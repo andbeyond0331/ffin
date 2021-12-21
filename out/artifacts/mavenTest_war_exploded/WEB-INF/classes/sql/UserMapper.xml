@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		
+<mapper namespace="UserMapper">
+
+	<!--User Table-->
+	<resultMap id="userSelectMap" type="user">
+		<result property="userId"				column="user_id"					jdbcType="VARCHAR"/>
+		<result property="userPassword"			column="user_password"				jdbcType="VARCHAR"/>
+		<result property="userName"				column="user_name"					jdbcType="VARCHAR"/>
+		<result property="userPhone"			column="user_phone"					jdbcType="VARCHAR"/>
+		<result property="userBirth"			column="user_birth"					jdbcType="DATE"/>
+		<result property="userAddr"				column="user_addr"					jdbcType="VARCHAR"/>
+		<result property="userAddrDetail"		column="user_addr_detail"			jdbcType="VARCHAR"/>
+		<result property="userMapLa"			column="user_map_la"				jdbcType="DECIMAL"/>
+		<result property="userMapLo"			column="user_map_lo"				jdbcType="DECIMAL"/>
+		<result property="userRegDate"			column="user_reg_date"				jdbcType="VARCHAR"/>
+		<result property="ReportCount"			column="report_count"				jdbcType="NUMERIC"/>
+		<result property="userEmail"			column="user_email"					jdbcType="VARCHAR"/>
+		<result property="userEmailStatus"		column="user_email_status"			jdbcType="CHAR"/>
+		<result property="userProImg"			column="user_pro_img"				jdbcType="VARCHAR"/>
+		<result property="userFavPlace"			column="user_fav_place"				jdbcType="VARCHAR"/>
+		<result property="userFavPlaceDetail"	column="user_fav_place_detail"		jdbcType="VARCHAR"/>
+		<result property="userFavMenu"			column="user_fav_menu"				jdbcType="VARCHAR"/>
+		<result property="userIntro"			column="user_intro"					jdbcType="VARCHAR"/>
+		<result property="userTotalPoint"		column="user_total_point"			jdbcType="NUMERIC"/>
+		<result property="userByeStatus"		column="user_bye_status"			jdbcType="CHAR"/>
+		<result property="userByeReason"		column="user_bye_reason"			jdbcType="CHAR"/>
+		<result property="userByeRegDate"		column="user_bye_reg_date"			jdbcType="DATE"/>
+		<result property="role"					column="role"						jdbcType="CHAR"/>
+		<result property="blackRedDate"			column="black_reg_date"				jdbcType="DATE"/>
+		<result property="blackEndDate"			column="black_end_date"				jdbcType="DATE"/>
+	</resultMap>
+
+
+	<!--정보조회-->
+	<select id = "getUser" parameterType="String" resultMap="userSelectMap">
+		SELECT user_id
+		FROM user
+		WHERE user_id = #{value}
+	</select>
+
+</mapper>
