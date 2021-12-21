@@ -39,7 +39,7 @@
 
 
 	<!--정보조회-->
-	<select id = "getUser" parameterType="String" resultMap="userSelectMap">
+	<select id = "getUser" parameterType="java.lang.String" resultMap="userSelectMap">
 		SELECT user_id
 		FROM user
 		WHERE user_id = #{value}

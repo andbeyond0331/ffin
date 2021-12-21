@@ -6,6 +6,7 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="ffin" />
+          <element id="module-output" name="mavenTest" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.1.0" />
@@ -39,8 +40,10 @@
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
           <element id="library" level="project" name="Maven: javax.mail:mail:1.4.7" />
           <element id="library" level="project" name="Maven: org.springframework:spring-websocket:5.2.3.RELEASE" />
+          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.0.1" />
         </element>
       </element>
+      <element id="javaee-facet-resources" facet="mavenTest/web/Web" />
     </root>
   </artifact>
 </component>
