@@ -15,10 +15,35 @@
 
 	<!-- FQCN(Full Qualified Class Name) Alias(별칭관리) -->
 	<typeAliases>
+		<typeAlias alias="search" 	type="com.ffin.common.Search" />
+		<typeAlias alias="page" 	type="com.ffin.common.Page" />
+		<typeAlias alias="catering" 	type="com.ffin.service.domain.Catering" />
+		<typeAlias alias="chat" type="com.ffin.service.domain.Chat" />
+		<typeAlias alias="comment" 	type="com.ffin.service.domain.Comment" />
+		<typeAlias alias="coupon" 	type="com.ffin.service.domain.Coupon" />
+		<typeAlias alias="heart" 	type="com.ffin.service.domain.Heart" />
+		<typeAlias alias="inquiry" 		type="com.ffin.service.domain.Inquiry" />
+		<typeAlias alias="menu" 	type="com.ffin.service.domain.Menu" />
+		<typeAlias alias="msg" 	type="com.ffin.service.domain.Msg" />
+		<typeAlias alias="optionGroup" 	type="com.ffin.service.domain.OptionGroup" />
+		<typeAlias alias="orderDetail" 	type="com.ffin.service.domain.OrderDetail" />
+		<typeAlias alias="point" 	type="com.ffin.service.domain.Point" />
+		<typeAlias alias="post" 	type="com.ffin.service.domain.Post" />
+		<typeAlias alias="purchase" 	type="com.ffin.service.domain.Purchase" />
+		<typeAlias alias="report" 	type="com.ffin.service.domain.Report" />
+		<typeAlias alias="review" 	type="com.ffin.service.domain.Review" />
+		<typeAlias alias="truck" 		type="com.ffin.service.domain.Truck" />
 		<typeAlias alias="user" 	type="com.ffin.service.domain.User" />
 	</typeAliases>
 
 	<mappers>
+		<mapper resource="sql/UserMapper.xml"/>
+		<mapper resource="sql/MessageMapper.xml"/>
+		<mapper resource="sql/MenuMapper.xml"/>
+		<mapper resource="sql/PurchaseMapper.xml"/>
+		<mapper resource="sql/CateringMapper.xml"/>
+		<mapper resource="sql/ReviewMapper.xml"/>
+		<mapper resource="sql/TruckMapper.xml"/>
 		<mapper resource="sql/UserMapper.xml"/>
 	</mappers>
 
