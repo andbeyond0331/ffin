@@ -13,7 +13,8 @@ public class Truck {
 	private String truckAddr; 
 	private String truckAddrDetail; 
 	private String truckPhone; 
-	private String truckEmail; 
+	private String truckEmail;
+	private String truckName;
 	private String truckBusiLice; 
 	private String truckBusiNo; 
 	private int truckCate; 
@@ -22,14 +23,14 @@ public class Truck {
 	private Float truckAVGStar; 
 	private Double truckMapLa; 
 	private Double truckMapLo; 
-	private Date truckJoinReqStatus; 
+	private int truckJoinReqStatus;
 	private Date truckJoinReqDate; 
 	private String truckNoticeTitle; 
 	private String truckNoticeContent; 
 	private String truckNoticeImg; 
 	private int truckByeStatus; 
 	private int truckByeReason; 
-	private int truckBusiStatus; 
+	private String truckBusiStatus;
 	private Date truckRegDate; 
 	private int role; 
 	
