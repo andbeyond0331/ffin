@@ -1,16 +1,19 @@
 package com.ffin.service.domain;
 
+import lombok.Data;
+
+@Data
 public class OrderDetail {
-	
+
 	private int odNo;
 	private int odOrderNo;
 	private String odMenuName;
 	private String odOptionGroupName;
 	private String odOptionName;
-	private String odMenuQty;
-	private String odMenuQtyFlag;
-	private String odMenuPrice;
-	private String odOptionPrice;
+	private int odMenuQty;
+	private int odMenuQtyFlag;
+	private int odMenuPrice;
+	private int odOptionPrice;
 	private String odMenuImage;
-		
+
 }

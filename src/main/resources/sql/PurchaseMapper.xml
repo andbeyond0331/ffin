@@ -6,4 +6,436 @@
 
 <mapper namespace="PurchaseMapper">
 
+	<resultMap type="purchase" id="purchaseSelectMap">
+		<!--Purchase Domain-->
+		<result property="orderNo" 				column="ORDER_NO" 				jdbcType="NUMERIC"/>
+		<result property="orderUserId.userId" 	column="ORDER_USER_ID" 			jdbcType="VARCHAR"/>
+		<result property="orderTruckId.truckId"	column="ORDER_TRUCK_ID"			jdbcType="VARCHAR"/>
+		<result property="payPointNo.pointNo" 	column="PAY_POINT_NO"			jdbcType="NUMERIC"/>
+		<result property="payCouponNo.couponNo"	column="PAY_COUPON_NO"	 		jdbcType="NUMERIC"/>
+		<result property="payResNo.ctNo" 		column="PAY_RES_NO" 			jdbcType="NUMERIC"/>
+		<result property="orderQty" 			column="ORDER_QTY"				jdbcType="NUMERIC"/>
+		<result property="orderRequest" 		column="ORDER_REQUEST" 			jdbcType="VARCHAR"/>
+		<result property="orderStatus" 			column="ORDER_STATUS" 			jdbcType="CHAR"/>
+		<result property="orderPickUpTime" 		column="ORDER_PICK_UP_TIME"		jdbcType="NUMERIC"/>
+		<result property="orderCookingTime"		column="ORDER_COOKING_TIME"		jdbcType="NUMERIC"/>
+		<result property="orderCancelReason"	column="ORDER_CANCEL_REASON"	jdbcType="CHAR" />
+		<result property="orderNopeReason" 		column="ORDER_NOPE_REASON" 		jdbcType="CHAR" />
+		<result property="orderTotalPrice"		column="ORDER_TOTAL_PRICE" 	 	jdbcType="NUMERIC" />
+		<result property="payDateTime" 			column="PAY_DATE_TIME" 			jdbcType="TIMESTAMP" />
+		<result property="payRefundDateTime" 	column="PAY_REFUND_DATE_TIME" 	jdbcType="TIMESTAMP" />
+		<result property="payServiceType" 		column="PAY_SERVICE_TYPE" 		jdbcType="CHAR" />
+		<result property="payOption" 			column="PAY_OPTION" 			jdbcType="CHAR" />
+		<result property="payRefundStatus" 		column="PAY_REFUND_STATUS" 		jdbcType="CHAR" />
+		<result property="payPrice" 			column="PAY_PRICE" 				jdbcType="NUMERIC" />
+
+		<association property="payCouponNo" javaType="coupon">
+			<id property="couponNo"							column="PAY_COUPON_NO" 				jdbcType="NUMERIC"/>
+			<result property="couponReceivedUserId.userId"	column="COUPON_RECEIVED_USER_ID"	jdbcType="VARCHAR"/>
+			<result property="couponDcPrice"				column="COUPON_DC_PRICE"			jdbcType="NUMERIC"/>
+			<result property="couponStatus"					column="COUPON_STATUS"				jdbcType="CHAR"/>
+			<result property="couponWeatherType"			column="COUPON_WEATHER_TYPE"        jdbcType="CHAR"/>
+
+		</association>
+
+		<association property="orderUserId" javaType="user">
+			<id property="userId" 			column="ORDER_USER_ID"		jdbcType="VARCHAR"/>
+			<result property="userPhone"	column="USER_PHONE"			jdbcType="VARCHAR"/>
+			<result property="userName"		column="USER_NAME"			jdbcType="VARCHAR"/>
+			<result property="userProImg"	column="USER_PRO_IMG"		jdbcType="VARCHAR"/>
+
+
+		</association>
+		<association property="orderTruckId" javaType="truck">
+			<id property="truckId"			 	column="ORDER_TRUCK_ID" 	jdbcType="VARCHAR"/>
+			<result property="truckName"		column="TRUCK_NAME"			jdbcType="VARCHAR"/>
+			<result property="truckCEOName"		column="TRUCK_CEO_NAME"		jdbcType="VARCHAR"/>
+			<result property="truckPhone"		column="TRUCK_PHONE"		jdbcType="VARCHAR"/>
+		</association>
+
+
+
+
+	</resultMap>
+
+
+
+
+	<resultMap type="orderDetail" id="orderDetailSelectMap">
+		<!--OrderDetail Domain-->
+		<result property="odNo" 				column="OD_NO" 					jdbcType="NUMERIC" />
+		<result property="odOrderNo" 			column="OD_ORDER_NO" 			jdbcType="NUMERIC" />
+		<result property="odMenuName" 			column="OD_MENU_NAME" 			jdbcType="VARCHAR" />
+		<result property="odOptionGroupName" 	column="OD_OPTION_GROUP_NAEM" 	jdbcType="VARCHAR" />
+		<result property="odOptionName" 		column="OD_OPTION_NAME" 		jdbcType="VARCHAR" />
+		<result property="odMenuQty" 			column="OD_MENU_QTY" 			jdbcType="NUMERIC" />
+		<result property="odMenuQtyFlag" 		column="OD_MENU_QTY_FLAG" 		jdbcType="CHAR" />
+		<result property="odMenuPrice" 			column="OD_MENU_PRICE" 			jdbcType="NUMERIC" />
+		<result property="odOptionPrice" 		column="OD_OPTION_PRICE" 		jdbcType="NUMERIC" />
+		<result property="odMenuImage" 			column="OD_MENU_IMAGE" 			jdbcType="VARCHAR" />
+
+
+	</resultMap>
+
+
+	<resultMap type="point" id="pointSelectMap">
+		<!--point Domain-->
+		<result property="pointNo"				column="POINT_NO"				jdbcType="NUMERIC"	/>
+		<result property="pointUserId.userId" 	column="POINT_USER_ID"			jdbcType="VARCHAR"/>
+		<result property="pointAmt"				column="POINT_AMT"				jdbcType="NUMERIC"/>
+		<result property="pointUseDate"			column="POINT_USE_DATE"			jdbcType="TIMESTAMP"/>
+		<result property="pointPlmnStatus"		column="POINT_PLMN_STATUS"		jdbcType="CHAR"/>
+		<result property="pointStatus"			column="POINT_STATUS"			jdbcType="CHAR"/>
+		<result property="pointBirthCode"		column="POINT_BIRTH_CODE"		jdbcType="NUMERIC"/>
+
+		<association property="pointUserId" javaType="user">
+			<id property="userId" column="USER_ID" jdbcType="VARCHAR"/>
+			<result property="userTotalPoint" column="USER_TOTAL_POINT" jdbcType="NUMERIC"/>
+		</association>
+
+	</resultMap>
+	<resultMap type="user" id="userSelectMap">
+		<!--coupon Domain-->
+		<result property="userId"				column="USER_ID"					jdbcType="VARCHAR"/>
+		<result property="userTotalPoint"		column="USER_TOTAL_POINT"			jdbcType="NUMERIC"/>
+
+	</resultMap>
+
+	<resultMap type="coupon" id="couponSelectMap">
+		<!--coupon Domain-->
+		<result property="couponNo"				column="COUPON_NO"					jdbcType="INTEGER"/>
+		<result property="couponReceivedUserId.userId"	column="COUPON_RECEIVED_USER_ID"	jdbcType="VARCHAR"/>
+		<result property="couponDcPrice"		column="COUPON_DC_PRICE"			jdbcType="INTEGER"/>
+		<result property="couponStatus"			column="COUPON_STATUS"				jdbcType="CHAR"/>
+		<result property="couponWeatherType"	column="COUPON_WEATHER_TYPE"		jdbcType="CHAR"/>
+
+
+	</resultMap>
+
+
+
+
+
+		<!--	<association property="purchaseProd"  javaType="product">
+                    <id property="prodNo" column="prod_no" jdbcType="NUMERIC"/>
+                    <result property="prodName" column="prod_name" jdbcType="VARCHAR"/>
+                    <result property="prodDetail" column="prod_detail" jdbcType="VARCHAR"/>
+                    <result property="manuDate" column="manufacture_day" jdbcType="VARCHAR"/>
+                    <result property="price" column="price" jdbcType="NUMERIC"/>
+                    <result property="fileName" column="image_file" jdbcType="VARCHAR"/>
+                    <result property="regDate" column="REG_DATE" jdbcType="DATE"/>
+                    <result property="stockCnt" column="stock_cnt" jdbcType="NUMERIC"/>
+                </association>-->
+
+
+
+
+	<insert id="addPurchase" parameterType="purchase">
+		INSERT
+		INTO purchase (ORDER_USER_ID,ORDER_TRUCK_ID,ORDER_QTY,
+							ORDER_STATUS,ORDER_PICK_UP_TIME,ORDER_TOTAL_PRICE)
+		VALUES(
+				  #{orderUserId.userId:VARCHAR},
+				  #{orderTruckId.truckId:VARCHAR},
+				  #{orderQty:NUMERIC},
+				  #{orderStatus:CHAR},
+				  #{orderPickUpTime:NUMERIC},
+				  #{orderTotalPrice:NUMERIC}
+			  )
+
+	</insert>
+
+
+	<insert id="addCart" parameterType="orderDetail">
+		INSERT
+		INTO ffin.orderdetail (OD_ORDER_NO,OD_MENU_NAME,OD_OPTION_GROUP_NAME,
+							   OD_OPTION_NAME,OD_MENU_QTY,OD_MENU_QTY_FLAG,
+							   OD_MENU_PRICE,OD_OPTION_PRICE,OD_MENU_IMAGE)
+		VALUES (
+				   #{odOrderNo:NUMERIC},
+				   #{odMenuName:VARCHAR},
+				   #{odOptionGroupName:VARCHAR},
+				   #{odOptionName:VARCHAR},
+				   #{odMenuQty:NUMERIC},
+				   #{odMenuQtyFlag:CHAR},
+				   #{odMenuPrice:NUMERIC},
+				   #{odOptionPrice:NUMERIC},
+				   #{odMenuImage:VARCHAR}
+			   )
+
+	</insert>
+
+
+
+	<insert id="addCoupon" parameterType="coupon">
+		INSERT
+		INTO ffin.COUPON ( COUPON_RECEIVED_USER_ID,COUPON_DC_PRICE,
+						   COUPON_TYPE,COUPON_STATUS)
+		VALUES(
+				  #{couponReceivedUserId.userId:VARCHAR},
+				  #{couponDcPrice:NUMERIC},
+				  #{couponType:CHAR},
+				  #{couponStatus:CHAR}
+			  )
+
+	</insert>
+
+	<insert id="updatePoint" parameterType="point">
+		INSERT
+		INTO ffin.point (POINT_USER_ID,POINT_AMT,POINT_USE_DATE,
+						 POINT_PLMN_STATUS,POINT_STATUS,POINT_BIRTH_CODE)
+		VALUES (
+				   #{pointUserId.userId :VARCHAR},
+				   #{pointAmt:NUMERIC},
+				   SYSDATE() ,
+				   #{pointPlmnStatus:CHAR},
+				   #{pointStatus:CHAR},
+				   #{pointBirthCode:NUMERIC}
+			   )
+
+	</insert>
+
+
+
+
+
+
+	<!--updateQuery-->
+
+
+
+
+
+
+	<update id="updatePurchase"	parameterType="purchase"   >
+		UPDATE ffin.purchase
+		<set>
+			ORDER_STATUS = #{orderStatus},
+			PAY_DATE_TIME = SYSDATE(),
+			PAY_PRICE = #{payPrice},
+			PAY_SERVICE_TYPE = #{payServiceType},
+			<if test="payPointNo.pointNo =! 0">
+			PAY_POINT_NO = #{payPointNo.pointNo},
+			</if>
+			<if test="payCouponNo.couponNo =! 0">
+			PAY_COUPON_NO = #{payCouponNo.couponNo},
+			</if>
+			<if test="payResNo.ctNo =! 0">
+			PAY_RES_NO = #{payResNo.ctNo},
+		    </if>
+			PAY_OPTION = #{payOption}
+		</set>
+
+		WHERE order_no = #{orderNo}
+	</update>
+
+
+
+
+
+	<!--총포인트 수정-->
+	<update id="updateTotalPoint"	parameterType="user"   >
+		UPDATE ffin.user
+		<set>
+			USER_TOTAL_POINT = #{userTotalPoint}
+		</set>
+
+		WHERE user_id = #{userId}
+	</update>
+
+
+
+
+	<!-->쿠폰사용으로 사용유무수정 -->
+	<update id="updateCouponStatus"	parameterType="coupon"   >
+		UPDATE ffin.coupon
+		<set>
+			COUPON_STATUS = #{couponStatus}
+		</set>
+
+		WHERE coupon_no = #{couponNo}
+	</update>
+
+
+
+	<!-->주문접수 이후픽업요청 픽업완료로 주문상태변경-->
+	<update id="updateOrderTranCode"	parameterType="purchase"   >
+		UPDATE ffin.purchase
+		<set>
+			ORDER_STATUS = #{orderStatus}
+		</set>
+
+		WHERE order_no = #{orderNo}
+	</update>
+
+
+	<!--주문대기 상태의 최초 주문접수 시 예상조리시간-->
+	<update id="updateOrderCookingTime"	parameterType="purchase"   >
+		UPDATE ffin.purchase
+		<set>
+			ORDER_STATUS = #{orderStatus},
+		    ORDER_COOKING_TIME = #{orderCookingTime}
+
+		</set>
+
+		WHERE order_no = #{orderNo}
+	</update>
+
+
+	<!--주문취소로 주문상태변경,주문취소사유-->
+	<update id="updateOrderCancel"	parameterType="purchase"   >
+		UPDATE ffin.purchase
+		<set>
+			ORDER_STATUS = #{orderStatus},
+			ORDER_CANCEL_REASON = #{orderCancelReason}
+
+		</set>
+
+		WHERE order_no = #{orderNo}
+	</update>
+
+	<!--주문거절로 주문상태변경,주문취소사유-->
+	<update id="updateOrderRefusal"	parameterType="purchase"   >
+		UPDATE ffin.purchase
+		<set>
+			ORDER_STATUS = #{orderStatus},
+			ORDER_NOPE_REASON = #{orderNopeReason}
+		</set>
+
+		WHERE order_no = #{orderNo}
+	</update>
+
+
+
+	<!--환불처리유무-->
+	<update id="updateRefundStatus"	parameterType="purchase"   >
+		UPDATE ffin.purchase
+		<set>
+			ORDER_STATUS = #{orderStatus},
+			PAY_REFUND_STATUS = #{payRefundStatus}
+		</set>
+
+		WHERE order_no = #{orderNo}
+	</update>
+
+	<!--
+	&lt;!&ndash;결제이후 결제정보 추가업데이트&ndash;&gt;
+	<update id="updateOrder"	parameterType="purchase"   >
+		UPDATE ffin.purchase
+		<set>
+			ORDER_STATUS = #{orderStatus}
+		</set>
+
+		WHERE order_no = #{orderNo}
+	</update>
+
+
+-->
+
+
+
+
+
+
+<!--
+
+	<select id="getCouponList" parameterType="Map" resultMap="purchaseSelectMap">
+		SELECT
+			COUPON_NO, COUPON_RECEIVED_USER_ID, COUPON_DC_PRICE, COUPON_STATUS, COUPON_WEATHER_TYPE
+		FROM coupon
+		WHERE COUPON_RECEIVED_USER_ID = ${value}
+	</select>
+-->
+
+<!--
+	<select id="getCartList" parameterType="int" resultMap="orderDetailSelectMap">
+		SELECT
+			OD_NO, OD_ORDER_NO, OD_MENU_NAME, OD_OPTION_GROUP_NAEM, OD_OPTION_NAME, OD_MENU_QTY, OD_MENU_QTY_FLAG,
+			OD_MENU_PRICE, OD_OPTION_PRICE, OD_MENU_IMAGE
+		FROM orderdetail
+		WHERE OD_ORDER_NO = #{value}
+
+	</select>
+
+	<select id="getOrderList" parameterType="String" resultMap="purchaseSelectMap">
+		SELECT
+			PUR.ORDER_NO,PUR.ORDER_USER_ID,PUR.ORDER_TRUCK_ID,PUR.ORDER_STATUS,PUR.ORDER_PICK_UP_TIME,PUR.ORDER_COOKING_TIME,ORD.OD_MENU_NAME
+		FROM ffin.purchase pur,ffin.orderdetail ord
+		WHERE truck_id = #{value}
+		  AND ord.od_order_no = pur.order_no
+		  AND od_menu_qty_flag = 0;
+
+	</select>
+
+	<select id="getPurchaseList" parameterType="String" resultMap="orderSelectMap">
+		SELECT
+			*
+		FROM purchase
+		WHERE order_user_id = #{value}
+	</select>
+-->
+
+	<!--
+	<select id="getSalesList" parameterType="String" resultMap="purchaseSelectMap">
+		SELECT
+			*
+		FROM purchase
+		WHERE order_truck_id = #{value}
+
+	</select>
+	-->
+<!--
+	<select id="getPointList" parameterType="String" resultMap="pointSelectMap">
+		SELECT
+			u.USER_TOTAL_POINT,p.point_user_id,p.POINT_AMT,p.POINT_NO,p.POINT_USE_DATE,p.POINT_BIRTH_CODE,p.POINT_PLMN_STATUS,p.POINT_STATUS
+		FROM ffin.user u,ffin.point p
+		WHERE u.USER_ID= p.POINT_USER_ID
+		  and u.user_id = #{value}
+
+	</select>
+-->
+
+	<select id="getPurchase" parameterType="purchase" resultMap="purchaseSelectMap">
+		SELECT
+			order_no,order_user_id,order_truck_id,pay_point_no,pay_coupon_no,pay_res_no,order_qty,order_request,order_status,order_pick_up_time,order_cooking_time,
+			order_cancel_reason,order_nope_reason,order_total_price,pay_date_time,pay_refund_date_time
+		FROM ffin.purchase
+		WHERE order_no = #{value}
+
+	</select>
+<!--
+
+	<select id="getOrderDetail" parameterType="String" resultMap="orderDetailorderSelectMap">
+		SELECT
+			P.ORDER_NO,P.ORDER_USER_ID,P.ORDER_TRUCK_ID,P.ORDER_QTY,P.ORDER_PICK_UP_TIME,P.ORDER_COOKING_TIME,P.PAY_DATE_TIME,
+			P.PAY_OPTION,P.PAY_PRICE,u.USER_PHONE,u.USER_PRO_IMG,o.OD_MENU_IMAGE,o.OD_MENU_NAME,o.OD_MENU_PRICE,o.OD_MENU_QTY,
+			o.OD_MENU_QTY,o.OD_MENU_QTY_FLAG,o.OD_OPTION_GROUP_NAME,o.OD_OPTION_NAME,o.OD_OPTION_PRICE
+		FROM ffin.purchase p,ffin.user u,ffin.orderdetail o
+		where u.user_id = p.order_user_id
+		  and p.ORDER_NO = o.OD_ORDER_NO
+		  and order_no = #{value};
+
+	</select>
+-->
+
+	<select id="getCoupon" parameterType="int" resultMap="couponSelectMap">
+		SELECT
+			COUPON_DC_PRICE,COUPON_NO,COUPON_STATUS
+		FROM ffin.coupon
+		WHERE COUPON_NO = #{value}
+
+	</select>
+
+
+	<select id="getTotalPoint" parameterType="String" resultMap="userSelectMap">
+		SELECT
+			user_total_point
+		FROM ffin.user
+		WHERE user_id = #{value}
+
+	</select>
+
+
+
+
 </mapper>
