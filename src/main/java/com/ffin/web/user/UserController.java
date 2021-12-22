@@ -21,16 +21,31 @@ public class UserController {
     @Qualifier("userServiceImpl")
     private UserService userService;
 
-    @RequestMapping(value = "getUser", method = RequestMethod.GET)
-    public ModelAndView getUser(HttpServletRequest request,ModelAndView m) throws Exception{
-        System.out.println("UserController.getUser : GET");
-        String userId= request.getParameter("userId");
+//    @RequestMapping(value = "getUser", method = RequestMethod.GET)
+//    public ModelAndView getUser(HttpServletRequest request,ModelAndView m) throws Exception{
+//        System.out.println("UserController.getUser : GET");
+//        String userId= request.getParameter("userId");
+//
+//        System.out.println("userId: "+userId);
+//        User user = userService.getUser(userId);
+//        System.out.println("user: "+user);
+//        m.addObject("user",user);
+//        m.setViewName("/WEB-INF/views/user/getUser.jsp");
+//        return m;
+//    }
 
-        System.out.println("userId: "+userId);
+    @RequestMapping( value="getUser", method=RequestMethod.GET )
+    public String getUser( @RequestParam("userId") String userId , Model model ) throws Exception {
+
+        System.out.println("/user/getUser : GET");
+        //Business Logic
         User user = userService.getUser(userId);
-        System.out.println("user: "+user);
-        m.addObject("user",user);
-        m.setViewName("/WEB-INF/views/user/getUser.jsp");
-        return m;
+        // Model 과 View 연결
+        model.addAttribute("user", user);
+
+        return "forward:views/user/getUser";
     }
+
+
+
 }

@@ -21,15 +21,16 @@ public class User {
     private String userEmail;
     private int userEmailStatus;
     private String userProImg;
-    private int userFavPlace;
-    private int userFavPlaceDetail;
+    private String userFavPlace;
+    private String userFavPlaceDetail;
     private String userFavMenu;
     private String userIntro;
     private int userTotalPoint;
     private int userByeStatus;
     private int userByeReason;
-    private Date userByeRegDate;
-    private Date blackRegDate;
-    private Date blackRestPer;
+    private String userByeRegDate;
+    private String blackRegDate;
+    private String blackEndDate;
     private int role;
+
 }
