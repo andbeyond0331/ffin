@@ -12,7 +12,7 @@ public class Catering {
     private Menu ctMenu; //menu
 
     private int ctNo;
-    private Date ctDate;
+    private String ctDate;
     private String ctStartTime;
     private String ctEndTime;
     private int ctMenuMinQty;
@@ -25,7 +25,7 @@ public class Catering {
     private int ctQuotation;
     private int ctRealQuotation;
     private String ctTruckRequest;
-    private int ctStatusCode;
+    private String ctStatusCode;
     private Timestamp ctServRegDate;
     private Timestamp ctResRegDate;
     private Timestamp ctCancelDate;
