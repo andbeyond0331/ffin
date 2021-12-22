@@ -9,7 +9,7 @@ public class Point {
 	
 	//point TABLE
 	private int pointNo;
-	private String pointUserId;
+	private User pointUserId;
 	private int pointAmt;
 	private Date pointUseDate;
 	private int pointPlmnStatus;
