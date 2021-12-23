@@ -2,6 +2,7 @@ package com.ffin.web.purchase;
 
 import com.ffin.service.domain.*;
 import com.ffin.service.purchase.PurchaseService;
+import com.sun.javafx.collections.MappingChange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -39,12 +42,15 @@ public class PurchaseController {
     int pageSize;
 
     @RequestMapping(value = "getCartMenuList", method= RequestMethod.GET)
-    public String getCartMenuList(@RequestParam("orderDetail") OrderDetail orderDetail, Model model ) throws Exception{
-
+    public ModelAndView getCartMenuList(@RequestParam("userId") String userId, ModelAndView model ) throws Exception{
         System.out.println("/purchase/getCartMenuList : GET");
         //Session에 저장되어 있는 메뉴정보를 map에 담아서 List 로 확인
+        Map map = new HashMap();
+        model.addObject("list",map.get("list"));
+        model.setViewName("/purchase/getCartMenuList.jsp");
 
-        return "forward:/purchase/getCartMenuList.jsp";
+
+        return model;
     }
 
     @RequestMapping(value = "addCart", method= RequestMethod.POST)

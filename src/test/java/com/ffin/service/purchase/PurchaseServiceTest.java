@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -68,7 +71,7 @@ public class PurchaseServiceTest {
     }
 
 
-    @Test
+    //@Test
     public void TestGetOrderDetail() throws Exception {
         Purchase purchase = new Purchase();
         purchase = purchaseService.getOrderDetail(1);
@@ -110,7 +113,7 @@ public class PurchaseServiceTest {
 
 
     //@Test
-    public void TestGetPointist() throws Exception {
+    public void TestGetPointList() throws Exception {
         Search search = new Search();
         search.setCurrentPage(1);
         search.setPageSize(3);
@@ -119,7 +122,7 @@ public class PurchaseServiceTest {
 
     }
 
-    @Test
+    //@Test
     public void TestGetPurchaseList() throws Exception {
         Search search = new Search();
         search.setCurrentPage(1);
@@ -130,19 +133,21 @@ public class PurchaseServiceTest {
     }
 
 
-    /*    @Test
+    //@Test
     public void TestGetSalesList() throws Exception {
-        Search
+        Search search = new Search();
+        search.setCurrentPage(1);
+        search.setPageSize(3);
         Map map = purchaseService.getSalesList(search,"truck01");
         System.out.println(map);
 
-    }*/
+    }
 
 
 
 ////////////////////ADD///////////////////////////////////
 
-   //@Test
+  // @Test
     public void testAddPurchase() throws Exception {
 
         Purchase purchase = new Purchase();
@@ -157,20 +162,23 @@ public class PurchaseServiceTest {
         purchase.setOrderPickUpTime(15);
         purchase.setOrderTotalPrice(3000);
 
-        purchaseService.addPurchase(purchase);
+        int orderNo = purchaseService.addPurchase(purchase);
 
+       System.out.println("받아온정보!!!!"+orderNo);
 
 
     }
 
 
-    //@Test
+    @Test
     public void testAddOrderDetail() throws Exception {
 
         OrderDetail orderDetail = new OrderDetail();
 /*        Purchase purchase = new Purchase();
         purchase.setOrderNo(8);*/
-        orderDetail.setOdOrderNo(8);
+        Purchase purchase = new Purchase();
+        purchase.setOrderNo(8);
+        orderDetail.setOdOrderNo(purchase);
         orderDetail.setOdMenuImage("imag5-1");
         orderDetail.setOdMenuName("menu10");
         orderDetail.setOdMenuPrice(1000);
@@ -179,9 +187,10 @@ public class PurchaseServiceTest {
         orderDetail.setOdOptionGroupName("null");
         orderDetail.setOdOptionName("null");
         orderDetail.setOdOptionPrice(0);
+        List list = new ArrayList();
+        list.add(orderDetail);
 
-
-        purchaseService.addCart(orderDetail);
+        purchaseService.addCart(list);
 
 
 

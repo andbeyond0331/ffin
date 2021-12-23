@@ -6,7 +6,7 @@ import lombok.Data;
 public class OrderDetail {
 
 	private int odNo;
-	private int odOrderNo;
+	private Purchase odOrderNo;
 	private String odMenuName;
 	private String odOptionGroupName;
 	private String odOptionName;

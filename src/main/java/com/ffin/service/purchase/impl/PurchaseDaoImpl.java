@@ -25,14 +25,16 @@ public class PurchaseDaoImpl implements PurchaseDao {
         System.out.println(this.getClass());
     }
     @Override
-    public void addCart(OrderDetail orderDetail) throws Exception{
-        System.out.println("orderDetail = " + orderDetail);
-        sqlSession.insert("PurchaseMapper.addCart",orderDetail);
+    public void addCart(List list) throws Exception{
+        System.out.println("orderDetail = " + list);
+        sqlSession.insert("PurchaseMapper.addCart",list);
     }//장바구니에 정보 등록
     @Override
-    public void addPurchase(Purchase purchase)throws Exception{
+    public int addPurchase(Purchase purchase)throws Exception{
         System.out.println("PurchaseDaoImpl.addPurchase");
         sqlSession.insert("PurchaseMapper.addPurchase",purchase);
+        int id = purchase.getOrderNo();
+        return id;
     }
     //주문번호 생성을 위해서
     @Override
@@ -110,10 +112,14 @@ public class PurchaseDaoImpl implements PurchaseDao {
     }//마이페이지에서 구매이력
     @Override
     public List getSalesList(Search search , String truckId)throws Exception{
-        return sqlSession.selectList("PurchaseMapper.");
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("search",search);
+        map.put("truckId",truckId);
+        return sqlSession.selectList("PurchaseMapper.getSalesList",map);
     } //마이페이지에서 판매이력
     @Override
     public List getPointList(Search search , String userId)throws Exception{
+        System.out.println("search = " + search + ", userId = " + userId);
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("search",search);
         map.put("userId",userId);

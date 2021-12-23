@@ -64,7 +64,7 @@
 	<resultMap type="orderDetail" id="orderDetailSelectMap">
 		<!--OrderDetail Domain-->
 		<result property="odNo" 				column="OD_NO" 					jdbcType="NUMERIC" />
-		<result property="odOrderNo" 			column="OD_ORDER_NO" 			jdbcType="NUMERIC" />
+		<result property="odOrderNo.orderNo" 	column="OD_ORDER_NO" 			jdbcType="NUMERIC" />
 		<result property="odMenuName" 			column="OD_MENU_NAME" 			jdbcType="VARCHAR" />
 		<result property="odOptionGroupName" 	column="OD_OPTION_GROUP_NAME" 	jdbcType="VARCHAR" />
 		<result property="odOptionName" 		column="OD_OPTION_NAME" 		jdbcType="VARCHAR" />
@@ -130,7 +130,9 @@
 
 
 
-	<insert id="addPurchase" parameterType="purchase">
+	<insert id="addPurchase" parameterType="purchase" useGeneratedKeys="true" keyProperty="orderNo">
+
+
 		INSERT
 		INTO purchase (ORDER_USER_ID,ORDER_TRUCK_ID,ORDER_QTY,
 							ORDER_STATUS,ORDER_PICK_UP_TIME,ORDER_TOTAL_PRICE)
@@ -146,13 +148,14 @@
 	</insert>
 
 
-	<insert id="addCart" parameterType="orderDetail">
+	<insert id="addCart" parameterType="list">
 		INSERT
 		INTO ffin.orderdetail (OD_ORDER_NO,OD_MENU_NAME,OD_OPTION_GROUP_NAME,
 							   OD_OPTION_NAME,OD_MENU_QTY,OD_MENU_QTY_FLAG,
 							   OD_MENU_PRICE,OD_OPTION_PRICE,OD_MENU_IMAGE)
-		VALUES (
-				   #{odOrderNo:NUMERIC},
+		VALUES
+		       <foreach collection="list" item="item" separator=",">
+				(  #{odOrderNo.orderNo:NUMERIC},
 				   #{odMenuName:VARCHAR},
 				   #{odOptionGroupName:VARCHAR},
 				   #{odOptionName:VARCHAR},
@@ -160,9 +163,8 @@
 				   #{odMenuQtyFlag:CHAR},
 				   #{odMenuPrice:NUMERIC},
 				   #{odOptionPrice:NUMERIC},
-				   #{odMenuImage:VARCHAR}
-			   )
-
+				   #{odMenuImage:VARCHAR} )
+			   </foreach>
 	</insert>
 
 
@@ -357,7 +359,7 @@
 
 
 
-<!--	<select id="getOrderList" parameterType="String" resultMap="purchaseSelectMap,orderDetailSelectMap">
+	<select id="getOrderList" parameterType="String" resultMap="purchaseSelectMap,orderDetailSelectMap">
 		SELECT
 			PUR.ORDER_NO,PUR.ORDER_USER_ID,PUR.ORDER_TRUCK_ID,PUR.ORDER_STATUS,PUR.ORDER_PICK_UP_TIME,PUR.ORDER_COOKING_TIME,ORD.OD_MENU_NAME
 		FROM ffin.purchase pur,ffin.orderdetail ord
@@ -365,7 +367,7 @@
 		  AND ord.od_order_no = pur.order_no
 		  AND od_menu_qty_flag = 0;
 
-	</select>-->
+	</select>
 
 	<select id="getPurchaseList" parameterType="map" resultMap="purchaseSelectMap">
 		SELECT inner_table.*
@@ -388,22 +390,47 @@
 		limit 0,8;
 	</select>
 
-	<!--
-	<select id="getSalesList" parameterType="String" resultMap="purchaseSelectMap">
-		SELECT
-			*
+	<select id="getSalesList" parameterType="map" resultMap="purchaseSelectMap">
+		SELECT inner_table.*
+		FROM (SELECT *
 		FROM purchase
-		WHERE order_truck_id = #{value}
+		<where>
+			<if test="searchCondition != null">
 
+				<bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+				<if test="searchCondition == 0 and searchKeyword !='' ">
+					AND ORDER_STATUS LIKE #{searchKeyword}
+				</if>
+				<if test="searchCondition == 1 and searchKeyword !=''">
+					AND ORDER_STATUS LIKE #{searchKeyword}
+				</if>
+			</if>
+			AND ORDER_TRUCK_ID = #{truckId}
+		</where>
+		order by order_no) inner_table
+		limit 0,8;
 	</select>
-	-->
-	<select id="getPointList" parameterType="String" resultMap="pointSelectMap">
-		SELECT
-			u.USER_TOTAL_POINT,p.point_user_id,p.POINT_AMT,p.POINT_NO,p.POINT_USE_DATE,p.POINT_BIRTH_CODE,p.POINT_PLMN_STATUS,p.POINT_STATUS
-		FROM ffin.user u,ffin.point p
-		WHERE u.USER_ID= p.POINT_USER_ID
-		  and u.user_id = #{value}
+	<select id="getPointList" parameterType="map" resultMap="pointSelectMap">
 
+		SELECT inner_table.*
+		FROM (SELECT point_user_id,POINT_AMT,POINT_NO,POINT_USE_DATE,POINT_BIRTH_CODE,POINT_PLMN_STATUS,POINT_STATUS
+
+		FROM ffin.point
+		<where>
+			<if test="searchCondition != null">
+
+				<bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+				<if test="searchCondition == 0 and searchKeyword !='' ">
+					AND POINT_STATUS LIKE #{searchKeyword}
+				</if>
+				<if test="searchCondition == 1 and searchKeyword !=''">
+					AND POINT_STATUS LIKE #{searchKeyword}
+				</if>
+			</if>
+			AND point_user_id = #{userId}
+		</where>
+		order by point_no) inner_table
+		limit 0,8;
 	</select>
 
 	<select id="getPurchase" parameterType="purchase" resultMap="purchaseSelectMap">
