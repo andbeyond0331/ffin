@@ -38,7 +38,7 @@ public class CateringServiceTest {
 
     }
 
-    //@Test
+    @Test
     public void getCtStatusList() throws Exception {
         //getCtStatusList(Search search, String id, String ctStatusCode)
         Search search = new Search();
