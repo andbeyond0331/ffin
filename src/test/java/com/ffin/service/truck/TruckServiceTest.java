@@ -32,7 +32,7 @@ public class TruckServiceTest {
     @Qualifier("truckServiceImpl")
     private TruckService truckService;
 
-    //@Test
+    @Test
     public void testAddTruck() throws Exception {
 
         Truck truck = new Truck();
@@ -70,7 +70,7 @@ public class TruckServiceTest {
         Assert.assertEquals(Integer.parseInt("1"), truck.getTruckJoinReqStatus());
         Assert.assertEquals(Date.valueOf("2021-12-20"), truck.getTruckJoinReqDate());
         Assert.assertEquals("0", truck.getTruckBusiStatus());
-        Assert.assertEquals(Date.valueOf("2021-12-20"), truck.getTruckJoinReqDate());
+        Assert.assertEquals(Date.valueOf("2021-12-20"), truck.getTruckRegDate());
         Assert.assertEquals(1, truck.getRole());
     }
 
@@ -273,7 +273,7 @@ public class TruckServiceTest {
         Assert.assertEquals("changeTestTruckPassword", truck.getTruckPassword());
     }
 
-    @Test
+    //@Test
     public void testGetTruckListAll() throws Exception{
         Search search = new Search();
         search.setCurrentPage(1);

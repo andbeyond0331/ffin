@@ -69,6 +69,14 @@
 	</select>
 
 
+	<!-- SQL : 아이디 중복 체크 -->
+	<select id="checkDuId" resultType="integer">
+		SELECT count(*)
+		FROM truck
+		WHERE truck_id = #{truckId}
+	</select>
+
+
 
 	<select id="findTruckId"   parameterType="map"    resultType="string" >
 		SELECT

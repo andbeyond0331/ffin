@@ -70,6 +70,9 @@ public interface TruckDao {
     // 푸드트럭 사업자등록번호인증(OCR 기능 이용하여 관리자가 인증..)
     public void busiLiceAuth(Truck truck) throws Exception ;
 
+    // 푸드트럭 아이디 중복체크
+    public int checkDuId(String truckId) throws Exception;
+
 
     // 게시판 Page 처리를 위한 전체Row(totalCount)  return
     public int getTotalCount(Search search) throws Exception ;

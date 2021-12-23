@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=utf-8" %>
-<%@ page pageEncoding="utf-8"%>
+<%@ page contentType="text/html; charset=euc-kr" %>
+<%@ page pageEncoding="euc-kr"%>
 
 
 <!DOCTYPE html>
@@ -7,50 +7,116 @@
 <html lang="ko">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="euc-kr">
 
-    <!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
+    <!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>í‘¸ë“œíŠ¸ëŸ­(ì‚¬ì—…ì) íšŒì›ê°€ì…</title>
+    <title>ÇªµåÆ®·°(»ç¾÷ÀÚ) È¸¿ø°¡ÀÔ</title>
 
     <!-- datepicker -->
-    <!-- jQuery UI CSS íŒŒì¼ -->
+    <!-- jQuery UI CSS ÆÄÀÏ -->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
-    <!-- jQuery ê¸°ë³¸ jsíŒŒì¼-->
+    <!-- jQuery ±âº» jsÆÄÀÏ-->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <!-- jQuery UI ë¼ì´ë¸ŒëŸ¬ë¦¬ jsíŒŒì¼ -->
+    <!-- jQuery UI ¶óÀÌºê·¯¸® jsÆÄÀÏ -->
     <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 
 
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
-    <script>
+    <script type="text/javascript">
+
+        //============= "°¡ÀÔ"  Event ¿¬°á =============
+        $(function() {
+            //==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+            $( "button.btn.btn-primary" ).on("click" , function() {
+                fncAddTruck();
+            });
+        });
+
+        //============= "Ãë¼Ò"  Event Ã³¸® ¹×  ¿¬°á =============
+    $(function() {
+    //==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+    $("a[href='#' ]").on("click" , function() {
+        self.location = "/truck/loginTruck"
+    });
+    });
+
+
+        function fncAddTruck() {
+
+            var id=$("input[name='truckId']").val();
+            var pw=$("input[name='truckPassword']").val();
+            var pw_confirm=$("input[name='truckPasswordChk']").val();
+            var name=$("input[name='truckCEOName']").val();
+
+
+            if(id == null || id.length <1){
+                alert("¾ÆÀÌµğ´Â ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+                return;
+            }
+            if(pw == null || pw.length <1){
+                alert("ÆĞ½º¿öµå´Â  ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+                return;
+            }
+            if(pw_confirm == null || pw_confirm.length <1){
+                alert("ÆĞ½º¿öµå È®ÀÎÀº  ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+                return;
+            }
+            if(name == null || name.length <1){
+                alert("ÀÌ¸§Àº  ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+                return;
+            }
+
+            if( pw != pw_confirm ) {
+                alert("ºñ¹Ğ¹øÈ£ È®ÀÎÀÌ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+                $("input:text[name='truckPasswordChk']").focus();
+                return;
+            }
+
+            // var value = "";
+            // if( $("input:text[name='phone2']").val() != ""  &&  $("input:text[name='phone3']").val() != "") {
+            //     var value = $("option:selected").val() + "-"
+            //         + $("input[name='phone2']").val() + "-"
+            //         + $("input[name='phone3']").val();
+            // }
+            //
+            // $("input:hidden[name='phone']").val( value );
+
+            $("form").attr("method" , "POST").attr("action" , "/truck/addTruck").submit();
+        }
+    </script>
+    <!-- ÇªµåÆ®·° ¾ÆÀÌµğ Áßº¹Ã¼Å© -->
+    <script type="text/javascript">
         $("#truckId").blur(function(){
-            var sm_id = $("#truckId").val();
-            if(sm_id == "" || sm_name.length < 2){
-                $(".successIdChk").text("ì•„ì´ë””ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
+
+            var truckId = $("#truckId").val();
+            $.ajax({
+                url : '${pageContext.request.contextPath}/truck/checkDuId?truckId='+ truckId,
+                type : 'get',
+                //cache : false,
+                success : function(data) {
+
+            if(truckId == "" || truckId.length < 2){
+                $(".successIdChk").text("¾ÆÀÌµğ´Â 2ÀÚ ÀÌ»ó ÀÔ·ÂÇØÁÖ¼¼¿ä.");
                 $(".successIdChk").css("color", "red");
                 $("#idDoubleChk").val("false");
             }else{
-                $.ajax({
-                    url : '${pageContext.request.contextPath}/idCheck?sm_id='+ sm_id,
-                    type : 'post',
-                    cache : false,
-                    success : function(data) {
+
                         if (data == 0) {
-                            $(".successIdChk").text("ì‚¬ìš©ê°€ëŠ¥í•œ ì•„ì´ë””ì…ë‹ˆë‹¤.");
-                            $(".successIdChk").css("color", "green");
+                            $("#id_check").text("»ç¿ë°¡´ÉÇÑ ¾ÆÀÌµğÀÔ´Ï´Ù.");
+                            $("#id_check").css("color", "green");
                             $("#idDoubleChk").val("true");
                         } else {
-                            $(".successIdChk").text("ì‚¬ìš©ì¤‘ì¸ ì•„ì´ë””ì…ë‹ˆë‹¤.");
-                            $(".successIdChk").css("color", "red");
+                            $("#id_check").text("»ç¿ëÁßÀÎ ¾ÆÀÌµğÀÔ´Ï´Ù.");
+                            $("#id_check").css("color", "red");
                             $("#idDoubleChk").val("false");
                         }
                     }, error : function() {
-                        console.log("ì‹¤íŒ¨");
+                        console.log("½ÇÆĞ");
                     }
-                });
-            }
+                }
+            });
         });
     </script>
 
@@ -63,12 +129,12 @@
 
                     console.log(data);
 
-                    // íŒì—…ì—ì„œ ê²€ìƒ‰ê²°ê³¼ í•­ëª©ì„ í´ë¦­í–ˆì„ë•Œ ì‹¤í–‰í•  ì½”ë“œë¥¼ ì‘ì„±í•˜ëŠ” ë¶€ë¶„.
-                    // ë„ë¡œëª… ì£¼ì†Œì˜ ë…¸ì¶œ ê·œì¹™ì— ë”°ë¼ ì£¼ì†Œë¥¼ í‘œì‹œí•œë‹¤.
-                    // ë‚´ë ¤ì˜¤ëŠ” ë³€ìˆ˜ê°€ ê°’ì´ ì—†ëŠ” ê²½ìš°ì—” ê³µë°±('')ê°’ì„ ê°€ì§€ë¯€ë¡œ, ì´ë¥¼ ì°¸ê³ í•˜ì—¬ ë¶„ê¸° í•œë‹¤.
-                    var roadAddr = data.roadAddress; // ë„ë¡œëª… ì£¼ì†Œ ë³€ìˆ˜
-                    var jibunAddr = data.jibunAddress; // ì§€ë²ˆ ì£¼ì†Œ ë³€ìˆ˜
-                    // ìš°í¸ë²ˆí˜¸ì™€ ì£¼ì†Œ ì •ë³´ë¥¼ í•´ë‹¹ í•„ë“œì— ë„£ëŠ”ë‹¤.
+                    // ÆË¾÷¿¡¼­ °Ë»ö°á°ú Ç×¸ñÀ» Å¬¸¯ÇßÀ»¶§ ½ÇÇàÇÒ ÄÚµå¸¦ ÀÛ¼ºÇÏ´Â ºÎºĞ.
+                    // µµ·Î¸í ÁÖ¼ÒÀÇ ³ëÃâ ±ÔÄ¢¿¡ µû¶ó ÁÖ¼Ò¸¦ Ç¥½ÃÇÑ´Ù.
+                    // ³»·Á¿À´Â º¯¼ö°¡ °ªÀÌ ¾ø´Â °æ¿ì¿£ °ø¹é('')°ªÀ» °¡Áö¹Ç·Î, ÀÌ¸¦ Âü°íÇÏ¿© ºĞ±â ÇÑ´Ù.
+                    var roadAddr = data.roadAddress; // µµ·Î¸í ÁÖ¼Ò º¯¼ö
+                    var jibunAddr = data.jibunAddress; // Áö¹ø ÁÖ¼Ò º¯¼ö
+                    // ¿ìÆí¹øÈ£¿Í ÁÖ¼Ò Á¤º¸¸¦ ÇØ´ç ÇÊµå¿¡ ³Ö´Â´Ù.
                     document.getElementById('member_post').value = data.zonecode;
                     if(roadAddr !== ''){
                         document.getElementById("member_addr").value = roadAddr;
@@ -88,8 +154,8 @@
             $( "#truckCEOBirth" ).datepicker({
                 changeMonth : true,
                 changeYear : true,
-                nextText : 'ë‹¤ìŒ ë‹¬',
-                prevText : 'ì´ì „ ë‹¬',
+                nextText : '´ÙÀ½ ´Ş',
+                prevText : 'ÀÌÀü ´Ş',
                 dateFormat : "yy-mm-dd"
             });
         });
@@ -100,77 +166,155 @@
 
 <body>
 
-<div class="page-header">
-    <h3 class=" text-info">í‘¸ë“œíŠ¸ëŸ­(ì‚¬ì—…ì) íšŒì›ê°€ì…</h3>
+<div class="container">
+    <div class="titleStyle">
+        <h3 class=" text-info">ÇªµåÆ®·°(»ç¾÷ÀÚ) È¸¿ø°¡ÀÔ</h3>
+    </div>
+<form method="POST">
+
+<!-- ¾ÆÀÌµğ Áßº¹°Ë»ç -->
+<div class="form-group">
+    <label for = "truckId">¾ÆÀÌµğ</label>
+    <input type="text" class="form-control" id="truckId" name="truckId" placeholder="¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä." required maxlength="10">
+    <span class="point">¡Ø ¿µ¹®ÀÚ, ¼Ò¹®ÀÚ ÀÔ·Â°¡´É, ÃÖ´ë 10ÀÚ ±îÁö ÀÔ·Â</span>
+    <div class="check_font" id="id_check"></div>
 </div>
 
-<!-- ì•„ì´ë”” ì¤‘ë³µê²€ì‚¬ -->
-<br/>
-<tr>
-    <th>
-        <label for="truckid">ì•„ì´ë””</label>
-    </th>
-    <td>
-        <input id="sm_id" type="text" name="sm_id" placeholder="ì•„ì´ë””ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”." required maxlength="10"/>
-        <span class="point successIdChk"></span><br/>
-        <span class="point">â€» ì˜ë¬¸ì, ì†Œë¬¸ì ì…ë ¥ê°€ëŠ¥, ìµœëŒ€ 10ì ê¹Œì§€ ì…ë ¥</span>
-        <input type="hidden" id="idDoubleChk"/>
-    </td>
-<tr/>
 
-<!-- ë¹„ë°€ë²ˆí˜¸ í™•ì¸ -->
+<!-- ºñ¹Ğ¹øÈ£ È®ÀÎ -->
 <br/><br/>
 <tr>
     <th>
-        <label for="truckPassword">ë¹„ë°€ë²ˆí˜¸</label>
+        <label for="truckPassword">ºñ¹Ğ¹øÈ£</label>
     </th>
     <td>
-        <input id="truckPassword" type="password" name="sm_pw"  required maxlength="8" autocomplete="off"/>
-        <span class="point">â€» ë¹„ë°€ë²ˆí˜¸ëŠ” ì´ 8ì ê¹Œì§€ ì…ë ¥ê°€ëŠ¥</span>
+        <input id="truckPassword" type="password" name="truckPassword"  required maxlength="8" autocomplete="off"/>
+        <span class="point">¡Ø ºñ¹Ğ¹øÈ£´Â ÃÑ 8ÀÚ ±îÁö ÀÔ·Â°¡´É</span>
     </td>
 </tr>
 <br/><br/>
 <tr>
     <th>
-        <label for="truckPasswordChk">ë¹„ë°€ë²ˆí˜¸ í™•ì¸</label>
+        <label for="truckPasswordChk">ºñ¹Ğ¹øÈ£ È®ÀÎ</label>
     </th>
     <td>
-        <input id="truckPasswordChk" type="password" name="sm_pw_chk" placeholder="ë™ì¼í•˜ê²Œ ì…ë ¥í•´ì£¼ì„¸ìš”." required maxlength="8" autocomplete="off"/>
+        <input id="truckPasswordChk" type="password" name="truckPasswordChk" placeholder="µ¿ÀÏÇÏ°Ô ÀÔ·ÂÇØÁÖ¼¼¿ä." required maxlength="8" autocomplete="off"/>
         <span class="point successPwChk"></span>
         <input type="hidden" id="pwDoubleChk"/>
     </td>
 </tr>
 
-<!-- íŠ¸ëŸ­ ëŒ€í‘œì ì´ë¦„ ì…ë ¥ë€ -->
+<!-- Æ®·° ´ëÇ¥ÀÚ ÀÌ¸§ ÀÔ·Â¶õ -->
 <br/><br/>
 <tr>
     <th>
-        <label for="truckCEOName" class="col-sm-offset-1 col-sm-3 control-label">ì´ë¦„</label>
+        <label for="truckCEOName" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸§</label>
     </th>
     <td>
-        <input id="truckCEOName" class="form-control" id="truckCEOName" name="truckCEOName" placeholder="ëŒ€í‘œìì´ë¦„">
+        <input id="truckCEOName" class="form-control"  name="truckCEOName" placeholder="´ëÇ¥ÀÚÀÌ¸§">
         </div>
     </td>
 </tr>
 
-<!-- íŠ¸ëŸ­ ëŒ€í‘œì ìƒë…„ì›”ì¼ ì…ë ¥ë€ -->
+<!-- Æ®·° ´ëÇ¥ÀÚ »ı³â¿ùÀÏ ÀÔ·Â¶õ -->
 <br/><br/>
 <div class="form-group">
-    <label for="truckCEOBirth" class="col-sm-offset-1 col-sm-3 control-label">ìƒë…„ì›”ì¼</label>
+    <label for="truckCEOBirth" class="col-sm-offset-1 col-sm-3 control-label">»ı³â¿ùÀÏ</label>
 
-        <input id="truckCEOBirth" class="form-control" id="truckCEOBirth" name="truckCEOBirth" placeholder="ëŒ€í‘œì ìƒë…„ì›”ì¼">
+        <input id="truckCEOBirth" class="form-control"  name="truckCEOBirth" placeholder="´ëÇ¥ÀÚ »ı³â¿ùÀÏ">
         &nbsp;
 
 </div>
 
 <br/>
 
-<!-- ì¹´ì¹´ì˜¤(ë‹¤ìŒ) ì£¼ì†Œì°¾ê¸° -->
-<p>ì£¼ì†Œì°¾ê¸°</p>
-<div>ìš°í¸ë²ˆí˜¸ ì…ë ¥ë€ì„ í´ë¦­í•˜ì„¸ìš”.</div>
-<input id="member_post"  type="text" placeholder="ìš°í¸ë²ˆí˜¸ 5ìë¦¬" readonly onclick="findAddr()">
-<input id="member_addr" type="text" placeholder="ì£¼ì†Œ" readonly> <br>
-<input type="text" placeholder="ì£¼ì†Œ ìƒì„¸">
+<!-- Ä«Ä«¿À(´ÙÀ½) ÁÖ¼ÒÃ£±â -->
+<p>ÁÖ¼ÒÃ£±â</p>
+<div>¿ìÆí¹øÈ£ ÀÔ·Â¶õÀ» Å¬¸¯ÇÏ¼¼¿ä.</div>
+<input id="member_post"  type="text" placeholder="¿ìÆí¹øÈ£ 5ÀÚ¸®" readonly onclick="findAddr()">
+<input id="member_addr" type="text" placeholder="ÁÖ¼Ò" readonly> <br>
+<input type="text" placeholder="ÁÖ¼Ò »ó¼¼">
+
+
+<!-- ÈŞ´ëÆù¹øÈ£ ÀÔ·Â¶õ -->
+<br/><br/>
+<div class="form-group">
+    <label for="truckPhone" class="col-sm-offset-1 col-sm-3 control-label">ÈŞ´ëÆù¹øÈ£</label>
+
+    <input id="truckPhone" class="form-control"  name="truckPhone" placeholder="ÈŞ´ëÆù¹øÈ£">
+</div>
+
+<!-- ÀÌ¸ŞÀÏ ÀÔ·Â¶õ -->
+<br/><br/>
+<div class="form-group">
+    <label for="truckEmail" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸ŞÀÏ</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="truckEmail" name="truckEmail" placeholder="ÀÌ¸ŞÀÏ">
+    </div>
+</div>
+
+<!-- ÇªµåÆ®·° »óÈ£ ÀÔ·Â¶õ -->
+<br/><br/>
+<div class="form-group">
+    <label for="truckName" class="col-sm-offset-1 col-sm-3 control-label">ÇªµåÆ®·°»óÈ£</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="truckName" name="truckName" placeholder="ÇªµåÆ®·°»óÈ£">
+    </div>
+</div>
+
+<!-- ÇªµåÆ®·° »ç¾÷ÀÚµî·ÏÁõ ÆÄÀÏ¾÷·Îµå¶õ -->
+<br/><br/>
+<div class="form-group">
+    <label for="truckBusiLice" class="col-sm-offset-1 col-sm-3 control-label">»ç¾÷ÀÚµî·ÏÁõ</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="truckBusiLice" name="truckBusiLice" placeholder="»ç¾÷ÀÚµî·ÏÁõ ÆÄÀÏ¾÷·Îµå">
+    </div>
+</div>
+
+
+<!-- ÇªµåÆ®·° Ä«Å×°í¸® -->
+<br/><br/>
+<div class="form-group">
+    <label for="truckCate" class="col-sm-offset-1 col-sm-3 control-label">ÇªµåÆ®·° Ä«Å×°í¸®</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="truckCate" name="truckCate" placeholder="ÇªµåÆ®·° Ä«Å×°í¸®">
+    </div>
+</div>
+
+<!-- ÇªµåÆ®·° ÇÁ·ÎÇÊÀÌ¹ÌÁö ÆÄÀÏ¾÷·Îµå¶õ -->
+<br/><br/>
+<div class="form-group">
+    <label for="truckProImg" class="col-sm-offset-1 col-sm-3 control-label">ÇÁ·ÎÇÊ ÀÌ¹ÌÁö</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="truckProImg" name="truckProImg" placeholder="ÇÁ·ÎÇÊ ÀÌ¹ÌÁö ÆÄÀÏ¾÷·Îµå">
+    </div>
+</div>
+
+
+<!-- ÇªµåÆ®·° »çÀå´Ô ÇÑ¸¶µğ -->
+<br/><br/>
+<div class="form-group">
+    <label for="truckCEOIntro" class="col-sm-offset-1 col-sm-3 control-label">»çÀå´Ô ÇÑ¸¶µğ</label>
+    <div class="col-sm-4">
+        <input type="text" class="form-control" id="truckCEOIntro" name="truckCEOIntro" placeholder="»çÀå´Ô ÇÑ¸¶µğ">
+    </div>
+</div>
+
+
+
+
+<br/><br/>
+<div class="form-group">
+    <div class="col-sm-offset-4  col-sm-4 text-center">
+        <button type="button" class="btn btn-primary" >°¡ ÀÔ</button>
+        <a class="btn btn-primary btn" href="#" role="button">Ãë ¼Ò</a>
+    </div>
+</div>
+
+
+</form>
+</form>
+</div>
 </body>
 
 
@@ -179,37 +323,5 @@
 
 
 </html>
-<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
-<div class="container">
-
-
-
-
-
-    <div class="row">
-        <div class="col-xs-4 col-md-2"><strong>ì•„ ì´ ë””</strong></div>
-        <div class="col-xs-8 col-md-4">${truck.truckId}</div>
-
-
-
-        <div class="col-xs-4 col-md-2"><strong>ìƒ í˜¸</strong></div>
-        <div class="col-xs-8 col-md-4">${truck.truckName}</div>
-        <div class="col-xs-4 col-md-2"><strong>ë³„ ì </strong></div>
-        <div class="col-xs-8 col-md-4">${truck.truckAVGStar}</div>
-        <div class="col-xs-4 col-md-2"><strong>í”„ ë¡œ í•„ ì´ ë¯¸ ì§€</strong></div>
-        <div class="col-xs-8 col-md-4">${truck.truckProImg}</div>
-        <div class="col-xs-4 col-md-2"><strong>ì˜ ì—… ìƒ íƒœ</strong></div>
-        <div class="col-xs-8 col-md-4">${truck.truckBusiStatus}</div>
-        <div class="col-xs-4 col-md-2"><strong>ì „ í™” ë²ˆ í˜¸</strong></div>
-        <div class="col-xs-8 col-md-4">${truck.truckPhone}</div>
-        <div class="col-xs-4 col-md-2"><strong>ìœ„ ë„</strong></div>
-        <div class="col-xs-8 col-md-4">${truck.truckMapLa}</div>
-        <div class="col-xs-4 col-md-2"><strong>ê²½ ë„</strong></div>
-        <div class="col-xs-8 col-md-4">${truck.truckMapLo}</div>
-        <div class="col-xs-4 col-md-2"><strong>ê³µ ì§€ ë‚´ ìš©</strong></div>
-        <div class="col-xs-8 col-md-4">${truck.truckNoticeContent}</div>
-        <div class="col-xs-4 col-md-2"><strong>ê³µ ì§€ ì‚¬ ì§„</strong></div>
-        <div class="col-xs-8 col-md-4">${truck.truckNoticeImg}</div>
-    </div>
 
     <hr/>
