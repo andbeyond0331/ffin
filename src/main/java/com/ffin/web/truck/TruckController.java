@@ -44,7 +44,7 @@ public class TruckController {
 
         System.out.println("/truck/addTruck : GET");
 
-        return "redirect:/truck/addTruckView.jsp";
+        return "/WEB-INF/views/truck/addTruckView.jsp";
     }
 
     @RequestMapping( value = "addTruck", method=RequestMethod.POST)
