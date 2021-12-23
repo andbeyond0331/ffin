@@ -52,6 +52,7 @@
     </resultMap>
 
 
+    <!-- ***** Report ***** -->
     <insert id="addReport" parameterType="report">
         INSERT INTO report
             (report_user_id, report_target_id, report_date, report_content, report_link, report_type)
@@ -74,7 +75,7 @@
     <select id="getReportList" parameterType="search" resultMap="reportSelectMap">
         select *
         FROM ( SELECT inner_table.*, @rownum := @rownum + 1 as row_seq
-               FROM( SELECT r.report_no, r.report_user_id, r.report_target_id, r.report_content, r.report_link
+               FROM( SELECT r.report_no, r.report_user_id, r.report_target_id, r.report_content, r.report_link, report_type
                      FROM report r, user u
                      WHERE r.report_user_id = u.user_id
                         <if test="searchCondition != null">
@@ -83,13 +84,71 @@
                                 AND r.report_user_id LIKE #{searchKeyword}
                             </if>
                             <if test="searchCondition == 1 and searchKeyword !='' ">
-                                AND r.report_content LIKE #{searchKeyword}
+                                AND r.report_type LIKE #{searchKeyword}
                             </if>
                         </if>
                     order by r.report_no ) inner_table,  (select @rownum := 0) r
-               limit #{search.startRowNum},#{search.endRowNum} ) l
-        WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
+               limit 0, 8 ) l
+        WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
     </select>
+
+    <select id="getTotalCount" parameterType="search" resultType="int">
+        SELECT COUNT(*)
+        FROM ( SELECT report_no, report_user_id, report_target_id, report_date, report_content, report_link, report_type, report_proc_status
+                FROM report
+                <if test="searchCondition != null">
+                    <where>
+                        <if test="searchCondition == 0 and searchKeyword !='' ">
+                            report_user_id = #{searchKeyword}
+                        </if>
+                        <if test="searchCondition == 1 and searchKeyword !='' ">
+                            report_type = #{searchKeyword}
+                        </if>
+                    </where>
+                </if> ) countTable
+    </select>
+
+    <update id="updateReport" parameterType="report">
+        UPDATE report
+        <set>
+            report_content  = #{reportContent},
+            report_link     = #{reportLink},
+            report_type     = #{reportType}
+        </set>
+        WHERE report_no     = #{reportNo}
+    </update>
+
+    <update id="updateReportProcStatus" parameterType="report">
+        UPDATE report
+        <set>
+            report_proc_status  = #{reportProcStatus}
+        </set>
+        WHERE report_no     = #{reportNo}
+    </update>
+
+
+    <!-- ***** Inquiry ***** -->
+    <insert id="addInquiry" parameterType="inquiry">
+        INSERT INTO inquiry
+        ( INQUIRY_USER_ID, INQUIRY_TRUCK_ID, INQUIRY_TYPE, INQUIRY_TITLE, INQUIRY_CONTENT, INQUIRY_FILE, INQUIRY_DATE, INQUIRY_ANS_STATUS, INQUIRY_USER_ROLE)
+        VALUES
+            (#{inquiryUserId},
+             #{inquiryTruckId},
+             #{inquiryType},
+             #{inquiryTitle},
+             #{inquiryContent},
+             #{inquiryFile},
+             #{inquiryDate},
+             #{inquiryAnsStatus},
+             #{inquiryUserRole});
+    </insert>
+
+    <select id="getInquiry" parameterType="int" resultMap="inquirySelectMap">
+        SELECT *
+        FROM inquiry
+        WHERE INQUIRY_NO = #{value}
+    </select>
+
 
 
 

@@ -1,6 +1,7 @@
 package com.ffin.service.qna.impl;
 
 import com.ffin.common.Search;
+import com.ffin.service.domain.Inquiry;
 import com.ffin.service.domain.Report;
 import com.ffin.service.qna.QnADao;
 import org.apache.ibatis.session.SqlSession;
@@ -43,6 +44,36 @@ public class QnADaoImpl implements QnADao {
     public List<Report> getReportList(Search search) throws Exception {
         System.out.println("QnADaoImpl.getReportList");
         return sqlSession.selectList("QnAMapper.getReportList", search);
+    }
+
+    @Override
+    public int getTotalCount(Search search) throws Exception {
+        System.out.println("QnADaoImpl.getTotalCount");
+        return sqlSession.selectOne("QnAMapper.getTotalCount", search);
+    }
+
+    @Override
+    public void updateReport(Report report) throws Exception {
+        System.out.println("QnADaoImpl.updateReport");
+        sqlSession.update("QnAMapper.updateReport", report);
+    }
+
+    @Override
+    public void updateReportProcStatus(Report report) throws Exception {
+        System.out.println("QnADaoImpl.updateReportProcStatus");
+        sqlSession.update("QnAMapper.updateReportProcStatus", report);
+    }
+
+    @Override
+    public void addInquiry(Inquiry inquiry) throws Exception {
+        System.out.println("QnADaoImpl.addInquiry");
+        sqlSession.insert("QnAMapper.addInquiry", inquiry);
+    }
+
+    @Override
+    public Inquiry getInquiry(int inquiryNo) throws Exception {
+        System.out.println("QnADaoImpl.getInquiry");
+        return sqlSession.selectOne("QnAMapper.getInquiry", inquiryNo);
     }
 
 
