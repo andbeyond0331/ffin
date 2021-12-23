@@ -19,30 +19,189 @@
 		<result property="userAddrDetail"		column="user_addr_detail"			jdbcType="VARCHAR"/>
 		<result property="userMapLa"			column="user_map_la"				jdbcType="DECIMAL"/>
 		<result property="userMapLo"			column="user_map_lo"				jdbcType="DECIMAL"/>
-		<result property="userRegDate"			column="user_reg_date"				jdbcType="VARCHAR"/>
-		<result property="ReportCount"			column="report_count"				jdbcType="NUMERIC"/>
+		<result property="reportCount"			column="report_count"				jdbcType="NUMERIC"/>
 		<result property="userEmail"			column="user_email"					jdbcType="VARCHAR"/>
 		<result property="userEmailStatus"		column="user_email_status"			jdbcType="CHAR"/>
 		<result property="userProImg"			column="user_pro_img"				jdbcType="VARCHAR"/>
+		<result property="userFavMenu"			column="user_fav_menu"				jdbcType="VARCHAR"/>
 		<result property="userFavPlace"			column="user_fav_place"				jdbcType="VARCHAR"/>
 		<result property="userFavPlaceDetail"	column="user_fav_place_detail"		jdbcType="VARCHAR"/>
-		<result property="userFavMenu"			column="user_fav_menu"				jdbcType="VARCHAR"/>
 		<result property="userIntro"			column="user_intro"					jdbcType="VARCHAR"/>
 		<result property="userTotalPoint"		column="user_total_point"			jdbcType="NUMERIC"/>
+		<result property="userRegDate"			column="user_reg_date"				jdbcType="VARCHAR"/>
 		<result property="userByeStatus"		column="user_bye_status"			jdbcType="CHAR"/>
 		<result property="userByeReason"		column="user_bye_reason"			jdbcType="CHAR"/>
 		<result property="userByeRegDate"		column="user_bye_reg_date"			jdbcType="DATE"/>
 		<result property="role"					column="role"						jdbcType="CHAR"/>
-		<result property="blackRedDate"			column="black_reg_date"				jdbcType="DATE"/>
+		<result property="blackRegDate"			column="black_reg_date"				jdbcType="DATE"/>
 		<result property="blackEndDate"			column="black_end_date"				jdbcType="DATE"/>
 	</resultMap>
 
 
+	<!--회원가입-->
+	<insert id="addUserInfo" parameterType="user">
+		INSERT INTO user
+			(USER_ID, USER_PASSWORD, USER_NAME, USER_PHONE, USER_BIRTH, USER_ADDR, USER_ADDR_DETAIL, USER_EMAIL, USER_EMAIL_STATUS, USER_REG_DATE)
+		VALUES
+			(#{userId},
+			 #{userPassword},
+			 #{userName},
+			 #{userPhone},
+			 #{userBirth},
+			 #{userAddr},
+			 #{userAddrDetail},
+			 #{userEmail},
+			 #{userEmailStatus},
+			 SYSDATE())
+	</insert>
+
 	<!--정보조회-->
-	<select id = "getUser" parameterType="java.lang.String" resultMap="userSelectMap">
-		SELECT user_id
+	<select id = "getUser" parameterType="String" resultMap="userSelectMap">
+		SELECT *
 		FROM user
 		WHERE user_id = #{value}
 	</select>
+
+	<!--목록조회-->
+	<!--limit을 어떻게 변수처리할지 생각해보자-->
+	<select id="getUserList" parameterType="search" resultMap="userSelectMap">
+		SELECT inner_table.*
+		FROM( SELECT USER_ID, USER_PASSWORD, USER_NAME, USER_PHONE, USER_BIRTH, USER_ADDR, USER_ADDR_DETAIL, USER_MAP_LA, USER_MAP_LO, REPORT_COUNT,
+		             USER_EMAIL, USER_EMAIL_STATUS, USER_PRO_IMG, USER_FAV_MENU, USER_FAV_PLACE, USER_FAV_PLACE_DETAIL, USER_INTRO, USER_TOTAL_POINT, USER_REG_DATE
+			  FROM user
+				<if test="searchCondition != null">
+					<where>
+						<bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+						<if test="searchCondition == 0 and searchKeyword !='' ">
+							AND user_id LIKE #{searchKeyword}
+						</if>
+						<if test="searchCondition == 1 and searchKeyword !='' ">
+							AND user_name LIKE #{searchKeyword}
+						</if>
+					</where>
+				</if>
+			  order by user_id ) inner_table
+		limit 0,8;
+	</select>
+
+	<select id="getBlackList" parameterType="search" resultMap="userSelectMap">
+		SELECT inner_table.*
+		FROM( SELECT USER_ID, USER_PASSWORD, USER_NAME, USER_PHONE, REPORT_COUNT, USER_EMAIL, USER_EMAIL_STATUS, ROLE, BLACK_REG_DATE, BLACK_END_DATE
+		FROM user
+		<if test="searchCondition != null">
+			<where>
+				<bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+				<if test="searchCondition == 0 and searchKeyword !='' ">
+					AND user_id LIKE #{searchKeyword}
+				</if>
+				<if test="searchCondition == 1 and searchKeyword !='' ">
+					AND user_name LIKE #{searchKeyword}
+				</if>
+			</where>
+		</if>
+		order by user_id ) inner_table
+		limit 0,8;
+	</select>
+
+
+	<!--row Count-->
+	<select id="getTotalCount" parameterType="search" resultType="int">
+		SELECT COUNT(*)
+		FROM(	SELECT USER_ID, USER_NAME, USER_PHONE, USER_BIRTH, USER_ADDR, USER_ADDR_DETAIL, USER_MAP_LA, USER_MAP_LO, REPORT_COUNT, USER_EMAIL, USER_EMAIL_STATUS, USER_REG_DATE
+		FROM user
+		<if test="searchCondition != null">
+			<where>
+				<if test="searchCondition == 0 and searchKeyword !='' ">
+					user_id = #{searchKeyword}
+				</if>
+				<if test="searchCondition == 1 and searchKeyword !='' ">
+					user_name = #{searchKeyword}
+				</if>
+			</where>
+		</if> ) countTable
+	</select>
+
+	<!--내정보수정-->
+	<update id = "updateUserInfo" parameterType="user">
+		UPDATE user
+		<set>
+			user_name			= #{userName},
+			user_phone			= #{userPhone},
+			user_birth			= #{userBirth},
+			user_addr			= #{userAddr},
+			user_addr_detail	= #{userAddrDetail},
+			user_email			= #{userEmail},
+			user_email_status	= #{userEmailStatus}
+		</set>
+		WHERE user_id = #{userId}
+	</update>
+
+	<!--프로필수정-->
+	<update id="updateUserProfile" parameterType="user">
+		UPDATE user
+		<set>
+			user_pro_img				= #{userProImg},
+		    user_fav_menu				= #{userFavMenu},
+			user_fav_place				= #{userFavPlace},
+			user_fav_place_detail		= #{userFavPlaceDetail},
+			user_fav_menu				= #{userFavMenu},
+			user_intro					= #{userIntro}
+		</set>
+		WHERE user_id = #{userId}
+	</update>
+
+	<!--위치수정-->
+	<update id = "updateUserMap" parameterType="user">
+		UPDATE user
+		<set>
+			user_map_la		= #{userMapLa},
+			user_map_lo		= #{userMapLo}
+		</set>
+		WHERE user_id = #{userId}
+	</update>
+
+	<!--id찾기-->
+	<select id="getUserId" parameterType="user" resultType="String">
+		SELECT user_id
+		FROM user
+		WHERE user_name = #{userName}  AND  role != '1'
+			<if test="user_phone == null and user_email != null">
+				AND user_email = #{userEmail}
+			</if>
+			<if test="user_phone != null and user_email == null">
+				AND user_phone = #{userPhone}
+			</if>
+	</select>
+
+	<!--PW변경-->
+	<update id="updatePassword" parameterType="user">
+		UPDATE user
+		<set>
+			user_password 	= #{userPassword}
+		</set>
+		WHERE user_id = #{userId}
+	</update>
+
+	<!--회원탈퇴-->
+	<update id = "updateUserByeStatus" parameterType="String">
+		UPDATE user
+		<set>
+			user_bye_reg_date = SYSDATE(),
+			user_bye_reason = #{userByeReason},
+			user_bye_status = 1
+		</set>
+		WHERE user_id = #{userId}
+	</update>
+
+	<!--블랙여부-->
+	<update id = "updateBlackStatus" parameterType="User">
+		UPDATE user
+		<set>
+			role				= '2',
+			black_reg_date		= SYSDATE(),
+			black_end_date		= DATE_ADD(SYSDATE(), INTERVAL 3 DAY)
+		</set>
+		WHERE user_id = #{userId}
+	</update>
 
 </mapper>
