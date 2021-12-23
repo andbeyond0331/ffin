@@ -12,6 +12,11 @@ public interface UserDao {
     public void addUserInfo(User user) throws Exception;
     //회원정보
     public User getUser(String userId) throws Exception;
+    //totalPoint
+    public User getUserTotalPoint(String userId) throws Exception;
+    //reportCount
+    public User getReportCount(String userId) throws Exception;
+
     //회원목록
     public List<User> getUserList(Search search) throws Exception;
     //블랙목록

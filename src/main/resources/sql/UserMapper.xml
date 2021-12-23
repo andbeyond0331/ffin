@@ -62,6 +62,20 @@
 		WHERE user_id = #{value}
 	</select>
 
+	<!--point조회-->
+	<select id="getUserTotalPoint" parameterType="String" resultMap="userSelectMap">
+		SELECT user_total_point
+		FROM user
+		WHERE user_id = #{value}
+	</select>
+
+	<!--신고횟수조회-->
+	<select id="getReportCount" parameterType="String" resultMap="userSelectMap">
+		SELECT report_count
+		FROM ffin.user
+		WHERE user_id = #{value}
+	</select>
+
 	<!--목록조회-->
 	<!--limit을 어떻게 변수처리할지 생각해보자-->
 	<select id="getUserList" parameterType="search" resultMap="userSelectMap">

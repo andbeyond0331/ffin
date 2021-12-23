@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class Inquiry {
 	
-	private int inquiryNO;
+	private int inquiryNo;
 	private String inquiryUserId;
 	private String inquiryTruckId;
 	private int inquiryType;

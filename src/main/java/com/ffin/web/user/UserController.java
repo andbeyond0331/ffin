@@ -23,10 +23,11 @@ public class UserController {
     @Qualifier("userServiceImpl")
     private UserService userService;
 
+
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String login() throws Exception{
         System.out.println("UserController.login : GET");
-        return "/WEB-INF/views/user/login.jsp";
+        return "redirect:/user/login.jsp";
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
@@ -37,7 +38,7 @@ public class UserController {
             session.setAttribute("user",dbUser);
             session.setAttribute("role","user");
         }
-        return "redirect:/index";
+        return "redirect:/index.jsp";
     }
 
 
@@ -64,7 +65,7 @@ public class UserController {
         // Model 과 View 연결
         model.addAttribute("user", user);
 
-        return "forward:/user/getUser";
+        return "forward:/user/getUser.jsp";
     }
 
 

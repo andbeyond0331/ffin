@@ -53,6 +53,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserTotalPoint(String userId) throws Exception {
+        System.out.println("UserServiceImpl.getUserTotalPoint");
+        return userDao.getUserTotalPoint(userId);
+    }
+
+    @Override
+    public User getReportCount(String userId) throws Exception {
+        System.out.println("UserServiceImpl.getReportCount");
+        return userDao.getReportCount(userId);
+    }
+
+    @Override
     public Map<String, Object> getUserList(Search search) throws Exception {
         System.out.println("UserServiceImpl.getUserList");
         List<User> list = userDao.getUserList(search);

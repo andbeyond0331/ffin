@@ -41,6 +41,18 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public User getUserTotalPoint(String userId) throws Exception {
+        System.out.println("UserDaoImpl.getUserTotalPoint");
+        return sqlSession.selectOne("UserMapper.getUserTotalPoint", userId);
+    }
+
+    @Override
+    public User getReportCount(String userId) throws Exception {
+        System.out.println("UserDaoImpl.getReportCount");
+        return sqlSession.selectOne("UserMapper.getReportCount",userId);
+    }
+
+    @Override
     public List<User> getUserList(Search search) throws Exception {
         System.out.println("UserDaoImpl.getUserList");
         return sqlSession.selectList("UserMapper.getUserList", search);

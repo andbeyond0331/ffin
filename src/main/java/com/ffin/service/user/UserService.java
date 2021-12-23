@@ -14,6 +14,10 @@ public interface UserService {
 
     //회원정보
     public User getUser(String userId) throws Exception;
+    //totalPoint
+    public User getUserTotalPoint(String userId) throws Exception;
+    //reportCount
+    public User getReportCount(String userId) throws Exception;
     //회원목록
     public Map<String, Object> getUserList(Search search) throws Exception;
     //블랙목록

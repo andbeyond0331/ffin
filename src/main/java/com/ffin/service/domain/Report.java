@@ -8,8 +8,8 @@ public class Report {
 
 	private int reportNo ;
 	private String reportUserId;
-	private String reportTagetId;
-	private Date reportDate;
+	private String reportTargetId;
+	private String reportDate;
 	private String reportContent;
 	private String reportLink;
 	private int reportType;
