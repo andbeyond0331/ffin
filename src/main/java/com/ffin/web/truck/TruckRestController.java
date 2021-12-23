@@ -117,4 +117,6 @@ public class TruckRestController {
 
         return truck;
     }
+
+
 }

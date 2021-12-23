@@ -44,7 +44,7 @@ public class TruckController {
 
         System.out.println("/truck/addTruck : GET");
 
-        return "/WEB-INF/views/truck/addTruckView.jsp";
+        return "/truck/addTruckView.jsp";
     }
 
     @RequestMapping( value = "addTruck", method=RequestMethod.POST)
@@ -67,7 +67,7 @@ public class TruckController {
         Truck truck = truckService.getTruck(truckId);
         System.out.println("truck = " + truck);
         m.addObject("truck", truck);
-        m.setViewName("/WEB-INF/views/truck/getTruck.jsp");
+        m.setViewName("/truck/getTruck.jsp");
 
         return m;
     }
@@ -99,26 +99,41 @@ public class TruckController {
         return "redirect:/truck/getTruck?truckId="+truck.getTruckId();
     }
 
-    @RequestMapping( value="login", method=RequestMethod.POST )
+    @RequestMapping( value = "loginTruck", method = RequestMethod.GET)
+    public String login() throws Exception{
+
+        System.out.println("/truck/loginTruck : GET");
+
+        return "/truck/loginTruck.jsp";
+    }
+
+    @RequestMapping( value="loginTruck", method=RequestMethod.POST )
     public String login(@ModelAttribute("truck") Truck truck , HttpSession session ) throws Exception {
 
-        System.out.println("/truck/login : POST");
+        System.out.println("/truck/loginTruck : POST");
         //Business Logic
         Truck dbTruck = truckService.getTruck(truck.getTruckId());
 
         if (truck.getTruckPassword().equals(dbTruck.getTruckPassword())) {
             session.setAttribute("truck", dbTruck);
+            session.setAttribute("role", "truck");
         }
+
+        System.out.println("로그인성공");
+        System.out.println("truck = " + truck + ", session = " + session);
+        System.out.println("role = " + session.getAttribute("role"));
 
         return "redirect:/index.jsp";
     }
 
-    @RequestMapping( value="logout", method= RequestMethod.GET )
+    @RequestMapping( value="logoutTruck", method= RequestMethod.GET )
     public String logout(HttpSession session ) throws Exception{
 
-        System.out.println("/truck/logout : POST");
+        System.out.println("/truck/logoutTruck : GET");
 
         session.invalidate();
+
+        System.out.println("로그아웃성공");
 
         return "redirect:/index.jsp";
     }

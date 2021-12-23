@@ -82,25 +82,22 @@
 
 	<!-- SQL : SELECT LIST -->
 	<select id="getTruckList"   parameterType="search"     resultMap="truckSelectMap">
-		SELECT truck_id , truck_name , truck_phone, truck_map_la, truck_map_lo, truck_cate, truck_avg_star, truck_pro_img, truck_busi_status
-		FROM truck
-		<!--FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-		FROM		(	SELECT truck_id , truck_name , truck_phone, truck_map_la, truck_map_lo, truck_cate, truck_avg_star, truck_pro_img, truck_busi_status
-		FROM truck
-		<if test="searchCondition != null">
-			<where>
-				<if test="searchCondition == 0 and searchKeyword !='' ">
-					truck_id = #{%searchKeyword%}
+		SELECT inner_table.*
+		FROM( SELECT  truck_id , truck_name , truck_phone, truck_map_la, truck_map_lo, truck_cate, truck_avg_star, truck_pro_img, truck_busi_status
+			FROM truck
+				<if test="searchCondition != null">
+					<where>
+						<bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+						<if test="searchCondition == 0 and searchKeyword !='' ">
+							AND truck_id LIKE #{searchKeyword}
+						</if>
+						<if test="searchCondition == 1 and searchKeyword !='' ">
+							AND truck_name LIKE #{searchKeyword}
+						</if>
+					</where>
 				</if>
-				<if test="searchCondition == 1 and searchKeyword !='' ">
-					truck_name = #{%searchKeyword%}
-				</if>
-			</where>
-		</if>
-		ORDER BY truck_id ) inner_table
-		WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}-->
-
+				order by truck_id ) inner_table
+		limit 0,8;
 	</select>
 
 

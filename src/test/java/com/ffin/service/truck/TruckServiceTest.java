@@ -209,7 +209,7 @@ public class TruckServiceTest {
         Assert.assertEquals("test@test.com", truck.getTruckEmail());
     }
 
-    @Test
+    //@Test
     public void updateBusiStatus() throws Exception{
 
         Truck truck = new Truck();
@@ -273,7 +273,7 @@ public class TruckServiceTest {
         Assert.assertEquals("changeTestTruckPassword", truck.getTruckPassword());
     }
 
-    //@Test
+    @Test
     public void testGetTruckListAll() throws Exception{
         Search search = new Search();
         search.setCurrentPage(1);
