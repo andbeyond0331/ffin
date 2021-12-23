@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ page pageEncoding="utf-8"%>
 
 
 <!DOCTYPE html>
@@ -7,43 +7,43 @@
 <html lang="ko">
 
 <head>
-    <meta charset="EUC-KR">
+    <meta charset="utf-8">
 
-    <!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+    <!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 </head>
 
 <body>
 
-<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 <div class="container">
 
     <div class="page-header">
-        <h3 class=" text-info">Æ®·°Á¤º¸Á¶È¸</h3>
-        <h5 class="text-muted">³» Æ®·° Á¤º¸¸¦ <strong class="text-danger">ÃÖ½ÅÁ¤º¸·Î °ü¸®</strong>ÇØ ÁÖ¼¼¿ä.</h5>
+        <h3 class=" text-info">íŠ¸ëŸ­ì •ë³´ì¡°íšŒ</h3>
+        <h5 class="text-muted">ë‚´ íŠ¸ëŸ­ ì •ë³´ë¥¼ <strong class="text-danger">ìµœì‹ ì •ë³´ë¡œ ê´€ë¦¬</strong>í•´ ì£¼ì„¸ìš”.</h5>
     </div>
 
     <div class="row">
-        <div class="col-xs-4 col-md-2"><strong>¾Æ ÀÌ µğ</strong></div>
+        <div class="col-xs-4 col-md-2"><strong>ì•„ ì´ ë””</strong></div>
         <div class="col-xs-8 col-md-4">${truck.truckId}</div>
-        <div class="col-xs-4 col-md-2"><strong>»ó È£</strong></div>
+        <div class="col-xs-4 col-md-2"><strong>ìƒ í˜¸</strong></div>
         <div class="col-xs-8 col-md-4">${truck.truckName}</div>
-        <div class="col-xs-4 col-md-2"><strong>º° Á¡</strong></div>
+        <div class="col-xs-4 col-md-2"><strong>ë³„ ì </strong></div>
         <div class="col-xs-8 col-md-4">${truck.truckAVGStar}</div>
-        <div class="col-xs-4 col-md-2"><strong>ÇÁ ·Î ÇÊ ÀÌ ¹Ì Áö</strong></div>
+        <div class="col-xs-4 col-md-2"><strong>í”„ ë¡œ í•„ ì´ ë¯¸ ì§€</strong></div>
         <div class="col-xs-8 col-md-4">${truck.truckProImg}</div>
-        <div class="col-xs-4 col-md-2"><strong>¿µ ¾÷ »ó ÅÂ</strong></div>
+        <div class="col-xs-4 col-md-2"><strong>ì˜ ì—… ìƒ íƒœ</strong></div>
         <div class="col-xs-8 col-md-4">${truck.truckBusiStatus}</div>
-        <div class="col-xs-4 col-md-2"><strong>Àü È­ ¹ø È£</strong></div>
+        <div class="col-xs-4 col-md-2"><strong>ì „ í™” ë²ˆ í˜¸</strong></div>
         <div class="col-xs-8 col-md-4">${truck.truckPhone}</div>
-        <div class="col-xs-4 col-md-2"><strong>À§ µµ</strong></div>
+        <div class="col-xs-4 col-md-2"><strong>ìœ„ ë„</strong></div>
         <div class="col-xs-8 col-md-4">${truck.truckMapLa}</div>
-        <div class="col-xs-4 col-md-2"><strong>°æ µµ</strong></div>
+        <div class="col-xs-4 col-md-2"><strong>ê²½ ë„</strong></div>
         <div class="col-xs-8 col-md-4">${truck.truckMapLo}</div>
-        <div class="col-xs-4 col-md-2"><strong>°ø Áö ³» ¿ë</strong></div>
+        <div class="col-xs-4 col-md-2"><strong>ê³µ ì§€ ë‚´ ìš©</strong></div>
         <div class="col-xs-8 col-md-4">${truck.truckNoticeContent}</div>
-        <div class="col-xs-4 col-md-2"><strong>°ø Áö »ç Áø</strong></div>
+        <div class="col-xs-4 col-md-2"><strong>ê³µ ì§€ ì‚¬ ì§„</strong></div>
         <div class="col-xs-8 col-md-4">${truck.truckNoticeImg}</div>
     </div>
 
@@ -52,7 +52,7 @@
 
 
 </div>
-<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 
 </body>
 
