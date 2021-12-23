@@ -35,6 +35,11 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public Review getReview(int reviewNo) throws Exception {
+        return reviewDao.getReview(reviewNo);
+    }
+
+    @Override
     public Map<String, Object> getReviewList(Search search) throws Exception {
         List<Review> list = reviewDao.getReviewList(search);
         int totalCount = reviewDao.getTotalCount(search);

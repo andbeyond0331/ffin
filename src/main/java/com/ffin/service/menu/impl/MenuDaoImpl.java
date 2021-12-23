@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.html.Option;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository("menuDaoImpl")
 public class MenuDaoImpl implements MenuDao {
@@ -50,8 +53,20 @@ public class MenuDaoImpl implements MenuDao {
 
     //옵션 그룹의 모든 옵션 받아오기
     @Override
-    public List<OptionGroup> getOptionGroup(Search search) throws Exception {
-        return sqlSession.selectOne("MenuMapper.getOptionGroup", search);
+    public Map<String, Object> getOptionGroup(Search search, int optionGroupNo) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        map.put("search", search);
+        map.put("optionGroupNo", optionGroupNo);
+
+        List<OptionGroup> list = sqlSession.selectList("MenuMapper.getOptionGroup", map);
+
+        System.out.println("list : " + list);
+
+        map.clear();
+        map.put("list", list);
+
+        return map;
     }
 
     // 옵션 하나 받아오기
@@ -61,8 +76,18 @@ public class MenuDaoImpl implements MenuDao {
     }
 
     @Override
-    public List<Menu> getMenuList(Search search) throws Exception {
-        return sqlSession.selectList("MenuMapper.getMenuList",search);
+    public Map<String, Object> getMenuList(Search search, String menuTruckId) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        map.put("search", search);
+        map.put("menuTruckId", menuTruckId);
+        List<Menu> list = sqlSession.selectList("MenuMapper.getMenuList", map);
+        System.out.println("list : " + list);
+
+        map.clear();
+        map.put("list", list);
+
+        return map;
     }
 
     @Override

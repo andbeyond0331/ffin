@@ -39,6 +39,15 @@
 			   )
 	</insert>
 
+	<select 	id="getReview"	parameterType="int"	resultMap="ReviewSelectMap" >
+		SELECT
+			rv_no, rv_order_no, rv_reg_time, rv_star, rv_content, rv_truck_cmt_content, rv_truck_cmt_reg_time, rv_img1, rv_img2, rv_img3, rv_delete, rv_tc_delete
+
+		FROM review
+		WHERE RV_NO = #{value}
+
+	</select>
+
 	<select id="getReviewList"	parameterType="map"	resultMap="ReviewSelectMap">
 		SELECT
 			RV_NO,
@@ -67,7 +76,9 @@
 	<update id="updateRVAddTruckComment"	parameterType="review">
 		UPDATE 	review
 		<set>
-			RV_TRUCK_CMT_CONTENT = #{rvTruckCmtContent}
+			RV_TRUCK_CMT_CONTENT = #{rvTruckCmtContent},
+		    RV_TRUCK_CMT_REG_TIME = SYSDATE()
+
 		</set>
 		WHERE RV_NO = #{rvNo}
 	</update>

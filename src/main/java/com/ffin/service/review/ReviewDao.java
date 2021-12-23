@@ -11,6 +11,8 @@ public interface ReviewDao {
     //INSERT
     public void addReview(Review review) throws Exception;
 
+    //SELECT ONE
+    public Review getReview(int reviewNo) throws Exception;
     //SELECT LIST
     public List<Review> getReviewList(Search search) throws Exception;
 

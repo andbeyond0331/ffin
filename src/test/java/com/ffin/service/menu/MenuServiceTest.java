@@ -99,10 +99,7 @@ public class MenuServiceTest {
 //
 //    }
 
-    ///////////////////////////////////
-    // 다시 보기 !!!!!!!!!!!!!!!
-    ///////////////////////////////////
-//    @Test
+//    @Test //okay
 //    public void getOptionGroup() throws Exception{
 //
 //        Search search = new Search();
@@ -110,21 +107,16 @@ public class MenuServiceTest {
 //        search.setPageSize(100);
 //        search.setSearchCondition("0");
 //        search.setSearchKeyword("");
-//        Map<String, Object> map = menuService.getOptionGroup(search);
+//        Map<String, Object> map = menuService.getOptionGroup(search, 1);
 //
 //        List<Object> list = (List<Object>)map.get("list");
 //
-//        Assert.assertEquals(1, list.size());
-//
-//        Integer totalCount = (Integer)map.get("totalCount");
-//        System.out.println(totalCount);
-//
-//
+//        Assert.assertEquals(3, list.size());
 //
 //
 //    }
 
-//        @Test   // okay
+//        @Test   //okay
 //    public void getOption() throws Exception{
 //
 //        OptionGroup optionGroup = new OptionGroup();
@@ -136,30 +128,25 @@ public class MenuServiceTest {
 //
 //    }
 
-
-    ////////////////////////////////////////////////////////
-    // 다시 봐야 함!!!!!!!!!!!!!!!!!!!
-    /////////////////////////////////////////////////////////
-//    @Test
+//
+//
+//    @Test //okay!!!!!!!!!!!!!!!
 //    public void getMenuList() throws Exception {
 //        Search search  = new Search();
 //        search.setCurrentPage(1);
 //        search.setPageSize(8);
 //        search.setSearchCondition("0");
-//        search.setSearchKeyword("truck01");
-//        Map<String, Object> map = menuService.getMenuList(search);
+//        search.setSearchKeyword("");
+//        Map<String, Object> map = menuService.getMenuList(search, "truck01");
 //
 //        List<Object> list = (List<Object>)map.get("list");
-//        Assert.assertEquals(3, list.size());
+//        Assert.assertEquals(8, list.size());
 //
 //        System.out.println("list : " + list);
 //
-//        Integer totalCount = (Integer)map.get("totalCount");
-//        System.out.println("totalCount : " + totalCount);
-//
 //
 //    }
-///////////////////////////////////////////////////
+
 
 
 
@@ -290,12 +277,16 @@ public class MenuServiceTest {
 //
 //    }
 //
-//    @Test
+//    @Test  //okay!!!
 //    public void deleteOptionGroup() throws Exception {
+//
+//        Search search = new Search();
 //
 //        OptionGroup optionGroup = new OptionGroup();
 //
-//        optionGroup = menuService.getOptionGroup(101);
+//        List<OptionGroup> list= (List<OptionGroup>) menuService.getOptionGroup(search, 101).get("list");
+//
+//        optionGroup = list.get(0);
 //
 //        int optionGroupNo = optionGroup.getOptionGroupNo();
 //

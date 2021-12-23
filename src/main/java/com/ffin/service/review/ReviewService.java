@@ -11,6 +11,9 @@ public interface ReviewService {
     //리뷰 등록
     public void addReview(Review review) throws Exception;
 
+    //리뷰 조회
+    public Review getReview(int reviewNo) throws Exception;
+
     //리뷰 목록 조회
     public Map<String, Object> getReviewList(Search search) throws Exception;
 
