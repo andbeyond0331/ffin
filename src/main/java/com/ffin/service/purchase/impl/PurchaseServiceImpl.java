@@ -26,9 +26,9 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public void addCart(List list) throws Exception{
+    public void addCart(OrderDetail orderDetail) throws Exception{
         System.out.println("PurchaseServiceImpl.addCart");
-        purchaseDao.addCart(list);
+        purchaseDao.addCart(orderDetail);
 
     }//장바구니에 정보 등록, 등록된 주분번호 가져오기
     @Override

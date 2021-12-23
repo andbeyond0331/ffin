@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PurchaseDao {
 
-    public void addCart(List list) throws Exception ;//장바구니에 정보 등록
+    public void addCart(OrderDetail orderDetail) throws Exception ;//장바구니에 정보 등록
     public int addPurchase(Purchase purchase)throws Exception;//주문번호 생성을 위해서
     public void updatePoint(Point point)throws Exception;// 포인트 적립차감 등록
     public void addCoupon(Coupon coupon)throws Exception;// 쿠폰발급 등록

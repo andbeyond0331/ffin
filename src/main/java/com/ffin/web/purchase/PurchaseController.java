@@ -6,6 +6,7 @@ import com.sun.javafx.collections.MappingChange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,18 +37,32 @@ public class PurchaseController {
     //==> 아래의 두개를 주석을 풀어 의미를 확인 할것
     @Value("#{commonProperties['pageUnit']}")
     //@Value("#{commonProperties['pageUnit'] ?: 3}")
-            int pageUnit;
+        int pageUnit;
 
     @Value("#{commonProperties['pageSize']}")
     //@Value("#{commonProperties['pageSize'] ?: 2}")
-    int pageSize;
+        int pageSize;
 
     @RequestMapping(value = "getCartMenuList", method= RequestMethod.GET)
     public ModelAndView getCartMenuList(@RequestParam("userId") String userId, ModelAndView model ) throws Exception{
         System.out.println("/purchase/getCartMenuList : GET");
         //Session에 저장되어 있는 메뉴정보를 map에 담아서 List 로 확인
+        Purchase purchase = new Purchase();
+        purchase.setOrderNo(8);
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setOdOrderNo(purchase);
+        orderDetail.setOdMenuImage("imag5-1");
+        orderDetail.setOdMenuName("menu10");
+        orderDetail.setOdMenuPrice(1000);
+        orderDetail.setOdMenuQty(3);
+        orderDetail.setOdMenuQtyFlag(1);
+        orderDetail.setOdOptionGroupName("null");
+        orderDetail.setOdOptionName("null");
+        orderDetail.setOdOptionPrice(0);
+        HttpSession session = new MockHttpSession();
+       // session.setAttribute("cart",orderDetail);
         Map map = new HashMap();
-        model.addObject("list",map.get("list"));
+        model.addObject("cart",orderDetail);
         model.setViewName("/purchase/getCartMenuList.jsp");
 
 
@@ -54,7 +70,7 @@ public class PurchaseController {
     }
 
     @RequestMapping(value = "addCart", method= RequestMethod.POST)
-    public String addCart(@ModelAttribute("orderDetail") OrderDetail orderDetail, @ModelAttribute("purchase") Purchase purchase, Model model) throws Exception{
+    public ModelAndView addCart(@ModelAttribute("orderDetail") OrderDetail orderDetail, @ModelAttribute("purchase") Purchase purchase, ModelAndView model) throws Exception{
 
         System.out.println("/purchase/addCart : POST");
 
@@ -63,12 +79,12 @@ public class PurchaseController {
         orderDetail.setOdOrderNo(purchase);
         purchaseService.addCart(orderDetail);
 
-        Map cart = purchaseService.getCartList(orderNo);
-        int totalPoint = purchaseService.getTotalPoint(purchase.getOrderUserId().getUserId());
+        Map cart = purchaseService.getCartList(orderNo);*/
+        User totalPoint = purchaseService.getTotalPoint("user01");
 
-        model.addAttribute("cart", cart);
-        model.addAttribute("point",totalPoint);*/
-
+//        model.addObject("cart", cart);
+        model.addObject("point",totalPoint);
+        model.setViewName("/purchase/addPayView.jsp");
         //session.removeAttribute("s_name2");
         //session 삭제하는 방법
         //장바구니에 있는 정보를 저장하고 저장한 내용을 불러와서 addPayView.jsp로 네비게이션
@@ -84,7 +100,7 @@ public class PurchaseController {
         // addCart()
         // getCart()
         // getTotalPoint
-        return "forward:/purchase/addPayView.jsp";
+        return model;
     }
 
     @RequestMapping(value = "addOrder", method= RequestMethod.POST)

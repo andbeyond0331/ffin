@@ -148,13 +148,13 @@
 	</insert>
 
 
-	<insert id="addCart" parameterType="list">
+	<insert id="addCart" parameterType="map">
 		INSERT
 		INTO ffin.orderdetail (OD_ORDER_NO,OD_MENU_NAME,OD_OPTION_GROUP_NAME,
 							   OD_OPTION_NAME,OD_MENU_QTY,OD_MENU_QTY_FLAG,
 							   OD_MENU_PRICE,OD_OPTION_PRICE,OD_MENU_IMAGE)
 		VALUES
-		       <foreach collection="list" item="item" separator=",">
+
 				(  #{odOrderNo.orderNo:NUMERIC},
 				   #{odMenuName:VARCHAR},
 				   #{odOptionGroupName:VARCHAR},
@@ -164,7 +164,7 @@
 				   #{odMenuPrice:NUMERIC},
 				   #{odOptionPrice:NUMERIC},
 				   #{odMenuImage:VARCHAR} )
-			   </foreach>
+
 	</insert>
 
 
