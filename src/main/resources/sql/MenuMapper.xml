@@ -6,5 +6,188 @@
 
 <mapper namespace="MenuMapper">
 
-	
+	<resultMap id="MenuSelectMap" type="menu">
+		<result property="menuNo" 			column="MENU_NO" 			jdbcType="INTEGER"/>
+		<result property="menuTruckId"	column="MENU_TRUCK_ID" 		jdbcType="VARCHAR" />
+		<result property="menuName" 				column="MENU_NAME" 					jdbcType="VARCHAR" />
+		<result property="menuPrice" 	column="MENU_PRICE" 		jdbcType="INTEGER" />
+		<result property="menuDetail" 				column="MENU_DETAIL" 					jdbcType="VARCHAR" />
+		<result property="isSigMenu" 				column="IS_SIG_MENU" 					jdbcType="CHAR" />
+		<result property="menuRegDate" 	column="MENU_REG_DATE" 		jdbcType="DATE" />
+		<result property="menuImg1" 			column="MENU_IMG1" 		jdbcType="VARCHAR" />
+		<result property="menuImg2" 				column="MENU_IMG2" 					jdbcType="VARCHAR" />
+		<result property="menuImg3"					column="MENU_IMG3"				jdbcType="VARCHAR"	/>
+	</resultMap>
+
+	<resultMap id="OptionGroupSelectMap" type="optionGroup">
+		<result property="menuNo"		column="MENU_NO"		jdbcType="INTEGER"/>
+		<result property="optionGroupNo" 			column="OPTION_GROUP_NO" 			jdbcType="INTEGER"/>
+		<result property="optionNo"	column="OPTION_NO" 		jdbcType="INTEGER" />
+		<result property="optionGroupName" 				column="OPTION_GROUP_NAME" 					jdbcType="VARCHAR" />
+		<result property="optionName"			column="OPTION_NAME"					jdbcType="VARCHAR" />
+		<result property="optionPrice" 				column="OPTION_PRICE" 					jdbcType="INTEGER" />
+
+	</resultMap>
+
+	<insert id="addMenu"	parameterType="menu">
+		INSERT INTO menu
+		(
+			MENU_TRUCK_ID,
+			MENU_NAME,
+			MENU_PRICE,
+			MENU_DETAIL,
+			IS_SIG_MENU,
+			MENU_REG_DATE,
+			MENU_IMG1,
+			MENU_IMG2,
+			MENU_IMG3)
+		VALUES
+			(
+				#{menuTruckId},
+				#{menuName},
+				#{menuPrice},
+				#{menuDetail},
+				#{isSigMenu},
+				SYSDATE(),
+				#{menuImg1},
+				#{menuImg2},
+				#{menuImg3})
+	</insert>
+
+
+	<insert id="addOptionGroup" parameterType="optionGroup">
+		insert into optiongroup
+		(
+			MENU_NO,
+			OPTION_GROUP_NO,
+			OPTION_NO,
+			OPTION_GROUP_NAME,
+			OPTION_NAME,
+			OPTION_PRICE)
+		values (
+				   #{menuNo:INTEGER},
+				   #{optionGroupNo},
+				   #{optionNo},
+				   #{optionGroupName},
+				   #{optionName},
+				   #{optionPrice}
+			   )
+	</insert>
+
+	<select 	id="getMenu"	parameterType="int"	resultMap="MenuSelectMap" >
+		SELECT
+			MENU_NO,
+			MENU_TRUCK_ID,
+			MENU_NAME,
+			MENU_PRICE,
+			MENU_DETAIL,
+			IS_SIG_MENU,
+			MENU_IMG1,
+			MENU_IMG2,
+			MENU_IMG3
+		FROM menu
+		WHERE MENU_NO = #{value}
+
+	</select>
+
+	<select 	id="getOption"	parameterType="int"	resultMap="OptionGroupSelectMap" >
+		SELECT
+			MENU_NO,
+			OPTION_GROUP_NO,
+			OPTION_NO,
+			OPTION_GROUP_NAME,
+			OPTION_NAME,
+			OPTION_PRICE
+		FROM ffin.optiongroup
+		WHERE OPTION_NO = #{value}
+
+	</select>
+
+	<select 	id="getOptionGroup"	parameterType="map"	resultMap="OptionGroupSelectMap" >
+		SELECT *
+		FROM (		SELECT inner_table. *
+		FROM (	SELECT o.*, m.MENU_NO
+		FROM ffin.optiongroup o, menu m
+		WHERE o.MENU_NO = m.MENU_NO
+		<if test="optionGroupNo != null">
+			AND o.OPTION_GROUP_NO = #{optionGroupNo}
+		</if>
+		) inner_table)
+
+	</select>
+
+	<select  id="getMenuList" 	parameterType="map"		resultMap="MenuSelectMap">
+		SELECT
+			MENU_NO,
+			MENU_TRUCK_ID,
+			MENU_NAME,
+			MENU_PRICE,
+			MENU_DETAIL,
+			IS_SIG_MENU,
+			MENU_IMG1,
+			MENU_IMG2,
+			MENU_IMG3
+		FROM menu
+		WHERE MENU_NO = #{menuNo}
+	</select>
+
+	<!--
+            <select  id="getOptionGroupList" 	parameterType="map"		resultMap="OptionGroupSelectMap">
+                SELECT
+                    OPTION_GROUP_NO,
+                    OPTION_NO,
+                    OPTION_GROUP_NAME,
+                    OPTION_NAME,
+                    OPTION_PRICE
+                FROM optiongroup
+                WHERE OPTION_NO = #{optionNo}
+            </select>
+       -->
+
+	<update id="updateMenu" parameterType="menu">
+		UPDATE menu
+		<set>
+			MENU_NAME = #{menuName},
+			MENU_PRICE = #{menuPrice},
+			MENU_DETAIL = #{menuDetail},
+			IS_SIG_MENU = #{isSigMenu},
+			MENU_IMG1 = #{menuImg1},
+			MENU_IMG2 = #{menuImg2},
+			MENU_IMG3 = #{menuImg3}
+		</set>
+		WHERE MENU_NO = #{menuNo}
+	</update>
+
+	<update id="updateOptionGroup" parameterType="optionGroup">
+		UPDATE optiongroup
+		<set>
+			OPTION_GROUP_NAME = #{optionGroupName:VARCHAR},
+			OPTION_NAME = #{optionName:VARCHAR},
+			OPTION_PRICE = #{optionPrice:INTEGER}
+		</set>
+		WHERE OPTION_NO = #{optionNo}
+	</update>
+
+	<delete id="deleteMenu">
+		DELETE FROM menu
+		WHERE MENU_NO = #{menuNo}
+	</delete>
+
+	<delete id="deleteOptionGroupMenu">
+		DELETE FROM ffin.optiongroup
+		WHERE MENU_NO = #{menuNo}
+	</delete>
+
+	<delete id="deleteOptionGroup">
+		DELETE FROM optiongroup
+		WHERE OPTION_GROUP_NO = #{optionGroupNo}
+	</delete>
+
+	<delete id="deleteOption">
+		DELETE FROM optiongroup
+		WHERE OPTION_NO = #{optionNo}
+	</delete>
+
+
+
 </mapper>

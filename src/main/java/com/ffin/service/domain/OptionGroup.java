@@ -8,8 +8,8 @@ import lombok.Data;
 public class OptionGroup {
 	
 	private int MenuNo;
-	private int optionNo;
 	private int optionGroupNo;
+	private int optionNo;
 	private String optionGroupName;
 	private String optionName;
 	private int optionPrice;

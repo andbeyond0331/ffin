@@ -1,0 +1,106 @@
+package com.ffin.service.menu.impl;
+
+import com.ffin.common.Search;
+import com.ffin.service.domain.Menu;
+import com.ffin.service.domain.OptionGroup;
+import com.ffin.service.menu.MenuDao;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository("menuDaoImpl")
+public class MenuDaoImpl implements MenuDao {
+
+    ///FFF
+    @Autowired
+    @Qualifier("sqlSessionTemplate")
+    private SqlSession sqlSession;
+
+    public void setSqlSession(SqlSession sqlSession){
+        this.sqlSession = sqlSession;
+    }
+
+    public MenuDaoImpl(){
+
+        System.out.println(this.getClass());
+    }
+
+    ///MMM
+
+    @Override
+    public void addMenu(Menu menu) throws Exception {
+
+        sqlSession.insert("MenuMapper.addMenu", menu);
+
+    }
+
+    @Override
+    public void addOptionGroup(OptionGroup optionGroup) throws Exception {
+
+        sqlSession.insert("MenuMapper.addOptionGroup", optionGroup);
+    }
+
+    @Override
+    public Menu getMenu(int menuNo) throws Exception {
+        return sqlSession.selectOne("MenuMapper.getMenu", menuNo);
+    }
+
+    //옵션 그룹의 모든 옵션 받아오기
+    @Override
+    public List<OptionGroup> getOptionGroup(Search search) throws Exception {
+        return sqlSession.selectOne("MenuMapper.getOptionGroup", search);
+    }
+
+    // 옵션 하나 받아오기
+    @Override
+    public OptionGroup getOption(int optionNo) throws Exception {
+        return sqlSession.selectOne("MenuMapper.getOption", optionNo);
+    }
+
+    @Override
+    public List<Menu> getMenuList(Search search) throws Exception {
+        return sqlSession.selectList("MenuMapper.getMenuList",search);
+    }
+
+    @Override
+    public void updateMenu(Menu menu) throws Exception {
+
+        sqlSession.update("MenuMapper.updateMenu", menu);
+
+    }
+
+    @Override
+    public void updateOptionGroup(OptionGroup optionGroup) throws Exception {
+
+        sqlSession.update("MenuMapper.updateOptionGroup", optionGroup);
+    }
+
+    // 하나의 메뉴와 그 메뉴에 연결된 모든 옵션그룹과 그 안의 여러 옵션들을 삭제
+    @Override
+    public void deleteMenu(Menu menu) throws Exception {
+        sqlSession.delete("MenuMapper.deleteOptionGroupMenu", menu.getMenuNo());
+        sqlSession.delete("MenuMapper.deleteMenu", menu);
+    }
+
+    // 한 번에 하나의 옵션 그룹과 그 안의 여러 옵션 삭제
+    @Override
+    public void deleteOptionGroup(OptionGroup optionGroup) throws Exception {
+
+        sqlSession.delete("MenuMapper.deleteOptionGroup", optionGroup);
+    }
+
+    // 한 번에 하나의 옵션 삭제
+    @Override
+    public void deleteOption(OptionGroup optionGroup) throws Exception {
+        sqlSession.delete("MenuMapper.deleteOption", optionGroup);
+
+    }
+
+    @Override
+    public int getTotalCount(Search search) throws Exception {
+        return sqlSession.selectOne("MenuMapper.getTotalCount",search);
+    }
+}
