@@ -25,9 +25,9 @@ public class PurchaseDaoImpl implements PurchaseDao {
         System.out.println(this.getClass());
     }
     @Override
-    public void addCart(List list) throws Exception{
-        System.out.println("orderDetail = " + list);
-        sqlSession.insert("PurchaseMapper.addCart",list);
+    public void addCart(OrderDetail orderDetail) throws Exception{
+        System.out.println("orderDetail = " + orderDetail);
+        sqlSession.insert("PurchaseMapper.addCart",orderDetail);
     }//장바구니에 정보 등록
     @Override
     public int addPurchase(Purchase purchase)throws Exception{

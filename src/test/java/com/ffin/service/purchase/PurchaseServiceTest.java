@@ -187,10 +187,10 @@ public class PurchaseServiceTest {
         orderDetail.setOdOptionGroupName("null");
         orderDetail.setOdOptionName("null");
         orderDetail.setOdOptionPrice(0);
-        List list = new ArrayList();
-        list.add(orderDetail);
+   /*     List list = new ArrayList();
+        list.add(orderDetail);*/
 
-        purchaseService.addCart(list);
+        purchaseService.addCart(orderDetail);
 
 
 

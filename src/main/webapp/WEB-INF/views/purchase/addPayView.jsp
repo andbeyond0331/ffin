@@ -343,9 +343,9 @@
     </table>
 
     <input type="hidden" name="purchaseProd.prodNo"
-           value="${product.prodNo}" /> <input type="hidden" name="prodName"
-                                               value="${product.prodName}" /> <input type="hidden"
-                                                                                     name="prodDetail" value="${product.prodDetail}" />
+           value="<%--${product.prodNo}--%>" /> <input type="hidden" name="prodName"
+                                               value="<%--${product.prodName}--%>" /> <input type="hidden"
+                                                                                     name="prodDetail" value="<%--${product.prodDetail}--%>" />
 
     <table width="600" border="0" cellspacing="0" cellpadding="0"
            align="center" style="margin-top: 13px;">
@@ -362,7 +362,7 @@
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
 
-                        <td width="105">${product.prodNo}</td>
+                        <td width="105"><%--${product.prodNo}--%></td>
                     </tr>
                 </table>
             </td>
@@ -376,8 +376,8 @@
                     align="absmiddle" />
             </td>
             <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01">${product.prodName}<input type="hidden"
-                                                             name="prodNo" value="${product.prodNo}" /></td>
+            <td class="ct_write01"><%--${product.prodName}--%><input type="hidden"
+                                                             name="prodNo" value="<%--${product.prodNo}--%>" /></td>
 
 
         </tr>
@@ -390,8 +390,8 @@
                     align="absmiddle" />
             </td>
             <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01">${product.prodDetail}<input
-                    type="hidden" name="fileName" value="${product.fileName}" />
+            <td class="ct_write01"><%--${product.prodDetail}--%><input
+                    type="hidden" name="fileName" value="<%--${product.fileName}--%>" />
             </td>
         </tr>
         <tr>
@@ -403,8 +403,8 @@
                     align="absmiddle" />
             </td>
             <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01">${product.amount}<input type="hidden"
-                                                           name="amount" value="${product.amount}" /></td>
+            <td class="ct_write01"><%--${product.amount}--%><input type="hidden"
+                                                           name="amount" value="<%--${product.amount}--%>" /></td>
         </tr>
         <tr>
             <td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -412,8 +412,8 @@
         <tr>
             <td width="104" class="ct_write">제조일자</td>
             <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01">${product.manuDate}<input type="hidden"
-                                                             name="manuDate" value="${product.manuDate}" /></td>
+            <td class="ct_write01"><%--${product.manuDate}--%><input type="hidden"
+                                                             name="manuDate" value="<%--${product.manuDate}--%>" /></td>
         </tr>
         <tr>
             <td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -421,9 +421,9 @@
         <tr>
             <td width="104" class="ct_write">가격</td>
             <td bgcolor="D6D6D6" width="1"></td>
-            <input type="hidden" name="price" value="${product.price}"/>
-            <td class="ct_write01">${product.price}<input type="hidden"
-                                                          name="price" value="${product.price}" /></td>
+            <input type="hidden" name="price" value="1000<%--${product.price}--%>"/>
+            <td class="ct_write01"><%--${product.price}--%><input type="hidden"
+                                                          name="price" value="<%--${product.price}--%>" /></td>
         </tr>
         <tr>
             <td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -431,8 +431,8 @@
         <tr>
             <td width="104" class="ct_write">등록일자</td>
             <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01">${product.regDate}<input type="hidden"
-                                                            name="regDate" value="${product.regDate}" /></td>
+            <td class="ct_write01"><%--${product.regDate}--%><input type="hidden"
+                                                            name="regDate" value="<%--${product.regDate}--%>" /></td>
         </tr>
         <tr>
             <td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -443,8 +443,8 @@
                     align="absmiddle" />
             </td>
             <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01">${user.userId}<input type="hidden"
-                                                        name="buyer.userId" value="${user.userId}" /></td>
+            <td class="ct_write01"><%--${user.userId}--%><input type="hidden"
+                                                        name="buyer.userId" value="<%--${user.userId}--%>" /></td>
 
         </tr>
         <tr>
