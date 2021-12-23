@@ -1,8 +1,11 @@
 package com.ffin.web.menu;
 
 
+import com.ffin.common.Page;
+import com.ffin.common.Search;
 import com.ffin.service.domain.Menu;
 import com.ffin.service.domain.Truck;
+import com.ffin.service.domain.User;
 import com.ffin.service.menu.MenuService;
 import com.ffin.service.truck.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 // 메뉴 관리 Controller
 @Controller
@@ -91,37 +96,64 @@ public class MenuController {
 
 
     @RequestMapping(value="getMenu", method=RequestMethod.GET)
-    public String getMenu(@RequestParam("menuNo") int menuNo, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public ModelAndView getMenu(HttpServletRequest request, ModelAndView modelAndView) throws Exception{
 
         System.out.println("/menu/getMenu : GET");
 
-        String menuNoo=Integer.toString(menuNo);
+        String menuNoo = request.getParameter("menuNo");
 
-        String menu = request.getParameter("menu");
+        int menuNo = Integer.parseInt(menuNoo);
 
+        Menu menu = menuService.getMenu(menuNo);
 
+        modelAndView.addObject("menu", menu);
+        modelAndView.setViewName("/menu/getMenu.jsp");
 
+        System.out.println("request = " + request + ", modelAndView = " + modelAndView);
 
-        System.out.println("menuNo = " + menuNo + ", model = " + model + ", request = " + request);
-
-        return "forward:/menu/getMenu.jsp";
+        return modelAndView;
     }
-/*
+
     @RequestMapping(value="updateMenu", method=RequestMethod.GET)
-    public String updateMenu(@RequestParam("menuNo")int menuNo, Model model) throws Exception{
+    public ModelAndView updateMenu(HttpServletRequest request, ModelAndView modelAndView) throws Exception{
 
         System.out.println("/menu/updateMenu : GET");
 
         //Business Logic
+
+        String menuNoo = request.getParameter("menuNo");
+
+        int menuNo = Integer.parseInt(menuNoo);
+
         Menu menu = menuService.getMenu(menuNo);
+
         //Model - View 연결
-        model.addAttribute("menu", menu);
+        modelAndView.addObject("menu", menu);
+        modelAndView.setViewName("/menu/updateMenuView.jsp");
 
-        System.out.println("menuNo = " + menuNo + ", model = " + model);
+        System.out.println("request = " + request + ", modelAndView = " + modelAndView);
 
-        return "forward:/menu/updateMenuView.jsp";
+        return modelAndView;
     }
-*/
 
+    @RequestMapping("getMenuList")
+    public ModelAndView getListMenuList(@ModelAttribute("search") Search search, @RequestParam("truckId") String truckId,
+                                  HttpServletRequest request, ModelAndView modelAndView) throws Exception{
+
+        search.setPageSize(pageSize);
+        Truck truck  = truckService.getTruck(truckId);
+
+        Map<String , Object> map= menuService.getMenuList(search, truck.getTruckId());
+
+        modelAndView.addObject("list", map.get("list"));
+        modelAndView.setViewName("/menu/getTruck.jsp");
+//       model.addAttribute("list", map.get("list"));
+//        model.addAttribute("search", search);
+
+        return modelAndView;
+    }
+//
+//    @RequestMapping("deleteMenu")
+//    public ModelAndView deleteMenu(@ModelAttribute())
 
 }

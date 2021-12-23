@@ -60,9 +60,9 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Map<String, Object> getMenuList(Search search, String menuTruckId) throws Exception {
+    public Map<String, Object> getMenuList(Search search, String truckId) throws Exception {
 
-        return menuDao.getMenuList(search, menuTruckId);
+        return menuDao.getMenuList(search, truckId);
     }
 
     @Override

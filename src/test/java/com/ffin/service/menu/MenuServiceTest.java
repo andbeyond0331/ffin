@@ -130,22 +130,22 @@ public class MenuServiceTest {
 
 //
 //
-//    @Test //okay!!!!!!!!!!!!!!!
-//    public void getMenuList() throws Exception {
-//        Search search  = new Search();
-//        search.setCurrentPage(1);
-//        search.setPageSize(8);
-//        search.setSearchCondition("0");
-//        search.setSearchKeyword("");
-//        Map<String, Object> map = menuService.getMenuList(search, "truck01");
-//
-//        List<Object> list = (List<Object>)map.get("list");
-//        Assert.assertEquals(8, list.size());
-//
-//        System.out.println("list : " + list);
-//
-//
-//    }
+    @Test //okay!!!!!!!!!!!!!!!
+    public void getMenuList() throws Exception {
+        Search search  = new Search();
+        search.setCurrentPage(1);
+        search.setPageSize(8);
+        search.setSearchCondition("0");
+        search.setSearchKeyword("");
+        Map<String, Object> map = menuService.getMenuList(search, "truck01");
+
+        List<Object> list = (List<Object>)map.get("list");
+        Assert.assertEquals(3, list.size());
+
+        System.out.println("list : " + list);
+
+
+    }
 
 
 

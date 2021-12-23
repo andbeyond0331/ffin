@@ -83,7 +83,7 @@
                 <li class="list-group-item d-flex justify-content-between bg-light">
                     <div class="text-success">
                         <h6 class="my-0">푸드트럭 상호</h6>
-                        <small>NO.${menu.menuTruckId }</small>
+                        <small>NO.${truck.truckId}</small>
                     </div>
                     <span class="text-success"></span>
                 </li>
