@@ -17,7 +17,7 @@
   		<result property="msgRoom" 		column="MSG_ROOM" 		jdbcType="NUMERIC"/>
   	</resultMap>
 
-	<!-- LIST 불러오는 것 같은데 NICK은 뭐징? MSG_NO로 왜 WHERE 조건에 붙었지? -->
+	<!-- LIST  -->
 	<select id="message_list" parameterType="msg" resultMap="msgSelectMap">
 		select MSG_NO, MSG_ROOM, MSG_SEND_USER_ID, MSG_RECV_USER_ID, date_format(MSG_SEND_DATE, '%Y-%m-%d %H:%i') send_time, MSG_READ_DATE, MSG_CONTENT, MSG_READ_STATUS
 		from msg
@@ -75,7 +75,7 @@
 	</update>
 
 	<!-- 메세지리스트에서 메세지 보내기 -->
-	<insert id="messageSendInlist" parameterType="msg">
+	<insert id="messageSendInlist" parameterType="msg" >
 		<choose>
 			<when test="msgRoom != 0">
 				insert into msg(MSG_SEND_USER_ID, MSG_RECV_USER_ID, MSG_SEND_DATE, MSG_READ_DATE, MSG_CONTENT, MSG_READ_STATUS, MSG_ROOM) values(#{msgSendUserId}, #{msgRecvUserId}, now(), now(), #{msgContent}, 0, #{msgRoom});

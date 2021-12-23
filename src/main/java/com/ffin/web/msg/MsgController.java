@@ -2,13 +2,13 @@ package com.ffin.web.msg;
 
 
 import com.ffin.service.domain.Msg;
+import com.ffin.service.domain.User;
 import com.ffin.service.msg.MsgService;
+import com.ffin.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +26,8 @@ public class MsgController {
     @Autowired
     @Qualifier("msgServiceImpl")
     private MsgService msgService;
-
+    @Qualifier("userServiceImpl")
+    private UserService userService;
     public MsgController(){
         System.out.println(this.getClass());
     }
@@ -39,8 +40,8 @@ public class MsgController {
         // System.out.println("현대 사용자 nick : " + session.getAttribute("nick"));
         System.out.println("MsgController.message_list");
         //test하느라 id값 고정으로 해놓음
-        //String id = (String) session.getAttribute("userId");
-        String id="user01";
+        String id = (String) session.getAttribute("userId");
+        //String id="user01";
 
         Msg to = new Msg();
         to.setId(id);
@@ -56,6 +57,35 @@ public class MsgController {
         modelAndView.setViewName("/msg/message_list.jsp");
         return modelAndView;
     }
+
+
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public ModelAndView login() throws Exception{
+        System.out.println("UserController.login : GET");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/msg/msglogin.jsp");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "login", method = RequestMethod.POST)
+    public ModelAndView login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
+        System.out.println("UserController.login : POST");
+        System.out.println("user = " + user);
+        //User dbUser = userService.getUser(user.getUserId());
+       // System.out.println("dbUser : "+dbUser);
+            session.setAttribute("userId",user.getUserId());
+            session.setAttribute("role","user");
+
+
+        System.out.println("user = " + user);
+
+        ModelAndView modelAndView = new ModelAndView();
+         modelAndView.setViewName("/msg/message_list.jsp");
+        return modelAndView;
+    }
+
+
+
 /*
 
     // 메세지 목록

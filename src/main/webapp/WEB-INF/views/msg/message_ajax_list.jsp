@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<style>
+<%--<style>
 
 
 
@@ -15,7 +15,7 @@
     }
 
     p {
-        font-family: 'Noto Sans KR', sans-serif;
+        /*font-family: 'Noto Sans KR', sans-serif;*/
         font-size: 20px;
     }
 
@@ -42,7 +42,7 @@
     .top_spac{ margin: 20px 0 0;}
 
 
-    .recent_heading {float: left; width:40%;}
+
     .srch_bar {
         display: inline-block;
         text-align: right;
@@ -50,13 +50,7 @@
     }
     .headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #f7f7f7;}
 
-    .recent_heading h4 {
-        color: #5fcf80;
-        font-size: 30px;
-        margin: auto;
-        font-family: 'Nanum Pen Script', cursive;
-    }
-    .srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; width:80%; padding:2px 0 4px 6px; background:none; font-family: 'Nanum Pen Script', cursive; font-size:25px;}
+    .srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; width:80%; padding:2px 0 4px 6px; background:none; }
     .srch_bar .input-group-addon button {
         background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
         border: medium none;
@@ -66,7 +60,7 @@
     }
     .srch_bar .input-group-addon { margin: 0 0 0 -27px;}
 
-    .chat_ib h5{ font-size:20px; color:#464646; margin:0 0 8px 0; font-family: 'Nanum Pen Script', cursive;}
+    .chat_ib h5{ font-size:20px; color:#464646; margin:0 0 8px 0; }
     .chat_ib h5 span{ font-size:17px; float:right;}
     .chat_ib p{ font-size:14px; color:#989898; margin:auto}
     .chat_img {
@@ -129,19 +123,19 @@
     }
 
     .sent_msg p {
-        background: #97df93 none repeat scroll 0 0;
+        background: #ff5900 none repeat scroll 0 0;
         border-radius: 7px;
         font-size: 14px;
         margin: 0; color:#fff;
         padding: 10px 10px 10px 12px;
         width:100%;
-        font-family: 'Noto Sans KR', sans-serif;
+        /*font-family: 'Noto Sans KR', sans-serif;*/
     }
     .outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
     .sent_msg {
         float: right;
         width: 46%;
-        font-family: 'Noto Sans KR', sans-serif;
+        /*font-family: 'Noto Sans KR', sans-serif;*/
     }
     .input_msg_write input {
         background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
@@ -168,7 +162,7 @@
     }
 
     .msg_send_btn:hover{
-        background: #5fcd58 none repeat scroll 0 0;
+        background: #ff5900 none repeat scroll 0 0;
     }
 
     .messaging { padding: 0 0 50px 0;}
@@ -177,10 +171,10 @@
         overflow-y: auto;
     }
 
-</style>
+</style>--%>
 <c:forEach var="tmp" items="${list}">
     <div class="chat_list_box${tmp.msgRoom } chat_list_box">
-        <div type="button" class="chat_list" msgRoom="${tmp.msgRoom }" other_id="${tmp.other_id }">
+        <div type="button" class="chat_list" msgRoom="${tmp.msgRoom }" other-id="${tmp.other_id }">
             <!-- active-chat -->
             <div class="chat_people">
                 <div class="chat_img" >

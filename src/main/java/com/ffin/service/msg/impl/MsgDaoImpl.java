@@ -17,12 +17,12 @@ public class MsgDaoImpl implements MsgDao {
     private SqlSession sqlSession;
 
     // 메세지 리스트
-   // public ArrayList<Msg> messageList(Msg to) {
+    //public ArrayList<Msg> messageList(Msg to) {
     public List<Msg> messageList(Msg to) {
         String id = to.getId();
 
         // 메세지 리스트에 나타낼 것들 가져오기 - 가장 최근 메세지, 보낸사람 profile 사진, 보낸사람 nick
-        // ArrayList<Msg> list = (ArrayList) sqlSession.selectList("MessageMapper.message_list", to);
+        //List list = (List) sqlSession.selectList("MessageMapper.message_list", to);
         System.out.println("id = " + id);
         System.out.println("to = " + to);
         List<Msg> list = sqlSession.selectList("MessageMapper.message_list", to);
@@ -39,7 +39,7 @@ public class MsgDaoImpl implements MsgDao {
             mto.setUnread(unread);
             // 메세지 상대의 프로필사진을 mto에 set한다.
             mto.setProfile(profile);
-            // 메세지 상대 id을 세팅한다. other_nick
+            // 메세지 상대 id을 세팅한다. other_id
             if (id.equals(mto.getMsgSendUserId())) {
                 mto.setOther_id(mto.getMsgRecvUserId());
             } else {
