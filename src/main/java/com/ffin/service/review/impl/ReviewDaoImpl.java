@@ -30,6 +30,12 @@ public class ReviewDaoImpl implements ReviewDao {
     }
 
     @Override
+    public Review getReview(int reviewNo) throws Exception {
+
+        return sqlSession.selectOne("ReviewMapper.getReview", reviewNo);
+    }
+
+    @Override
     public List<Review> getReviewList(Search search) throws Exception {
         return sqlSession.selectList("ReviewMapper.getReviewList", search);
     }

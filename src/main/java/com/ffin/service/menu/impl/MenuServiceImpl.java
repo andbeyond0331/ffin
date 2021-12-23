@@ -48,16 +48,9 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Map<String,Object> getOptionGroup(Search search) throws Exception {
-        List<OptionGroup> list = menuDao.getOptionGroup(search);
-        int totalCount = menuDao.getTotalCount(search);
+    public Map<String,Object> getOptionGroup(Search search, int optionGroupNo) throws Exception {
 
-        Map<String, Object> map = new HashMap<String, Object>();
-
-        map.put("list", list);
-        map.put("totalCount", new Integer(totalCount));
-        System.out.println("MenuServiceImpl.getOptionGroup");
-        return map;
+        return menuDao.getOptionGroup(search,optionGroupNo);
     }
 
     @Override
@@ -67,16 +60,9 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Map<String, Object> getMenuList(Search search) throws Exception {
-        List<Menu> list = menuDao.getMenuList(search);
-        int totalCount = menuDao.getTotalCount(search);
+    public Map<String, Object> getMenuList(Search search, String menuTruckId) throws Exception {
 
-        Map<String, Object> map = new HashMap<String, Object>();
-
-        map.put("list",list);
-        map.put("totalCount", new Integer(totalCount));
-
-        return map;
+        return menuDao.getMenuList(search, menuTruckId);
     }
 
     @Override

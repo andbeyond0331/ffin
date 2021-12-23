@@ -5,6 +5,7 @@ import com.ffin.service.domain.Menu;
 import com.ffin.service.domain.OptionGroup;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MenuDao {
 
@@ -20,14 +21,14 @@ public interface MenuDao {
 
     // 옵션 그룹의 모든 옵션 받아오기
     //SELECT LIST
-    public List<OptionGroup> getOptionGroup(Search search) throws Exception;
+    public Map<String, Object> getOptionGroup(Search search, int optionGroupNo) throws Exception;
 
     // 옵션 그룹 중 옵션 하나 받아오기
     //SELECT ONE
     public OptionGroup getOption(int optionNo) throws Exception;
 
     //SELECT LIST
-    public List<Menu> getMenuList(Search search) throws Exception;
+    public Map<String, Object> getMenuList(Search search, String menuTruckId) throws Exception;
 
     //UPDATE
     public void updateMenu(Menu menu) throws Exception;

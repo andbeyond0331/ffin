@@ -19,13 +19,13 @@ public interface MenuService {
     public Menu getMenu(int menuNo) throws Exception;
 
     //옵션 그룹 조회
-    public Map<String,Object> getOptionGroup(Search search) throws Exception;
+    public Map<String,Object> getOptionGroup(Search search, int optionGroupNo) throws Exception;
 
     //옵션 조회
     public OptionGroup getOption(int optionNo) throws Exception;
 
     //메뉴 목록 조회
-    public Map<String, Object> getMenuList(Search search) throws Exception;
+    public Map<String, Object> getMenuList(Search search, String menuTruckId) throws Exception;
 
     //메뉴 수정
     public void updateMenu(Menu menu) throws Exception;

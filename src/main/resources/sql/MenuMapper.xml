@@ -104,15 +104,14 @@
 	</select>
 
 	<select 	id="getOptionGroup"	parameterType="map"	resultMap="OptionGroupSelectMap" >
-		SELECT *
-		FROM (		SELECT inner_table. *
-		FROM (	SELECT o.*, m.MENU_NO
+
+		SELECT o.MENU_NO, o.OPTION_GROUP_NO, o.OPTION_NO, o.OPTION_GROUP_NAME, o.OPTION_NAME, o.OPTION_PRICE, m.MENU_NO
 		FROM ffin.optiongroup o, menu m
 		WHERE o.MENU_NO = m.MENU_NO
 		<if test="optionGroupNo != null">
 			AND o.OPTION_GROUP_NO = #{optionGroupNo}
 		</if>
-		) inner_table)
+
 
 	</select>
 
@@ -128,7 +127,10 @@
 			MENU_IMG2,
 			MENU_IMG3
 		FROM menu
-		WHERE MENU_NO = #{menuNo}
+		<if test="truckId !=null">
+			WHERE MENU_TRUCK_ID = #{menuTruckId}
+		</if>
+
 	</select>
 
 	<!--
