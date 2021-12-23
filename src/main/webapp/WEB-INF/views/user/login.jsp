@@ -94,7 +94,7 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<div class="navbar  navbar-default">
         <div class="container">
-        	<a class="navbar-brand" href="/index.jsp">Model2 MVC Shop</a>
+        	<a class="navbar-brand" href="${pageContext.request.contextPath}">Model2 MVC Shop</a>
    		</div>
    	</div>
    	<!-- ToolBar End /////////////////////////////////////-->	

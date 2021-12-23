@@ -56,6 +56,18 @@ public class UserServiceTest {
     }
 
     //@Test
+    public void testGetUserTotalPoint() throws Exception {
+        User user = new User();
+        user = userService.getUserTotalPoint("test01");
+    }
+
+    //@Test
+    public void testGetReportCount() throws Exception {
+        User user = new User();
+        user = userService.getReportCount("test01");
+    }
+
+    //@Test
     public void testGetUserList() throws Exception {
         Search search = new Search();
         search.setCurrentPage(1);
