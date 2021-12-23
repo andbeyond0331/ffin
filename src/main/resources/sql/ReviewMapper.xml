@@ -3,7 +3,82 @@
 <!DOCTYPE mapper
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-		
+
+
 <mapper namespace="ReviewMapper">
+
+	<resultMap id="ReviewSelectMap" type="review">
+		<result property="rvNo" 			column="RV_NO" 			jdbcType="INTEGER"/>
+		<result property="rvOrderNo"	column="RV_ORDER_NO" 		jdbcType="INTEGER" />
+		<result property="rvRegTime" 	column="RV_REG_TIME" 		jdbcType="DATE" />
+		<result property="rvStar" 			column="RV_STAR" 	jdbcType="FLOAT" />
+		<result property="rvContent" 			column="RV_CONTENT" 	jdbcType="VARCHAR" />
+		<result property="rvTruckCmtContent" 			column="RV_TRUCK_CMT_CONTENT" 			jdbcType="VARCHAR"/>
+		<result property="rvTruckCmtRegTime"	column="RV_TRUCK_CMT_REG_TIME" 		jdbcType="DATE" />
+		<result property="rvImg1" 	column="RV_IMG1" 		jdbcType="VARCHAR" />
+		<result property="rvImg2" 			column="RV_IMG2" 	jdbcType="VARCHAR" />
+		<result property="rvImg3" 			column="RV_IMG3" 	jdbcType="VARCHAR" />
+		<result property="rvDelete" 			column="RV_DELETE" 	jdbcType="CHAR" />
+		<result property="rvTCDelete" 			column="RV_TC_DELETE" 	jdbcType="CHAR" />
+	</resultMap>
+
+
+	<insert id="addReview"	parameterType="review">
+		INSERT
+		INTO review (RV_ORDER_NO, RV_REG_TIME, RV_STAR, RV_CONTENT, RV_IMG1, RV_IMG2, RV_IMG3, ffin.review.RV_DELETE, ffin.review.RV_TC_DELETE)
+		VALUES (
+				   #{rvOrderNo},
+				   SYSDATE(),
+				   #{rvStar},
+				   #{rvContent},
+				   #{rvImg1},
+				   #{rvImg2},
+				   #{rvImg3},
+				   #{rvDelete},
+				   #{rvTCDelete}
+			   )
+	</insert>
+
+	<select id="getReviewList"	parameterType="map"	resultMap="ReviewSelectMap">
+		SELECT
+			RV_NO,
+			RV_ORDER_NO,
+			RV_REG_TIME,
+			RV_STAR,
+			RV_CONTENT,
+			RV_IMG1,
+			RV_IMG2,
+			RV_IMG3
+		FROM 	review
+	</select>
+
+	<update id="updateReview"	parameterType="review">
+		UPDATE 	review
+		<set>
+			RV_STAR = #{rvStar},
+			RV_CONTENT = #{rvContent},
+			RV_IMG1=#{rvImg1},
+			RV_IMG2=#{rvImg2},
+			RV_IMG3=#{rvImg3}
+		</set>
+		WHERE RV_NO = #{rvNo}
+	</update>
+
+	<update id="updateRVAddTruckComment"	parameterType="review">
+		UPDATE 	review
+		<set>
+			RV_TRUCK_CMT_CONTENT = #{rvTruckCmtContent}
+		</set>
+		WHERE RV_NO = #{rvNo}
+	</update>
+
+	<update id="updateRVUpdateTruckComment"	parameterType="review">
+		UPDATE 	review
+		<set>
+			RV_TRUCK_CMT_CONTENT = #{rvTruckCmtContent}
+		</set>
+		WHERE RV_NO = #{rvNo}
+	</update>
+
 
 </mapper>
