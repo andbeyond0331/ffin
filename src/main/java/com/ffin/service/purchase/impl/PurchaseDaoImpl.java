@@ -90,11 +90,11 @@ public class PurchaseDaoImpl implements PurchaseDao {
 
 
     @Override
-    public List<Purchase> getCouponList(String userId)throws Exception{
-        return sqlSession.selectList("PurchaseMapper.getCouponList",userId);
+    public List<Coupon> getCouponList(Coupon coupon)throws Exception{
+        return sqlSession.selectList("PurchaseMapper.getCouponList",coupon);
     } //쿠폰 리스트를 출력
     @Override
-    public List<Purchase> getCartList(int orderNo)throws Exception{
+    public List<OrderDetail> getCartList(int orderNo)throws Exception{
         return sqlSession.selectList("PurchaseMapper.getCartList",orderNo);
     } //주문상세에 있는 정보 List?로 가져옴
     @Override

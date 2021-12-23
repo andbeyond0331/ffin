@@ -34,7 +34,7 @@
 			<result property="couponReceivedUserId.userId"	column="COUPON_RECEIVED_USER_ID"	jdbcType="VARCHAR"/>
 			<result property="couponDcPrice"				column="COUPON_DC_PRICE"			jdbcType="NUMERIC"/>
 			<result property="couponStatus"					column="COUPON_STATUS"				jdbcType="CHAR"/>
-			<result property="couponWeatherType"			column="COUPON_WEATHER_TYPE"        jdbcType="CHAR"/>
+			<result property="couponType"			column="COUPON_TYPE"        jdbcType="CHAR"/>
 
 		</association>
 
@@ -66,7 +66,7 @@
 		<result property="odNo" 				column="OD_NO" 					jdbcType="NUMERIC" />
 		<result property="odOrderNo" 			column="OD_ORDER_NO" 			jdbcType="NUMERIC" />
 		<result property="odMenuName" 			column="OD_MENU_NAME" 			jdbcType="VARCHAR" />
-		<result property="odOptionGroupName" 	column="OD_OPTION_GROUP_NAEM" 	jdbcType="VARCHAR" />
+		<result property="odOptionGroupName" 	column="OD_OPTION_GROUP_NAME" 	jdbcType="VARCHAR" />
 		<result property="odOptionName" 		column="OD_OPTION_NAME" 		jdbcType="VARCHAR" />
 		<result property="odMenuQty" 			column="OD_MENU_QTY" 			jdbcType="NUMERIC" />
 		<result property="odMenuQtyFlag" 		column="OD_MENU_QTY_FLAG" 		jdbcType="CHAR" />
@@ -107,7 +107,7 @@
 		<result property="couponReceivedUserId.userId"	column="COUPON_RECEIVED_USER_ID"	jdbcType="VARCHAR"/>
 		<result property="couponDcPrice"		column="COUPON_DC_PRICE"			jdbcType="INTEGER"/>
 		<result property="couponStatus"			column="COUPON_STATUS"				jdbcType="CHAR"/>
-		<result property="couponWeatherType"	column="COUPON_WEATHER_TYPE"		jdbcType="CHAR"/>
+		<result property="couponType"	column="COUPON_TYPE"		jdbcType="CHAR"/>
 
 
 	</resultMap>
@@ -337,43 +337,56 @@
 
 
 
-<!--
 
-	<select id="getCouponList" parameterType="Map" resultMap="purchaseSelectMap">
+	<select id="getCouponList" parameterType="coupon" resultMap="couponSelectMap">
 		SELECT
-			COUPON_NO, COUPON_RECEIVED_USER_ID, COUPON_DC_PRICE, COUPON_STATUS, COUPON_WEATHER_TYPE
+			COUPON_NO, COUPON_RECEIVED_USER_ID, COUPON_DC_PRICE, COUPON_STATUS, COUPON_TYPE
 		FROM coupon
-		WHERE COUPON_RECEIVED_USER_ID = ${value}
+		WHERE COUPON_RECEIVED_USER_ID = #{couponReceivedUserId.userId}
 	</select>
--->
 
-<!--
+
 	<select id="getCartList" parameterType="int" resultMap="orderDetailSelectMap">
 		SELECT
-			OD_NO, OD_ORDER_NO, OD_MENU_NAME, OD_OPTION_GROUP_NAEM, OD_OPTION_NAME, OD_MENU_QTY, OD_MENU_QTY_FLAG,
+			OD_NO, OD_ORDER_NO, OD_MENU_NAME, OD_OPTION_GROUP_NAME, OD_OPTION_NAME, OD_MENU_QTY, OD_MENU_QTY_FLAG,
 			OD_MENU_PRICE, OD_OPTION_PRICE, OD_MENU_IMAGE
 		FROM orderdetail
 		WHERE OD_ORDER_NO = #{value}
 
 	</select>
 
-	<select id="getOrderList" parameterType="String" resultMap="purchaseSelectMap">
+
+
+<!--	<select id="getOrderList" parameterType="String" resultMap="purchaseSelectMap,orderDetailSelectMap">
 		SELECT
 			PUR.ORDER_NO,PUR.ORDER_USER_ID,PUR.ORDER_TRUCK_ID,PUR.ORDER_STATUS,PUR.ORDER_PICK_UP_TIME,PUR.ORDER_COOKING_TIME,ORD.OD_MENU_NAME
 		FROM ffin.purchase pur,ffin.orderdetail ord
-		WHERE truck_id = #{value}
+		WHERE pur.order_truck_id = #{value}
 		  AND ord.od_order_no = pur.order_no
 		  AND od_menu_qty_flag = 0;
 
-	</select>
+	</select>-->
 
-	<select id="getPurchaseList" parameterType="String" resultMap="orderSelectMap">
-		SELECT
-			*
-		FROM purchase
-		WHERE order_user_id = #{value}
+	<select id="getPurchaseList" parameterType="map" resultMap="purchaseSelectMap">
+		SELECT inner_table.*
+		FROM (SELECT *
+				FROM purchase
+				<where>
+						<if test="searchCondition != null">
+
+								<bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+									AND ORDER_STATUS LIKE #{searchKeyword}
+								</if>
+								<if test="searchCondition == 1 and searchKeyword !=''">
+									AND ORDER_STATUS LIKE #{searchKeyword}
+								</if>
+						</if>
+					AND ORDER_USER_ID = #{orderUserId.userId}
+				</where>
+			order by order_no) inner_table
+		limit 0,8;
 	</select>
--->
 
 	<!--
 	<select id="getSalesList" parameterType="String" resultMap="purchaseSelectMap">
@@ -384,7 +397,6 @@
 
 	</select>
 	-->
-<!--
 	<select id="getPointList" parameterType="String" resultMap="pointSelectMap">
 		SELECT
 			u.USER_TOTAL_POINT,p.point_user_id,p.POINT_AMT,p.POINT_NO,p.POINT_USE_DATE,p.POINT_BIRTH_CODE,p.POINT_PLMN_STATUS,p.POINT_STATUS
@@ -393,7 +405,6 @@
 		  and u.user_id = #{value}
 
 	</select>
--->
 
 	<select id="getPurchase" parameterType="purchase" resultMap="purchaseSelectMap">
 		SELECT
@@ -403,9 +414,8 @@
 		WHERE order_no = #{value}
 
 	</select>
-<!--
 
-	<select id="getOrderDetail" parameterType="String" resultMap="orderDetailorderSelectMap">
+	<select id="getOrderDetail" parameterType="int" resultMap="purchaseSelectMap,orderDetailSelectMap">
 		SELECT
 			P.ORDER_NO,P.ORDER_USER_ID,P.ORDER_TRUCK_ID,P.ORDER_QTY,P.ORDER_PICK_UP_TIME,P.ORDER_COOKING_TIME,P.PAY_DATE_TIME,
 			P.PAY_OPTION,P.PAY_PRICE,u.USER_PHONE,u.USER_PRO_IMG,o.OD_MENU_IMAGE,o.OD_MENU_NAME,o.OD_MENU_PRICE,o.OD_MENU_QTY,
@@ -416,11 +426,10 @@
 		  and order_no = #{value};
 
 	</select>
--->
 
 	<select id="getCoupon" parameterType="int" resultMap="couponSelectMap">
 		SELECT
-			COUPON_DC_PRICE,COUPON_NO,COUPON_STATUS
+			COUPON_DC_PRICE,COUPON_NO,COUPON_STATUS, COUPON_RECEIVED_USER_ID
 		FROM ffin.coupon
 		WHERE COUPON_NO = #{value}
 

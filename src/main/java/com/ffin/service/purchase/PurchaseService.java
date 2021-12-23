@@ -24,7 +24,7 @@ public interface PurchaseService {
     public void updateRefundStatus(Purchase purchase)throws Exception ;//환불처리유무
     public void updateOrder(Purchase purchase)throws Exception; //결제이후 결제정보 추가업데이트
 
-    public Map getCouponList(String userId)throws Exception; //쿠폰 리스트를 출력
+    public Map getCouponList(Coupon coupon)throws Exception; //쿠폰 리스트를 출력
     public Map getCartList( int orderNo)throws Exception; //주문상세에 있는 정보 List?로 가져옴
     public Map getOrderList(String truckId)throws Exception; //현재판매목록
     public Map getPurchaseList(Search search , String userId)throws Exception;//마이페이지에서 구매이력

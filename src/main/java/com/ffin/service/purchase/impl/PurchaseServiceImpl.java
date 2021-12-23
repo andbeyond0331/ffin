@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service("purchaseServiceImpl")
@@ -91,9 +92,10 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 
     @Override
-    public Map<String,Object> getCouponList(String userId)throws Exception{
+    public Map<String,Object> getCouponList(Coupon coupon)throws Exception{
         Map<String,Object> map = new HashMap<String,Object>();
-        map.put("list", purchaseDao.getCouponList( userId));
+        List<Coupon> list = purchaseDao.getCouponList(coupon);
+        map.put("list", list);
         return map;
     } //쿠폰 리스트를 출력
     @Override
@@ -105,7 +107,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Override
     public Map<String,Object> getOrderList( String truckId)throws Exception{
         Map<String,Object> map = new HashMap<String,Object>();
-        map.put("list", purchaseDao.getCouponList( truckId));
+        map.put("list", purchaseDao.getOrderList(truckId));
         return map;
     } //현재판매목록
     @Override

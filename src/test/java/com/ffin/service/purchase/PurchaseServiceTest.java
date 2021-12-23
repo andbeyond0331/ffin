@@ -1,5 +1,6 @@
 package com.ffin.service.purchase;
 
+import com.ffin.common.Search;
 import com.ffin.service.domain.*;
 import com.ffin.service.user.UserService;
 import org.junit.Assert;
@@ -66,21 +67,76 @@ public class PurchaseServiceTest {
 
     }
 
+
+    @Test
+    public void TestGetOrderDetail() throws Exception {
+        Purchase purchase = new Purchase();
+        purchase = purchaseService.getOrderDetail(1);
+        System.out.println(purchase);
+
+    }
+
 ///////////////////////List/////////////////////////////////
-/*    @Test
+    //@Test
     public void TestGetCouponList() throws Exception {
 
         User user = new User();
         Coupon coupon = new Coupon();
         user.setUserId("user01");
         coupon.setCouponReceivedUserId(user);
-        Map map = purchaseService.getCouponList("user01");
+        Map map = purchaseService.getCouponList(coupon);
         System.out.println(map);
 
-        Assert.assertEquals(0, user.getUserTotalPoint());
+
+    }
+
+    //@Test
+    public void TestGetCartList() throws Exception {
+        Map map = purchaseService.getCartList(1);
+        System.out.println(map);
+
+    }
+
+    //@Test
+    public void TestGetOrderList() throws Exception {
+        Map map = purchaseService.getOrderList("truck01");
+        System.out.println(map);
+
+    }
+
+
+
+
+
+
+    //@Test
+    public void TestGetPointist() throws Exception {
+        Search search = new Search();
+        search.setCurrentPage(1);
+        search.setPageSize(3);
+        Map map = purchaseService.getPointList(search,"user01");
+        System.out.println(map);
+
+    }
+
+    @Test
+    public void TestGetPurchaseList() throws Exception {
+        Search search = new Search();
+        search.setCurrentPage(1);
+        search.setPageSize(3);
+        Map map = purchaseService.getPurchaseList(search,"user01");
+        System.out.println(map);
+
+    }
+
+
+    /*    @Test
+    public void TestGetSalesList() throws Exception {
+        Search
+        Map map = purchaseService.getSalesList(search,"truck01");
+        System.out.println(map);
 
     }*/
-
 
 
 

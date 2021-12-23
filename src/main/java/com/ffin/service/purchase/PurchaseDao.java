@@ -24,8 +24,8 @@ public interface PurchaseDao {
     public void updateRefundStatus(Purchase purchase) throws Exception;//환불처리유무
     public void updateOrder(Purchase purchase)throws Exception; //결제이후 결제정보 추가업데이트
 
-    public List<Purchase> getCouponList(String userId)throws Exception; //이용자가 가지고 있는 쿠폰 리스트를 출력
-    public List<Purchase> getCartList( int orderNo)throws Exception; //주문상세에 있는 정보 List?로 가져옴
+    public List<Coupon> getCouponList(Coupon coupon)throws Exception; //이용자가 가지고 있는 쿠폰 리스트를 출력
+    public List<OrderDetail> getCartList( int orderNo)throws Exception; //주문상세에 있는 정보 List?로 가져옴
     public List<Purchase> getOrderList(String truckId)throws Exception; //푸드트럭에 대한 현재판매목록
     public List<Purchase> getPurchaseList(Search search , String userId)throws Exception;//마이페이지에서 구매이력
     public List<Purchase> getSalesList(Search search , String truckId)throws Exception; //마이페이지에서 판매이력
