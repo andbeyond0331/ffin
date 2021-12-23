@@ -16,12 +16,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/user/*")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     @Qualifier("userServiceImpl")
     private UserService userService;
+
+    //@Inject
+    public UserController(){
+        System.out.println(this.getClass());
+    }
+
+
+    @RequestMapping(value = "/addUser", method = RequestMethod.GET)
+    public String addUser() throws Exception {
+        return "forward:/user/addUser.jsp";
+    }
 
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
@@ -38,7 +49,7 @@ public class UserController {
             session.setAttribute("user",dbUser);
             session.setAttribute("role","user");
         }
-        return "redirect:/index.jsp";
+        return "redirect:/user/home.jsp";
     }
 
 
@@ -65,7 +76,7 @@ public class UserController {
         // Model 과 View 연결
         model.addAttribute("user", user);
 
-        return "forward:/user/getUser.jsp";
+        return "forward:/user/home.jsp";
     }
 
 

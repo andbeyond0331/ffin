@@ -14,7 +14,7 @@ public class Inquiry {
 	private String inquiryTitle;
 	private String inquiryContent;
 	private String inquiryFile;
-	private Date inquiryDate;
+	private String inquiryDate;
 	private int inquiryAnsStatus;
 	private String inquiryAnsTitle;
 	private String inquiryAnsContent;

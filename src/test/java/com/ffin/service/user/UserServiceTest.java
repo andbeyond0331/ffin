@@ -67,7 +67,7 @@ public class UserServiceTest {
         user = userService.getReportCount("test01");
     }
 
-    //@Test
+    @Test
     public void testGetUserList() throws Exception {
         Search search = new Search();
         search.setCurrentPage(1);
