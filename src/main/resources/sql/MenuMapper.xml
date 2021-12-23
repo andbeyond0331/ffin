@@ -116,20 +116,22 @@
 	</select>
 
 	<select  id="getMenuList" 	parameterType="map"		resultMap="MenuSelectMap">
+
 		SELECT
-			MENU_NO,
-			MENU_TRUCK_ID,
-			MENU_NAME,
-			MENU_PRICE,
-			MENU_DETAIL,
-			IS_SIG_MENU,
-			MENU_IMG1,
-			MENU_IMG2,
-			MENU_IMG3
-		FROM menu
-		<if test="truckId !=null">
-			WHERE MENU_TRUCK_ID = #{menuTruckId}
-		</if>
+			m.MENU_NO,
+			m.MENU_TRUCK_ID,
+			m.MENU_NAME,
+			m.MENU_PRICE,
+			m.MENU_DETAIL,
+			m.IS_SIG_MENU,
+			m.MENU_IMG1,
+			m.MENU_IMG2,
+			m.MENU_IMG3,
+			t.TRUCK_ID
+		FROM menu m, truck t
+
+		WHERE MENU_TRUCK_ID = #{menuTruckId} AND m.MENU_TRUCK_ID=t.TRUCK_ID
+
 
 	</select>
 

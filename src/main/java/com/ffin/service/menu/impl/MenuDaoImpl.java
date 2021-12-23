@@ -76,11 +76,11 @@ public class MenuDaoImpl implements MenuDao {
     }
 
     @Override
-    public Map<String, Object> getMenuList(Search search, String menuTruckId) throws Exception {
+    public Map<String, Object> getMenuList(Search search, String truckId) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
 
         map.put("search", search);
-        map.put("menuTruckId", menuTruckId);
+        map.put("menuTruckId", truckId);
         List<Menu> list = sqlSession.selectList("MenuMapper.getMenuList", map);
         System.out.println("list : " + list);
 

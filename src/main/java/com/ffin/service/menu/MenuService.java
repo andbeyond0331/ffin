@@ -25,7 +25,7 @@ public interface MenuService {
     public OptionGroup getOption(int optionNo) throws Exception;
 
     //메뉴 목록 조회
-    public Map<String, Object> getMenuList(Search search, String menuTruckId) throws Exception;
+    public Map<String, Object> getMenuList(Search search, String truckId) throws Exception;
 
     //메뉴 수정
     public void updateMenu(Menu menu) throws Exception;

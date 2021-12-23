@@ -28,7 +28,7 @@ public interface MenuDao {
     public OptionGroup getOption(int optionNo) throws Exception;
 
     //SELECT LIST
-    public Map<String, Object> getMenuList(Search search, String menuTruckId) throws Exception;
+    public Map<String, Object> getMenuList(Search search, String truckId) throws Exception;
 
     //UPDATE
     public void updateMenu(Menu menu) throws Exception;
