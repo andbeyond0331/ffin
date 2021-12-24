@@ -68,11 +68,11 @@
 				
 				if(pw == null || pw.length <1) {
 					alert('패스워드를 입력하지 않으셨습니다.');
-					$("#password").focus();
+					$("#userPassword").focus();
 					return;
 				}
 				
-				$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
+				$("form").attr("method","POST").attr("action","/user/loginPost").attr("target","_parent").submit();
 			});
 		});	
 		
@@ -114,12 +114,6 @@
 		 	 	<br/><br/>
 				
 				<div >	 	 	
-		 	 		<!-- <h4 class="text-center"><strong>회원로그인</strong></h4> -->
-		 	 		<div class="item active">
-				      <img src="/images/uploadFiles/logo.png">
-				    </div>
-		 	 		</br></br></br>
-
 			        <form class="form-horizontal">
 		  
 					  <div class="form-group">
@@ -130,9 +124,9 @@
 					  </div>
 					  
 					  <div class="form-group">
-					    <label for="password" class="col-sm-4 control-label">패 스 워 드</label>
+					    <label for="userPassword" class="col-sm-4 control-label">패 스 워 드</label>
 					    <div class="col-sm-6">
-					      <input type="password" class="form-control" name="password" id="password" placeholder="패스워드" >
+					      <input type="password" class="form-control" name="userPassword" id="userPassword" placeholder="패스워드" >
 					    </div>
 					  </div>
 					  
