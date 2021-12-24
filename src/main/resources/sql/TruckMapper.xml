@@ -53,7 +53,7 @@
 						   TRUCK_JOIN_REQ_DATE, TRUCK_NOTICE_TITLE, TRUCK_NOTICE_CONTENT, TRUCK_NOTICE_IMG,
 						   TRUCK_BYE_STATUS, TRUCK_BYE_REASON, TRUCK_BUSI_STATUS, TRUCK_REG_DATE, ROLE)
 		VALUES ( #{truckId}, #{truckPassword}, #{truckCEOName}, #{truckCEOBirth}, #{truckAddr}, #{truckAddrDetail}, #{truckPhone}, #{truckEmail}, #{truckName}, #{truckBusiLice}, #{truckBusiNo}, #{truckCate}, #{truckProImg},
-				 #{truckCEOIntro}, #{truckAVGStar}, #{truckMapLa}, #{truckMapLo}, #{truckJoinReqStatus}, #{truckJoinReqDate}, #{truckNoticeTitle}, #{truckNoticeContent},#{truckNoticeImg}, #{truckByeStatus}, #{truckByeReason}, #{truckBusiStatus}, #{truckRegDate}, #{role});
+				 #{truckCEOIntro}, #{truckAVGStar}, #{truckMapLa}, #{truckMapLo}, #{truckJoinReqStatus}, SYSDATE(), #{truckNoticeTitle}, #{truckNoticeContent},#{truckNoticeImg}, #{truckByeStatus}, #{truckByeReason}, #{truckBusiStatus}, SYSDATE(), #{role});
 	</insert>
 
 	<!-- SQL :SELECT ONE-->
@@ -70,19 +70,31 @@
 
 
 	<!-- SQL : 아이디 중복 체크 -->
-	<select id="checkDuId" resultType="integer">
+	<select id="checkDuId" resultType="int">
 		SELECT count(*)
 		FROM truck
 		WHERE truck_id = #{truckId}
 	</select>
 
 
-
+	<!-- SQL : 아이디 찾기 -->
 	<select id="findTruckId"   parameterType="map"    resultType="string" >
 		SELECT
 			TRUCK_ID
 		FROM truck
 		WHERE truck_name = #{truckName} and truck_phone= #{truckPhone}
+	</select>
+
+	<!-- SQL : 신규가입 트럭조회 -->
+	<select id="getNewTruckList"   parameterType="String"    resultMap="truckSelectMap" >
+		SELECT
+			TRUCK_ID, TRUCK_PASSWORD, TRUCK_CEO_NAME, TRUCK_CEO_BIRTH, TRUCK_ADDR, TRUCK_ADDR_DETAIL,
+			TRUCK_PHONE, TRUCK_EMAIL, TRUCK_NAME, TRUCK_BUSI_LICE, TRUCK_BUSI_NO, TRUCK_CATE, TRUCK_PRO_IMG,
+			TRUCK_CEO_INTRO, TRUCK_AVG_STAR, TRUCK_MAP_LA, TRUCK_MAP_LO, TRUCK_JOIN_REQ_STATUS,
+			TRUCK_JOIN_REQ_DATE, TRUCK_NOTICE_TITLE, TRUCK_NOTICE_CONTENT, TRUCK_NOTICE_IMG,
+			TRUCK_BYE_STATUS, TRUCK_BYE_REASON, TRUCK_BUSI_STATUS, TRUCK_REG_DATE, ROLE
+		FROM truck
+		WHERE role = 0
 	</select>
 
 
