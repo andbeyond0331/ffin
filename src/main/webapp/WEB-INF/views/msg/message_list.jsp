@@ -419,6 +419,7 @@
 
 
         let msgContent = $('.write_msg').val();
+//evt.preventDefault();
 
 
         msgContent = msgContent.trim();
@@ -439,6 +440,17 @@
                     msgContent: msgContent
                 },
                 success:function(data){
+                    // 전송에 성공시 알림을 주기 위하여..
+                    var userId = '${sessionScope.userId}';
+                    console.log("message.socket::::" + socket);
+                    if(socket) {
+                        // websocket에 보내기!!! (message, 보내는이, 받는이)
+                        let socketMessage = "message,"+userId+","+other_id;
+                        console.log("socketM::::" + socketMessage);
+                        socket.send(socketMessage);
+                    }
+
+
                     console.log("메세지 전송 성공");
 
                     // 메세지 입력칸 비우기
@@ -462,9 +474,51 @@
     $(document).ready(function(){
         // 메세지 리스트 리로드
         FirstMessageList();
+
+        connectWS();
+
+      //  connect();
     });
 
 
+
+
+</script>
+
+<script>
+    var socket = null; //전역변수.
+   /* $(document).ready(function(){
+        connectWS();
+    });*/
+
+    function connectWS(){
+        var ws = new WebSocket("ws://localhost:8080/push");
+        // servlet-context에 선언한 path와 일치시키도록...
+        socket = ws;
+
+        ws.onopen = function(){
+            console.log('Info : connection opened. ');
+
+
+        };
+        ws.onmessage = function(event){
+            console.log("ReceiveMessage: ", event.data+'\n');
+            let $socketAlert =  $('div#socketAlert');
+            $socketAlert.html(event.data);
+            $socketAlert.css('display', 'block');
+            setTimeout( function(){
+                $socketAlert.css('display', 'none')
+            }, 3000)
+
+        }
+
+        ws.onclose = function(event){
+            console.log('info: connection closed.');
+            setTimeout( function(){connectWS();}, 1000);
+        };
+        ws.onerror = function(err){console.log('error: connection error.', err);};
+
+    }
 
 
 </script>

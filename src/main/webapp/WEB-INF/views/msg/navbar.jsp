@@ -15,8 +15,9 @@
 		<!-- toolBar Button Start //////////////////////// -->
 
 	</div>
+
+
 </div>
+<div id="socketAlert" class="alert alert-warning" role="alert" style="display:none;"></div>
 <!-- ToolBar End /////////////////////////////////////-->
 
-
-</script>
