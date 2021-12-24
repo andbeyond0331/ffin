@@ -54,7 +54,7 @@ public class TruckController {
         //Business Logic
         truckService.addTruck(truck);
 
-        return "redirect:/truck/loginTruck.jsp";
+        return "/truck/loginTruck.jsp";
     }
 
     @RequestMapping( value = "getTruck", method = RequestMethod.GET)

@@ -118,7 +118,7 @@ public class TruckRestController {
         return truck;
     }
 
-    @RequestMapping(value = "/truck/checkDuId", method = RequestMethod.GET)
+    @RequestMapping(value = "/checkDuId", method = RequestMethod.POST)
     @ResponseBody
     public int checkDuId(@RequestParam("truckId") String truckId) throws Exception{
         return truckService.checkDuId(truckId);

@@ -61,7 +61,7 @@ public class TruckDaoImpl implements TruckDao {
     }
     // 새로 가입한 푸드트럭 보기(관리자)
     @Override
-    public void getNewTruck(Truck truck) throws Exception {
+    public void getNewTruck(Truck role) throws Exception {
 
     }
     // 푸드트럭 수정...
@@ -102,8 +102,8 @@ public class TruckDaoImpl implements TruckDao {
     }
     // 새로 가입한 푸드트럭 목록보기(관리자)
     @Override
-    public List<Truck> getNewTruckList(Search search) throws Exception {
-        return null;
+    public List<Truck> getNewTruckList(Truck role) throws Exception {
+        return sqlSession.selectList("TruckMapper.getNewTruckList", role);
     }
     // 푸드트럭 로그인
     @Override
