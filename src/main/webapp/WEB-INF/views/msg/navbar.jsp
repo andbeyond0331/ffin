@@ -11,7 +11,7 @@
 	<div class="container">
 
 		<a class="navbar-brand" href="message_list">메세쥐</a>
-
+		<a href="/room">채팅</a>
 		<!-- toolBar Button Start //////////////////////// -->
 
 	</div>

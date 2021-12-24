@@ -1,6 +1,8 @@
 package com.ffin.web.chatting;
 
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 @Controller
@@ -70,14 +74,22 @@ public class ChattingController {
      * @return
      */
     @RequestMapping("/moveChating")
-    public ModelAndView chating(@RequestParam HashMap<Object, Object> params) {
+   // public ModelAndView chating(@RequestParam HashMap<Object, Object> params) {
+    //public ModelAndView chating(@RequestParam("roomName") String roomName, @RequestParam("roomNumber") int roomNumber) {
+    public ModelAndView chating(HttpServletRequest request) throws Exception  {
+        System.out.println("ChattingController.chating");
+        request.setCharacterEncoding("UTF-8");
+        String roomName = new String(request.getParameter("roomName").getBytes("8859_1"),"UTF-8");
+
+        int roomNumber = Integer.parseInt(request.getParameter("roomNumber"));
+        System.out.println("roomName = " + roomName + ", roomNumber = " + roomNumber);
         ModelAndView mv = new ModelAndView();
-        int roomNumber = Integer.parseInt((String) params.get("roomNumber"));
+       // int roomNumber = Integer.parseInt((String) params.get("roomNumber"));
 
         List<Room> new_list = roomList.stream().filter(o->o.getRoomNumber()==roomNumber).collect(Collectors.toList());
         if(new_list != null && new_list.size() > 0) {
-            mv.addObject("roomName", params.get("roomName"));
-            mv.addObject("roomNumber", params.get("roomNumber"));
+            mv.addObject("roomName", roomName);
+            mv.addObject("roomNumber", roomNumber);
             mv.setViewName("/chatting/chat.jsp");
         }else {
             mv.setViewName("/chatting/room.jsp");

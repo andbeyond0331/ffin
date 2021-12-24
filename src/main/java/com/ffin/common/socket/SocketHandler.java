@@ -22,10 +22,11 @@ public class SocketHandler extends TextWebSocketHandler {
 
     @Override
     public void handleTextMessage(WebSocketSession session, TextMessage message) {
+        System.out.println(":::::::::::::::::::SocketHandler.handleTextMessage");
         //메시지 발송
         String msg = message.getPayload();
         JSONObject obj = jsonToObjectParser(msg);
-
+        System.out.println("::::::::::::::::::: "+obj);
         String rN = (String) obj.get("roomNumber");
         HashMap<String, Object> temp = new HashMap<String, Object>();
         if(rls.size() > 0) {
@@ -58,6 +59,8 @@ public class SocketHandler extends TextWebSocketHandler {
     @SuppressWarnings("unchecked")
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+
+        System.out.println(":::::::::::::SocketHandler.afterConnectionEstablished");
         //소켓 연결
         super.afterConnectionEstablished(session);
         boolean flag = false;

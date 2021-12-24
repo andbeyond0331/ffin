@@ -41,14 +41,22 @@
             width: 330px;
             height: 25px;
         }
-        #yourMsg{
-            display: none;
-        }
+
     </style>
 </head>
 
 <script type="text/javascript">
     var ws;
+    var userName = '${sessionScope.userId}';
+    console.log("userName: "+userName);
+    $(document).ready(function(){
+        // 메세지 리스트 리로드
+
+
+        wsOpen();
+
+        //  connect();
+    });
 
     function wsOpen(){
         //웹소켓 전송시 현재 방의 번호를 넘겨서 보낸다.
@@ -66,6 +74,7 @@
             var msg = data.data;
             if(msg != null && msg.trim() != ''){
                 var d = JSON.parse(msg);
+                console.log("dddd: "+d)
                 if(d.type == "getId"){
                     var si = d.sessionId != null ? d.sessionId : "";
                     if(si != ''){
@@ -73,7 +82,7 @@
                     }
                 }else if(d.type == "message"){
                     if(d.sessionId == $("#sessionId").val()){
-                        $("#chating").append("<p class='me'>나 :" + d.msg + "</p>");
+                        $("#chating").append("<p class='me'>"+userName+" :" + d.msg + "</p>");
                     }else{
                         $("#chating").append("<p class='others'>" + d.userName + " :" + d.msg + "</p>");
                     }
@@ -92,23 +101,26 @@
     }
 
     function chatName(){
-        var userName = $("#userName").val();
-        if(userName == null || userName.trim() == ""){
+       // var userName = $("#userName").val();
+        var userName = '${sessionScope.userId}';
+        console.log("userName: "+userName);
+      /*  if(userName == null || userName.trim() == ""){
             alert("사용자 이름을 입력해주세요.");
             $("#userName").focus();
         }else{
             wsOpen();
             $("#yourName").hide();
             $("#yourMsg").show();
-        }
+        }*/
     }
 
     function send() {
+
         var option ={
             type: "message",
             roomNumber: $("#roomNumber").val(),
             sessionId : $("#sessionId").val(),
-            userName : $("#userName").val(),
+            userName : userName,
             msg : $("#chatting").val()
         }
         ws.send(JSON.stringify(option))
@@ -123,8 +135,8 @@
 
     <div id="chating" class="chating">
     </div>
-
-    <div id="yourName">
+    <input type="hidden" name="userName" id="userName">
+   <%-- <div id="yourName">
         <table class="inputTable">
             <tr>
                 <th>사용자명</th>
@@ -132,7 +144,7 @@
                 <th><button onclick="chatName()" id="startBtn">이름 등록</button></th>
             </tr>
         </table>
-    </div>
+    </div>--%>
     <div id="yourMsg">
         <table class="inputTable">
             <tr>
