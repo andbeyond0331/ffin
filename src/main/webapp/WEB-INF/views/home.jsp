@@ -6,7 +6,9 @@
 </head>
 <body>
 This is welcomehome....
-${hello}
+<%--${user.password}
+${user.userId}--%>
+${user.userId}
 </body>
 
 </html>

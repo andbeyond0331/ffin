@@ -6,69 +6,115 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/user/*")
 public class UserController {
 
     @Autowired
     @Qualifier("userServiceImpl")
     private UserService userService;
+    ModelAndView modelAndView;
 
-    //@Inject
     public UserController(){
         System.out.println(this.getClass());
+        modelAndView = new ModelAndView();
     }
 
 
-    @RequestMapping(value = "/addUser", method = RequestMethod.GET)
-    public String addUser() throws Exception {
-        return "forward:/user/addUser.jsp";
-    }
+//    @RequestMapping(value = "login", method = RequestMethod.GET)
+//    public ModelAndView login(HttpServletRequest request) throws Exception{
+//        System.out.println("UserController.login : GET");
+//        modelAndView.setViewName("/user/login.jsp");
+//        modelAndView.setViewName("/user/login");
+//        return modelAndView;
+//    }
 
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String login() throws Exception{
+    @RequestMapping(value = "loginGet", method = RequestMethod.GET)
+    public String login2() throws Exception{
         System.out.println("UserController.login : GET");
+        return "/user/login.jsp";
+    }
+
+    @RequestMapping( value="loginPost", method=RequestMethod.POST )
+    public String login(@ModelAttribute("user") User user , HttpSession session) throws Exception{
+
+        System.out.println("/user/login : POST");
+        //Business Logic
+        User dbUser=userService.getUser(user.getUserId());
+
+        System.out.println("@@@"+ user);
+        System.out.println("???"+dbUser);
+
+        if( user.getUserPassword().equals(dbUser.getUserPassword())){
+            session.setAttribute("user", dbUser);
+            session.setAttribute("role","user");
+            System.out.println("로그인OK");
+            return "home.jsp";
+        }
+        System.out.println("로그인Nope");
+        return "/user/login.jsp";
+    }
+
+    @RequestMapping( value="addUserGet", method=RequestMethod.GET )
+    public String addUser() throws Exception{
+
+        System.out.println("/user/addUser : GET");
+
+        return "redirect:/user/addUser.jsp";
+    }
+
+    @RequestMapping( value="addUserPost", method=RequestMethod.POST )
+    public String addUser( @ModelAttribute("user") User user ) throws Exception {
+
+        System.out.println("/user/addUser : POST");
+        //Business Logic
+        userService.addUserInfo(user);
+
         return "redirect:/user/login.jsp";
     }
 
-    @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String login(@ModelAttribute("user")User user, HttpSession session) throws Exception{
-        System.out.println("UserController.login : POST");
-        User dbUser = userService.getUser(user.getUserId());
-        if(user.getUserPassword().equals(dbUser.getUserPassword())){
-            session.setAttribute("user",dbUser);
-            session.setAttribute("role","user");
-        }
-        return "redirect:/user/home.jsp";
-    }
-
+//    @RequestMapping(value = "login", method = RequestMethod.POST)
+//    public ModelAndView login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
+//
+//        System.out.println("UserController.login : POST");
+//
+//        User dbUser = userService.getUser(user.getUserId());
+//
+//        System.out.println("***"+user);
+//        System.out.println("!!!!"+user.getUserPassword());
+//        System.out.println("????"+dbUser.getUserPassword());
+//
+//        if(user.getUserPassword().equals(dbUser.getUserPassword())){
+//            session.setAttribute("user",dbUser);
+//            session.setAttribute("role","user");
+//            modelAndView.setViewName("redirect:/user/getUser");
+//        } else {
+//            modelAndView.setViewName("/user/login");
+//        }
+//        return modelAndView;
+//    }
 
 
 //    @RequestMapping(value = "getUser", method = RequestMethod.GET)
-//    public ModelAndView getUser(HttpServletRequest request,ModelAndView m) throws Exception{
+//    public ModelAndView getUser(HttpServletRequest request) throws Exception{
+//
 //        System.out.println("UserController.getUser : GET");
 //        String userId= request.getParameter("userId");
 //
-//        System.out.println("userId: "+userId);
 //        User user = userService.getUser(userId);
-//        System.out.println("user: "+user);
-//        m.addObject("user",user);
-//        m.setViewName("/WEB-INF/views/user/getUser.jsp");
-//        return m;
+//        modelAndView.addObject("user",user);
+//        modelAndView.setViewName("/user/getUser.jsp");
+//        return modelAndView;
 //    }
 
-    @RequestMapping( value="getUser", method=RequestMethod.GET )
-    public String getUser( @RequestParam("userId") String userId , Model model ) throws Exception {
+    @RequestMapping( value="getUserGet", method=RequestMethod.GET )
+    public String getUser(@RequestParam("userId") String userId , Model model ) throws Exception {
 
         System.out.println("/user/getUser : GET");
         //Business Logic
@@ -76,8 +122,10 @@ public class UserController {
         // Model 과 View 연결
         model.addAttribute("user", user);
 
-        return "forward:/user/home.jsp";
+        return "/user/getUser.jsp";
     }
+
+
 
 
 
