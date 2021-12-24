@@ -11,12 +11,11 @@ import com.ffin.service.truck.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,24 +54,48 @@ public class MenuController {
     @Value("100")
     int pageSize;
 
-    @RequestMapping(value = "addMenu", method= RequestMethod.GET)
-    public ModelAndView addMenu(@RequestParam("truckId") String truckId) throws Exception{
+//    @RequestMapping(value = "addMenu", method= RequestMethod.GET)
+//    public ModelAndView addMenu(@RequestParam("truckId") String truckId) throws Exception{
+//
+//        /*
+//            사업자가 메뉴를 등록하기 위해 사용하는 화면
+//            truckId로 truck의 상호를 화면에 뿌려주고, 추가할 메뉴 정보를 받는다.
+//         */
+//        System.out.println("/menu/addMenu : GET");
+//        System.out.println("truckId : " + truckId);
+//
+//        Truck truck = truckService.getTruck(truckId);
+//        System.out.println("truck : " + truck);
+//
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.addObject("truck", truck);
+//        modelAndView.setViewName("/menu/addMenuView.jsp");
+//
+//        return modelAndView;
+//    }
+        // 메뉴 추가 옵션그룹이랑 같이 하는 방법 고안1
+        @PostMapping ("addMenu")
+    public ResponseEntity<Menu> addMenu(Menu menu, String[] optionGroupName, String[] optionName, Integer[] optionPrice, @RequestParam("truckId") String truckId) throws Exception{
 
         /*
             사업자가 메뉴를 등록하기 위해 사용하는 화면
             truckId로 truck의 상호를 화면에 뿌려주고, 추가할 메뉴 정보를 받는다.
+            optionGroup 도 함께 등록하기 위해 노력해본다.
          */
-        System.out.println("/menu/addMenu : GET");
-        System.out.println("truckId : " + truckId);
 
-        Truck truck = truckService.getTruck(truckId);
-        System.out.println("truck : " + truck);
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("truck", truck);
-        modelAndView.setViewName("/menu/addMenuView.jsp");
-
-        return modelAndView;
+//            menuService.addMenu(menu, map);
+            return new ResponseEntity<Menu>(menu, HttpStatus.OK);
+//        System.out.println("/menu/addMenu : GET");
+//        System.out.println("truckId : " + truckId);
+//
+//        Truck truck = truckService.getTruck(truckId);
+//        System.out.println("truck : " + truck);
+//
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.addObject("truck", truck);
+//        modelAndView.setViewName("/menu/addMenuView.jsp");
+//
+//        return modelAndView;
     }
 //
 //    @RequestMapping(value = "addMenu", method=RequestMethod.POST)
@@ -152,8 +175,31 @@ public class MenuController {
 
         return modelAndView;
     }
-//
-//    @RequestMapping("deleteMenu")
-//    public ModelAndView deleteMenu(@ModelAttribute())
+
+    @RequestMapping(value="deleteMenu", method=RequestMethod.POST)
+    public ModelAndView deleteMenu(HttpServletRequest request, ModelAndView modelAndView) throws Exception{
+
+        System.out.println("/menu/deleteMenu : GET");
+
+        //Business Logic
+
+        String menuNoo = request.getParameter("menuNo");
+
+        int menuNo = Integer.parseInt(menuNoo);
+
+        Menu menu = menuService.getMenu(menuNo);
+
+        menuService.deleteMenu(menu);
+
+        //Model - View 연결
+        modelAndView.addObject("menu", menu);
+        modelAndView.setViewName("/menu/updateMenuView.jsp"); // 진석님과 메뉴 수정 어디서 할 지 상의해보고
+
+        System.out.println("request = " + request + ", modelAndView = " + modelAndView);
+
+        return modelAndView;
+    }
+
+
 
 }
