@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PurchaseDao {
 
-    public void addCart(OrderDetail orderDetail) throws Exception ;//장바구니에 정보 등록
+    public void addCart(List list) throws Exception ;//장바구니에 정보 등록
     public int addPurchase(Purchase purchase)throws Exception;//주문번호 생성을 위해서
     public void updatePoint(Point point)throws Exception;// 포인트 적립차감 등록
     public void addCoupon(Coupon coupon)throws Exception;// 쿠폰발급 등록
@@ -31,10 +31,10 @@ public interface PurchaseDao {
     public List<Purchase> getSalesList(Search search , String truckId)throws Exception; //마이페이지에서 판매이력
     public List<Point> getPointList(Search search , String userId)throws Exception;//마이페이지에서 포인트내역조회
 
+    public List getOrderDetail(int orderNo) throws Exception;//주문정보 조회 이용자의 정보도 함께
 
 
     public Purchase getPurchase( int orderNo)throws Exception; // 결제정보 조회
-    public Purchase getOrderDetail(int orderNo) throws Exception;//주문정보 조회 이용자의 정보도 함께
     public Coupon getCoupon(int couponNo)throws Exception;// 쿠폰 할인금
     public User getTotalPoint (String userId)throws Exception;//보유 총포인트 조회
 

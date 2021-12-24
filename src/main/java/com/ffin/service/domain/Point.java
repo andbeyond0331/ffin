@@ -16,14 +16,5 @@ public class Point {
 	private int pointStatus;
 	private int pointBirthCode;
 	
-	
-	
-
-	
-	
-	
-	
-	
-	
 
 }

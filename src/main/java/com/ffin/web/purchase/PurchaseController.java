@@ -116,7 +116,7 @@ public class PurchaseController {
         purchaseService.updateCouponStatus(coupon);
         purchaseService.updatePoint(point);
         purchaseService.updateTotalPoint(user);
-        purchase = purchaseService.getOrderDetail(purchase.getOrderNo());
+        Map map = purchaseService.getOrderDetail(purchase.getOrderNo());
         model.addAttribute(purchase);
 
 

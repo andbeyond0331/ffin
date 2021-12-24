@@ -25,9 +25,12 @@ public class PurchaseDaoImpl implements PurchaseDao {
         System.out.println(this.getClass());
     }
     @Override
-    public void addCart(OrderDetail orderDetail) throws Exception{
-        System.out.println("orderDetail = " + orderDetail);
-        sqlSession.insert("PurchaseMapper.addCart",orderDetail);
+    public void addCart(List list) throws Exception{
+        System.out.println("orderDetail = " + list);
+        Map map = new HashMap();
+        map.put("list",list);
+        System.out.println("map에 들어간것 확인 "+map.get("list"));
+        sqlSession.insert("PurchaseMapper.addCart",map);
     }//장바구니에 정보 등록
     @Override
     public int addPurchase(Purchase purchase)throws Exception{
@@ -125,6 +128,14 @@ public class PurchaseDaoImpl implements PurchaseDao {
         map.put("userId",userId);
         return sqlSession.selectList("PurchaseMapper.getPointList",map);
     }//마이페이지에서 포인트내역조회
+    @Override
+    public List getOrderDetail(int orderNo)throws Exception{
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("orderNo",orderNo);
+        return sqlSession.selectOne("PurchaseMapper.getOrderDetail",map);
+    } //주문정보 조회 이용자의 정보도 함께
+
+
 
 
     @Override
@@ -140,9 +151,6 @@ public class PurchaseDaoImpl implements PurchaseDao {
     public Purchase getPurchase(int orderNo)throws Exception{
         return sqlSession.selectOne("PurchaseMapper.getPurchase",orderNo);
     } // 결제정보 조회
-    @Override
-    public Purchase getOrderDetail(int orderNo)throws Exception{
-        return sqlSession.selectOne("PurchaseMapper.getOrderDetail",orderNo);
-    } //주문정보 조회 이용자의 정보도 함께
+
 
 }
