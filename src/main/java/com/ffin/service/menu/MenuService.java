@@ -10,7 +10,10 @@ import java.util.Map;
 public interface MenuService {
 
     //메뉴 등록
-    public void addMenu(Menu menu) throws Exception;
+    //public void addMenu(Menu menu) throws Exception;
+
+    //메뉴와 옵션 한꺼번에 등록하는 방법 고안1
+    public void addMenu(Menu menu, Map map) throws Exception;
 
     //옵션 그룹 등록
     public void addOptionGroup(OptionGroup optionGroup) throws Exception;

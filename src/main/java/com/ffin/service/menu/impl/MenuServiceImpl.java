@@ -31,10 +31,16 @@ public class MenuServiceImpl implements MenuService {
     }
 
     ///MMM
-    @Override
-    public void addMenu(Menu menu) throws Exception {
-        System.out.println("MenuServiceImpl.addMenu");
+//    @Override
+//    public void addMenu(Menu menu) throws Exception {
+//        System.out.println("MenuServiceImpl.addMenu");
+//        menuDao.addMenu(menu);
+//    }
+    //메뉴와 옵션그룹 한 번에 insert하는 방법 고안1
+    public void addMenu(Menu menu, Map map) throws Exception {
         menuDao.addMenu(menu);
+
+//        if()
     }
 
     @Override
