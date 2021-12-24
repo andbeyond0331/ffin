@@ -10,190 +10,120 @@
         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link href="/css/animate.min.css" rel="stylesheet">
 <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
 <script type="text/javascript">
-    $(function () {
-        $(window).scroll(function () { //브라우저에 스크롤이 발생하는 순간부터
-            var curpos = $(window).scrollTop()+20; //스크롤바의 상단 위치값+20 보관
-            $(".sky").stop().animate({"top":curpos}); //스카이메뉴의 상단위치값 애니
-        });
-    });
 
-    $(function() {
-        $("button.btn-primary:contains('확정')").click(function() {
-            $("form").attr("method","POST").attr("action","/purchase/addCart").submit();
-        });
-    });
+    function scrollUpDown(_document, _window){
+        var scrollHeight = $(_document).height() - $(_window).height();
 
+        $(_document.body).stop().animate({
+            scrollTop: 0
+        }, 500).animate({
+            scrollTop: scrollHeight
+        }, 2000).delay(200).animate({
+            scrollTop: 0
+        }, 2000);
+    }
+
+    window.scrollUpDown;
+
+    $(document).ready(function(){
+
+        $('.box-demo-button-wrapper button').on('click', function(){
+            var iframe = $(this).parent().find('+ .box-demo').find('iframe')[0];
+
+            scrollUpDown(iframe.contentDocument, iframe.contentWindow);
+        });
+
+    });
 
 </script>
 <style type="text/css">
-    * {
-        padding:0;
-        margin:0;
-    }
-    .box {
-        position:relative;
-        width:400px;
-        margin:auto;
-        background:#ccc;
-        height:3000px;
-    }
-    .sky {
-        position:absolute;
-        width:200px;
-        left:200%;
-        top:20px;
-        background: #b47f7f;
-        height:200px;
-    }
+
+    html,
+    body {
+        margin: 0; }
+    .header {
+        height: 80px;
+        position: sticky;
+        top: 0;
+        background: burlywood; }
+    .container {
+        display: flex;
+        flex-flow: row nowrap; }
+    .content {
+        width: 100%;
+        height: 3000px;
+        background: #f5f5f5; }
+    .sidebar {
+        width: 20%;
+        height: 400px;
+        position: sticky;
+        top: 80px;
+        background: yellowgreen; }
+    .footer {
+        background: #333;
+        height: 200px; }
+
+
+
 </style>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-<div class="box">
-    <p class="sky">
-
-
-
-<form>
-        <table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
+<div class="header">Header</div>
+<div class="container">
+    <div class="content">Main content</div>
+    <div class="sidebar">
+        <table border=1>
             <tr>
-                <td width="15" height="37">
-                    <img src="/images/ct_ttl_img01.gif"  width="15" height="37"/>
-                </td>
-                <td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left: 10px;">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td width="93%" class="ct_ttl01">구매정보수정</td>
-                            <td width="20%" align="right">&nbsp;</td>
-                        </tr>
-                    </table>
-                </td>
-                <td width="12" height="37">
-                    <img src="/images/ct_ttl_img03.gif" width="12" height="37"/>
-                </td>
+                <td>메뉴이름</td>
+                <td>${cart.odMenuName}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>옵션그룹이름</td>
+                <td>${cart.odOptionGroupName}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>옵션이름</td>
+                <td>${cart.odOptionName}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>메뉴수량</td>
+                <td>${cart.odMenuQty}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>메뉴가격</td>
+                <td>${cart.odMenuPrice}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>옵션가격</td>
+                <td>${cart.odOptionPrice}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>메뉴이미지</td>
+                <td>${cart.odMenuImage}</td>
+                <td></td>
             </tr>
         </table>
-        <input type="hidden" name="odMenuName" value="${cart.odMenuName}" />
-        <table width="600" border="0" cellspacing="0" cellpadding="0"	align="center" style="margin-top: 13px;">
-            <tr>
-                <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-            </tr>
-            <tr>
-                <td width="104" class="ct_write">구매자아이디</td>
-                <td bgcolor="D6D6D6" width="1"></td>
-                <td class="ct_write01">${cart.odOptionGroupName}</td>
-
-                <input type="hidden" name="odOptionName" value="${cart.odOptionName}">
-
-            </tr>
-            <tr>
-                <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-            </tr>
-            <tr>
-                <td width="104" class="ct_write">구매방법${cart.odMenuQty}</td>
-                <td bgcolor="D6D6D6" width="1"></td>
-                <td class="ct_write01">
-
-                </td>
-            </tr>
-            <tr>
-                <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-            </tr>
-            <tr>
-                <td width="104" class="ct_write">구매자이름</td>
-                <td bgcolor="D6D6D6" width="1"></td>
-                <td class="ct_write01">
-                    <input 	type="text" name="odMenuQtyFlag" 	class="ct_input_g" style="width: 100px; height: 19px"
-                              maxLength="20" value="${cart.odMenuQtyFlag}" />
-                </td>
-            </tr>
-            <tr>
-                <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-            </tr>
-            <tr>
-                <td width="104" class="ct_write">구매자 연락처</td>
-                <td bgcolor="D6D6D6" width="1"></td>
-                <td class="ct_write01">
-                    <input 	type="text" name="odMenuPrice" class="ct_input_g" style="width: 100px; height: 19px"
-                              maxLength="20" value="${cart.odMenuPrice}" />
-                </td>
-            </tr>
-
-            <tr>
-                <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-            </tr>
-            <tr>
-                <td width="104" class="ct_write">구매자주소</td>
-                <td bgcolor="D6D6D6" width="1"></td>
-                <td class="ct_write01">
-                    <input 	type="text" name="odMenuImage" class="ct_input_g" style="width: 100px; height: 19px"
-                              maxLength="20" value="${cart.odMenuImage}" />
-                </td>
-            </tr>
-            <tr>
-                <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-            </tr>
-            <tr>
-                <td width="104" class="ct_write">구매요청사항</td>
-                <td bgcolor="D6D6D6" width="1"></td>
-                <td class="ct_write01">
-                    <input 	type="text" name="odOptionPrice" 	class="ct_input_g" style="width: 100px; height: 19px"
-                              maxLength="20" value="${cart.odOptionPrice}" />
-                </td>
-            </tr>
-            <tr>
-                <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-            </tr>
-            <tr>
-                <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-            </tr>
-        </table>
-
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
-            <tr>
-                <td width="53%"></td>
-                <td align="right">
-                    <table border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td width="17" height="23">
-                                <img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-                            </td>
-                            <td background="/images/ct_btnbg02.gif" class="ct_btn01"	style="padding-top: 3px;">
-                                <!-- <input type="submit" value="수정"/> -->확인
-                            </td>
-                            <td background="/images/ct_btnbg02.gif" class="ct_btn01"
-                                style="padding-top: 3px;">
-                                <!-- <a href="javascript:fncAddPurchase();">구매</a> -->구매
-                            </td>
-                            <button type="button" class="btn btn-primary">확정</button>
-                            <td width="14" height="23">
-                                <img src="/images/ct_btnbg03.gif" width="14" height="23"/>
-                            </td>
-                            <td width="30"></td>
-                            <td width="17" height="23">
-                                <img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-                            </td>
-                            <td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-                                <!-- <a href="javascript:history.go(-1)">취소</a> -->취소
-                            </td>
-                            <td width="14" height="23">
-                                <img src="/images/ct_btnbg03.gif" width="14" height="23"/>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </table>
-
-</form>
-
-    </p>
+    </div>
 </div>
+<div class="footer">Footer</div>
+
 </body>
+
+
+
 </html>

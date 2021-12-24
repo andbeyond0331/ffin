@@ -148,22 +148,24 @@
 	</insert>
 
 
-	<insert id="addCart" parameterType="map">
+	<insert id="addCart" parameterType="map" useGeneratedKeys="true" keyProperty="odOrderNo">
 		INSERT
 		INTO ffin.orderdetail (OD_ORDER_NO,OD_MENU_NAME,OD_OPTION_GROUP_NAME,
 							   OD_OPTION_NAME,OD_MENU_QTY,OD_MENU_QTY_FLAG,
 							   OD_MENU_PRICE,OD_OPTION_PRICE,OD_MENU_IMAGE)
 		VALUES
 
-				(  #{odOrderNo.orderNo:NUMERIC},
-				   #{odMenuName:VARCHAR},
-				   #{odOptionGroupName:VARCHAR},
-				   #{odOptionName:VARCHAR},
-				   #{odMenuQty:NUMERIC},
-				   #{odMenuQtyFlag:CHAR},
-				   #{odMenuPrice:NUMERIC},
-				   #{odOptionPrice:NUMERIC},
-				   #{odMenuImage:VARCHAR} )
+		<foreach collection="list" item="item" separator=",">
+			(  ${item.odOrderNo.orderNo},
+			"${item.odMenuName}",
+			"${item.odOptionGroupName}",
+			"${item.odOptionName}",
+			${item.odMenuQty},
+			${item.odMenuQtyFlag},
+			${item.odMenuPrice},
+			${item.odOptionPrice},
+			"${item.odMenuImage}" )
+		</foreach>
 
 	</insert>
 

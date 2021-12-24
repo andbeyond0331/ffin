@@ -26,9 +26,9 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public void addCart(OrderDetail orderDetail) throws Exception{
+    public void addCart(List list) throws Exception{
         System.out.println("PurchaseServiceImpl.addCart");
-        purchaseDao.addCart(orderDetail);
+        purchaseDao.addCart(list);
 
     }//장바구니에 정보 등록, 등록된 주분번호 가져오기
     @Override
@@ -128,15 +128,19 @@ public class PurchaseServiceImpl implements PurchaseService {
         map.put("list", purchaseDao.getPointList(search, userId));
         return map;
     }//마이페이지에서 포인트내역조회
+    @Override
+    public Map getOrderDetail(int orderNo)throws Exception{
+        Map<String,Object> map = new HashMap<>();
+        map.put("list",purchaseDao.getOrderDetail(orderNo));
+        return map;
+    } //주문정보 조회 이용자의 정보도 함께
+
+
 
     @Override
     public  Purchase getPurchase(int orderNo)throws Exception{
         return purchaseDao.getPurchase(orderNo);
     } // 결제정보 조회
-    @Override
-    public Purchase getOrderDetail(int orderNo)throws Exception{
-        return purchaseDao.getOrderDetail(orderNo);
-    } //주문정보 조회 이용자의 정보도 함께
     @Override
     public Coupon getCoupon(int couponNo)throws Exception{
         System.out.println("PurchaseServiceImpl.getCoupon");

@@ -73,14 +73,14 @@ public class PurchaseServiceTest {
 
     //@Test
     public void TestGetOrderDetail() throws Exception {
-        Purchase purchase = new Purchase();
-        purchase = purchaseService.getOrderDetail(1);
-        System.out.println(purchase);
+
+        Map map = purchaseService.getOrderDetail(1);
+        System.out.println(map);
 
     }
 
 ///////////////////////List/////////////////////////////////
-    //@Test
+    @Test
     public void TestGetCouponList() throws Exception {
 
         User user = new User();
@@ -170,7 +170,7 @@ public class PurchaseServiceTest {
     }
 
 
-    @Test
+    //@Test
     public void testAddOrderDetail() throws Exception {
 
         OrderDetail orderDetail = new OrderDetail();
@@ -187,10 +187,36 @@ public class PurchaseServiceTest {
         orderDetail.setOdOptionGroupName("null");
         orderDetail.setOdOptionName("null");
         orderDetail.setOdOptionPrice(0);
-   /*     List list = new ArrayList();
-        list.add(orderDetail);*/
 
-        purchaseService.addCart(orderDetail);
+
+        OrderDetail orderDetail1 = new OrderDetail();
+        orderDetail1.setOdOrderNo(purchase);
+        orderDetail1.setOdMenuImage("imag5-1");
+        orderDetail1.setOdMenuName("menu10");
+        orderDetail1.setOdMenuPrice(2000);
+        orderDetail1.setOdMenuQty(4);
+        orderDetail1.setOdMenuQtyFlag(0);
+        orderDetail1.setOdOptionGroupName("ogption1");
+        orderDetail1.setOdOptionName("option1");
+        orderDetail1.setOdOptionPrice(1000);
+
+        OrderDetail orderDetail2 = new OrderDetail();
+        orderDetail2.setOdOrderNo(purchase);
+        orderDetail2.setOdMenuImage("imag5-1");
+        orderDetail2.setOdMenuName("menu10");
+        orderDetail2.setOdMenuPrice(2000);
+        orderDetail2.setOdMenuQty(3);
+        orderDetail2.setOdMenuQtyFlag(0);
+        orderDetail2.setOdOptionGroupName("ogption2");
+        orderDetail2.setOdOptionName("option1");
+        orderDetail2.setOdOptionPrice(1000);
+
+        List list = new ArrayList();
+        list.add(orderDetail);
+        list.add(orderDetail1);
+        list.add(orderDetail2);
+
+        purchaseService.addCart(list);
 
 
 
