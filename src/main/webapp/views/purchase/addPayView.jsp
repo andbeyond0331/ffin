@@ -344,7 +344,7 @@
 
     <input type="hidden" name="purchaseProd.prodNo"
            value="<%--${product.prodNo}--%>" /> <input type="hidden" name="prodName"
-                                               value="<%--${product.prodName}--%>" /> <input type="hidden"
+                                               value="${orderDetail.odOrderMenuName}" /> <input type="hidden"
                                                                                      name="prodDetail" value="<%--${product.prodDetail}--%>" />
 
     <table width="600" border="0" cellspacing="0" cellpadding="0"
@@ -421,9 +421,9 @@
         <tr>
             <td width="104" class="ct_write">가격</td>
             <td bgcolor="D6D6D6" width="1"></td>
-            <input type="hidden" name="price" value="1000<%--${product.price}--%>"/>
-            <td class="ct_write01"><%--${product.price}--%><input type="hidden"
-                                                          name="price" value="<%--${product.price}--%>" /></td>
+            <input type="hidden" name="price" value="1000${purchase.orderTotalPrice}"/>
+            <td class="ct_write01">${purchase.orderTotalPrice}<input type="hidden"
+                                                          name="price" value="${purchase.orderTotalPrice}" /></td>
         </tr>
         <tr>
             <td height="1" colspan="3" bgcolor="D6D6D6"></td>
@@ -431,7 +431,7 @@
         <tr>
             <td width="104" class="ct_write">등록일자</td>
             <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01"><%--${product.regDate}--%><input type="hidden"
+            <td class="ct_write01">${purchase.orderTotalPrice}<input type="hidden"
                                                             name="regDate" value="<%--${product.regDate}--%>" /></td>
         </tr>
         <tr>
@@ -443,8 +443,8 @@
                     align="absmiddle" />
             </td>
             <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01"><%--${user.userId}--%><input type="hidden"
-                                                        name="buyer.userId" value="<%--${user.userId}--%>" /></td>
+            <td class="ct_write01">${purchase.orderUserId.userId}<input type="hidden"
+                                                        name="buyer.userId" value="${purchase.orderUserId.userId}" /></td>
 
         </tr>
         <tr>

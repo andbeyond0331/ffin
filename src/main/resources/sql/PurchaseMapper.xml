@@ -9,10 +9,11 @@
 	<resultMap type="purchase" id="purchaseSelectMap">
 		<!--Purchase Domain-->
 		<result property="orderNo" 				column="ORDER_NO" 				jdbcType="NUMERIC"/>
-		<result property="orderUserId.userId" 	column="ORDER_USER_ID" 			jdbcType="VARCHAR"/>
+		<!--<result property="orderUserId.userId" 	column="ORDER_USER_ID" 			jdbcType="VARCHAR"/>
 		<result property="orderTruckId.truckId"	column="ORDER_TRUCK_ID"			jdbcType="VARCHAR"/>
-		<result property="payPointNo.pointNo" 	column="PAY_POINT_NO"			jdbcType="NUMERIC"/>
 		<result property="payCouponNo.couponNo"	column="PAY_COUPON_NO"	 		jdbcType="NUMERIC"/>
+		-->
+		<result property="payPointNo.pointNo" 	column="PAY_POINT_NO"			jdbcType="NUMERIC"/>
 		<result property="payResNo.ctNo" 		column="PAY_RES_NO" 			jdbcType="NUMERIC"/>
 		<result property="orderQty" 			column="ORDER_QTY"				jdbcType="NUMERIC"/>
 		<result property="orderRequest" 		column="ORDER_REQUEST" 			jdbcType="VARCHAR"/>
@@ -64,7 +65,7 @@
 	<resultMap type="orderDetail" id="orderDetailSelectMap">
 		<!--OrderDetail Domain-->
 		<result property="odNo" 				column="OD_NO" 					jdbcType="NUMERIC" />
-		<result property="odOrderNo.orderNo" 	column="OD_ORDER_NO" 			jdbcType="NUMERIC" />
+	<!--	<result property="odOrderNo.orderNo" 	column="OD_ORDER_NO" 			jdbcType="NUMERIC" />-->
 		<result property="odMenuName" 			column="OD_MENU_NAME" 			jdbcType="VARCHAR" />
 		<result property="odOptionGroupName" 	column="OD_OPTION_GROUP_NAME" 	jdbcType="VARCHAR" />
 		<result property="odOptionName" 		column="OD_OPTION_NAME" 		jdbcType="VARCHAR" />
@@ -74,6 +75,55 @@
 		<result property="odOptionPrice" 		column="OD_OPTION_PRICE" 		jdbcType="NUMERIC" />
 		<result property="odMenuImage" 			column="OD_MENU_IMAGE" 			jdbcType="VARCHAR" />
 
+		<association property="odOrderNo" javaType="purchase">
+			<result property="orderNo" 				column="OD_ORDER_NO" 				jdbcType="NUMERIC"/>
+			<!--<result property="orderUserId.userId" 	column="ORDER_USER_ID" 			jdbcType="VARCHAR"/>
+            <result property="orderTruckId.truckId"	column="ORDER_TRUCK_ID"			jdbcType="VARCHAR"/>
+            <result property="payCouponNo.couponNo"	column="PAY_COUPON_NO"	 		jdbcType="NUMERIC"/>
+            -->
+			<result property="payPointNo.pointNo" 	column="PAY_POINT_NO"			jdbcType="NUMERIC"/>
+			<result property="payResNo.ctNo" 		column="PAY_RES_NO" 			jdbcType="NUMERIC"/>
+			<result property="orderQty" 			column="ORDER_QTY"				jdbcType="NUMERIC"/>
+			<result property="orderRequest" 		column="ORDER_REQUEST" 			jdbcType="VARCHAR"/>
+			<result property="orderStatus" 			column="ORDER_STATUS" 			jdbcType="CHAR"/>
+			<result property="orderPickUpTime" 		column="ORDER_PICK_UP_TIME"		jdbcType="NUMERIC"/>
+			<result property="orderCookingTime"		column="ORDER_COOKING_TIME"		jdbcType="NUMERIC"/>
+			<result property="orderCancelReason"	column="ORDER_CANCEL_REASON"	jdbcType="CHAR" />
+			<result property="orderNopeReason" 		column="ORDER_NOPE_REASON" 		jdbcType="CHAR" />
+			<result property="orderTotalPrice"		column="ORDER_TOTAL_PRICE" 	 	jdbcType="NUMERIC" />
+			<result property="payDateTime" 			column="PAY_DATE_TIME" 			jdbcType="TIMESTAMP" />
+			<result property="payRefundDateTime" 	column="PAY_REFUND_DATE_TIME" 	jdbcType="TIMESTAMP" />
+			<result property="payServiceType" 		column="PAY_SERVICE_TYPE" 		jdbcType="CHAR" />
+			<result property="payOption" 			column="PAY_OPTION" 			jdbcType="CHAR" />
+			<result property="payRefundStatus" 		column="PAY_REFUND_STATUS" 		jdbcType="CHAR" />
+			<result property="payPrice" 			column="PAY_PRICE" 				jdbcType="NUMERIC" />
+
+			<association property="payCouponNo" javaType="coupon">
+				<id property="couponNo"							column="PAY_COUPON_NO" 				jdbcType="NUMERIC"/>
+				<result property="couponReceivedUserId.userId"	column="COUPON_RECEIVED_USER_ID"	jdbcType="VARCHAR"/>
+				<result property="couponDcPrice"				column="COUPON_DC_PRICE"			jdbcType="NUMERIC"/>
+				<result property="couponStatus"					column="COUPON_STATUS"				jdbcType="CHAR"/>
+				<result property="couponType"			column="COUPON_TYPE"        jdbcType="CHAR"/>
+
+			</association>
+
+			<association property="orderUserId" javaType="user">
+				<id property="userId" 			column="ORDER_USER_ID"		jdbcType="VARCHAR"/>
+				<result property="userPhone"	column="USER_PHONE"			jdbcType="VARCHAR"/>
+				<result property="userName"		column="USER_NAME"			jdbcType="VARCHAR"/>
+				<result property="userProImg"	column="USER_PRO_IMG"		jdbcType="VARCHAR"/>
+
+
+			</association>
+			<association property="orderTruckId" javaType="truck">
+				<id property="truckId"			 	column="ORDER_TRUCK_ID" 	jdbcType="VARCHAR"/>
+				<result property="truckName"		column="TRUCK_NAME"			jdbcType="VARCHAR"/>
+				<result property="truckCEOName"		column="TRUCK_CEO_NAME"		jdbcType="VARCHAR"/>
+				<result property="truckPhone"		column="TRUCK_PHONE"		jdbcType="VARCHAR"/>
+			</association>
+
+
+		</association>
 
 	</resultMap>
 
@@ -444,15 +494,13 @@
 
 	</select>
 
-	<select id="getOrderDetail" parameterType="int" resultMap="purchaseSelectMap,orderDetailSelectMap">
+	<select id="getOrderDetail" parameterType="map" resultMap="orderDetailSelectMap">
 		SELECT
-			P.ORDER_NO,P.ORDER_USER_ID,P.ORDER_TRUCK_ID,P.ORDER_QTY,P.ORDER_PICK_UP_TIME,P.ORDER_COOKING_TIME,P.PAY_DATE_TIME,
-			P.PAY_OPTION,P.PAY_PRICE,u.USER_PHONE,u.USER_PRO_IMG,o.OD_MENU_IMAGE,o.OD_MENU_NAME,o.OD_MENU_PRICE,o.OD_MENU_QTY,
-			o.OD_MENU_QTY,o.OD_MENU_QTY_FLAG,o.OD_OPTION_GROUP_NAME,o.OD_OPTION_NAME,o.OD_OPTION_PRICE
-		FROM ffin.purchase p,ffin.user u,ffin.orderdetail o
+			*
+		FROM purchase p,user u,orderDetail o
 		where u.user_id = p.order_user_id
 		  and p.ORDER_NO = o.OD_ORDER_NO
-		  and order_no = #{value};
+		  and order_no = #{orderNo};
 
 	</select>
 

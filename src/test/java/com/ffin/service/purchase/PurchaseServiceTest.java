@@ -37,12 +37,12 @@ public class PurchaseServiceTest {
         purchase = purchaseService.getPurchase(1);
 
         Assert.assertEquals(1, purchase.getOrderNo());
-        Assert.assertEquals("user01", purchase.getOrderUserId());
-        Assert.assertEquals("truck01", purchase.getOrderTruckId());
+        Assert.assertEquals("user01", purchase.getOrderUserId().getUserId());
+        Assert.assertEquals("truck01", purchase.getOrderTruckId().getTruckId());
         Assert.assertEquals("주문요청사항", purchase.getOrderRequest());
-        Assert.assertEquals(3, purchase.getOrderStatus());
+        Assert.assertEquals(4, purchase.getOrderStatus());
         Assert.assertEquals(15, purchase.getOrderPickUpTime());
-        Assert.assertEquals(15, purchase.getOrderCookingTime());
+        Assert.assertEquals(10, purchase.getOrderCookingTime());
 
 
     }
@@ -71,16 +71,10 @@ public class PurchaseServiceTest {
     }
 
 
-    //@Test
-    public void TestGetOrderDetail() throws Exception {
 
-        Map map = purchaseService.getOrderDetail(1);
-        System.out.println(map);
-
-    }
 
 ///////////////////////List/////////////////////////////////
-    @Test
+   // @Test
     public void TestGetCouponList() throws Exception {
 
         User user = new User();
@@ -143,6 +137,14 @@ public class PurchaseServiceTest {
 
     }
 
+    @Test
+    public void TestGetOrderDetail() throws Exception {
+
+        Map map = purchaseService.getOrderDetail(1);
+        System.out.println(map.get("list"));
+
+    }
+
 
 
 ////////////////////ADD///////////////////////////////////
@@ -170,7 +172,7 @@ public class PurchaseServiceTest {
     }
 
 
-    //@Test
+    @Test
     public void testAddOrderDetail() throws Exception {
 
         OrderDetail orderDetail = new OrderDetail();

@@ -3,6 +3,7 @@ package com.ffin.service.purchase.impl;
 import com.ffin.common.Search;
 import com.ffin.service.domain.*;
 import com.ffin.service.purchase.PurchaseDao;
+import com.sun.scenario.effect.impl.sw.java.JSWBlend_SRC_OUTPeer;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -130,9 +131,10 @@ public class PurchaseDaoImpl implements PurchaseDao {
     }//마이페이지에서 포인트내역조회
     @Override
     public List getOrderDetail(int orderNo)throws Exception{
+        System.out.println("orderNo = " + orderNo);
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("orderNo",orderNo);
-        return sqlSession.selectOne("PurchaseMapper.getOrderDetail",map);
+        return sqlSession.selectList("PurchaseMapper.getOrderDetail",map);
     } //주문정보 조회 이용자의 정보도 함께
 
 

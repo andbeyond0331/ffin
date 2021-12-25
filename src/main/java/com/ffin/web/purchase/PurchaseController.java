@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -47,7 +49,7 @@ public class PurchaseController {
     public ModelAndView getCartMenuList(@RequestParam("userId") String userId, ModelAndView model ) throws Exception{
         System.out.println("/purchase/getCartMenuList : GET");
         //Session에 저장되어 있는 메뉴정보를 map에 담아서 List 로 확인
-        Purchase purchase = new Purchase();
+/*        Purchase purchase = new Purchase();
         purchase.setOrderNo(8);
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setOdOrderNo(purchase);
@@ -59,10 +61,14 @@ public class PurchaseController {
         orderDetail.setOdOptionGroupName("null");
         orderDetail.setOdOptionName("null");
         orderDetail.setOdOptionPrice(0);
-        HttpSession session = new MockHttpSession();
-       // session.setAttribute("cart",orderDetail);
+        HttpSession session = new MockHttpSession();*/
+        OrderDetail orderDetail = new OrderDetail();
         Map map = new HashMap();
-        model.addObject("cart",orderDetail);
+        map = purchaseService.getOrderDetail(1);
+       // session.setAttribute("cart",orderDetail);
+
+
+        model.addObject("map",map);
         model.setViewName("/purchase/getCartMenuList.jsp");
 
 
@@ -73,18 +79,26 @@ public class PurchaseController {
     public ModelAndView addCart(@ModelAttribute("orderDetail") OrderDetail orderDetail, @ModelAttribute("purchase") Purchase purchase, ModelAndView model) throws Exception{
 
         System.out.println("/purchase/addCart : POST");
-
-       /* int orderNo = purchaseService.addPurchase(purchase);
-        purchase.setOrderNo(orderNo);
+        System.out.println("orderDetail11111 = " + orderDetail + ", purchase2222 = " + purchase);
+      int orderNo = purchaseService.addPurchase(purchase);
         orderDetail.setOdOrderNo(purchase);
-        purchaseService.addCart(orderDetail);
+        List list = new ArrayList();
+        list.add(orderDetail);
+        purchaseService.addCart(list);
+        System.out.println(orderNo);
 
-        Map cart = purchaseService.getCartList(orderNo);*/
-        User totalPoint = purchaseService.getTotalPoint("user01");
+
+        Map cart = purchaseService.getCartList(orderNo);
+        purchase = purchaseService.getPurchase(orderNo);
+        User totalPoint = purchaseService.getTotalPoint(purchase.getOrderUserId().getUserId());
 
 //        model.addObject("cart", cart);
+        model.addObject("purchase",purchase);
+        model.addObject("cart",cart);
+        model.addObject("orderNo",orderNo);
         model.addObject("point",totalPoint);
         model.setViewName("/purchase/addPayView.jsp");
+        System.out.println("model에 들어간 정보:::::::::::"+model);
         //session.removeAttribute("s_name2");
         //session 삭제하는 방법
         //장바구니에 있는 정보를 저장하고 저장한 내용을 불러와서 addPayView.jsp로 네비게이션
