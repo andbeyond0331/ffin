@@ -230,7 +230,7 @@ public class TruckServiceTest {
     }
 
 
-    //@Test
+    @Test
     public void testUpdateNotice() throws Exception {
 
         Truck truck = new Truck();

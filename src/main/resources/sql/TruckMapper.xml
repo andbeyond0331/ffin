@@ -70,10 +70,17 @@
 
 
 	<!-- SQL : 아이디 중복 체크 -->
-	<select id="checkDuId" resultType="int">
+	<select id="checkDuId" resultType="integer">
 		SELECT count(*)
 		FROM truck
 		WHERE truck_id = #{truckId}
+	</select>
+
+	<!-- SQL : 푸드트럭상호 중복 체크 -->
+	<select id="checkDuTruckName" resultType="integer">
+		SELECT count(*)
+		FROM truck
+		WHERE truck_name = #{truckName}
 	</select>
 
 

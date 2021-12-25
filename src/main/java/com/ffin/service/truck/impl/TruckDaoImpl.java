@@ -170,6 +170,12 @@ public class TruckDaoImpl implements TruckDao {
         return sqlSession.selectOne("TruckMapper.checkDuId", truckId);
     }
 
+    // 푸드트럭 상호 중복체크
+    @Override
+    public int checkDuTruckName(String truckName) throws Exception {
+        return sqlSession.selectOne("TruckMapper.checkDuTruckName", truckName);
+    }
+
     // 게시판 Page 처리를 위한 전체Row(totalCount)  return
     @Override
     public int getTotalCount(Search search) throws Exception {
