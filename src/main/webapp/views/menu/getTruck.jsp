@@ -11,9 +11,19 @@
     <link rel="stylesheet" href="/css/admin.css" type="text/css">
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script type="text/javascript">
 
+        window.onload = function() {
+            alert("why? : " + $("tr.ct_list_pop td").find("input[name=menuNo]").val());
 
+
+                //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+                $("tr.ct_list_pop td").on("click", function () {
+                    self.location = "http://127.0.0.1:8080/menu/getMenu?menuNo=" + $(this).find("input[name=menuNo]").val();
+                });
+
+        };
 
 
 
@@ -81,7 +91,8 @@
 
                     <td align="left">
 
-                        <span class="menu">${menu.menuName}</span>
+                        <span class="menu">${menu.menuName}
+                        <input type="hidden" id="menuNo" name="menuNo" value="${menu.menuNo}"/></span>
                         <span class="menu" hidden="">${menu.menuNo}</span>
                         <span class="menu" hidden="">${menu.menuTruckId}</span>
 
