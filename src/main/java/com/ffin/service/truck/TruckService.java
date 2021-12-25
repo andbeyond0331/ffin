@@ -66,6 +66,9 @@ public interface TruckService {
     // 푸드트럭 아이디 중복체크
     public int checkDuId(String truckId) throws Exception;
 
+    // 푸드트럭 상호 중복체크
+    public int checkDuTruckName(String truckName) throws Exception;
+
     // 게시판 Page 처리를 위한 전체Row(totalCount)  return
     public int getTotalCount(Search search) throws Exception ;
 }
