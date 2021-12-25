@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -119,23 +120,31 @@ public class MenuController {
 
 
     @RequestMapping(value="getMenu", method=RequestMethod.GET)
-    public ModelAndView getMenu(HttpServletRequest request, ModelAndView modelAndView) throws Exception{
+    public String getMenu(@RequestParam(value="menuNo", required = false) int menuNo, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception{
 
         System.out.println("/menu/getMenu : GET");
 
-        String menuNoo = request.getParameter("menuNo");
-
-        int menuNo = Integer.parseInt(menuNoo);
+        System.out.println("menuNo = " + menuNo + ", model = " + model + ", request = " + request + ", response = " + response);
+//
+//        int menuNoo = Integer.parseInt(menuNo);
+//
+//        System.out.println("menuNoo : " + menuNoo);
 
         Menu menu = menuService.getMenu(menuNo);
 
-        modelAndView.addObject("menu", menu);
-        modelAndView.setViewName("/menu/getMenu.jsp");
+        System.out.println("menu : " + menu);
 
-        System.out.println("request = " + request + ", modelAndView = " + modelAndView);
+        model.addAttribute("menu", menu);
+        model.addAttribute("menuNo", menuNo);
 
-        return modelAndView;
+
+
+        System.out.println("menuNo = " + menuNo + ", model = " + model + ", request = " + request + ", response = " + response);
+
+        return "forward:/menu/getMenu.jsp";
     }
+
+
 
     @RequestMapping(value="updateMenu", method=RequestMethod.GET)
     public ModelAndView updateMenu(HttpServletRequest request, ModelAndView modelAndView) throws Exception{
@@ -160,7 +169,7 @@ public class MenuController {
     }
 
     @RequestMapping("getMenuList")
-    public ModelAndView getListMenuList(@ModelAttribute("search") Search search, @RequestParam("truckId") String truckId,
+    public ModelAndView getMenuList(@ModelAttribute("search") Search search, @RequestParam("truckId") String truckId,
                                   HttpServletRequest request, ModelAndView modelAndView) throws Exception{
 
         search.setPageSize(pageSize);
