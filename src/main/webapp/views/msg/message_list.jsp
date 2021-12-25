@@ -13,7 +13,7 @@
     <jsp:include page="index.jsp"></jsp:include>
 
     <!-- CSS File -->
-    <link href="../../../resources/css/message_list.css" rel="stylesheet">
+    <link href="../../resources/css/message_list.css" rel="stylesheet">
     <link href="navbar.css" rel="stylesheet">
 
     <!-- 메세지 전송 아이콘(종이비행기) 때문에 필요 -->
