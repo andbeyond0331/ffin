@@ -130,8 +130,9 @@ public class PurchaseServiceImpl implements PurchaseService {
     }//마이페이지에서 포인트내역조회
     @Override
     public Map getOrderDetail(int orderNo)throws Exception{
-        Map<String,Object> map = new HashMap<>();
+        Map<String,Object> map = new HashMap<String,Object>();
         map.put("list",purchaseDao.getOrderDetail(orderNo));
+        System.out.println(map);
         return map;
     } //주문정보 조회 이용자의 정보도 함께
 
