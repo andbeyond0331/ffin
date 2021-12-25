@@ -50,14 +50,15 @@
 
        </mvc:interceptors>
 
-       :: 본실습에서는 주석처리 : 추후 PJT 시 RestFul 고려 LogonCheckInterceptor 조건 추가할것
        -->
 
 
     <!--  :: ViewResolver 선언 -->
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
-        <property name="prefix" value="/WEB-INF/views/"/>
+        <!--<property name="prefix" value="views"/>-->
+        <!--        <property name="suffix" value=".jsp"/>-->
+        <property name="redirectHttp10Compatible" value="false"/>
     </bean>
 
 
@@ -97,7 +98,23 @@
     <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
 
 
+    <!-- web socket handler -->
+    <bean id="pushEchoHandler" class="com.ffin.common.socket.PushEchoHandler"></bean>
+    <bean id="socketHandler" class="com.ffin.common.socket.SocketHandler"></bean>
 
+    <websocket:handlers>
+        <websocket:mapping handler="socketHandler" path="/chating/{roomNumber}"/>
+        <websocket:handshake-interceptors>
+            <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+        </websocket:handshake-interceptors>
+    </websocket:handlers>
+
+    <websocket:handlers>
+        <websocket:mapping handler="pushEchoHandler" path="/push"/>
+        <websocket:handshake-interceptors>
+            <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+        </websocket:handshake-interceptors>
+    </websocket:handlers>
 
     <!-- <websocket:handlers>
     <websocket:handlers>

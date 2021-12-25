@@ -35,13 +35,13 @@ public class UserController {
 //    }
 
 
-    @RequestMapping(value = "loginGet", method = RequestMethod.GET)
+    @RequestMapping(value = "login", method = RequestMethod.GET)
     public String login2() throws Exception{
         System.out.println("UserController.login : GET");
-        return "/user/login.jsp";
+        return "views/user/login.jsp";
     }
 
-    @RequestMapping( value="loginPost", method=RequestMethod.POST )
+    @RequestMapping( value="login", method=RequestMethod.POST )
     public String login(@ModelAttribute("user") User user , HttpSession session) throws Exception{
 
         System.out.println("/user/login : POST");
@@ -55,28 +55,28 @@ public class UserController {
             session.setAttribute("user", dbUser);
             session.setAttribute("role","user");
             System.out.println("로그인OK");
-            return "home.jsp";
+            return "/views/home.jsp";
         }
         System.out.println("로그인Nope");
-        return "/user/login.jsp";
+        return "views/user/login.jsp";
     }
 
-    @RequestMapping( value="addUserGet", method=RequestMethod.GET )
+    @RequestMapping( value="addUser", method=RequestMethod.GET )
     public String addUser() throws Exception{
 
         System.out.println("/user/addUser : GET");
 
-        return "redirect:/user/addUser.jsp";
+        return "redirect:views/user/addUser.jsp";
     }
 
-    @RequestMapping( value="addUserPost", method=RequestMethod.POST )
+    @RequestMapping( value="addUser", method=RequestMethod.POST )
     public String addUser( @ModelAttribute("user") User user ) throws Exception {
 
         System.out.println("/user/addUser : POST");
         //Business Logic
         userService.addUserInfo(user);
 
-        return "redirect:/user/login.jsp";
+        return "redirect:views/user/login.jsp";
     }
 
 //    @RequestMapping(value = "login", method = RequestMethod.POST)
@@ -113,7 +113,7 @@ public class UserController {
 //        return modelAndView;
 //    }
 
-    @RequestMapping( value="getUserGet", method=RequestMethod.GET )
+    @RequestMapping( value="getUser", method=RequestMethod.GET )
     public String getUser(@RequestParam("userId") String userId , Model model ) throws Exception {
 
         System.out.println("/user/getUser : GET");
@@ -122,7 +122,7 @@ public class UserController {
         // Model 과 View 연결
         model.addAttribute("user", user);
 
-        return "/user/getUser.jsp";
+        return "views/user/getUser.jsp";
     }
 
 
