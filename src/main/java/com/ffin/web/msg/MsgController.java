@@ -44,9 +44,11 @@ public class MsgController {
         // System.out.println("현대 사용자 nick : " + session.getAttribute("nick"));
         System.out.println("MsgController.message_list");
         //test하느라 id값 고정으로 해놓음
-        String id = (String) session.getAttribute("userId");
+        User user = (User) session.getAttribute("user");
+        String id = user.getUserId();
+        System.out.println("user = " + user);
         //String id="user01";
-
+        System.out.println("id = " + id);
         Msg to = new Msg();
         to.setId(id);
 

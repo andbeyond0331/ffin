@@ -7,7 +7,7 @@
 <c:forEach var="tmp" items="${clist }">
 
     <c:choose>
-        <c:when test="${sessionScope.userId ne tmp.msgSendUserId }">
+        <c:when test="${sessionScope.user.userId ne tmp.msgSendUserId }">
             <!-- 받은 메세지 -->
             <div class="incoming_msg">
                 <div class="incoming_msg_img">

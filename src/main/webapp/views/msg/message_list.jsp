@@ -264,7 +264,7 @@
                 },
                 success:function(data){
                     // 전송에 성공시 알림을 주기 위하여..
-                    var userId = '${sessionScope.userId}';
+                    var userId = '${sessionScope.user.userId}';
                     console.log("message.socket::::" + socket);
                     if(socket) {
                         // websocket에 보내기!!! (message, 보내는이, 받는이)

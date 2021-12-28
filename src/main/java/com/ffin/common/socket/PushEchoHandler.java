@@ -78,7 +78,8 @@ public class PushEchoHandler extends TextWebSocketHandler {
     private String getId(WebSocketSession session) {
         Map<String, Object> httpSession = session.getAttributes();
        // User loginUser = httpSession.get("user"); user로 나중에 저장하면 글케 들고오기
-        String loginUserId = (String) httpSession.get("userId");
+        String loginUserId = ((User) httpSession.get("user")).getUserId();
+        System.out.println("loginUserId = " + loginUserId);
         if(null == loginUserId)
             return session.getId();
         else

@@ -5,6 +5,7 @@ package com.ffin.web.msg;
 import com.ffin.service.catering.CateringService;
 import com.ffin.service.domain.Catering;
 import com.ffin.service.domain.Msg;
+import com.ffin.service.domain.User;
 import com.ffin.service.msg.MsgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -52,7 +53,10 @@ public class MsgRestController {
 
         System.out.println("MsgController.message_ajax_list");
         request.setCharacterEncoding("UTF-8");
-        String id = (String) session.getAttribute("userId");
+        User user = (User) session.getAttribute("user");
+        String id = user.getUserId();
+
+        //String id = (String) session.getAttribute("userId");
         //String id="user01";
 
         Msg to = new Msg();
@@ -82,7 +86,9 @@ public class MsgRestController {
        // int msgRoom = 1;
         Msg to = new Msg();
         to.setMsgRoom(msgRoom);
-        to.setId((String) session.getAttribute("userId"));
+        User user = (User) session.getAttribute("user");
+        String id = user.getUserId();
+        to.setId(id);
        // to.setId("user01");
 
         // 메세지 내용을 가져온다.
@@ -109,7 +115,7 @@ public class MsgRestController {
         System.out.println("msgRoom = " + msgRoom + ", other_id = " + other_id + ", msgContent = " + msgContent );
         Msg to = new Msg();
         to.setMsgRoom(msgRoom);
-        to.setMsgSendUserId((String) session.getAttribute("userId"));
+        to.setMsgSendUserId(((User) session.getAttribute("user")).getUserId());
         //to.setMsgSendUserId("user01");
         to.setMsgRecvUserId(other_id);
         to.setMsgContent(msgContent);

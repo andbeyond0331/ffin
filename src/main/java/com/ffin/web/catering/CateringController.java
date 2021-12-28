@@ -62,7 +62,9 @@ public class CateringController {
         if (role == "user" || role.equals("user")){
             // session 처리 되면 주석 풀어서 체크하기. 지금은 임의로 한거.
             //id = ((User)session.getAttribute("user")).getUserId();
-            id = (String) session.getAttribute("userId");
+            //id = (String) session.getAttribute("userId");
+            User user = (User) session.getAttribute("user");
+             id = user.getUserId();
             System.out.println("user id: "+id);
             search.setSearchCondition("2");
 

@@ -60,6 +60,24 @@
                 self.location = "views/homeTest.jsp"
             });
         });
+        // ============= 쪽지 ===============
+        $( function() {
+            $("a[href='#' ]:contains('쪽지')").on("click" , function() {
+                self.location = "/msg/message_list"
+            });
+        });
+        // ============= 채팅 ===============
+        $( function() {
+            $("a[href='#' ]:contains('채팅')").on("click" , function() {
+                self.location = "/room"
+            });
+        });
+        // ============= 케이터링 ===============
+        $( function() {
+            $("a[href='#' ]:contains('케이터링')").on("click" , function() {
+                self.location = "/catering/mainCalendar"
+            });
+        });
 
     </script>
 
@@ -87,6 +105,9 @@
                     <li><a href="#">이용자 로 그 아 웃</a> </li>
                     <li><a href="#">사업자 로 그 아 웃</a> </li>
                     <li><a href="#">homeTest</a> </li>
+                    <li><a href="#">쪽지</a> </li>
+                    <li><a href="#">채팅</a> </li>
+                    <li><a href="#">케이터링</a> </li>
                 </ul>
             </div>
 

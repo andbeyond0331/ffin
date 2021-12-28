@@ -64,7 +64,7 @@
 
 <script type="text/javascript">
     var ws;
-    var userName = '${sessionScope.userId}';
+    var userName = '${sessionScope.user.userId}';
     console.log("userName: "+userName);
     $(document).ready(function(){
         // 메세지 리스트 리로드
