@@ -100,6 +100,29 @@
 
     <hr/>
 
+   <table>
+       <c:set var="i" value="0"/>
+       <c:forEach var="optionGroup" items="${list}">
+           <c:set var="i" value="${i+1}" />
+           <tr class="ct_list_pop">
+               <td align="center">
+
+                       ${i}
+               </td>
+               <td></td>
+
+               <td align="left">
+
+<%--                   <span class="odMenuName">${cart.odMenuName}</span>--%>
+                   <span class="optionGroupName" >${optionGroup.optionGroupName}</span>
+                   <span class="optionName" >${optionGroup.optionName}</span>
+                   <span class="optionPrice" >${optionGroup.optionPrice}</span>
+
+               </td>
+
+       </c:forEach>
+   </table>
+
 
     <div class="row">
         <div class="col-md-12 text-center ">

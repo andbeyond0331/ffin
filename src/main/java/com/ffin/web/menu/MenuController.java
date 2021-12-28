@@ -42,14 +42,6 @@ public class MenuController {
     @Qualifier("truckServiceImpl")
     private TruckService truckService;
 
-    // classpath:config/common.properties,
-    // classpath:config/commonservce.xml 참조 할 것
-//    @Value("#{commonProperties['pageUnit'] ?: 3")
-//    int pageUnit;
-//
-//    @Value("#{commonProperties['pageSize'] ?: 2")
-//    int pageSize;
-
     @Value("100") //pageUnit은 propertySource를 위에 선언하고 @value의 값을 지정해줌
     //추후 pageUnit과 pageSize 출력되는지 jUnit에서 확인이 필요합니다.
     //@Value("#{commonProperties['pageUnit'] ?: 3}")
@@ -77,15 +69,14 @@ public class MenuController {
 
         return modelAndView;
     }
-    //     메뉴 추가 옵션그룹이랑 같이 하는 방법 고안1 -> 헷갈려서 실패
 
-
-//    메뉴 추가 옵션그룹이랑 같이 하는 방법 고안2
     @RequestMapping(value="addMenuOptionGroup", method=RequestMethod.POST)
-    public String addMenuOptionGroup(@ModelAttribute("truck") Truck truck, @ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
+    public String addMenuOptionGroup(@ModelAttribute("truck") Truck truck, @ModelAttribute(value="optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
 
         System.out.println("/menu/addMenu:POST");
         System.out.println("optionGroup : " + optionGroup + ", menu : " + menu);
+
+        menu.setMenuTruckId(truck.getTruckId());
 
 
         int menuNo = menuService.addMenu(menu);
@@ -104,51 +95,32 @@ public class MenuController {
 
         System.out.println("model 확인 : " + model);
 
-        return "redirect:views/menu/getTruck?truckId="+truck.getTruckId();
+        return "redirect:/menu/getMenuList?truckId="+menu.getMenuTruckId();
 
     }
-//
-//    @RequestMapping(value = "addMenu", method=RequestMethod.POST)
-//    public ModelAndView addMenu(@ModelAttribute("menu") Menu menu) throws Exception{
-//        /*
-//            메뉴 추가 로직
-//         */
-//        System.out.println("/menu/addMenu : POST");
-//        System.out.println("menu = " + menu);
-//
-//        menuService.addMenu(menu);
-//
-//        //Business Logic
-//
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.addObject("menu", menu);
-//        modelAndView.setViewName("/truck/getTruck.jsp"); // 추후 진석님께 여쭤보고 변경
-//
-//        return modelAndView;
-//    }
 
 
     @RequestMapping(value="getMenu", method=RequestMethod.GET)
-    public String getMenu(@RequestParam(value="menuNo", required = false) int menuNo, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public String getMenu(@ModelAttribute("search") Search search, @RequestParam(value="menuNo", required = false) int menuNo, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception{
 
         System.out.println("/menu/getMenu : GET");
 
-        System.out.println("menuNo = " + menuNo + ", model = " + model + ", request = " + request + ", response = " + response);
-//
-//        int menuNoo = Integer.parseInt(menuNo);
-//
-//        System.out.println("menuNoo : " + menuNoo);
+        System.out.println("search = " + search + ", menuNo = " + menuNo + ", model = " + model + ", request = " + request + ", response = " + response);
+
+
+        search.setPageSize(pageSize);
 
         Menu menu = menuService.getMenu(menuNo);
+
+        Map optionGroup = menuService.getOptionGroupByMenu(search,menuNo);
 
         System.out.println("menu : " + menu);
 
         model.addAttribute("menu", menu);
         model.addAttribute("menuNo", menuNo);
+        model.addAttribute("list", optionGroup.get("list"));
 
-
-
-        System.out.println("menuNo = " + menuNo + ", model = " + model + ", request = " + request + ", response = " + response);
+        System.out.println("list="+ optionGroup.get("list")+", search = " + search + ", menuNo = " + menuNo + ", model = " + model + ", request = " + request + ", response = " + response);
 
         return "forward:/views/menu/getMenu.jsp";
     }
@@ -165,8 +137,6 @@ public class MenuController {
         return "redirect:/views/menu/getMenu?menuNo="+menu.getMenuNo();
 
     }
-
-
 
     @RequestMapping(value="updateMenu", method=RequestMethod.GET)
     public ModelAndView updateMenu(HttpServletRequest request, ModelAndView modelAndView) throws Exception{
@@ -198,19 +168,7 @@ public class MenuController {
         menuService.updateMenu(menu);
 
         session.setAttribute("menu", menu);
-//
-//        String menuNoo = request.getParameter("menuNo");
-//
-//        int menuNo = Integer.parseInt(menuNoo);
-//
-//        System.out.println("menu = " + menu + ", model = " + model);
-//        //BL
-//        menuService.updateMenu(menu);
-//
-//        model.addObject("menu", menu);
-//        model.addObject("menuNo", menuNo);
-//
-//        model.setViewName("forward:/menu/getMenu?menuNo="+menuNo);
+
 
         return "redirect:/menu/getMenu?menuNo="+menu.getMenuNo();
 
@@ -227,8 +185,6 @@ public class MenuController {
 
         modelAndView.addObject("list", map.get("list"));
         modelAndView.setViewName("/views/menu/getTruck.jsp");
-//       model.addAttribute("list", map.get("list"));
-//        model.addAttribute("search", search);
 
         return modelAndView;
     }

@@ -30,39 +30,27 @@ public class MenuServiceImpl implements MenuService {
         System.out.println(this.getClass());
     }
 
-    ///MMM
-//    @Override
-//    public void addMenu(Menu menu) throws Exception {
-//        System.out.println("MenuServiceImpl.addMenu");
-//        menuDao.addMenu(menu);
-//    }
-    //메뉴와 옵션그룹 한 번에 insert하는 방법 고안1 -> 헷갈려서 실패
-//    public void addMenu(List list) throws Exception {
-//        System.out.println("MenuServiceImpl.addMenu");
-//        menuDao.addMenu(list);
-//
-//    }
+    //MMM
 
-    //메뉴와 옵션그룹 한 번에 insert하는 방법 고안2
+
+    ///////////////add//////////////
     @Override
     public int addMenu(Menu menu) throws Exception{
         System.out.println("MenuServiceImpl.addMenu");
         return menuDao.addMenu(menu);
     }
 
-//    @Override
-//    public void addOptionGroup(OptionGroup optionGroup) throws Exception {
-//        menuDao.addOptionGroup(optionGroup);
-//    }
-
-    //메뉴와 옵션그룹 한 번에 insert하는 방법 고안2
-    @Override
+    @Override  //addOptionGroup
     public void addOptionGroup(List list) throws Exception{
         System.out.println("MenuServiceImpl.addOptionGroup");
         menuDao.addOptionGroup(list);
     }
 
-    //메뉴와 옵션그룹 한 번에 insert하는 방법 고안2 를 위한 optionGroup list get
+
+
+
+
+    ///////////////get//////////////
     @Override
     public Map<String, Object> getOptionGroupList(int optionGroupNo) throws Exception{
         Map<String, Object> map = new HashMap<String, Object>();
@@ -76,15 +64,20 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    public OptionGroup getOption(int optionNo) throws Exception {
+        System.out.println("MenuServiceImpl.getOption");
+        return menuDao.getOption(optionNo);
+    }
+
+    @Override
     public Map<String,Object> getOptionGroup(Search search, int optionGroupNo) throws Exception {
 
         return menuDao.getOptionGroup(search,optionGroupNo);
     }
 
     @Override
-    public OptionGroup getOption(int optionNo) throws Exception {
-        System.out.println("MenuServiceImpl.getOption");
-        return menuDao.getOption(optionNo);
+    public Map<String, Object> getOptionGroupByMenu(Search search, int menuNo) throws Exception {
+        return menuDao.getOptionGroupByMenu(search, menuNo);
     }
 
     @Override
@@ -93,11 +86,15 @@ public class MenuServiceImpl implements MenuService {
         return menuDao.getMenuList(search, truckId);
     }
 
+
+
+
+
+    ///////////////update//////////////
     @Override
     public void updateMenu(Menu menu) throws Exception {
 
         menuDao.updateMenu(menu);
-
     }
 
     @Override
@@ -105,6 +102,10 @@ public class MenuServiceImpl implements MenuService {
         menuDao.updateOptionGroup(optionGroup);
     }
 
+
+
+
+    ///////////////delete//////////////
     @Override
     public void deleteMenu(Menu menu) throws Exception {
         menuDao.deleteMenu(menu);
@@ -119,6 +120,7 @@ public class MenuServiceImpl implements MenuService {
     public void deleteOption(OptionGroup optionGroup) throws Exception {
         menuDao.deleteOption(optionGroup);
     }
+
 
 
 }

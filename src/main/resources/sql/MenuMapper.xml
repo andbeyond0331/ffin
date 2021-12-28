@@ -29,50 +29,47 @@
 
 	</resultMap>
 
-	<insert id="addMenu"	parameterType="menu">
-		INSERT INTO menu
+
+	<insert id="addMenu" parameterType="menu" useGeneratedKeys="true" keyProperty="menuNo">
+		INSERT INTO ffin.menu
+		(menu_truck_id, menu_name, menu_price, menu_detail, is_sig_menu, menu_reg_date, menu_img1, menu_img2, menu_img3)
+		values
 		(
-			MENU_TRUCK_ID,
-			MENU_NAME,
-			MENU_PRICE,
-			MENU_DETAIL,
-			IS_SIG_MENU,
-			MENU_REG_DATE,
-			MENU_IMG1,
-			MENU_IMG2,
-			MENU_IMG3)
-		VALUES
-			(
-				#{menuTruckId},
-				#{menuName},
-				#{menuPrice},
-				#{menuDetail},
-				#{isSigMenu},
-				SYSDATE(),
-				#{menuImg1},
-				#{menuImg2},
-				#{menuImg3})
-	</insert>
+		 #{menuTruckId:VARCHAR},
+		 #{menuName:VARCHAR},
+		 #{menuPrice:INTEGER},
+		 #{menuDetail:VARCHAR},
+		 #{isSigMenu},
+		 sysdate(),
+		 #{menuImg1},
+		 #{menuImg2},
+		 #{menuImg3}
+		 )
 
 
-	<insert id="addOptionGroup" parameterType="optionGroup">
-		insert into optiongroup
-		(
-			MENU_NO,
-			OPTION_GROUP_NO,
-			OPTION_NO,
-			OPTION_GROUP_NAME,
-			OPTION_NAME,
-			OPTION_PRICE)
-		values (
-				   #{menuNo:INTEGER},
-				   #{optionGroupNo},
-				   #{optionNo},
-				   #{optionGroupName},
-				   #{optionName},
-				   #{optionPrice}
-			   )
 	</insert>
+
+	<insert id="addOptionGroup" parameterType="map" useGeneratedKeys="true" keyProperty="menuNo">
+			INSERT INTO ffin.optiongroup
+			(MENU_NO, OPTION_GROUP_NO, OPTION_NO, OPTION_GROUP_NAME, OPTION_NAME, OPTION_PRICE)
+			VALUES
+			<foreach collection="list" item="item" separator=",">
+				(${item.menuNo},
+				 ${item.optionGroupNo},
+				 ${item.optionNo},
+				 '${item.optionGroupName}',
+				 '${item.optionName}',
+				 ${item.optionPrice}
+				 )
+			</foreach>
+	</insert>
+
+	<select id="getOptionGroupList" parameterType="int" resultMap="OptionGroupSelectMap">
+		SELECT
+			menu_no, option_group_no, option_no, option_group_name, option_name, option_price
+		FROM optiongroup
+		WHERE OPTION_GROUP_NO = #{value}
+	</select>
 
 	<select 	id="getMenu"	parameterType="int"	resultMap="MenuSelectMap" >
 		SELECT
@@ -81,6 +78,7 @@
 			MENU_NAME,
 			MENU_PRICE,
 			MENU_DETAIL,
+		    MENU_REG_DATE,
 			IS_SIG_MENU,
 			MENU_IMG1,
 			MENU_IMG2,
@@ -115,6 +113,19 @@
 
 	</select>
 
+	<select 	id="getOptionGroupByMenu"	parameterType="map"	resultMap="OptionGroupSelectMap" >
+
+		SELECT o.MENU_NO, o.OPTION_GROUP_NO, o.OPTION_NO, o.OPTION_GROUP_NAME, o.OPTION_NAME, o.OPTION_PRICE, m.MENU_NO
+		FROM ffin.optiongroup o, menu m
+		WHERE o.MENU_NO = m.MENU_NO
+			AND o.MENU_NO = #{menuNo}
+
+
+
+	</select>
+
+
+
 	<select  id="getMenuList" 	parameterType="map"		resultMap="MenuSelectMap">
 
 		SELECT
@@ -134,19 +145,6 @@
 
 
 	</select>
-
-	<!--
-            <select  id="getOptionGroupList" 	parameterType="map"		resultMap="OptionGroupSelectMap">
-                SELECT
-                    OPTION_GROUP_NO,
-                    OPTION_NO,
-                    OPTION_GROUP_NAME,
-                    OPTION_NAME,
-                    OPTION_PRICE
-                FROM optiongroup
-                WHERE OPTION_NO = #{optionNo}
-            </select>
-       -->
 
 	<update id="updateMenu" parameterType="menu">
 		UPDATE menu
