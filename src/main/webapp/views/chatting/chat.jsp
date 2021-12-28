@@ -51,6 +51,14 @@
         .img{
             float: right;
         }
+        img{
+            /*글쓴이의 프로필 사진을 둥글게*/
+            width: 40px;
+            height: 40px;
+            border: 0px;
+            /*border: 1px solid #cecece;*/
+            border-radius: 50%;
+        }
     </style>
 </head>
 
@@ -84,7 +92,7 @@
 
             if(msg != null && msg.type != ''){
                 var d = JSON.parse(msg);
-                console.log("d1: "+d)
+                console.log("d: "+d.profile);
                 if(d.type == "getId"){
                     var si = d.sessionId != null ? d.sessionId : "";
                     if(si != ''){
@@ -94,9 +102,11 @@
                 }else if(d.type == "message"){
                     console.log("d2: "+d)
                     if(d.sessionId == $("#sessionId").val()){
-                        $("#chating").append("<p class='me'>"+userName+" :" + d.msg + "</p>");
+                        $("#chating").append("<p class='me'>" +
+                            "<a href='/views/home.jsp'><img src='../../../resources/image/"+d.profile+"' alt='sunil' ></a>"
+                            +userName+" :" + d.msg + "</p>");
                     }else{
-                        $("#chating").append("<p class='others'>" + d.userName + " :" + d.msg + "</p>");
+                        $("#chating").append("<p class='others'><a href='/views/home.jsp'><img src='../../../resources/image/"+d.profile+"' alt='sunil' ></a>" + d.userName + " :" + d.msg + "</p>");
                     }
 
                 }else{
@@ -108,19 +118,22 @@
                 var url = URL.createObjectURL(new Blob([msg]));
                 console.log('url: '+url)
                 console.log('msg: '+msg)
+                $("#chating").append("<div class='img'><img class='msgImg' src="+url+"></div><div class='clearBoth'></div></p>");
+
                 /*
                     채팅에서 사진 전송을 제외하던지
                     다른 방법을 찾아보던지 해야 할 것 같음 잘 안되네
-                 */
+
                 if(userName== $("#sessionName").val()){
                     console.log("여기지.")
                     $("#chating").append("<p class='me'>"+userName+" :<div class='img'><img class='msgImg' src="+url+"></div><div class='clearBoth'></div></p>");
                 }else{
                     console.log("아니, 여기지.")
                     $("#chating").append("<p class='others'>" + $("#sessionName").val() + " :<div class='img'><img class='msgImg' src="+url+"></div><div class='clearBoth'></div></p>");
-                }
+                } */
 
             }
+            $("#chating").scrollTop($("#chating")[0].scrollHeight);
         }
 
         document.addEventListener("keypress", function(e){

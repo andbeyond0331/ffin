@@ -54,6 +54,7 @@
 
 <div id="calendar-container">
     <div id="calendar"></div>
+    <div><button>등록(사업자만)</button></div>
 </div>
 
 
@@ -66,12 +67,20 @@
         var calendar = new FullCalendar.Calendar(calendarEl, {
             height: 600,
             plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
+            dateClick : function (info) {
+
+                alert('Clicked on: ' + info.date);
+
+            },
+            eventClick: function(arg) {
+                alert("얍얍ㅜ:"+arg)
+            },
             defaultView: 'dayGridMonth',
             defaultDate: new Date(),
             header: {
-                left: 'prev,next today',
+                left: 'prev,next',
                 center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+                right: 'today'
             },
             eventLimit: true,
             eventLimitText: "more",
@@ -87,9 +96,14 @@
 
 %>
                 {
-                    title : '<%= ct.getCtNo() %>',
+                    title : '<%= ct.getCtTruck().getTruckName() %>',
                     start : '<%= ct.getCtDate() %>',
                     end : '<%= ct.getCtDate() %>'
+                    <% if (ct.getCtStatusCode().equals("5")){%>
+                    , color: "#f81f59"
+                    <%} else {%>
+                    , color: "#008d62"
+                    <%} %>
                 },
                 <%
                     }

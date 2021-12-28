@@ -47,21 +47,21 @@
 
 	<select id="getCtList"	parameterType="map"	resultMap="cateringSelectMap">
 		SELECT
-			CT_NO, CT_TRUCK_ID, CT_USER_ID, CT_MENU_NO, CT_DATE, CT_START_TIME, CT_END_TIME, CT_MENU_MIN_QTY, CT_MENU_MAX_QTY, CT_MENU_QTY, CT_ADD, CT_ADD_DETAIL, CT_USER_REQUEST, CT_PHONE, CT_QUOTATION, CT_REAL_QUOTATION, CT_TRUCK_REQUEST, CT_STATUS_CODE, CT_SERV_REG_DATE, CT_RES_REG_DATE, CT_CANCEL_DATE
-		FROM catering ct
+			ct.*, tr.TRUCK_NAME
+		FROM catering ct, truck tr
 		<if test="search.searchCondition ==0">
 			<where>
-				CT_USER_ID = #{id}
+				ct.CT_USER_ID = #{id} AND ct.CT_TRUCK_ID = tr.TRUCK_ID
 			</where>
 		</if>
 		<if test="search.searchCondition ==1">
 			<where>
-				CT_TRUCK_ID = #{id}
+				ct.CT_TRUCK_ID = #{id} AND ct.CT_TRUCK_ID = tr.TRUCK_ID
 			</where>
 		</if>
 		<if test="search.searchCondition ==2">
 			<where>
-				CT_STATUS_CODE='0' OR (CT_USER_ID=#{id} AND CT_STATUS_CODE='5')
+				(ct.CT_STATUS_CODE='0' OR (ct.CT_USER_ID=#{id} AND ct.CT_STATUS_CODE='5')) AND ct.CT_TRUCK_ID = tr.TRUCK_ID
 			</where>
 		</if>
 	</select>

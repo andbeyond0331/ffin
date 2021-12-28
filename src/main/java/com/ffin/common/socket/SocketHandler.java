@@ -8,10 +8,15 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.ffin.service.domain.User;
+import com.ffin.service.user.UserService;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;
@@ -27,10 +32,12 @@ public class SocketHandler extends TextWebSocketHandler {
     private static final String FILE_UPLOAD_PATH = "C:/image/";
     static int fileUploadIdx = 0;
     static String fileUploadSession = "";
-
+    @Autowired
+    @Qualifier("userServiceImpl")
+    private UserService userService;
 
     @Override
-    public void handleTextMessage(WebSocketSession session, TextMessage message) {
+    public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         System.out.println(":::::::::::::::::::SocketHandler.handleTextMessage");
         //메시지 발송
         String msg = message.getPayload();
@@ -38,7 +45,14 @@ public class SocketHandler extends TextWebSocketHandler {
         System.out.println("::::::::::::::::::: "+obj);
         String rN = (String) obj.get("roomNumber");
         String msgType = (String) obj.get("type"); //메시지의 타입을 확인한다.
-        System.out.println("::::: msgType = " + msgType);
+        System.out.println("::::: msg = " + msg);
+        String userName = (String) obj.get("userName");
+        User user=userService.getUser(userName); //user 정보를 받아옴
+
+        System.out.println("user = " + user);
+        obj.put("profile", user.getUserProImg());
+
+        System.out.println("obj : "+obj);
         HashMap<String, Object> temp = new HashMap<String, Object>();
         if(rls.size() > 0) {
             for(int i=0; i<rls.size(); i++) {
