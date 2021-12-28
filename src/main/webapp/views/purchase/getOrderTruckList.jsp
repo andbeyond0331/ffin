@@ -46,6 +46,7 @@
                 <div class="row">
                         <div class="col">
                                 <div class="jumbotron ">
+                                        <hr class="my-2">
                                 </div>
                         </div>
                         <div class="col">

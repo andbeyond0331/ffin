@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
@@ -14,34 +14,50 @@
     <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<link rel="stylesheet" href="/css/admin.css" type="text/css">
+
 
 </head>
 <body>
 <!-- Bootstrap Dropdown Hover CSS -->
-<link href="/css/animate.min.css" rel="stylesheet">
-<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
 
-<!-- Bootstrap Dropdown Hover JS -->
-<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <!--  ///////////////////////// CSS ////////////////////////// -->
+
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+   <%-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+   --%> <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <style>
 
     body {
         padding-top: 50px;
+    }
+
+
+    input[type="text"]#pointAmttwo{
+        -webkit-appearance: none!important;
+        color: #171616;
+        text-align: right;
+        width: 75px;
+        border: 1px solid gray;
+        border-left: 0px;
+        margin: 0 0 0 -7px;
+        background: white;
+    }
+    input[type="text"]#pointAmt{
+        -webkit-appearance: none!important;
+        border: 1px solid gray;
+        border-right: 0px;
+        outline: none;
     }
 </style>
 <script type="text/javascript">
@@ -284,7 +300,7 @@
         $("form").attr("method" , "POST").attr("action" , "/purchase/addPurchase").submit();
     }
     $(function() {
-        $("td.ct_btn01:contains('구매')").click(function() {
+        $("button.btn.btn-primary:contains('진짜결제')").click(function() {
 
             kakaopay();
 
@@ -323,6 +339,68 @@
         $('#myInput').focus()
     })
 
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+
+        var modal = $(this)
+
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        modal.find('.modal-title').text('옵션그룹' + recipient);
+        modal.find('.modal-body input').val(recipient);
+
+
+    })
+    $('#optionModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+
+        var modal = $(this)
+
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        modal.find('.modal-title').text('옵션' + recipient);
+        modal.find('.modal-body input').val(recipient);
+
+
+    })
+
+    //옵션그룹추가 모달 로직
+    var count = 0;
+
+    $(function(){
+
+        var modal = $('#myModal');
+
+
+        modal.find('button.btn.btn-primary').on("click", function(){
+            count++;
+
+            realCouponDcPrice = modal.find('input[name=options]:checked').val();
+
+            console.log(realOptionGroupName + " : realOptionGroupName");
+
+
+
+            divElem = "<div class=\"form-group\" id=\"optionGroupName"+count+"\" name=\"optionGroupName\">"+
+                "<label for=\"optionGroupName\" class=\"col-sm-offset-1 col-sm-3 control-label\">옵션그룹"+count+"</label>"+
+                "<div class=\"col-xs-8 col-md-4\">"+realOptionGroupName+"</div>"+
+                "<input type=\"button\" value=\"삭제\" onclick=\"javascript:removeEL("+count+")\"/>" +
+                // "<input type=\"button\" value=\"옵션추가\" onclick=\"javascript:addOption(optionGroupName"+count+")\"/>" +
+                "<button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#optionModal\" data-whatever=\"option\">옵션 추가</button>"+
+                "</div>";
+
+            console.log("divElem :"+divElem);
+
+            $('div#here').append($(divElem));
+
+            // modal.modal('hide');
+
+        });
+
+    });
+
 </script>
 
 
@@ -333,15 +411,38 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
                     <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                        </thead>
+                        <c:set var="i" value="0"/>
+                        <c:forEach var="couponLis" items="${couponList.get('list')}">
+                            <c:set var="i" value="${i+1}" />
+                            <tr>
+                                <th scope="row">${i}</th>
+                                <td><label class="btn btn-secondary active">
+                                    <input type="radio" name="options" id="option${i}" autocomplete="off" checked> Active
+                                </label></td>
+                                <td>${couponLis.couponDcPrice}</td>
+                                <td>${couponLis.couponType}</td>
+                                <td>${couponLis.couponStatus}</td>
+                            </tr>
+                        </c:forEach>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary">쿠폰 적용</button>
                 </div>
             </div>
         </div>
@@ -349,30 +450,32 @@
 
 
     <div class="container-fluid">
-    <div class="row">
+        <div class="row">
 
 
-        <div class="col">
-            <div class="jumbotron ">
-                <div class="container">
-                    <div class="row">
+            <div class="col">
+                <div class="jumbotron ">
+                    <div class="container">
+                        <div class="row">
                         <div class="col-sm-12">
                         <h3>결제하기</h3>
                         </div>
-                    </div>
 
+                    </div>
+                    <hr class="my-2">
                     <div class="row">
                         <div class="col-sm-12">
                             <h3>할인 및 적립금</h3>
                         </div>
                     </div>
 
+
                         <div class="row">
                         <label for="couponPrice" class="col-sm-offset-1 col-sm-3 control-label">할인쿠폰</label>
                         <div class="col-sm-3">
-                            <div class="well well-sm">${coupon.couponPrice}</div>
-                            <input type="hidden" class="form-control" id="couponPrice"
-                                   name="couponPrice" placeholder="상품명을 입력하세요" >
+                            <div class="well well-sm">${coupon.couponDcPrice}</div>
+                            <input type="text" class="form-control" id="couponPrice"
+                                   name="couponPrice" placeholder="쿠폰을 적용하세요" disabled/>
                         </div>
                         <div class="col-sm-1">
                            원
@@ -390,16 +493,19 @@
                             <label for="pointAmt" class="col-sm-offset-1 col-sm-3 control-label">적립금</label>
                             <div class="col-sm-2">
                                 <%--<div class="well well-sm">${user.userTotalPorint}</div>--%>
-                                <input type="hidden" name="pointAmt" id="pointAmt" value="${point.pointAmt}">
+
                                 <div class="well well-sm">0</div>
                             </div>
-                            <div class="col-sm-2">
-                                <div class="well well-sm">${point.pointAmt}</div>
+                            <div class="col-sm-4">
+
+                                <input type="text"  placeholder="o" id="pointAmt">
+                                <input type="text"  id="pointAmttwo" value="원" disabled/>
+
+
+
                             </div>
+
                             <div class="col-sm-1">
-                                원
-                            </div>
-                            <div class="col-sm-2">
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-secondary btn-sm">
                                     포인트 적용
@@ -414,6 +520,7 @@
                                 </div>
                             </div>
                         </div>
+                    <hr class="my-lg-4">
                         <div class="row">
                             <div class="col-sm-10">
                     <h3>결제방법</h3>
@@ -422,7 +529,8 @@
                     <div class="row">
                         <div class="col-sm-5">
                             <button type="button" class="btn btn-secondary btn-lg btn-block">
-                                카카오톡
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    카카오톡</div>
                             </button>
                         </div>
                         <div class="col-sm-5">
@@ -448,23 +556,19 @@
                             </button>
                         </div>
                     </div>
-
-
-
-
-
-
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <label class="btn btn-secondary active">
+                                <input type="radio" name="options" id="option1" autocomplete="off" checked> Active
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="options" id="option2" autocomplete="off"> Radio
+                            </label>
+                            <label class="btn btn-secondary">
+                                <input type="radio" name="options" id="option3" autocomplete="off"> Radio
+                            </label>
+                        </div>
                 </div>
-
-
-
-
-
-
-
-
             </div>
-
         </div>
 
 
@@ -525,7 +629,7 @@
             <td height="1" colspan="3" bgcolor="D6D6D6"></td>
         </tr>
         <tr>
-            <td width="300" class="ct_write">상품번호 <img
+            <td width="300" class="ct_write">상품번호 <img>
             </td>
             <td bgcolor="D6D6D6" width="1"></td>
             <td class="ct_write01" width="299">
@@ -698,7 +802,10 @@
                     결제하기
                 </button>
                 <button type="button" class="btn btn-primary btn-lg" >
-                    다음
+                    controller 2번 타기
+                </button>
+                <button type="button" class="btn btn-primary btn-lg" >
+                    진짜결제
                 </button>
             </div>
 

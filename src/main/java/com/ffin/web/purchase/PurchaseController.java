@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/purchase/*")
@@ -51,19 +48,7 @@ public class PurchaseController {
     public ModelAndView getCartMenuList(@RequestParam("orderNo")int orderNo , ModelAndView model ) throws Exception{
         System.out.println("/purchase/getCartMenuList : GET");
         //Session에 저장되어 있는 메뉴정보를 map에 담아서 List 로 확인
-/*        Purchase purchase = new Purchase();
-        purchase.setOrderNo(8);
-        OrderDetail orderDetail = new OrderDetail();
-        orderDetail.setOdOrderNo(purchase);
-        orderDetail.setOdMenuImage("imag5-1");
-        orderDetail.setOdMenuName("menu10");
-        orderDetail.setOdMenuPrice(1000);
-        orderDetail.setOdMenuQty(3);
-        orderDetail.setOdMenuQtyFlag(1);
-        orderDetail.setOdOptionGroupName("null");
-        orderDetail.setOdOptionName("null");
-        orderDetail.setOdOptionPrice(0);
-        HttpSession session = new MockHttpSession();*/
+
         OrderDetail orderDetail = new OrderDetail();
         Map map = new HashMap();
         map = purchaseService.getOrderDetail(orderNo);
@@ -86,19 +71,43 @@ public class PurchaseController {
       int orderNo = purchaseService.addPurchase(purchase);
         orderDetail.setOdOrderNo(purchase);
 
-        List list = new ArrayList();
+/*        List list = new ArrayList();
+        String[] splitMenu = orderDetail.getOdMenuName().split(",");
+        String[] splitGroup = orderDetail.getOdOptionGroupName().split(",");
+        String[] splitOption = orderDetail.getOdOptionName().split(",");
+        String[] splitImage = orderDetail.getOdMenuImage().split(",");
+        for (int i=0; i<splitMenu.length; i++) {
+            list.add(splitImage);
+            list.add(splitGroup);
+            list.add(splitMenu);
+            list.add(splitOption);
+        }
+        */
+        System.out.println("1112222333");
+
+/*        List list = Arrays.asList(orderDetail.getOdMenuImage().split(","));
+        list.add(orderDetail);
+        list = Arrays.asList(orderDetail.getOdMenuName().split(","));
+
+        System.out.println("list>>>>>>>>>>>"+list);*/
+
+        List list = new ArrayList<>();
         list.add(orderDetail);
         purchaseService.addCart(list);
         System.out.println(orderNo);
+        Coupon coupon = new Coupon();
+        coupon.setCouponReceivedUserId(purchase.getOrderUserId());
+        Map coupontList = new HashMap();
 
-
+        coupontList = purchaseService.getCouponList(coupon);
         Map cart = purchaseService.getCartList(orderNo);
         purchase = purchaseService.getPurchase(orderNo);
         User totalPoint = purchaseService.getTotalPoint(purchase.getOrderUserId().getUserId());
         Point point = new Point();
         point.setPointAmt(0);
-
+        System.out.println("couponList>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+coupontList);
 //        model.addObject("cart", cart);
+        model.addAttribute("couponList",coupontList);
         model.addAttribute("point",point);
         model.addAttribute("purchase",purchase);
         model.addAttribute("cart",cart);
@@ -189,12 +198,15 @@ public class PurchaseController {
     //OrderList로 좌측에 있는 리스트를 보여주는 이때 무한스크롤!!!
     //우측은!! 여기서 왼쪽을 클릭하게 되면 나오는 화면으로 따로 해야되나?? 같이 해야되나???
     //getOrderList로 출력한 Map으로 처음들어갔을때 나오는 화면으로 최신주문orderNo를 가져와서 보여주는것도!!!
-    @RequestMapping(value = "getOrderList", method= RequestMethod.POST)
-    public String getOrderList(@ModelAttribute("truckId")String truckId,@ModelAttribute("orderNo")int orderNo, Model model,Purchase purchase) throws Exception{
+    @RequestMapping(value = "getOrderList", method= RequestMethod.GET)
+    /*public String getOrderList(@ModelAttribute("truckId")String truckId,@ModelAttribute("orderNo")int orderNo, Model model,Purchase purchase) throws Exception{
+    */
+    public String getOrderList(@RequestParam("truckId")String truckId, Model model,Purchase purchase) throws Exception{
 
         System.out.println("/purchase/getOrderList : POST");
         String truckTest = "truck02";
         Map map = purchaseService.getOrderList(truckTest);
+        int orderNo = 0;
         if(orderNo != 0) {
             purchaseService.getPurchase(orderNo);
         }
