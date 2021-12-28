@@ -19,7 +19,8 @@ import java.util.Map;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:config/context-common.xml",
+@ContextConfiguration(locations = {"classpath:config/context-auth.xml",
+        "classpath:config/context-common.xml",
         "classpath:config/context-aspect.xml",
         "classpath:config/context-mybatis.xml",
         "classpath:config/context-transaction.xml" })
@@ -119,6 +120,23 @@ public class MenuServiceTest {
 //
 //
 //    }
+//
+    @Test
+    public void getOptionGroupByMenu() throws Exception{
+
+        Search search = new Search();
+        search.setCurrentPage(1);
+        search.setPageSize(100);
+        search.setSearchCondition("0");
+        search.setSearchKeyword("");
+        Map<String, Object> map = menuService.getOptionGroupByMenu(search, 1);
+
+        List<Object> list = (List<Object>)map.get("list");
+
+        Assert.assertEquals(6, list.size());
+
+
+    }
 
 //        @Test   //okay
 //    public void getOption() throws Exception{
@@ -134,7 +152,7 @@ public class MenuServiceTest {
 
 //
 //
-//    @Test //okay!!!!!!!!!!!!!!!
+//    @Test
 //    public void getMenuList() throws Exception {
 //        Search search  = new Search();
 //        search.setCurrentPage(1);
@@ -171,6 +189,8 @@ public class MenuServiceTest {
 //
 //
 //    }
+
+
 
 //    @Test //okay!!! -> real.. 한 번에!!!
 //    public void testAddOptionGroup() throws Exception {

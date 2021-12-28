@@ -10,34 +10,25 @@ import java.util.Map;
 public interface MenuDao {
 
     //INSERT
-//    public void addMenu(Menu menu) throws Exception;
-
-    //INSERT
-    //optionGroup이랑 menu 같이 insert하는 방법 고안 1 -> 헷가려서 실패
-//    public void addMenu(List list) throws Exception;
-
-    //INSERT
-    //optionGroup이랑 menu 같이 insert하는 방법 고안 2
     public int addMenu(Menu menu) throws Exception;
 
     //INSERT
-    //public void addOptionGroup(OptionGroup optionGroup) throws Exception;
-
-    //INSERT
-    //optionGroup이랑 menu 같이 insert하는 방법 고안 2
     public void addOptionGroup(List list) throws Exception;
 
     //SELECT LIST
-    //optionGroup이랑 menu  같이 isnert하는 방법 고안 2를 위한 getOptionGroupList
     public List<OptionGroup> getOptionGroupList(int optionGroupNo) throws Exception;
 
     //SELECT ONE
     public Menu getMenu(int menuNo) throws Exception;
 
 
-    // 옵션 그룹의 모든 옵션 받아오기
+    // 옵션 그룹의 모든 옵션 받아오기 by optionGroupNo
     //SELECT LIST
     public Map<String, Object> getOptionGroup(Search search, int optionGroupNo) throws Exception;
+
+    //옵션 그룹의 모든 옵션 받아오기 by menuNo
+    //SELECT LIST
+    public Map<String, Object> getOptionGroupByMenu(Search search, int menuNo) throws Exception;
 
     // 옵션 그룹 중 옵션 하나 받아오기
     //SELECT ONE

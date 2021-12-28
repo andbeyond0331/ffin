@@ -10,17 +10,8 @@ import java.util.Map;
 
 public interface MenuService {
 
-    //메뉴 등록
-    //public void addMenu(Menu menu) throws Exception;
-
-    //메뉴와 옵션 한꺼번에 등록하는 방법 고안1 -> 헷갈려서 실패
-    //public void addMenu(List list) throws Exception;
-
     //메뉴와 옵션 한꺼번에 등록하는 방법 고안2
     public int addMenu(Menu menu) throws Exception;
-
-    //옵션 그룹 등록
-    //public void addOptionGroup(OptionGroup optionGroup) throws Exception;
 
     //메뉴와 옵션 한꺼번에 등록하는 방법 고안2
     //옵션 그룹 등록
@@ -32,8 +23,11 @@ public interface MenuService {
     //메뉴 조회
     public Menu getMenu(int menuNo) throws Exception;
 
-    //옵션 그룹 조회
+    //옵션 그룹 by optionGroupNo
     public Map<String,Object> getOptionGroup(Search search, int optionGroupNo) throws Exception;
+
+    //옵션그룹 조회 by menuNo
+    public Map<String, Object> getOptionGroupByMenu(Search search, int menuNo) throws Exception;
 
     //옵션 조회
     public OptionGroup getOption(int optionNo) throws Exception;

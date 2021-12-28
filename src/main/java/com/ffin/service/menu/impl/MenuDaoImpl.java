@@ -31,24 +31,6 @@ public class MenuDaoImpl implements MenuDao {
         System.out.println(this.getClass());
     }
 
-    ///MMM
-
-//    @Override
-//    public void addMenu(Menu menu) throws Exception {
-//
-//        sqlSession.insert("MenuMapper.addMenu", menu);
-//
-//    }
-
-    //menu 랑 optionGroup 같이 insert하는 방법 고안1 -> 헷갈려서 실패
-//    public void addMenu(List list) throws Exception{
-//        System.out.println("optionGroup list : " + list);
-//        Map map = new HashMap();
-//        map.put("list", list);
-//        System.out.println("map에 들어간 것 확인 : " +map.get("list"));
-//        sqlSession.insert("MenuMapper.addMenu", map);
-//    }
-
     //menu 랑 optionGroup 같이 insert하는 방법 고안2
     @Override
     public int addMenu(Menu menu) throws Exception{
@@ -57,12 +39,6 @@ public class MenuDaoImpl implements MenuDao {
         int menuNo = menu.getMenuNo();
         return menuNo;
     }
-
-//    @Override
-//    public void addOptionGroup(OptionGroup optionGroup) throws Exception {
-//
-//        sqlSession.insert("MenuMapper.addOptionGroup", optionGroup);
-//    }
 
     //menu 랑 optionGroup 같이 insert하는 방법 고안2
     @Override
@@ -94,6 +70,23 @@ public class MenuDaoImpl implements MenuDao {
         map.put("optionGroupNo", optionGroupNo);
 
         List<OptionGroup> list = sqlSession.selectList("MenuMapper.getOptionGroup", map);
+
+        System.out.println("list : " + list);
+
+        map.clear();
+        map.put("list", list);
+
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> getOptionGroupByMenu(Search search, int menuNo) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        map.put("search", search);
+        map.put("menuNo", menuNo);
+
+        List<OptionGroup> list = sqlSession.selectList("MenuMapper.getOptionGroupByMenu", map);
 
         System.out.println("list : " + list);
 
