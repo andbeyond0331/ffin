@@ -6,5 +6,5 @@ public interface AuthService {
     public void sendEmail(String content) throws Exception;
 
     //phone auth
-    public void sendSMS(String userPhone, int randomNumber) throws Exception;
+    //public void sendSMS(String userPhone, int randomNumber) throws Exception;
 }
