@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,8 +25,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {	"classpath:config/context-common.xml",
+@ContextConfiguration(locations = {	"classpath:config/context-auth.xml",
+        "classpath:config/context-common.xml",
         "classpath:config/context-aspect.xml",
         "classpath:config/context-mybatis.xml",
         "classpath:config/context-transaction.xml" })

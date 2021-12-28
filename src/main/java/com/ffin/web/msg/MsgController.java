@@ -11,9 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,6 +28,8 @@ public class MsgController {
     @Autowired
     @Qualifier("msgServiceImpl")
     private MsgService msgService;
+
+    @Autowired
     @Qualifier("userServiceImpl")
     private UserService userService;
     public MsgController(){
@@ -70,18 +74,27 @@ public class MsgController {
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public ModelAndView login(@ModelAttribute("user") User user, HttpSession session) throws Exception{
         System.out.println("UserController.login : POST");
-        System.out.println("user = " + user);
-        //User dbUser = userService.getUser(user.getUserId());
-       // System.out.println("dbUser : "+dbUser);
-            session.setAttribute("userId",user.getUserId());
-            session.setAttribute("role","user");
 
+        User dbUser=userService.getUser(user.getUserId());
+//        ModelMap modelMap = modelAndView.getModelMap();
+//        Object userCoo = modelMap.get("user");
+        System.out.println("dbUser = " + dbUser);
+        if( user.getUserPassword().equals(dbUser.getUserPassword())) {
+
+            session.setAttribute("user", dbUser);
+            session.setAttribute("role", "user");
+            session.setAttribute("userId", user.getUserId());
+
+        }
 
         System.out.println("user = " + user);
 
         ModelAndView modelAndView = new ModelAndView();
-         modelAndView.setViewName("/views/msg/message_list.jsp");
+        modelAndView.addObject("user", dbUser);
+        modelAndView.setViewName("/views/msg/message_list.jsp");
         return modelAndView;
+
+
     }
 
 

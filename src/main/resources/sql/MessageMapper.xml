@@ -15,6 +15,7 @@
   		<result property="msgContent" 		column="MSG_CONTENT" 		jdbcType="VARCHAR"/>
   		<result property="msgReadStatus" 		column="MSG_READ_STATUS"		jdbcType="CHAR"/>
   		<result property="msgRoom" 		column="MSG_ROOM" 		jdbcType="NUMERIC"/>
+		<result property="profile" 		column="USER_PRO_IMG" 		jdbcType="VARCHAR"/>
   	</resultMap>
 
 	<!-- LIST  -->
