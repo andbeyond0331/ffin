@@ -4,14 +4,24 @@ import com.ffin.common.Search;
 import com.ffin.service.domain.Catering;
 import com.ffin.service.domain.Menu;
 import com.ffin.service.domain.Truck;
+import com.ffin.service.domain.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,11 +36,66 @@ public class CateringServiceTest {
     @Qualifier("cateringServiceImpl")
     private CateringService cateringService;
 
-  // @Test
+
+
+    @Test
+    public void mainCalendar() throws Exception {
+        System.out.println("CateringController.mainCalendar");
+        /*
+            메인 화면
+            달력으로 노출할 예정
+            이용자, 사업자 구분
+         */
+        Search search = new Search();
+        String role = "user";
+        String id="user01";
+        Map<String , Object> map= new HashMap<String , Object>();
+        //String role = (String)session.getAttribute("role");// role로 구분할 예정 - user / truck
+        System.out.println("role = " + role);
+
+        if (role == "user" || role.equals("user")){
+            // user 라면
+           // id = ((User)session.getAttribute("user")).getUserId();
+            System.out.println("user id: "+id);
+            search.setSearchCondition("2");
+
+        }else if(role == "truck" || role.equals("truck")){
+            // truck이라면
+            //id = ((Truck)session.getAttribute("truck")).getTruckId();
+            System.out.println("truck id: "+id);
+            search.setSearchCondition("1");
+
+        }
+        map = cateringService.getCtList(search, id);
+        //System.out.println("map = " + map);
+        List<Catering> list = (List<Catering>) map.get("list");
+        System.out.println("list = " + list);
+        Map<String, Catering> javaMap = new HashMap<>();
+        
+        
+        //javaMap.put()
+        //List<Product> list = productService.getAutoProdName(keyword);
+
+        ArrayList ja = new ArrayList();
+
+
+
+        for(int i=0; i<list.size(); i++) {
+
+            ja.add(list.get(i).getCtNo());//title
+            ja.add(list.get(i).getCtDate()); //start_time
+
+        }
+
+    }
+
+
+
+    //@Test
     public void getCtList() throws Exception {
 
         Search search = new Search();
-        search.setSearchCondition("0");
+        search.setSearchCondition("2");
         String id="user01";
 
 
@@ -38,7 +103,7 @@ public class CateringServiceTest {
 
     }
 
-    @Test
+    //@Test
     public void getCtStatusList() throws Exception {
         //getCtStatusList(Search search, String id, String ctStatusCode)
         Search search = new Search();

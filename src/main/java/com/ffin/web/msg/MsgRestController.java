@@ -68,7 +68,7 @@ public class MsgRestController {
         // return "/message_ajax_list.jsp";
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("list", list);
-        modelAndView.setViewName("/msg/message_ajax_list.jsp");
+        modelAndView.setViewName("/views/msg/message_ajax_list.jsp");
         return modelAndView;
         //return list;
     }
@@ -91,7 +91,7 @@ public class MsgRestController {
         //return "/WEB-INF/views/msg/message_content_list.jsp";
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("clist", clist);
-        modelAndView.setViewName("/msg/message_content_list.jsp");
+        modelAndView.setViewName("/views/msg/message_content_list.jsp");
         return modelAndView;
         //return clist;
     }

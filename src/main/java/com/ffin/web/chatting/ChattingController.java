@@ -27,7 +27,7 @@ public class ChattingController {
     @RequestMapping("/chat")
     public ModelAndView chat() {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("/chatting/chat.jsp");
+        mv.setViewName("/views/chatting/chat.jsp");
         return mv;
     }
 
@@ -38,7 +38,7 @@ public class ChattingController {
     @RequestMapping("/room")
     public ModelAndView room() {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("/chatting/room.jsp");
+        mv.setViewName("/views/chatting/room.jsp");
         return mv;
     }
 
@@ -90,9 +90,9 @@ public class ChattingController {
         if(new_list != null && new_list.size() > 0) {
             mv.addObject("roomName", roomName);
             mv.addObject("roomNumber", roomNumber);
-            mv.setViewName("/chatting/chat.jsp");
+            mv.setViewName("/views/chatting/chat.jsp");
         }else {
-            mv.setViewName("/chatting/room.jsp");
+            mv.setViewName("/views/chatting/room.jsp");
         }
         return mv;
     }

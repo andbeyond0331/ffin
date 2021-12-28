@@ -45,22 +45,24 @@ public class CateringController {
     @Value("${pageSize}")
     int pageSize;
 
-    @RequestMapping( value="mainCalendar", method= RequestMethod.GET)
+    @RequestMapping( value="/mainCalendar", method= RequestMethod.GET)
     public ModelAndView mainCalendar(@ModelAttribute("search") Search search , HttpSession session) throws Exception {
         System.out.println("CateringController.mainCalendar");
-        /*
-            메인 화면
+           /* 메인 화면
             달력으로 노출할 예정
             이용자, 사업자 구분
-         */
+            full Calendar ...*/
+
+
         String id="";
         Map<String , Object> map= new HashMap<String , Object>();
         String role = (String)session.getAttribute("role");// role로 구분할 예정 - user / truck
         System.out.println("role = " + role);
 
         if (role == "user" || role.equals("user")){
-            // user 라면
-            id = ((User)session.getAttribute("user")).getUserId();
+            // session 처리 되면 주석 풀어서 체크하기. 지금은 임의로 한거.
+            //id = ((User)session.getAttribute("user")).getUserId();
+            id = (String) session.getAttribute("userId");
             System.out.println("user id: "+id);
             search.setSearchCondition("2");
 
@@ -76,7 +78,7 @@ public class CateringController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("list", map.get("list"));
-        modelAndView.setViewName("/WEB-INF/views/catering/mainCalendar.jsp");
+        modelAndView.setViewName("/views/catering/mainCalendar.jsp");
         return modelAndView;
     }
 
@@ -95,7 +97,7 @@ public class CateringController {
         System.out.println("map = " + map);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("list", map.get("list"));
-        modelAndView.setViewName("/WEB-INF/views/catering/userList.jsp");
+        modelAndView.setViewName("/views/catering/userList.jsp");
 
         return modelAndView;
     }
@@ -122,13 +124,13 @@ public class CateringController {
             id = ((User)session.getAttribute("user")).getUserId();
             System.out.println("user id: "+id);
             search.setSearchCondition("0");
-            modelAndView.setViewName("/WEB-INF/views/catering/userResList.jsp");
+            modelAndView.setViewName("/views/catering/userResList.jsp");
         }else if(role == "truck" || role.equals("truck")){
             // truck이라면
             id = ((Truck)session.getAttribute("truck")).getTruckId();
             System.out.println("truck id: "+id);
             search.setSearchCondition("1");
-            modelAndView.setViewName("/WEB-INF/views/catering/truckResList.jsp");
+            modelAndView.setViewName("/views/catering/truckResList.jsp");
         }
 
         map = cateringService.getCtStatusList(search, id, ctStatusCode);
@@ -155,7 +157,7 @@ public class CateringController {
         System.out.println("map = " + map);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("list", map.get("list"));
-        modelAndView.setViewName("/WEB-INF/views/catering/userList.jsp");
+        modelAndView.setViewName("/views/catering/userList.jsp");
 
         return modelAndView;
     }
@@ -177,7 +179,7 @@ public class CateringController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("catering", catering);
-        modelAndView.setViewName("/WEB-INF/views/catering/addCtView.jsp");
+        modelAndView.setViewName("/views/catering/addCtView.jsp");
 
         return modelAndView;
     }
@@ -196,7 +198,7 @@ public class CateringController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("catering", catering);
-        modelAndView.setViewName("/WEB-INF/views/catering/mainCalendar.jsp");
+        modelAndView.setViewName("/views/catering/mainCalendar.jsp");
 
         return modelAndView;
     }
@@ -217,7 +219,7 @@ public class CateringController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("catering", catering);
-        modelAndView.setViewName("/WEB-INF/views/catering/getCtDetail.jsp");
+        modelAndView.setViewName("/views/catering/getCtDetail.jsp");
 
         return modelAndView;
     }
@@ -241,7 +243,7 @@ public class CateringController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("catering", catering);
-        modelAndView.setViewName("/WEB-INF/views/catering/getCtDetail.jsp");
+        modelAndView.setViewName("/views/catering/getCtDetail.jsp");
 
         return modelAndView;
     }
@@ -263,7 +265,7 @@ public class CateringController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("catering", resCatering);
-        modelAndView.setViewName("/WEB-INF/views/catering/getCtDetail.jsp");
+        modelAndView.setViewName("/views/catering/getCtDetail.jsp");
         return modelAndView;
     }
 
@@ -285,7 +287,7 @@ public class CateringController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("catering", catering);
-        modelAndView.setViewName("/WEB-INF/views/catering/getCtDetail.jsp");
+        modelAndView.setViewName("/views/catering/getCtDetail.jsp");
         return modelAndView;
     }
 
@@ -308,7 +310,7 @@ public class CateringController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("catering", resCatering);
-        modelAndView.setViewName("/WEB-INF/views/catering/getCtDetail.jsp");
+        modelAndView.setViewName("/views/catering/getCtDetail.jsp");
         return modelAndView;
     }
 
@@ -327,7 +329,7 @@ public class CateringController {
         cateringService.updateCtResCancel(ctNo, ctStatusCode);
 
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/WEB-INF/views/catering/getCtDetail.jsp");
+        modelAndView.setViewName("/views/catering/getCtDetail.jsp");
         return modelAndView;
     }
 
