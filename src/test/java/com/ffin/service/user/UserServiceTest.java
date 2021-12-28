@@ -7,14 +7,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.mail.internet.MimeMessage;
 import java.util.List;
 import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {	"classpath:config/context-common.xml",
+@ContextConfiguration(locations = {	"classpath:config/context-auth.xml",
+                                    "classpath:config/context-common.xml",
                                     "classpath:config/context-aspect.xml",
                                     "classpath:config/context-mybatis.xml",
                                     "classpath:config/context-transaction.xml" })
@@ -23,7 +28,6 @@ public class UserServiceTest {
     @Autowired
     @Qualifier("userServiceImpl")
     private UserService userService;
-
 
     //@Test
     public void testAddUserInfo() throws Exception {
@@ -152,9 +156,4 @@ public class UserServiceTest {
         userService.updateBlackStatus(user);
     }
 
-//    @Test
-//    public void testGetUserIdByPhone() throws Exception {
-//        User user = user.getUserId("");
-//
-//    }
 }

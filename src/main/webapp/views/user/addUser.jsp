@@ -14,24 +14,7 @@
 
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 
-	<!-- DatePicker -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
- 	<!-- <link rel="stylesheet" href="/resources/demos/style.css">  -->
-  	<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  	<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-  
-	<!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>  -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	
-	<!-- <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>  -->
-	<!-- <script type="text/javascript" src="../javascript/calendar.js"></script>  -->
-	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
  		body {
@@ -43,82 +26,144 @@
         label {
         	color : #6593A6;
         }
+
+		.correct{
+			color : greenyellow;
+		}
+		.incorrect{
+			color: #d00000;
+		}
+
         
      </style>
-    
 
-<script type="text/javascript">
-	
-	
-	function fncAddProduct(){
-		
-		var name = $("input[name='prodName']").val();
-		var detail = $("input[name='prodDetail']").val();ㄴ
-		var manuDate = $("input[name='manuDate']").val();
-		var price = $("input[name='price']").val();
-		
-		if( name == null || name.length<1){
-			alert("상품명은 반드시 입력하여 합니다.");
-			return;
-		}
-		
-		if( detail == null || detail.length<1){
-			alert("상품 상세정보는 반드시 입력하여 합니다.");
-			return;
-		}
-		
-		if( manuDate == null || manuDate.length<1){
-			alert("제조일자는 반드시 입력하여 합니다.");
-			return;
-		}
-		
-		if( price == null || price.length<1){
-			alert("가격은 반드시 입력하여 합니다.");
-			return;
-		}
-		
-		$("form").attr("method","POST").attr("action","/product/addProduct").attr("enctype","multipart/form-data").submit();
-		
-	}
-	
-	$(function(){
-		$("button.btn.btn-primary").click(function(){
-			//alert( $("td.ct_btn01:contains('등록')").html() );
-			fncAddProduct();
-		});
-	});
-	
-	
-	$(function() {
-		 $( "a[href='#']" ).click( function() {
-				$("form")[0].reset();
-		});
-	});	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 
-/* 	$( function() {
-	    $( "#manuDate" ).datepicker({
-	      showOn: "button",
-	      buttonImage: "/images/calendar.gif",
-	      buttonImageOnly: true,
-	      buttonText: "Select date", 
-	      dateFormat : 'yy-mm-dd', 
-	      
-	      showButtonPanel: true,
-	      closeText : "닫기",
-          prevText : "이전달",
-          nextText : "다음달",
-          currentText : "오늘",
-          changeMonth: true, // 월을 바꿀 수 있는 셀렉트 박스
-          changeYear: true, // 년을 바꿀 수 있는 셀렉트 박스
-          monthNames : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
-          monthNamesShort : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
-          dayNames : [ "일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일" ],
-          dayNamesShort : [ "일", "월", "화", "수", "목", "금", "토" ],
-          dayNamesMin : [ "일", "월", "화", "수", "목", "금", "토" ],
-          weekHeader : "주",
-	    });
-	    
-	  } ); */
+	<%--주소API--%>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+
+	<script type="text/javascript">
+
+		$( function() {
+
+			var code = "";
+``
+			/* 인증번호 이메일 전송 */
+			$(".email-auth").click(function () {
+
+				var inputEmail = $("#userEmail").val();
+				var authInputBox = $(".mail-check-input");
+				var boxWrap = $(".mail-check-input-box");
+
+				alert(inputEmail);
+				$.ajax({
+					type:"GET",
+					url:"/auth/json/emailAuth/"+inputEmail,
+					success:function (data){
+						//console.log("data : "+data);
+						/*$("#userEmailAuth").attr("disabled",false);*/
+						authInputBox.attr("disabled",false);
+						boxWrap.attr("id", "mail-check-input-box-ture")
+						code = data;
+					}
+				});
+			});
+
+			/* email 인증번호 비교 */
+			$(".mail-check-input").on("keyup",function (){
+
+				var inputCode = $(".mail-check-input").val();
+				var checkResult = $("#mail-check-input-box-warn");
+				/*console.log("inputCode"+inputCode);
+				console.log("code"+code);*/
+				if(inputCode.length >= 6){
+					if(inputCode == code){
+						checkResult.html("OK");
+						checkResult.attr("class", "correct");
+					}else {
+						checkResult.html("NOPE");
+						checkResult.attr("class","incorrect");
+					}
+				}
+
+			});
+
+
+			/* coolSMS */
+			// $(".sms-auth").click(function (){
+			//
+			// 	alert("zzz...");
+			// 	/*var code = "";*/
+			// 	var userPhone = $("#userPhone").val();
+			// 	$("form").attr("method","POST").attr("action", "/auth/sendSMS").submit();
+			//
+			// 	alert("인증번호가 전송되었습니다.");
+			// });
+
+		});
+
+		/* Daum API */
+		function addrApi(){
+			new daum.Postcode({
+				oncomplete: function(data) {
+
+					alert(data);
+					alert(data.roadAddress);
+
+					// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+					// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+					var addr = ''; // 주소 변수
+					var extraAddr = ''; // 참고항목 변수
+
+					//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+					if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+						addr = data.roadAddress;
+					} else { // 사용자가 지번 주소를 선택했을 경우(J)
+						addr = data.jibunAddress;
+					}
+
+					// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+					if(data.userSelectedType === 'R'){
+						// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+						// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+						if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+							extraAddr += data.bname;
+						}
+						// 건물명이 있고, 공동주택일 경우 추가한다.
+						if(data.buildingName !== '' && data.apartment === 'Y'){
+							extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+						}
+						// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+						if(extraAddr !== ''){
+							extraAddr = ' (' + extraAddr + ')';
+						}
+						// 조합된 참고항목을 해당 필드에 넣는다.
+						// document.getElementById("sample6_extraAddress").value = extraAddr;
+						addr += extraAddr;
+					} else {
+						// document.getElementById("sample6_extraAddress").value = '';
+						addr = '';
+					}
+
+					// 우편번호와 주소 정보를 해당 필드에 넣는다.
+					// document.getElementById('sample6_postcode').value = data.zonecode;
+					// document.getElementById("sample6_address").value = addr;
+					//$(".userAddr").val(data.zonecode);
+					// 커서를 상세주소 필드로 이동한다.
+					// document.getElementById("sample6_detailAddress").focus();
+					$("#userAddr").val(addr);
+					$("#userAddrDetail").attr("readonly", false);
+					$("#userAddrDetail").focus();
+				}
+			}).open();
+		}
+
+
+
 
 
 </script>
@@ -130,54 +175,97 @@
  	<div class="container">
 	
 		<div class="page-header" >
-	       <h3 class="text-info">상 품 등 록</h3>
-	       <h5 class="text-muted">상품 정보를 <strong class="text-danger">정확하게 입력</strong>해 주세요.</h5>
+	       <h3 class="text-info">회 원 가 입</h3>
+	       <h5 class="text-muted">회원정보를 <strong class="text-danger">정확하게 입력</strong>해 주세요.</h5>
 	    </div>
 		
 		<form class="form-horizontal">
 
 			<div class="form-group">
-			    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">상품명</label>
+			    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">ID</label>
 			    <div class="col-sm-4">
-			      <input type="text" class="form-control" id="prodName" name="prodName" placeholder="상품명">
+			      <input type="text" class="form-control" id="userId" name="userId" placeholder="ID">
 			    </div>
 			  </div>
 			
 			<hr/>
 			
 			<div class="form-group">
-			    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">상품상세정보</label>
+			    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">Password</label>
 			    <div class="col-sm-4">
-			      <input type="text" class="form-control" id="prodDetail" name="prodDetail" placeholder="상품상세정보">
+			      <input type="text" class="form-control" id="userPassword" name="userPassword" placeholder="Password">
 			    </div>
 			  </div>
 			
 			<hr/>
 			
 			<div class="form-group">
-			    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">제조일자</label>
+			    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 			    <div class="col-sm-4">
-			      <input type="text" class="form-control" id="manuDate" name="manuDate" placeholder="제조일자">
+			      <input type="text" class="form-control" id="userName" name="userName" placeholder="이름">
 			    </div>
 			  </div>
-			
+
 			<hr/>
-			
-			<div class="form-group">
-			    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">가격</label>
-			    <div class="col-sm-4">
-			      <input type="text" class="form-control" id="price" name="price" placeholder="가격">
-			    </div>
-			  </div>
-			
+            <div class="form-group">
+                <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">Phone</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="userPhone" name="userAddr" placeholder="핸드폰번호">
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-warning sms-auth" >인증번호</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="userName" class="col-sm-offset-1 col-sm-3 control-label"></label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="userPhoneAuth" name="userPhoneAuth" placeholder="인증번호" disabled required>
+                    <input type="hidden" name="text" id="authNum"><%--인증번호 hidden으로 전송--%>
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-group-xs" id="userPhoneAuthNum">인 증</button>
+                    <br/>
+                    <span class="point successPhoneChk">휴대폰 번호를 먼저 입력해주세요.</span>
+                </div>
+            </div>
 			<hr/>
-			
+
 			<div class="form-group">
-			    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
-			    <div class="col-sm-4">
-			      <input type="file" class="form-control" id="fileName1" name="fileName1" placeholder="상품이미지">
-			    </div>
-			  </div>
+				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label">주소</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="userAddr" name="userAddr" placeholder="주소검색" readonly="readonly">
+				</div>
+				<div class="col-sm-3">
+					<button type="button" class="btn btn-success" onclick="addrApi()">주소검색</button>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label"></label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="userAddrDetail" name="userAddrDetail" placeholder="상세주소를 입력해주세요" readonly="readonly">				</div>
+			</div>
+
+			<hr/>
+
+			<div class="form-group">
+				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label">Email</label>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="Email" >
+				</div>
+				<div class="col-sm-3">
+					<button type="button" class="btn btn-info email-auth">email인증</button>
+				</div>
+			</div>
+			<div class="form-group mail-check-wrap">
+				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label"></label>
+				<div class="col-sm-4 mail-check-input-box" id="mail-check-input-box-fail">
+					<input type="text" class="form-control mail-check-input" id="userEmailAuth" name="userEmailAuth" placeholder="인증번호" disabled="disabled">
+					<span id="mail-check-input-box-warn"></span>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+
+
 			
 			<hr/>
 

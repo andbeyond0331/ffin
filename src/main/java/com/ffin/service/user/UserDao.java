@@ -3,10 +3,17 @@ package com.ffin.service.user;
 import com.ffin.common.Search;
 import com.ffin.service.domain.User;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 public interface UserDao {
+
+    //로그인 유지
+    void autoLogin(String userId, String sessionKey, Date sessionLimit) throws Exception;
+    //세션키 검증
+    User SessionKeyAuth(String sessionKey) throws Exception;
 
     //회원가입
     public void addUserInfo(User user) throws Exception;

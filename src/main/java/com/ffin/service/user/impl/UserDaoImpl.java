@@ -1,5 +1,6 @@
 package com.ffin.service.user.impl;
 
+import antlr.NameSpace;
 import com.ffin.common.Search;
 import com.ffin.service.domain.User;
 import com.ffin.service.user.UserDao;
@@ -8,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +22,7 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     @Qualifier("sqlSessionTemplate")
     private SqlSession sqlSession;
+
     public void setSqlSession(SqlSession sqlSession) {
         this.sqlSession = sqlSession;
     }
@@ -25,6 +30,22 @@ public class UserDaoImpl implements UserDao {
     ///Constructor
     public UserDaoImpl() {
         System.out.println(this.getClass());
+    }
+
+    @Override
+    public void autoLogin(String userId, String sessionKey, Date sessionLimit) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("sessionKey", sessionKey);
+        map.put("sessionLimit", sessionLimit);
+
+        sqlSession.update("UserMapper.autoLogin", map);
+    }
+
+    @Override
+    public User SessionKeyAuth(String sessionKey) throws Exception {
+        System.out.println("UserDaoImpl.SessionKeyAuth");
+        return sqlSession.selectOne("UserMapper.SessionKeyAuth", sessionKey);
     }
 
     ///Method

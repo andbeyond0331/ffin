@@ -29,6 +29,21 @@
         <div class="col-xs-8 col-md-4">${user.userId}</div>
     </div>
 
+    <div class="row">
+        <div class="col-xs-4 col-md-2"><strong>이 름</strong></div>
+        <div class="col-xs-8 col-md-4">${user.userName}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-4 col-md-2"><strong>연 락 처</strong></div>
+        <div class="col-xs-8 col-md-4">${user.userPhone}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-4 col-md-2"><strong>이 메 일</strong></div>
+        <div class="col-xs-8 col-md-4">${user.userEmail}</div>
+    </div>
+
     <hr/>
 
 
