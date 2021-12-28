@@ -17,8 +17,9 @@ import java.util.Map;
 import java.util.Optional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration( locations = { "classpath:config/context-aspect.xml",
+@ContextConfiguration( locations = { "classpath:config/context-auth.xml",
         "classpath:config/context-common.xml",
+        "classpath:config/context-aspect.xml",
         "classpath:config/context-mybatis.xml",
         "classpath:config/context-transaction.xml" })
 

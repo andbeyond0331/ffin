@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="HeartMapper">
+    <resultMap id="heartSelectMap" type="heart">
+        <result property="heartNo"          column="HEART_NO"           jdbcType="NUMERIC"/>
+        <result property="heartTargetP"     column="HEART_TARGET_P"     jdbcType="NUMERIC"/>
+        <result property="heartTargetT"     column="HEART_TARGET_T"     jdbcType="VARCHAR"/>
+        <result property="heartType"        column="HEART_TYPE"         jdbcType="CHAR"/>
+        <result property="heartRegDate"     column="HEART_REG_DATE"     jdbcType="DATE"/>
+        <result property="heartFlag"        column="HEART_FLAG"         jdbcType="CHAR"/>
+        <result property="heartUserId"      column="HEART_USER_ID"      jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!-- SQL : INSERT -->
+    <insert id="addHeart"       parameterType="heart">
+        INSERT INTO HEART (HEART_TARGET_P, HEART_TARGET_T, HEART_TYPE, HEART_REG_DATE, HEART_FLAG, HEART_USER_ID)
+        VALUES (#{heartTargetP},#{heartTargetT},#{heartType},SYSDATE(),#{heartFlag},#{heartUserId})
+    </insert>
+
+    <!-- SQL : SELECT ONE -->
+    <select id="getHeart"       parameterType="int"         resultMap="heartSelectMap">
+        SELECT
+            HEART_TARGET_P, HEART_TARGET_T, HEART_TYPE, HEART_REG_DATE, HEART_FLAG, HEART_USER_ID
+        FROM heart
+        WHERE heart_no = #{heartNo}
+    </select>
+
+
+    <!-- SQL : SELECT LIST -->
+    <select id="getHeartList"     parameterType="search"      resultMap="heartSelectMap">
+        SELECT inner_table.*
+        FROM( SELECT HEART_TARGET_P, HEART_TARGET_T, HEART_TYPE, HEART_REG_DATE, HEART_FLAG, HEART_USER_ID
+        FROM heart
+        <if test="searchCondition != null">
+            <where>
+                <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+                <if test="searchCondition == 0 and searchKeyword !='' ">
+                    AND heart_target_p LIKE #{searchKeyword}
+                </if>
+            </where>
+        </if>
+        order by heart_no ) inner_table
+        limit 0,8;
+    </select>
+
+    <!-- SQL : UPDATE -->
+    <update id="updateHeart"  parameterType="heart">
+        UPDATE heart
+        <set>
+            HEART_FLAG = #{heartFlag},
+            HEART_REG_DATE = SYSDATE()
+        </set>
+        WHERE heart_no = #{heartNo}
+    </update>
+</mapper>
+

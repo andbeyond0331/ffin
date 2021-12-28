@@ -46,6 +46,8 @@
 		<mapper resource="sql/ReviewMapper.xml"/>
 		<mapper resource="sql/TruckMapper.xml"/>
 		<mapper resource="sql/PostMapper.xml"/>
+		<mapper resource="sql/CommentMapper.xml"/>
+		<mapper resource="sql/HeartMapper.xml"/>
 	</mappers>
 
 

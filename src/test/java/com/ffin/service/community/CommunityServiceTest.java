@@ -1,8 +1,7 @@
 package com.ffin.service.community;
 
 import com.ffin.common.Search;
-import com.ffin.service.domain.Post;
-import com.ffin.service.domain.Truck;
+import com.ffin.service.domain.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,10 +14,11 @@ import java.util.List;
 import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration( locations = { "classpath:config/context-aspect.xml",
+@ContextConfiguration(locations = {"classpath:config/context-auth.xml",
         "classpath:config/context-common.xml",
+        "classpath:config/context-aspect.xml",
         "classpath:config/context-mybatis.xml",
-        "classpath:config/context-transaction.xml" })
+        "classpath:config/context-transaction.xml"})
 
 public class CommunityServiceTest {
 
@@ -31,7 +31,7 @@ public class CommunityServiceTest {
     private CommunityService communityService;
 
     //@Test
-    public void testAddPost() throws Exception{
+    public void testAddPost() throws Exception {
         Truck truck = new Truck();
         truck.setTruckId("truck04");
 
@@ -45,7 +45,30 @@ public class CommunityServiceTest {
     }
 
     //@Test
-    public void testGetPost() throws Exception{
+    public void testAddComment() throws Exception {
+
+        Comment comment = new Comment();
+        comment.setCommentPostNo(1);
+        comment.setCommentContent("후회없도록");
+        comment.setCommentUserId("use04");
+
+        communityService.addComment(comment);
+    }
+
+    //@Test
+    public void testAddHeart() throws Exception {
+
+        Heart heart = new Heart();
+        heart.setHeartTargetP(4);
+        heart.setHeartType(1);
+        heart.setHeartFlag(0);
+        //heart.setHeartUserId("use04");
+
+        communityService.addHeart(heart);
+    }
+
+    //@Test
+    public void testGetPost() throws Exception {
 
         Post post = new Post();
 
@@ -55,10 +78,30 @@ public class CommunityServiceTest {
         Assert.assertEquals("춥습니다", post.getPostContent());
     }
 
-    @Test
-    public void testUpdatePost() throws Exception{
+    //@Test
+    public void testGetComment() throws Exception {
 
-        Post post = communityService.getPost(11);
+        Comment comment = new Comment();
+
+        comment = communityService.getComment(1);
+
+        Assert.assertEquals("그러네요", comment.getCommentContent());
+    }
+
+    //@Test
+    public void testGetHeart() throws Exception {
+
+        Heart heart = new Heart();
+
+        heart = communityService.getHeart(1);
+
+        Assert.assertEquals(1, heart.getHeartType());
+    }
+
+    //@Test
+    public void testUpdatePost() throws Exception {
+
+        Post post = communityService.getPost(1);
 
 
         post.setPostTitle("힘들면");
@@ -70,11 +113,33 @@ public class CommunityServiceTest {
     }
 
     //@Test
-    public void testGetPostListAll() throws Exception{
+    public void testUpdateComment() throws Exception {
+
+        Comment comment = communityService.getComment(1);
+
+        comment.setCommentContent("퓨퓨ㅠㅠ");
+
+        communityService.updateComment(comment);
+
+    }
+
+    //@Test
+    public void testUpdateHeart() throws Exception {
+
+        Heart heart = communityService.getHeart(1);
+
+        heart.setHeartFlag(0);
+
+        communityService.updateHeart(heart);
+
+    }
+
+    //@Test
+    public void testGetPostListAll() throws Exception {
         Search search = new Search();
         search.setCurrentPage(1);
         search.setPageSize(3);
-        Map<String,Object> map = communityService.getPostList(search);
+        Map<String, Object> map = communityService.getPostList(search);
         //Assert.assertEquals(3, list.size());
 
         //==> console 확인
@@ -83,7 +148,7 @@ public class CommunityServiceTest {
         //Integer totalCount = (Integer)map.get("totalCount");
         //System.out.println(totalCount);
 
-        List<Object> list = (List<Object>)map.get("list");
+        List<Object> list = (List<Object>) map.get("list");
 
         System.out.println("============================================");
 
@@ -93,7 +158,78 @@ public class CommunityServiceTest {
         search.setSearchKeyword("");
         map = communityService.getPostList(search);
 
-        list = (List<Object>)map.get("list");
+        list = (List<Object>) map.get("list");
+        //Assert.assertEquals(3, list.size());
+
+        //==> console 확인
+        //System.out.println(list);
+
+        //totalCount = (Integer)map.get("totalCount");
+        //System.out.println(totalCount);
+    }
+
+
+    //@Test
+    public void testGetCommentList() throws Exception {
+        Search search = new Search();
+        search.setCurrentPage(1);
+        search.setPageSize(3);
+
+        Map<String, Object> map = communityService.getCommentList(search);
+        //Assert.assertEquals(3, list.size());
+
+        //==> console 확인
+        //System.out.println(list);
+
+        //Integer totalCount = (Integer)map.get("totalCount");
+        //System.out.println(totalCount);
+
+        List<Object> list = (List<Object>) map.get("list");
+
+        System.out.println("============================================");
+
+        search.setCurrentPage(1);
+        search.setPageSize(3);
+        search.setSearchCondition("0");
+        search.setSearchKeyword("");
+        //map = communityService.getCommentList(search);
+
+        list = (List<Object>) map.get("list");
+        //Assert.assertEquals(3, list.size());
+
+        //==> console 확인
+        //System.out.println(list);
+
+        //totalCount = (Integer)map.get("totalCount");
+        //System.out.println(totalCount);
+    }
+
+    //@Test
+    public void testGetHeartList() throws Exception {
+        Search search = new Search();
+        search.setCurrentPage(1);
+        search.setPageSize(3);
+
+        Map<String, Object> map = communityService.getHeartList(search);
+        //Assert.assertEquals(3, list.size());
+
+        //==> console 확인
+        //System.out.println(list);
+
+        //Integer totalCount = (Integer)map.get("totalCount");
+        //System.out.println(totalCount);
+
+        List<Object> list = (List<Object>) map.get("list");
+
+        System.out.println("============================================");
+
+        search.setCurrentPage(1);
+        search.setPageSize(3);
+        search.setSearchCondition("0");
+        search.setSearchKeyword("");
+        //map = communityService.getCommentList(search);
+
+        list = (List<Object>) map.get("list");
         //Assert.assertEquals(3, list.size());
 
         //==> console 확인
