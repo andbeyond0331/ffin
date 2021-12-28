@@ -6,28 +6,19 @@
 
 <mapper namespace="CommentMapper">
     <resultMap id="commentSelectMap" type="comment">
-        <result property="commentNo"        column="COMMENT_NO"         jdbcType="NUMERIC"/>
-        <result property="commentContent"   column="COMMENT_CONTENT"    jdbcType="VARCHAR"/>
-        <result property="commentDate"      column="COMMENT_DATE"       jdbcType="DATE"/>
-        <result property="secretKey"        column="SECRET_KET"         jdbcType="CHAR"/>
-        <association property="commentPostNo"       javaType="post">
-            <id property="postNO"           column="POST_NO"            jdbcType="NUMERIC"/>
-            <result property="postTitle"    column="POST_TITLE"         jdbcType="VARCHAR"/>
-        </association>
-        <association property="commentUserId"       javaType="user">
-            <id property="userId"           column="COMMENT_USER_ID"    jdbcType="VARCHAR"/>
-            <result property="userName"     column="USER_NAME"          jdbcType="VARCHAR"/>
-        </association>
-        <association property="commentTruckId"       javaType="truck">
-            <id property="truckId"           column="COMMENT_TRUCK_ID"    jdbcType="VARCHAR"/>
-            <result property="truckName"     column="TRUCK_NAME"          jdbcType="VARCHAR"/>
-        </association>
+        <result property="commentNo"            column="COMMENT_NO"             jdbcType="NUMERIC"/>
+        <result property="commentPostNo"        column="COMMENT_POST_NO"        jdbcType="NUMERIC"/>
+        <result property="commentContent"       column="COMMENT_CONTENT"        jdbcType="VARCHAR"/>
+        <result property="commentUserId"        column="COMMENT_USER_ID"        jdbcType="VARCHAR"/>
+        <result property="commentTruckId"       column="COMMENT_TRUCK_ID"       jdbcType="VARCHAR"/>
+        <result property="commentDate"          column="COMMENT_DATE"           jdbcType="DATE"/>
+        <result property="secretKey"            column="SECRET_KET"             jdbcType="CHAR"/>
     </resultMap>
 
     <!-- SQL : INSERT -->
     <insert id="addComment"     parameterType="comment">
         INSERT INTO COMMENT (COMMENT_POST_NO, COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY)
-        VALUES (#{commentPostNo.postNo}, #{commentUserId.userId}, #{commentTruckId.truckId}, #{commentContent}, SYSDATE(), DEFAULT);
+        VALUES (#{commentPostNo}, #{commentUserId}, #{commentTruckId}, #{commentContent}, SYSDATE(), DEFAULT);
     </insert>
 
     <!-- SQL :SELECT ONE-->
@@ -35,32 +26,39 @@
         SELECT
             COMMENT_POST_NO, COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
         FROM comment
-        WEHRE comment_no = #{value}
+        WHERE comment_no = #{commentNo}
     </select>
 
     <select id="getComment2"     parameterType="String"         resultMap="commentSelectMap">
         SELECT
             COMMENT_POST_NO, COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
         FROM comment
-        WEHRE comment_user_id = #{value}
+        WHERE comment_user_id = #{value}
     </select>
 
     <select id="getComment3"     parameterType="String"         resultMap="commentSelectMap">
         SELECT
             COMMENT_POST_NO, COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
         FROM comment
-        WEHRE comment_truck_id = #{value}
+        WHERE comment_truck_id = #{value}
     </select>
 
 
     <!-- SQL : SELECT LIST -->
     <select id="getCommentList"     parameterType="search"      resultMap="commentSelectMap">
-        SELECT
-            COMMENT_POST_NO, COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
-            FROM comment
-            WHERE COMMENT_POST_NO = #{commentPostNo} AND SECRET_KEY = '0'
-            order by comment_no
-
+        SELECT inner_table.*
+        FROM( SELECT COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
+        FROM comment
+        <if test="searchCondition != null">
+            <where>
+                <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+                <if test="searchCondition == 0 and searchKeyword !='' ">
+                    AND comment_post_no LIKE #{searchKeyword}
+                </if>
+            </where>
+        </if>
+        order by comment_no ) inner_table
+        limit 0,8;
     </select>
 
     <!-- SQL : UPDATE -->

@@ -3,9 +3,7 @@ package com.ffin.web.community;
 import com.ffin.common.Page;
 import com.ffin.common.Search;
 import com.ffin.service.community.CommunityService;
-import com.ffin.service.domain.Post;
-import com.ffin.service.domain.Truck;
-import com.ffin.service.domain.User;
+import com.ffin.service.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +29,7 @@ public class CommunityController {
     private CommunityService communityService;
     //setter Method 구현않음
 
-    public CommunityController(){
+    public CommunityController() {
         System.out.println(this.getClass());
     }
 
@@ -40,47 +38,50 @@ public class CommunityController {
     @Value("#{commonProperties['pageSize']}")
     int pageSize;
 
-    @RequestMapping( value = "addPost", method = RequestMethod.GET)
-    public String addPost() throws Exception    {
+
+    ///////////////////// 게시물 관련 메소드 ////////////////////////
+    @RequestMapping(value = "addPost", method = RequestMethod.GET)
+    public String addPost() throws Exception {
         System.out.println("/community/addPost : GET");
 
         return "/community/addPostView.jsp";
     }
 
-    @RequestMapping( value = "addPost", method = RequestMethod.POST)
-    public String addPost(@ModelAttribute("post") Post post, @ModelAttribute("truck") Truck truck, @ModelAttribute("user") User user, Model model,HttpSession session) throws Exception    {
+    @RequestMapping(value = "addPost", method = RequestMethod.POST)
+    public String addPost(@ModelAttribute("post") Post post, @ModelAttribute("truck") Truck truck, @ModelAttribute("user") User user, Model model, HttpSession session) throws Exception {
         System.out.println("/community/addPost : POST");
 
-        System.out.println(session.getAttribute("truckId"));
-
-        String postUser = ((User)session.getAttribute("user")).getUserId();
-        System.out.println(postUser);
-        String postTruck = ((Truck)session.getAttribute("truck")).getTruckId();
-        System.out.println(postTruck);
-//        post.setPostUser("postUserId", postUser);
-//        post.setPostTruck("postTruckId", postTruckId);
+        if (session.getAttribute("role").equals("user")) {
+            String postUser = ((User) session.getAttribute("user")).getUserId();
+            System.out.println("게시물 작성자(user) : " + session.getAttribute("userId"));
+            post.setPostUser((User) session.getAttribute("user"));
+        } else if (session.getAttribute("role").equals("truck")) {
+            String postTruck = ((Truck) session.getAttribute("truck")).getTruckId();
+            System.out.println("게시물 작성자(truck) : " + session.getAttribute("truckId"));
+            post.setPostTruck((Truck) session.getAttribute("truck"));
+        }
         communityService.addPost(post);
 
         return "/views/community/getPostList.jsp";
     }
 
-    @RequestMapping( value = "getPost", method = RequestMethod.GET)
-    public ModelAndView getPost(HttpServletRequest request, ModelAndView m) throws Exception{
+    @RequestMapping(value = "getPost", method = RequestMethod.GET)
+    public ModelAndView getPost(HttpServletRequest request, ModelAndView m) throws Exception {
 
         System.out.println("CommunityContoller.getPost : GET");
         int postNo = Integer.parseInt(request.getParameter("postNo"));
 
         System.out.println("postNo = " + postNo);
         Post post = communityService.getPost(postNo);
-        System.out.println("post = "+post);
+        System.out.println("post = " + post);
         m.addObject("post", post);
         m.setViewName("/community/getPost.jsp");
 
         return m;
     }
 
-    @RequestMapping( value = "updatePost", method = RequestMethod.GET)
-    public String updatePost(@ModelAttribute("postNo") int postNo, Model model, HttpSession httpSession) throws Exception{
+    @RequestMapping(value = "updatePost", method = RequestMethod.GET)
+    public String updatePost(@ModelAttribute("postNo") int postNo, Model model, HttpSession httpSession) throws Exception {
         System.out.println("/community/updatePost : GET");
         //Business Logic
         Post post = communityService.getPost(postNo);
@@ -90,26 +91,26 @@ public class CommunityController {
         return "forward:/community/updatePost.jsp";
     }
 
-    @RequestMapping( value = "updatePost", method = RequestMethod.POST)
-    public String updatePost(@ModelAttribute("post") Post post, Model model, HttpSession session) throws Exception{
+    @RequestMapping(value = "updatePost", method = RequestMethod.POST)
+    public String updatePost(@ModelAttribute("post") Post post, Model model, HttpSession session) throws Exception {
 
         System.out.println("/community/updatePost : POST");
         //Business Logic
         communityService.updatePost(post);
 
-        int sessionNo = ((Post)session.getAttribute("post")).getPostNo();
-        if(sessionNo == post.getPostNo()){
+        int sessionNo = ((Post) session.getAttribute("post")).getPostNo();
+        if (sessionNo == post.getPostNo()) {
             session.setAttribute("post", post);
         }
-        return "redirect:/community/getPost?postNo="+post.getPostNo();
+        return "redirect:/community/getPost?postNo=" + post.getPostNo();
     }
 
-    @RequestMapping( value = "getPostList")
-    public String getPostList(@ModelAttribute("search")Search search, Model model, HttpServletRequest request) throws Exception{
+    @RequestMapping(value = "getPostList")
+    public String getPostList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
 
         System.out.println("/community/getPostList : GET/POST");
 
-        if(search.getCurrentPage() ==0 ){
+        if (search.getCurrentPage() == 0) {
             search.setCurrentPage(1);
         }
         search.setPageSize(pageSize);
@@ -117,7 +118,7 @@ public class CommunityController {
         // Business Logic 수행
         Map<String, Object> map = communityService.getPostList(search);
 
-        Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
         System.out.println(resultPage);
 
         //  Model 과 View 연결
@@ -126,5 +127,186 @@ public class CommunityController {
         model.addAttribute("search", search);
 
         return "forward:/community/getPostList.jsp";
+    }
+
+
+
+    ////////////////////// 코멘트 관련 메소드 ////////////////////////////
+    @RequestMapping(value = "addComment", method = RequestMethod.GET)
+    public String addComment() throws Exception {
+        System.out.println("/community/addComment : GET");
+
+        return "/community/getPost.jsp";
+    }
+
+    @RequestMapping(value = "addComment", method = RequestMethod.POST)
+    public String addComment(@ModelAttribute("comment") Comment comment, @ModelAttribute("truck") Truck truck, @ModelAttribute("user") User user, Model model, HttpSession session) throws Exception {
+        System.out.println("/community/addComment : POST");
+
+        if (session.getAttribute("role").equals("user")) {
+            String commentUser = ((User) session.getAttribute("user")).getUserId();
+            System.out.println("댓글 작성자(user) : " + session.getAttribute("userId"));
+            comment.setCommentUserId(commentUser);
+        } else if (session.getAttribute("role").equals("truck")) {
+            String commentTruck = ((Truck) session.getAttribute("truck")).getTruckId();
+            System.out.println("댓글 작성자(truck) : " + session.getAttribute("truckId"));
+            comment.setCommentTruckId(commentTruck);
+        }
+        communityService.addComment(comment);
+
+        return "/views/community/getPost.jsp";
+    }
+
+    @RequestMapping(value = "getComment", method = RequestMethod.GET)
+    public ModelAndView getComment(HttpServletRequest request, ModelAndView m) throws Exception {
+
+        System.out.println("CommunityContoller.getComment : GET");
+        int commentNo = Integer.parseInt(request.getParameter("commentNo"));
+
+        System.out.println("commentNo = " + commentNo);
+        Comment comment = communityService.getComment(commentNo);
+        System.out.println("comment = " + comment);
+        m.addObject("comment", comment);
+        m.setViewName("/community/getComment.jsp");
+
+        return m;
+    }
+
+    @RequestMapping(value = "updateComment", method = RequestMethod.GET)
+    public String updateComment(@ModelAttribute("commentNo") int commentNo, Model model, HttpSession httpSession) throws Exception {
+        System.out.println("/community/updateComment : GET");
+        //Business Logic
+        Comment comment = communityService.getComment(commentNo);
+        //Model 과 View 연결
+        model.addAttribute("comment", comment);
+
+        return "forward:/community/updateComment.jsp";
+    }
+
+    @RequestMapping(value = "updateComment", method = RequestMethod.POST)
+    public String updateComment(@ModelAttribute("comment") Comment comment, Model model, HttpSession session) throws Exception {
+
+        System.out.println("/community/updateComment : POST");
+        //Business Logic
+        communityService.updateComment(comment);
+
+        int sessionNo = ((Comment) session.getAttribute("comment")).getCommentNo();
+        if (sessionNo == comment.getCommentNo()) {
+            session.setAttribute("comment", comment);
+        }
+        return "redirect:/community/getComment?commentNo=" + comment.getCommentNo();
+    }
+
+    @RequestMapping(value = "getCommentList")
+    public String getCommentList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+
+        System.out.println("/community/getCommentList : GET/POST");
+
+        if (search.getCurrentPage() == 0) {
+            search.setCurrentPage(1);
+        }
+        search.setPageSize(pageSize);
+
+        // Business Logic 수행
+        Map<String, Object> map = communityService.getCommentList(search);
+
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+        System.out.println(resultPage);
+
+        //  Model 과 View 연결
+        model.addAttribute("list", map.get("list"));
+        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("search", search);
+
+        return "forward:/community/getCommentList.jsp";
+    }
+
+
+
+    ////////////////////// 좋아요 관련 메소드 ////////////////////////////
+    @RequestMapping(value = "addHeart", method = RequestMethod.GET)
+    public String addHeart() throws Exception {
+        System.out.println("/community/addHeart : GET");
+
+        return "/community/getHeart.jsp";
+    }
+
+    @RequestMapping(value = "addHeart", method = RequestMethod.POST)
+    public String addHeart(@ModelAttribute("heart") Heart heart, @ModelAttribute("truck") Truck truck, @ModelAttribute("user") User user, Model model, HttpSession session) throws Exception {
+        System.out.println("/community/addHeart : POST");
+
+        if (session.getAttribute("role").equals("user")) {
+            String heartUser = ((User) session.getAttribute("user")).getUserId();
+            System.out.println("좋아요 누른사람(user) : " + session.getAttribute("userId"));
+            heart.setHeartUserId(heartUser);
+        }
+        communityService.addHeart(heart);
+
+        return "/views/community/getHeart.jsp";
+    }
+
+    @RequestMapping(value = "getHeart", method = RequestMethod.GET)
+    public ModelAndView getHeart(HttpServletRequest request, ModelAndView m) throws Exception {
+
+        System.out.println("CommunityContoller.getHeart : GET");
+        int heartNo = Integer.parseInt(request.getParameter("heartNo"));
+
+        System.out.println("commentNo = " + heartNo);
+        Heart heart = communityService.getHeart(heartNo);
+        System.out.println("heart = " + heart);
+        m.addObject("heart", heart);
+        m.setViewName("/community/getHeart.jsp");
+
+        return m;
+    }
+
+
+    @RequestMapping(value = "updateHeart", method = RequestMethod.GET)
+    public String updateHeart(@ModelAttribute("heartNo") int heartNo, Model model, HttpSession httpSession) throws Exception {
+        System.out.println("/community/updateHeart : GET");
+        //Business Logic
+        Heart heart = communityService.getHeart(heartNo);
+        //Model 과 View 연결
+        model.addAttribute("heart", heart);
+
+        return "forward:/community/updateHeart.jsp";
+    }
+
+    @RequestMapping(value = "updateHeart", method = RequestMethod.POST)
+    public String updateHeart(@ModelAttribute("heart") Heart heart, Model model, HttpSession session) throws Exception {
+
+        System.out.println("/community/updateHeart : POST");
+        //Business Logic
+        communityService.updateHeart(heart);
+
+        int sessionNo = ((Heart) session.getAttribute("heart")).getHeartNo();
+        if (sessionNo == heart.getHeartNo()) {
+            session.setAttribute("heart", heart);
+        }
+        return "redirect:/community/getHeart?heartNo=" + heart.getHeartNo();
+    }
+
+    @RequestMapping(value = "getHeartList")
+    public String getHeartList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+
+        System.out.println("/community/getHeartList : GET/POST");
+
+        if (search.getCurrentPage() == 0) {
+            search.setCurrentPage(1);
+        }
+        search.setPageSize(pageSize);
+
+        // Business Logic 수행
+        Map<String, Object> map = communityService.getHeartList(search);
+
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+        System.out.println(resultPage);
+
+        //  Model 과 View 연결
+        model.addAttribute("list", map.get("list"));
+        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("search", search);
+
+        return "forward:/community/getHeartList.jsp";
     }
 }

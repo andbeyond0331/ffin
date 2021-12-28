@@ -4,6 +4,7 @@ import com.ffin.common.Search;
 import com.ffin.service.community.CommunityDao;
 import com.ffin.service.community.CommunityService;
 import com.ffin.service.domain.Comment;
+import com.ffin.service.domain.Heart;
 import com.ffin.service.domain.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -66,25 +67,60 @@ public class CommunityServiceImpl implements CommunityService {
     // 댓글 작성
     @Override
     public void addComment(Comment comment) throws Exception {
-
+        communityDao.addComment(comment);
     }
 
     // 댓글 조회
     @Override
     public Comment getComment(int commentNo) throws Exception {
-        return null;
+        return communityDao.getComment(commentNo);
     }
 
     // 댓글 목록 조회
     @Override
     public Map<String, Object> getCommentList(Search search) throws Exception {
-        return null;
+
+        List<Comment> list = communityDao.getCommentList(search);
+        //int totalCount = truckDao.getTatalCount(search);
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("list", list);
+
+        return map;
     }
 
     // 댓글 수정
     @Override
     public void updateComment(Comment comment) throws Exception {
+        communityDao.updateComment(comment);
+    }
 
+    // 좋아요 누르기
+    @Override
+    public void addHeart(Heart heart) throws Exception {
+        communityDao.addHeart(heart);
+    }
+    // 좋아요 조회
+    @Override
+    public Heart getHeart(int heartNo) throws Exception {
+        return communityDao.getHeart(heartNo);
+    }
+    // 좋아요 목록 조회
+    @Override
+    public Map<String, Object> getHeartList(Search search) throws Exception {
+
+        List<Heart> list = communityDao.getHeartList(search);
+        //int totalCount = truckDao.getTatalCount(search);
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("list", list);
+
+        return map;
+    }
+    // 좋아요 갱신
+    @Override
+    public void updateHeart(Heart heart) throws Exception {
+        communityDao.updateHeart(heart);
     }
 
     // 게시판 Page 처리를 위한 전체Row(totalCount)
