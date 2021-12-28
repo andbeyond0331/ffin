@@ -36,16 +36,38 @@ public class MenuServiceImpl implements MenuService {
 //        System.out.println("MenuServiceImpl.addMenu");
 //        menuDao.addMenu(menu);
 //    }
-    //메뉴와 옵션그룹 한 번에 insert하는 방법 고안1
-    public void addMenu(Menu menu, Map map) throws Exception {
-        menuDao.addMenu(menu);
+    //메뉴와 옵션그룹 한 번에 insert하는 방법 고안1 -> 헷갈려서 실패
+//    public void addMenu(List list) throws Exception {
+//        System.out.println("MenuServiceImpl.addMenu");
+//        menuDao.addMenu(list);
+//
+//    }
 
-//        if()
+    //메뉴와 옵션그룹 한 번에 insert하는 방법 고안2
+    @Override
+    public int addMenu(Menu menu) throws Exception{
+        System.out.println("MenuServiceImpl.addMenu");
+        return menuDao.addMenu(menu);
     }
 
+//    @Override
+//    public void addOptionGroup(OptionGroup optionGroup) throws Exception {
+//        menuDao.addOptionGroup(optionGroup);
+//    }
+
+    //메뉴와 옵션그룹 한 번에 insert하는 방법 고안2
     @Override
-    public void addOptionGroup(OptionGroup optionGroup) throws Exception {
-        menuDao.addOptionGroup(optionGroup);
+    public void addOptionGroup(List list) throws Exception{
+        System.out.println("MenuServiceImpl.addOptionGroup");
+        menuDao.addOptionGroup(list);
+    }
+
+    //메뉴와 옵션그룹 한 번에 insert하는 방법 고안2 를 위한 optionGroup list get
+    @Override
+    public Map<String, Object> getOptionGroupList(int optionGroupNo) throws Exception{
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("list", menuDao.getOptionGroupList(optionGroupNo));
+        return map;
     }
 
     @Override

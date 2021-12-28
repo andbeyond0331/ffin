@@ -3,6 +3,7 @@ package com.ffin.service.menu;
 import com.ffin.common.Search;
 import com.ffin.service.domain.Menu;
 import com.ffin.service.domain.OptionGroup;
+import com.ffin.service.domain.Truck;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +59,8 @@ public class MenuServiceTest {
 //
 //
 //    }
+
+
 
 //
 //    @Test  //OKAY
@@ -130,24 +134,93 @@ public class MenuServiceTest {
 
 //
 //
-    @Test //okay!!!!!!!!!!!!!!!
-    public void getMenuList() throws Exception {
-        Search search  = new Search();
-        search.setCurrentPage(1);
-        search.setPageSize(8);
-        search.setSearchCondition("0");
-        search.setSearchKeyword("");
-        Map<String, Object> map = menuService.getMenuList(search, "truck01");
+//    @Test //okay!!!!!!!!!!!!!!!
+//    public void getMenuList() throws Exception {
+//        Search search  = new Search();
+//        search.setCurrentPage(1);
+//        search.setPageSize(8);
+//        search.setSearchCondition("0");
+//        search.setSearchKeyword("");
+//        Map<String, Object> map = menuService.getMenuList(search, "truck01");
+//
+//        List<Object> list = (List<Object>)map.get("list");
+//        Assert.assertEquals(3, list.size());
+//
+//        System.out.println("list : " + list);
+//
+//
+//    }
 
-        List<Object> list = (List<Object>)map.get("list");
-        Assert.assertEquals(3, list.size());
+//    @Test //OKAY!!! -> REAL
+//    public void addMenuTest() throws Exception{
+//
+//        Menu menu = new Menu();
+//        Truck truck = new Truck();
+//        truck.setTruckId("truck01");
+//        menu.setMenuTruckId(truck.getTruckId());
+//        menu.setMenuName("realTestmenuName");
+//        menu.setMenuPrice(54321);
+//        menu.setIsSigMenu(1);
+//        menu.setMenuDetail("realtestMenuDetail");
+//        menu.setMenuImg1("reatTestMenuImg1");
+//
+//        int menuNo = menuService.addMenu(menu);
+//
+//        System.out.println("menuNo : " + menuNo);
+//
+//
+//
+//    }
 
-        System.out.println("list : " + list);
+//    @Test //okay!!! -> real.. 한 번에!!!
+//    public void testAddOptionGroup() throws Exception {
+//
+//        OptionGroup optionGroup = new OptionGroup();
+//
+//        Menu menu = new Menu();
+//        menu.setMenuNo(8);
+//        optionGroup.setMenuNo(menu.getMenuNo());
+//        optionGroup.setOptionGroupNo(1000);
+//        optionGroup.setOptionNo(1000);
+//        optionGroup.setOptionGroupName("1000번옵션그룹이름");
+//        optionGroup.setOptionName("1000번옵션이름");
+//        optionGroup.setOptionPrice(654321);
+//
+//        OptionGroup optionGroup1 = new OptionGroup();
+//
+//        optionGroup1.setMenuNo(menu.getMenuNo());
+//        optionGroup1.setOptionGroupNo(1000);
+//        optionGroup1.setOptionNo(1001);
+//        optionGroup1.setOptionGroupName("1000번옵션그룹이름");
+//        optionGroup1.setOptionName("1001번옵션이름");
+//        optionGroup1.setOptionPrice(7654321);
+//
+//        OptionGroup optionGroup2 = new OptionGroup();
+//
+//        optionGroup2.setMenuNo(menu.getMenuNo());
+//        optionGroup2.setOptionGroupNo(1000);
+//        optionGroup2.setOptionNo(1002);
+//        optionGroup2.setOptionGroupName("1000번옵션그룹이름");
+//        optionGroup2.setOptionName("1002번옵션이름");
+//        optionGroup2.setOptionPrice(87654321);
+//
+//        List list = new ArrayList();
+//        list.add(optionGroup);
+//        list.add(optionGroup1);
+//        list.add(optionGroup2);
+//
+//        menuService.addOptionGroup(list);
+//
+//        System.out.println("list : "+ list);
+//    }
 
+//    @Test
+//    public void testGetOptionGroupList() throws Exception{
+//        Map map = menuService.getOptionGroupList(1000);
+//        System.out.println("map : " + map);
+//    }
 
-    }
-
-
+///////////////////////////////////////////
 
 
 //    @Test //okay
@@ -159,22 +232,21 @@ public class MenuServiceTest {
 //
 //
 //        Assert.assertEquals(8,menu.getMenuNo());
-//        Assert.assertEquals("truck04",menu.getMenuTruckId());
-//        Assert.assertEquals("menuTest1",menu.getMenuName());
-//        Assert.assertEquals(10000,menu.getMenuPrice());
-//        Assert.assertEquals("menuDetailTest1",menu.getMenuDetail());
-//        Assert.assertEquals(0,menu.getIsSigMenu());
-//        Assert.assertEquals("menuImgTest1",menu.getMenuImg1());
-//        Assert.assertEquals("menuImgTest2",menu.getMenuImg2());
-//        Assert.assertEquals("menuImgTest3",menu.getMenuImg3());
+//        Assert.assertEquals("truck01",menu.getMenuTruckId());
+//        Assert.assertEquals("realTestmenuName",menu.getMenuName());
+//        Assert.assertEquals(54321,menu.getMenuPrice());
+//        Assert.assertEquals("realtestMenuDetail",menu.getMenuDetail());
+//        Assert.assertEquals(1,menu.getIsSigMenu());
+//        Assert.assertEquals("reatTestMenuImg1",menu.getMenuImg1());
 //
-//        menu.setMenuName("menuUpdateTest1");
-//        menu.setMenuPrice(50000);
-//        menu.setMenuDetail("menuDetailUpdateTest1");
-//        menu.setIsSigMenu(1);
-//        menu.setMenuImg1("menuImgUpdateTest1");
-//        menu.setMenuImg2("menuImgUpdateTest2");
-//        menu.setMenuImg3("menuImgUpdateTest3");
+//
+//        menu.setMenuName("아");
+//        menu.setMenuPrice(10000);
+//        menu.setMenuDetail("이");
+//        menu.setIsSigMenu(0);
+//        menu.setMenuImg1("우");
+//        menu.setMenuImg2("에");
+//        menu.setMenuImg3("오");
 //
 //        menuService.updateMenu(menu);
 //
@@ -182,13 +254,13 @@ public class MenuServiceTest {
 //        Assert.assertNotNull(menu);
 //
 //        System.out.println("menu : " + menu);
-//        Assert.assertEquals("menuUpdateTest1",menu.getMenuName());
-//        Assert.assertEquals(50000,menu.getMenuPrice());
-//        Assert.assertEquals("menuDetailUpdateTest1",menu.getMenuDetail());
-//        Assert.assertEquals(1,menu.getIsSigMenu());
-//        Assert.assertEquals("menuImgUpdateTest1",menu.getMenuImg1());
-//        Assert.assertEquals("menuImgUpdateTest2",menu.getMenuImg2());
-//        Assert.assertEquals("menuImgUpdateTest3",menu.getMenuImg3());
+//        Assert.assertEquals("아",menu.getMenuName());
+//        Assert.assertEquals(10000,menu.getMenuPrice());
+//        Assert.assertEquals("이",menu.getMenuDetail());
+//        Assert.assertEquals(0,menu.getIsSigMenu());
+//        Assert.assertEquals("우",menu.getMenuImg1());
+//        Assert.assertEquals("에",menu.getMenuImg2());
+//        Assert.assertEquals("오",menu.getMenuImg3());
 //
 //    }
 
@@ -284,7 +356,7 @@ public class MenuServiceTest {
 //
 //        OptionGroup optionGroup = new OptionGroup();
 //
-//        List<OptionGroup> list= (List<OptionGroup>) menuService.getOptionGroup(search, 101).get("list");
+//        List<OptionGroup> list= (List<OptionGroup>) menuService.getOptionGroup(search, 1002).get("list");
 //
 //        optionGroup = list.get(0);
 //
@@ -297,6 +369,8 @@ public class MenuServiceTest {
 //        menuService.deleteOptionGroup(optionGroup);
 //
 //        System.out.println("/////////////////////////");
+//
+//
 //
 //
 //    }

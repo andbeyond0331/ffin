@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 
 // 리뷰 관리 Controller
 @Controller
@@ -70,15 +69,15 @@ public class ReviewController {
 
         //Business Logic
 
-        String reviewNoo = request.getParameter("reviewNo");
+        String rvNoo = request.getParameter("rvNo");
 
-        int reviewNo = Integer.parseInt(reviewNoo);
+        int rvNo = Integer.parseInt(rvNoo);
 
-        Review review = reviewService.getReview(reviewNo);
+        Review review = reviewService.getReview(rvNo);
 
         //Model - View 연결
         modelAndView.addObject("review", review);
-        modelAndView.setViewName("/review/updateReviewView.jsp");
+        modelAndView.setViewName("/views/review/updateReviewView.jsp");
 
         System.out.println("request = " + request + ", modelAndView = " + modelAndView);
 
@@ -97,7 +96,20 @@ public class ReviewController {
 
         reviewService.updateReview(review);
 
-        return "forward:/review/updateReview.jsp";
+        model.addAttribute("review", review);
+
+        return "forward:/views/review/updateReview.jsp";
+    }
+
+    @RequestMapping(value="updateRVAddTruckComment", method=RequestMethod.GET)
+    public String updateRVAddTruckComment(@ModelAttribute("rvNo") int rvNo, Model model) throws Exception{
+        System.out.println("rvNo = " + rvNo + ", model = " + model);
+
+        Review review = reviewService.getReview(rvNo);
+
+        model.addAttribute("review", review);
+
+        return "/views/review/updateRVAddTruckCommentView.jsp";
     }
 
 }

@@ -19,8 +19,9 @@
 
 
                 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+                // var menuNo = trim($(this.find("input[name=menuNo]").val()));
                 $("tr.ct_list_pop td").on("click", function () {
-                    self.location = "http://127.0.0.1:8080/menu/getMenu?menuNo=" + $(this).find("input[name=menuNo]").val();
+                    self.location = "/menu/getMenu?menuNo="+$("tr.ct_list_pop td").find("input[name=menuNo]").val();
                 });
 
         };
