@@ -148,11 +148,7 @@ public class TruckDaoImpl implements TruckDao {
     public void emailAuth(Truck truck) throws Exception {
 
     }
-    // 푸드트럭 휴대폰번호인증(메세지)
-    @Override
-    public void messageAuth(Truck truck) throws Exception {
 
-    }
     // 푸드트럭 캡차인증
     @Override
     public void captchaAuth(Truck truck) throws Exception {

@@ -6,10 +6,11 @@ import lombok.Data;
 
 @Data
 public class Post {
-	
-	private int boardCateNo;
-	private int postNO;
-	private String postUserId;
+
+	private User postUser;		// 게시물을 작성한 이용자
+	private Truck postTruck;	// 게시물을 작성한 트럭
+
+	private int postNo;
 	private String postTitle;
 	private String postContent;
 	private Date postRegDate;
@@ -17,6 +18,5 @@ public class Post {
 	private String postFile1;
 	private String postFile2;
 	private String postFile3;
-	
 
 }

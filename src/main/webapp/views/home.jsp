@@ -17,21 +17,43 @@
     <title>HELLO</title>
 
     <script type="text/javascript">
-        //============= 회원원가입 화면이동 =============
+        //============= 유저회원원가입 화면이동 =============
         $( function() {
             //==> 추가된부분 : "addUser"  Event 연결
-            $("a[href='#' ]:contains('회원가입')").on("click" , function() {
+            $("a[href='#' ]:contains('이용자 회원가입')").on("click" , function() {
                 self.location = "views/user/addUser.jsp"
             });
         });
 
-        //============= 로그인 화면이동 =============
+        //============= 이용자 로그인 화면이동 =============
         $( function() {
             //==> 추가된부분 : "addUser"  Event 연결
-            $("a[href='#' ]:contains('로 그 인')").on("click" , function() {
+            $("a[href='#' ]:contains('이용자 로 그 인')").on("click" , function() {
                 self.location = "views/user/login.jsp"
             });
         });
+
+        //============= 사업자 로그인 화면이동 =============
+        $( function() {
+            $("a[href='#' ]:contains('사업자 로 그 인')").on("click" , function() {
+                self.location = "views/truck/loginTruck.jsp"
+            });
+        });
+
+        // ============= 이용자 로그아웃 ===============
+        $( function() {
+            $("a[href='#' ]:contains('이용자 로 그 아 웃')").on("click" , function() {
+                self.location = "/user/logout"
+            });
+        });
+
+        // ============= 사업자 로그아웃 ===============
+        $( function() {
+            $("a[href='#' ]:contains('사업자 로 그 아 웃')").on("click" , function() {
+                self.location = "/truck/logoutTruck"
+            });
+        });
+
     </script>
 
 </head>
@@ -52,8 +74,11 @@
 
             <div class="collapse navbar-collapse"  id="target">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">회원가입</a></li>
-                    <li><a href="#">로 그 인</a></li>
+                    <li><a href="#">이용자 회원가입</a></li>
+                    <li><a href="#">이용자 로 그 인</a></li>
+                    <li><a href="#">사업자 로 그 인</a></li>
+                    <li><a href="#">이용자 로 그 아 웃</a> </li>
+                    <li><a href="#">사업자 로 그 아 웃</a> </li>
                 </ul>
             </div>
 

@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=euc-kr" %>
-<%@ page pageEncoding="euc-kr"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
@@ -7,9 +7,9 @@
 <html lang="ko">
 
 <head>
-    <meta charset="euc-kr">
+    <meta charset="UTF-8">
 
-    <!-- ¬¸¡∂ : http://getbootstrap.com/css/   ¬¸¡∂ -->
+    <!-- Ï∞∏Ï°∞ : http://getbootstrap.com/css/   Ï∞∏Ï°∞ -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -29,24 +29,24 @@
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">
 
-        //============= "∑Œ±◊¿Œ"  Event ø¨∞· =============
+        //============= "Î°úÍ∑∏Ïù∏"  Event Ïó∞Í≤∞ =============
         $( function() {
 
             $("#truckId").focus();
 
-            //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+            //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
             $("button").on("click" , function() {
-                var id=$("input:text").val();
-                var pw=$("input:text").val();
+                var id=$("#truckId").val();
+                var pw=$("#truckPassword").val();
 
                 if(id == null || id.length <1) {
-                    alert('ID ∏¶ ¿‘∑¬«œ¡ˆ æ ¿∏ºÃΩ¿¥œ¥Ÿ.');
+                    alert('ID Î•º ÏûÖÎ†•ÌïòÏßÄ ÏïäÏúºÏÖ®ÏäµÎãàÎã§.');
                     $("#truckId").focus();
                     return;
                 }
 
                 if(pw == null || pw.length <1) {
-                    alert('∆–Ω∫øˆµÂ∏¶ ¿‘∑¬«œ¡ˆ æ ¿∏ºÃΩ¿¥œ¥Ÿ.');
+                    alert('Ìå®Ïä§ÏõåÎìúÎ•º ÏûÖÎ†•ÌïòÏßÄ ÏïäÏúºÏÖ®ÏäµÎãàÎã§.');
                     $("#truckPassword").focus();
                     return;
                 }
@@ -55,11 +55,11 @@
             });
         });
 
-        //============= »∏ø¯ø¯∞°¿‘»≠∏È¿Ãµø =============
+        //============= ÌöåÏõêÏõêÍ∞ÄÏûÖÌôîÎ©¥Ïù¥Îèô =============
         $( function() {
-            //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+            //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
             $("a[href='#' ]").on("click" , function() {
-                self.location = "/truck/addTruck"
+                self.location = "/views/truck/addTruckView.jsp"
             });
         });
 
@@ -72,38 +72,38 @@
 <div class="container">
 
     <div class="page-header">
-        <h3 class=" text-info">∆Æ∑∞∑Œ±◊¿Œ</h3>
+        <h3 class=" text-info">ÏÇ¨ÏóÖÏûê Î°úÍ∑∏Ïù∏</h3>
     </div>
 
-    <!--  »≠∏È±∏º∫ div Start /////////////////////////////////////-->
+    <!--  ÌôîÎ©¥Íµ¨ÏÑ± div Start /////////////////////////////////////-->
     <div class="container">
         <!--  row Start /////////////////////////////////////-->
 
                 <br/><br/>
 
                 <div class="jumbotron">
-                    <h1 class="text-center">∑Œ &nbsp;&nbsp;±◊ &nbsp;&nbsp;¿Œ</h1>
+                    <h1 class="text-center">Î°ú &nbsp;&nbsp;Í∑∏ &nbsp;&nbsp;Ïù∏</h1>
 
                     <form class="form-horizontal">
 
                         <div class="form-group">
-                            <label for="truckId" class="col-sm-4 control-label">æ∆ ¿Ã µ</label>
+                            <label for="truckId" class="col-sm-4 control-label">ÏïÑ Ïù¥ Îîî</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name="truckId" id="truckId"  placeholder="æ∆¿Ãµ" >
+                                <input type="text" class="form-control" name="truckId" id="truckId"  placeholder="ÏïÑÏù¥Îîî" >
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="truckPassword" class="col-sm-4 control-label">∆– Ω∫ øˆ µÂ</label>
+                            <label for="truckPassword" class="col-sm-4 control-label">Ìå® Ïä§ Ïõå Îìú</label>
                             <div class="col-sm-6">
-                                <input type="truckPassword" class="form-control" name="truckPassword" id="truckPassword" placeholder="∆–Ω∫øˆµÂ" >
+                                <input type="truckPassword" class="form-control" name="truckPassword" id="truckPassword" placeholder="Ìå®Ïä§ÏõåÎìú" >
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-6 text-center">
-                                <button type="button" class="btn btn-primary"  >∑Œ &nbsp;±◊ &nbsp;¿Œ</button>
-                                <a class="btn btn-primary btn" href="#" role="button">»∏ &nbsp;ø¯ &nbsp;∞° &nbsp;¿‘</a>
+                                <button type="button" class="btn btn-primary"  >Î°ú &nbsp;Í∑∏ &nbsp;Ïù∏</button>
+                                <a class="btn btn-primary btn" href="#" role="button">Ìöå &nbsp;Ïõê &nbsp;Í∞Ä &nbsp;ÏûÖ</a>
                             </div>
                         </div>
 

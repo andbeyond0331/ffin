@@ -54,7 +54,7 @@ public class TruckController {
         //Business Logic
         truckService.addTruck(truck);
 
-        return "/truck/loginTruck.jsp";
+        return "/views/truck/loginTruck.jsp";
     }
 
     @RequestMapping( value = "getTruck", method = RequestMethod.GET)
@@ -116,14 +116,16 @@ public class TruckController {
 
         if (truck.getTruckPassword().equals(dbTruck.getTruckPassword())) {
             session.setAttribute("truck", dbTruck);
+            session.setAttribute("truckId", dbTruck.getTruckId());
             session.setAttribute("role", "truck");
         }
 
         System.out.println("로그인성공");
         System.out.println("truck = " + truck + ", session = " + session);
+        System.out.println("truckId = " + session.getAttribute("truckId"));
         System.out.println("role = " + session.getAttribute("role"));
 
-        return "redirect:/index.jsp";
+        return "redirect:/views/home.jsp";
     }
 
     @RequestMapping( value="logoutTruck", method= RequestMethod.GET )
@@ -135,7 +137,7 @@ public class TruckController {
 
         System.out.println("로그아웃성공");
 
-        return "redirect:/index.jsp";
+        return "redirect:/views/home.jsp";
     }
 
     @RequestMapping( value="getTruckList" )

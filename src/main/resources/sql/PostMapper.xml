@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PostMapper">
+    <resultMap id="postSelectMap" type="post">
+        <result property="postNo"           column="POST_NO"            jdbcType="NUMERIC"/>
+        <result property="postTitle"        column="POST_TITLE"         jdbcType="VARCHAR"/>
+        <result property="postContent"      column="POST_CONTENT"       jdbcType="VARCHAR"/>
+        <result property="postRegDate"      column="POST_REG_DATE"      jdbcType="DATE"/>
+        <result property="secretKey"        column="SECRET_KEY"         jdbcType="CHAR"/>
+        <result property="postFile1"        column="POST_FILE1"         jdbcType="VARCHAR"/>
+        <result property="postFile2"        column="POST_FILE2"         jdbcType="VARCHAR"/>
+        <result property="postFile3"        column="POST_FILE3"         jdbcType="VARCHAR"/>
+        <association property="postUser"    javaType="user">
+            <id property="userId"           column="POST_USER_ID"       jdbcType="VARCHAR"/>
+            <result property="userName"     column="USER_NAME"          jdbcType="VARCHAR"/>
+        </association>
+        <association property="postTruck"   javaType="truck">
+            <id property="truckId"          column="POST_TRUCK_ID"      jdbcType="VARCHAR"/>
+            <result property="truckName"    column="TRUCK_NAME"         jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <!-- SQL : INSERT -->
+    <insert id="addPost"    parameterType="post">
+        INSERT INTO POST (POST_USER_ID, POST_TRUCK_ID, POST_TITLE, POST_CONTENT, POST_REG_DATE, SECRET_KEY, POST_FILE1,
+                          POST_FILE2, POST_FILE3)
+        VALUES (#{postUser.userId}, #{postTruck.truckId}, #{postTitle}, #{postContent}, SYSDATE(), DEFAULT, #{postFile1}, #{postFile2}, #{postFile3})
+    </insert>
+
+    <!-- SQL :SELECT ONE-->
+    <select id="getPost"    parameterType="int"      resultMap="postSelectMap">
+        SELECT
+            POST_USER_ID, POST_TRUCK_ID, POST_TITLE, POST_CONTENT, POST_REG_DATE, SECRET_KEY, POST_FILE1,
+            POST_FILE2, POST_FILE3
+        FROM post
+        WHERE post_no = #{value}
+    </select>
+
+    <select id="getPost2"    parameterType="String"      resultMap="postSelectMap">
+        SELECT
+            POST_USER_ID, POST_TRUCK_ID, POST_TITLE, POST_CONTENT, POST_REG_DATE, SECRET_KEY, POST_FILE1,
+            POST_FILE2, POST_FILE3
+        FROM post
+        WHERE post_title = #{value}
+    </select>
+
+<!--    <select id="getPost3"    parameterType="String"      resultMap="postSelectMap">-->
+<!--        SELECT-->
+<!--            POST_USER_ID, POST_TRUCK_ID, POST_TITLE, POST_CONTENT, POST_REG_DATE, SECRET_KEY, POST_FILE1,-->
+<!--            POST_FILE2, POST_FILE3-->
+<!--        FROM post-->
+<!--        WHERE post_content = #{value}-->
+<!--    </select>-->
+
+    <!-- SQL : SELECT LIST -->
+    <select id="getPostList"    parameterType="search"      resultMap="postSelectMap">
+        SELECT inner_table.*
+        FROM( SELECT post_no, post_title, post_user_id, post_truck_id, post_reg_date
+            FROM post
+        <if test="searchCondition != null">
+            <where>
+                <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+                <if test="searchCondition == 0 and searchKeyword !='' ">
+                    AND post_no LIKE #{searchKeyword}
+                </if>
+                <if test="searchCondition == 1 and searchKeyword !='' ">
+                    AND post_title LIKE #{searchKeyword}
+                </if>
+            </where>
+        </if>
+        order by post_no ) inner_table
+        limit 0,8;
+    </select>
+
+
+
+    <!-- SQL : UPDATE -->
+    <update id="updatePost"     parameterType="post">
+        UPDATE post
+        <set>
+            post_title = #{postTitle},
+            post_content = #{postContent},
+            post_file1 = #{postFile1},
+            post_file2 = #{postFile2},
+            post_file2 = #{postFile3}
+        </set>
+        WHERE post_no = #{postNo}
+    </update>
+
+
+</mapper>
