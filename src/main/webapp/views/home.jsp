@@ -54,6 +54,13 @@
             });
         });
 
+        // ============= 사업자 로그아웃 ===============
+        $( function() {
+            $("a[href='#' ]:contains('homeTest')").on("click" , function() {
+                self.location = "views/homeTest.jsp"
+            });
+        });
+
     </script>
 
 </head>
@@ -79,11 +86,15 @@
                     <li><a href="#">사업자 로 그 인</a></li>
                     <li><a href="#">이용자 로 그 아 웃</a> </li>
                     <li><a href="#">사업자 로 그 아 웃</a> </li>
+                    <li><a href="#">homeTest</a> </li>
                 </ul>
             </div>
 
         </div>
     </div>
+
+${user.userId}
+
 </body>
 
 </html>

@@ -7,48 +7,419 @@
 <html lang="ko">
 
 <head>
+
+    <script type="text/javascript">
+
+            function loginModal(){
+                $('#openLoginModal').modal('show');
+            }
+
+    </script>
+
+
+
+    <!-- Basic -->
     <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
     <meta name="description" content="" />
     <meta name="author" content="" />
+
     <title>F.FIN | FOODTRUCK FINDER</title>
-    <link rel="icon" type="image/x-icon" href="../resources/bootstrap/assets/favicon.ico" />
-    <%--favicon--%>
-    <link rel="apple-touch-icon" sizes="180x180" href="../resources/bootstrap/assets/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../resources/bootstrap/assets/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../resources/bootstrap/assets/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
-    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="../resources/bootstrap/css/styles.css" rel="stylesheet" />
+
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="../resources/bootstrap/css/bootstrap.css" />
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+
+    <!-- font awesome style -->
+    <link href="../resources/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- nice select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+    <!-- slidck slider -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" integrity="sha256-UK1EiopXIL+KVhfbFa8xrmAWPeBjMVdvYMYkTAEv/HI=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css.map" integrity="undefined" crossorigin="anonymous" />
+
+
+    <!-- Custom styles for this template -->
+    <link href="../resources/bootstrap/css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="../resources/bootstrap/css/responsive.css" rel="stylesheet" />
+
+    <!--    Favicons-->
+    <link rel="apple-touch-icon" sizes="180x180" href="../resources/bootstrap/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../resources/bootstrap/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../resources/bootstrap/assets/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../resources/bootstrap/assets/favicons/favicon.ico">
+    <link rel="manifest" href="../resources/bootstrap/assets/favicons/manifest.json">
+    <meta name="msapplication-TileImage" content="../resources/bootstrap/assets/favicons/mstile-150x150.png">
+    <meta name="theme-color" content="#ffffff">
 
 </head>
 
 <body id="page-top">
-<!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-    <div class="container px-4 px-lg-5">
-        <a class="navbar-brand d-inline-flex" href="homeTest.jsp">
-            <img class="d-inline-block" src="../resources/bootstrap/assert/img/logo.svg" alt="logo" />
-            <span class="text-1000 fs-3 fw-bold ms-2 text-gradient">F.FIN</span></a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            Menu
-            <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-                <li class="nav-item"><a class="nav-link" href="#signup">Contact</a></li>
-            </ul>
+
+
+
+
+<div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+        <div class="container-fluid" >
+            <nav class="navbar navbar-expand-lg custom_nav-container">
+                <a class="navbar-brand" href="homeTest.jsp">
+                    <img class="d-inline-block" src="../resources/bootstrap/assets/logo.svg" alt="logo" />
+                    <span>F.FIN</span>
+                </a>
+                <div class="" id="">
+                    <div class="User_option">
+                        <a href="#modalName">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span data-toggle="modal" data-target=".bd-example-modal-lg" id="loginModal"  onclick=loginModal()>Login</span>
+                        </a>
+                        <!-- Modal -->
+                        <div class="modal fade" id="openLoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#User">User</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#CEO">CEO</a>
+                                            </li>
+                                        </ul>
+                                        <form>
+                                            <div class="tab-content">
+                                                <div class="tab-pane fade show active" id="User">
+                                                    <div class="mb-3">
+                                                        <label for="exampleInputEmail1" class="form-label">ID</label>
+                                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                                        <div id="emailHelp" class="form-text">User!</div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                                                        <input type="password" class="form-control" id="exampleInputPassword1">
+                                                    </div>
+                                                    <div class="mb-3 form-check">
+                                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="CEO">
+                                                    <div class="mb-3">
+                                                        <label for="exampleInputEmail1" class="form-label">ID</label>
+                                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                                        <div id="emailHelp" class="form-text">CEO!</div>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                                                        <input type="password" class="form-control" id="exampleInputPassword1">
+                                                    </div>
+                                                    <div class="mb-3 form-check">
+                                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <form class="form-inline ">
+                            <input type="search" placeholder="Search" />
+                            <button class="btn  nav_search-btn" type="submit">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="custom_menu-btn">
+                        <button onclick="openNav()">
+                            <img src="../resources/bootstrap/images/menu.png" alt="">
+                        </button>
+                    </div>
+                    <div id="myNav" class="overlay">
+                        <div class="overlay-content">
+                            <a href="homeTest.jsp">Home</a>
+                            <a href="about.html">About</a>
+                            <a href="blog.html">Blog</a>
+                            <a href="testimonial.html">Testimonial</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+
+    <!-- slider section -->
+    <section class="slider_section ">
+        <div class="container ">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="detail-box">
+                        <h1 class="display-1 fs-md-5 fs-lg-6 fs-xl-8 text-light">
+                            FoodTruck Finder
+                        </h1>
+                        <h5 class="text-800 mb-5 fs-4">Within a few clicks,<br class="d-none d-xxl-block" /><br/>find foodtruck are accessible near you</h5>
+                    </div>
+                    <div class="find_container ">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <form>
+                                        <div class="form-row ">
+                                            <div class="form-group col-lg-6">
+                                                <input type="text" class="form-control" id="inputLocation" placeholder="What's your address?">
+                                                <span class="location_icon">
+                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                  </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row ">
+                                            <div class="form-group col-md-4">
+                                                <div class="btn-box">
+                                                    <button type="submit" class="btn ">Use current location</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider_container">
+            <div class="item">
+                <div class="img-box">
+                    <img src="../resources/bootstrap/images/foodtruck_default.jpg" alt="" />
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="../resources/bootstrap/images/foodtruck_default.jpg" alt="" />
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="../resources/bootstrap/images/foodtruck_default.jpg" alt="" />
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="../resources/bootstrap/images/foodtruck_default.jpg" alt="" />
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="../resources/bootstrap/images/foodtruck_default.jpg" alt="" />
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="../resources/bootstrap/images/foodtruck_default.jpg" alt="" />
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="../resources/bootstrap/images/foodtruck_default.jpg" alt="" />
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="../resources/bootstrap/images/foodtruck_default.jpg" alt="" />
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end slider section -->
+</div>
+
+
+<!-- Popular Foodtruck section -->
+
+<section class="recipe_section layout_padding-top">
+    <div class="container">
+        <div class="heading_container heading_center">
+            <h2>
+                Popular Foodtruck
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-4 mx-auto">
+                <div class="box">
+                    <div class="img-box">
+                        <img src="../resources/bootstrap/images/food1.png" class="box-img" alt="">
+                    </div>
+                    <div class="detail-box">
+                        <h5> MenuName </h5>
+                        <div><span class="text-warning me-2"><i class="fas fa-map-marker-alt"></i></span><span class="text-primary">TruckName</span></div><span class="text-1000 fw-bold">₩5,000</span>
+                        <br/>
+                        <a href="">
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mx-auto">
+                <div class="box">
+                    <div class="img-box">
+                        <img src="../resources/bootstrap/images/food2.png" class="box-img" alt="">
+                    </div>
+                    <div class="detail-box">
+                        <h5> MenuName </h5>
+                        <div><span class="text-warning me-2"><i class="fas fa-map-marker-alt"></i></span><span class="text-primary">TruckName</span></div><span class="text-1000 fw-bold">₩5,000</span>
+                        <br/>
+                        <a href="">
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mx-auto">
+                <div class="box">
+                    <div class="img-box">
+                        <img src="../resources/bootstrap/images/food3.png" class="box-img" alt="">
+                    </div>
+                    <div class="detail-box">
+                        <h5> MenuName </h5>
+                        <div><span class="text-warning me-2"><i class="fas fa-map-marker-alt"></i></span><span class="text-primary">TruckName</span></div><span class="text-1000 fw-bold">₩5,000</span>
+                        <br/>
+                        <a href="">
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-box">
+            <a href="">
+                more FoodTruck
+            </a>
         </div>
     </div>
-</nav>
+</section>
+<!-- end Popular Foodtruck section -->
 
+
+<!-- coupon section -->
+<section class="about_section layout_padding">
+    <div class="container">
+        <div class="col-md-11 col-lg-10 mx-auto">
+            <div class="heading_container heading_center">
+                <h2>
+                    Coupon
+                </h2>
+            </div>
+            <div class="box">
+                <div class="col-md-7 mx-auto">
+                    <div class="img-box">
+                        <img src="../resources/bootstrap/images/weather.png" class="box-img" alt="">
+                    </div>
+                </div>
+                <div class="detail-box">
+                    <p>coupon 받아가라... font 적용 어떻게하냐....</p>
+                    <div class="btn-box">
+                        <a href="">
+                            쿠폰받기
+                        </a>
+                    </div>
+                    <%--<a href="">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </a>--%>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- end coupon section -->
+
+<!-- end select start-->
+
+<section class="about_section layout_padding">
+    <div class="container">
+        <div class="col-md-11 col-lg-10 mx-auto">
+            <div class="heading_container heading_center">
+                <h2>
+                    Let's do it together
+                </h2>
+            </div>
+            <div class="box">
+                <div class="col-md-7 mx-auto">
+                    <div class="img-box">
+                        <img src="../resources/bootstrap/images/handshake.png" class="box-img" alt="">
+                    </div>
+                </div>
+                <div class="detail-box">
+                    <p>Grow with F.FIN! <br/> Our technology and user base can help you boost sales and unlock new opportunities!</p>
+                    <div class="btn-box">
+                        <a href="">
+                            쿠폰받기
+                        </a>
+                    </div>
+                    <%--<a href="">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </a>--%>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br/><br/><br/><br/><br/><br/><br/><br/>
+</section>
+
+<!-- end select end-->
+
+
+
+
+<!-- footer section -->
+<footer class="footer_section">
+    <div class="container">
+
+        <p>
+            &copy; <span id="displayYear"></span> All Rights Reserved By
+            <a href="https://html.design/">Free Html Templates</a><br>
+            Distributed By: <a href="https://themewagon.com/">ThemeWagon</a>
+        </p>
+    </div>
+</footer>
+<!-- footer section -->
+
+</div>
+
+<!-- jQery -->
+<script src="../resources/bootstrap/js/jquery-3.4.1.min.js"></script>
+<!-- bootstrap js -->
+<script src="../resources/bootstrap/js/bootstrap.js"></script>
+<!-- slick  slider -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+<!-- nice select -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
+<!-- custom js -->
+<script src="../resources/bootstrap/js/custom.js"></script>
 
 </body>
 

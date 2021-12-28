@@ -10,12 +10,28 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
+            classpath:config/context-auth.xml,
             classpath:config/context-aspect.xml,
             classpath:config/context-common.xml,
             classpath:config/context-mybatis.xml,
             classpath:config/context-transaction.xml
         </param-value>
     </context-param>
+
+    <!-- :: Spring API 에 제공하는 CharacterEncodingFilter 로 한글 인코딩처리 -->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>utf-8</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <!-- ::SpringMVC 에서의 Front Controller(단일인입점)  DispatcherServlet 선언 -->
     <servlet>
@@ -49,21 +65,4 @@
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.htm</welcome-file>
     </welcome-file-list>
-
-
-    <!-- :: Spring API 에 제공하는 CharacterEncodingFilter 로 한글 인코딩처리 -->
-    <filter>
-        <filter-name>encodingFilter</filter-name>
-        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-        <init-param>
-            <param-name>encoding</param-name>
-            <param-value>euc_kr</param-value>
-        </init-param>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>encodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
 </web-app>
