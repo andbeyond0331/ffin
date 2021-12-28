@@ -137,7 +137,7 @@ public class PurchaseServiceTest {
 
     }
 
-    @Test
+    //@Test
     public void TestGetOrderDetail() throws Exception {
 
         Map map = purchaseService.getOrderDetail(1);
@@ -149,7 +149,7 @@ public class PurchaseServiceTest {
 
 ////////////////////ADD///////////////////////////////////
 
-  // @Test
+   //@Test
     public void testAddPurchase() throws Exception {
 
         Purchase purchase = new Purchase();
@@ -172,7 +172,7 @@ public class PurchaseServiceTest {
     }
 
 
-    @Test
+    //@Test
     public void testAddOrderDetail() throws Exception {
 
         OrderDetail orderDetail = new OrderDetail();
@@ -234,7 +234,6 @@ public class PurchaseServiceTest {
         coupon.setCouponType(3);
         coupon.setCouponStatus(0);
         purchaseService.addCoupon(coupon);
-
     }
 
 
@@ -248,7 +247,8 @@ public class PurchaseServiceTest {
         point.setPointStatus(0);
         point.setPointUserId(user);
         point.setPointPlmnStatus(0);
-        purchaseService.updatePoint(point);
+        int pointNo = purchaseService.updatePoint(point);
+        System.out.println("pointNo"+pointNo);
     }
 
 ///////////////////Update////////////////////////////

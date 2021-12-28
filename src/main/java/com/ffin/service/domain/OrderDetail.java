@@ -1,5 +1,6 @@
 package com.ffin.service.domain;
 
+
 import lombok.Data;
 
 @Data
