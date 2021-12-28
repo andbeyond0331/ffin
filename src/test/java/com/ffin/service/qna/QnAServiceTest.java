@@ -39,7 +39,7 @@ public class QnAServiceTest {
         qnAService.addReport(report);
     }
 
-    //@Test
+    @Test
     public void testGetReport() throws Exception{
         Report report = new Report();
         report = qnAService.getReport(1);
