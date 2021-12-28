@@ -19,12 +19,35 @@
 <script type="text/javascript">
 
     $(function() {
-        $("button.btn.btn-primary").click(function () {
+        $("button.btn.btn-primary:Contains('주문하기')").click(function () {
             alert("djkdjdk");
             $("form").attr("method" , "POST").attr("action" , "/purchase/addCart").submit();
 
         });
     });
+    $(function() {
+        $("button.btn.btn-primary:Contains('json')").click(function () {
+            alert("djkdjdk");
+            to_ajax();
+            $("form").attr("method" , "POST").attr("action" , "/purchase/addCart").submit();
+        });
+    });
+    function  to_ajax(){
+        var query = $("form").serialize();
+        $.ajax({
+            type: "post",
+            url: '/purchase/json/addPayView',
+            data : query,
+            dataType: 'json',
+            error: function (xhr, status, error) {
+                alert(error);
+            },
+            success: function (json) {
+                alert(json)
+            }
+        });
+    }
+
 </script>
 <style type="text/css">
 
@@ -151,6 +174,7 @@
         </table>
 
             <button type="button" class="btn btn-primary">주문하기</button>
+            <button type="button" class="btn btn-primary">json</button>
         </div>
        <%-- <table border=1>
             <tr>

@@ -17,7 +17,9 @@ import java.util.List;
 import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {	"classpath:config/context-common.xml",
+@ContextConfiguration(locations = {
+        "classpath:config/context-auth.xml",
+        "classpath:config/context-common.xml",
         "classpath:config/context-aspect.xml",
         "classpath:config/context-mybatis.xml",
         "classpath:config/context-transaction.xml" })
@@ -74,7 +76,7 @@ public class PurchaseServiceTest {
 
 
 ///////////////////////List/////////////////////////////////
-   // @Test
+    @Test
     public void TestGetCouponList() throws Exception {
 
         User user = new User();
@@ -116,7 +118,7 @@ public class PurchaseServiceTest {
 
     }
 
-    //@Test
+    @Test
     public void TestGetPurchaseList() throws Exception {
         Search search = new Search();
         search.setCurrentPage(1);
