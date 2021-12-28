@@ -54,7 +54,7 @@ public class MsgController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("list", list);
-        modelAndView.setViewName("/msg/message_list.jsp");
+        modelAndView.setViewName("/views/msg/message_list.jsp");
         return modelAndView;
     }
 
@@ -63,7 +63,7 @@ public class MsgController {
     public ModelAndView login() throws Exception{
         System.out.println("UserController.login : GET");
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/msg/msglogin.jsp");
+        modelAndView.setViewName("/views/msg/msglogin.jsp");
         return modelAndView;
     }
 
@@ -80,7 +80,7 @@ public class MsgController {
         System.out.println("user = " + user);
 
         ModelAndView modelAndView = new ModelAndView();
-         modelAndView.setViewName("/msg/message_list.jsp");
+         modelAndView.setViewName("/views/msg/message_list.jsp");
         return modelAndView;
     }
 

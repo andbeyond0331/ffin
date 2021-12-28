@@ -41,7 +41,16 @@
             width: 330px;
             height: 25px;
         }
-
+        .msgImg{
+            width: 200px;
+            height: 125px;
+        }
+        .clearBoth{
+            clear: both;
+        }
+        .img{
+            float: right;
+        }
     </style>
 </head>
 
@@ -72,15 +81,18 @@
         ws.onmessage = function(data) {
             //메시지를 받으면 동작
             var msg = data.data;
-            if(msg != null && msg.trim() != ''){
+
+            if(msg != null && msg.type != ''){
                 var d = JSON.parse(msg);
-                console.log("dddd: "+d)
+                console.log("d1: "+d)
                 if(d.type == "getId"){
                     var si = d.sessionId != null ? d.sessionId : "";
                     if(si != ''){
                         $("#sessionId").val(si);
+                        $("#sessionName").val(d.userName);
                     }
                 }else if(d.type == "message"){
+                    console.log("d2: "+d)
                     if(d.sessionId == $("#sessionId").val()){
                         $("#chating").append("<p class='me'>"+userName+" :" + d.msg + "</p>");
                     }else{
@@ -90,6 +102,24 @@
                 }else{
                     console.warn("unknown type!")
                 }
+            }else{
+
+                //파일 업로드한 경우 업로드한 파일을 채팅방에 뿌려준다.
+                var url = URL.createObjectURL(new Blob([msg]));
+                console.log('url: '+url)
+                console.log('msg: '+msg)
+                /*
+                    채팅에서 사진 전송을 제외하던지
+                    다른 방법을 찾아보던지 해야 할 것 같음 잘 안되네
+                 */
+                if(userName== $("#sessionName").val()){
+                    console.log("여기지.")
+                    $("#chating").append("<p class='me'>"+userName+" :<div class='img'><img class='msgImg' src="+url+"></div><div class='clearBoth'></div></p>");
+                }else{
+                    console.log("아니, 여기지.")
+                    $("#chating").append("<p class='others'>" + $("#sessionName").val() + " :<div class='img'><img class='msgImg' src="+url+"></div><div class='clearBoth'></div></p>");
+                }
+
             }
         }
 
@@ -126,11 +156,37 @@
         ws.send(JSON.stringify(option))
         $('#chatting').val("");
     }
+
+    function fileSend(){
+        var file = document.querySelector("#fileUpload").files[0];
+        var fileReader = new FileReader();
+
+        console.log("file: "+file+"fileReader : "+fileReader);
+
+        fileReader.onload = function() {
+            var param = {
+                type: "fileUpload",
+                file: file,
+                roomNumber: $("#roomNumber").val(),
+                sessionId : $("#sessionId").val(),
+                msg : $("#chatting").val(),
+                userName : userName
+            }
+            ws.send(JSON.stringify(param)); //파일 보내기전 메시지를 보내서 파일을 보냄을 명시한다.
+
+            arrayBuffer = this.result;
+            ws.send(arrayBuffer); //파일 소켓 전송
+        };
+        fileReader.readAsArrayBuffer(file);
+    }
+
+
 </script>
 <body>
 <div id="container" class="container">
     <h1>${roomName}의 채팅방</h1>
     <input type="hidden" id="sessionId" value="">
+    <input type="hidden" id="sessionName" value="">
     <input type="hidden" id="roomNumber" value="${roomNumber}">
 
     <div id="chating" class="chating">
@@ -151,6 +207,11 @@
                 <th>메시지</th>
                 <th><input id="chatting" placeholder="보내실 메시지를 입력하세요."></th>
                 <th><button onclick="send()" id="sendBtn">보내기</button></th>
+            </tr>
+            <tr>
+                <th>파일업로드</th>
+                <th><input type="file" id="fileUpload"></th>
+                <th><button onclick="fileSend()" id="sendFileBtn">파일올리기</button></th>
             </tr>
         </table>
     </div>
