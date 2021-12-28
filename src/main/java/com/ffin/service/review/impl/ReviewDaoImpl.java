@@ -29,6 +29,7 @@ public class ReviewDaoImpl implements ReviewDao {
         sqlSession.insert("ReviewMapper.addReview", review);
     }
 
+    //delete와 update를 위한 get
     @Override
     public Review getReview(int reviewNo) throws Exception {
 

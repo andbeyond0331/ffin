@@ -40,7 +40,7 @@
         $(function() {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
             $( "button" ).on("click" , function() {
-                self.location = "/product/updateProduct?prodNo=${product.prodNo}"
+                self.location = "/menu/updateMenu?menuNo=${menu.menuNo}"
             });
         });
 
@@ -60,56 +60,50 @@
 
     <div class="row">
         <div class="col-xs-4 col-md-2"><strong>상품번호</strong></div>
-        <div class="col-xs-8 col-md-4">${product.prodNo}</div>
+        <div class="col-xs-8 col-md-4">${menu.menuNo}</div>
     </div>
 
     <hr/>
 
     <div class="row">
         <div class="col-xs-4 col-md-2 "><strong>상품명</strong></div>
-        <div class="col-xs-8 col-md-4">${product.prodName}</div>
+        <div class="col-xs-8 col-md-4">${menu.menuName}</div>
     </div>
 
     <hr/>
 
     <div class="row">
         <div class="col-xs-4 col-md-2 "><strong>상품이미지</strong></div>
-        <div class="col-xs-8 col-md-4">${product.fileName}</div>
+        <div class="col-xs-8 col-md-4">${menu.menuImg1}</div>
     </div>
 
     <hr/>
 
     <div class="row">
         <div class="col-xs-4 col-md-2 "><strong>상품상세정보</strong></div>
-        <div class="col-xs-8 col-md-4">${product.prodDetail}	</div>
+        <div class="col-xs-8 col-md-4">${menu.menuDetail}	</div>
     </div>
 
     <hr/>
 
     <div class="row">
-        <div class="col-xs-4 col-md-2"><strong>제조일자</strong></div>
-        <div class="col-xs-8 col-md-4">${product.manuDate}</div>
+        <div class="col-xs-4 col-md-2"><strong>대표메뉴여부</strong></div>
+        <div class="col-xs-8 col-md-4">${menu.isSigMenu}</div>
     </div>
 
     <hr/>
 
     <div class="row">
         <div class="col-xs-4 col-md-2 "><strong>가격</strong></div>
-        <div class="col-xs-8 col-md-4">${product.price}</div>
+        <div class="col-xs-8 col-md-4">${menu.menuPrice}</div>
     </div>
 
     <hr/>
 
-    <div class="row">
-        <div class="col-xs-4 col-md-2 "><strong>등록일자</strong></div>
-        <div class="col-xs-8 col-md-4">${product.regDate}</div>
-    </div>
-
-    <hr/>
 
     <div class="row">
         <div class="col-md-12 text-center ">
-            <button type="button" class="btn btn-primary">상품정보수정</button>
+            <button type="button" class="btn btn-primary">메뉴정보수정</button>
         </div>
     </div>
 

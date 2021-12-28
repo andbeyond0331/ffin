@@ -4,6 +4,7 @@ package com.ffin.web.menu;
 import com.ffin.common.Page;
 import com.ffin.common.Search;
 import com.ffin.service.domain.Menu;
+import com.ffin.service.domain.OptionGroup;
 import com.ffin.service.domain.Truck;
 import com.ffin.service.domain.User;
 import com.ffin.service.menu.MenuService;
@@ -22,6 +23,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 // 메뉴 관리 Controller
@@ -55,48 +58,54 @@ public class MenuController {
     @Value("100")
     int pageSize;
 
-//    @RequestMapping(value = "addMenu", method= RequestMethod.GET)
-//    public ModelAndView addMenu(@RequestParam("truckId") String truckId) throws Exception{
-//
-//        /*
-//            사업자가 메뉴를 등록하기 위해 사용하는 화면
-//            truckId로 truck의 상호를 화면에 뿌려주고, 추가할 메뉴 정보를 받는다.
-//         */
-//        System.out.println("/menu/addMenu : GET");
-//        System.out.println("truckId : " + truckId);
-//
-//        Truck truck = truckService.getTruck(truckId);
-//        System.out.println("truck : " + truck);
-//
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.addObject("truck", truck);
-//        modelAndView.setViewName("/menu/addMenuView.jsp");
-//
-//        return modelAndView;
-//    }
-        // 메뉴 추가 옵션그룹이랑 같이 하는 방법 고안1
-        @PostMapping ("addMenu")
-    public ResponseEntity<Menu> addMenu(Menu menu, String[] optionGroupName, String[] optionName, Integer[] optionPrice, @RequestParam("truckId") String truckId) throws Exception{
+    @RequestMapping(value = "addMenu", method= RequestMethod.GET)
+    public ModelAndView addMenu(@RequestParam("truckId") String truckId) throws Exception{
 
         /*
             사업자가 메뉴를 등록하기 위해 사용하는 화면
             truckId로 truck의 상호를 화면에 뿌려주고, 추가할 메뉴 정보를 받는다.
-            optionGroup 도 함께 등록하기 위해 노력해본다.
          */
+        System.out.println("/menu/addMenu : GET");
+        System.out.println("truckId : " + truckId);
 
-//            menuService.addMenu(menu, map);
-            return new ResponseEntity<Menu>(menu, HttpStatus.OK);
-//        System.out.println("/menu/addMenu : GET");
-//        System.out.println("truckId : " + truckId);
-//
-//        Truck truck = truckService.getTruck(truckId);
-//        System.out.println("truck : " + truck);
-//
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.addObject("truck", truck);
-//        modelAndView.setViewName("/menu/addMenuView.jsp");
-//
-//        return modelAndView;
+        Truck truck = truckService.getTruck(truckId);
+        System.out.println("truck : " + truck);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("truck", truck); //화면단에서 truck.truckId를 menuTruckId에 넣기
+        modelAndView.setViewName("/views/menu/addMenuView.jsp");
+
+        return modelAndView;
+    }
+    //     메뉴 추가 옵션그룹이랑 같이 하는 방법 고안1 -> 헷갈려서 실패
+
+
+//    메뉴 추가 옵션그룹이랑 같이 하는 방법 고안2
+    @RequestMapping(value="addMenuOptionGroup", method=RequestMethod.POST)
+    public String addMenuOptionGroup(@ModelAttribute("truck") Truck truck, @ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
+
+        System.out.println("/menu/addMenu:POST");
+        System.out.println("optionGroup : " + optionGroup + ", menu : " + menu);
+
+
+        int menuNo = menuService.addMenu(menu);
+        optionGroup.setMenuNo(menuNo);
+        List list = new ArrayList();
+        list.add(optionGroup);
+        menuService.addOptionGroup(list);
+        System.out.println("menuNo : " + menuNo);
+
+        menu = menuService.getMenu(menuNo);
+        Map optionGroupList = menuService.getOptionGroupList(optionGroup.getOptionGroupNo());
+
+        model.addAttribute("menu", menu);
+        model.addAttribute("optionGroup", optionGroupList);
+        model.addAttribute("menuNo", menuNo);
+
+        System.out.println("model 확인 : " + model);
+
+        return "redirect:views/menu/getTruck?truckId="+truck.getTruckId();
+
     }
 //
 //    @RequestMapping(value = "addMenu", method=RequestMethod.POST)
@@ -141,7 +150,20 @@ public class MenuController {
 
         System.out.println("menuNo = " + menuNo + ", model = " + model + ", request = " + request + ", response = " + response);
 
-        return "forward:/menu/getMenu.jsp";
+        return "forward:/views/menu/getMenu.jsp";
+    }
+
+    @RequestMapping(value="getMenu", method=RequestMethod.POST)
+    public String getMenu(@ModelAttribute("menuNo") int menuNo, Model model, HttpSession session) throws Exception{
+        System.out.println("/menu/getMenu : POST");
+
+        //BL
+        Menu menu = menuService.getMenu(menuNo);
+
+        session.setAttribute("menu", menu);
+
+        return "redirect:/views/menu/getMenu?menuNo="+menu.getMenuNo();
+
     }
 
 
@@ -161,11 +183,37 @@ public class MenuController {
 
         //Model - View 연결
         modelAndView.addObject("menu", menu);
-        modelAndView.setViewName("/menu/updateMenuView.jsp");
+        modelAndView.addObject("menuNo", menuNo);
+        modelAndView.setViewName("/views/menu/updateMenuView.jsp");
 
         System.out.println("request = " + request + ", modelAndView = " + modelAndView);
 
         return modelAndView;
+    }
+
+    @RequestMapping(value="updateMenu", method=RequestMethod.POST)
+    public String updateMenu(@ModelAttribute("menu") Menu menu, Model model, HttpSession session) throws Exception{
+        System.out.println("/menu/updateMenu : POST");
+
+        menuService.updateMenu(menu);
+
+        session.setAttribute("menu", menu);
+//
+//        String menuNoo = request.getParameter("menuNo");
+//
+//        int menuNo = Integer.parseInt(menuNoo);
+//
+//        System.out.println("menu = " + menu + ", model = " + model);
+//        //BL
+//        menuService.updateMenu(menu);
+//
+//        model.addObject("menu", menu);
+//        model.addObject("menuNo", menuNo);
+//
+//        model.setViewName("forward:/menu/getMenu?menuNo="+menuNo);
+
+        return "redirect:/menu/getMenu?menuNo="+menu.getMenuNo();
+
     }
 
     @RequestMapping("getMenuList")
@@ -178,7 +226,7 @@ public class MenuController {
         Map<String , Object> map= menuService.getMenuList(search, truck.getTruckId());
 
         modelAndView.addObject("list", map.get("list"));
-        modelAndView.setViewName("/menu/getTruck.jsp");
+        modelAndView.setViewName("/views/menu/getTruck.jsp");
 //       model.addAttribute("list", map.get("list"));
 //        model.addAttribute("search", search);
 
@@ -202,7 +250,7 @@ public class MenuController {
 
         //Model - View 연결
         modelAndView.addObject("menu", menu);
-        modelAndView.setViewName("/menu/updateMenuView.jsp"); // 진석님과 메뉴 수정 어디서 할 지 상의해보고
+        modelAndView.setViewName("/views/menu/updateMenuView.jsp"); // 진석님과 메뉴 수정 어디서 할 지 상의해보고
 
         System.out.println("request = " + request + ", modelAndView = " + modelAndView);
 
