@@ -35,6 +35,8 @@
 		<result property="role"					column="role"						jdbcType="CHAR"/>
 		<result property="blackRegDate"			column="black_reg_date"				jdbcType="DATE"/>
 		<result property="blackEndDate"			column="black_end_date"				jdbcType="DATE"/>
+		<result property="sessionKey"			column="session_key"				jdbcType="VARCHAR"/>
+		<result property="sessionLimit"			column="session_limit"				jdbcType="DATE"/>
 	</resultMap>
 
 
@@ -54,6 +56,23 @@
 			 #{userEmailStatus},
 			 SYSDATE())
 	</insert>
+
+	<!-- login 유지 -->
+	<update id="autoLogin">
+		UPDATE user
+		<set>
+			session_key 	= #{sessionKey},
+		    session_limit 	= #{sessionLimit}
+		</set>
+		WHERE user_id = #{userId}
+	</update>
+
+	<!-- sessionKey check -->
+	<select id="sessionKeyAuth" resultMap="userSelectMap">
+		SELECT *
+		FROM user
+		WHERE SESSION_KEY = #{value}
+	</select>
 
 	<!--정보조회-->
 	<select id = "getUser" parameterType="String" resultMap="userSelectMap">

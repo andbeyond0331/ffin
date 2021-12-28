@@ -2,7 +2,7 @@ package com.ffin.service.domain;
 
 import lombok.Data;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 public class User {
@@ -32,5 +32,7 @@ public class User {
     private String blackRegDate;
     private String blackEndDate;
     private int role;
+    private String sessionKey;
+    private Date sessionLimit;
 
 }

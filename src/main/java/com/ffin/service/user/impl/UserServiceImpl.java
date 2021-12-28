@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,18 @@ public class UserServiceImpl implements UserService {
     ///Constructor
     public UserServiceImpl() {
         System.out.println(this.getClass());
+    }
+
+    @Override
+    public void autoLogin(String userId, String sessionKey, Date sessionLimit) throws Exception {
+        System.out.println("UserServiceImpl.autoLogin");
+        userDao.autoLogin(userId, sessionKey, sessionLimit);
+    }
+
+    @Override
+    public User SessionKeyAuth(String sessionKey) throws Exception {
+        System.out.println("UserServiceImpl.SessionKeyAuth");
+        return userDao.SessionKeyAuth(sessionKey);
     }
 
     ///Method
