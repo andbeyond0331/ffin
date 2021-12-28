@@ -30,28 +30,31 @@
 		<result property="payRefundStatus" 		column="PAY_REFUND_STATUS" 		jdbcType="CHAR" />
 		<result property="payPrice" 			column="PAY_PRICE" 				jdbcType="NUMERIC" />
 
-		<association property="payCouponNo" javaType="coupon">
-			<id property="couponNo"							column="PAY_COUPON_NO" 				jdbcType="NUMERIC"/>
+		<association property="payCouponNo" 				javaType="coupon">
+			<id 	property="couponNo"						column="PAY_COUPON_NO" 				jdbcType="NUMERIC"/>
 			<result property="couponReceivedUserId.userId"	column="COUPON_RECEIVED_USER_ID"	jdbcType="VARCHAR"/>
 			<result property="couponDcPrice"				column="COUPON_DC_PRICE"			jdbcType="NUMERIC"/>
 			<result property="couponStatus"					column="COUPON_STATUS"				jdbcType="CHAR"/>
-			<result property="couponType"			column="COUPON_TYPE"        jdbcType="CHAR"/>
+			<result property="couponType"					column="COUPON_TYPE" 		       jdbcType="CHAR"/>
 
 		</association>
 
-		<association property="orderUserId" javaType="user">
-			<id property="userId" 			column="ORDER_USER_ID"		jdbcType="VARCHAR"/>
-			<result property="userPhone"	column="USER_PHONE"			jdbcType="VARCHAR"/>
-			<result property="userName"		column="USER_NAME"			jdbcType="VARCHAR"/>
-			<result property="userProImg"	column="USER_PRO_IMG"		jdbcType="VARCHAR"/>
+		<association property="orderUserId" 	javaType="user">
+			<id property="userId" 				column="ORDER_USER_ID"			jdbcType="VARCHAR"/>
+			<result property="userPhone"		column="USER_PHONE"				jdbcType="VARCHAR"/>
+			<result property="userName"			column="USER_NAME"				jdbcType="VARCHAR"/>
+			<result property="userProImg"		column="USER_PRO_IMG"			jdbcType="VARCHAR"/>
 
 
 		</association>
 		<association property="orderTruckId" javaType="truck">
-			<id property="truckId"			 	column="ORDER_TRUCK_ID" 	jdbcType="VARCHAR"/>
-			<result property="truckName"		column="TRUCK_NAME"			jdbcType="VARCHAR"/>
-			<result property="truckCEOName"		column="TRUCK_CEO_NAME"		jdbcType="VARCHAR"/>
-			<result property="truckPhone"		column="TRUCK_PHONE"		jdbcType="VARCHAR"/>
+			<id property="truckId"			 	column="ORDER_TRUCK_ID" 		jdbcType="VARCHAR"/>
+			<result property="truckName"		column="TRUCK_NAME"				jdbcType="VARCHAR"/>
+			<result property="truckCEOName"		column="TRUCK_CEO_NAME"			jdbcType="VARCHAR"/>
+			<result property="truckPhone"		column="TRUCK_PHONE"			jdbcType="VARCHAR"/>
+			<result property="truckMapLa" 		column="TRUCK_MAP_LA" 			jdbcType="DECIMAL" />
+			<result property="truckMapLo" 		column="TRUCK_MAP_LO"			jdbcType="DECIMAL" />
+
 		</association>
 
 
@@ -76,7 +79,7 @@
 		<result property="odMenuImage" 			column="OD_MENU_IMAGE" 			jdbcType="VARCHAR" />
 
 		<association property="odOrderNo" javaType="purchase">
-			<result property="orderNo" 				column="OD_ORDER_NO" 				jdbcType="NUMERIC"/>
+			<result property="orderNo" 				column="OD_ORDER_NO" 			jdbcType="NUMERIC"/>
 			<!--<result property="orderUserId.userId" 	column="ORDER_USER_ID" 			jdbcType="VARCHAR"/>
             <result property="orderTruckId.truckId"	column="ORDER_TRUCK_ID"			jdbcType="VARCHAR"/>
             <result property="payCouponNo.couponNo"	column="PAY_COUPON_NO"	 		jdbcType="NUMERIC"/>
@@ -103,23 +106,26 @@
 				<result property="couponReceivedUserId.userId"	column="COUPON_RECEIVED_USER_ID"	jdbcType="VARCHAR"/>
 				<result property="couponDcPrice"				column="COUPON_DC_PRICE"			jdbcType="NUMERIC"/>
 				<result property="couponStatus"					column="COUPON_STATUS"				jdbcType="CHAR"/>
-				<result property="couponType"			column="COUPON_TYPE"        jdbcType="CHAR"/>
+				<result property="couponType"					column="COUPON_TYPE"      			jdbcType="CHAR"/>
 
 			</association>
 
-			<association property="orderUserId" javaType="user">
-				<id property="userId" 			column="ORDER_USER_ID"		jdbcType="VARCHAR"/>
-				<result property="userPhone"	column="USER_PHONE"			jdbcType="VARCHAR"/>
-				<result property="userName"		column="USER_NAME"			jdbcType="VARCHAR"/>
-				<result property="userProImg"	column="USER_PRO_IMG"		jdbcType="VARCHAR"/>
+			<association property="orderUserId" 	javaType="user">
+				<id property="userId" 				column="ORDER_USER_ID"			jdbcType="VARCHAR"/>
+				<result property="userPhone"		column="USER_PHONE"				jdbcType="VARCHAR"/>
+				<result property="userName"			column="USER_NAME"				jdbcType="VARCHAR"/>
+				<result property="userProImg"		column="USER_PRO_IMG"			jdbcType="VARCHAR"/>
 
 
 			</association>
 			<association property="orderTruckId" javaType="truck">
-				<id property="truckId"			 	column="ORDER_TRUCK_ID" 	jdbcType="VARCHAR"/>
-				<result property="truckName"		column="TRUCK_NAME"			jdbcType="VARCHAR"/>
-				<result property="truckCEOName"		column="TRUCK_CEO_NAME"		jdbcType="VARCHAR"/>
-				<result property="truckPhone"		column="TRUCK_PHONE"		jdbcType="VARCHAR"/>
+				<id property="truckId"			 	column="ORDER_TRUCK_ID" 		jdbcType="VARCHAR"/>
+				<result property="truckName"		column="TRUCK_NAME"				jdbcType="VARCHAR"/>
+				<result property="truckCEOName"		column="TRUCK_CEO_NAME"			jdbcType="VARCHAR"/>
+				<result property="truckPhone"		column="TRUCK_PHONE"			jdbcType="VARCHAR"/>
+				<result property="truckMapLa" 		column="TRUCK_MAP_LA" 			jdbcType="DECIMAL" />
+				<result property="truckMapLo" 		column="TRUCK_MAP_LO"			jdbcType="DECIMAL" />
+
 			</association>
 
 
@@ -130,34 +136,34 @@
 
 	<resultMap type="point" id="pointSelectMap">
 		<!--point Domain-->
-		<result property="pointNo"				column="POINT_NO"				jdbcType="NUMERIC"	/>
-		<result property="pointUserId.userId" 	column="POINT_USER_ID"			jdbcType="VARCHAR"/>
-		<result property="pointAmt"				column="POINT_AMT"				jdbcType="NUMERIC"/>
-		<result property="pointUseDate"			column="POINT_USE_DATE"			jdbcType="TIMESTAMP"/>
-		<result property="pointPlmnStatus"		column="POINT_PLMN_STATUS"		jdbcType="CHAR"/>
-		<result property="pointStatus"			column="POINT_STATUS"			jdbcType="CHAR"/>
-		<result property="pointBirthCode"		column="POINT_BIRTH_CODE"		jdbcType="NUMERIC"/>
+		<result property="pointNo"					column="POINT_NO"				jdbcType="NUMERIC"	/>
+		<result property="pointUserId.userId" 		column="POINT_USER_ID"			jdbcType="VARCHAR"/>
+		<result property="pointAmt"					column="POINT_AMT"				jdbcType="NUMERIC"/>
+		<result property="pointUseDate"				column="POINT_USE_DATE"			jdbcType="TIMESTAMP"/>
+		<result property="pointPlmnStatus"			column="POINT_PLMN_STATUS"		jdbcType="CHAR"/>
+		<result property="pointStatus"				column="POINT_STATUS"			jdbcType="CHAR"/>
+		<result property="pointBirthCode"			column="POINT_BIRTH_CODE"		jdbcType="NUMERIC"/>
 
 		<association property="pointUserId" javaType="user">
-			<id property="userId" column="USER_ID" jdbcType="VARCHAR"/>
-			<result property="userTotalPoint" column="USER_TOTAL_POINT" jdbcType="NUMERIC"/>
+			<id property="userId" 					column="USER_ID" 				jdbcType="VARCHAR"/>
+			<result property="userTotalPoint"		column="USER_TOTAL_POINT"		jdbcType="NUMERIC"/>
 		</association>
 
 	</resultMap>
 	<resultMap type="user" id="userSelectMap">
 		<!--coupon Domain-->
-		<result property="userId"				column="USER_ID"					jdbcType="VARCHAR"/>
-		<result property="userTotalPoint"		column="USER_TOTAL_POINT"			jdbcType="NUMERIC"/>
+		<result property="userId"					column="USER_ID"				jdbcType="VARCHAR"/>
+		<result property="userTotalPoint"			column="USER_TOTAL_POINT"		jdbcType="NUMERIC"/>
 
 	</resultMap>
 
 	<resultMap type="coupon" id="couponSelectMap">
 		<!--coupon Domain-->
-		<result property="couponNo"				column="COUPON_NO"					jdbcType="INTEGER"/>
+		<result property="couponNo"						column="COUPON_NO"					jdbcType="INTEGER"/>
 		<result property="couponReceivedUserId.userId"	column="COUPON_RECEIVED_USER_ID"	jdbcType="VARCHAR"/>
-		<result property="couponDcPrice"		column="COUPON_DC_PRICE"			jdbcType="INTEGER"/>
-		<result property="couponStatus"			column="COUPON_STATUS"				jdbcType="CHAR"/>
-		<result property="couponType"	column="COUPON_TYPE"		jdbcType="CHAR"/>
+		<result property="couponDcPrice"				column="COUPON_DC_PRICE"			jdbcType="INTEGER"/>
+		<result property="couponStatus"					column="COUPON_STATUS"				jdbcType="CHAR"/>
+		<result property="couponType"					column="COUPON_TYPE"				jdbcType="CHAR"/>
 
 
 	</resultMap>
@@ -221,7 +227,7 @@
 
 
 
-	<insert id="addCoupon" parameterType="coupon">
+	<insert id="addCoupon" parameterType="coupon" >
 		INSERT
 		INTO ffin.COUPON ( COUPON_RECEIVED_USER_ID,COUPON_DC_PRICE,
 						   COUPON_TYPE,COUPON_STATUS)
@@ -234,7 +240,7 @@
 
 	</insert>
 
-	<insert id="updatePoint" parameterType="point">
+	<insert id="updatePoint" parameterType="point" useGeneratedKeys="true" keyProperty="pointNo">
 		INSERT
 		INTO ffin.point (POINT_USER_ID,POINT_AMT,POINT_USE_DATE,
 						 POINT_PLMN_STATUS,POINT_STATUS,POINT_BIRTH_CODE)

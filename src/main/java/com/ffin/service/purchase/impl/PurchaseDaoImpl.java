@@ -42,12 +42,15 @@ public class PurchaseDaoImpl implements PurchaseDao {
     }
     //주문번호 생성을 위해서
     @Override
-    public void updatePoint(Point point)throws Exception{
+    public int updatePoint(Point point)throws Exception{
         sqlSession.insert("PurchaseMapper.updatePoint",point);
+        int no = point.getPointNo();
+        return no;
     }// 포인트 적립차감 등록
     @Override
     public void addCoupon(Coupon coupon)throws Exception{
         sqlSession.insert("PurchaseMapper.addCoupon",coupon);
+
     }// 쿠폰발급 등록
 
 

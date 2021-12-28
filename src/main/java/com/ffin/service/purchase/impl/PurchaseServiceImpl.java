@@ -38,12 +38,12 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
     //주문번호 생성을 위해서
     @Override
-    public void updatePoint(Point point)throws Exception{
-        purchaseDao.updatePoint(point);
+    public int updatePoint(Point point)throws Exception{
+       return purchaseDao.updatePoint(point);
     }// 포인트 적립차감 등록
     @Override
     public void addCoupon(Coupon coupon)throws Exception{
-        purchaseDao.addCoupon(coupon);
+       purchaseDao.addCoupon(coupon);
     }// 쿠폰발급 등록
 
 

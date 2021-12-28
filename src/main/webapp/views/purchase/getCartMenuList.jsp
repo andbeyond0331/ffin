@@ -18,29 +18,6 @@
 
 <script type="text/javascript">
 
-    function scrollUpDown(_document, _window){
-        var scrollHeight = $(_document).height() - $(_window).height();
-
-        $(_document.body).stop().animate({
-            scrollTop: 0
-        }, 500).animate({
-            scrollTop: scrollHeight
-        }, 2000).delay(200).animate({
-            scrollTop: 0
-        }, 2000);
-    }
-
-    window.scrollUpDown;
-
-    $(document).ready(function(){
-
-        $('.box-demo-button-wrapper button').on('click', function(){
-            var iframe = $(this).parent().find('+ .box-demo').find('iframe')[0];
-
-            scrollUpDown(iframe.contentDocument, iframe.contentWindow);
-        });
-
-    });
     $(function() {
         $("button.btn.btn-primary").click(function () {
             alert("djkdjdk");
@@ -50,6 +27,7 @@
     });
 </script>
 <style type="text/css">
+
 
     html,
     body {
@@ -63,11 +41,12 @@
         display: flex;
         flex-flow: row nowrap; }
     .content {
-        width: 100%;
+        width: 120%;
         height: 3000px;
         background: #f5f5f5; }
     .sidebar {
-        width: 20%;
+        font-size: 10px;
+        width: 40%;
         height: 400px;
         position: sticky;
         top: 80px;
@@ -75,6 +54,7 @@
     .footer {
         background: #333;
         height: 200px; }
+
 
 
 
@@ -93,7 +73,7 @@
 
 
 
-        <div class="container">
+        <div class="content">
 
 
 
@@ -107,7 +87,7 @@
             <thead>
             <tr>
                 <td class="ct_list_b" width="100">no</td>
-                <td class="ct_line02"></td>
+                <td class="ct_line02" size></td>
                 <td class="ct_list_b" width="150">메뉴 이름</td>
                 <td class="ct_line02"></td>
                 <td class="ct_list_b" width="150">메뉴 설명</td>
@@ -144,7 +124,7 @@
                     <span class="odOptionName" hidden="">${cart.odOptionName}</span>
 
                 </td>
-t
+
                 <td></td>
                 <td align="left">
                     <input type="hidden"  name="odMenuName" value="${cart.odMenuName}"/>
