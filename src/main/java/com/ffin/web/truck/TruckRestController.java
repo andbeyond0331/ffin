@@ -4,6 +4,8 @@ import com.ffin.common.Page;
 import com.ffin.common.Search;
 import com.ffin.service.domain.Truck;
 import com.ffin.service.truck.TruckService;
+import net.nurigo.java_sdk.Coolsms;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 //==> 트럭관리 RestController
 @RestController
@@ -118,6 +122,7 @@ public class TruckRestController {
         return truck;
     }
 
+    // 푸드트럭 아이디 중복확인
     @RequestMapping(value = "/checkDuId/{truckId}", method = RequestMethod.POST)
     @ResponseBody
     public String checkDuId(@PathVariable String truckId) throws Exception {
@@ -132,6 +137,7 @@ public class TruckRestController {
         return result;
     }
 
+    // 푸드트럭 상호 중복확인
     @RequestMapping(value = "/checkDuTruckName/{truckName}", method = RequestMethod.POST)
     @ResponseBody
     public String checkDuTruckName(@PathVariable String truckName) throws Exception {
@@ -146,5 +152,14 @@ public class TruckRestController {
         return result;
     }
 
+    // 푸드트럭 휴대폰번호인증
 
-}
+//    @RequestMapping(value = "/phoneCheck", method = RequestMethod.GET)
+//    @ResponseBody
+//    public String sendSMS(@RequestParam("phone") String userPhoneNumber) { // 휴대폰 문자보내기
+//        int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
+//        truckService.certifiedPhoneNumber(userPhoneNumber,randomNumber);
+//        return Integer.toString(randomNumber); }
+
+
+    }

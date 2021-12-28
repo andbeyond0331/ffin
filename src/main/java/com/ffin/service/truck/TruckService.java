@@ -56,8 +56,10 @@ public interface TruckService {
     public void sendEmail(Truck truck) throws Exception ;
     // 푸드트럭 이메일인증
     public void emailAuth(Truck truck) throws Exception ;
-    // 푸드트럭 휴대폰번호인증(메세지)
-    public void messageAuth(Truck truck) throws Exception ;
+
+//    // 푸드트럭 휴대폰번호인증(메세지)
+//    public void messageAuth(String truckPhone, String numStr) throws Exception;
+
     // 푸드트럭 캡차인증
     public void captchaAuth(Truck truck) throws Exception ;
     // 푸드트럭 사업자등록번호인증(OCR 기능 이용하여 관리자가 인증..)
@@ -71,4 +73,6 @@ public interface TruckService {
 
     // 게시판 Page 처리를 위한 전체Row(totalCount)  return
     public int getTotalCount(Search search) throws Exception ;
+
+    //public void certifiedPhoneNumber(String , int );
 }

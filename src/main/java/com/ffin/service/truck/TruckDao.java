@@ -63,8 +63,6 @@ public interface TruckDao {
     public void sendEmail(Truck truck) throws Exception ;
     // 푸드트럭 이메일인증
     public void emailAuth(Truck truck) throws Exception ;
-    // 푸드트럭 휴대폰번호인증(메세지)
-    public void messageAuth(Truck truck) throws Exception ;
     // 푸드트럭 캡차인증
     public void captchaAuth(Truck truck) throws Exception ;
     // 푸드트럭 사업자등록번호인증(OCR 기능 이용하여 관리자가 인증..)

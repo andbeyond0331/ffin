@@ -45,7 +45,7 @@
 		<mapper resource="sql/CateringMapper.xml"/>
 		<mapper resource="sql/ReviewMapper.xml"/>
 		<mapper resource="sql/TruckMapper.xml"/>
-		<mapper resource="sql/UserMapper.xml"/>
+		<mapper resource="sql/PostMapper.xml"/>
 	</mappers>
 
 

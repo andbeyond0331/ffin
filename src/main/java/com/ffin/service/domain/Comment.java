@@ -12,6 +12,7 @@ public class Comment {
 	private int commentPostNo;
 	private String commentContent;
 	private String commentUserId;
+	private String commentTruckId;
 	private Date commentDate;
 	private int secretKey;
 

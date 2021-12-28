@@ -66,9 +66,9 @@ public class TruckServiceTest {
         Assert.assertEquals("aaa.jpg", truck.getTruckBusiLice());
         Assert.assertEquals(8, truck.getTruckCate());
         Assert.assertEquals(Integer.parseInt("1"), truck.getTruckJoinReqStatus());
-        Assert.assertEquals(Date.valueOf("2021-12-24"), truck.getTruckJoinReqDate());
+        Assert.assertEquals(Date.valueOf("2021-12-27"), truck.getTruckJoinReqDate());
         Assert.assertEquals("0", truck.getTruckBusiStatus());
-        Assert.assertEquals(Date.valueOf("2021-12-24"), truck.getTruckRegDate());
+        Assert.assertEquals(Date.valueOf("2021-12-27"), truck.getTruckRegDate());
         Assert.assertEquals(1, truck.getRole());
     }
 
@@ -230,24 +230,25 @@ public class TruckServiceTest {
     }
 
 
-    @Test
+    //@Test
     public void testUpdateNotice() throws Exception {
 
         Truck truck = new Truck();
-
+        System.out.println("인스턴스생성");
         truck = truckService.getTruck("testTruckId");
-
-        Assert.assertNotNull(truck);
-
+        System.out.println("getTruck");
+//        Assert.assertNotNull(truck);
+        truck.setTruckId("testTruckId");
         truck.setTruckNoticeTitle("고오옹지");
         truck.setTruckNoticeContent("공지올립니다!!");
         truck.setTruckNoticeImg("testNoticeImg.jpg");
+        System.out.println("setTruck");
 
         truckService.updateNotice(truck);
-
+        System.out.println("update");
         truck = truckService.getTruck("testTruckId");
         Assert.assertNotNull(truck);
-
+        System.out.println("업데이트확인");
         Assert.assertEquals("고오옹지", truck.getTruckNoticeTitle());
         Assert.assertEquals("공지올립니다!!", truck.getTruckNoticeContent());
         Assert.assertEquals("testNoticeImg.jpg", truck.getTruckNoticeImg());

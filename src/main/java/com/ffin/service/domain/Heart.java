@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class Heart {
+
 	private int heartNo;
 	private int heartTargetP;
 	private String heartTargetT;

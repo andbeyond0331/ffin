@@ -20,7 +20,8 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <!-- jQuery UI 라이브러리 js파일 -->
     <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
-
+    <!-- 구글 리캡차 -->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">
@@ -37,7 +38,7 @@
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
             $("a[href='#' ]").on("click", function () {
-                self.location = "/truck/loginTruck"
+                self.location = "/views/truck/loginTruck.jsp"
             });
         });
 
@@ -77,6 +78,7 @@
             // $("input:hidden[name='phone']").val( value );
 
             $("form").attr("method", "POST").attr("action", "/truck/addTruck").submit();
+            alert("회원가입이 완료되었습니다. 가입승인에는 영업일 기준 2~5일이 소요되며 확인을 누르시면 로그인 화면으로 이동합니다.");
         }
     </script>
     <!-- 푸드트럭 아이디 중복체크 -->
@@ -160,27 +162,69 @@
             });
         });
 
+        // <!-- 휴대폰 문자인증 -->
+        // //휴대폰 번호 인증
+        // var code2 = "";
+        // $("#phoneChk").click(function () {
+        //     alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
+        //     var phone = $("#phone").val();
+        //     $.ajax({
+        //         type: "GET", url: "phoneCheck?phone=" + phone, cache: false, success: function (data) {
+        //             if (data == "error") {
+        //                 alert("휴대폰 번호가 올바르지 않습니다.")
+        //                 $(".successPhoneChk").text("유효한 번호를 입력해주세요.");
+        //                 $(".successPhoneChk").css("color", "red");
+        //                 $("#phone").attr("autofocus", true);
+        //             } else {
+        //                 $("#phone2").attr("disabled", false);
+        //                 $("#phoneChk2").css("display", "inline-block");
+        //                 $(".successPhoneChk").text("인증번호를 입력한 뒤 본인인증을 눌러주십시오.");
+        //                 $(".successPhoneChk").css("color", "green");
+        //                 $("#phone").attr("readonly", true);
+        //                 code2 = data;
+        //             }
+        //         }
+        //     });
+        // });
+        //
+        //
+        // //휴대폰 인증번호 대조
+        // $("#phoneChk2").click(function () {
+        //     if ($("#phone2").val() == code2) {
+        //         $(".successPhoneChk").text("인증번호가 일치합니다.");
+        //         $(".successPhoneChk").css("color", "green");
+        //         $("#phoneDoubleChk").val("true");
+        //         $("#phone2").attr("disabled", true);
+        //     } else {
+        //         $(".successPhoneChk").text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+        //         $(".successPhoneChk").css("color", "red");
+        //         $("#phoneDoubleChk").val("false");
+        //         $(this).attr("autofocus", true);
+        //     }
+        // });
+
+
     </script>
 
 
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=01337c4e168951397bd2092ef93c4666&libraries=services"></script>
+<%--    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=01337c4e168951397bd2092ef93c4666&libraries=services"></script>--%>
     <script>
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div
             mapOption = {
-                center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+                //center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
                 level : 5 // 지도의 확대 레벨
             };
 
-        //지도를 미리 생성
-        var map = new daum.maps.Map(mapContainer, mapOption);
-        //주소-좌표 변환 객체를 생성
-        var geocoder = new daum.maps.services.Geocoder();
-        //마커를 미리 생성
-        var marker = new daum.maps.Marker({
-            position: new daum.maps.LatLng(37.537187, 127.005476),
-            map     : map
-        });
+        // //지도를 미리 생성
+        // var map = new daum.maps.Map(mapContainer, mapOption);
+        // //주소-좌표 변환 객체를 생성
+        // var geocoder = new daum.maps.services.Geocoder();
+        // //마커를 미리 생성
+        // var marker = new daum.maps.Marker({
+        //     position: new daum.maps.LatLng(37.537187, 127.005476),
+        //     map     : map
+        // });
 
 
         function sample5_execDaumPostcode() {
@@ -226,6 +270,7 @@
             });
         });
 
+
     </script>
 
 </head>
@@ -258,7 +303,8 @@
                 <label for="truckPassword">비밀번호</label>
             </th>
             <td>
-                <input id="truckPassword" type="password" name="truckPassword" required maxlength="8" autocomplete="off"/>
+                <input id="truckPassword" type="password" name="truckPassword" required maxlength="8"
+                       autocomplete="off"/>
                 <span class="point">※ 비밀번호는 총 8자 까지 입력가능</span><br/>
             </td>
         </tr>
@@ -303,13 +349,20 @@
             <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
         </div>
 
-        <!-- 휴대폰번호 입력란 -->
-        <br/><br/>
-        <div class="form-group">
-            <label for="truckPhone" class="col-sm-offset-1 col-sm-3 control-label">휴대폰번호</label>
 
-            <input id="truckPhone" class="form-control" name="truckPhone" placeholder="휴대폰번호">
-        </div>
+        <!-- 핸드폰 문자 인증 -->
+        <br/><br/>
+        <tr class="mobileNo">
+            <th><label for="phone">휴대폰 번호</label></th>
+            <td><p><input id="phone" type="text" name="phone" title="전화번호 입력" required/> <span id="phoneChk"
+                                                                                               class="doubleChk">인증번호 보내기</span><br/>
+                <input id="phone2" type="text" name="phone2" title="인증번호 입력" disabled required/> <span id="phoneChk2"
+                                                                                                       class="doubleChk">본인인증</span>
+                <span class="point successPhoneChk">휴대폰 번호 입력후 인증번호 보내기를 해주십시오.</span> <input type="hidden"
+                                                                                              id="phoneDoubleChk"/></p>
+            </td>
+        </tr>
+
 
         <!-- 이메일 입력란 -->
         <br/><br/>
@@ -327,7 +380,8 @@
                 <label for="truckName">푸드트럭상호</label>
             </th>
             <td>
-                <input id="truckName" type="text" name="truckName" placeholder="푸드트럭 상호를 입력해주세요." required maxlength="10"/>
+                <input id="truckName" type="text" name="truckName" placeholder="푸드트럭 상호를 입력해주세요." required
+                       maxlength="10"/>
                 <span class="point successNameChk"></span><br/>
                 <span class="point">※ 한글, 영문 입력가능, 최대 10자 까지 입력</span>
                 <input type="hidden" id="nameDoubleChk"/>
@@ -343,6 +397,15 @@
                        placeholder="사업자등록증 파일업로드">
             </div>
         </div>
+        <br/>
+        <h4>사업자등록증 파일업로드</h4>
+        업로드하실 파일을 선택하세요. <br/>
+        <form action="./upload.jsp" method="post"
+              enctype="multipart/form-data">
+            <input type="file" name="file" size="50"/>
+            <br/>
+            <input type="submit" value="선택한 파일 업로드"/>
+        </form>
 
 
         <!-- 푸드트럭 카테고리 -->
@@ -362,6 +425,15 @@
                 <input type="text" class="form-control" id="truckProImg" name="truckProImg" placeholder="프로필 이미지 파일업로드">
             </div>
         </div>
+        <br/>
+        <h4>푸드트럭 프로필 이미지 파일업로드</h4>
+        업로드하실 파일을 선택하세요. <br/>
+        <form action="./upload.jsp" method="post"
+              enctype="multipart/form-data">
+            <input type="file" name="file" size="50"/>
+            <br/>
+            <input type="submit" value="선택한 파일 업로드"/>
+        </form>
 
 
         <!-- 푸드트럭 사장님 한마디 -->
@@ -372,7 +444,10 @@
                 <input type="text" class="form-control" id="truckCEOIntro" name="truckCEOIntro" placeholder="사장님 한마디">
             </div>
         </div>
-
+        <br/><br/>
+        <div id="google_recaptha">
+            <div class="g-recaptcha" data-sitekey="6LcPg8gdAAAAAO5xlPExdNehovl0HGgHL8veP0OR"></div>
+        </div>
 
         <br/><br/>
         <div class="form-group">
