@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository("reviewDaoImpl")
 public class ReviewDaoImpl implements ReviewDao {
@@ -37,8 +39,16 @@ public class ReviewDaoImpl implements ReviewDao {
     }
 
     @Override
-    public List<Review> getReviewList(Search search) throws Exception {
-        return sqlSession.selectList("ReviewMapper.getReviewList", search);
+    public Map<String, Object> getReviewListTruck(Search search, String truckId) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("search", search);
+        List<Review> list =sqlSession.selectList("ReviewMapper.getReviewListTruck", map);
+        System.out.println("list : " + list);
+
+        map.clear();
+        map.put("list", list);
+
+        return map;
     }
 
     @Override

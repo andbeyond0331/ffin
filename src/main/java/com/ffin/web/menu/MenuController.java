@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -70,11 +71,12 @@ public class MenuController {
         return modelAndView;
     }
 
+    @Transactional //menu만 들어가고 optionGroup은 들어가지 않는 상황 방지
     @RequestMapping(value="addMenuOptionGroup", method=RequestMethod.POST)
     public String addMenuOptionGroup(@ModelAttribute("truck") Truck truck, @ModelAttribute(value="optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
 
         System.out.println("/menu/addMenu:POST");
-        System.out.println("optionGroup : " + optionGroup + ", menu : " + menu);
+        System.out.println("truck = " + truck + ", optionGroup = " + optionGroup + ", menu = " + menu + ", model = " + model);
 
         menu.setMenuTruckId(truck.getTruckId());
 

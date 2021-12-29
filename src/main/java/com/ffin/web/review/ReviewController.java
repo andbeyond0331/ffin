@@ -1,8 +1,11 @@
 package com.ffin.web.review;
 
+import com.ffin.common.Search;
 import com.ffin.service.domain.*;
 import com.ffin.service.purchase.PurchaseService;
 import com.ffin.service.review.ReviewService;
+import com.ffin.service.truck.TruckService;
+import com.ffin.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +35,10 @@ public class ReviewController {
     @Qualifier("purchaseServiceImpl")
     private PurchaseService purchaseService;
 
+    @Autowired
+    @Qualifier("truckServiceImpl")
+    private TruckService truckService;
+
     @Value("100") //pageUnit은 propertySource를 위에 선언하고 @value의 값을 지정해줌
     //추후 pageUnit과 pageSize 출력되는지 jUnit에서 확인이 필요합니다.
     //@Value("#{commonProperties['pageUnit'] ?: 3}")
@@ -58,21 +65,28 @@ public class ReviewController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("orderDetail", orderDetail);
         modelAndView.addObject("purchase",purchase);
+
         modelAndView.setViewName("/views/review/addReviewView.jsp");
 
         return modelAndView;
     }
 
-//    @RequestMapping(value="addReview", method=RequestMethod.POST)
-//    public String addReview(@ModelAttribute("review") Review review, Model model) throws Exception{
-//
-//        System.out.println("/review/addReview:POST");
-//        System.out.println("review = " + review + ", model = " + model);
-//
-//        reviewService.addReview(review);
-//
-//
-//    }
+    @RequestMapping(value="addReview", method=RequestMethod.POST)
+    public String addReview(@ModelAttribute("rvOrderNo") int rvOrderNo, @ModelAttribute("review") Review review, Model model) throws Exception{
+
+        System.out.println("/review/addReview:POST");
+        System.out.println("rvOrderNo = " + rvOrderNo + ", review = " + review + ", model = " + model);
+
+        review.setRvOrderNo(rvOrderNo);
+
+        reviewService.addReview(review);
+
+        model.addAttribute("review", review);
+
+        return "redirect:/views/menu/getMenu.jsp"; //송화님&진석님과 얘기해보기
+
+
+    }
 
     @RequestMapping(value="updateReview", method=RequestMethod.GET)
     public ModelAndView updateReview(HttpServletRequest request, ModelAndView modelAndView) throws Exception{
@@ -97,21 +111,22 @@ public class ReviewController {
     }
 
     @RequestMapping(value="updateReview", method=RequestMethod.POST)
-    public String updateReview(@ModelAttribute("review") Review review, @RequestParam(value="fileUpload", required = false) MultipartFile file, Model model) throws Exception{
-//        if(!file.getOriginalFilename().isEmpty()){
-//            file.transferTo(new File(FILE_SERVER_PATH, file.getOriginalFilename()));
-//        }
-//
-//        review.setRvImg1(file.getOriginalFilename());
+    public String updateReview(@ModelAttribute("rvNo") int rvNo, @ModelAttribute("review") Review review, Model model) throws Exception{
 
-        System.out.println("review = " + review + ", file = " + file + ", model = " + model);
+        System.out.println("/review/updateReview:POST");
+        System.out.println("rvNo = " + rvNo + ", review = " + review + ", model = " + model);
+
+        review.setRvNo(rvNo);
 
         reviewService.updateReview(review);
 
         model.addAttribute("review", review);
 
-        return "forward:/views/review/updateReview.jsp";
+        return "redirect:/views/review/addReviewView.jsp"; //송화님&진석님과 얘기해보기
+
+
     }
+
 
     @RequestMapping(value="updateRVAddTruckComment", method=RequestMethod.GET)
     public String updateRVAddTruckComment(@ModelAttribute("rvNo") int rvNo, Model model) throws Exception{
@@ -119,9 +134,93 @@ public class ReviewController {
 
         Review review = reviewService.getReview(rvNo);
 
+        int orderNo = review.getRvOrderNo();
+
+        Purchase purchase = purchaseService.getPurchase(orderNo);
+
+        User user  = purchase.getOrderUserId();
+
+        String userId = user.getUserId();
+
+
         model.addAttribute("review", review);
+        model.addAttribute("userId", userId);
 
         return "/views/review/updateRVAddTruckCommentView.jsp";
     }
+
+    @RequestMapping(value="updateRVAddTruckComment", method=RequestMethod.POST)
+    public String updateRVAddTruckComment(@ModelAttribute("rvNo") int rvNo, @ModelAttribute("review") Review review, Model model) throws Exception{
+
+        System.out.println("/review/updateReview:POST");
+        System.out.println("rvNo = " + rvNo + ", review = " + review + ", model = " + model);
+
+        review.setRvNo(rvNo);
+
+        reviewService.updateRVAddTruckComment(review);
+
+        model.addAttribute("review", review);
+
+        return "redirect:/views/review/updateReviewView.jsp"; //송화님&진석님과 얘기해보기
+
+
+    }
+
+    @RequestMapping(value="updateRVUpdateTruckComment", method=RequestMethod.GET)
+    public String updateRVUpdateTruckComment(@ModelAttribute("rvNo") int rvNo, Model model) throws Exception{
+
+        System.out.println("/review/updateRVUpdateTruckComment:GET");
+        System.out.println("rvNo = " + rvNo + ", model = " + model);
+
+        Review review = reviewService.getReview(rvNo);
+
+        int orderNo = review.getRvOrderNo();
+
+        Purchase purchase = purchaseService.getPurchase(orderNo);
+
+        User user  = purchase.getOrderUserId();
+
+        String userId = user.getUserId();
+
+
+        model.addAttribute("review", review);
+        model.addAttribute("userId", userId);
+
+        return "/views/review/updateRVUpdateTruckCommentView.jsp";
+    }
+
+    @RequestMapping(value="updateRVUpdateTruckComment", method=RequestMethod.POST)
+    public String updateRVUpdateTruckComment(@ModelAttribute("rvNo") int rvNo, @ModelAttribute("review") Review review, Model model) throws Exception{
+
+        System.out.println("/review/updateRVUpdateTruckComment:POST");
+        System.out.println("rvNo = " + rvNo + ", review = " + review + ", model = " + model);
+
+        review.setRvNo(rvNo);
+
+        reviewService.updateRVUpdateTruckComment(review);
+
+        model.addAttribute("review", review);
+
+        return "redirect:/views/review/updateReviewView.jsp"; //송화님&진석님과 얘기해보기
+
+
+    }
+
+//    @RequestMapping("getReviewListTruck")
+//    public ModelAndView getReviewListTruck(@ModelAttribute("search") Search search, @RequestParam("truckId") String truckId,
+//                                    ModelAndView modelAndView) throws Exception{
+//
+//        search.setPageSize(pageSize);
+//        Truck truck  = truckService.getTruck(truckId);
+//
+////        Map<String , Object> map= reviewService.getReviewList(search, truck.getTruckId());
+//
+//        modelAndView.addObject("list", map.get("list"));
+//        modelAndView.setViewName("/views/menu/getTruck.jsp");
+//
+//        return modelAndView;
+//    }
+
+
 
 }

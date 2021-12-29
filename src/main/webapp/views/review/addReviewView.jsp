@@ -52,7 +52,9 @@
 
         function fncAddReview(){
 
-            $(".form-horizontal").attr("method", "POST").attr("action","/review/addReview").submit();
+            var rvOrderNo = $("input[name='rvOrderNo']").val();
+
+            $(".form-horizontal").attr("method", "POST").attr("action","/review/addReview?rvOrderNo="+rvOrderNo).submit();
         }
 
     </script>
@@ -119,6 +121,7 @@
 
         <div class="form-group">
             <label for="rvStar" class="col-sm-offset-1 col-sm-3 control-label">리뷰 별점</label>
+            <input type="hidden" value="${purchase.orderNo}" name="rvOrderNo"/>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="rvStar" name="rvStar" value="${review.rvStar }" placeholder="리뷰 별점을 입력하세요.">
 

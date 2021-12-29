@@ -40,14 +40,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Map<String, Object> getReviewList(Search search) throws Exception {
-        List<Review> list = reviewDao.getReviewList(search);
-        int totalCount = reviewDao.getTotalCount(search);
-
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("list", list);
-        map.put("totalCount", new Integer(totalCount));
-        return map;
+    public Map<String, Object> getReviewListTruck(Search search, String truckId) throws Exception {
+        return reviewDao.getReviewListTruck(search, truckId);
     }
 
     @Override
