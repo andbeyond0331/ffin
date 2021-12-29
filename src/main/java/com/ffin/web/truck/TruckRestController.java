@@ -154,12 +154,15 @@ public class TruckRestController {
 
     // 푸드트럭 휴대폰번호인증
 
-//    @RequestMapping(value = "/phoneCheck", method = RequestMethod.GET)
-//    @ResponseBody
-//    public String sendSMS(@RequestParam("phone") String userPhoneNumber) { // 휴대폰 문자보내기
-//        int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
-//        truckService.certifiedPhoneNumber(userPhoneNumber,randomNumber);
-//        return Integer.toString(randomNumber); }
+    @RequestMapping(value = "/phoneCheck/{phone}", method = RequestMethod.GET)
+    @ResponseBody
+    public String sendSMS(@PathVariable("phone") String truckPhoneNumber) {
+        System.out.println("TruckRestController.sendSMS");// 휴대폰 문자보내기
+        System.out.println("truckPhoneNumber = " + truckPhoneNumber);
+        int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
+        System.out.println("randomNumber = " + randomNumber);
+        truckService.certifiedPhoneNumber(truckPhoneNumber,randomNumber);
+        return Integer.toString(randomNumber); }
 
 
     }
