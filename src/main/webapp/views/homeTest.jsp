@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
 <!DOCTYPE html>
@@ -68,106 +69,9 @@
 
 
 <div class="hero_area">
-    <!-- header section strats -->
-    <header class="header_section">
-        <div class="container-fluid" >
-            <nav class="navbar navbar-expand-lg custom_nav-container">
-                <a class="navbar-brand" href="homeTest.jsp">
-                    <img class="d-inline-block" src="../resources/bootstrap/assets/logo.svg" alt="logo" />
-                    <span>F.FIN</span>
-                </a>
-                <div class="" id="">
-                    <div class="User_option">
-                        <a href="#modalName">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                            <span data-toggle="modal" data-target=".bd-example-modal-lg" id="loginModal"  onclick=loginModal()>Login</span>
-                        </a>
-                        <!-- Modal -->
-                        <div class="modal fade" id="openLoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <ul class="nav nav-tabs">
-                                            <li class="nav-item">
-                                                <a class="nav-link active" data-toggle="tab" href="#User">User</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#CEO">CEO</a>
-                                            </li>
-                                        </ul>
-                                        <form>
-                                            <div class="tab-content">
-                                                <div class="tab-pane fade show active" id="User">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label">ID</label>
-                                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                                        <div id="emailHelp" class="form-text">User!</div>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                                                        <input type="password" class="form-control" id="exampleInputPassword1">
-                                                    </div>
-                                                    <div class="mb-3 form-check">
-                                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane fade" id="CEO">
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputEmail1" class="form-label">ID</label>
-                                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                                        <div id="emailHelp" class="form-text">CEO!</div>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                                                        <input type="password" class="form-control" id="exampleInputPassword1">
-                                                    </div>
-                                                    <div class="mb-3 form-check">
-                                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <form class="form-inline ">
-                            <input type="search" placeholder="Search" />
-                            <button class="btn  nav_search-btn" type="submit">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </button>
-                        </form>
-                    </div>
-                    <div class="custom_menu-btn">
-                        <button onclick="openNav()">
-                            <img src="../resources/bootstrap/images/menu.png" alt="">
-                        </button>
-                    </div>
-                    <div id="myNav" class="overlay">
-                        <div class="overlay-content">
-                            <a href="homeTest.jsp">Home</a>
-                            <a href="about.html">About</a>
-                            <a href="blog.html">Blog</a>
-                            <a href="testimonial.html">Testimonial</a>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
+
+<!-- toolbar -->
+<jsp:include page="/views/toolbar.jsp" />
 
 
     <!-- slider section -->
@@ -339,14 +243,11 @@
                 </div>
                 <div class="detail-box">
                     <p>coupon 받아가라... font 적용 어떻게하냐....</p>
-                    <div class="btn-box">
-                        <a href="">
-                            쿠폰받기
-                        </a>
-                    </div>
-                    <%--<a href="">
-                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                    </a>--%>
+                </div>
+                <div class="btn-box">
+                    <a href="">
+                        coupon
+                    </a>
                 </div>
             </div>
         </div>
@@ -374,41 +275,26 @@
                 </div>
                 <div class="detail-box">
                     <p>Grow with F.FIN! <br/> Our technology and user base can help you boost sales and unlock new opportunities!</p>
-                    <div class="btn-box">
-                        <a href="">
-                            쿠폰받기
-                        </a>
-                    </div>
+
                     <%--<a href="">
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>--%>
+                </div>
+                <div class="btn-box">
+                    <a href="">
+                        Join us!
+                    </a>
                 </div>
             </div>
         </div>
 
     </div>
-    <br/><br/><br/><br/><br/><br/><br/><br/>
 </section>
-
 <!-- end select end-->
 
 
-
-
-<!-- footer section -->
-<footer class="footer_section">
-    <div class="container">
-
-        <p>
-            &copy; <span id="displayYear"></span> All Rights Reserved By
-            <a href="https://html.design/">Free Html Templates</a><br>
-            Distributed By: <a href="https://themewagon.com/">ThemeWagon</a>
-        </p>
-    </div>
-</footer>
-<!-- footer section -->
-
-</div>
+<!-- footer -->
+<jsp:include page="/views/footer.jsp" />
 
 <!-- jQery -->
 <script src="../resources/bootstrap/js/jquery-3.4.1.min.js"></script>
