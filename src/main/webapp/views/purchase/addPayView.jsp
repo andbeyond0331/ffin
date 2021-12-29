@@ -7,36 +7,32 @@
 <!doctype html>
 <html lang="ko">
 <meta charset="EUC-KR">
-<meta charset="utf-8">
+
 
 <head>
-
+    <jsp:include page="/views/toolbar.jsp" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
 <!-- Bootstrap Dropdown Hover CSS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 
-
-
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 <!--  ///////////////////////// CSS ////////////////////////// -->
-
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<!-- 제이쿼리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous" type="text/javascript"></script>
+<!-- 아임포트 -->
+<script src ="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javascript"></script>
 
 
 <style>
 
-    body {
-        padding-top: 50px;
-    }
+
 
 
     input[type="text"]#pointAmttwo{
@@ -66,76 +62,62 @@
         IMP.init('imp67651684'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
         var msg;
 
-        var price= $("input[name='price']").val()
-        var prnm = $("input[name='prodName']").val();
-        var total = 0;
-        var prodParam = [];
-        var stkcntParam = [];
-
-
-/*        $( "input[name='chklist']:checked" ).each(function(i){
-            var chk = $(this).val();
-            //alert($(this).parents('div').find("input[name='stockCount']").val())
-            var amount = $(this).parents('div').find("input[name='"+chk+"']").val()
-
-            var pr = $("input[name='price']").val()
-
-            prodParam.push($(this).val());
-            stkcntParam.push(amount);
-            price += pr * amount ;
-
-            total++;
-        });*/
-
+        var orderTotalPrice= $("input[name='orderTotalPrice']").val()
+        var orderTruckId = $("input[name='orderTruckId']").val();
         var payOption = $("select[name='payOption']").val();
         var payPrice =  $("input[name='payPrice']").val();
         var pointAmt =  $("input[name='pointAmt']").val();
         var couponDcPrice =  $("input[name='couponDcPrice']").val();
+        var orderNo = $("input[name='orderNo']").val();
 
 
 
 
         var postData = { "payOption" : payOption,
-            "payPrice" :payPrice,
-            "pointAmt" : pointAmt,
-            "couponDcPrice" : couponDcPrice,
-            "receiverPhone" : receiverPhone,
-            "divyAddr" : divyAddr,
-            "divyRequest" : divyRequest,
-            "divyDate" : divyDate,
-            "totalPrice" : price }
+            "orderTotalPrice" :orderTotalPrice,
+            "orderTruckId" : orderTruckId,
+            "orderNo"  :  orderNo}
+        alert(postData)
 
-
-        alert(paymentOption);
-        if(paymentOption=='1'){
+        alert(payOption);
+        if(payOption=='1'){
             IMP.request_pay({
                 pg : 'danal',
                 pay_method : 'phone',
                 merchant_uid : 'merchant_' + new Date().getTime(),
-                name : prnm+"외 "+total+"건",
-                amount : price,
-                buyer_email : 'flora@naver.com',
-                buyer_name : receiverName,
-                buyer_tel : receiverPhone,
-                buyer_addr : divyAddr,
-                buyer_postcode : '123-456',
-                //m_redirect_url : 'http://www.naver.com'
+                name : '주문명:결제테스트',
+                amount : orderTotalPrice,
+                buyer_tel : '010-2056-1658',
+                buyer_name : 'receiverName'
+
+
             }, function(rsp) {
                 if ( rsp.success ) {
+                    alert("결제 들어왔어")
+
                     //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
-                    jQuery.ajax({
-                        url: "/purchase/json/addPayView", //cross-domain error가 발생하지 않도록 주의해주세요
+                    $.ajax({
                         type: 'POST',
-                        dataType: 'json',
-                        data: postData
+                        dataType : 'json',
+                        url: "/purchase/json/addPayView", //cross-domain error가 발생하지 않도록 주의해주세요
+                        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+
+                        data : {
+                            "payOption" : payOption,
+                            "orderTotalPrice" :orderTotalPrice,
+                            "orderTruckId" : "truck07",
+                            "orderNo"  :  orderNo
+                        }
+
+
                     }).done(function(data) {
                         //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
                         if ( everythings_fine ) {
                             msg = '결제가 완료되었습니다.';
-                            msg += '\n고유ID : ' + rsp.imp_uid;
+                            msg += '\n고유ID : ' + rsp.name;
                             msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-                            msg += '\결제 금액 : ' + rsp.paid_amount;
-                            msg += '카드 승인번호 : ' + rsp.apply_num;
+                            msg += '결제 금액 : ' + rsp.amount;
+
 
                             alert(msg);
                         } else {
@@ -144,7 +126,7 @@
                         }
                     });
                     //성공시 이동할 페이지
-                    location.href="http://127.0.0.1:8080/purchase/getOrderUser";
+                    $("form").attr("method" , "POST").attr("action" , "/purchase/getOrderUser").submit();
                 } else {
                     msg = '결제에 실패하였습니다.';
                     msg += '에러내용 : ' + rsp.error_msg;
@@ -152,13 +134,13 @@
 
                     alert(msg);
                 }
-            });}else if(paymentOption=='2'){
+            });}else if(payOption=='2'){
             IMP.request_pay({
                 pg : 'kakaopay',
                 pay_method : 'card',
                 merchant_uid : 'merchant_' + new Date().getTime(),
-                name : prnm+"외 "+total+"건",
-                amount : price,
+                name : '치킨',
+                amount : 2000,
                 buyer_email : 'flora@naver.com',
                 buyer_name : receiverName,
                 buyer_tel : receiverPhone,
@@ -197,7 +179,7 @@
 
                     alert(msg);
                 }
-            });}else if(paymentOption=='3'){
+            });}else if(payOption=='3'){
             IMP.request_pay({
                 pg : 'danal',
                 pay_method : 'vbank',
@@ -252,14 +234,14 @@
 
     function fncAddPurchase() {
 
-        var amount = $("input[name='amount']").val();
+/*        var amount = $("input[name='amount']").val();
         var quantity = $("input[name='quantity']").val();
         var divyDate = $("input[name='divyDate']").val();
         var paymentOption = $("select[name='paymentOption']").val();
         var price = $("input[name='price']").val();
         var receiverName = $("input[name='receiverName']").val();
         var receiverPhone = $("input[name='receiverPhone']").val();
-        var divyRequest = $("input[name='divyRequest']").val();
+        var divyRequest = $("input[name='divyRequest']").val();*/
         alert(amount)
         alert(quantity)
   /*      if(quantity != null && quantity > amount ){
@@ -369,10 +351,11 @@
         var modal = $('#myModal');
 
 
-        modal.find('button.btn.btn-primary').on("click", function(){
+        modal.find('button.btn-primary').on("click", function(){
+            alert("ssa")
             count++;
 
-            realCouponDcPrice = modal.find('input[name=options]:checked').val();
+            realCouponDcPrice = modal.find('input[name=options]:checked').each().val();
 
             console.log(realOptionGroupName + " : realOptionGroupName");
 
@@ -388,7 +371,7 @@
 
             console.log("divElem :"+divElem);
 
-            $('div#here').append($(divElem));
+            $('#couponDcPrice').val(1000);
 
             // modal.modal('hide');
 
@@ -426,7 +409,7 @@
                             <tr>
                                 <th scope="row">${i}</th>
                                 <td><label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option${i}" autocomplete="off" checked> Active
+                                    <input type="radio" name="options" id="option${i}" autocomplete="off" value="${couponLis.couponDcPrice}" checked> Active
                                 </label></td>
                                 <td>${couponLis.couponDcPrice}</td>
                                 <td>${couponLis.couponType}</td>
@@ -466,11 +449,12 @@
 
 
                         <div class="row">
-                        <label for="couponPrice" class="col-sm-offset-1 col-sm-3 control-label">할인쿠폰</label>
+                        <label for="couponDcPrice" class="col-sm-offset-1 col-sm-3 control-label">할인쿠폰</label>
                         <div class="col-sm-3">
                             <div class="well well-sm">${coupon.couponDcPrice}</div>
-                            <input type="text" class="form-control" id="couponPrice"
-                                   name="couponPrice" placeholder="쿠폰을 적용하세요" disabled/>
+                            <input type="hidden" name="orderNo" value="${purchase.orderNo}">
+                            <input type="text" class="form-control" id="couponDcPrice"
+                                   name="couponDcPrice" placeholder="쿠폰을 적용하세요" value="" >
                         </div>
                         <div class="col-sm-1">
                            원
@@ -493,7 +477,7 @@
                             </div>
                             <div class="col-sm-4">
 
-                                <input type="text"  placeholder="o" id="pointAmt">
+                                <input type="text"  placeholder="o" id="pointAmt" naem="pointAmt">
                                 <input type="text"  id="pointAmttwo" value="원" disabled/>
 
 
@@ -658,18 +642,7 @@
         <tr>
             <td height="1" colspan="3" bgcolor="D6D6D6"></td>
         </tr>
-        <tr>
-            <td width="300" class="ct_write">상품번호 <img>
-            </td>
-            <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01" width="299">
-                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td width="105"><%--${product.prodNo}--%></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
+
         <tr>
             <td height="1" colspan="3" bgcolor="D6D6D6"></td>
         </tr>
@@ -677,8 +650,8 @@
             <td width="104" class="ct_write">상품명
             </td>
             <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01"><%--${product.prodName}--%><input type="hidden"
-                                                             name="prodNo" value="<%--${product.prodNo}--%>" /></td>
+            <td class="ct_write01"><%--${product.prodName}--%>
+                <input type="hidden" name="prodNo" value="<%--${product.prodNo}--%>" /></td>
 
 
         </tr>
@@ -703,22 +676,15 @@
             <td class="ct_write01"><%--${product.amount}--%><input type="hidden"
                                                            name="amount" value="<%--${product.amount}--%>" /></td>
         </tr>
+
+
         <tr>
             <td height="1" colspan="3" bgcolor="D6D6D6"></td>
         </tr>
         <tr>
-            <td width="104" class="ct_write">제조일자</td>
+            <td width="104" class="ct_write">결제금액</td>
             <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01"><%--${product.manuDate}--%><input type="hidden"
-                                                             name="manuDate" value="<%--${product.manuDate}--%>" /></td>
-        </tr>
-        <tr>
-            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-        </tr>
-        <tr>
-            <td width="104" class="ct_write">가격</td>
-            <td bgcolor="D6D6D6" width="1"></td>
-            <input type="hidden" name="price" value="${purchase.orderTotalPrice}"/>
+            <input type="hidden" name="orderTotalPrice" value="${purchase.orderTotalPrice}"/>
             <td class="ct_write01">${purchase.orderTotalPrice}<input type="hidden"
                                                           name="price" value="${purchase.orderTotalPrice}" /></td>
         </tr>
@@ -750,7 +716,7 @@
         <tr>
             <td width="104" class="ct_write">구매방법</td>
             <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01"><select name="paymentOption"
+            <td class="ct_write01"><select name="payOption"
                                            class="ct_input_g" style="width: 100px; height: 19px"
                                            maxLength="20">
                 <option value="1" selected="selected">현금구매</option>
@@ -846,6 +812,6 @@
 
 </form>
 
-
+<jsp:include page="/views/footer.jsp" />
 </body>
 </html>

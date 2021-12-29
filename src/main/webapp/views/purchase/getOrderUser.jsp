@@ -4,13 +4,14 @@
 
 <!doctype html>
 <html lang="ko">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="EUC-KR">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<head>
+<jsp:include page="/views/toolbar.jsp" />
+<!-- Required meta tags -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <style>
         #map_ma {width:100%; height:400px; clear:both; border:solid 1px red;}
@@ -19,9 +20,11 @@
 </head>
 <body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBmxlLXS2GGFBgeQTt6n4YPhxU6NKu4Kx8" ></script>
 
 <script type="text/javascript">
-   /* $(document).ready(function() {
+    $(document).ready(function() {
         var myLatlng = new google.maps.LatLng(35.837143,128.558612); // 위치값 위도 경도
      var Y_point = 35.837143; // Y 좌표
      var X_point = 128.558612; // X 좌표
@@ -55,67 +58,69 @@
      google.maps.event.addListener(marker, 'click', function() {
          infowindow.open(map, marker);
      });
-    });*/
+    });
 </script>
+<main>
+    <div class="container py-4">
+        <header class="pb-4 mb-5 border-bottom">
+            <span class="fs-1">현재주문정보</span>
 
-<div class="container">
+        </header>
 
-    <!-- 다단레이아웃  Start /////////////////////////////////////-->
-    <div class="row">
+        <div class="row align-items-md-stretch">
+            <div class="col-md-6">
+                <div class="h-100 p-5 bg-light border rounded-3">
+                    <table class="table table-hover table-striped" >
 
-        <!--  Menu 구성 Start /////////////////////////////////////-->
-        <div class="col-md-3">
-            <table class="table table-hover table-striped" >
+                        <thead>
+                        <tr>
+                            <th align="center">No</th>
+                            <th align="left" >회원 ID</th>
+                            <th align="left">회원명</th>
+                            <th align="left">이메일</th>
+                            <th align="left">간략정보</th>
+                        </tr>
+                        </thead>
 
-                <thead>
-                <tr>
-                    <th align="center">No</th>
-                    <th align="left" >회원 ID</th>
-                    <th align="left">회원명</th>
-                    <th align="left">이메일</th>
-                    <th align="left">간략정보</th>
-                </tr>
-                </thead>
+                        <tbody>
 
-                <tbody>
+                        <c:set var="i" value="0" />
+                        <c:forEach var="cart" items="${map.get('list')}">
+                            <c:set var="i" value="${ i+1 }" />
+                            <tr>
+                                <td align="center">${ i }</td>
+                                <td align="left"  title="Click : 회원정보 확인">${cart.odMenuName}</td>
+                                <td align="left">${cart.odOptionGroupName}</td>
+                                <td align="left">${cart.odOptionName}</td>
+                                <td align="left">
+                                    <i class="glyphicon glyphicon-ok" id= "${cart.odMenuQty}"></i>
+                                    <input type="hidden" value="${cart.odMenuPrice}">
+                                </td>
+                            </tr>
+                        </c:forEach>
 
-                <c:set var="i" value="0" />
-                <c:forEach var="cart" items="${map.get('list')}">
-                    <c:set var="i" value="${ i+1 }" />
-                    <tr>
-                        <td align="center">${ i }</td>
-                        <td align="left"  title="Click : 회원정보 확인">${cart.odMenuName}</td>
-                        <td align="left">${cart.odOptionGroupName}</td>
-                        <td align="left">${cart.odOptionName}</td>
-                        <td align="left">
-                            <i class="glyphicon glyphicon-ok" id= "${cart.odMenuQty}"></i>
-                            <input type="hidden" value="${cart.odMenuPrice}">
-                        </td>
-                    </tr>
-                </c:forEach>
+                        </tbody>
 
-                </tbody>
-
-            </table>
-
-
-        </div>
-
-        <!--  Menu 구성 end /////////////////////////////////////-->
-
-        <!--  Main start /////////////////////////////////////-->
-        <div class="col-md-9">
-            <div class="jumbotron ">
+                    </table>
+                    <button type="button" class="btn btn-secondary">결제취소</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="h-100 p-5 bg-light border rounded-3">
+                    <h2>푸드트럭위치</h2>
+                    <div id="map_ma"></div>
 
 
-                <div id="map_ma"></div>
-
+                </div>
             </div>
         </div>
 
+        <footer class="pt-3 mt-4 text-muted border-top">
+            &copy; 2021
+        </footer>
     </div>
-</div>
-
+</main>
+<jsp:include page="/views/footer.jsp" />
 </body>
 </html>
 
