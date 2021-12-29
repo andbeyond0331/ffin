@@ -10,6 +10,7 @@ body {
   overflow-x: hidden;
   background-image: url(../images/body-bg.jpg);
   background-size: cover;
+  height: 100%;
 }
 
 .layout_padding {
@@ -675,6 +676,7 @@ a:focus {
 
 .client_section {
   text-align: center;
+  min-height: 470px;
 }
 
 .client_section .detail-box {
@@ -702,7 +704,7 @@ a:focus {
 
 .client_section .detail-box i.fa-quote-left {
   font-size: 24px;
-  color: #4855fe;
+  color: #f17228;
 }
 
 .client_section .carousel-control-next {
@@ -724,16 +726,6 @@ a:focus {
 .client_section .carousel-control-next:hover {
   background-color: #4855fe;
   color: #ffffff;
-}
-
-.footer_container {
-  background-image: url(../images/cta-one-bg.png);
-  background-size: 100%;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: top;
-  /*padding-top: 245px;*/
-  margin-top: -175px;
 }
 
 .info_section {
@@ -809,29 +801,88 @@ a:focus {
   color: #f17228;
 }
 
- footer section
+.footer_container {
+  background-image: url(../images/cta-one-bg.png);
+  /*background-size: 100%;*/
+  background-repeat: no-repeat;
+  background-position: top;
+  background-position-x: 100%;
+  padding-top: 245px;
+  margin-top: -175px;
+  bottom:0;
+}
+
+
 .footer_section {
 /*  background-image: url(../images/cta-one-bg.png);*/
   background-size: 100%;
-  background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: top;
   padding-top: 245px;
   margin-top: -175px;
-   position: absolute;
-   bottom: 0;
+  background-position-x: 100%;
+  bottom:0;
 }
 
 .footer_section p {
   color: #ffba49;
   padding-bottom: 100px;
   margin: 0;
-/*  top: 50%;
-  left: 50%;*/
+  top: 50%;
+  left: 50%;
   text-align: center;
 }
 
 .footer_section p a {
   color: inherit;
 }
+
+.data-input-box{
+  margin-top: 20px;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.auth-phone {
+  height: 35px;
+  font-size: 15px;
+  margin-top: 5px;
+  float: right;
+}
+
+.addrApi {
+  height: 35px;
+  font-size: 15px;
+  margin-top: 5px;
+  float: right;
+}
+
+.auth-email {
+  height: 35px;
+  font-size: 15px;
+  margin-top: 5px;
+  float: right;
+}
+
+.client_section .btn-box a {
+  display: inline-block;
+  padding: 10px 45px;
+  background-color: #ffe537;
+  color: #000000;
+  border-radius: 45px;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  border: 1px solid #ffe537;
+  outline: none;
+}
+
+.client_section .btn-box a:hover {
+  background-color: transparent;
+  color: #ffe537;
+}
+
+
+
+
+
 /*# sourceMappingURL=style.css.map */

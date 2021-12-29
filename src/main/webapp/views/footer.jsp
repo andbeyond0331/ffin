@@ -56,7 +56,7 @@
 
 <br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
-<div class="hero_area">
+<div class="footer_div">
 
     <div class="footer_container">
         <!-- info section -->

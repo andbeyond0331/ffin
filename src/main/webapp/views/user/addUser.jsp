@@ -1,59 +1,93 @@
-<%@ page contentType="text/html; charset=euc-kr" %>
-    
-    
-    
-<!DOCTYPE html>
-
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ page pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html lang="ko">
 
+
 <head>
-	<meta charset="EUC-KR">
-	
-	<title>È¸¿ø°¡ÀÔ</title>
+	<!-- Basic -->
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<!-- Mobile Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<!-- Site Metas -->
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
 
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>F.FIN | FOODTRUCK FINDER</title>
 
-	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
- 		body {
-            padding-top : 50px;
-        }
-        
-        div h3, div h5 {text-align: center;}
-        
-        label {
-        	color : #6593A6;
-        }
+	<!-- bootstrap core css -->
+	<link rel="stylesheet" type="text/css" href="../../resources/bootstrap/css/bootstrap.css" />
 
-		.correct{
-			color : greenyellow;
-		}
-		.incorrect{
-			color: #d00000;
-		}
+	<!-- fonts style -->
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
 
-        
-     </style>
+	<!-- font awesome style -->
+	<link href="../../resources/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
+	<!-- nice select -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+	<!-- slidck slider -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" integrity="sha256-UK1EiopXIL+KVhfbFa8xrmAWPeBjMVdvYMYkTAEv/HI=" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css.map" integrity="undefined" crossorigin="anonymous" />
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<!-- Custom styles for this template -->
+	<link href="../../resources/bootstrap/css/style.css" rel="stylesheet" />
+	<!-- responsive style -->
+	<link href="../../resources/bootstrap/css/responsive.css" rel="stylesheet" />
 
-	<%--ÁÖ¼ÒAPI--%>
+	<!--    Favicons-->
+	<link rel="apple-touch-icon" sizes="180x180" href="../../resources/bootstrap/assets/favicons/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="../../resources/bootstrap/assets/favicons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="../../resources/bootstrap/assets/favicons/favicon-16x16.png">
+	<link rel="shortcut icon" type="image/x-icon" href="../../resources/bootstrap/assets/favicons/favicon.ico">
+	<link rel="manifest" href="../../resources/bootstrap/assets/favicons/manifest.json">
+	<meta name="msapplication-TileImage" content="../../resources/bootstrap/assets/favicons/mstile-150x150.png">
+	<meta name="theme-color" content="#ffffff">
+
+	<!-- jQery -->
+	<script src="../../resources/bootstrap/js/jquery-3.4.1.min.js"></script>
+	<!-- bootstrap js -->
+	<script src="../../resources/bootstrap/js/bootstrap.js"></script>
+	<!-- slick  slider -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+	<!-- nice select -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
+	<!-- custom js -->
+	<script src="../../resources/bootstrap/js/custom.js"></script>
+
+	<%--ì£¼ì†ŒAPI--%>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 
 	<script type="text/javascript">
 
+		/* í•„ìˆ˜ì…ë ¥ì‚¬í•­ check */
+		$(function () {
+			$("a[href='#' ]").on("click" , function() {
+
+				var userId = $("input[name='userId']").val();
+				var userPassword = $("input[name='userPassword']").val();
+				var userName = $("input[name='userName']").val();
+				var userPhone = $("input[name='userPhone']").val();
+
+				if(userId == null || id.length < 1 ){
+					$("input[name='userId']").focus();
+				}
+
+				$("form").attr("method" , "POST").attr("action" , "/user/addUser").submit();
+			});
+		});
+
+
+		/* ì´ë©”ì¼ ì¸ì¦ */
 		$( function() {
 
 			var code = "";
 ``
-			/* ÀÎÁõ¹øÈ£ ÀÌ¸ŞÀÏ Àü¼Û */
-			$(".email-auth").click(function () {
+			/* ì¸ì¦ë²ˆí˜¸ ì´ë©”ì¼ ì „ì†¡ */
+			$(".auth-email").click(function () {
 
 				var inputEmail = $("#userEmail").val();
 				var authInputBox = $(".mail-check-input");
@@ -73,13 +107,12 @@
 				});
 			});
 
-			/* email ÀÎÁõ¹øÈ£ ºñ±³ */
+			/* email ì¸ì¦ë²ˆí˜¸ ë¹„êµ */
 			$(".mail-check-input").on("keyup",function (){
 
 				var inputCode = $(".mail-check-input").val();
 				var checkResult = $("#mail-check-input-box-warn");
-				/*console.log("inputCode"+inputCode);
-				console.log("code"+code);*/
+
 				if(inputCode.length >= 6){
 					if(inputCode == code){
 						checkResult.html("OK");
@@ -101,7 +134,7 @@
 			// 	var userPhone = $("#userPhone").val();
 			// 	$("form").attr("method","POST").attr("action", "/auth/sendSMS").submit();
 			//
-			// 	alert("ÀÎÁõ¹øÈ£°¡ Àü¼ÛµÇ¾ú½À´Ï´Ù.");
+			// 	alert("ì¸ì¦ë²ˆí˜¸ê°€ ì „ì†¡ë˜ì—ˆìŠµë‹ˆë‹¤.");
 			// });
 
 		});
@@ -114,34 +147,34 @@
 					alert(data);
 					alert(data.roadAddress);
 
-					// °¢ ÁÖ¼ÒÀÇ ³ëÃâ ±ÔÄ¢¿¡ µû¶ó ÁÖ¼Ò¸¦ Á¶ÇÕÇÑ´Ù.
-					// ³»·Á¿À´Â º¯¼ö°¡ °ªÀÌ ¾ø´Â °æ¿ì¿£ °ø¹é('')°ªÀ» °¡Áö¹Ç·Î, ÀÌ¸¦ Âü°íÇÏ¿© ºĞ±â ÇÑ´Ù.
-					var addr = ''; // ÁÖ¼Ò º¯¼ö
-					var extraAddr = ''; // Âü°íÇ×¸ñ º¯¼ö
+					// ê° ì£¼ì†Œì˜ ë…¸ì¶œ ê·œì¹™ì— ë”°ë¼ ì£¼ì†Œë¥¼ ì¡°í•©í•œë‹¤.
+					// ë‚´ë ¤ì˜¤ëŠ” ë³€ìˆ˜ê°€ ê°’ì´ ì—†ëŠ” ê²½ìš°ì—” ê³µë°±('')ê°’ì„ ê°€ì§€ë¯€ë¡œ, ì´ë¥¼ ì°¸ê³ í•˜ì—¬ ë¶„ê¸° í•œë‹¤.
+					var addr = ''; // ì£¼ì†Œ ë³€ìˆ˜
+					var extraAddr = ''; // ì°¸ê³ í•­ëª© ë³€ìˆ˜
 
-					//»ç¿ëÀÚ°¡ ¼±ÅÃÇÑ ÁÖ¼Ò Å¸ÀÔ¿¡ µû¶ó ÇØ´ç ÁÖ¼Ò °ªÀ» °¡Á®¿Â´Ù.
-					if (data.userSelectedType === 'R') { // »ç¿ëÀÚ°¡ µµ·Î¸í ÁÖ¼Ò¸¦ ¼±ÅÃÇßÀ» °æ¿ì
+					//ì‚¬ìš©ìê°€ ì„ íƒí•œ ì£¼ì†Œ íƒ€ì…ì— ë”°ë¼ í•´ë‹¹ ì£¼ì†Œ ê°’ì„ ê°€ì ¸ì˜¨ë‹¤.
+					if (data.userSelectedType === 'R') { // ì‚¬ìš©ìê°€ ë„ë¡œëª… ì£¼ì†Œë¥¼ ì„ íƒí–ˆì„ ê²½ìš°
 						addr = data.roadAddress;
-					} else { // »ç¿ëÀÚ°¡ Áö¹ø ÁÖ¼Ò¸¦ ¼±ÅÃÇßÀ» °æ¿ì(J)
+					} else { // ì‚¬ìš©ìê°€ ì§€ë²ˆ ì£¼ì†Œë¥¼ ì„ íƒí–ˆì„ ê²½ìš°(J)
 						addr = data.jibunAddress;
 					}
 
-					// »ç¿ëÀÚ°¡ ¼±ÅÃÇÑ ÁÖ¼Ò°¡ µµ·Î¸í Å¸ÀÔÀÏ¶§ Âü°íÇ×¸ñÀ» Á¶ÇÕÇÑ´Ù.
+					// ì‚¬ìš©ìê°€ ì„ íƒí•œ ì£¼ì†Œê°€ ë„ë¡œëª… íƒ€ì…ì¼ë•Œ ì°¸ê³ í•­ëª©ì„ ì¡°í•©í•œë‹¤.
 					if(data.userSelectedType === 'R'){
-						// ¹ıÁ¤µ¿¸íÀÌ ÀÖÀ» °æ¿ì Ãß°¡ÇÑ´Ù. (¹ıÁ¤¸®´Â Á¦¿Ü)
-						// ¹ıÁ¤µ¿ÀÇ °æ¿ì ¸¶Áö¸· ¹®ÀÚ°¡ "µ¿/·Î/°¡"·Î ³¡³­´Ù.
-						if(data.bname !== '' && /[µ¿|·Î|°¡]$/g.test(data.bname)){
+						// ë²•ì •ë™ëª…ì´ ìˆì„ ê²½ìš° ì¶”ê°€í•œë‹¤. (ë²•ì •ë¦¬ëŠ” ì œì™¸)
+						// ë²•ì •ë™ì˜ ê²½ìš° ë§ˆì§€ë§‰ ë¬¸ìê°€ "ë™/ë¡œ/ê°€"ë¡œ ëë‚œë‹¤.
+						if(data.bname !== '' && /[ë™|ë¡œ|ê°€]$/g.test(data.bname)){
 							extraAddr += data.bname;
 						}
-						// °Ç¹°¸íÀÌ ÀÖ°í, °øµ¿ÁÖÅÃÀÏ °æ¿ì Ãß°¡ÇÑ´Ù.
+						// ê±´ë¬¼ëª…ì´ ìˆê³ , ê³µë™ì£¼íƒì¼ ê²½ìš° ì¶”ê°€í•œë‹¤.
 						if(data.buildingName !== '' && data.apartment === 'Y'){
 							extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
 						}
-						// Ç¥½ÃÇÒ Âü°íÇ×¸ñÀÌ ÀÖÀ» °æ¿ì, °ıÈ£±îÁö Ãß°¡ÇÑ ÃÖÁ¾ ¹®ÀÚ¿­À» ¸¸µç´Ù.
+						// í‘œì‹œí•  ì°¸ê³ í•­ëª©ì´ ìˆì„ ê²½ìš°, ê´„í˜¸ê¹Œì§€ ì¶”ê°€í•œ ìµœì¢… ë¬¸ìì—´ì„ ë§Œë“ ë‹¤.
 						if(extraAddr !== ''){
 							extraAddr = ' (' + extraAddr + ')';
 						}
-						// Á¶ÇÕµÈ Âü°íÇ×¸ñÀ» ÇØ´ç ÇÊµå¿¡ ³Ö´Â´Ù.
+						// ì¡°í•©ëœ ì°¸ê³ í•­ëª©ì„ í•´ë‹¹ í•„ë“œì— ë„£ëŠ”ë‹¤.
 						// document.getElementById("sample6_extraAddress").value = extraAddr;
 						addr += extraAddr;
 					} else {
@@ -149,11 +182,11 @@
 						addr = '';
 					}
 
-					// ¿ìÆí¹øÈ£¿Í ÁÖ¼Ò Á¤º¸¸¦ ÇØ´ç ÇÊµå¿¡ ³Ö´Â´Ù.
+					// ìš°í¸ë²ˆí˜¸ì™€ ì£¼ì†Œ ì •ë³´ë¥¼ í•´ë‹¹ í•„ë“œì— ë„£ëŠ”ë‹¤.
 					// document.getElementById('sample6_postcode').value = data.zonecode;
 					// document.getElementById("sample6_address").value = addr;
 					//$(".userAddr").val(data.zonecode);
-					// Ä¿¼­¸¦ »ó¼¼ÁÖ¼Ò ÇÊµå·Î ÀÌµ¿ÇÑ´Ù.
+					// ì»¤ì„œë¥¼ ìƒì„¸ì£¼ì†Œ í•„ë“œë¡œ ì´ë™í•œë‹¤.
 					// document.getElementById("sample6_detailAddress").focus();
 					$("#userAddr").val(addr);
 					$("#userAddrDetail").attr("readonly", false);
@@ -162,122 +195,95 @@
 			}).open();
 		}
 
-
-
-
-
 </script>
 </head>
 
-<body>
+<body id="page-top">
 
+<jsp:include page="/views/toolbar.jsp" />
 
- 	<div class="container">
-	
-		<div class="page-header" >
-	       <h3 class="text-info">È¸ ¿ø °¡ ÀÔ</h3>
-	       <h5 class="text-muted">È¸¿øÁ¤º¸¸¦ <strong class="text-danger">Á¤È®ÇÏ°Ô ÀÔ·Â</strong>ÇØ ÁÖ¼¼¿ä.</h5>
-	    </div>
-		
-		<form class="form-horizontal">
+<!-- client section -->
 
-			<div class="form-group">
-			    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">ID</label>
-			    <div class="col-sm-4">
-			      <input type="text" class="form-control" id="userId" name="userId" placeholder="ID">
-			    </div>
-			  </div>
-			
-			<hr/>
-			
-			<div class="form-group">
-			    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">Password</label>
-			    <div class="col-sm-4">
-			      <input type="text" class="form-control" id="userPassword" name="userPassword" placeholder="Password">
-			    </div>
-			  </div>
-			
-			<hr/>
-			
-			<div class="form-group">
-			    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸§</label>
-			    <div class="col-sm-4">
-			      <input type="text" class="form-control" id="userName" name="userName" placeholder="ÀÌ¸§">
-			    </div>
-			  </div>
+<section class="client_section layout_padding">
+	<div class="container">
+		<div class="col-md-11 col-lg-10 mx-auto">
+			<div id="customCarousel1" class="carousel slide">
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<div class="detail-box">
+							<i class="fa fa-quote-left" aria-hidden="true"></i>
+							<h4 style="margin-top: 10px;">
+								íšŒì›ê°€ì…
+							</h4>
+						</div>
+						<form class="row justify-content-center">
 
-			<hr/>
-            <div class="form-group">
-                <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">Phone</label>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" id="userPhone" name="userAddr" placeholder="ÇÚµåÆù¹øÈ£">
-                </div>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-warning sms-auth" >ÀÎÁõ¹øÈ£</button>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="userName" class="col-sm-offset-1 col-sm-3 control-label"></label>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" id="userPhoneAuth" name="userPhoneAuth" placeholder="ÀÎÁõ¹øÈ£" disabled required>
-                    <input type="hidden" name="text" id="authNum"><%--ÀÎÁõ¹øÈ£ hiddenÀ¸·Î Àü¼Û--%>
-                </div>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-group-xs" id="userPhoneAuthNum">ÀÎ Áõ</button>
-                    <br/>
-                    <span class="point successPhoneChk">ÈŞ´ëÆù ¹øÈ£¸¦ ¸ÕÀú ÀÔ·ÂÇØÁÖ¼¼¿ä.</span>
-                </div>
-            </div>
-			<hr/>
+							<div class="col-md-6 data-input-box">
 
-			<div class="form-group">
-				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label">ÁÖ¼Ò</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="userAddr" name="userAddr" placeholder="ÁÖ¼Ò°Ë»ö" readonly="readonly">
-				</div>
-				<div class="col-sm-3">
-					<button type="button" class="btn btn-success" onclick="addrApi()">ÁÖ¼Ò°Ë»ö</button>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label"></label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="userAddrDetail" name="userAddrDetail" placeholder="»ó¼¼ÁÖ¼Ò¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä" readonly="readonly">				</div>
-			</div>
+								<div class="data-input-box">
+									<label for="userId" class="form-label label-name">ID</label>
+									<input type="text" class="form-control" id="userId" placeholder="ì•„ì´ë””">
+								</div>
 
-			<hr/>
+								<div class="data-input-box">
+									<label for="userPassword" class="form-label label-name">Password</label>
+									<input type="password" class="form-control" id="userPassword" placeholder="ë¹„ë°€ë²ˆí˜¸">
+									<input type="password" class="form-control" id="userPasswordChk" placeholder="ë¹„ë°€ë²ˆí˜¸ í™•ì¸" disabled="disabled" style="margin-top: 10px">
+								</div>
 
-			<div class="form-group">
-				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label">Email</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="Email" >
-				</div>
-				<div class="col-sm-3">
-					<button type="button" class="btn btn-info email-auth">emailÀÎÁõ</button>
+								<div class="data-input-box">
+									<label for="userdName" class="form-label label-name">ì´ë¦„</label>
+									<input type="text" class="form-control" id="userdName">
+								</div>
+
+								<div class="data-input-box">
+									<label for="userBirth" class="form-label label-name">ìƒë…„ì›”ì¼</label>
+									<input type="text" class="form-control" id="userBirth">
+									<%--<span style="font-size: 10pt;">ì—° 1íšŒ ìƒì¼ ì¶•í•˜ ì¿ í°ì´ ë°œê¸‰ë©ë‹ˆë‹¤.</span>--%>
+									<div id="birthHelp" class="form-text" style="font-size: 10pt;">ì—° 1íšŒ ìƒì¼ ì¶•í•˜ ì¿ í°ì´ ë°œê¸‰ë©ë‹ˆë‹¤.</div>
+								</div>
+
+								<div class="data-input-box">
+									<label for="userPhone" class="form-label label-name">Phone</label>
+									<input type="text" class="form-control" id="userPhone" placeholder="ì „í™”ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.">
+									<%--<span style="font-size: 10pt;">ì¸ì¦ë²ˆí˜¸ë¥¼ ìš”ì²­í•˜ì„¸ìš”.</span>--%>
+									<div id="phoneHelp" class="form-text" style="font-size: 10pt;">ì¸ì¦ë²ˆí˜¸ë¥¼ ìš”ì²­í•˜ì„¸ìš”.</div>
+									<button type="button" class="btn btn-outline-warning auth-phone" >ì¸ì¦ë²ˆí˜¸ ìš”ì²­</button>
+									<input type="authPhone" class="form-control" id="authPhone" placeholder="ì¸ì¦ë²ˆí˜¸ í™•ì¸" disabled="disabled" style="margin-top: 25px">
+								</div>
+
+								<div class="data-input-box">
+									<label for="userAddr" class="form-label label-name">ì£¼ì†Œ</label>
+									<input type="text" class="form-control" id="userAddr" placeholder="ì£¼ì†Œ ê²€ìƒ‰" style="width: 80%;">
+									<button type="button" class="btn btn-outline-warning addrApi" onclick="addrApi()">ê²€ìƒ‰</button>
+									<input type="text" class="form-control" id="userAddrDetail" placeholder="ìƒì„¸ì£¼ì†Œ" style="margin-top: 25px">
+								</div>
+
+								<div class="data-input-box">
+									<label for="userEmail" class="form-label label-name">Email</label>
+									<input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="ì´ë©”ì¼ì„ ì…ë ¥í•˜ì„¸ìš”.">
+									<%--<span style="font-size: 10pt;">ì¸ì¦ë²ˆí˜¸ë¥¼ ìš”ì²­í•˜ì„¸ìš”.</span>--%>
+									<div id="emailHelp" class="form-text" style="font-size: 10pt;">ì¸ì¦ë²ˆí˜¸ë¥¼ ìš”ì²­í•˜ì„¸ìš”.</div>
+									<button type="button" class="btn btn-outline-warning auth-email" >ì¸ì¦ë²ˆí˜¸ ìš”ì²­</button>
+									<input type="authEmail" class="form-control" id="authEmail" placeholder="ì¸ì¦ë²ˆí˜¸ í™•ì¸" disabled="disabled" style="margin-top: 25px">
+								</div>
+
+							</div>
+						</form>
+
+						<div class="btn-box">
+							<a href="#">
+								ê°€ì…í•˜ê¸°
+							</a>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="form-group mail-check-wrap">
-				<label for="userName" class="col-sm-offset-1 col-sm-3 control-label"></label>
-				<div class="col-sm-4 mail-check-input-box" id="mail-check-input-box-fail">
-					<input type="text" class="form-control mail-check-input" id="userEmailAuth" name="userEmailAuth" placeholder="ÀÎÁõ¹øÈ£" disabled="disabled">
-					<span id="mail-check-input-box-warn"></span>
-					<div class="clearfix"></div>
-				</div>
-			</div>
-
-
-			
-			<hr/>
-
-
- 		<div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >°¡&nbsp;ÀÔ</button>
-			  <a class="btn btn-primary btn" href="#" role="button">Ãë&nbsp;¼Ò</a>
-		    </div>
 		</div>
-		  
-	</form>
 	</div>
+</section>
+
+<jsp:include page="/views/footer.jsp" />
+
 </body>
 </html>
