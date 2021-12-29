@@ -4,21 +4,22 @@
 
 
 
-<html>
-<head>
+<!doctype html>
+<html lang="ko">
 <meta charset="EUC-KR">
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8">
 
-    <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+<head>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 </head>
 <body>
 <!-- Bootstrap Dropdown Hover CSS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 
 
@@ -30,12 +31,7 @@
 
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-   <%-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-   --%> <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
 <style>
 
     body {
@@ -77,7 +73,7 @@
         var stkcntParam = [];
 
 
-        $( "input[name='chklist']:checked" ).each(function(i){
+/*        $( "input[name='chklist']:checked" ).each(function(i){
             var chk = $(this).val();
             //alert($(this).parents('div').find("input[name='stockCount']").val())
             var amount = $(this).parents('div').find("input[name='"+chk+"']").val()
@@ -89,21 +85,20 @@
             price += pr * amount ;
 
             total++;
-        });
+        });*/
 
-        var paymentOption = $("select[name='paymentOption']").val();
-        var receiverName =  $("input[name='receiverName']").val();
-        var receiverPhone =  $("input[name='receiverPhone']").val();
-        var divyAddr =  $("input[name='divyAddr']").val();
-        var divyRequest =  $("input[name='divyRequest']").val();
-        var divyDate =  $("input[name='divyDate']").val();
+        var payOption = $("select[name='payOption']").val();
+        var payPrice =  $("input[name='payPrice']").val();
+        var pointAmt =  $("input[name='pointAmt']").val();
+        var couponDcPrice =  $("input[name='couponDcPrice']").val();
 
 
 
-        var postData = { "prodParam" : prodParam,
-            "stkcntParam" :stkcntParam,
-            "paymentOption" : paymentOption,
-            "receiverName" : receiverName,
+
+        var postData = { "payOption" : payOption,
+            "payPrice" :payPrice,
+            "pointAmt" : pointAmt,
+            "couponDcPrice" : couponDcPrice,
             "receiverPhone" : receiverPhone,
             "divyAddr" : divyAddr,
             "divyRequest" : divyRequest,
@@ -129,7 +124,7 @@
                 if ( rsp.success ) {
                     //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
                     jQuery.ajax({
-                        url: "/purchase/json/addPurchase", //cross-domain error가 발생하지 않도록 주의해주세요
+                        url: "/purchase/json/addPayView", //cross-domain error가 발생하지 않도록 주의해주세요
                         type: 'POST',
                         dataType: 'json',
                         data: postData
@@ -174,7 +169,7 @@
                 if ( rsp.success ) {
                     //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
                     jQuery.ajax({
-                        url: "/purchase/json/addPurchase", //cross-domain error가 발생하지 않도록 주의해주세요
+                        url: "/purchase/json/addPayView", //cross-domain error가 발생하지 않도록 주의해주세요
                         type: 'POST',
                         dataType: 'json',
                         data: postData
@@ -219,7 +214,7 @@
                 if ( rsp.success ) {
                     //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
                     jQuery.ajax({
-                        url: "/purchase/json/addPurchase", //cross-domain error가 발생하지 않도록 주의해주세요
+                        url: "/purchase/json/addPayView", //cross-domain error가 발생하지 않도록 주의해주세요
                         type: 'POST',
                         dataType: 'json',
                         data: postData
@@ -407,13 +402,13 @@
 <form name="addPurchase">
     <!-- Modal -->
     <%--Modal 작은칸--%>
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
 
                     <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <table class="table">
@@ -441,7 +436,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">쿠폰 적용</button>
                 </div>
             </div>
@@ -449,12 +444,12 @@
     </div>
 
 
-    <div class="container-fluid">
-        <div class="row">
+    <div class="container overflow-hidden">
+        <div class="row gx-5">
 
 
             <div class="col">
-                <div class="jumbotron ">
+
                     <div class="container">
                         <div class="row">
                         <div class="col-sm-12">
@@ -482,7 +477,7 @@
                         </div>
                         <div class="col-sm-3">
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#myModal">
+                            <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">
                                 쿠폰적용
                            </button>
                         </div>
@@ -526,7 +521,39 @@
                     <h3>결제방법</h3>
                             </div>
                         </div>
-                    <div class="row">
+                        <div class="container">
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <div class="p-3 border bg-light">
+                                        <button type="button" class="btn btn-secondary btn-lg btn-block">
+                                            카카오톡<
+                                    </button>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="p-3 border bg-light">
+                                        <button type="button" class="btn btn-secondary btn-lg btn-block">
+                                            신용카드
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="p-3 border bg-light">
+                                        <button type="button" class="btn btn-secondary btn-lg btn-block">
+                                            휴대폰결제
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="p-3 border bg-light">
+                                        <button type="button" class="btn btn-secondary btn-lg btn-block">
+                                        무통장입금
+                                    </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+<%--                    <div class="row">
                         <div class="col-sm-5">
                             <button type="button" class="btn btn-secondary btn-lg btn-block">
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -556,7 +583,7 @@
                             </button>
                         </div>
                     </div>
-                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
                             <label class="btn btn-secondary active">
                                 <input type="radio" name="options" id="option1" autocomplete="off" checked> Active
                             </label>
@@ -567,7 +594,10 @@
                                 <input type="radio" name="options" id="option3" autocomplete="off"> Radio
                             </label>
                         </div>
-                </div>
+
+                    --%>
+
+
             </div>
         </div>
 
