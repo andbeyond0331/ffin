@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/user/*")
@@ -47,6 +50,45 @@ public class UserRestController {
         return "redirect:/index.jsp";
     }
 
+
+    @RequestMapping(value = "json/login/{userId}", method = RequestMethod.POST)
+    public String login(@ModelAttribute("user") User user, @PathVariable String userId, HttpSession session,
+                        HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        System.out.println("/user/jon/login : POST");
+        //Business Logic
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
+        User dbUser = userService.getUser(user.getUserId());
+
+        if (user.getUserPassword().equals(dbUser.getUserPassword())) {
+
+            session.setAttribute("user", dbUser);
+            session.setAttribute("role", "user");
+
+          if(request.getParameter("userCookie") == null) {
+                System.out.println("자동로그인");
+
+                Cookie loginCookie = new Cookie("loginCookie", session.getId());
+
+                loginCookie.setPath("/");
+                int amount = 60*60*24*7;
+                loginCookie.setMaxAge(amount);
+
+                System.out.println("쿠키줘!!!"+session.getId());
+
+                response.addCookie(loginCookie);
+
+                Date sessionLimit = new Date(System.currentTimeMillis()+(1000*amount));
+                userService.autoLogin(user.getUserId(), session.getId(), sessionLimit);
+            }
+            System.out.println("로그인 OK");
+        } else {
+            System.out.println("로그인Nope");
+        }
+        return userId;
+    }
+
+
     @RequestMapping(value = "json/addUser", method = RequestMethod.POST)
     public User addUser( @RequestBody User user, HttpSession session) throws Exception {
         System.out.println("UserRestController.addUser");
@@ -54,6 +96,5 @@ public class UserRestController {
         userService.addUserInfo(user);
         return userService.getUser(user.getUserId());
     }
-
 
 }

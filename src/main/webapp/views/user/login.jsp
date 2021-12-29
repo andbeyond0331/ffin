@@ -1,69 +1,22 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: songs
-  Date: 2021-12-29
-  Time: Ïò§Ï†Ñ 1:49
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=EUC-KR" %>
+<%@ page pageEncoding="EUC-KR"%>
+
+
+<!DOCTYPE html>
 
 <html lang="ko">
 
-
 <head>
-	<!-- Basic -->
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<!-- Mobile Metas -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<!-- Site Metas -->
-	<meta name="keywords" content="" />
-	<meta name="description" content="" />
-	<meta name="author" content="" />
+	<meta charset="EUC-KR">
 
-	<title>F.FIN | FOODTRUCK FINDER</title>
+	<!-- ¬¸¡∂ : http://getbootstrap.com/css/   ¬¸¡∂ -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<!-- bootstrap core css -->
-	<link rel="stylesheet" type="text/css" href="../../resources/bootstrap/css/bootstrap.css" />
-
-	<!-- fonts style -->
-	<link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
-
-	<!-- font awesome style -->
-	<link href="../../resources/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
-	<!-- nice select -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
-	<!-- slidck slider -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" integrity="sha256-UK1EiopXIL+KVhfbFa8xrmAWPeBjMVdvYMYkTAEv/HI=" crossorigin="anonymous" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css.map" integrity="undefined" crossorigin="anonymous" />
-
-
-	<!-- Custom styles for this template -->
-	<link href="../../resources/bootstrap/css/style.css" rel="stylesheet" />
-	<!-- responsive style -->
-	<link href="../../resources/bootstrap/css/responsive.css" rel="stylesheet" />
-
-	<!--    Favicons-->
-	<link rel="apple-touch-icon" sizes="180x180" href="../../resources/bootstrap/assets/favicons/apple-touch-icon.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="../../resources/bootstrap/assets/favicons/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="../../resources/bootstrap/assets/favicons/favicon-16x16.png">
-	<link rel="shortcut icon" type="image/x-icon" href="../../resources/bootstrap/assets/favicons/favicon.ico">
-	<link rel="manifest" href="../../resources/bootstrap/assets/favicons/manifest.json">
-	<meta name="msapplication-TileImage" content="../../resources/bootstrap/assets/favicons/mstile-150x150.png">
-	<meta name="theme-color" content="#ffffff">
-
-	<!-- jQery -->
-	<script src="../../resources/bootstrap/js/jquery-3.4.1.min.js"></script>
-	<!-- bootstrap js -->
-	<script src="../../resources/bootstrap/js/bootstrap.js"></script>
-	<!-- slick  slider -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
-	<!-- nice select -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
-	<!-- custom js -->
-	<script src="../../resources/bootstrap/js/custom.js"></script>
-
-
+	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 
 	<%-- kakao login--%>
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -97,7 +50,7 @@
 						//console.log(JSON.stringify(authObj));
 						//console.log(Kakao.Auth.getAccessToken());
 
-						//2. Î°úÍ∑∏Ïù∏ ÏÑ±Í≥µÏãú, APIÎ•º Ìò∏Ï∂úÌï©ÎãàÎã§.
+						//2. ∑Œ±◊¿Œ º∫∞¯Ω√, API∏¶ »£√‚«’¥œ¥Ÿ.
 						Kakao.API.request({
 							url: '/v2/user/me',
 							success: function (res) {
@@ -114,8 +67,8 @@
 									success: function (idChk) {
 										console.log("hey kakao");
 										console.log(idChk);
-										if (idChk === id) { //DBÏóê ÏïÑÏù¥ÎîîÍ∞Ä ÏóÜÏùÑ Í≤ΩÏö∞ => ÌöåÏõêÍ∞ÄÏûÖ
-											console.log("ÌöåÏõêÍ∞ÄÏûÖÏ§ë...");
+										if (idChk === id) { //DBø° æ∆¿Ãµ∞° æ¯¿ª ∞ÊøÏ => »∏ø¯∞°¿‘
+											console.log("»∏ø¯∞°¿‘¡ﬂ...");
 											$.ajax({
 												url: "views/user/addUser.jsp",
 												method: "POST",
@@ -130,13 +83,13 @@
 												}),
 												success: function (JSONData) {
 													console.log(JSONData)
-													alert("ÌöåÏõêÍ∞ÄÏûÖÏù¥ Ï†ïÏÉÅÏ†ÅÏúºÎ°ú ÎêòÏóàÏäµÎãàÎã§.");
+													alert("»∏ø¯∞°¿‘¿Ã ¡§ªÛ¿˚¿∏∑Œ µ«æ˙Ω¿¥œ¥Ÿ.");
 													$("form").attr("method", "POST").attr("action", "/user/snsLogin/" + res.id).attr("target", "_parent").submit();
 												}
 											})
 										}
-										if (!(idChk === id)) { //DBÏóê ÏïÑÏù¥ÎîîÍ∞Ä Ï°¥Ïû¨Ìï† Í≤ΩÏö∞ => Î°úÍ∑∏Ïù∏
-											console.log("Î°úÍ∑∏Ïù∏Ï§ë...");
+										if (!(idChk === id)) { //DBø° æ∆¿Ãµ∞° ¡∏¿Á«“ ∞ÊøÏ => ∑Œ±◊¿Œ
+											console.log("∑Œ±◊¿Œ¡ﬂ...");
 											$("form").attr("method", "POST").attr("action", "/user/snsLogin/" + res.kakao_account.email).attr("target", "_parent").submit();
 										}
 									}
@@ -160,19 +113,19 @@
 
 			$("#userId").focus();
 
-			//==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("button").on("click" , function() {
 				var id=$("input:text").val();
 				var pw=$("input:password").val();
 
 				if(id == null || id.length <1) {
-					alert('ID Î•º ÏûÖÎ†•ÌïòÏßÄ ÏïäÏúºÏÖ®ÏäµÎãàÎã§.');
+					alert('ID ∏¶ ¿‘∑¬«œ¡ˆ æ ¿∏ºÃΩ¿¥œ¥Ÿ.');
 					$("#userId").focus();
 					return;
 				}
 
 				if(pw == null || pw.length <1) {
-					alert('Ìå®Ïä§ÏõåÎìúÎ•º ÏûÖÎ†•ÌïòÏßÄ ÏïäÏúºÏÖ®ÏäµÎãàÎã§.');
+					alert('∆–Ω∫øˆµÂ∏¶ ¿‘∑¬«œ¡ˆ æ ¿∏ºÃΩ¿¥œ¥Ÿ.');
 					$("#userPassword").focus();
 					return;
 				}
@@ -184,7 +137,7 @@
 
 		// addUser Nav
 		$( function() {
-			//==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("a[href='#' ]").on("click" , function() {
 				self.location = "/user/addUser"
 			});
@@ -192,41 +145,54 @@
 
 	</script>
 
-
-
 </head>
 
+<body>
 
+<!-- ToolBar Start /////////////////////////////////////-->
+<div class="navbar  navbar-default">
+	<div class="container">
+		<a class="navbar-brand" href="../home.jsp">F.FIN</a>
+	</div>
+</div>
+<!-- ToolBar End /////////////////////////////////////-->
 
-<body id="page-top">
-
-<jsp:include page="/views/toolbar.jsp" />
+<!--  »≠∏È±∏º∫ div Start /////////////////////////////////////-->
 <div class="container">
+	<!--  row Start /////////////////////////////////////-->
+
+
 
 	<div class="row">
+
 		<div class="col-md-3"></div>
+
 		<div class="col-md-6">
+
 			<br/><br/>
+
 			<div >
+
 				<form class="form-horizontal">
+
 					<div class="form-group">
-						<label for="userId" class="col-sm-4 control-label">ÏïÑ Ïù¥ Îîî</label>
+						<label for="userId" class="col-sm-4 control-label">æ∆ ¿Ã µ</label>
 						<div class="col-sm-6">
-							<input type="text" class="form-control" name="userId" id="userId"  placeholder="ÏïÑÏù¥Îîî" >
+							<input type="text" class="form-control" name="userId" id="userId"  placeholder="æ∆¿Ãµ" >
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label for="userPassword" class="col-sm-4 control-label">Ìå® Ïä§ Ïõå Îìú</label>
+						<label for="userPassword" class="col-sm-4 control-label">∆– Ω∫ øˆ µÂ</label>
 						<div class="col-sm-6">
-							<input type="password" class="form-control" name="userPassword" id="userPassword" placeholder="Ìå®Ïä§ÏõåÎìú" >
+							<input type="password" class="form-control" name="userPassword" id="userPassword" placeholder="∆–Ω∫øˆµÂ" >
 						</div>
 					</div>
 
-					<!-- Ïπ¥Ïπ¥Ïò§ Î°úÍ∑∏Ïù∏ Ï∂îÍ∞Ä -->
+					<!-- ƒ´ƒ´ø¿ ∑Œ±◊¿Œ √ﬂ∞° -->
 					<div id="kakaoLogin"  class="col-sm-offset-4 col-sm-6 text-center">
 						<a id="kakao-login-btn">
-							<img src="../../resources/image/kakao_login_medium_wide.png" width="100%"/>
+							<img src="/resources/image/kakao_login_medium_wide.png" width="100%"/>
 						</a>
 						<a href="http://developers.kakao.com/logout"></a>
 					</div>
@@ -235,18 +201,21 @@
 
 					<div class="form-group">
 						<div class="col-sm-offset-4 col-sm-6 text-center">
-							<button type="button" class="btn btn-warning"  >Î°ú &nbsp;Í∑∏ &nbsp;Ïù∏</button>
-							<a class="btn btn-warning btn" href="#" role="button">Ìöå &nbsp;Ïõê &nbsp;Í∞Ä &nbsp;ÏûÖ</a>
+							<button type="button" class="btn btn-warning"  >∑Œ &nbsp;±◊ &nbsp;¿Œ</button>
+							<a class="btn btn-warning btn" href="#" role="button">»∏ &nbsp;ø¯ &nbsp;∞° &nbsp;¿‘</a>
 						</div>
 					</div>
+
 				</form>
 			</div>
+
 		</div>
+
 	</div>
+	<!--  row Start /////////////////////////////////////-->
+
 </div>
-
-
-<jsp:include page="/views/footer.jsp" />
+<!--  »≠∏È±∏º∫ div end /////////////////////////////////////-->
 
 </body>
 

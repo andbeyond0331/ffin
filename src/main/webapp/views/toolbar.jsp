@@ -9,16 +9,6 @@
 
 <head>
 
-    <script type="text/javascript">
-
-        function loginModal(){
-            $('#openLoginModal').modal('show');
-        }
-
-    </script>
-
-
-
     <!-- Basic -->
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -60,6 +50,93 @@
     <meta name="msapplication-TileImage" content="../resources/bootstrap/assets/favicons/mstile-150x150.png">
     <meta name="theme-color" content="#ffffff">
 
+
+    <!-- jQery -->
+    <script src="../resources/bootstrap/js/jquery-3.4.1.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="../resources/bootstrap/js/bootstrap.js"></script>
+    <!-- slick  slider -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+    <!-- nice select -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
+    <!-- custom js -->
+    <script src="../resources/bootstrap/js/custom.js"></script>
+
+    <script type="text/javascript">
+
+        function loginModal(){
+            $('#openLoginModal').modal('show');
+        }
+
+        $(function () {
+
+               $("#modalLoginBtn").click(function () {
+
+                   console.log("user")
+
+                   var userId = $("#userId").val();
+                   var userPassword = $("#userPassword").val();
+
+                   console.log(userId);
+                   console.log(userPassword);
+
+                   $.ajax({
+                       type: "POST",
+                       url: "/user/json/login/" + userId,
+                       data: {userId, userPassword},
+                       success: function (data) {
+                           self.location = "redirect : ./views/home.jsp"
+                       }
+                   });
+           });
+
+            $("#roleTab a[href='#CEO']").click(function (){
+                alert("나와라 CEO");
+
+                $("#modalLoginBtn").click(function () {
+
+                    console.log("truck")
+
+                    var truckId=$("#truckId").val();
+                    var truckPassword=$("#truckPassword").val();
+
+                    console.log(truckId);
+                    console.log(truckPassword);
+
+                });
+            });
+        });
+
+
+
+/*
+        $(function () {
+            $("#modalLoginBtn").click(function () {
+
+                console.log("login button");
+
+                var userId=$("input:text").val();
+                var userPassword=$("input:password").val();
+                $.ajax({
+                    type:"POST",
+                    url:"/user/json/login/"+userId,
+                    data:{userId, userPassword},
+                    success:function (data) {
+                        self.location = "redirect:/views/home.jsp"
+                    }
+                });
+            });
+        });
+*/
+
+
+    </script>
+    <!-- javascript -->
+
+
+
+
+
 </head>
 
 <body id="page-top">
@@ -76,10 +153,12 @@
                 </a>
                 <div class="" id="">
                     <div class="User_option">
-                        <a href="#modalName">
+                        <a href="#login">
                             <i class="fa fa-user" aria-hidden="true"></i>
                             <span data-toggle="modal" data-target=".bd-example-modal-lg" id="loginModal"  onclick=loginModal()>Login</span>
                         </a>
+                        ${user.userId}
+                        ${truck.truckId}
                         <!-- Modal -->
                         <div class="modal fade" id="openLoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -92,40 +171,39 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <ul class="nav nav-pills nav-fill">
+                                        <ul class="nav nav-pills nav-fill" id="roleTab">
                                             <li class="nav-item">
-                                                <a class="nav-link active" data-toggle="tab" href="#User">User</a>
+                                                <a class="nav-link active" data-toggle="tab" href="#user">User</a>
                                             </li>
                                             <li class="nav-item">
                                                 <a class="nav-link" data-toggle="tab" href="#CEO">CEO</a>
                                             </li>
                                         </ul>
-                                        <form>
+                                        <form id = "modalForm" name="modalForm">
                                             <div class="tab-content">
-                                                <div class="tab-pane fade show active" id="User">
+                                                <div class="tab-pane fade show active" id="user">
                                                     <div class="mb-3">
                                                         <label for="userId" class="form-label">ID</label>
-                                                        <input type="email" class="form-control" id="userId" aria-describedby="emailHelp">
-                                                        <div id="userIdInfo" class="form-text">User!</div>
+                                                        <input type="text" class="form-control" id="userId" >
+                                                        <%--<div id="userIdInfo" class="form-text">User!</div>--%>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="userPassword" class="form-label">Password</label>
                                                         <input type="password" class="form-control" id="userPassword">
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-md-4 form-check">
-                                                            <input type="checkbox" class="form-check-input" id="autoLoginUser">
-                                                            <label class="form-check-label" for="autoLoginUser">자동로그인</label>
-                                                        </div>
-                                                        <div class="col-md-4 col-md-offset-4">
-                                                            아이디 찾기
-                                                        </div>
+                                                    <div class="mb-3 form-check">
+                                                        <input type="checkbox" class="form-check-input" id="autoLoginUser">
+                                                        <label class="form-check-label" for="autoLoginUser">자동로그인</label>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <span style="color: #0b1727; margin-left: 0;">아직 회원이 아니신가요?</span>
+                                                        <a class="addChk" href="./user/addUser.jsp" style="color: #0b1727; margin-left: 0;"> <strong style="float: right; stroke: #000000">회원가입</strong></a>
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane fade" id="CEO">
                                                     <div class="mb-3">
                                                         <label for="truckId" class="form-label">ID</label>
-                                                        <input type="text" class="form-control" id="truckId" aria-describedby="emailHelp">
+                                                        <input type="text" class="form-control" id="truckId">
                                                         <div id="truckIdInfo" class="form-text">CEO!</div>
                                                     </div>
                                                     <div class="mb-3">
@@ -138,11 +216,10 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-warning btn-lg btn-block" id="modalLoginBtn" style="color: #ffffff">login</button>
+                                            </div>
                                         </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <%--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
-                                        <button type="button" class="btn btn-warning btn-lg btn-block">login</button>
                                     </div>
                                 </div>
                             </div>
@@ -175,17 +252,6 @@
 
 </div>
 
-
-<!-- jQery -->
-<script src="../resources/bootstrap/js/jquery-3.4.1.min.js"></script>
-<!-- bootstrap js -->
-<script src="../resources/bootstrap/js/bootstrap.js"></script>
-<!-- slick  slider -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
-<!-- nice select -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
-<!-- custom js -->
-<script src="../resources/bootstrap/js/custom.js"></script>
 
 </body>
 

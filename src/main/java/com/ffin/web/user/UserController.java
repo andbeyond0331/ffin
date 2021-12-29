@@ -47,10 +47,8 @@ public class UserController {
         System.out.println("/user/login : POST");
         //Business Logic
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println("user!!!!" + user);
         User dbUser=userService.getUser(user.getUserId());
-//        ModelMap modelMap = modelAndView.getModelMap();
-//        Object userCoo = modelMap.get("user");
-
         if( user.getUserPassword().equals(dbUser.getUserPassword())){
 
             session.setAttribute("user", dbUser);
@@ -75,7 +73,7 @@ public class UserController {
 
 //            if(user.isUseCookie())
 
-            return "redirect:/views/home.jsp";
+            return "redirect:/views/homeTest.jsp";
 
         } else {
             System.out.println("로그인Nope");
