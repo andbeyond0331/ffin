@@ -48,7 +48,7 @@
 
 	</select>
 
-	<select id="getReviewList"	parameterType="map"	resultMap="ReviewSelectMap">
+	<select id="getReviewListTruck"	parameterType="map"	resultMap="ReviewSelectMap">
 		SELECT
 			RV_NO,
 			RV_ORDER_NO,

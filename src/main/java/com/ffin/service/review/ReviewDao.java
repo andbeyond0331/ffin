@@ -5,6 +5,7 @@ import com.ffin.common.Search;
 import com.ffin.service.domain.Review;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ReviewDao {
 
@@ -14,7 +15,7 @@ public interface ReviewDao {
     //SELECT ONE
     public Review getReview(int reviewNo) throws Exception;
     //SELECT LIST
-    public List<Review> getReviewList(Search search) throws Exception;
+    public Map<String, Object> getReviewListTruck(Search search, String truckId) throws Exception;
 
     //UPDATE
     public void updateReview(Review review) throws Exception;
