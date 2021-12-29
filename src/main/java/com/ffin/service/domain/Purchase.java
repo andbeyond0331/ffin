@@ -19,7 +19,6 @@ public class Purchase {
 	private Catering payResNo; //결제시 사용한 케이터링번호
 
 
-
 	private int orderNo; //주문번호
 	private int orderQty; //주문 수량
 	private String orderRequest; //주문 요청사항
