@@ -93,6 +93,16 @@
     <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
 
 
+    <!-- ajax 객체 리턴 -->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+        <property name="order" value="0"/>
+    </bean>
+    <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+        <property name="contentType" value="application/json;charset=UTF-8"> </property>
+    </bean>
+
+
+
     <!-- web socket handler -->
     <bean id="pushEchoHandler" class="com.ffin.common.socket.PushEchoHandler"></bean>
     <bean id="socketHandler" class="com.ffin.common.socket.SocketHandler"></bean>

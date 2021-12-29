@@ -4,6 +4,9 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.Getter;
+
+@Getter
 @Data
 public class Catering {
 

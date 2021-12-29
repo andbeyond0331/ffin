@@ -53,6 +53,10 @@ public class CateringController {
             이용자, 사업자 구분
             full Calendar ...*/
 
+        session.setAttribute("role", "user");
+        User testUser = new User();
+        testUser.setUserId("user01");
+        session.setAttribute("user", testUser);
 
         String id="";
         Map<String , Object> map= new HashMap<String , Object>();

@@ -6,8 +6,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>F.FIN | FOODTRUCK FINDER</title>
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="../../resources/bootstrap/css/bootstrap.css" />
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+
+    <!-- font awesome style -->
+    <link href="../../resources/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- nice select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+    <!-- slidck slider -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" integrity="sha256-UK1EiopXIL+KVhfbFa8xrmAWPeBjMVdvYMYkTAEv/HI=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css.map" integrity="undefined" crossorigin="anonymous" />
+
+
+    <!-- Custom styles for this template -->
+    <link href="../../resources/bootstrap/css/style.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="../../resources/bootstrap/css/responsive.css" rel="stylesheet" />
+
+    <!--    Favicons-->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../resources/bootstrap/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../resources/bootstrap/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../resources/bootstrap/assets/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../resources/bootstrap/assets/favicons/favicon.ico">
+    <link rel="manifest" href="../../resources/bootstrap/assets/favicons/manifest.json">
+    <meta name="msapplication-TileImage" content="../../resources/bootstrap/assets/favicons/mstile-150x150.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- jQery -->
+    <script src="../../resources/bootstrap/js/jquery-3.4.1.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="../../resources/bootstrap/js/bootstrap.js"></script>
+    <!-- slick  slider -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+    <!-- nice select -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
+    <!-- custom js -->
+    <script src="../../resources/bootstrap/js/custom.js"></script>
+
+
+    <%--주소API--%>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <link href='../../resources/fullcalendar/core/main.css' rel='stylesheet' />
     <link href='../../resources/fullcalendar/daygrid/main.css' rel='stylesheet' />
@@ -17,6 +71,9 @@
     <script src="../../resources/fullcalendar/interaction/main.min.js"></script>
     <script src="../../resources/fullcalendar/timegrid/main.min.js"></script>
     <script src='../../resources/fullcalendar/core/locales/ko.js'></script>
+
+
+
     <%
         List<Catering> list = (List<Catering>) request.getAttribute("list");
     %>
@@ -26,7 +83,13 @@
 
 
     <style>
+        h4{
+            color : #fd7622;
+        }
 
+        body{
+            background-size: cover;
+        }
         html, body {
             margin: 0;
             padding: 0;
@@ -37,30 +100,66 @@
         #calendar-container {
             position: relative;
             z-index: 1;
-            margin-left: 200px;
+
         }
 
         #calendar {
             max-width: 900px;
             margin: 20px auto;
         }
-
+        img{ max-width:100%;}
     </style>
 
 </head>
 
 
-<body>
+<body id="page-top">
+<jsp:include page="/views/toolbar.jsp" />
 
 <div id="calendar-container">
     <div id="calendar"></div>
     <div><button>등록(사업자만)</button></div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">서비스 상세정보</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body"> </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
 
+    $(function() {
+        $("#staticBackdrop").on('hide.bs.modal', function (e) {
 
+            self.location = "/catering/mainCalendar"
+
+            e.stopImmediatePropagation();
+
+        });
+
+
+
+
+
+    });
+
+
+    var g_arg;
     document.addEventListener('DOMContentLoaded', function() {
        // alert("야호")
         var calendarEl = document.getElementById('calendar');
@@ -69,11 +168,25 @@
             plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
             dateClick : function (info) {
 
-                alert('Clicked on: ' + info.date);
+                $('.modal-body').append("hi");
+                $('#staticBackdrop').modal('show');
 
             },
             eventClick: function(arg) {
-                alert("얍얍ㅜ:"+arg)
+                var statusCode = arg.event.extendedProps.ctStatusCode;
+                /*
+                   (예약가능, 초록)  statusCode = 0 : 서비스 상세보기
+                          role = truck이면 수정/삭제
+                          role = user면 예약 가능하도록 폼 띄우기
+                   (예약,    ? )  statuscode = 1 : 예약된 상태, 예약 상세 보기
+                         role = user  - 이용자 취소 버튼 출력
+                         role = truck - 수락/거절 버튼 출력
+                   ( 수락 완료, 결제 필요 ) statuscode = 4 : 마찬가지로 예약 상세 보기
+                         role = user - 결제 버튼 출력
+                   ( 예약 완료, 핑크 ) statuscode = 5
+                         예약 상세 보기
+                 */
+                getCateringDetail(arg);
             },
             defaultView: 'dayGridMonth',
             defaultDate: new Date(),
@@ -91,14 +204,16 @@
             locale: 'ko',
             events: [
                 <%
-  	  for (int i = 0; i < list.size(); i++) {
-            Catering ct = (Catering)list.get(i);
+                       for (int i = 0; i < list.size(); i++) {
+                     Catering ct = (Catering)list.get(i);
 
 %>
                 {
                     title : '<%= ct.getCtTruck().getTruckName() %>',
                     start : '<%= ct.getCtDate() %>',
-                    end : '<%= ct.getCtDate() %>'
+                    end : '<%= ct.getCtDate() %>',
+                    ctNo : '<%=ct.getCtNo()%>',
+                    ctStatusCode : '<%=ct.getCtStatusCode()%>'
                     <% if (ct.getCtStatusCode().equals("5")){%>
                     , color: "#f81f59"
                     <%} else {%>
@@ -121,8 +236,130 @@
 
     });
 
+    function getCateringDetail(arg) {
+        /* statusCode == 0 */
+        g_arg = arg;
+        var ctNo = arg.event.extendedProps.ctNo;
+        console.log(ctNo);
+        $.ajax({
+            url:"/catering/json/getCtDetail/"+ctNo,
+            method:"get",
+            data:{
+            },
+            success: function (data) {
+               // alert(data);
+                console.log("data : "+data.catering.ctTruck.truckId)
+                var div="";
+                var role = "user"
+                <%--${sessionScope.role};--%>
+
+                div += "<div class='row'>"+
+                    "<div ><strong>푸드트럭 이름</strong> : "+data.catering.ctTruck.truckName+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>서비스 가능 날짜</strong> : "+data.catering.ctDate+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>서비스 가능 시간</strong> : "+data.catering.ctStartTime+"시 ~ "+data.catering.ctEndTime+"시</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong></strong> <img src='../../../resources/image/"+data.catering.ctMenu.menuImg1+"'></div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>최소 수량</strong> : "+data.catering.ctMenuMinQty+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>최대 수량</strong> : "+data.catering.ctMenuMaxQty+"</div></div>"
+                    if (role=="user")
+                    {
+                       div += "<div class='row'>"
+                              +"<div ><strong>예약자 성함</strong> : <input type='text' id='ctUserId' name='ctUserId'/></div></div>"
+                              +"<div class='row'>"
+                              +"<div ><strong>예약자 전화번호</strong> : <input type='text' id='ctUserPhone' name='ctUserPhone'/></div></div>"
+                              +"<div class='row'>"
+                              +"<div ><strong>예약자 주소</strong> : " +
+                           "<input type='text'  id='ctUserAddr' name='ctUserAddr' placeholder='주소검색' readonly='readonly'></div>" +
+                           "<button type='button' onclick='addrApi()'>주소검색</button></div>"
+                               +"<div class='row'>"
+                               +"<div ><strong>예약자 상세 주소</strong> : <input type='text' id='ctUserAddrDetail' name='ctUserAddrDetail' placeholder='상세주소를 입력해주세요' readonly='readonly'>	</div></div>"
+                           +"<div class='row'>"
+                           +"<div ><strong>필요 수량</strong> : <input type='text' id='ctMenuQty' name='ctMenuQty'/></div></div>"
+                           +"<div class='row'>"
+                           +"<div ><strong>예상 견적</strong> : <input type='text' id='ctQuotation' name='ctQuotation'/></div></div>"
+                    }
+                div += +"</div><hr/>";
+                $('.modal-body').append(div);
+                $('#staticBackdrop').modal('show');
+
+            },
+            error : function(err){
+                console.log('에러')
+            }
+        });
+
+    }
+
+    /* Daum API */
+    function addrApi(){
+        new daum.Postcode({
+            oncomplete: function(data) {
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    // document.getElementById("sample6_extraAddress").value = extraAddr;
+                    addr += extraAddr;
+                } else {
+                    // document.getElementById("sample6_extraAddress").value = '';
+                    addr = '';
+                }
+
+                console.log(addr);
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                // document.getElementById('ctUserAddr').value = data.zonecode;
+
+                //$(".userAddr").val(data.zonecode);
+                // 커서를 상세주소 필드로 이동한다.
+                // document.getElementById("sample6_detailAddress").focus();
+
+                $("input:text[name=ctUserAddr]").val(addr);
+                $("input:text[name=ctUserAddrDetail]").attr("readonly", false);
+                $("input:text[name=ctUserAddrDetail]").focus();
+            }
+        }).open();
+    }
+
+
+
+
+
 </script>
 
+<jsp:include page="/views/footer.jsp" />
 
 </body>
 </html>

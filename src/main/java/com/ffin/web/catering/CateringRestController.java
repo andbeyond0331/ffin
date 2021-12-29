@@ -137,6 +137,30 @@ public class CateringRestController {
 
 
 
+        @RequestMapping( value="json/getCtDetail/{ctNo}", method=RequestMethod.GET)
+        @ResponseBody
+        public ModelAndView getCtDetail(@PathVariable("ctNo") int ctNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
+            /*
+                서비스내역, 예약 내역을 불러온다.
+                상세정보조회.
+             */
+            request.setCharacterEncoding("UTF-8");
+
+            System.out.println("CateringController.REST");
+            System.out.println("ctNo = " + ctNo);
+
+            Catering catering = cateringService.getCtDetail(ctNo);
+            System.out.println("catering = " + catering);
+            /*Map<String, Object> map = new HashMap<>();
+            map.put("ctNo", catering.getCtNo());
+            map.put("ctTruckId", catering.getCtTruck().getTruckId());*/
+            ModelAndView mv = new ModelAndView("jsonView");
+            mv.addObject("catering", catering);
+
+            return mv;
+        }
+
+
 
 
 
