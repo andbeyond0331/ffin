@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -89,7 +90,9 @@
         //============= "가입"  Event 연결 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $("button.btn.btn-primary").on("click", fncAddTruck);
+            $("button.btn.btn-primary").on("click", function () {
+                fncAddTruck();
+            });
         });
 
         //============= "취소"  Event 처리 및  연결 =============
@@ -135,11 +138,11 @@
             //
             // $("input:hidden[name='phone']").val( value );
 
-            $("form").attr("method", "POST").attr("action", "/truck/addTruck").submit();
+            $("form").attr("method", "POST").attr("action", "/truck/addTruck").attr("enctype", "multipart/form-data").submit();
             alert("회원가입이 완료되었습니다. 가입승인에는 영업일 기준 2~5일이 소요되며 확인을 누르시면 로그인 화면으로 이동합니다.");
         }
 
-    // <!-- 푸드트럭 아이디 중복체크 -->
+        // <!-- 푸드트럭 아이디 중복체크 -->
 
         $(function () {
             $("#tId").keyup(function () {
@@ -172,7 +175,7 @@
             });
 
 
-        // <!-- 푸드트럭 비밀번호 체크 -->
+            // <!-- 푸드트럭 비밀번호 체크 -->
 
             $("#truckPasswordChk").keyup(function () {
                 if ($("#tPassword").val() == $("#truckPasswordChk").val()) {
@@ -187,7 +190,7 @@
             })
 
 
-        // <!-- 푸드트럭상호 중복체크 -->
+            // <!-- 푸드트럭상호 중복체크 -->
 
             $("#truckName").keyup(function () {
                 var truckName = $("#truckName").val();
@@ -219,11 +222,11 @@
             });
 
 
-        <!-- 휴대폰 문자인증 -->
-        //휴대폰 번호 인증
+            <!-- 휴대폰 문자인증 -->
+            //휴대폰 번호 인증
             var code2 = "";
 
-            $(".sms-auth").click(function() {
+            $(".sms-auth").click(function () {
                 alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
 
                 var inputPhone = $("#truckPhone").val();
@@ -231,8 +234,8 @@
                 var boxWrap = $(".phone-check-input-box");
 
                 $.ajax({
-                    type: "GET",
-                    url: "/truck/phoneCheck/" + inputPhone,
+                    type   : "GET",
+                    url    : "/truck/phoneCheck/" + inputPhone,
                     success: function (data) {
                         if (data == "error") {
                             alert("휴대폰 번호가 올바르지 않습니다.")
@@ -240,7 +243,7 @@
                             $(".successPhoneChk").css("color", "red");
                             $("#truckPhone").attr("autofocus", true);
                         } else {
-                            authInputBox.attr("disabled",false);
+                            authInputBox.attr("disabled", false);
                             boxWrap.attr("id", "phone-check-input-box-ture")
                             code2 = data;
                         }
@@ -249,25 +252,25 @@
             });
 
 
-        //휴대폰 인증번호 대조
-        $(".phone-check-input").on("keyup",function () {
+            //휴대폰 인증번호 대조
+            $(".phone-check-input").on("keyup", function () {
 
-            var inputCode = $(".phone-check-input").val();
-            var checkResult = $("#phone-check-input-box-warn");
+                var inputCode = $(".phone-check-input").val();
+                var checkResult = $("#phone-check-input-box-warn");
 
-            if(inputCode.length >= 4){
-                if(inputCode == code2){
-                    checkResult.text("인증번호가 일치합니다");
-                    checkResult.css("color", "blue")
-                    checkResult.attr("class", "correct");
-                }else {
-                    checkResult.text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
-                    checkResult.css("color", "red");
-                    checkResult.attr("class","incorrect");
+                if (inputCode.length >= 4) {
+                    if (inputCode == code2) {
+                        checkResult.text("인증번호가 일치합니다");
+                        checkResult.css("color", "blue")
+                        checkResult.attr("class", "correct");
+                    } else {
+                        checkResult.text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+                        checkResult.css("color", "red");
+                        checkResult.attr("class", "incorrect");
+                    }
                 }
-            }
 
-        })
+            })
         });
 
 
@@ -322,10 +325,7 @@
                 }
             }).open();
         }
-    </script>
 
-
-    <script>
 
         $(function () {
             $("#truckCEOBirth").datepicker({
@@ -338,7 +338,7 @@
         });
 
 
-        $(function() {
+        $(function () {
 
             var code = "";
             ``
@@ -351,12 +351,12 @@
 
                 var boxWrap = $(".mail-check-input-box");
                 $.ajax({
-                    type:"GET",
-                    url:"/auth/json/emailAuth/"+inputEmail,
-                    success:function (data){
+                    type   : "GET",
+                    url    : "/auth/json/emailAuth/" + inputEmail,
+                    success: function (data) {
                         //console.log("data : "+data);
                         /*$("#userEmailAuth").attr("disabled",false);*/
-                        authInputBox.attr("disabled",false);
+                        authInputBox.attr("disabled", false);
                         boxWrap.attr("id", "mail-check-input-box-ture")
                         code = data;
                     }
@@ -364,21 +364,21 @@
             });
 
             /* email 인증번호 비교 */
-            $(".mail-check-input").on("keyup",function (){
+            $(".mail-check-input").on("keyup", function () {
 
                 var inputCode = $(".mail-check-input").val();
                 var checkResult = $("#mail-check-input-box-warn");
                 /*console.log("inputCode"+inputCode);
                 console.log("code"+code);*/
-                if(inputCode.length >= 6){
-                    if(inputCode == code){
+                if (inputCode.length >= 6) {
+                    if (inputCode == code) {
                         checkResult.text("인증번호가 일치합니다");
                         checkResult.css("color", "blue")
                         checkResult.attr("class", "correct");
-                    }else {
+                    } else {
                         checkResult.text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
                         checkResult.css("color", "red");
-                        checkResult.attr("class","incorrect");
+                        checkResult.attr("class", "incorrect");
                     }
                 }
 
@@ -395,143 +395,148 @@
 <br/><br/>
 <div class="container">
 
-    <div class="page-header" >
-        <label for="page-header" class="col-sm-offset-4 control-label"/>
+    <div class="page-header">
+        <label for="page-top" class="col-sm-offset-4 control-label"/>
         <h3 class="text-info">푸드트럭(사업자) 회원가입</h3>
         <h5 class="text-muted">가입정보를 <strong class="text-danger">정확하게 입력</strong>해 주세요.</h5>
     </div>
 
     <form class="form-horizontal">
 
-    <!-- 아이디 중복검사 -->
-    <div class="form-group">
-        <label for="tId" class="col-sm-offset-1 col-sm-3 control-label">ID</label>
-        <div class="col-sm-4">
-            <input id="tId" type="text" name="truckId" placeholder="아이디를 입력해주세요." required maxlength="10"/>
-            <span class="point successIdChk"></span><br/>
-            <span class="point">※ 영문자, 소문자 입력가능, 최대 10자 까지 입력</span>
-            <input type="hidden" id="idDoubleChk"/>
+        <!-- 아이디 중복검사 -->
+        <div class="form-group">
+            <label for="tId" class="col-sm-offset-1 col-sm-3 control-label">ID</label>
+            <div class="col-sm-4">
+                <input id="tId" type="text" name="truckId" placeholder="아이디를 입력해주세요." required maxlength="10"/>
+                <span class="point successIdChk"></span><br/>
+                <span class="point">※ 영문자, 소문자 입력가능, 최대 10자 까지 입력</span>
+                <input type="hidden" id="idDoubleChk"/>
+            </div>
         </div>
-    </div>
 
         <hr/>
 
-    <!-- 비밀번호 확인 -->
-    <div class="form-group">
-        <label for="tPassword" class="col-sm-offset-1 col-sm-3 control-label">Password</label>
-        <div class="col-sm-4">
-            <input type="password" class="form-control" id="tPassword"  name="truckPassword" placeholder="Password" required maxlength="8"
-                   autocomplete="off"/>
-            <span class="point">※ 비밀번호는 총 8자 까지 입력가능</span><br/>
+        <!-- 비밀번호 확인 -->
+        <div class="form-group">
+            <label for="tPassword" class="col-sm-offset-1 col-sm-3 control-label">Password</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" id="tPassword" name="truckPassword" placeholder="Password"
+                       required maxlength="8"
+                       autocomplete="off"/>
+                <span class="point">※ 비밀번호는 총 8자 까지 입력가능</span><br/>
+            </div>
         </div>
-    </div>
 
         <hr/>
 
-    <div class="form-group">
-        <label for="truckPasswordChk" class="col-sm-offset-1 col-sm-3 control-label">Password 확인</label>
-        <div class="col-sm-4">
-            <input id="truckPasswordChk" type="password" class="form-control" name="truckPasswordChk" placeholder="동일하게 입력해주세요." required
-                   maxlength="8" autocomplete="off"/>
-            <span class="point successPwChk"></span>
-            <input type="hidden" id="pwDoubleChk"/>
+        <div class="form-group">
+            <label for="truckPasswordChk" class="col-sm-offset-1 col-sm-3 control-label">Password 확인</label>
+            <div class="col-sm-4">
+                <input id="truckPasswordChk" type="password" class="form-control" name="truckPasswordChk"
+                       placeholder="동일하게 입력해주세요." required
+                       maxlength="8" autocomplete="off"/>
+                <span class="point successPwChk"></span>
+                <input type="hidden" id="pwDoubleChk"/>
+            </div>
         </div>
-    </div>
 
         <hr/>
 
-    <!-- 트럭 대표자 이름 입력란 -->
-    <br/>
-    <div class="form-group">
-        <label for="truckCEOName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
-        <div class="col-sm-4">
-            <input id="truckCEOName" class="form-control" name="truckCEOName" placeholder="대표자이름">
-            <span id="result_id_msg" class="help-block"></span>
-        </div>
-    </div>
-
-        <hr/>
-
-    <!-- 트럭 대표자 생년월일 입력란 -->
-    <br/>
-    <div class="form-group">
-        <label for="truckCEOBirth" class="col-sm-offset-1 col-sm-3 control-label">생년월일</label>
-        <div class="col-sm-4">
-            <input id="truckCEOBirth" class="form-control" name="truckCEOBirth" placeholder="대표자 생년월일">
-        </div>
-    </div>
-
-        <hr/>
-
-    <br/>
-    <!-- 주소 -->
-    <div class="form-group">
-        <label for="truckAddr" class="col-sm-offset-1 col-sm-3 control-label">주소</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" id="truckAddr" name="truckAddr" placeholder="사업자등록증에 등록된 주소">
-        </div>
-        <div>
-            <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
-        </div>
+        <!-- 트럭 대표자 이름 입력란 -->
         <br/>
-        <label for="truckAddrDetail" class="col-sm-offset-1 col-sm-3 control-label">주소 상세</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" id="truckAddrDetail" name="truckAddrDetail" placeholder="주소 상세">
-            <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+        <div class="form-group">
+            <label for="truckCEOName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
+            <div class="col-sm-4">
+                <input id="truckCEOName" class="form-control" name="truckCEOName" placeholder="대표자이름">
+                <span id="result_id_msg" class="help-block"></span>
+            </div>
         </div>
-    </div>
 
         <hr/>
 
-    <!-- 핸드폰 문자 인증 -->
-    <br/>
-    <div class="form-group">
-        <label for="truckPhone" class="col-sm-offset-1 col-sm-3 control-label">연락처</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" id="truckPhone" name="truckPhone" placeholder="인증번호 확인이 가능한 전화번호 입력"/>
+        <!-- 트럭 대표자 생년월일 입력란 -->
+        <br/>
+        <div class="form-group">
+            <label for="truckCEOBirth" class="col-sm-offset-1 col-sm-3 control-label">생년월일</label>
+            <div class="col-sm-4">
+                <input id="truckCEOBirth" class="form-control" name="truckCEOBirth" placeholder="대표자 생년월일">
+            </div>
         </div>
-        <div class="col-sm-3">
-            <button id="phoneChk" type="button" class="btn btn-warning sms-auth">인증번호 요청</button>
-        </div>
-    </div>
-    <div class="form-group phone-check-wrap">
-        <label for="truckPhone" class="col-sm-offset-1 col-sm-3 control-label"></label>
-        <div class="col-sm-4 phone-check-input-box" id="phone-check-input-box-fail">
-        <input type="text" class="form-control phone-check-input" id="truckPhoneAuth" name="truckPhoneAuth" placeholder="인증번호" disabled
-               required/>
-            <span class="point successEmailChk">인증번호 확인이 가능한 전화번호를 먼저 입력해주세요.</span>
-            <span id="phone-check-input-box-warn"></span>
-            <div class="clearfix"></div>
-        </div>
-</div>
 
         <hr/>
 
-<!-- 이메일 입력란 -->
-<div class="form-group">
-    <label for="truckEmail" class="col-sm-offset-1 col-sm-3 control-label">Email</label>
-    <div class="col-sm-4">
-        <input type="text" class="form-control" id="truckEmail" name="truckEmail" placeholder="인증번호 확인이 가능한 Email">
-    </div>
-    <div class="col-sm-3">
-        <button type="button" id="emailChk" class="btn btn-warning email-auth">인증번호 요청</button>
-    </div>
-</div>
-<div class="form-group mail-check-wrap">
-    <label for="truckEmail" class="col-sm-offset-1 col-sm-3 control-label"></label>
-    <div class="col-sm-4 mail-check-input-box" id="mail-check-input-box-fail">
-        <input type="text" class="form-control mail-check-input" id="truckEmailAuth" name="truckEmailAuth"
-               placeholder="인증번호" disabled required>
-        <span class="point successEmailChk">인증번호 확인이 가능한 메일 주소를 먼저 입력해주세요.</span>
-        <span id="mail-check-input-box-warn"></span>
-        <div class="clearfix"></div>
-    </div>
-</div>
+        <br/>
+        <!-- 주소 -->
+        <div class="form-group">
+            <label for="truckAddr" class="col-sm-offset-1 col-sm-3 control-label">주소</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="truckAddr" name="truckAddr" placeholder="사업자등록증에 등록된 주소">
+            </div>
+            <div>
+                <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
+            </div>
+            <br/>
+            <label for="truckAddrDetail" class="col-sm-offset-1 col-sm-3 control-label">주소 상세</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="truckAddrDetail" name="truckAddrDetail" placeholder="주소 상세">
+                <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+            </div>
+        </div>
 
         <hr/>
 
-<!-- 푸드트럭상호 중복검사 -->
-<br/>
+        <!-- 핸드폰 문자 인증 -->
+        <br/>
+        <div class="form-group">
+            <label for="truckPhone" class="col-sm-offset-1 col-sm-3 control-label">연락처</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="truckPhone" name="truckPhone"
+                       placeholder="인증번호 확인이 가능한 전화번호 입력"/>
+            </div>
+            <div class="col-sm-3">
+                <button id="phoneChk" type="button" class="btn btn-warning sms-auth">인증번호 요청</button>
+            </div>
+        </div>
+        <div class="form-group phone-check-wrap">
+            <label for="truckPhone" class="col-sm-offset-1 col-sm-3 control-label"></label>
+            <div class="col-sm-4 phone-check-input-box" id="phone-check-input-box-fail">
+                <input type="text" class="form-control phone-check-input" id="truckPhoneAuth" name="truckPhoneAuth"
+                       placeholder="인증번호" disabled
+                       required/>
+                <span class="point successEmailChk">인증번호 확인이 가능한 전화번호를 먼저 입력해주세요.</span>
+                <span id="phone-check-input-box-warn"></span>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <hr/>
+
+        <!-- 이메일 입력란 -->
+        <div class="form-group">
+            <label for="truckEmail" class="col-sm-offset-1 col-sm-3 control-label">Email</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="truckEmail" name="truckEmail"
+                       placeholder="인증번호 확인이 가능한 Email">
+            </div>
+            <div class="col-sm-3">
+                <button type="button" id="emailChk" class="btn btn-warning email-auth">인증번호 요청</button>
+            </div>
+        </div>
+        <div class="form-group mail-check-wrap">
+            <label for="truckEmail" class="col-sm-offset-1 col-sm-3 control-label"></label>
+            <div class="col-sm-4 mail-check-input-box" id="mail-check-input-box-fail">
+                <input type="text" class="form-control mail-check-input" id="truckEmailAuth" name="truckEmailAuth"
+                       placeholder="인증번호" disabled required>
+                <span class="point successEmailChk">인증번호 확인이 가능한 메일 주소를 먼저 입력해주세요.</span>
+                <span id="mail-check-input-box-warn"></span>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <hr/>
+
+        <!-- 푸드트럭상호 중복검사 -->
+        <br/>
         <div class="form-group">
             <label for="truckName" class="col-sm-offset-1 col-sm-3 control-label">푸드트럭 상호</label>
             <div class="col-sm-4">
@@ -544,82 +549,84 @@
 
         <hr/>
 
-<!-- 푸드트럭 사업자등록증 파일업로드란 -->
-<br/>
-<div class="form-group">
-    <label for="truckBusiLice" class="col-sm-offset-1 col-sm-3 control-label">사업자등록증</label>
-    <div class="col-sm-4">
-        <input type="text" class="form-control" id="truckBusiLice" name="truckBusiLice"
-               placeholder="사업자등록증 파일업로드">
-    </div>
-</div>
-<br/>
-<%--<h4>사업자등록증 파일업로드</h4>--%>
-<%--        <h5>업로드하실 파일을 선택하세요.</h5>--%>
-<%--<form action="./upload.jsp" method="post"--%>
-<%--      enctype="multipart/form-data">--%>
-<%--    <input type="file" name="file" size="50"/>--%>
-<%--    <br/>--%>
-<%--    <input type="submit" value="선택한 파일 업로드"/>--%>
-<%--</form>--%>
+        <!-- 푸드트럭 사업자등록증 파일업로드란 -->
+<%--        <br/>--%>
+<%--        <div class="form-group">--%>
+<%--            <label for="truckBusiLice" class="col-sm-offset-1 col-sm-3 control-label">사업자등록증</label>--%>
+<%--            <div class="col-sm-4">--%>
+<%--                <input type="file" name="truckBusiLice" class="form-control" />--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <input type="hidden" id="checkR"/>--%>
+
+        <br/>
+        <%--<h4>사업자등록증 파일업로드</h4>--%>
+        <%--        <h5>업로드하실 파일을 선택하세요.</h5>--%>
+        <%--<form action="./upload.jsp" method="post"--%>
+        <%--      enctype="multipart/form-data">--%>
+        <%--    <input type="file" name="file" size="50"/>--%>
+        <%--    <br/>--%>
+        <%--    <input type="submit" value="선택한 파일 업로드"/>--%>
+        <%--</form>--%>
 
         <br/><br/>
         <!-- 푸드트럭 카테고리 -->
-<div class="form-group">
-    <label for="truckCate" class="col-sm-offset-1 col-sm-3 control-label">푸드트럭 카테고리</label>
-    <div class="col-sm-4">
-        <input type="text" class="form-control" id="truckCate" name="truckCate" placeholder="푸드트럭 카테고리">
-    </div>
-</div>
+        <div class="form-group">
+            <label for="truckCate" class="col-sm-offset-1 col-sm-3 control-label">푸드트럭 카테고리</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="truckCate" name="truckCate" placeholder="푸드트럭 카테고리">
+            </div>
+        </div>
 
-<%--        <!-- 푸드트럭 프로필이미지 파일업로드란 -->--%>
-<%--        <br/><br/>--%>
-<%--        <div class="form-group">--%>
-<%--            <label for="truckProImg" class="col-sm-offset-1 col-sm-3 control-label">프로필 이미지</label>--%>
-<%--            <div class="col-sm-4">--%>
-<%--                <input type="text" class="form-control" id="truckProImg" name="truckProImg" placeholder="프로필 이미지 파일업로드">--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<br/>
-<%--<h4>푸드트럭 프로필 이미지 파일업로드</h4>--%>
-<%--        <h5>업로드하실 파일을 선택하세요.</h5>--%>
-<%--<form action="./upload.jsp" method="post"--%>
-<%--      enctype="multipart/form-data">--%>
-<%--    <input type="file" name="file" size="50"/>--%>
-<%--    <br/>--%>
-<%--    <input type="submit" value="선택한 파일 업로드"/>--%>
-<%--</form>--%>
+        <%--        <!-- 푸드트럭 프로필이미지 파일업로드란 -->--%>
+        <%--        <br/><br/>--%>
+        <%--        <div class="form-group">--%>
+        <%--            <label for="truckProImg" class="col-sm-offset-1 col-sm-3 control-label">프로필 이미지</label>--%>
+        <%--            <div class="col-sm-4">--%>
+        <%--                <input type="text" class="form-control" id="truckProImg" name="truckProImg" placeholder="프로필 이미지 파일업로드">--%>
+        <%--            </div>--%>
+        <%--        </div>--%>
+        <br/>
+        <%--<h4>푸드트럭 프로필 이미지 파일업로드</h4>--%>
+        <%--        <h5>업로드하실 파일을 선택하세요.</h5>--%>
+        <%--<form action="./upload.jsp" method="post"--%>
+        <%--      enctype="multipart/form-data">--%>
+        <%--    <input type="file" name="file" size="50"/>--%>
+        <%--    <br/>--%>
+        <%--    <input type="submit" value="선택한 파일 업로드"/>--%>
+        <%--</form>--%>
 
-        <br/><hr/>
-
-<!-- 푸드트럭 사장님 한마디 -->
-<div class="form-group">
-    <label for="truckCEOIntro" class="col-sm-offset-1 col-sm-3 control-label">사장님 한마디</label>
-    <div class="col-sm-4">
-        <input type="text" class="form-control" id="truckCEOIntro" name="truckCEOIntro" placeholder="사장님 한마디">
-    </div>
-</div>
-
+        <br/>
         <hr/>
 
-<br/>
+        <!-- 푸드트럭 사장님 한마디 -->
         <div class="form-group">
-<div id="google_recaptha">
-    <label for="google_recaptha" class="col-sm-offset-4 control-label"/>
-    <div class="g-recaptcha" data-sitekey="6LcPg8gdAAAAAO5xlPExdNehovl0HGgHL8veP0OR"></div>
-</div>
+            <label for="truckCEOIntro" class="col-sm-offset-1 col-sm-3 control-label">사장님 한마디</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="truckCEOIntro" name="truckCEOIntro" placeholder="사장님 한마디">
+            </div>
         </div>
 
         <hr/>
 
-<br/>
-<div class="form-group">
-    <div class="col-sm-offset-1  col-sm-4 text-center">
-        <button type="button" class="btn btn-primary">가 입</button>
-        <a class="btn btn-primary btn" href="#" role="button">취 소</a>
-    </div>
-</div>
-</form>
+        <br/>
+        <div class="form-group">
+            <div id="google_recaptha">
+                <label for="google_recaptha" class="col-sm-offset-4 control-label"/>
+                <div class="g-recaptcha" data-sitekey="6LcPg8gdAAAAAO5xlPExdNehovl0HGgHL8veP0OR"></div>
+            </div>
+        </div>
+
+        <hr/>
+
+        <br/>
+        <div class="form-group">
+            <div class="col-sm-offset-1  col-sm-4 text-center">
+                <button type="button" class="btn btn-primary">가 입</button>
+                <a class="btn btn-primary btn" href="#" role="button">취 소</a>
+            </div>
+        </div>
+    </form>
 
 
 </div>
