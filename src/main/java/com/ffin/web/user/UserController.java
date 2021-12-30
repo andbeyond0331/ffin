@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
@@ -113,7 +112,7 @@ public class UserController {
 
 
 
-        return "redirect:views/user/addUser.jsp";
+        return "/views/user/addUserInfo.jsp";
     }
 
     @RequestMapping( value="addUser", method=RequestMethod.POST )

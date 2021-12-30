@@ -843,18 +843,28 @@ a:focus {
   text-align: left;
 }
 
+.form-control{
+  width: 99%;
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+
 .auth-phone {
   height: 35px;
   font-size: 15px;
   margin-top: 5px;
   float: right;
+  margin-right: 3px;
 }
 
 .addrApi {
-  height: 35px;
+  height: 38px;
+  width: 78px;
   font-size: 15px;
-  margin-top: 5px;
   float: right;
+  margin-right: 3px;
+
 }
 
 .auth-email {
@@ -862,6 +872,8 @@ a:focus {
   font-size: 15px;
   margin-top: 5px;
   float: right;
+  margin-right: 3px;
+
 }
 
 .client_section .btn-box a {
@@ -880,6 +892,142 @@ a:focus {
   background-color: transparent;
   color: #ffe537;
 }
+
+
+.id_vc_chk_1{
+  display: none;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-top: 8px;
+  color: #ffba49;
+  font-weight: bold;
+}
+
+.id_vc_chk_2{
+  display: none;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-top: 8px;
+  color: #f17228;
+  font-weight: bold;
+}
+
+.id_input_chk{
+  display: none;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-top: 8px;
+  color: #f17228;
+  font-weight: bold;
+}
+
+.id_ex_chk{
+  display: none;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-top: 8px;
+  color: #f17228;
+  font-weight: bold;
+}
+
+.pw_input_chk{
+  display: none;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-top: 8px;
+  color: #f17228;
+  font-weight: bold;
+}
+
+.pw_ex_chk{
+  display: none;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-top: 8px;
+  color: #f17228;
+  font-weight: bold;
+}
+
+.rePw_input_chk{
+  display: none;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-top: 8px;
+  color: #f17228;
+  font-weight: bold;
+}
+
+.rePw_vc_chk{
+  display: none;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-top: 8px;
+  color: #f17228;
+  font-weight: bold;
+}
+
+.name_input_chk{
+  display: none;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-top: 8px;
+  color: #f17228;
+  font-weight: bold;
+}
+
+.name_ex_chk{
+  display: none;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-top: 8px;
+  color: #f17228;
+  font-weight: bold;
+}
+
+.brith_ex_chK{
+  display: none;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-top: 8px;
+  color: #f17228;
+  font-weight: bold;
+}
+
+.phone_input_chk{
+  display: none;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-top: 8px;
+  color: #f17228;
+  font-weight: bold;
+  float:left;
+}
+
+.phone_ex_chk{
+  display: none;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-top: 8px;
+  color: #f17228;
+  font-weight: bold;
+  float:left;
+}
+
+.phone_auth_chk{
+  display: none;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-top: 8px;
+  color: #f17228;
+  font-weight: bold;
+  float:left;
+}
+
+
+
+
+
+
 
 
 
