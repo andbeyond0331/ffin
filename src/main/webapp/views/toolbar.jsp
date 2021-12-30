@@ -70,25 +70,26 @@
 
         $(function () {
 
-               $("#modalLoginBtn").click(function () {
+            $("#modalLoginBtn").click(function () {
 
-                   console.log("user")
+                console.log("user")
 
-                   var userId = $("#userId").val();
-                   var userPassword = $("#userPassword").val();
+                var userId = $("#userId").val();
+                var userPassword = $("#userPassword").val();
 
-                   console.log(userId);
-                   console.log(userPassword);
+                console.log(userId);
+                console.log(userPassword);
 
-                   $.ajax({
-                       type: "POST",
-                       url: "/user/json/login/" + userId,
-                       data: {userId, userPassword},
-                       success: function (data) {
-                           self.location = "redirect : ./views/home.jsp"
-                       }
-                   });
-           });
+                $.ajax({
+                    type: "POST",
+                    url: "/user/json/login/" + userId,
+                    data: {userId, userPassword},
+                    success: function (data) {
+                        /*javascript redirect 방법*/
+                        location.replace("http://localhost:8080/views/homeTest.jsp");
+                    }
+                });
+            });
 
             $("#roleTab a[href='#CEO']").click(function (){
                 alert("나와라 CEO");
@@ -107,27 +108,45 @@
             });
         });
 
-
-
-/*
-        $(function () {
-            $("#modalLoginBtn").click(function () {
-
-                console.log("login button");
-
-                var userId=$("input:text").val();
-                var userPassword=$("input:password").val();
-                $.ajax({
-                    type:"POST",
-                    url:"/user/json/login/"+userId,
-                    data:{userId, userPassword},
-                    success:function (data) {
-                        self.location = "redirect:/views/home.jsp"
-                    }
-                });
+        // 혜지 추가
+        // ============= 쪽지 ===============
+        $( function() {
+            $("#goMsg").on("click" , function() {
+                self.location = "/msg/message_list"
             });
         });
-*/
+        // ============= 채팅 ===============
+        $( function() {
+            $("#goChat").on("click" , function() {
+                self.location = "/room"
+            });
+        });
+        // ============= 케이터링 ===============
+        $( function() {
+            $("#goCatering").on("click" , function() {
+                self.location = "/catering/mainCalendar"
+            });
+        });
+
+        /*
+                $(function () {
+                    $("#modalLoginBtn").click(function () {
+
+                        console.log("login button");
+
+                        var userId=$("input:text").val();
+                        var userPassword=$("input:password").val();
+                        $.ajax({
+                            type:"POST",
+                            url:"/user/json/login/"+userId,
+                            data:{userId, userPassword},
+                            success:function (data) {
+                                self.location = "redirect:/views/home.jsp"
+                            }
+                        });
+                    });
+                });
+        */
 
 
     </script>
@@ -151,7 +170,26 @@
                     <img class="d-inline-block" src="../resources/bootstrap/assets/logo.svg" alt="logo" />
                     <span>F.FIN</span>
                 </a>
-                <div class="" id="">
+                <div class = "menuTab" style="float: left;">
+                    <ul class="nav menu_tab">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" id="goTruck" >푸드트럭</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" id="goCatering">케이터링</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" id="goPost">게시판</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" id="goChat" >채팅방</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" id="goMsg" >쪽지</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="user_option_wrap" id="">
                     <div class="User_option">
                         <a href="#login">
                             <i class="fa fa-user" aria-hidden="true"></i>
@@ -197,7 +235,7 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <span style="color: #0b1727; margin-left: 0;">아직 회원이 아니신가요?</span>
-                                                        <a class="addChk" href="./user/addUser.jsp" style="color: #0b1727; margin-left: 0;"> <strong style="float: right; stroke: #000000">회원가입</strong></a>
+                                                        <a class="addChk" href="./user/addUserInfo.jsp" style="color: #0b1727; margin-left: 0;"> <strong style="float: right; stroke: #000000">회원가입</strong></a>
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane fade" id="CEO">
@@ -243,6 +281,7 @@
                             <a href="about.html">About</a>
                             <a href="blog.html">Blog</a>
                             <a href="testimonial.html">Testimonial</a>
+
                         </div>
                     </div>
                 </div>
