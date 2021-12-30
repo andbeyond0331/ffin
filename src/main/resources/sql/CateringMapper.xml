@@ -51,12 +51,12 @@
 		FROM catering ct, truck tr
 		<if test="search.searchCondition ==0">
 			<where>
-				ct.CT_USER_ID = #{id} AND ct.CT_TRUCK_ID = tr.TRUCK_ID
+				ct.CT_USER_ID = #{id} AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_STATUS_CODE !='6'
 			</where>
 		</if>
 		<if test="search.searchCondition ==1">
 			<where>
-				ct.CT_TRUCK_ID = #{id} AND ct.CT_TRUCK_ID = tr.TRUCK_ID
+				ct.CT_TRUCK_ID = #{id} AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_STATUS_CODE !='6'
 			</where>
 		</if>
 		<if test="search.searchCondition ==2">
@@ -104,9 +104,16 @@
 			ct.*, tr.TRUCK_ID, tr.TRUCK_NAME, tr.TRUCK_PHONE, m.IS_SIG_MENU, m.MENU_IMG1, m.MENU_NO, m.MENU_NAME, m.MENU_PRICE
 		FROM catering ct, truck tr, menu m
 		WHERE CT_NO = #{value}
-AND ct.CT_MENU_NO = m.MENU_NO AND ct.CT_TRUCK_ID = tr.TRUCK_ID
+		AND ct.CT_MENU_NO = m.MENU_NO AND ct.CT_TRUCK_ID = tr.TRUCK_ID
 	</select>
 
+	<select id="getResDetail"	parameterType="int"	resultMap="cateringSelectMap">
+		SELECT
+			ct.*, tr.TRUCK_ID, tr.TRUCK_NAME, tr.TRUCK_PHONE, m.IS_SIG_MENU, m.MENU_IMG1, m.MENU_NO, m.MENU_NAME, m.MENU_PRICE, us.USER_ID, us.USER_NAME
+		FROM catering ct, truck tr, menu m, user us
+		WHERE CT_NO = #{value}
+		  AND ct.CT_MENU_NO = m.MENU_NO AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_USER_ID = us.USER_ID
+	</select>
 
 	<insert id="addCt" parameterType="catering">
 		INSERT INTO catering(ct_truck_id,  ct_menu_no, ct_date, ct_menu_min_qty, ct_menu_max_qty, ct_serv_reg_date)
@@ -165,7 +172,7 @@ AND ct.CT_MENU_NO = m.MENU_NO AND ct.CT_TRUCK_ID = tr.TRUCK_ID
 	<update id="updateCtResCancel" parameterType="map">
 		UPDATE catering
 		<set>
-			<if test='ctStatusCode == "2"' >
+			<if test='ctStatusCode == "2" or ctStatusCode == "3"'>
 				CT_CANCEL_DATE=now(),
 			</if>
 			<if test="ctStatusCode =='5' or ctStatusCode.equals('5')">

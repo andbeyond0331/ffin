@@ -5,6 +5,7 @@ package com.ffin.web.catering;
 import com.ffin.common.Search;
 import com.ffin.service.catering.CateringService;
 import com.ffin.service.domain.Catering;
+import com.ffin.service.domain.Menu;
 import com.ffin.service.domain.Truck;
 import com.ffin.service.domain.User;
 import org.json.simple.JSONArray;
@@ -17,10 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Date;
+import java.util.*;
 
 @RestController
 @RequestMapping("/catering/*")
@@ -205,6 +204,150 @@ public class CateringRestController {
         modelAndView.addObject("catering", resCatering);
         modelAndView.setViewName("/views/catering/getCtDetail.jsp");*/
         return "y";
+    }
+
+
+    @RequestMapping( value="json/updateCtMenuQty", method=RequestMethod.POST)
+    @ResponseBody
+    public String updateCtMenuQty(HttpServletRequest request, HttpServletResponse response) throws Exception {
+           /* 사업자가 등록한 서비스를 수정함
+            기준 ; status = 0 이어야 함 (애초에 status가 0이어야 수정 버튼을 보이게 하려고 해서 따로 where절에 조건을 붙이지는 않았음
+            추후 견고한 코딩을 위하여 이 부분은 수정할 예정임*/
+
+        System.out.println("CateringController.updateCtMenuQty");
+        int ctNo = Integer.parseInt(request.getParameter("ctNo"));
+        int ctMenuMinQty = Integer.parseInt(request.getParameter("ctMenuMinQty"));
+        int ctMenuMaxQty = Integer.parseInt(request.getParameter("ctMenuMaxQty"));
+        System.out.println("ctNo = " + ctNo + ", ctMenuMinQty = " + ctMenuMinQty);
+        System.out.println("ctMenuMaxQty = " + ctMenuMaxQty);
+
+        cateringService.updateCtMenuQty(ctNo, ctMenuMinQty, ctMenuMaxQty);
+
+        return "y";
+    }
+
+    @RequestMapping( value="json/updateCtServDelete", method=RequestMethod.POST)
+    @ResponseBody
+    public String updateCtServDelete(@RequestParam("ctNo") int ctNo) throws Exception {
+        /*
+            statusCode = 6
+         */
+        System.out.println("CateringController.updateCtServDelete");
+        System.out.println("ctno: "+ctNo);
+        cateringService.updateCtResCancel(ctNo, "6");
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/views/catering/getCtDetail.jsp");
+        return "y";
+    }
+
+
+
+
+    @RequestMapping( value="json/getResDetail/{ctNo}", method=RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView getResDetail(@PathVariable("ctNo") int ctNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
+            /*
+                예약 내역을 불러온다. 상세정보조회.
+             */
+        request.setCharacterEncoding("UTF-8");
+
+        System.out.println("CateringController.REST");
+        System.out.println("ctNo = " + ctNo);
+
+        Catering catering = cateringService.getResDetail(ctNo);
+        System.out.println("catering = " + catering);
+            /*Map<String, Object> map = new HashMap<>();
+            map.put("ctNo", catering.getCtNo());
+            map.put("ctTruckId", catering.getCtTruck().getTruckId());*/
+        ModelAndView mv = new ModelAndView("jsonView");
+        mv.addObject("catering", catering);
+
+        return mv;
+    }
+
+
+    @RequestMapping( value="json/updateCtResCancel", method=RequestMethod.POST)
+    @ResponseBody
+    public String updateCtResCancel(@RequestParam("ctNo") int ctNo, @RequestParam("ctStatusCode") String ctStatusCode) throws Exception {
+        /*
+            이용자 혹은 트럭이 취소를 할 수 있음
+            추후 메모가 생기면 메모도 같이 보낼 수 있어야 할 듯
+         */
+        System.out.println("Rest. CateringController.updateCtResCancel");
+
+
+        cateringService.updateCtResCancel(ctNo, ctStatusCode);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("/views/catering/getCtDetail.jsp");
+        return ctStatusCode;
+    }
+
+
+    @RequestMapping( value="json/addCt/{truckId}", method= RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView addCt(@PathVariable("truckId") String truckId) throws Exception {
+        /*
+            addCtView
+            사업자가 서비스를 등록하기 위해 사용하는 화면
+            truckId로 truck의 정보 및 메뉴 정보를 불러와서 화면에 뿌려준다.
+         */
+
+        System.out.println("addCt   : GET/REST");
+        System.out.println("truckId = " + truckId);
+
+        Catering catering = cateringService.getCtTruckMenu(truckId);
+        System.out.println("catering = " + catering);
+
+        ModelAndView modelAndView = new ModelAndView("jsonView");
+        modelAndView.addObject("catering", catering);
+
+
+        return modelAndView;
+    }
+
+
+    @RequestMapping( value="json/addCtServ", method= RequestMethod.POST)
+    @ResponseBody
+    public String addCtServ(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+        /*
+            addCtView
+            사업자가 서비스를 등록하기 위해 사용하는 화면
+         */
+
+        System.out.println("REST  addCt   : POST");
+        String truckId = ((Truck)session.getAttribute("truck")).getTruckId();
+        System.out.println("truckId = " + truckId);
+        int menuNo = Integer.parseInt(request.getParameter("menuNo"));
+        System.out.println("menuNo = " + menuNo);
+        String ctDate = request.getParameter("ctDate");
+        System.out.println("ctDate = " + ctDate);
+        int ctMenuMinQty = Integer.parseInt(request.getParameter("ctMenuMinQty"));
+        System.out.println("ctMenuMinQty = " + ctMenuMinQty);
+        int ctMenuMaxQty = Integer.parseInt(request.getParameter("ctMenuMaxQty"));
+
+        System.out.println("ctMenuMaxQty = " + ctMenuMaxQty);
+        
+        
+        Truck truck = new Truck();
+        truck.setTruckId(truckId);
+        Menu menu = new Menu();
+        menu.setMenuNo(menuNo);
+        Catering catering = new Catering();
+        catering.setCtTruck(truck);
+        catering.setCtMenu(menu);
+        catering.setCtDate(ctDate);
+        catering.setCtMenuMinQty(ctMenuMinQty);
+        catering.setCtMenuMaxQty(ctMenuMaxQty);
+
+        cateringService.addCt(catering);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("catering", catering);
+        modelAndView.setViewName("/views/catering/addCtView.jsp");
+
+        return truckId;
     }
 
 

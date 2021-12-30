@@ -12,6 +12,7 @@ public interface CateringDao {
     public Map<String, Object> getCtDateList(Search search, String ctDate) throws Exception;
     public Catering getCtTruckMenu(String truckId) throws Exception;
     public Catering getCtDetail(int ctNo) throws Exception;
+    public Catering getResDetail(int ctNo) throws Exception;
     public void addCt(Catering catering) throws Exception;
     public void updateCtResAdd(Catering catering) throws Exception;
     public void updateCtMenuQty(int ctNo, int ctMenuMinQty, int ctMenuMaxQty) throws Exception;

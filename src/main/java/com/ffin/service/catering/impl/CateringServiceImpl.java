@@ -49,6 +49,11 @@ public class CateringServiceImpl implements CateringService {
     }
 
     @Override
+    public Catering getResDetail(int ctNo) throws Exception {
+        return cateringDao.getResDetail(ctNo);
+    }
+
+    @Override
     public void addCt(Catering catering) throws Exception {
         cateringDao.addCt(catering);
     }

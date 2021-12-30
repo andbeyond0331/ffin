@@ -47,6 +47,7 @@ public interface CateringService {
       */
      public Catering getCtTruckMenu(String truckId) throws Exception;
      public Catering getCtDetail(int ctNo) throws Exception;
+     public Catering getResDetail(int ctNo) throws Exception;
      public void addCt(Catering catering) throws Exception;
 
      public void updateCtResAdd(Catering catering) throws Exception;

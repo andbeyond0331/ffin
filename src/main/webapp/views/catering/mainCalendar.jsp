@@ -72,6 +72,8 @@
     <script src="../../resources/fullcalendar/timegrid/main.min.js"></script>
     <script src='../../resources/fullcalendar/core/locales/ko.js'></script>
 
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=51615d81a030d0475e576eb41e443c14"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 
     <%
@@ -142,23 +144,19 @@
 
 
 <script>
-
+    var role = '${sessionScope.role}';
     $(function() {
         var modal = $('#staticBackdrop');
 
         $("#staticBackdrop").on('hide.bs.modal', function (e) {
-
             self.location = "/catering/mainCalendar"
-
             e.stopImmediatePropagation();
-
         });
 
-
-
-
-
         $(".btn-default").on("click" , function() {
+            /*
+                사장님께 문자 고 고
+             */
 
             //  var
             /* var ctUserName = modal.find("input[name='ctUserName']").val();
@@ -171,7 +169,7 @@
              var ctEndTime = modal.find("input[name='ctEndTime']").val();
              var ctUserRequest = modal.find("textarea[name='ctUserRequest']").val();*/
 
-            //console.log(ctUserName + ":" + ctUserPhone + ":" + ctUserAddr + ":" +ctUserAddrDetail + ":" +ctMenuQty + ":" +ctQuotation + ":" +ctStartTime + ":" +ctEndTime + ":" +ctUserRequest)
+            //console.log(ctUserName + ":" + ctUserPhone + ":" +' ctUserAddr + ":" +ctUserAddrDetail + ":" +ctMenuQty + ":" +ctQuotation + ":" +ctStartTime + ":" +ctEndTime + ":" +ctUserRequest)
 
             $.ajax(
                 {
@@ -193,7 +191,7 @@
                     success : function(data)
                     {
                         //alert(data.reviewText)
-                        //alert(" 상품의 리뷰 작성이 완료되었습니다. ")
+                        alert(" 예약이 완료되었습니다. ")
 
                         $('#staticBackdrop').modal('hide');
                         window.location.reload();
@@ -201,6 +199,45 @@
 
                 });//end ajax
         });
+
+
+        var mapContainer = modal.find("div[name='map']"), // 지도를 표시할 div
+            mapOption = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+// 지도를 생성합니다
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+
+// 주소-좌표 변환 객체를 생성합니다
+        var geocoder = new kakao.maps.services.Geocoder();
+
+// 주소로 좌표를 검색합니다
+        geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function(result, status) {
+
+            // 정상적으로 검색이 완료됐으면
+            if (status === kakao.maps.services.Status.OK) {
+
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                // 결과값으로 받은 위치를 마커로 표시합니다
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+
+                // 인포윈도우로 장소에 대한 설명을 표시합니다
+                var infowindow = new kakao.maps.InfoWindow({
+                    content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+                });
+                infowindow.open(map, marker);
+
+                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                map.setCenter(coords);
+            }
+        });
+
     });
 
 
@@ -217,25 +254,46 @@
             plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
             dateClick : function (info) {
 
-                $('.modal-body').append("hi");
-                $('#staticBackdrop').modal('show');
+                /* 과거 못누르게 */
+                let now = new Date();
+                let check = moment(info.date).format('YYYY-MM-DD');
+                let today = moment(now).format('YYYY-MM-DD');
+
+                if(check < today)
+                {
+                    // 과거 일자
+                }
+                else
+                {
+                    if(role=="truck") {
+                        addCateringService(today);
+                    }
+                }
+
 
             },
             eventClick: function(arg) {
                 var statusCode = arg.event.extendedProps.ctStatusCode;
                 /*
                    (예약가능, 초록)  statusCode = 0 : 서비스 상세보기
-                          role = truck이면 수정/삭제
-                          role = user면 예약 가능하도록 폼 띄우기
-                   (예약,    ? )  statuscode = 1 : 예약된 상태, 예약 상세 보기
+                          role = truck이면 수정/삭제 -> 완료 -> 수정/삭제 오께이
+                          role = user면 예약 가능하도록 폼 띄우기 -> 완료 / 예약오께이
+                   (예약,   보라 )  statuscode = 1 : 예약된 상태, 예약 상세 보기
                          role = user  - 이용자 취소 버튼 출력
                          role = truck - 수락/거절 버튼 출력
                    ( 수락 완료, 결제 필요 ) statuscode = 4 : 마찬가지로 예약 상세 보기
                          role = user - 결제 버튼 출력
+                                truck - 수락 취소 버튼 출력 > statusCode = 1로 변경, 수락 메모 삭제
                    ( 예약 완료, 핑크 ) statuscode = 5
-                         예약 상세 보기
+                         예약 상세 보기 (동일)
                  */
+
+                if(statusCode =='0'){
                 getCateringDetail(arg);
+                 }else if(statusCode =='1'|| statusCode == '4' || statusCode == '5'){
+                    getResDetail(arg);
+                }
+
             },
             defaultView: 'dayGridMonth',
             defaultDate: new Date(),
@@ -265,8 +323,14 @@
                     ctStatusCode : '<%=ct.getCtStatusCode()%>'
                     <% if (ct.getCtStatusCode().equals("5")){%>
                     , color: "#f81f59"
-                    <%} else {%>
+                    <%} else if (ct.getCtStatusCode().equals("0")){%>
                     , color: "#008d62"
+                    <%}  else if (ct.getCtStatusCode().equals("1")){%>
+                    , color: "#bcb5f3"
+                    <%}  else if (ct.getCtStatusCode().equals("4")){%>
+                    , color: "#fcab31"
+                    <%}  else{%>
+                    , color: "#868583"
                     <%} %>
                 },
                 <%
@@ -285,6 +349,62 @@
 
     });
 
+
+    function addCateringService(today){
+
+        /* 사업자의 서비스 등록을 하기 위한.. */
+        let truckId = '${sessionScope.truck.truckId}';
+
+        $.ajax({
+            url:"/catering/json/addCt/"+truckId,
+            method:"get",
+            data:{
+            },
+            success: function (data) {
+                // alert(data);
+                //t.TRUCK_ID, t.TRUCK_NAME, t.TRUCK_PHONE, m.IS_SIG_MENU, m.MENU_IMG1, m.MENU_NO, m.MENU_NAME, m.MENU_PRICE
+
+                var div="";
+                // var role = '${sessionScope.role}';
+                var modalFooter = "";
+
+                <%--${sessionScope.role};--%>
+
+                div += "<div class='row'>"
+                    + "<div><strong>푸드트럭 이름</strong> : "+data.catering.ctTruck.truckName+"</div>" +
+                    "</div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>서비스 가능 날짜</strong> : "+today+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong></strong> <img src='../../../resources/image/"+data.catering.ctMenu.menuImg1+"'></div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>최소 수량</strong> : <input type='text' id='servMenuMinQty' name='servMenuMinQty'  /></div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>최대 수량</strong> : <input type='text' id='servMenuMaxQty' name='servMenuMaxQty' /></div></div>"
+                   +"<input type='text' id='menuNo' name='menuNo' value='"+data.catering.ctMenu.menuNo+"'/>"
+                   +"<input type='hidden' id='ctDate' name='ctDate' value='"+today+"'/>";
+
+                modalFooter += "<div class='modal-footer'>"
+                    +"<button type='button' class='btn btn-outline-info' id='addCtServ' name='addCtServ' onclick='addCtServ();'>서비스 등록</button>"
+                    +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
+                    +"</div>";
+
+                $('.modal-footer').remove();
+                $('.modal-content').append(modalFooter);
+                $('.modal-body').html(div);
+                $('#staticBackdrop').modal('show');
+            },
+            error : function(err){
+                console.log('에러')
+            }
+        });//end ajax
+
+    }
+
     function getCateringDetail(arg) {
         /* statusCode == 0 */
         g_arg = arg;
@@ -299,9 +419,11 @@
                 // alert(data);
                 console.log("data : "+data.catering.ctTruck.truckId)
                 var div="";
-                var role = "user"
-                <%--${sessionScope.role};--%>
+               // var role = '${sessionScope.role}';
+                var modalFooter = "";
 
+                <%--${sessionScope.role};--%>
+                console.log("role : "+role)
                 div += "<div class='row'>"+
                     "<div><strong>서비스 번호</strong> : "+data.catering.ctNo+"</div></div>" +
                     "<div class='row'>"
@@ -315,15 +437,14 @@
                     +"<div ><strong></strong> <img src='../../../resources/image/"+data.catering.ctMenu.menuImg1+"'></div></div>"
                     +"<div class='row'>"
                     +"<div ><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong>최소 수량</strong> : "+data.catering.ctMenuMinQty+"</div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong>최대 수량</strong> : "+data.catering.ctMenuMaxQty+"</div></div>"
                     +"<input type='hidden' id='ctNo' name='ctNo' value='"+data.catering.ctNo+"'/>"
-                if (role=="user")
-                {
+                if (role=="user") {
                     div +=
                         "<div class='row'>"
+                        +"<div ><strong>최소 수량</strong> : "+data.catering.ctMenuMinQty+"</div></div>"
+                        +"<div class='row'>"
+                        +"<div ><strong>최대 수량</strong> : "+data.catering.ctMenuMaxQty+"</div></div>"
+                        +"<div class='row'>"
                         +"<div ><strong>예약자 아이디</strong> : <input type='text' id='ctUserId' name='ctUserId'/></div></div>"
                         +"<div class='row'>"
                         +"<div ><strong>예약자 전화번호</strong> : <input type='text' id='ctUserPhone' name='ctUserPhone'/></div></div>"
@@ -345,12 +466,22 @@
                         +"<div><strong>종료 시간</strong> : <input type='text' id='ctEndTime' name='ctEndTime'/></div></div>"
                         +"<div class='row'>"
                         +"<div><strong>요청 사항</strong> : <textarea name='ctUserRequest' rows='3'></textarea></div></div>"
-
+                        + "</div><hr/>";
                 }else if (role=="truck"){
-                    // truck이면 '수정', '삭제' 버튼 생성
+                    div += "<div class='row'>"
+                        +"<div ><strong>최소 수량</strong> : <input type='text' id='ctMenuMinQty' name='ctMenuMinQty' value='"+data.catering.ctMenuMinQty+"' /></div></div>"
+                        +"<div class='row'>"
+                        +"<div ><strong>최대 수량</strong> : <input type='text' id='ctMenuMaxQty' name='ctMenuMaxQty' value='"+data.catering.ctMenuMaxQty+"' /></div></div>";
 
+                    $('.modal-footer').remove();
+
+
+                    modalFooter += "<div class='modal-footer'>"
+                    +"<button type='button' class='btn btn-outline-info' id='updateCtServ' name='updateCtServ' onclick='updateCtServ();'>서비스 수정</button>"
+                    +"<button type='button' class='btn btn-outline-danger' id='deleteCtServ' name='deleteCtServ' onclick='deleteCtServ();'>서비스 삭제</button>"
+                    +"</div>";
+                    $('.modal-content').append(modalFooter);
                 }
-                div += "</div><hr/>";
                 $('.modal-body').html(div);
                 $('#staticBackdrop').modal('show');
 
@@ -361,6 +492,234 @@
         });
 
     }
+
+    /*
+     예약 상세
+     기본적으로는 아래 footer 부분 제외하고는 다 똑같이 가도 될듯.
+     이용자는 수정은 못함 취소만 가능함
+
+
+      (예약,   보라 )  statuscode = 1 : 예약된 상태, 예약 상세 보기
+                         role = user  - 이용자 취소 버튼 출력
+                         role = truck - 수락/거절 버튼 출력
+                   ( 수락 완료, 결제 필요 ) statuscode = 4 : 마찬가지로 예약 상세 보기
+                         role = user - 결제 버튼 출력
+                         truck - 수락 취소 버튼 출력 > statusCode = 1로 변경, 수락 메모 삭제
+                   ( 예약 완료, 핑크 ) statuscode = 5
+                         예약 상세 보기 (동일)
+    */
+    function getResDetail(arg) {
+        /* statusCode == 0 */
+        g_arg = arg;
+        var ctNo = arg.event.extendedProps.ctNo;
+        var statusCode = arg.event.extendedProps.ctStatusCode;
+
+        console.log(ctNo);
+        $.ajax({
+            url:"/catering/json/getResDetail/"+ctNo,
+            method:"get",
+            data:{
+            },
+            success: function (data) {
+                // alert(data);
+                console.log("data : "+data.catering.ctTruck.truckId)
+                var div="";
+               // var role = '${sessionScope.role}';
+                var modalFooter = "";
+
+                <%--${sessionScope.role};--%>
+                console.log("role : "+role)
+                div += "<div class='row'>"+
+                    "<div><strong>서비스 번호</strong> : "+data.catering.ctNo+"</div></div>" +
+                    "<div class='row'>"
+                    + "<div><strong>이용자 이름</strong> : "+data.catering.ctUser.userName+"</div></div>"
+                    +"<div class='row'>"
+                     + "<div><strong>이용자 전화번호</strong> : "+data.catering.ctPhone+"</div></div>"
+                    +"<div class='row'>"
+                    + "<div><strong>푸드트럭 이름</strong> : "+data.catering.ctTruck.truckName+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>예약 날짜</strong> : "+data.catering.ctDate+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>시작 시간</strong> : "+data.catering.ctStartTime+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>종료 시간</strong> : "+data.catering.ctEndTime+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>주소</strong> : "+data.catering.ctAdd+" "+data.catering.ctAddDetail+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div id ='map' style='width:100%;height:350px;'>"
+                    +"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong></strong> <img src='../../../resources/image/"+data.catering.ctMenu.menuImg1+"'></div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>필요 수량</strong> : "+data.catering.ctMenuQty+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>요청사항</strong> : "+data.catering.ctUserRequest+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>견적</strong> : "+data.catering.ctQuotation+"</div></div>"
+                    +"<input type='hidden' id='ctNo' name='ctNo' value='"+data.catering.ctNo+"'/>";
+
+                if (statusCode == '1') {
+                    /* 이용자: 취소가능 , 사업자: 수락 or 거절 */
+                    if (role=="user") { // '취소'버튼, '확인'버튼
+                        modalFooter += "<div class='modal-footer'>"
+                            +"<button type='button' class='btn btn-outline-danger' id='resCancel' name='resCancel' onclick='updateCtResCancel(2);'>예약 취소</button>"
+                            +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
+                            +"</div>";
+                    }else{
+                        modalFooter += "<div class='modal-footer'>"
+                            +"<button type='button' class='btn btn-outline-success' id='resAccept' name='resAccept' onclick='updateCtResCancel(4);'>수락</button>"
+                            +"<button type='button' class='btn btn-outline-danger' id='resReject' name='resReject' onclick='updateCtResCancel(3);'>거절</button>"
+                            +"</div>";
+                    }
+
+                }else if (statusCode == '4'){
+                    /*
+                    role = user - 결제 버튼 출력
+                         truck - 수락 취소 버튼 출력 > statusCode = 1로 변경
+                     */
+                    if (role=="user") { // '취소'버튼, '확인'버튼
+                        modalFooter += "<div class='modal-footer'>"
+                            +"<button type='button' class='btn btn-outline-danger' id='resCancel' name='resCancel' onclick=''>결제</button>"
+                            +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
+                            +"</div>";
+                    }else{
+                        modalFooter += "<div class='modal-footer'>"
+                            +"<button type='button' class='btn btn-outline-success' id='resAccept' name='resAccept' onclick='updateCtResCancel(1);'>수락 취소</button>"
+                            +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
+                            +"</div>";
+                    }
+
+
+                }else if (statusCode =='5'){
+                    /*
+                     ( 예약 완료, 핑크 ) statuscode = 5
+                         예약 상세 보기 (동일)
+
+                         예약정보 불러오기?
+                         아니면 1대1연락하기? 이런건 좀 고민해보기!!!!
+                     */
+                    modalFooter += "<div class='modal-footer'>"
+                        +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
+                        +"</div>";
+                }
+
+                $('.modal-footer').remove();
+                $('.modal-content').append(modalFooter);
+                $('.modal-body').html(div);
+                $('#staticBackdrop').modal('show');
+
+            },
+            error : function(err){
+                console.log('에러')
+            }
+        });
+
+    }
+    /* 이용자 취소(2), 사업자 취소(3) */
+    function updateCtResCancel(statusCode){
+        var modal = $('#staticBackdrop');
+
+        $.ajax(
+            {
+                url : "/catering/json/updateCtResCancel",
+                method : "POST",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data :{
+                    ctNo : modal.find("input[name='ctNo']").val(),
+                    ctStatusCode : statusCode
+                },
+                success : function(data)
+                {
+                    //alert(data.reviewText)
+                    alert(" 취소되었습니다. ")
+                    $('#staticBackdrop').modal('hide');
+                    window.location.reload();
+                }
+
+            });//end ajax
+    }
+
+    /* 서비스 등록 */
+    function addCtServ(){
+        var modal = $('#staticBackdrop');
+
+        $.ajax(
+            {
+                url : "/catering/json/addCtServ",
+                method : "POST",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data :{
+                    menuNo : modal.find("input[name='menuNo']").val(),
+                    ctDate : modal.find("input[name='ctDate']").val(),
+                    ctMenuMinQty : modal.find("input[name='ctMenuMinQty']").val(),
+                    ctMenuMaxQty : modal.find("input[name='ctMenuMaxQty']").val()
+                },
+                success : function(data)
+                {
+                    //alert(data.reviewText)
+                    alert(" 등록되었습니다. ")
+                    $('#staticBackdrop').modal('hide');
+                    window.location.reload();
+                }
+
+            });//end ajax
+    }
+
+    /* 서비스 수정, role=truck, statusCode=0 */
+    function updateCtServ(){
+        var modal = $('#staticBackdrop');
+
+        $.ajax(
+            {
+                url : "/catering/json/updateCtMenuQty",
+                method : "POST",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data :{
+                    ctNo : modal.find("input[name='ctNo']").val(),
+                    ctMenuMinQty : modal.find("input[name='ctMenuMinQty']").val(),
+                    ctMenuMaxQty : modal.find("input[name='ctMenuMaxQty']").val()
+                },
+                success : function(data)
+                {
+                    //alert(data.reviewText)
+                    alert(" 수정되었습니다. ")
+                    $('#staticBackdrop').modal('hide');
+                    window.location.reload();
+                }
+
+            });//end ajax
+    }
+
+    /* 서비스 삭제, role=truck, statusCode=0
+    * flag를 두려다가 그냥 resStatusCode=6으로 사용하려 함
+    * 걍 삭제해버리까.....
+    * */
+    function deleteCtServ(){
+        var modal = $('#staticBackdrop');
+
+        $.ajax(
+            {
+                url : "/catering/json/updateCtServDelete",
+                method : "POST",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data :{
+                    ctNo : modal.find("input[name='ctNo']").val()
+                },
+                success : function(data)
+                {
+                    //alert(data.reviewText)
+                    alert(" 삭제되었습니다. ")
+                    $('#staticBackdrop').modal('hide');
+                    window.location.reload();
+                }
+
+            });//end ajax
+    }
+
 
     /* Daum API */
     function addrApi(){
@@ -416,7 +775,6 @@
             }
         }).open();
     }
-
 
 
 

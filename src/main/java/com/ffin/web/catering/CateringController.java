@@ -53,10 +53,12 @@ public class CateringController {
             이용자, 사업자 구분
             full Calendar ...*/
 
-        session.setAttribute("role", "user");
-        User testUser = new User();
-        testUser.setUserId("user01");
-        session.setAttribute("user", testUser);
+        session.setAttribute("role", "truck");
+        //User testUser = new User();
+        //testUser.setUserId("user01");
+        Truck testTruck = new Truck();
+        testTruck.setTruckId("truck01");
+        session.setAttribute("truck", testTruck);
 
         String id="";
         Map<String , Object> map= new HashMap<String , Object>();
@@ -70,7 +72,7 @@ public class CateringController {
             User user = (User) session.getAttribute("user");
             id = user.getUserId();
             System.out.println("user id: "+id);
-            search.setSearchCondition("2");
+            search.setSearchCondition("0");
 
         }else if(role == "truck" || role.equals("truck")){
             // truck이라면
@@ -169,27 +171,6 @@ public class CateringController {
     }
 
 
-    @RequestMapping( value="addCt", method= RequestMethod.GET)
-    public ModelAndView addCt(@RequestParam("truckId") String truckId) throws Exception {
-        /*
-            addCtView
-            사업자가 서비스를 등록하기 위해 사용하는 화면
-            truckId로 truck의 정보 및 메뉴 정보를 불러와서 화면에 뿌려준다.
-         */
-
-        System.out.println("addCt   : GET");
-        System.out.println("truckId = " + truckId);
-
-        Catering catering = cateringService.getCtTruckMenu(truckId);
-        System.out.println("catering = " + catering);
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("catering", catering);
-        modelAndView.setViewName("/views/catering/addCtView.jsp");
-
-        return modelAndView;
-    }
-
     @RequestMapping( value="addCt", method=RequestMethod.POST)
     public ModelAndView addCt(@ModelAttribute("catering") Catering catering) throws Exception {
           /*
@@ -255,51 +236,6 @@ public class CateringController {
     }
 
 
-/*
-
-    @RequestMapping( value="updateCtResAdd", method=RequestMethod.POST)
-    public ModelAndView updateCtResAdd(@ModelAttribute("catering") Catering catering) throws Exception {
-        */
-/*
-            이용자가 예약을 등록함
-         *//*
-
-        System.out.println("CateringController.updateCtResAdd");
-        System.out.println("catering = " + catering);
-
-        cateringService.updateCtResAdd(catering);
-
-        Catering resCatering = cateringService.getCtDetail(catering.getCtNo());
-        // 업데이트 이후, 등록된 전체 내용을 보내고자 함
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("catering", resCatering);
-        modelAndView.setViewName("/views/catering/getCtDetail.jsp");
-        return modelAndView;
-    }
-*/
-
-
-    @RequestMapping( value="updateCtMenuQty", method=RequestMethod.POST)
-    public ModelAndView updateCtMenuQty(@RequestParam("ctNo") int ctNo, @RequestParam("ctMenuMinQty") int ctMenuMinQty,  @RequestParam("ctMenuMaxQty") int ctMenuMaxQty) throws Exception {
-        /*
-            사업자가 등록한 서비스를 수정함
-            기준 ; status = 0 이어야 함 (애초에 status가 0이어야 수정 버튼을 보이게 하려고 해서 따로 where절에 조건을 붙이지는 않았음
-            추후 견고한 코딩을 위하여 이 부분은 수정할 예정임
-         */
-        System.out.println("CateringController.updateCtMenuQty");
-        System.out.println("ctNo = " + ctNo + ", ctMenuMinQty = " + ctMenuMinQty + ", ctMenuMaxQty = " + ctMenuMaxQty);
-
-        cateringService.updateCtMenuQty(ctNo, ctMenuMinQty, ctMenuMaxQty);
-
-        Catering catering = cateringService.getCtDetail(ctNo);
-        // 업데이트 이후, 등록된 전체 내용을 보내고자 함
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("catering", catering);
-        modelAndView.setViewName("/views/catering/getCtDetail.jsp");
-        return modelAndView;
-    }
 
 
 
@@ -327,21 +263,7 @@ public class CateringController {
 
 
 
-    @RequestMapping( value="updateCtResCancel", method=RequestMethod.POST)
-    public ModelAndView updateCtResCancel(@RequestParam("ctNo") int ctNo, @RequestParam("ctStatusCode") String ctStatusCode, HttpSession session) throws Exception {
-        /*
-            이용자 혹은 트럭이 취소를 할 수 있음
-            추후 메모가 생기면 메모도 같이 보낼 수 있어야 할 듯
-         */
-        System.out.println("CateringController.updateCtResCancel");
-        System.out.println("ctNo = " + ctNo + ", ctStatusCode = " + ctStatusCode + ", session = " + session);
 
-        cateringService.updateCtResCancel(ctNo, ctStatusCode);
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/views/catering/getCtDetail.jsp");
-        return modelAndView;
-    }
 
 
 
