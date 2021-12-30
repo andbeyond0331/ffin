@@ -11,9 +11,9 @@
 
     <script type="text/javascript">
 
-            function loginModal(){
-                $('#openLoginModal').modal('show');
-            }
+        function loginModal(){
+            $('#openLoginModal').modal('show');
+        }
 
     </script>
 
@@ -70,8 +70,8 @@
 
 <div class="hero_area">
 
-<!-- toolbar -->
-<jsp:include page="/views/toolbar.jsp" />
+    <!-- toolbar -->
+    <jsp:include page="/views/toolbar.jsp" />
 
 
     <!-- slider section -->

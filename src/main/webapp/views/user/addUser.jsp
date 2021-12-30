@@ -69,11 +69,44 @@
 
 				var userId = $("input[name='userId']").val();
 				var userPassword = $("input[name='userPassword']").val();
+				var reUserPassword = $("input[name='reUserPassword']").val();
 				var userName = $("input[name='userName']").val();
 				var userPhone = $("input[name='userPhone']").val();
 
 				if(userId == null || id.length < 1 ){
-					$("input[name='userId']").focus();
+					$("#userId").focus(function () {
+						$(this).css("background-color","#ffe537")
+					});
+
+
+				}
+
+				if(userPassword == null || userPassword.length < 1 ){
+					userPassword.focus();
+					return;
+				}
+
+				/*password V.C*/
+				var userPasswordChk = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,25}$/;
+				if(!userPasswordChk.test(userPassword.value)){
+					userPassword.focus();
+					return;
+				}
+
+				/*password 재입력*/
+				if(userPassword.value !== reUserPassword.value){
+					reUserPassword.focus();
+					return;
+				}
+
+				if(userName == null || userName.length < 1 ){
+					userName.focus();
+					return;
+				}
+
+				if(userPhone == null || userPhone.length < 1 ){
+					userPhone.focus();
+					return;
 				}
 
 				$("form").attr("method" , "POST").attr("action" , "/user/addUser").submit();
@@ -85,7 +118,7 @@
 		$( function() {
 
 			var code = "";
-``
+			``
 			/* 인증번호 이메일 전송 */
 			$(".auth-email").click(function () {
 
@@ -195,7 +228,7 @@
 			}).open();
 		}
 
-</script>
+	</script>
 </head>
 
 <body id="page-top">
@@ -228,33 +261,31 @@
 								<div class="data-input-box">
 									<label for="userPassword" class="form-label label-name">Password</label>
 									<input type="password" class="form-control" id="userPassword" placeholder="비밀번호">
-									<input type="password" class="form-control" id="userPasswordChk" placeholder="비밀번호 확인" disabled="disabled" style="margin-top: 10px">
+									<input type="password" class="form-control" id="reUserPassword" placeholder="비밀번호 확인" disabled="disabled" style="margin-top: 10px">
 								</div>
 
 								<div class="data-input-box">
-									<label for="userdName" class="form-label label-name">이름</label>
-									<input type="text" class="form-control" id="userdName">
+									<label for="userName" class="form-label label-name">이름</label>
+									<input type="text" class="form-control" id="userName">
 								</div>
 
 								<div class="data-input-box">
 									<label for="userBirth" class="form-label label-name">생년월일</label>
 									<input type="text" class="form-control" id="userBirth">
-									<%--<span style="font-size: 10pt;">연 1회 생일 축하 쿠폰이 발급됩니다.</span>--%>
 									<div id="birthHelp" class="form-text" style="font-size: 10pt;">연 1회 생일 축하 쿠폰이 발급됩니다.</div>
 								</div>
 
 								<div class="data-input-box">
 									<label for="userPhone" class="form-label label-name">Phone</label>
 									<input type="text" class="form-control" id="userPhone" placeholder="전화번호를 입력하세요.">
-									<%--<span style="font-size: 10pt;">인증번호를 요청하세요.</span>--%>
-									<div id="phoneHelp" class="form-text" style="font-size: 10pt;">인증번호를 요청하세요.</div>
-									<button type="button" class="btn btn-outline-warning auth-phone" >인증번호 요청</button>
-									<input type="authPhone" class="form-control" id="authPhone" placeholder="인증번호 확인" disabled="disabled" style="margin-top: 25px">
+									<div id="phoneHelp" class="form-text" style="font-size: 10pt; float:left; margin-right:10px; margin-top: 12px;">인증번호를 요청하세요.</div>
+									<button type="button" class="btn btn-outline-warning auth-phone" style="float: right; margin-bottom: 5px;" >인증번호 요청</button>
+									<input type="text" class="form-control" id="authPhone" placeholder="인증번호 확인" disabled="disabled" >
 								</div>
 
 								<div class="data-input-box">
 									<label for="userAddr" class="form-label label-name">주소</label>
-									<input type="text" class="form-control" id="userAddr" placeholder="주소 검색" style="width: 80%;">
+									<input type="text" class="form-control" id="userAddr" placeholder="주소 검색" style="width: 80%; ">
 									<button type="button" class="btn btn-outline-warning addrApi" onclick="addrApi()">검색</button>
 									<input type="text" class="form-control" id="userAddrDetail" placeholder="상세주소" style="margin-top: 25px">
 								</div>
@@ -262,10 +293,10 @@
 								<div class="data-input-box">
 									<label for="userEmail" class="form-label label-name">Email</label>
 									<input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="이메일을 입력하세요.">
-									<%--<span style="font-size: 10pt;">인증번호를 요청하세요.</span>--%>
-									<div id="emailHelp" class="form-text" style="font-size: 10pt;">인증번호를 요청하세요.</div>
-									<button type="button" class="btn btn-outline-warning auth-email" >인증번호 요청</button>
-									<input type="authEmail" class="form-control" id="authEmail" placeholder="인증번호 확인" disabled="disabled" style="margin-top: 25px">
+									<div id="emailHelp" class="form-text" style="font-size: 10pt; float:left; margin-right:10px; margin-top: 12px;">인증번호를 요청하세요.</div>
+									<button type="button" class="btn btn-outline-warning auth-email" style="float: right; margin-bottom: 5px;" >인증번호 요청</button>
+									<label for="authEmail" class="form-label label-name"></label>
+									<input type="text" class="form-control" id="authEmail" placeholder="인증번호 확인" disabled="disabled" style="margin-top: 25px">
 								</div>
 
 							</div>
