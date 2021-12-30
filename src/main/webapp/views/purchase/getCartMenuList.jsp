@@ -44,7 +44,8 @@
         var query = $("form").serialize();
         $.ajax({
             type: "post",
-            url: '/purchase/json/addPayView',
+            url: '/purchase/json/addCartList',
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             data : query,
             dataType: 'json',
             error: function (xhr, status, error) {

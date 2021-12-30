@@ -46,15 +46,14 @@
         IMP.init('imp67651684'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
         var msg;
 
-        var orderUserId = $("input[name='orderUserId']").val();
+        var orderUserId = $("input[name='orderUserId.userId']").val();
         var orderTotalPrice= $("input[name='orderTotalPrice']").val();
-        var orderTruckId = $("input[name='orderTruckId']").val();
+        var orderTruckId = $("input[name='orderTruckId.truckId']").val();
         var payOption = $("input[name='payOption']:checked").val();
         var payPrice =  $("input[name='payPrice']").val();
         var pointAmt =  $("input[name='pointAmt']").val();
         var couponDcPrice =  $("input[name='couponDcPrice']").val();
         var orderNo = $("input[name='orderNo']").val();
-
 
 
 
@@ -90,6 +89,8 @@
                         data : {
                             "payOption" : payOption,
                             "orderTotalPrice" :orderTotalPrice,
+                            "orderUserId" : orderUserId,
+                            "orderTruckId" : orderTruckId,
 
 
                         }
@@ -394,44 +395,23 @@
                             <h3>할인 및 적립금</h3>
                         </div>
                     </div>
-                  <div class="row">
+                    <div class="row">
                         <label for="couponDcPrice" class="col-sm-offset-1 col-sm-3 control-label">할인쿠폰</label>
-                        <div class="col-sm-3">
-                            <div class="well well-sm">${coupon.couponDcPrice}</div>
-                            <input type="text" class="form-control" id="couponDcPrice"
-                                   name="couponDcPrice" placeholder="쿠폰을 적용하세요" value="" >
-                        </div>
-                        <div class="col-sm-1">
-                            원
-                        </div>
-                        <div class="col-sm-3">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">
-                                쿠폰적용
-                            </button>
+                        <div class="input-group w-100">
+                            <input type="text" class="form-control" id="couponDcPrice" name="couponDcPrice" placeholder="쿠폰을 적용하세요" value="${coupon.couponDcPrice}" >
+                            <span class="input-group-text">원</span>
+                            <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#myModal">쿠폰적용</button>
                         </div>
                     </div>
 
                     <div class="row">
-
                         <label for="pointAmt" class="col-sm-offset-1 col-sm-3 control-label">적립금</label>
-                        <div class="col-sm-2">
-                            <%--<div class="well well-sm">${user.userTotalPorint}</div>--%>
-
-                            <div class="well well-sm">0</div>
-                        </div>
-                        <div class="col-sm-2">
-                            <input type="text"  placeholder="o" id="pointAmt" naem="pointAmt">
-                        </div>
-
-                        <div class="col-sm-2">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-secondary btn-sm">
-                                포인트적용
-                            </button>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">${user.userTotalPoint}</span>
+                            <input type="text" class="form-control" id="pointAmt" naem="pointAmt" placeholder="입력" value="${point.pointAmt}" >
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">적용</button>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="container">
