@@ -181,7 +181,7 @@ public class TruckServiceImpl implements TruckService {
         return null;
     }
 
-
+    // 문자인증
     public void certifiedPhoneNumber(String truckPhoneNumber, int randomNumber) {
         String api_key = "NCSIIBP9OZRKRL6J";
         String api_secret = "WNJOTZFUSTD19LSNH0NOWDIGVJD7OWRC";

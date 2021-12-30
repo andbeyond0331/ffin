@@ -74,5 +74,6 @@ public interface TruckService {
     // 게시판 Page 처리를 위한 전체Row(totalCount)  return
     public int getTotalCount(Search search) throws Exception ;
 
+    // 문자인증
     public void certifiedPhoneNumber(String truckPhoneNumber, int randomNumber);
 }

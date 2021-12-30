@@ -4,9 +4,6 @@ import com.ffin.common.Page;
 import com.ffin.common.Search;
 import com.ffin.service.domain.Truck;
 import com.ffin.service.truck.TruckService;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,9 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 //==> 트럭관리 Controller
@@ -56,13 +50,28 @@ public class TruckController {
     }
 
     @RequestMapping(value = "addTruck", method = RequestMethod.POST)
-    public String addTruck(@ModelAttribute("truck") Truck truck, @RequestParam("truckBusiLice1") MultipartFile lice,  @RequestParam("truckProImg1") MultipartFile img) throws Exception {
+    public String addTruck(@ModelAttribute("truck") Truck truck) throws Exception {
 
         System.out.println("/truck/addTruck : POST");
         //Business Logic
+        System.out.println("truck = " + truck);
+
+//        String temDir = "/Users/js/IdeaProjects/ffin/src/main/webapp/resources/image";
+//
+//        if (!file1.getOriginalFilename().isEmpty()) {
+//            file1.transferTo(new File(temDir, file1.getOriginalFilename()));
+//        }
+////        if (!file2.getOriginalFilename().isEmpty()) {
+////            file2.transferTo(new File(temDir, file2.getOriginalFilename()));
+////        }
+//
+//        truck.setTruckBusiLice(file1.getOriginalFilename());
+//        //truck.setTruckProImg(file2.getOriginalFilename());
         truckService.addTruck(truck);
 
-        return "/views/truck/loginTruck.jsp";
+//        model.addAttribute("truck", truck);
+
+        return "redirect:/views/truck/loginTruck.jsp";
     }
 
     @RequestMapping(value = "getTruck", method = RequestMethod.GET)
