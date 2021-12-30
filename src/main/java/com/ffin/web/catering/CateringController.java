@@ -38,7 +38,7 @@ public class CateringController {
 
 
     @Value("${pageUnit}") //pageUnit은 propertySource를 위에 선언하고 @value의 값을 지정해줌
-            //추후 pageUnit과 pageSize 출력되는지 jUnit에서 확인이 필요합니다.
+    //추후 pageUnit과 pageSize 출력되는지 jUnit에서 확인이 필요합니다.
     //@Value("#{commonProperties['pageUnit'] ?: 3}")
     int pageUnit;
 
@@ -68,7 +68,7 @@ public class CateringController {
             //id = ((User)session.getAttribute("user")).getUserId();
             //id = (String) session.getAttribute("userId");
             User user = (User) session.getAttribute("user");
-             id = user.getUserId();
+            id = user.getUserId();
             System.out.println("user id: "+id);
             search.setSearchCondition("2");
 
@@ -141,7 +141,7 @@ public class CateringController {
 
         map = cateringService.getCtStatusList(search, id, ctStatusCode);
         System.out.println("map = " + map);
-         modelAndView.addObject("list", map.get("list"));
+        modelAndView.addObject("list", map.get("list"));
 
         return modelAndView;
     }
@@ -255,12 +255,15 @@ public class CateringController {
     }
 
 
+/*
 
     @RequestMapping( value="updateCtResAdd", method=RequestMethod.POST)
     public ModelAndView updateCtResAdd(@ModelAttribute("catering") Catering catering) throws Exception {
-        /*
+        */
+/*
             이용자가 예약을 등록함
-         */
+         *//*
+
         System.out.println("CateringController.updateCtResAdd");
         System.out.println("catering = " + catering);
 
@@ -274,6 +277,7 @@ public class CateringController {
         modelAndView.setViewName("/views/catering/getCtDetail.jsp");
         return modelAndView;
     }
+*/
 
 
     @RequestMapping( value="updateCtMenuQty", method=RequestMethod.POST)

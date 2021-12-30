@@ -137,30 +137,75 @@ public class CateringRestController {
 
 
 
-        @RequestMapping( value="json/getCtDetail/{ctNo}", method=RequestMethod.GET)
-        @ResponseBody
-        public ModelAndView getCtDetail(@PathVariable("ctNo") int ctNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @RequestMapping( value="json/getCtDetail/{ctNo}", method=RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView getCtDetail(@PathVariable("ctNo") int ctNo, HttpServletRequest request, HttpServletResponse response) throws Exception {
             /*
                 서비스내역, 예약 내역을 불러온다.
                 상세정보조회.
              */
-            request.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
-            System.out.println("CateringController.REST");
-            System.out.println("ctNo = " + ctNo);
+        System.out.println("CateringController.REST");
+        System.out.println("ctNo = " + ctNo);
 
-            Catering catering = cateringService.getCtDetail(ctNo);
-            System.out.println("catering = " + catering);
+        Catering catering = cateringService.getCtDetail(ctNo);
+        System.out.println("catering = " + catering);
             /*Map<String, Object> map = new HashMap<>();
             map.put("ctNo", catering.getCtNo());
             map.put("ctTruckId", catering.getCtTruck().getTruckId());*/
-            ModelAndView mv = new ModelAndView("jsonView");
-            mv.addObject("catering", catering);
+        ModelAndView mv = new ModelAndView("jsonView");
+        mv.addObject("catering", catering);
 
-            return mv;
-        }
+        return mv;
+    }
 
 
+    @RequestMapping( value="json/updateCtResAdd", method=RequestMethod.POST)
+    @ResponseBody
+    public String updateCtResAdd(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        /*
+            이용자가 예약을 등록함
+         */
+        request.setCharacterEncoding("UTF-8");
+        System.out.println("CateringController.updateCtResAdd");
+
+        int ctNo = Integer.parseInt(request.getParameter("ctNo"));
+        String ctUserId = request.getParameter("ctUserId");
+        String ctPhone = request.getParameter("ctUserPhone");
+        String ctAdd = request.getParameter("ctUserAddr");
+        String ctAddDetail = request.getParameter("ctUserAddrDetail");
+        int ctMenuQty = Integer.parseInt(request.getParameter("ctMenuQty"));
+        int ctQuotation = Integer.parseInt(request.getParameter("ctQuotation"));
+        String ctStartTime = request.getParameter("ctStartTime");
+        String ctEndTime = request.getParameter("ctEndTime");
+        String ctUserRequest = request.getParameter("ctUserRequest");
+
+        User user = new User();
+        user.setUserId(ctUserId);
+        Catering catering = new Catering();
+        catering.setCtNo(ctNo);
+        catering.setCtUser(user);
+        catering.setCtPhone(ctPhone);
+        catering.setCtAdd(ctAdd);
+        catering.setCtAddDetail(ctAddDetail);
+        catering.setCtMenuQty(ctMenuQty);
+        catering.setCtQuotation(ctQuotation);
+        catering.setCtStartTime(ctStartTime);
+        catering.setCtEndTime(ctEndTime);
+        catering.setCtUserRequest(ctUserRequest);
+
+
+        cateringService.updateCtResAdd(catering);
+
+        //Catering resCatering = cateringService.getCtDetail(catering.getCtNo());
+        // 업데이트 이후, 등록된 전체 내용을 보내고자 함
+
+       /* ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("catering", resCatering);
+        modelAndView.setViewName("/views/catering/getCtDetail.jsp");*/
+        return "y";
+    }
 
 
 

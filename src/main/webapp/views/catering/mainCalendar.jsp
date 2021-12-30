@@ -128,13 +128,13 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">서비스 상세정보</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true"></span>
                 </button>
             </div>
-            <div class="modal-body"> </div>
+            <div class="modal-body"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+                <button type="button" class="btn btn-default" id="AddCtRes" name="AddCtRes">예약</button>
             </div>
         </div>
     </div>
@@ -144,6 +144,8 @@
 <script>
 
     $(function() {
+        var modal = $('#staticBackdrop');
+
         $("#staticBackdrop").on('hide.bs.modal', function (e) {
 
             self.location = "/catering/mainCalendar"
@@ -156,12 +158,59 @@
 
 
 
+        $(".btn-default").on("click" , function() {
+
+            //  var
+            /* var ctUserName = modal.find("input[name='ctUserName']").val();
+             var ctUserPhone = modal.find("input[name='ctUserPhone']").val();
+             var ctUserAddr = modal.find("input[name='ctUserAddr']").val();
+             var ctUserAddrDetail = modal.find("input[name='ctUserAddrDetail']").val();
+             var ctMenuQty = modal.find("input[name='ctMenuQty']").val();
+             var ctQuotation = modal.find("input[name='ctQuotation']").val();
+             var ctStartTime = modal.find("input[name='ctStartTime']").val();
+             var ctEndTime = modal.find("input[name='ctEndTime']").val();
+             var ctUserRequest = modal.find("textarea[name='ctUserRequest']").val();*/
+
+            //console.log(ctUserName + ":" + ctUserPhone + ":" + ctUserAddr + ":" +ctUserAddrDetail + ":" +ctMenuQty + ":" +ctQuotation + ":" +ctStartTime + ":" +ctEndTime + ":" +ctUserRequest)
+
+            $.ajax(
+                {
+                    url : "/catering/json/updateCtResAdd",
+                    method : "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    data :{
+                        ctNo : modal.find("input[name='ctNo']").val(),
+                        ctUserId : modal.find("input[name='ctUserId']").val(),
+                        ctUserPhone : modal.find("input[name='ctUserPhone']").val(),
+                        ctUserAddr : modal.find("input[name='ctUserAddr']").val(),
+                        ctUserAddrDetail : modal.find("input[name='ctUserAddrDetail']").val(),
+                        ctMenuQty : modal.find("input[name='ctMenuQty']").val(),
+                        ctQuotation : modal.find("input[name='ctQuotation']").val(),
+                        ctStartTime : modal.find("input[name='ctStartTime']").val(),
+                        ctEndTime : modal.find("input[name='ctEndTime']").val(),
+                        ctUserRequest : modal.find("textarea[name='ctUserRequest']").val()
+                    },
+                    success : function(data)
+                    {
+                        //alert(data.reviewText)
+                        //alert(" 상품의 리뷰 작성이 완료되었습니다. ")
+
+                        $('#staticBackdrop').modal('hide');
+                        window.location.reload();
+                    }
+
+                });//end ajax
+        });
     });
+
+
+
+
 
 
     var g_arg;
     document.addEventListener('DOMContentLoaded', function() {
-       // alert("야호")
+        // alert("야호")
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
             height: 600,
@@ -229,7 +278,7 @@
                     end : "2019-01-01"
                 }
             ]
-             //events:function end
+            //events:function end
         });//new FullCalendar end
 
         calendar.render();
@@ -247,18 +296,19 @@
             data:{
             },
             success: function (data) {
-               // alert(data);
+                // alert(data);
                 console.log("data : "+data.catering.ctTruck.truckId)
                 var div="";
                 var role = "user"
                 <%--${sessionScope.role};--%>
 
                 div += "<div class='row'>"+
-                    "<div ><strong>푸드트럭 이름</strong> : "+data.catering.ctTruck.truckName+"</div></div>"
+                    "<div><strong>서비스 번호</strong> : "+data.catering.ctNo+"</div></div>" +
+                    "<div class='row'>"
+                    + "<div><strong>푸드트럭 이름</strong> : "+data.catering.ctTruck.truckName+"</div>" +
+                    "</div>"
                     +"<div class='row'>"
                     +"<div ><strong>서비스 가능 날짜</strong> : "+data.catering.ctDate+"</div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong>서비스 가능 시간</strong> : "+data.catering.ctStartTime+"시 ~ "+data.catering.ctEndTime+"시</div></div>"
                     +"<div class='row'>"
                     +"<div ><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
                     +"<div class='row'>"
@@ -269,25 +319,39 @@
                     +"<div ><strong>최소 수량</strong> : "+data.catering.ctMenuMinQty+"</div></div>"
                     +"<div class='row'>"
                     +"<div ><strong>최대 수량</strong> : "+data.catering.ctMenuMaxQty+"</div></div>"
-                    if (role=="user")
-                    {
-                       div += "<div class='row'>"
-                              +"<div ><strong>예약자 성함</strong> : <input type='text' id='ctUserId' name='ctUserId'/></div></div>"
-                              +"<div class='row'>"
-                              +"<div ><strong>예약자 전화번호</strong> : <input type='text' id='ctUserPhone' name='ctUserPhone'/></div></div>"
-                              +"<div class='row'>"
-                              +"<div ><strong>예약자 주소</strong> : " +
-                           "<input type='text'  id='ctUserAddr' name='ctUserAddr' placeholder='주소검색' readonly='readonly'></div>" +
-                           "<button type='button' onclick='addrApi()'>주소검색</button></div>"
-                               +"<div class='row'>"
-                               +"<div ><strong>예약자 상세 주소</strong> : <input type='text' id='ctUserAddrDetail' name='ctUserAddrDetail' placeholder='상세주소를 입력해주세요' readonly='readonly'>	</div></div>"
-                           +"<div class='row'>"
-                           +"<div ><strong>필요 수량</strong> : <input type='text' id='ctMenuQty' name='ctMenuQty'/></div></div>"
-                           +"<div class='row'>"
-                           +"<div ><strong>예상 견적</strong> : <input type='text' id='ctQuotation' name='ctQuotation'/></div></div>"
-                    }
-                div += +"</div><hr/>";
-                $('.modal-body').append(div);
+                    +"<input type='hidden' id='ctNo' name='ctNo' value='"+data.catering.ctNo+"'/>"
+                if (role=="user")
+                {
+                    div +=
+                        "<div class='row'>"
+                        +"<div ><strong>예약자 아이디</strong> : <input type='text' id='ctUserId' name='ctUserId'/></div></div>"
+                        +"<div class='row'>"
+                        +"<div ><strong>예약자 전화번호</strong> : <input type='text' id='ctUserPhone' name='ctUserPhone'/></div></div>"
+                        +"<div class='row'>"
+                        +"<div ><strong>예약자 주소</strong> : " +
+                        "<input type='text'  id='ctUserAddr' name='ctUserAddr' placeholder='주소검색' readonly='readonly'></div>" +
+                        "<button type='button' onclick='addrApi()'>주소검색</button></div>"
+                        +"<div class='row'>"
+                        +"<div ><strong>예약자 상세 주소</strong> : <input type='text' id='ctUserAddrDetail' name='ctUserAddrDetail' placeholder='상세주소를 입력해주세요' readonly='readonly'>	</div></div>"
+                        +"<div class='row'>"
+                        +"<div ><strong>필요 수량</strong> : <input type='text' id='ctMenuQty' name='ctMenuQty'/></div></div>"
+                        +"<div class='row'>"
+                        +"<div ><strong>예상 견적</strong> : <input type='text' id='ctQuotation' name='ctQuotation'/></div></div>"
+                        // 예상견적 자동 계산되도록 하자
+                        // input data 값 더 깔끔하게 수정
+                        +"<div class='row'>"
+                        +"<div><strong>시작 시간</strong> : <input type='text' id='ctStartTime' name='ctStartTime'/></div></div>"
+                        +"<div class='row'>"
+                        +"<div><strong>종료 시간</strong> : <input type='text' id='ctEndTime' name='ctEndTime'/></div></div>"
+                        +"<div class='row'>"
+                        +"<div><strong>요청 사항</strong> : <textarea name='ctUserRequest' rows='3'></textarea></div></div>"
+
+                }else if (role=="truck"){
+                    // truck이면 '수정', '삭제' 버튼 생성
+
+                }
+                div += "</div><hr/>";
+                $('.modal-body').html(div);
                 $('#staticBackdrop').modal('show');
 
             },
@@ -352,6 +416,7 @@
             }
         }).open();
     }
+
 
 
 
