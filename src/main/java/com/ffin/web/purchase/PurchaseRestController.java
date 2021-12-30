@@ -29,12 +29,11 @@ public class PurchaseRestController {
     @ResponseBody
     public ModelAndView addPayView(HttpServletRequest request ,@RequestParam("payOption") int payOption,
                                    @RequestParam("orderTotalPrice") int orderTotalPrice,
-                                   @RequestParam("orderTruckId") String orderTruckId,@RequestParam("orderNo") int orderNo,
                                    HttpServletResponse response  )throws Exception{
         //System.out.println("postLLLL"+purchase);
         request.setCharacterEncoding("UTF-8");
         System.out.println("json/addPayView");
-        System.out.println(", payOption = " + payOption + ", orderTotalPrice = " + orderTotalPrice + ", orderTruckId = " + orderTruckId + ", orderNo = " + orderNo );
+        System.out.println(", payOption = " + payOption + ", orderTotalPrice = " + orderTotalPrice  );
 
         ModelAndView modelAndView = new ModelAndView();
 

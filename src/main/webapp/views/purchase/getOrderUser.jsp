@@ -24,7 +24,7 @@
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBmxlLXS2GGFBgeQTt6n4YPhxU6NKu4Kx8" ></script>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+/*    $(document).ready(function() {
         var myLatlng = new google.maps.LatLng(35.837143,128.558612); // 위치값 위도 경도
      var Y_point = 35.837143; // Y 좌표
      var X_point = 128.558612; // X 좌표
@@ -58,7 +58,7 @@
      google.maps.event.addListener(marker, 'click', function() {
          infowindow.open(map, marker);
      });
-    });
+    });*/
 </script>
 <main>
     <div class="container py-4">
