@@ -297,70 +297,80 @@
         <div id="here"></div>
         <!--////////////////모달 옵션그룹 추가 시작////////////-->
 
-        <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal fade" id="exampleModal" aria-hidden="true" aria-labelledby="exampleModalLabel" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalToggleLabel">옵션그룹이름</h5>
-                        <
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Show a second modal and hide this one with the button below.
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Hide this modal and show the first with the button below.
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to first</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Open first modal</a>
+                        <h5 class="modal-title" id="exampleModalLabel">옵션그룹이름</h5>
 
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="optionGroupName" class="col-from-label">옵션그룹이름</label>
+                                <input type="text" class="form-control" id="optionGroupName" value="">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <%--                        <button class="btn btn-primary" data-bs-target="#optionModalLabel" data-bs-toggle="modal">옵션추가</button>--%>
+                        <button type="button" class="btn btn-primary custom" data-toggle="modal" data-target="#optionModal" data-whatever="option">옵션추가</button>
+                        <button type="button" class="btn btn-primary" id="add-optionGroup">옵션그룹추가</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="optionModal" aria-hidden="true" aria-labelledby="optionModalLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="optionModalLabel">옵션 추가</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <label for="optionName" class="col-form-label">옵션 이름</label>
+                            <input type="text" class="form-control" id="optionName" value="">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="nav-link active" data-bs-target="#exampleModal" data-bs-toggle="modal">옵션 추가</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--        <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModal" role="button">옵션그룹추가</a>--%>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-target="#exampleModal" data-whatever="optionGroup">옵션그룹추가</button>
         <!--모달 옵션그룹 추가 끝-->
 
         <!--////////////////모달 옵션 추가 시작////////////-->
 
-<%--        <div class="modal fade" id="optionModal" tabindex="-1" role="dialog" aria-labelledby="optionModalLabel" aria-hidden="true">--%>
-<%--            <div class="modal-dialog" role="document">--%>
-<%--                <div class="modal-content">--%>
-<%--                    <div class="modal-header">--%>
-<%--                        <h5 class="modal-title" id="optionModalLabel">옵션 추가</h5>--%>
-<%--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
-<%--                            <span aria-hidden="true">&times;</span>--%>
-<%--                        </button>--%>
-<%--                    </div>--%>
-<%--                    <div class="modal-body">--%>
-<%--                        <form>--%>
-<%--                            <div class="form-group">--%>
-<%--                                <label for="optionName" class="col-form-label">옵션 이름</label>--%>
-<%--                                <input type="text" class="form-control" id="optionName" value="">--%>
-<%--                            </div>--%>
+        <%--        <div class="modal fade" id="optionModal" tabindex="-1" role="dialog" aria-labelledby="optionModalLabel" aria-hidden="true">--%>
+        <%--            <div class="modal-dialog" role="document">--%>
+        <%--                <div class="modal-content">--%>
+        <%--                    <div class="modal-header">--%>
+        <%--                        <h5 class="modal-title" id="optionModalLabel">옵션 추가</h5>--%>
+        <%--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
+        <%--                            <span aria-hidden="true">&times;</span>--%>
+        <%--                        </button>--%>
+        <%--                    </div>--%>
+        <%--                    <div class="modal-body">--%>
+        <%--                        <form>--%>
+        <%--                            <div class="form-group">--%>
+        <%--                                <label for="optionName" class="col-form-label">옵션 이름</label>--%>
+        <%--                                <input type="text" class="form-control" id="optionName" value="">--%>
+        <%--                            </div>--%>
 
-<%--                        </form>--%>
-<%--                    </div>--%>
-<%--                    <div class="modal-footer">--%>
-<%--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
-<%--                        <button type="button" class="btn btn-primary" id="add-option">옵션추가</button>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
+        <%--                        </form>--%>
+        <%--                    </div>--%>
+        <%--                    <div class="modal-footer">--%>
+        <%--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--%>
+        <%--                        <button type="button" class="btn btn-primary" id="add-option">옵션추가</button>--%>
+        <%--                    </div>--%>
+        <%--                </div>--%>
+        <%--            </div>--%>
+        <%--        </div>--%>
 
         <!--모달 옵션 추가 끝-->
 
