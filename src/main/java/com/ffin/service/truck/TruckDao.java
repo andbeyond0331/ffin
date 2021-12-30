@@ -2,7 +2,9 @@ package com.ffin.service.truck;
 
 import com.ffin.common.Search;
 import com.ffin.service.domain.Truck;
+import com.ffin.service.domain.User;
 
+import java.util.Date;
 import java.util.List;
 
 //==> 회원관리에서 CRUD 추상화/캡슐화한 DAO Interface Definition
@@ -74,7 +76,16 @@ public interface TruckDao {
     // 푸드트럭 상호 중복체크
     public int checkDuTruckName(String truckName) throws Exception;
 
+    // 푸드트럭 탈퇴 전 Password 체크
+    public int checkDuPw(String truckPassword) throws Exception;
+
     // 게시판 Page 처리를 위한 전체Row(totalCount)  return
     public int getTotalCount(Search search) throws Exception ;
+
+
+    //로그인 유지
+    void autoLogin(String truckId, String sessionKey, Date sessionLimit) throws Exception;
+    //세션키 검증
+    Truck SessionKeyAuth(String sessionKey) throws Exception;
 
 }

@@ -74,16 +74,16 @@
 
                 console.log("user")
 
-                var userId = $("#userId").val();
-                var userPassword = $("#userPassword").val();
+                var userIdModal = $("#userIdModal").val();
+                var userPasswordModal = $("#userPasswordModal").val();
 
-                console.log(userId);
-                console.log(userPassword);
+                console.log(userIdModal);
+                console.log(userPasswordModal);
 
                 $.ajax({
                     type: "POST",
-                    url: "/user/json/login/" + userId,
-                    data: {userId, userPassword},
+                    url: "/user/json/login/" + userIdModal,
+                    data: {userIdModal, userPasswordModal},
                     success: function (data) {
                         /*javascript redirect 방법*/
                         location.replace("http://localhost:8080/views/homeTest.jsp");
@@ -92,7 +92,7 @@
             });
 
             $("#roleTab a[href='#CEO']").click(function (){
-                alert("나와라 CEO");
+                // alert("나와라 CEO");
 
                 $("#modalLoginBtn").click(function () {
 
@@ -104,6 +104,16 @@
                     console.log(truckId);
                     console.log(truckPassword);
 
+                    $.ajax({
+                        type   : "POST",
+                        url    : "/truck/json/login/" + truckId,
+                        data   : {truckId, truckPassword},
+                        success: function (data) {
+                            alert(truckId+" 사장님 환영합니다.");
+                            /*javascript redirect 방법*/
+                            location.replace("http://localhost:8080/views/homeTest.jsp");
+                        }
+                    })
                 });
             });
         });
@@ -222,12 +232,12 @@
                                                 <div class="tab-pane fade show active" id="user">
                                                     <div class="mb-3">
                                                         <label for="userId" class="form-label">ID</label>
-                                                        <input type="text" class="form-control" id="userId" >
+                                                        <input type="text" class="form-control" id="userIdModal" >
                                                         <%--<div id="userIdInfo" class="form-text">User!</div>--%>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="userPassword" class="form-label">Password</label>
-                                                        <input type="password" class="form-control" id="userPassword">
+                                                        <input type="password" class="form-control" id="userPasswordModal">
                                                     </div>
                                                     <div class="mb-3 form-check">
                                                         <input type="checkbox" class="form-check-input" id="autoLoginUser">
@@ -242,7 +252,7 @@
                                                     <div class="mb-3">
                                                         <label for="truckId" class="form-label">ID</label>
                                                         <input type="text" class="form-control" id="truckId">
-                                                        <div id="truckIdInfo" class="form-text">CEO!</div>
+                                                        <%--<div id="truckIdInfo" class="form-text">CEO!</div>--%>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="truckPassword" class="form-label">Password</label>
@@ -251,6 +261,10 @@
                                                     <div class="mb-3 form-check">
                                                         <input type="checkbox" class="form-check-input" id="autoLoginTruck">
                                                         <label class="form-check-label" for="autoLoginTruck">자동로그인</label>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <span style="color: #0b1727; margin-left: 0;">아직 회원이 아니신가요?</span>
+                                                        <a class="addChk" href="./truck/addTruckView.jsp" style="color: #0b1727; margin-left: 0;"> <strong style="float: right; stroke: #000000">사업자 회원가입</strong></a>
                                                     </div>
                                                 </div>
                                             </div>

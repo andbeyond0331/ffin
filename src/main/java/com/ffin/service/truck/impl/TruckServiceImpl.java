@@ -2,6 +2,7 @@ package com.ffin.service.truck.impl;
 
 import com.ffin.common.Search;
 import com.ffin.service.domain.Truck;
+import com.ffin.service.domain.User;
 import com.ffin.service.truck.TruckDao;
 import com.ffin.service.truck.TruckService;
 import net.nurigo.java_sdk.api.Message;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -175,6 +177,12 @@ public class TruckServiceImpl implements TruckService {
         return truckDao.checkDuTruckName(truckName);
     }
 
+    // 푸드트럭 상호 중복체크
+    @Override
+    public int checkDuPw(String truckPassword) throws Exception {
+        return truckDao.checkDuPw(truckPassword);
+    }
+
     // 새로 가입한 푸드트럭 목록보기(관리자)
     @Override
     public List<Truck> getNewTruckList(Search search) throws Exception {
@@ -200,5 +208,18 @@ public class TruckServiceImpl implements TruckService {
         }
     }
 
+
+    // 트럭 자동로그인
+    @Override
+    public void autoLogin(String truckId, String sessionKey, Date sessionLimit) throws Exception {
+        System.out.println("truckServiceImpl.autoLogin");
+        truckDao.autoLogin(truckId, sessionKey, sessionLimit);
+    }
+    // 세션키 인증
+    @Override
+    public Truck SessionKeyAuth(String sessionKey) throws Exception {
+        System.out.println("UserServiceImpl.SessionKeyAuth");
+        return truckDao.SessionKeyAuth(sessionKey);
+    }
 
     }

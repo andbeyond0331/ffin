@@ -3,6 +3,7 @@ package com.ffin.web.truck;
 import com.ffin.common.Page;
 import com.ffin.common.Search;
 import com.ffin.service.domain.Truck;
+import com.ffin.service.domain.User;
 import com.ffin.service.truck.TruckService;
 import net.nurigo.java_sdk.Coolsms;
 import org.json.simple.JSONObject;
@@ -12,8 +13,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -47,19 +51,41 @@ public class TruckRestController {
         return truckService.getTruck(truckId);
     }
 
-    @RequestMapping(value = "json/login", method = RequestMethod.POST)
-    public Truck login(@RequestBody Truck truck, HttpSession session) throws Exception {
+    @RequestMapping(value = "json/login/{truckId}", method = RequestMethod.POST)
+    public String login(@ModelAttribute("truck") Truck truck, @PathVariable String truckId, HttpSession session,
+                        HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        System.out.println("/truck/json/login : POST");
-        // Business Logic
-        System.out.println("::" + truck);
+        System.out.println("/truck/jon/login : POST");
+        //Business Logic
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
         Truck dbTruck = truckService.getTruck(truck.getTruckId());
 
         if (truck.getTruckPassword().equals(dbTruck.getTruckPassword())) {
-            session.setAttribute("truck", dbTruck);
-        }
 
-        return dbTruck;
+            session.setAttribute("truck", dbTruck);
+            session.setAttribute("role", "truck");
+
+            if (request.getParameter("truckCookie") == null) {
+                System.out.println("자동로그인");
+
+                Cookie loginCookie = new Cookie("loginCookie", session.getId());
+
+                loginCookie.setPath("/");
+                int amount = 60 * 60 * 24 * 7;
+                loginCookie.setMaxAge(amount);
+
+                System.out.println("쿠키줘!!!" + session.getId());
+
+                response.addCookie(loginCookie);
+
+                Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
+                truckService.autoLogin(truck.getTruckId(), session.getId(), sessionLimit);
+            }
+            System.out.println("로그인 OK");
+        } else {
+            System.out.println("로그인 Nope");
+        }
+        return truckId;
     }
 
     @RequestMapping(value = "json/updateTruck/{truckId}", method = RequestMethod.GET)
@@ -159,10 +185,28 @@ public class TruckRestController {
     public String sendSMS(@PathVariable("phone") String truckPhoneNumber) {
         System.out.println("TruckRestController.sendSMS");// 휴대폰 문자보내기
         System.out.println("truckPhoneNumber = " + truckPhoneNumber);
-        int randomNumber = (int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
+        int randomNumber = (int) ((Math.random() * (9999 - 1000 + 1)) + 1000);//난수 생성
         System.out.println("randomNumber = " + randomNumber);
-        truckService.certifiedPhoneNumber(truckPhoneNumber,randomNumber);
-        return Integer.toString(randomNumber); }
-
-
+        truckService.certifiedPhoneNumber(truckPhoneNumber, randomNumber);
+        return Integer.toString(randomNumber);
     }
+
+    // 푸드트럭 탈퇴 전 패스워드확인
+    @RequestMapping(value = "/checkDuPw/{truckPassword}", method = RequestMethod.POST)
+    @ResponseBody
+    public String checkDuPw(@PathVariable String truckPassword) throws Exception {
+        System.out.println("TruckRestController.checkDuPw");
+        int flag = truckService.checkDuPw(truckPassword);
+        String result = "";
+        if (flag == 0) {
+            result = "y";
+        } else {
+            result = "n";
+        }
+        return result;
+    }
+
+}
+
+
+
