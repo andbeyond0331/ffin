@@ -83,6 +83,13 @@
 		WHERE truck_name = #{truckName}
 	</select>
 
+	<!-- SQL : 푸드트럭 탈퇴 전 Password 체크 -->
+	<select id="checkDuPw" resultType="integer">
+		SELECT count(*)
+		FROM truck
+		WHERE truck_password = #{truckPassword}
+	</select>
+
 
 	<!-- SQL : 아이디 찾기 -->
 	<select id="findTruckId"   parameterType="map"    resultType="string" >
@@ -164,7 +171,22 @@
 		WHERE truck_id = #{truckId}
 	</update>
 
+	<!-- login 유지 -->
+	<update id="autoLogin">
+		UPDATE truck
+		<set>
+			session_key 	= #{sessionKey},
+			session_limit 	= #{sessionLimit}
+		</set>
+		WHERE truck_id = #{truckId}
+	</update>
 
+	<!-- sessionKey check -->
+	<select id="sessionKeyAuth" resultMap="truckSelectMap">
+		SELECT *
+		FROM truck
+		WHERE SESSION_KEY = #{value}
+	</select>
 
  
 </mapper>

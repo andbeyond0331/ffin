@@ -2,12 +2,14 @@ package com.ffin.service.truck.impl;
 
 import com.ffin.common.Search;
 import com.ffin.service.domain.Truck;
+import com.ffin.service.domain.User;
 import com.ffin.service.truck.TruckDao;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -172,9 +174,32 @@ public class TruckDaoImpl implements TruckDao {
         return sqlSession.selectOne("TruckMapper.checkDuTruckName", truckName);
     }
 
+    // 푸드트럭 회원탈퇴 전 Password 체크
+    @Override
+    public int checkDuPw(String truckPassword) throws Exception {
+        return sqlSession.selectOne("TruckMapper.checkDuPw", truckPassword);
+    }
+
     // 게시판 Page 처리를 위한 전체Row(totalCount)  return
     @Override
     public int getTotalCount(Search search) throws Exception {
         return sqlSession.selectOne("TruckMapper.getTotalCount", search);
+    }
+
+
+    @Override
+    public void autoLogin(String truckId, String sessionKey, Date sessionLimit) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("truckId", truckId);
+        map.put("sessionKey", sessionKey);
+        map.put("sessionLimit", sessionLimit);
+
+        sqlSession.update("TruckMapper.autoLogin", map);
+    }
+
+    @Override
+    public Truck SessionKeyAuth(String sessionKey) throws Exception {
+        System.out.println("TruckDaoImpl.SessionKeyAuth");
+        return sqlSession.selectOne("TruckMapper.SessionKeyAuth", sessionKey);
     }
 }

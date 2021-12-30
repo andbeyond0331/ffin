@@ -105,38 +105,55 @@
 
 
         function fncAddTruck() {
-
+            // 유효성체크
             var id = $("input[name='truckId']").val();
             var pw = $("input[name='truckPassword']").val();
             var pw_confirm = $("input[name='truckPasswordChk']").val();
             var name = $("input[name='truckCEOName']").val();
-
+            var addr = $("input[name='truckAddr']").val();
+            var phone_auth = $("input[name='truckPhoneAuth']").val();
+            var mail_auth = $("input[name='truckEmailAuth']").val();
+            var truck_name = $("input[name='truckName']").val();
+            var truck_lice = $("input[name='busiLice']").val();
+            var cate = $("input[name='truckCate']").val();
 
             if (id == null || id.length < 1) {
                 alert("아이디는 반드시 입력하셔야 합니다.");
                 return;
             }
             if (pw == null || pw.length < 1) {
-                alert("패스워드는  반드시 입력하셔야 합니다.");
+                alert("패스워드는 반드시 입력하셔야 합니다.");
                 return;
             }
             if (pw_confirm == null || pw_confirm.length < 1) {
-                alert("패스워드 확인은  반드시 입력하셔야 합니다.");
+                alert("패스워드 확인은 반드시 입력하셔야 합니다.");
                 return;
             }
             if (name == null || name.length < 1) {
-                alert("이름은  반드시 입력하셔야 합니다.");
+                alert("사업자대표 이름은 반드시 입력하셔야 합니다.");
+                return;
+            }
+            if (addr == null || addr.length < 1) {
+                alert("사업자등록증 상의 주소지는 반드시 입력하셔야 합니다.");
+                return;
+            }
+            if (phone_auth == null || phone_auth.length < 1) {
+                alert("휴대폰 문자인증을 반드시 거쳐야 합니다.");
+                return;
+            }
+            if (mail_auth == null || mail_auth.length < 1) {
+                alert("이메일 인증을 반드시 거쳐야 합니다.");
+                return;
+            }
+            if (truck_name == null || truck_name.length < 1) {
+                alert("푸드트럭 상호는 반드시 입력하셔야 합니다.");
+                return;
+            }
+            if (truck_lice == null || truck_lice.length < 1) {
+                alert("사업자등록증 이미지 파일을 반드시 첨부하셔야 합니다.");
                 return;
             }
 
-            // var value = "";
-            // if( $("input:text[name='phone2']").val() != ""  &&  $("input:text[name='phone3']").val() != "") {
-            //     var value = $("option:selected").val() + "-"
-            //         + $("input[name='phone2']").val() + "-"
-            //         + $("input[name='phone3']").val();
-            // }
-            //
-            // $("input:hidden[name='phone']").val( value );
 
             $("form").attr("method", "POST").attr("action", "/truck/addTruck").attr("enctype", "multipart/form-data").submit();
             alert("회원가입이 완료되었습니다. 가입승인에는 영업일 기준 2~5일이 소요되며 확인을 누르시면 로그인 화면으로 이동합니다.");
@@ -550,51 +567,48 @@
         <hr/>
 
         <!-- 푸드트럭 사업자등록증 파일업로드란 -->
-<%--        <br/>--%>
-<%--        <div class="form-group">--%>
-<%--            <label for="truckBusiLice" class="col-sm-offset-1 col-sm-3 control-label">사업자등록증</label>--%>
-<%--            <div class="col-sm-4">--%>
-<%--                <input type="file" name="truckBusiLice" class="form-control" />--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <input type="hidden" id="checkR"/>--%>
+        <br/>
+        <div class="form-group">
+            <label for="busiLice" class="col-sm-offset-1 col-sm-3 control-label">사업자등록증</label>
+            <div class="col-sm-4">
+                <input id="busiLice" type="file" name="busiLice" class="form-control"/>
+            </div>
+        </div>
+        <input type="hidden" id="checkL"/>
 
         <br/>
-        <%--<h4>사업자등록증 파일업로드</h4>--%>
-        <%--        <h5>업로드하실 파일을 선택하세요.</h5>--%>
-        <%--<form action="./upload.jsp" method="post"--%>
-        <%--      enctype="multipart/form-data">--%>
-        <%--    <input type="file" name="file" size="50"/>--%>
-        <%--    <br/>--%>
-        <%--    <input type="submit" value="선택한 파일 업로드"/>--%>
-        <%--</form>--%>
-
-        <br/><br/>
+        <hr/>
         <!-- 푸드트럭 카테고리 -->
         <div class="form-group">
             <label for="truckCate" class="col-sm-offset-1 col-sm-3 control-label">푸드트럭 카테고리</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="truckCate" name="truckCate" placeholder="푸드트럭 카테고리">
-            </div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <select name="truckCate" class="col-sm-4 ct_input_g"
+                    style="width: 120px; height: 24px" maxLength="30">
+                <option value="0" selected="selected">카테고리를 선택해주세요</option>
+                <option value="1">고기</option>
+                <option value="2">분식</option>
+                <option value="3">음료</option>
+                <option value="4">양식</option>
+                <option value="5">디저트</option>
+                <option value="6">한식</option>
+                <option value="7">일식</option>
+                <option value="8">기타</option>
+            </select>
+            <input type="hidden" id="truckCate" name="truckCate">
         </div>
 
-        <%--        <!-- 푸드트럭 프로필이미지 파일업로드란 -->--%>
-        <%--        <br/><br/>--%>
-        <%--        <div class="form-group">--%>
-        <%--            <label for="truckProImg" class="col-sm-offset-1 col-sm-3 control-label">프로필 이미지</label>--%>
-        <%--            <div class="col-sm-4">--%>
-        <%--                <input type="text" class="form-control" id="truckProImg" name="truckProImg" placeholder="프로필 이미지 파일업로드">--%>
-        <%--            </div>--%>
-        <%--        </div>--%>
         <br/>
-        <%--<h4>푸드트럭 프로필 이미지 파일업로드</h4>--%>
-        <%--        <h5>업로드하실 파일을 선택하세요.</h5>--%>
-        <%--<form action="./upload.jsp" method="post"--%>
-        <%--      enctype="multipart/form-data">--%>
-        <%--    <input type="file" name="file" size="50"/>--%>
-        <%--    <br/>--%>
-        <%--    <input type="submit" value="선택한 파일 업로드"/>--%>
-        <%--</form>--%>
+        <hr/>
+
+        <!-- 푸드트럭 프로필이미지 파일업로드란 -->
+        <br/>
+        <div class="form-group">
+            <label for="proImg" class="col-sm-offset-1 col-sm-3 control-label">프로필 이미지</label>
+            <div class="col-sm-4">
+                <input id="proImg" type="file" name="proImg" class="form-control"/>
+            </div>
+        </div>
+        <input type="hidden" id="checkP"/>
 
         <br/>
         <hr/>
