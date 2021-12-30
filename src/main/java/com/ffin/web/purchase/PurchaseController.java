@@ -161,8 +161,8 @@ public class PurchaseController {
     }
     //현재주문정보 화면으로 보여줄 데이터를 가져온다.
     @RequestMapping(value = "getOrderUser", method= RequestMethod.POST)
-    public String getOrderUser(@ModelAttribute("purchase")Purchase purchase, @ModelAttribute("user") User user,
-                                    @ModelAttribute("point") Point point, Model model) throws Exception {
+    public ModelAndView getOrderUser(@ModelAttribute("purchase")Purchase purchase, @ModelAttribute("user") User user,
+                                    @ModelAttribute("point") Point point, ModelAndView model) throws Exception {
 
         System.out.println("/purchase/getOrderUser : POST");
 
@@ -170,10 +170,11 @@ public class PurchaseController {
             Map map = new HashMap();
             map = purchaseService.getOrderDetail(purchase.getOrderNo());
         System.out.println("map//////////"+map);
-            model.addAttribute("map",map);
-            model.addAttribute("cart",purchase);
+            model.addObject("map",map);
+            model.addObject("cart",purchase);
+            model.setViewName("forward:/views/purchase/getOrderUser.jsp");
 
-    return  "forward:/views/purchase/getOrderUser.jsp";
+    return  model;
 
     }
 

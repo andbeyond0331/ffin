@@ -11,9 +11,9 @@
 
 <head>
     <jsp:include page="/views/toolbar.jsp" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
 <!-- Bootstrap Dropdown Hover CSS -->
@@ -35,22 +35,6 @@
 
 
 
-    input[type="text"]#pointAmttwo{
-        -webkit-appearance: none!important;
-        color: #171616;
-        text-align: right;
-        width: 75px;
-        border: 1px solid gray;
-        border-left: 0px;
-        margin: 0 0 0 -7px;
-        background: white;
-    }
-    input[type="text"]#pointAmt{
-        -webkit-appearance: none!important;
-        border: 1px solid gray;
-        border-right: 0px;
-        outline: none;
-    }
 </style>
 <script type="text/javascript">
 
@@ -62,9 +46,10 @@
         IMP.init('imp67651684'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
         var msg;
 
-        var orderTotalPrice= $("input[name='orderTotalPrice']").val()
+        var orderUserId = $("input[name='orderUserId']").val();
+        var orderTotalPrice= $("input[name='orderTotalPrice']").val();
         var orderTruckId = $("input[name='orderTruckId']").val();
-        var payOption = $("select[name='payOption']").val();
+        var payOption = $("input[name='payOption']:checked").val();
         var payPrice =  $("input[name='payPrice']").val();
         var pointAmt =  $("input[name='pointAmt']").val();
         var couponDcPrice =  $("input[name='couponDcPrice']").val();
@@ -105,8 +90,8 @@
                         data : {
                             "payOption" : payOption,
                             "orderTotalPrice" :orderTotalPrice,
-                            "orderTruckId" : "truck07",
-                            "orderNo"  :  orderNo
+
+
                         }
 
 
@@ -234,44 +219,44 @@
 
     function fncAddPurchase() {
 
-/*        var amount = $("input[name='amount']").val();
-        var quantity = $("input[name='quantity']").val();
-        var divyDate = $("input[name='divyDate']").val();
-        var paymentOption = $("select[name='paymentOption']").val();
-        var price = $("input[name='price']").val();
-        var receiverName = $("input[name='receiverName']").val();
-        var receiverPhone = $("input[name='receiverPhone']").val();
-        var divyRequest = $("input[name='divyRequest']").val();*/
+        /*        var amount = $("input[name='amount']").val();
+                var quantity = $("input[name='quantity']").val();
+                var divyDate = $("input[name='divyDate']").val();
+                var paymentOption = $("select[name='paymentOption']").val();
+                var price = $("input[name='price']").val();
+                var receiverName = $("input[name='receiverName']").val();
+                var receiverPhone = $("input[name='receiverPhone']").val();
+                var divyRequest = $("input[name='divyRequest']").val();*/
         alert(amount)
         alert(quantity)
-  /*      if(quantity != null && quantity > amount ){
-            alert("수량 확인 부탁드립니다");
-            return;
-        }
-        if(divyDate == null || divyDate < 1){
-            alert("날짜를 한번 확인하세요");
-            return;
-        }
-        if(paymentOption == null || paymentOption < 1){
-            alert("구매형식을 한번 확인하세요");
-            return;
-        }
-        if(price == null || price < 1){
-            alert("가격을 한번 확인하세요");
-            return;
-        }
-        if(receiverName == null || receiverName < 1){
-            alert("구매자이름을 한번 확인하세요");
-            return;
-        }
-        if(receiverPhone == null || receiverPhone < 1){
-            alert("구매자 연락처 한번 확인하세요");
-            return;
-        }
-        if(divyRequest == null || divyRequest < 1){
-            alert("구매요청사항 한번 확인하세요");
-            return;
-        }*/
+        /*      if(quantity != null && quantity > amount ){
+                  alert("수량 확인 부탁드립니다");
+                  return;
+              }
+              if(divyDate == null || divyDate < 1){
+                  alert("날짜를 한번 확인하세요");
+                  return;
+              }
+              if(paymentOption == null || paymentOption < 1){
+                  alert("구매형식을 한번 확인하세요");
+                  return;
+              }
+              if(price == null || price < 1){
+                  alert("가격을 한번 확인하세요");
+                  return;
+              }
+              if(receiverName == null || receiverName < 1){
+                  alert("구매자이름을 한번 확인하세요");
+                  return;
+              }
+              if(receiverPhone == null || receiverPhone < 1){
+                  alert("구매자 연락처 한번 확인하세요");
+                  return;
+              }
+              if(divyRequest == null || divyRequest < 1){
+                  alert("구매요청사항 한번 확인하세요");
+                  return;
+              }*/
 
 
         $("form").attr("method" , "POST").attr("action" , "/purchase/addPurchase").submit();
@@ -312,36 +297,6 @@
 
         });
     });
-    $('#myModal').on('shown.bs.modal', function () {
-        $('#myInput').focus()
-    })
-
-    $('#exampleModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('whatever') // Extract info from data-* attributes
-
-        var modal = $(this)
-
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        modal.find('.modal-title').text('옵션그룹' + recipient);
-        modal.find('.modal-body input').val(recipient);
-
-
-    })
-    $('#optionModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('whatever') // Extract info from data-* attributes
-
-        var modal = $(this)
-
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        modal.find('.modal-title').text('옵션' + recipient);
-        modal.find('.modal-body input').val(recipient);
-
-
-    })
 
     //옵션그룹추가 모달 로직
     var count = 0;
@@ -353,25 +308,14 @@
 
         modal.find('button.btn-primary').on("click", function(){
             alert("ssa")
-            count++;
 
-            realCouponDcPrice = modal.find('input[name=options]:checked').each().val();
+            realCouponDcPrice = modal.find('input[name=options]:checked').val();
 
-            console.log(realOptionGroupName + " : realOptionGroupName");
-
+            console.log(realCouponDcPrice + " : realOptionGroupName");
 
 
-            divElem = "<div class=\"form-group\" id=\"optionGroupName"+count+"\" name=\"optionGroupName\">"+
-                "<label for=\"optionGroupName\" class=\"col-sm-offset-1 col-sm-3 control-label\">옵션그룹"+count+"</label>"+
-                "<div class=\"col-xs-8 col-md-4\">"+realOptionGroupName+"</div>"+
-                "<input type=\"button\" value=\"삭제\" onclick=\"javascript:removeEL("+count+")\"/>" +
-                // "<input type=\"button\" value=\"옵션추가\" onclick=\"javascript:addOption(optionGroupName"+count+")\"/>" +
-                "<button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#optionModal\" data-whatever=\"option\">옵션 추가</button>"+
-                "</div>";
 
-            console.log("divElem :"+divElem);
-
-            $('#couponDcPrice').val(1000);
+            $('#couponDcPrice').val(realCouponDcPrice);
 
             // modal.modal('hide');
 
@@ -433,380 +377,305 @@
 
             <div class="col">
 
-                    <div class="container">
-                        <div class="row">
+                <div class="container">
+                    <div class="row">
                         <div class="col-sm-12">
-                        <h3>결제하기</h3>
+                            <h3>결제하기</h3>
                         </div>
 
                     </div>
                     <hr class="my-2">
                     <div class="row">
                         <div class="col-sm-12">
+                            <input type="hidden" name="orderTruckId.truckId" value="${purchase.orderTruckId.truckId}">
+                            <input type="hidden" name="payPrice" value="${purchase.payPrice}">
+                            <input type="hidden" name="orderUserId.userId" value="${purchase.orderUserId.userId}">
+                            <input type="hidden" name="orderNo" value="${purchase.orderNo}">
                             <h3>할인 및 적립금</h3>
                         </div>
                     </div>
-
-
-                        <div class="row">
+                  <div class="row">
                         <label for="couponDcPrice" class="col-sm-offset-1 col-sm-3 control-label">할인쿠폰</label>
                         <div class="col-sm-3">
                             <div class="well well-sm">${coupon.couponDcPrice}</div>
-                            <input type="hidden" name="orderNo" value="${purchase.orderNo}">
                             <input type="text" class="form-control" id="couponDcPrice"
                                    name="couponDcPrice" placeholder="쿠폰을 적용하세요" value="" >
                         </div>
                         <div class="col-sm-1">
-                           원
+                            원
                         </div>
                         <div class="col-sm-3">
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">
                                 쿠폰적용
-                           </button>
+                            </button>
                         </div>
-                        </div>
-
-                        <div class="row">
-
-                            <label for="pointAmt" class="col-sm-offset-1 col-sm-3 control-label">적립금</label>
-                            <div class="col-sm-2">
-                                <%--<div class="well well-sm">${user.userTotalPorint}</div>--%>
-
-                                <div class="well well-sm">0</div>
-                            </div>
-                            <div class="col-sm-4">
-
-                                <input type="text"  placeholder="o" id="pointAmt" naem="pointAmt">
-                                <input type="text"  id="pointAmttwo" value="원" disabled/>
-
-
-
-                            </div>
-
-                            <div class="col-sm-1">
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-secondary btn-sm">
-                                    포인트 적용
-                                </button>
-                            </div>
-                        </div>
+                    </div>
 
                     <div class="row">
-                            <div class="col-sm-10">
-                                <div class="container">
-                            적립금은 1000단위로 사용가능합니다.
-                                </div>
+
+                        <label for="pointAmt" class="col-sm-offset-1 col-sm-3 control-label">적립금</label>
+                        <div class="col-sm-2">
+                            <%--<div class="well well-sm">${user.userTotalPorint}</div>--%>
+
+                            <div class="well well-sm">0</div>
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="text"  placeholder="o" id="pointAmt" naem="pointAmt">
+                        </div>
+
+                        <div class="col-sm-2">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-secondary btn-sm">
+                                포인트적용
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="container">
+                                적립금은 1000단위로 사용가능합니다.
                             </div>
                         </div>
+                    </div>
                     <hr class="my-lg-4">
-                        <div class="row">
-                            <div class="col-sm-10">
-                    <h3>결제방법</h3>
-                            </div>
-                        </div>
-                        <div class="container">
-                            <div class="row g-2">
-                                <div class="col-6">
-                                    <div class="p-3 border bg-light">
-                                        <button type="button" class="btn btn-secondary btn-lg btn-block">
-                                            카카오톡<
-                                    </button>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="p-3 border bg-light">
-                                        <button type="button" class="btn btn-secondary btn-lg btn-block">
-                                            신용카드
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="p-3 border bg-light">
-                                        <button type="button" class="btn btn-secondary btn-lg btn-block">
-                                            휴대폰결제
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="p-3 border bg-light">
-                                        <button type="button" class="btn btn-secondary btn-lg btn-block">
-                                        무통장입금
-                                    </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-<%--                    <div class="row">
-                        <div class="col-sm-5">
-                            <button type="button" class="btn btn-secondary btn-lg btn-block">
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    카카오톡</div>
-                            </button>
-                        </div>
-                        <div class="col-sm-5">
-                            <button type="button" class="btn btn-secondary btn-lg btn-block">
-                                신용카드
-                            </button>
-                        </div>
-                    </div>
                     <div class="row">
-                        <div class="col-xs-12">
-                            <br/>
+                        <div class="col-sm-10">
+                            <h3>결제방법</h3>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-5">
-                            <button type="button" class="btn btn-secondary btn-lg btn-block">
-                                휴대폰결제
-                            </button>
-                        </div>
-                        <div class="col-sm-5">
-                            <button type="button" class="btn btn-secondary btn-lg btn-block">
-                                무통장입금
-                            </button>
+
+
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <div class="row row-cols-2">
+                            <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio1" value="1" autocomplete="off" checked>
+                                <label class="btn btn-outline-primary" for="btnradio1" >다날</label>
+                            </div>
+                            <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio2" value="2" autocomplete="off" >
+                                <label class="btn btn-outline-primary" for="btnradio2">카카오페이</label>
+                            </div>
+
                         </div>
                     </div>
-                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-secondary active">
-                                <input type="radio" name="options" id="option1" autocomplete="off" checked> Active
-                            </label>
-                            <label class="btn btn-secondary">
-                                <input type="radio" name="options" id="option2" autocomplete="off"> Radio
-                            </label>
-                            <label class="btn btn-secondary">
-                                <input type="radio" name="options" id="option3" autocomplete="off"> Radio
-                            </label>
+                    <div class="container">
+                        <div class="row row-cols-2">
+                            <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio3" value="3" autocomplete="off" >
+                                <label class="btn btn-outline-primary" for="btnradio3">신용카드</label>
+                            </div>
+                            <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio4" value="4" autocomplete="off" >
+                                <label class="btn btn-outline-primary" for="btnradio4">무통장입금</label>
+                            </div>
+
                         </div>
+                    </div>
+                </div>
+            </div>
 
-                    --%>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="col">
+                <div class="jumbotron ">
+                    <input type="hidden" name="prodName"
+                           value="<%--${orderDetail.odOrderMenuName}--%>" />
+
+                    <table width="600" border="0" cellspacing="0" cellpadding="0"
+                           align="center" style="margin-top: 13px;">
+                        <tr>
+                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+                        </tr>
+
+                        <tr>
+                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+                        </tr>
+                        <tr>
+                            <td width="104" class="ct_write">상품명
+                            </td>
+                            <td bgcolor="D6D6D6" width="1"></td>
+                            <td class="ct_write01"><%--${product.prodName}--%>
+                                <input type="hidden" name="prodNo" value="<%--${product.prodNo}--%>" /></td>
+
+
+                        </tr>
+                        <tr>
+                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+                        </tr>
+                        <tr>
+                            <td width="104" class="ct_write">상품상세정보
+                            </td>
+                            <td bgcolor="D6D6D6" width="1"></td>
+                            <td class="ct_write01"><%--${product.prodDetail}--%><input
+                                    type="hidden" name="fileName" value="<%--${product.fileName}--%>" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+                        </tr>
+                        <tr>
+                            <td width="104" class="ct_write">상품수량
+                            </td>
+                            <td bgcolor="D6D6D6" width="1"></td>
+                            <td class="ct_write01"><%--${product.amount}--%><input type="hidden"
+                                                                                   name="amount" value="<%--${product.amount}--%>" /></td>
+                        </tr>
+
+
+                        <tr>
+                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+                        </tr>
+                        <tr>
+                            <td width="104" class="ct_write">결제금액</td>
+                            <td bgcolor="D6D6D6" width="1"></td>
+                            <input type="hidden" name="orderTotalPrice" value="${purchase.orderTotalPrice}"/>
+                            <td class="ct_write01">${purchase.orderTotalPrice}<input type="hidden"
+                                                                                     name="price" value="${purchase.orderTotalPrice}" /></td>
+                        </tr>
+                        <tr>
+                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+                        </tr>
+                        <tr>
+                            <td width="104" class="ct_write">등록일자</td>
+                            <td bgcolor="D6D6D6" width="1"></td>
+                            <td class="ct_write01">${orderDetail.odMenuImage}<input type="hidden"
+                                                                                    name="regDate" value="<%--${product.regDate}--%>" /></td>
+                        </tr>
+                        <tr>
+                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+                        </tr>
+                        <tr>
+                            <td width="104" class="ct_write">구매자아이디 <img
+                                    src="/images/ct_icon_red.gif" width="3" height="3"
+                                    align="absmiddle" />
+                            </td>
+                            <td bgcolor="D6D6D6" width="1"></td>
+                            <td class="ct_write01"><%--${purchase.orderUserId.userId}--%><input type="hidden"
+                                                                                                name="buyer" value="<%--${purchase.orderUserId.userId}--%>" /></td>
+
+                        </tr>
+                        <tr>
+                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+                        </tr>
+                        <%--<tr>
+                            <td width="104" class="ct_write">구매방법</td>
+                            <td bgcolor="D6D6D6" width="1"></td>
+                            <td class="ct_write01"><select name="payOption"
+                                                           class="ct_input_g" style="width: 100px; height: 19px"
+                                                           maxLength="20">
+                                <option value="1" selected="selected">현금구매</option>
+                                <option value="2">신용구매</option>
+                                <option value="3">카카오페이</option>
+                            </select></td>
+
+                        </tr>--%>
+                        <tr>
+                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+                        </tr>
+                        <tr>
+                            <td width="104" class="ct_write">구매수량</td>
+                            <td bgcolor="D6D6D6" width="1"></td>
+                            <td class="ct_write01"><input type="text" name="quantity"
+                                                          class="ct_input_g" style="width: 100px; height: 19px"
+                                                          maxLength="20" /></td>
+                        </tr>
+                        <tr>
+                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+                        </tr>
+                        <tr>
+                            <td width="104" class="ct_write">구매자이름</td>
+                            <td bgcolor="D6D6D6" width="1"></td>
+                            <td class="ct_write01">
+                                <input type="hidden" name="pointAmt" value="${point.pointAmt}">
+                                <input type="text" name="receiverName"
+                                       class="ct_input_g" style="width: 100px; height: 19px"
+                                       maxLength="20" /></td>
+                        </tr>
+                        <tr>
+                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+                        </tr>
+                        <tr>
+                            <td width="104" class="ct_write">구매자연락처</td>
+                            <td bgcolor="D6D6D6" width="1"></td>
+                            <td class="ct_write01"><input type="text" name="receiverPhone"
+                                                          class="ct_input_g" style="width: 100px; height: 19px"
+                                                          maxLength="20" /></td>
+                        </tr>
+                        <tr>
+                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+                        </tr>
+                        <tr>
+                            <td width="104" class="ct_write">구매자주소</td>
+                            <td bgcolor="D6D6D6" width="1"></td>
+                            <td class="ct_write01"><input type="text" name="divyAddr"
+                                                          class="ct_input_g" style="width: 100px; height: 19px"
+                                                          maxLength="20" /></td>
+                        </tr>
+                        <tr>
+                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+                        </tr>
+                        <tr>
+                            <td width="104" class="ct_write">구매요청사항</td>
+                            <td bgcolor="D6D6D6" width="1"></td>
+                            <td class="ct_write01"><input type="text" name="divyRequest"
+                                                          class="ct_input_g" style="width: 100px; height: 19px"
+                                                          maxLength="20" /></td>
+                        </tr>
+                        <tr>
+                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+                        </tr>
+                        <tr>
+                            <td width="104" class="ct_write">배송희망일자</td>
+                            <td bgcolor="D6D6D6" width="1"></td>
+                            <td width="200" class="ct_write01"><input type="text"
+                                                                      readonly="readonly" id="datepicker" name="divyDate"
+                                                                      class="ct_input_g" style="width: 100px; height: 19px"
+                                                                      maxLength="20" /></td>
+                        </tr>
+                        <tr>
+                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
+                        </tr>
+                    </table>
+
+
+                    <button type="button" class="btn btn-primary btn-lg" name="clickPay">
+                        결제하기
+                    </button>
+                    <button type="button" class="btn btn-primary btn-lg" >
+                        controller 2번 타기
+                    </button>
+                    <button type="button" class="btn btn-primary btn-lg" >
+                        진짜결제
+                    </button>
+                </div>
 
             </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <div class="col">
-            <div class="jumbotron ">
-    <table width="100%" height="37" border="0" cellpadding="0"
-           cellspacing="0">
-        <tr><input type="hidden" name="1" value="danal"/>
-            <input type="hidden" name="2" value="phone"/>
-            <input type="hidden" name="3" value="kakaopay"/>
-            <input type="hidden" name="4" value="phone"/>
-            <td width="15" height="37"><img src="/images/ct_ttl_img01.gif"
-                                            width="15" height="37"></td>
-                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td width="93%" class="ct_ttl01">상품상세조회</td>
-                        <td width="20%" align="right">&nbsp;</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-
-    <input type="hidden" name="orderNo" value="${purchase.orderNo}" /> <input type="hidden" name="prodName"
-                                               value="<%--${orderDetail.odOrderMenuName}--%>" />
-
-    <table width="600" border="0" cellspacing="0" cellpadding="0"
-           align="center" style="margin-top: 13px;">
-        <tr>
-            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-        </tr>
-
-        <tr>
-            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-        </tr>
-        <tr>
-            <td width="104" class="ct_write">상품명
-            </td>
-            <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01"><%--${product.prodName}--%>
-                <input type="hidden" name="prodNo" value="<%--${product.prodNo}--%>" /></td>
-
-
-        </tr>
-        <tr>
-            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-        </tr>
-        <tr>
-            <td width="104" class="ct_write">상품상세정보
-            </td>
-            <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01"><%--${product.prodDetail}--%><input
-                    type="hidden" name="fileName" value="<%--${product.fileName}--%>" />
-            </td>
-        </tr>
-        <tr>
-            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-        </tr>
-        <tr>
-            <td width="104" class="ct_write">상품수량
-            </td>
-            <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01"><%--${product.amount}--%><input type="hidden"
-                                                           name="amount" value="<%--${product.amount}--%>" /></td>
-        </tr>
-
-
-        <tr>
-            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-        </tr>
-        <tr>
-            <td width="104" class="ct_write">결제금액</td>
-            <td bgcolor="D6D6D6" width="1"></td>
-            <input type="hidden" name="orderTotalPrice" value="${purchase.orderTotalPrice}"/>
-            <td class="ct_write01">${purchase.orderTotalPrice}<input type="hidden"
-                                                          name="price" value="${purchase.orderTotalPrice}" /></td>
-        </tr>
-        <tr>
-            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-        </tr>
-        <tr>
-            <td width="104" class="ct_write">등록일자</td>
-            <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01">${orderDetail.odMenuImage}<input type="hidden"
-                                                            name="regDate" value="<%--${product.regDate}--%>" /></td>
-        </tr>
-        <tr>
-            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-        </tr>
-        <tr>
-            <td width="104" class="ct_write">구매자아이디 <img
-                    src="/images/ct_icon_red.gif" width="3" height="3"
-                    align="absmiddle" />
-            </td>
-            <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01"><%--${purchase.orderUserId.userId}--%><input type="hidden"
-                                                        name="buyer.userId" value="<%--${purchase.orderUserId.userId}--%>" /></td>
-
-        </tr>
-        <tr>
-            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-        </tr>
-        <tr>
-            <td width="104" class="ct_write">구매방법</td>
-            <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01"><select name="payOption"
-                                           class="ct_input_g" style="width: 100px; height: 19px"
-                                           maxLength="20">
-                <option value="1" selected="selected">현금구매</option>
-                <option value="2">신용구매</option>
-                <option value="3">카카오페이</option>
-            </select></td>
-
-        </tr>
-        <tr>
-            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-        </tr>
-        <tr>
-            <td width="104" class="ct_write">구매수량</td>
-            <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01"><input type="text" name="quantity"
-                                          class="ct_input_g" style="width: 100px; height: 19px"
-                                          maxLength="20" /></td>
-        </tr>
-        <tr>
-            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-        </tr>
-        <tr>
-            <td width="104" class="ct_write">구매자이름</td>
-            <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01">
-                <input type="hidden" name="pointAmt" value="${point.pointAmt}">
-                <input type="text" name="receiverName"
-                                          class="ct_input_g" style="width: 100px; height: 19px"
-                                          maxLength="20" /></td>
-        </tr>
-        <tr>
-            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-        </tr>
-        <tr>
-            <td width="104" class="ct_write">구매자연락처</td>
-            <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01"><input type="text" name="receiverPhone"
-                                          class="ct_input_g" style="width: 100px; height: 19px"
-                                          maxLength="20" /></td>
-        </tr>
-        <tr>
-            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-        </tr>
-        <tr>
-            <td width="104" class="ct_write">구매자주소</td>
-            <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01"><input type="text" name="divyAddr"
-                                          class="ct_input_g" style="width: 100px; height: 19px"
-                                          maxLength="20" /></td>
-        </tr>
-        <tr>
-            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-        </tr>
-        <tr>
-            <td width="104" class="ct_write">구매요청사항</td>
-            <td bgcolor="D6D6D6" width="1"></td>
-            <td class="ct_write01"><input type="text" name="divyRequest"
-                                          class="ct_input_g" style="width: 100px; height: 19px"
-                                          maxLength="20" /></td>
-        </tr>
-        <tr>
-            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-        </tr>
-        <tr>
-            <td width="104" class="ct_write">배송희망일자</td>
-            <td bgcolor="D6D6D6" width="1"></td>
-            <td width="200" class="ct_write01"><input type="text"
-                                                      readonly="readonly" id="datepicker" name="divyDate"
-                                                      class="ct_input_g" style="width: 100px; height: 19px"
-                                                      maxLength="20" /></td>
-        </tr>
-        <tr>
-            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-        </tr>
-    </table>
-
-
-                <button type="button" class="btn btn-primary btn-lg" name="clickPay">
-                    결제하기
-                </button>
-                <button type="button" class="btn btn-primary btn-lg" >
-                    controller 2번 타기
-                </button>
-                <button type="button" class="btn btn-primary btn-lg" >
-                    진짜결제
-                </button>
-            </div>
-
-</div>
-    </div>
     </div>
 
 
