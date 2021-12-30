@@ -266,7 +266,7 @@
                 else
                 {
                     if(role=="truck") {
-                        addCateringService(today);
+                        addCateringService(check);
                     }
                 }
 
@@ -350,7 +350,7 @@
     });
 
 
-    function addCateringService(today){
+    function addCateringService(check){
 
         /* 사업자의 서비스 등록을 하기 위한.. */
         let truckId = '${sessionScope.truck.truckId}';
@@ -374,7 +374,7 @@
                     + "<div><strong>푸드트럭 이름</strong> : "+data.catering.ctTruck.truckName+"</div>" +
                     "</div>"
                     +"<div class='row'>"
-                    +"<div ><strong>서비스 가능 날짜</strong> : "+today+"</div></div>"
+                    +"<div ><strong>서비스 가능 날짜</strong> : "+check+"</div></div>"
                     +"<div class='row'>"
                     +"<div ><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
                     +"<div class='row'>"
@@ -385,8 +385,8 @@
                     +"<div ><strong>최소 수량</strong> : <input type='text' id='servMenuMinQty' name='servMenuMinQty'  /></div></div>"
                     +"<div class='row'>"
                     +"<div ><strong>최대 수량</strong> : <input type='text' id='servMenuMaxQty' name='servMenuMaxQty' /></div></div>"
-                   +"<input type='text' id='menuNo' name='menuNo' value='"+data.catering.ctMenu.menuNo+"'/>"
-                   +"<input type='hidden' id='ctDate' name='ctDate' value='"+today+"'/>";
+                   +"<input type='hidden' id='menuNo' name='menuNo' value='"+data.catering.ctMenu.menuNo+"'/>"
+                   +"<input type='hidden' id='ctDate' name='ctDate' value='"+check+"'/>";
 
                 modalFooter += "<div class='modal-footer'>"
                     +"<button type='button' class='btn btn-outline-info' id='addCtServ' name='addCtServ' onclick='addCtServ();'>서비스 등록</button>"
@@ -655,8 +655,8 @@
                 data :{
                     menuNo : modal.find("input[name='menuNo']").val(),
                     ctDate : modal.find("input[name='ctDate']").val(),
-                    ctMenuMinQty : modal.find("input[name='ctMenuMinQty']").val(),
-                    ctMenuMaxQty : modal.find("input[name='ctMenuMaxQty']").val()
+                    ctMenuMinQty : modal.find("input[name='servMenuMinQty']").val(),
+                    ctMenuMaxQty : modal.find("input[name='servMenuMaxQty']").val()
                 },
                 success : function(data)
                 {

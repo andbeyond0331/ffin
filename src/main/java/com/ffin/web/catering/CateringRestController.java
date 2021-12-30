@@ -298,7 +298,8 @@ public class CateringRestController {
         System.out.println("truckId = " + truckId);
 
         Catering catering = cateringService.getCtTruckMenu(truckId);
-        System.out.println("catering = " + catering);
+
+
 
         ModelAndView modelAndView = new ModelAndView("jsonView");
         modelAndView.addObject("catering", catering);

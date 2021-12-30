@@ -53,12 +53,12 @@ public class CateringController {
             이용자, 사업자 구분
             full Calendar ...*/
 
-        session.setAttribute("role", "truck");
+        //session.setAttribute("role", "truck");
         //User testUser = new User();
         //testUser.setUserId("user01");
-        Truck testTruck = new Truck();
-        testTruck.setTruckId("truck01");
-        session.setAttribute("truck", testTruck);
+        //Truck testTruck = new Truck();
+       // testTruck.setTruckId("truck01");
+       // session.setAttribute("truck", testTruck);
 
         String id="";
         Map<String , Object> map= new HashMap<String , Object>();

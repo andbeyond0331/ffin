@@ -8,6 +8,9 @@
 <mapper namespace="CateringMapper">
 	<resultMap id="cateringSelectMap" type="catering">
 		<result property="ctNo" 			column="CT_NO" 			jdbcType="NUMERIC"/>
+		<result property="ctMenu.menuNo" 			column="CT_MENU_NO" 			jdbcType="NUMERIC"/>
+		<result property="ctUser.userId" 			column="CT_USER_ID" 			jdbcType="VARCHAR"/>
+		<result property="ctTruck.truckId" 			column="CT_TRUCK_ID" 			jdbcType="VARCHAR"/>
 		<result property="ctDate"	column="CT_DATE" 		jdbcType="DATE" />
 		<result property="ctStartTime" 	column="CT_START_TIME" 		jdbcType="VARCHAR" />
 		<result property="ctEndTime" 			column="CT_END_TIME" 	jdbcType="VARCHAR" />
@@ -26,17 +29,17 @@
 		<result property="ctResRegDate" 			column="CT_RES_REG_DATE" 	jdbcType="DATE" />
 		<result property="ctCancelDate" 			column="CT_CANCEL_DATE" 	jdbcType="DATE" />
 		<association property="ctTruck" javaType="truck">
-			<id property="truckId" column="CT_TRUCK_ID" jdbcType="VARCHAR" />
+			<id property="truckId" column="TRUCK_ID" jdbcType="VARCHAR" />
 			<result property="truckPhone" column="TRUCK_PHONE" jdbcType="VARCHAR" />
 			<result property="truckName" column="TRUCK_NAME" jdbcType="VARCHAR"/>
 		</association>
 		<association property="ctUser" javaType="user">
-			<id property="userId" column="CT_USER_ID" jdbcType="VARCHAR"/>
+			<id property="userId" column="USER_ID" jdbcType="VARCHAR"/>
 			<result property="userName" column="USER_NAME" jdbcType="VARCHAR"/>
 			<result property="userPhone" column="USER_PHONE" jdbcType="VARCHAR"/>
 		</association>
 		<association property="ctMenu" javaType="menu">
-			<id property="menuNo" column="CT_MENU_NO" jdbcType="NUMERIC"/>
+			<id property="menuNo" column="MENU_NO" jdbcType="NUMERIC"/>
 			<result property="menuName" column="MENU_NAME" jdbcType="VARCHAR"/>
 			<result property="menuImg1" column="MENU_IMG1" jdbcType="VARCHAR"/>
 			<result property="isSigMenu" column="IS_SIG_MENU" jdbcType="CHAR"/>
