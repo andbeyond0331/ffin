@@ -40,6 +40,14 @@ public class UserRestController {
         return userId;
     }
 
+    @RequestMapping(value = "json/idChkDuplication", method = RequestMethod.POST)
+    public Boolean idChkDuplication(@RequestParam String userId) throws Exception {
+
+        System.out.println("UserRestController.idChkDuplication : POST ");
+
+        return userService.idChkDuplication(userId);
+    }
+
     @RequestMapping(value="snsLogin/{userId}", method=RequestMethod.POST)
     public String snsLogin( @PathVariable String userId, HttpSession session ) throws Exception{
         System.out.println("/user/snsLogin : POST");
