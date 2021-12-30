@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,8 +87,15 @@ public class MenuServiceImpl implements MenuService {
         return menuDao.getMenuList(search, truckId);
     }
 
-
-
+//    @Override
+//    public OptionGroup getLargestOptionGroupNo() throws Exception {
+//        return menuDao.getLargestOptionGroupNo();
+//    }
+//
+//    @Override
+//    public OptionGroup getLargestOptionNo() throws Exception {
+//        return menuDao.getLargestOptionNo();
+//    }
 
 
     ///////////////update//////////////

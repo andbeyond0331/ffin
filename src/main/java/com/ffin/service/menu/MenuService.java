@@ -35,6 +35,12 @@ public interface MenuService {
     //메뉴 목록 조회
     public Map<String, Object> getMenuList(Search search, String truckId) throws Exception;
 
+//    //옵션그룹 번호 지정을 위한 옵션 그룹 번호 중 가장 큰 값 조회
+//    public OptionGroup getLargestOptionGroupNo() throws Exception;
+//
+//    //옵션 번호 지정을 위한 옵션 번호 중 가장 큰 값 조회
+//    public OptionGroup getLargestOptionNo() throws Exception;
+
     //메뉴 수정
     public void updateMenu(Menu menu) throws Exception;
 

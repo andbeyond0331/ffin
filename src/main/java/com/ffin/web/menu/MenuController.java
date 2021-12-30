@@ -12,6 +12,7 @@ import com.ffin.service.truck.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -73,31 +74,46 @@ public class MenuController {
 
     @Transactional //menu만 들어가고 optionGroup은 들어가지 않는 상황 방지
     @RequestMapping(value="addMenuOptionGroup", method=RequestMethod.POST)
-    public String addMenuOptionGroup(@ModelAttribute("truck") Truck truck, @ModelAttribute(value="optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
+    public String addMenuOptionGroup(@ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
+   // public String addMenuOptionGroup(@ModelAttribute("optionGroup")OptionGroup optionGroup, Model model) throws Exception{
+//    public String addMenuOptionGroup(HttpServletRequest request, Model model) throws Exception{
 
         System.out.println("/menu/addMenu:POST");
-        System.out.println("truck = " + truck + ", optionGroup = " + optionGroup + ", menu = " + menu + ", model = " + model);
 
-        menu.setMenuTruckId(truck.getTruckId());
 
+//        Menu menu = (Menu) request.getAttribute("menu");
+//        OptionGroup optionGroup = (OptionGroup) request.getAttribute("optionGroup");
+               // System.out.println("optionGroup = " + optionGroup + ", model = " + model);
+        System.out.println("optionGroup = " + optionGroup + ", menu = " + menu + ", model = " + model);
+
+       // menu.setMenuTruckId(truck.getTruckId());
+
+//        int optionGroupNo = 10000;
+//        int optionNo = 10000;
+
+//        optionGroup.setOptionGroupNo(optionGroupNo);
+//        optionGroup.setOptionNo(optionNo);
 
         int menuNo = menuService.addMenu(menu);
         optionGroup.setMenuNo(menuNo);
+//        int menuNo =1;
+//        optionGroup.setMenuNo(menuNo);
         List list = new ArrayList();
         list.add(optionGroup);
         menuService.addOptionGroup(list);
         System.out.println("menuNo : " + menuNo);
 
-        menu = menuService.getMenu(menuNo);
-        Map optionGroupList = menuService.getOptionGroupList(optionGroup.getOptionGroupNo());
+//        menu = menuService.getMenu(menuNo);
+        Menu menu1 = menuService.getMenu(menuNo);
+//        menuService.addOptionGroup(list);
 
-        model.addAttribute("menu", menu);
-        model.addAttribute("optionGroup", optionGroupList);
+        model.addAttribute("menu", menu1);
+        model.addAttribute("optionGroup-list", list);
         model.addAttribute("menuNo", menuNo);
 
         System.out.println("model 확인 : " + model);
 
-        return "redirect:/menu/getMenuList?truckId="+menu.getMenuTruckId();
+        return "redirect:/views/menu/getTruck.jsp";
 
     }
 

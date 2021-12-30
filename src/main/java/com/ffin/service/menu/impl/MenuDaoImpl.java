@@ -61,6 +61,16 @@ public class MenuDaoImpl implements MenuDao {
         return sqlSession.selectOne("MenuMapper.getMenu", menuNo);
     }
 
+//    @Override
+//    public OptionGroup getLargestOptionGroupNo() throws Exception {
+//        return sqlSession.selectOne("MenuMapper.getLargestOptionGroupNo");
+//    }
+//
+//    @Override
+//    public OptionGroup getLargestOptionNo() throws Exception {
+//        return sqlSession.selectOne("MenuMapper.getLargestOptionNo");
+//    }
+
     //옵션 그룹의 모든 옵션 받아오기
     @Override
     public Map<String, Object> getOptionGroup(Search search, int optionGroupNo) throws Exception {
