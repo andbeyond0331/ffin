@@ -21,6 +21,12 @@ public interface MenuDao {
     //SELECT ONE
     public Menu getMenu(int menuNo) throws Exception;
 
+//    //SELECT ONE
+//    public OptionGroup getLargestOptionGroupNo()throws Exception;
+//
+//    //SELECT ONE
+//    public OptionGroup getLargestOptionNo()throws Exception;
+
 
     // 옵션 그룹의 모든 옵션 받아오기 by optionGroupNo
     //SELECT LIST

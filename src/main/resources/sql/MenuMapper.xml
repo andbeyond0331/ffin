@@ -55,12 +55,12 @@
 			VALUES
 			<foreach collection="list" item="item" separator=",">
 				(${item.menuNo},
-				 ${item.optionGroupNo},
-				 ${item.optionNo},
-				 '${item.optionGroupName}',
-				 '${item.optionName}',
-				 ${item.optionPrice}
-				 )
+				(select ifnull(max(OPTION_GROUP_NO)+1,1)from optiongroup b),
+				(select ifnull(max(OPTION_NO)+1,1)from optiongroup c),
+				'${item.optionGroupName}',
+				'${item.optionName}',
+				${item.optionPrice}
+				)
 			</foreach>
 	</insert>
 
@@ -145,6 +145,14 @@
 
 
 	</select>
+
+<!--	<select id="getLargestOptionGroupNo" parameterType="int" resultMap="OptionGroupSelectMap">-->
+<!--		SELECT MAX(option_group_no) FROM optiongroup;-->
+<!--	</select>-->
+
+<!--	<select id="getLargestOptionNo" parameterType="int" resultMap="OptionGroupSelectMap">-->
+<!--		SELECT MAX(OPTION_NO) FROM optiongroup;-->
+<!--	</select>-->
 
 	<update id="updateMenu" parameterType="menu">
 		UPDATE menu
