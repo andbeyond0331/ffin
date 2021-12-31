@@ -19,11 +19,14 @@
     </style>
 </head>
 <body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBmxlLXS2GGFBgeQTt6n4YPhxU6NKu4Kx8" ></script>
 
 <script type="text/javascript">
+
     $(document).ready(function() {
         var myLatlng = new google.maps.LatLng(35.837143,128.558612); // 위치값 위도 경도
      var Y_point = 35.837143; // Y 좌표
@@ -59,8 +62,60 @@
          infowindow.open(map, marker);
      });
     });
+
+  /* Iamport 환불시스템*/
+    function cancelPay() {
+        jQuery.ajax({
+            "url": "{환불요청을 받을 서비스 URL}", // 예: http://www.myservice.com/payments/cancel
+            "type": "POST",
+            "contentType": "application/json",
+            "data": JSON.stringify({
+                "merchant_uid": "{결제건의 주문번호}", // 예: ORD20180131-0000011
+                "cancel_request_amount": 2000, // 환불금액
+                "reason": "테스트 결제 환불" // 환불사유
+                "refund_holder": "홍길동", // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+                "refund_bank": "88" // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
+                "refund_account": "56211105948400" // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+            }),
+            "dataType": "json"
+        });
+    }
+
 </script>
 <main>
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel">Modal 1</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Show a second modal and hide this one with the button below.
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Hide this modal and show the first with the button below.
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to first</button>
+                    <button onclick="cancelPay()">환불하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container py-4">
         <header class="pb-4 mb-5 border-bottom">
             <span class="fs-1">현재주문정보</span>
@@ -102,7 +157,9 @@
                         </tbody>
 
                     </table>
+
                     <button type="button" class="btn btn-secondary">결제취소</button>
+                    <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Open first modal</a>
                 </div>
             </div>
             <div class="col-md-6">
