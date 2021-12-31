@@ -48,13 +48,13 @@ public class PurchaseController {
     public ModelAndView getCartMenuList(@RequestParam("orderNo")int orderNo , ModelAndView model ) throws Exception{
         System.out.println("/purchase/getCartMenuList : GET");
         //Session에 저장되어 있는 메뉴정보를 map에 담아서 List 로 확인
-
+        Purchase purchase = new Purchase();
         OrderDetail orderDetail = new OrderDetail();
         Map map = new HashMap();
         map = purchaseService.getOrderDetail(orderNo);
        // session.setAttribute("cart",orderDetail);
-
-
+        purchase = purchaseService.getPurchase(orderNo);
+        model.addObject("purchase",purchase);
         model.addObject("map",map);
         model.setViewName("forward:/views/purchase/getCartMenuList.jsp");
 
@@ -70,6 +70,7 @@ public class PurchaseController {
         System.out.println("orderDetail11111 = " + orderDetail + ", purchase2222 = " + purchase);
       int orderNo = purchaseService.addPurchase(purchase);
         orderDetail.setOdOrderNo(purchase);
+        Purchase pur = new Purchase();
 
 /*        List list = new ArrayList();
         String[] splitMenu = orderDetail.getOdMenuName().split(",");
@@ -84,16 +85,93 @@ public class PurchaseController {
         }
         */
         System.out.println("1112222333");
+        System.out.println("odMenuName"+orderDetail.getOdMenuName());
+        System.out.println("odOptionGroupName"+orderDetail.getOdOptionGroupName());
+        System.out.println("odOptionName"+orderDetail.getOdOptionName());
+        System.out.println("odMenuQty"+orderDetail.getOdMenuQty());
+        System.out.println("odMenuPrice"+orderDetail.getOdMenuPrice());
+        System.out.println("odOptionPrice"+orderDetail.getOdOptionPrice());
+        System.out.println("odMenuImage"+orderDetail.getOdMenuImage());
+        System.out.println("odOrderNo"+orderDetail.getOdOrderNo());
 
+        String[] odMenuName = orderDetail.getOdMenuName().split(",");
+        String[] odOptionGroupName = orderDetail.getOdOptionGroupName().split(",");
+        String[] odOptionName = orderDetail.getOdOptionName().split(",");
+        String[] odMenuQty = Integer.toString(orderDetail.getOdMenuQty()).split(",");
+        String[] odMenuPrice = Integer.toString(orderDetail.getOdMenuPrice()).split(",");
+        String[] odOptionPrice = Integer.toString(orderDetail.getOdOptionPrice()).split(",");
+        String[] odMenuImage = orderDetail.getOdMenuImage().split(",");
+        String[] odOrderNo = String.valueOf(orderDetail.getOdOrderNo()).split(",");
+
+        System.out.println("odMenuName length"+odMenuName.length);
+        System.out.println("odOptionGroupName length"+odOptionGroupName.length);
+        System.out.println("odOptionName length"+odOptionName.length);
+        System.out.println("odMenuQty length"+odMenuQty.length);
+        System.out.println("odMenuPrice length"+odMenuPrice.length);
+        System.out.println("odOptionPrice length"+odOptionPrice.length);
+        System.out.println("odMenuImage length"+odMenuImage.length);
+        System.out.println("odOrderNo length"+odOrderNo.length);
+
+        List <OrderDetail> orderList = new ArrayList<OrderDetail>();
+
+        for (int i = 0; i< odMenuName.length; i++){
+            OrderDetail order = new OrderDetail();
+
+            order.setOdMenuName(odMenuName[i]);
+            if(i>=odOptionGroupName.length){
+                order.setOdOptionGroupName(null);
+            }else{
+                order.setOdOptionGroupName(odOptionGroupName[i]);
+            }
+            if(i>=odOptionName.length){
+                order.setOdOptionName(null);
+            }else{
+                order.setOdOptionName(odOptionName[i]);
+            }
+            if(i>=odOptionName.length){
+                order.setOdOptionName(null);
+            }else{
+                order.setOdOptionName(odOptionName[i]);
+            }
+            if(i>=odMenuQty.length){
+                order.setOdMenuQty(0);
+            }else{
+                order.setOdMenuQty(Integer.parseInt(odMenuQty[i]));
+            }
+            if(i>=odMenuPrice.length){
+                order.setOdMenuPrice(0);
+            }else{
+                order.setOdMenuPrice(Integer.parseInt(odMenuPrice[i]));
+            }
+            if(i>=odOptionPrice.length){
+                order.setOdOptionPrice(0);
+            }else{
+                order.setOdOptionPrice(Integer.parseInt(odOptionPrice[i]));
+            }
+            if(i>=odMenuImage.length){
+                order.setOdMenuImage(null);
+            }else{
+                order.setOdMenuImage(odMenuImage[i]);
+            }
+            if(i>=odOrderNo.length){
+                order.setOdOrderNo(null);
+            }else{
+                pur.setOrderNo(orderNo);
+            }
+            order.setOdOrderNo(pur);
+
+
+            orderList.add(order);
+        }
 /*        List list = Arrays.asList(orderDetail.getOdMenuImage().split(","));
         list.add(orderDetail);
         list = Arrays.asList(orderDetail.getOdMenuName().split(","));
 
         System.out.println("list>>>>>>>>>>>"+list);*/
 
-        List list = new ArrayList<>();
-        list.add(orderDetail);
-        purchaseService.addCart(list);
+      /*  List list = new ArrayList<>();
+        list.add(orderDetail);*/
+        purchaseService.addCart(orderList);
         System.out.println(orderNo);
         Coupon coupon = new Coupon();
         coupon.setCouponReceivedUserId(purchase.getOrderUserId());

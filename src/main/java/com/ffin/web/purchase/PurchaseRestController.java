@@ -53,7 +53,9 @@ public class PurchaseRestController {
     public void addCartList(HttpServletRequest request, OrderDetail orderDetail,
                             HttpServletResponse response, ModelMap model)throws IOException,Exception{
         System.out.println("/////////////////////////////////////////////////");
-
+        System.out.println("request = " + request + ", orderDetail = " + orderDetail + ", response = " + response + ", model = " + model);
+        System.out.println(request.getAttribute(orderDetail.getOdMenuImage()));
+        System.out.println(request.getParameter(orderDetail.getOdMenuImage()));
         System.out.println("odMenuName"+orderDetail.getOdMenuName());
         System.out.println("odOptionGroupName"+orderDetail.getOdOptionGroupName());
         System.out.println("odOptionName"+orderDetail.getOdOptionName());

@@ -27,32 +27,33 @@
 <script type="text/javascript">
 
     $(function() {
-        $("button.btn.btn-primary:Contains('주문하기')").click(function () {
-            alert("djkdjdk");
+        $("button.btn.btn-primary:Contains('확인')").click(function () {
+            alert("넘거간다.");
             $("form").attr("method" , "POST").attr("action" , "/purchase/addCart").submit();
 
         });
     });
     $(function() {
         $("button.btn.btn-primary:Contains('json')").click(function () {
-            alert("djkdjdk");
+            alert("ddk");
             to_ajax();
             $("form").attr("method" , "POST").attr("action" , "/purchase/addCart").submit();
         });
     });
     function  to_ajax(){
-        var query = $("form").serialize();
+
         $.ajax({
             type: "post",
             url: '/purchase/json/addCartList',
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            data : query,
+            data : $("#form input").serialize(),
             dataType: 'json',
-            error: function (xhr, status, error) {
-                alert(error);
-            },
-            success: function (json) {
-                alert(json)
+            success: function(response){
+                if(response === 1){
+                    //load chech.php file
+                }  else {
+                    //show error
+                }
             }
         });
     }
@@ -99,7 +100,52 @@
 </head>
 <body bgcolor="#ffffff" text="#000000">
 
-<form>
+<form name="form">
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="orderPickUpTime" class="col-form-label">픽업희망시간:</label>
+                        <div class="btn-group" role="group" id="orderPickUpTime" aria-label="Basic radio toggle button group">
+                            <input type="radio" class="btn-check"  id="btnradio1" autocomplete="off" checked>
+                            <label class="btn btn-outline-primary" for="btnradio1" value="5">5분</label>
+
+                            <input type="radio" class="btn-check"  id="btnradio2" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio2" value="10">10분</label>
+
+                            <input type="radio" class="btn-check" id="btnradio3" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio3" value="15">15분</label>
+
+                            <input type="radio" class="btn-check"  id="btnradio4" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio4" value="20">20분</label>
+
+                            <input type="radio" class="btn-check"  id="btnradio5" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio5" value="30">30분</label>
+
+                            <input type="radio" class="btn-check"  id="btnradio6" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio6" value="40">40분</label>
+
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">주문요청사항:</label>
+                        <textarea class="form-control" id="message-text"  value="${purchase.orderRequest}"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <div class="container">
     <div class="content">Main content</div>
@@ -129,10 +175,10 @@
                 <td class="ct_list_b" width="150">메뉴 가격</td>
                 <td class="ct_line02"></td>
                 <td class="ct_list_b">대표 메뉴 여부
-                    <input type="hidden"  name="orderUserId.userId" value="user01"/>
+                    <input type="hidden"   name="orderUserId.userId" value="user01"/>
                     <input type="hidden"  name="orderTruckId.truckId" value="truck01"/>
                     <input type="hidden"  name="orderQty" value="3"/>
-                    <input type="hidden"  name="orderPickUpTime" value="15"/>
+               <input type="hidden"  name="orderPickUpTime" value="15"/>
                     <input type="hidden"  name="orderTotalPrice" value="3000"/>
 
                 </td>
@@ -161,13 +207,13 @@
 
                 <td></td>
                 <td align="left">
-                    <input type="hidden"  name="odMenuName" value="${cart.odMenuName}"/>
-                    <input type="hidden"  name="odOptionGroupName" value="${cart.odOptionGroupName}"/>
-                    <input type="hidden"  name="odOptionName" value="${cart.odOptionName}"/>
-                    <input type="hidden"  name="odMenuQty" value="${cart.odMenuQty}"/>
-                    <input type="hidden"  name="odMenuPrice" value="${cart.odMenuPrice}"/>
-                    <input type="hidden"  name="odOptionPrice" value="${cart.odOptionPrice}"/>
-                    <input type="hidden"  name="odMenuImage" value="${cart.odMenuImage}"/>
+                    <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
+                    <input type="hidden" id="odOptionGroupName" name="odOptionGroupName" value="${cart.odOptionGroupName}"/>
+                    <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.odOptionName}"/>
+                    <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.odMenuQty}"/>
+                    <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.odMenuPrice}"/>
+                    <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
+                    <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
                         ${cart.odMenuQty}
                 </td>
                 <td></td>
@@ -184,7 +230,7 @@
         </c:forEach>
         </table>
 
-            <button type="button" class="btn btn-primary">주문하기</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">주문하기</button>
             <button type="button" class="btn btn-primary">json</button>
         </div>
        <%-- <table border=1>
