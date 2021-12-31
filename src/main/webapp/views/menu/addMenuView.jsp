@@ -118,15 +118,10 @@
 
                 divElemOp ="</hr>"+
                     "<div class=\"form-group\" id=\""+realOptionName+"\" name=\"optionName\">"+
-                    //"<label for=\"optionName\" class=\"col-sm-offset-1 col-sm-3 control-label\">옵션"+countOp+"</label>"+
-                    ///"<label for=\"optionName\" class=\"col-sm-offset-1 col-sm-3 control-label\">옵션</label>"+
                     "<div class=\"col-xs-8 col-md-4\">"+"옵션 이름 : "+realOptionName+"</div>"+
                     "<input type=\"hidden\" id=\"applyOptionName+"+realOptionName+"\" name=\"applyOptionName\" value=\""+realOptionName+"\"/>"+
                     "<div class=\"col-xs-8 col-md-4\">"+"옵션 가격 : "+realOptionPrice+"</div>"+
                     "<input type=\"hidden\" id=\"applyOptionPrice+"+realOptionPrice+"\" name=\"applyOptionPrice\" value=\""+realOptionPrice+"\"/>"+
-
-                    // "<input type=\"hidden\" value=\""+indexOp+"\" name=\""+indexOp+"\"/>"+
-                    ///"<input type=\"button\" value=\"삭제\" onclick=\"javascript:removeELOption("+realOptionName+")\"/>" +
                     "</div>";
 
                 console.log("divElemOp : "+divElemOp);
@@ -206,7 +201,7 @@
                     "<div class=\"modal-body\">"+
                             "<div class=\"form-group\">"+
                                 "<label for=\"optionGroupName\" class=\"col-from-label\">옵션그룹이름</label>"+
-                                "<input type=\"text\" class=\"form-control\" id=\"optionGroupName\" value=\"\${optionGroup.optionGroupName}\">"+
+                                "<input type=\"text\" class=\"form-control\" id=\"optionGroupName\" value=\"\">"+
                             "</div>"+
                    // "</div>"+
                     "<div class=\"modal-footer\">"+
