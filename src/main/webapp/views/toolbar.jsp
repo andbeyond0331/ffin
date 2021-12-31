@@ -82,8 +82,9 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "/user/json/login/" + userIdModal,
-                    data: {userIdModal, userPasswordModal},
+                    url: "/user/json/login/"+userIdModal,
+                    data: {userId : userIdModal,
+                            userPassword : userPasswordModal},
                     success: function (data) {
                         /*javascript redirect 방법*/
                         location.replace("http://localhost:8080/views/homeTest.jsp");
@@ -176,113 +177,122 @@
     <header class="header_section">
         <div class="container-fluid" >
             <nav class="navbar navbar-expand-lg custom_nav-container">
-                <a class="navbar-brand" href="homeTest.jsp">
-                    <img class="d-inline-block" src="../resources/bootstrap/assets/logo.svg" alt="logo" />
-                    <span>F.FIN</span>
-                </a>
-                <div class = "menuTab" style="float: left;">
-                    <ul class="nav menu_tab">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" id="goTruck" >푸드트럭</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" id="goCatering">케이터링</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" id="goPost">게시판</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" id="goChat" >채팅방</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" id="goMsg" >쪽지</a>
-                        </li>
-                    </ul>
+                <div>
+                    <div class="logo" style="float: left;">
+                        <a class="navbar-brand" href="homeTest.jsp">
+                            <img class="d-inline-block" src="../resources/bootstrap/assets/logo.svg" alt="logo" />
+                            <span>F.FIN</span>
+                        </a>
+                    </div>
+                    <div class = "menuTab">
+                        <ul class="nav menu_tab">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" id="goTruck" >푸드트럭</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" id="goCatering">케이터링</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" id="goPost">게시판</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" id="goChat" >채팅방</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" id="goMsg" >쪽지</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="user_option_wrap" id="">
-                    <div class="User_option">
-                        <a href="#login">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                            <span data-toggle="modal" data-target=".bd-example-modal-lg" id="loginModal"  onclick=loginModal()>Login</span>
-                        </a>
-                        ${user.userId}
-                        ${truck.truckId}
-                        <!-- Modal -->
-                        <div class="modal fade" id="openLoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalCenterTitle">Login</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <ul class="nav nav-pills nav-fill" id="roleTab">
-                                            <li class="nav-item">
-                                                <a class="nav-link active" data-toggle="tab" href="#user">User</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" data-toggle="tab" href="#CEO">CEO</a>
-                                            </li>
-                                        </ul>
-                                        <form id = "modalForm" name="modalForm">
-                                            <div class="tab-content">
-                                                <div class="tab-pane fade show active" id="user">
-                                                    <div class="mb-3">
-                                                        <label for="userId" class="form-label">ID</label>
-                                                        <input type="text" class="form-control" id="userIdModal" >
-                                                        <%--<div id="userIdInfo" class="form-text">User!</div>--%>
+
+                        <%-- 로그인 전 --%>
+                        <div class="User_option">
+                            <a href="#login">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <span data-toggle="modal" data-target=".bd-example-modal-lg" id="loginModal"  onclick=loginModal()>Login</span>
+                            </a>
+                            ${user.userId}
+                            ${truck.truckId}
+                            <!-- Modal -->
+                            <div class="modal fade" id="openLoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Login</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <ul class="nav nav-pills nav-fill" id="roleTab">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" data-toggle="tab" href="#user">User</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" data-toggle="tab" href="#CEO">CEO</a>
+                                                </li>
+                                            </ul>
+                                            <form id = "modalForm" name="modalForm">
+                                                <div class="tab-content">
+                                                    <div class="tab-pane fade show active" id="user">
+                                                        <div class="mb-3">
+                                                            <label for="userIdModal" class="form-label">ID</label>
+                                                            <input type="text" class="form-control" id="userIdModal" >
+                                                            <%--<div id="userIdInfo" class="form-text">User!</div>--%>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="userPasswordModal" class="form-label">Password</label>
+                                                            <input type="password" class="form-control" id="userPasswordModal">
+                                                        </div>
+                                                        <div class="mb-3 form-check">
+                                                            <input type="checkbox" class="form-check-input" id="autoLoginUser">
+                                                            <label class="form-check-label" for="autoLoginUser">자동로그인</label>
+                                                            <a class="findId" href="" style="color: #ffba49; margin-left: 5px; font-size: 14px;"> <strong style="float: right; stroke: #ffba49; margin-right: 5px; margin-top: 2px;">ID/PW 찾기</strong></a>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <span style="color: #0b1727; margin-left: 5px; font-size: 14px">아직 회원이 아니신가요?</span>
+                                                            <a class="addChk" href="./user/addUserInfo.jsp" style="color: #ffba49; margin-left: 0; font-size: 14px;"> <strong style="float: right; stroke: #ffba49; margin-right: 5px;">회원가입</strong></a>
+                                                        </div>
                                                     </div>
-                                                    <div class="mb-3">
-                                                        <label for="userPassword" class="form-label">Password</label>
-                                                        <input type="password" class="form-control" id="userPasswordModal">
-                                                    </div>
-                                                    <div class="mb-3 form-check">
-                                                        <input type="checkbox" class="form-check-input" id="autoLoginUser">
-                                                        <label class="form-check-label" for="autoLoginUser">자동로그인</label>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <span style="color: #0b1727; margin-left: 0;">아직 회원이 아니신가요?</span>
-                                                        <a class="addChk" href="./user/addUserInfo.jsp" style="color: #0b1727; margin-left: 0;"> <strong style="float: right; stroke: #000000">회원가입</strong></a>
+                                                    <div class="tab-pane fade" id="CEO">
+                                                        <div class="mb-3">
+                                                            <label for="truckId" class="form-label">ID</label>
+                                                            <input type="text" class="form-control" id="truckId">
+                                                            <%--<div id="truckIdInfo" class="form-text">CEO!</div>--%>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="truckPassword" class="form-label">Password</label>
+                                                            <input type="password" class="form-control" id="truckPassword">
+                                                        </div>
+                                                        <div class="mb-3 form-check">
+                                                            <input type="checkbox" class="form-check-input" id="autoLoginTruck">
+                                                            <label class="form-check-label" for="autoLoginTruck">자동로그인</label>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <span style="color: #0b1727; margin-left: 5px; font-size: 14px">아직 회원이 아니신가요?</span>
+                                                            <a class="addChk" href="./truck/addTruckView.jsp" style="color: #ffba49; margin-left: 0; font-size: 14px;"> <strong style="float: right; stroke: #ffba49; margin-right: 5px;">사업자 회원가입</strong></a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="tab-pane fade" id="CEO">
-                                                    <div class="mb-3">
-                                                        <label for="truckId" class="form-label">ID</label>
-                                                        <input type="text" class="form-control" id="truckId">
-                                                        <%--<div id="truckIdInfo" class="form-text">CEO!</div>--%>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="truckPassword" class="form-label">Password</label>
-                                                        <input type="password" class="form-control" id="truckPassword">
-                                                    </div>
-                                                    <div class="mb-3 form-check">
-                                                        <input type="checkbox" class="form-check-input" id="autoLoginTruck">
-                                                        <label class="form-check-label" for="autoLoginTruck">자동로그인</label>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <span style="color: #0b1727; margin-left: 0;">아직 회원이 아니신가요?</span>
-                                                        <a class="addChk" href="./truck/addTruckView.jsp" style="color: #0b1727; margin-left: 0;"> <strong style="float: right; stroke: #000000">사업자 회원가입</strong></a>
-                                                    </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-warning btn-lg btn-block" id="modalLoginBtn" style="color: #ffffff">login</button>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-warning btn-lg btn-block" id="modalLoginBtn" style="color: #ffffff">login</button>
-                                            </div>
-                                        </form>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <form class="form-inline ">
+                                <input type="search" placeholder="Search" />
+                                <button class="btn  nav_search-btn" type="submit">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </button>
+                            </form>
                         </div>
-                        <form class="form-inline ">
-                            <input type="search" placeholder="Search" />
-                            <button class="btn  nav_search-btn" type="submit">
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </button>
-                        </form>
-                    </div>
+                        <%-- 로그인 전 End --%>
+
                     <div class="custom_menu-btn">
                         <button onclick="openNav()">
                             <img src="../resources/bootstrap/images/menu.png" alt="">
