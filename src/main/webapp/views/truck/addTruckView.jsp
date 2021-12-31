@@ -584,7 +584,7 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <select name="truckCate" class="col-sm-4 ct_input_g"
                     style="width: 120px; height: 24px" maxLength="30">
-                <option value="0" selected="selected">카테고리를 선택해주세요</option>
+                <option value="0" selected="selected">카테고리 선택</option>
                 <option value="1">고기</option>
                 <option value="2">분식</option>
                 <option value="3">음료</option>

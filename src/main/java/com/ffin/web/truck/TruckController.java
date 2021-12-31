@@ -196,19 +196,18 @@ public class TruckController {
     // 회원탈퇴
     @RequestMapping(value = "byeTruck", method = RequestMethod.POST)
     //public String byeTruck(@ModelAttribute("truck") Truck truck, @RequestParam("truckByeReason") int truckByeReason , HttpSession session) throws Exception{
-    public String byeTruck(@ModelAttribute("truckId") String truckId, HttpSession session) throws Exception{
+    public String byeTruck(@ModelAttribute("truck") Truck truck, HttpSession session) throws Exception{
 
         System.out.println("/truck/byeTruck : POST");
         //Business Logic
-        Truck byeTruck = (Truck) session.getAttribute("truckId");
-        //String sessionId = ((Truck) session.getAttribute("truck")).getTruckId();
-        //if(sessionId.equals(truck.getTruckId())){
-            //truck.setTruckByeReason(session.getAttribute("truckByeReason", truck));
-            byeTruck.setTruckByeStatus(1);
-            //truck.setTruckByeReason(truckByeReason);
-            truckService.byeTruck(byeTruck);
+        Truck dbTruck = truckService.getTruck(truck.getTruckId());
+
+        if(truck.getTruckPassword().equals(dbTruck.getTruckPassword())){
+            session.setAttribute("truck", truck);
+            dbTruck.setTruckByeStatus(1);
+            truckService.byeTruck(dbTruck);
             System.out.println("회원탈퇴완료");
-        //}
+        }
 
         return "redirect:/views/home.jsp";
     }
