@@ -79,7 +79,7 @@
         <div class="container ">
             <div class="row">
                 <div class="col-lg-10 mx-auto">
-                    <div class="detail-box">
+                    <div class="detail-box" style="margin-bottom: -40px;">
                         <h1 class="display-1 fs-md-5 fs-lg-6 fs-xl-8 text-light">
                             FoodTruck Finder
                         </h1>
@@ -90,7 +90,7 @@
                             <div class="row">
                                 <div class="col">
                                     <form>
-                                        <div class="form-row ">
+                                        <div class="form-row">
                                             <div class="form-group col-lg-6">
                                                 <input type="text" class="form-control" id="inputLocation" placeholder="What's your address?">
                                                 <span class="location_icon">
@@ -98,7 +98,7 @@
                                                   </span>
                                             </div>
                                         </div>
-                                        <div class="form-row ">
+                                        <div class="form-row"  style="margin-top: -15px;">
                                             <div class="form-group col-md-4">
                                                 <div class="btn-box">
                                                     <button type="submit" class="btn ">Use current location</button>

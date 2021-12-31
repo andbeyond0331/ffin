@@ -837,6 +837,13 @@ a:focus {
   color: inherit;
 }
 
+.menuTab{
+  float: right;
+  margin-top: 6px;
+  color: #ffffff;
+  font-weight: bolder;
+}
+
 .data-input-box{
   margin-top: 20px;
   margin-bottom: 30px;

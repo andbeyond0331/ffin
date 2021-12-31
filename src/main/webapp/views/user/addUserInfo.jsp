@@ -206,7 +206,7 @@
 
 						if(userId !== "") {
 
-							//정규표현식
+							//정규식
 							if (userIdEx.test(userId) === true) {
 
 								//중복검사
@@ -270,8 +270,20 @@
 				var rePw = $("#reUserPassword").val();
 				$(".pw_input_chk").css("display","none");
 
+				if(userPassword === ""){
+					$(".pw_input_chk").css("display","block");
+					$("#userPassword").css({
+						"border-color" : "#f17228",
+						"box-shadow" : "0 0 0 0.1rem rgb(241, 114, 40)"
+					});
+					pwChk = false;
+				}else {
+					$(".pw_input_chk").css("display","none");
+					pwChk = true;
+				}
 
-				if(pw !== "" || rePw !== "") {
+
+				if(pw !== "") {
 
 					//정규식
 					if (userPwEx.test(pw) === false) {
