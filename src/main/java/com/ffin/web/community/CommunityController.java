@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.Map;
 
 // 소통관리 Controller
@@ -40,42 +40,73 @@ public class CommunityController {
 
 
     ///////////////////// 게시물 관련 메소드 ////////////////////////
+    // 게시물 작성 화면 요청
     @RequestMapping(value = "addPost", method = RequestMethod.GET)
     public String addPost() throws Exception {
+
         System.out.println("/community/addPost : GET");
 
-        return "/community/addPostView.jsp";
+        return "/views/community/addPostView.jsp";
     }
 
     @RequestMapping(value = "addPost", method = RequestMethod.POST)
-    public String addPost(@ModelAttribute("post") Post post, @ModelAttribute("truck") Truck truck, @ModelAttribute("user") User user, Model model, HttpSession session) throws Exception {
+    public String addPost(@ModelAttribute("post") Post post, @RequestParam("file1") MultipartFile file1,@RequestParam("file2") MultipartFile file2,@RequestParam("file3") MultipartFile file3, HttpSession session) throws Exception {
+
         System.out.println("/community/addPost : POST");
 
-        if (session.getAttribute("role").equals("user")) {
-            String postUser = ((User) session.getAttribute("user")).getUserId();
-            System.out.println("게시물 작성자(user) : " + session.getAttribute("userId"));
-            post.setPostUser((User) session.getAttribute("user"));
-        } else if (session.getAttribute("role").equals("truck")) {
-            String postTruck = ((Truck) session.getAttribute("truck")).getTruckId();
-            System.out.println("게시물 작성자(truck) : " + session.getAttribute("truckId"));
-            post.setPostTruck((Truck) session.getAttribute("truck"));
+        String role =(String) session.getAttribute("role");
+
+        System.out.println("role = " + role);
+
+        User postUser = null;
+        Truck postTruck = null;
+
+        if (role.equals("user")) {
+            postUser = (User) session.getAttribute("user");
+            System.out.println("게시물 작성자(user) : " + postUser);
+            post.setPostUser(postUser);
+        } else if (role.equals("truck")) {
+            postTruck = (Truck) session.getAttribute("truck");
+            System.out.println("게시물 작성자(truck) : " + postTruck);
+            post.setPostTruck(postTruck);
         }
+
+        String temDir = "/Users/js/IdeaProjects/ffin/src/main/webapp/resources/image";
+
+        if (!file1.getOriginalFilename().isEmpty()) {
+            file1.transferTo(new File(temDir, file1.getOriginalFilename()));
+        }
+        if (!file2.getOriginalFilename().isEmpty()) {
+            file2.transferTo(new File(temDir, file2.getOriginalFilename()));
+        }
+        if (!file3.getOriginalFilename().isEmpty()) {
+            file3.transferTo(new File(temDir, file3.getOriginalFilename()));
+        }
+
+        post.setPostFile1(file1.getOriginalFilename());
+        post.setPostFile2(file2.getOriginalFilename());
+        post.setPostFile3(file3.getOriginalFilename());
+
         communityService.addPost(post);
 
-        return "/views/community/getPostList.jsp";
+        //model.addAttribute("post", post);
+
+
+        return "redirect:/community/getPostList";
     }
 
     @RequestMapping(value = "getPost", method = RequestMethod.GET)
-    public ModelAndView getPost(HttpServletRequest request, ModelAndView m) throws Exception {
+    public ModelAndView getPost(@RequestParam("postNo") int postNo, HttpServletRequest request, ModelAndView m) throws Exception {
 
-        System.out.println("CommunityContoller.getPost : GET");
-        int postNo = Integer.parseInt(request.getParameter("postNo"));
-
+        System.out.println("/community/getPost : GET");
+        postNo = Integer.parseInt(request.getParameter("postNo"));
         System.out.println("postNo = " + postNo);
+
         Post post = communityService.getPost(postNo);
         System.out.println("post = " + post);
+
         m.addObject("post", post);
-        m.setViewName("/community/getPost.jsp");
+        m.setViewName("/views/community/getPost.jsp");
 
         return m;
     }
@@ -106,7 +137,7 @@ public class CommunityController {
     }
 
     @RequestMapping(value = "getPostList")
-    public String getPostList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+    public String getPostList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request, HttpSession session) throws Exception {
 
         System.out.println("/community/getPostList : GET/POST");
 
@@ -118,17 +149,16 @@ public class CommunityController {
         // Business Logic 수행
         Map<String, Object> map = communityService.getPostList(search);
 
-        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
-        System.out.println(resultPage);
+            Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+            System.out.println(resultPage);
+            //  Model 과 View 연결
+            model.addAttribute("list", map.get("list"));
+            model.addAttribute("resultPage", resultPage);
+            model.addAttribute("search", search);
 
-        //  Model 과 View 연결
-        model.addAttribute("list", map.get("list"));
-        model.addAttribute("resultPage", resultPage);
-        model.addAttribute("search", search);
+            return "forward:/views/community/getPostList.jsp";
 
-        return "forward:/community/getPostList.jsp";
     }
-
 
 
     ////////////////////// 코멘트 관련 메소드 ////////////////////////////
@@ -220,7 +250,6 @@ public class CommunityController {
 
         return "forward:/community/getCommentList.jsp";
     }
-
 
 
     ////////////////////// 좋아요 관련 메소드 ////////////////////////////

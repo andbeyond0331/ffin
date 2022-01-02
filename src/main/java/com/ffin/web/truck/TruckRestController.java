@@ -191,21 +191,6 @@ public class TruckRestController {
         return Integer.toString(randomNumber);
     }
 
-    // 푸드트럭 탈퇴 전 패스워드확인
-    @RequestMapping(value = "/checkDuPw/{truckPassword}", method = RequestMethod.POST)
-    @ResponseBody
-    public String checkDuPw(@PathVariable String truckPassword) throws Exception {
-        System.out.println("TruckRestController.checkDuPw");
-        int flag = truckService.checkDuPw(truckPassword);
-        String result = "";
-        if (flag == 0) {
-            result = "y";
-        } else {
-            result = "n";
-        }
-        return result;
-    }
-
 }
 
 

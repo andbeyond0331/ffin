@@ -39,7 +39,11 @@ public interface CommunityDao {
 
 
     // 게시판 Page 처리를 위한 전체Row(totalCount)  return
-    public int getTotalCount(Search search) throws Exception ;
+    public int getTotalCountPost(Search search) throws Exception ;
+
+//    public int getTotalCountPostU(Search search) throws Exception ;
+//
+//    public int getTotalCountPostT(Search search) throws Exception ;
 
 
 }
