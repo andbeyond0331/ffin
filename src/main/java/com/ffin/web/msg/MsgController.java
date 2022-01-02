@@ -101,6 +101,18 @@ public class MsgController {
 
 
 
+    @RequestMapping( value="/getCtStatus", method= RequestMethod.GET)
+    public String getCtStatus(HttpSession session) throws Exception {
+
+        System.out.println("////////////////////////////////////////////////////");
+        System.out.println("////////////////////////////////////////////////////");
+        System.out.println("CateringController.getCtStatusList");
+        System.out.println("////////////////////////////////////////////////////");
+
+        return "yes";
+    }
+
+
 /*
 
     // 메세지 목록

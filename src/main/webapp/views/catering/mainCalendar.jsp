@@ -72,7 +72,6 @@
     <script src="../../resources/fullcalendar/timegrid/main.min.js"></script>
     <script src='../../resources/fullcalendar/core/locales/ko.js'></script>
 
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=51615d81a030d0475e576eb41e443c14"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 
@@ -110,17 +109,26 @@
             margin: 20px auto;
         }
         img{ max-width:100%;}
+        .allCT{
+            background-color : #ced4da;
+        }
     </style>
 
 </head>
 
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=51615d81a030d0475e576eb41e443c14&libraries=services"></script>"></script>
 
 <body id="page-top">
 <jsp:include page="/views/toolbar.jsp" />
 
 <div id="calendar-container">
     <div id="calendar"></div>
-    <div><button>등록(사업자만)</button></div>
+    <div id="calStatus"> <a href="/catering/mainCalendar" class="allCT"> 전  체 </a>
+        <a href="#" style=" background-color : #ced4da;"> 예약가능 </a>
+        <a href="#" class="allCT"> 수락대기 </a>
+        <a href="#" class="allCT"> 수락완료(결제대기) </a>
+        <a href="#" class="allCT"> 예약완료 </a></div>
+         <button type="button" class="btn btn-primary" id="gogogogogogo">예약가능</button>
 </div>
 
 <!-- Modal -->
@@ -134,6 +142,7 @@
                 </button>
             </div>
             <div class="modal-body"></div>
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-default" id="AddCtRes" name="AddCtRes">예약</button>
@@ -145,6 +154,12 @@
 
 <script>
     var role = '${sessionScope.role}';
+
+    $( "#gogogogogogo" ).on("click" , function() {
+        alert(1)
+        self.location ="/msg/getCtStatus";
+    });
+
     $(function() {
         var modal = $('#staticBackdrop');
 
@@ -153,7 +168,7 @@
             e.stopImmediatePropagation();
         });
 
-        $(".btn-default").on("click" , function() {
+        $(".btn-default").on("click", function () {
             /*
                 사장님께 문자 고 고
              */
@@ -173,23 +188,22 @@
 
             $.ajax(
                 {
-                    url : "/catering/json/updateCtResAdd",
-                    method : "POST",
+                    url: "/catering/json/updateCtResAdd",
+                    method: "POST",
                     contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                    data :{
-                        ctNo : modal.find("input[name='ctNo']").val(),
-                        ctUserId : modal.find("input[name='ctUserId']").val(),
-                        ctUserPhone : modal.find("input[name='ctUserPhone']").val(),
-                        ctUserAddr : modal.find("input[name='ctUserAddr']").val(),
-                        ctUserAddrDetail : modal.find("input[name='ctUserAddrDetail']").val(),
-                        ctMenuQty : modal.find("input[name='ctMenuQty']").val(),
-                        ctQuotation : modal.find("input[name='ctQuotation']").val(),
-                        ctStartTime : modal.find("input[name='ctStartTime']").val(),
-                        ctEndTime : modal.find("input[name='ctEndTime']").val(),
-                        ctUserRequest : modal.find("textarea[name='ctUserRequest']").val()
+                    data: {
+                        ctNo: modal.find("input[name='ctNo']").val(),
+                        ctUserId: modal.find("input[name='ctUserId']").val(),
+                        ctUserPhone: modal.find("input[name='ctUserPhone']").val(),
+                        ctUserAddr: modal.find("input[name='ctUserAddr']").val(),
+                        ctUserAddrDetail: modal.find("input[name='ctUserAddrDetail']").val(),
+                        ctMenuQty: modal.find("input[name='ctMenuQty']").val(),
+                        ctQuotation: modal.find("input[name='ctQuotation']").val(),
+                        ctStartTime: modal.find("input[name='ctStartTime']").val(),
+                        ctEndTime: modal.find("input[name='ctEndTime']").val(),
+                        ctUserRequest: modal.find("textarea[name='ctUserRequest']").val()
                     },
-                    success : function(data)
-                    {
+                    success: function (data) {
                         //alert(data.reviewText)
                         alert(" 예약이 완료되었습니다. ")
 
@@ -200,48 +214,25 @@
                 });//end ajax
         });
 
-
-        var mapContainer = modal.find("div[name='map']"), // 지도를 표시할 div
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
             mapOption = {
                 center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
                 level: 3 // 지도의 확대 레벨
             };
 
-// 지도를 생성합니다
+// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
         var map = new kakao.maps.Map(mapContainer, mapOption);
-
-// 주소-좌표 변환 객체를 생성합니다
-        var geocoder = new kakao.maps.services.Geocoder();
-
-// 주소로 좌표를 검색합니다
-        geocoder.addressSearch('제주특별자치도 제주시 첨단로 242', function(result, status) {
-
-            // 정상적으로 검색이 완료됐으면
-            if (status === kakao.maps.services.Status.OK) {
-
-                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-                // 결과값으로 받은 위치를 마커로 표시합니다
-                var marker = new kakao.maps.Marker({
-                    map: map,
-                    position: coords
-                });
-
-                // 인포윈도우로 장소에 대한 설명을 표시합니다
-                var infowindow = new kakao.maps.InfoWindow({
-                    content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
-                });
-                infowindow.open(map, marker);
-
-                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-                map.setCenter(coords);
-            }
-        });
+        map.layout;
+        console.log(mapContainer.innerText)
 
     });
 
 
 
+    function lookMap(){
+        //document.getElementById('calendar');
+
+    }
 
 
 
@@ -348,7 +339,6 @@
         calendar.render();
 
     });
-
 
     function addCateringService(check){
 
@@ -546,7 +536,7 @@
                     +"<div class='row'>"
                     +"<div ><strong>주소</strong> : "+data.catering.ctAdd+" "+data.catering.ctAddDetail+"</div></div>"
                     +"<div class='row'>"
-                    +"<div id ='map' style='width:100%;height:350px;'>"
+                    +"<div id ='map' name='map' style='width:100%;height:350px;'>b"
                     +"</div></div>"
                     +"<div class='row'>"
                     +"<div ><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
@@ -560,7 +550,13 @@
                     +"<div ><strong>요청사항</strong> : "+data.catering.ctUserRequest+"</div></div>"
                     +"<div class='row'>"
                     +"<div ><strong>견적</strong> : "+data.catering.ctQuotation+"</div></div>"
-                    +"<input type='hidden' id='ctNo' name='ctNo' value='"+data.catering.ctNo+"'/>";
+                    +"<input type='hidden' id='ctNo' name='ctNo' value='"+data.catering.ctNo+"'/>"
+                +"<input type='hidden' id='ctAdd' name='ctAdd' value='"+data.catering.ctAdd+"'/>"
+                +"<input type='hidden' id='ctAddDetail' name='ctAddDetail' value='"+data.catering.ctAddDetail+"'/>"
+                +"<button type='button' class='btn btn-outline-danger' id='lookMap' name='lookMap' onclick='lookMap();'>지도나와봐</button>";
+
+
+
 
                 if (statusCode == '1') {
                     /* 이용자: 취소가능 , 사업자: 수락 or 거절 */
@@ -583,7 +579,7 @@
                      */
                     if (role=="user") { // '취소'버튼, '확인'버튼
                         modalFooter += "<div class='modal-footer'>"
-                            +"<button type='button' class='btn btn-outline-danger' id='resCancel' name='resCancel' onclick=''>결제</button>"
+                            +"<button type='button' class='btn btn-outline-danger' id='purchaseRes' name='purchaseRes' onclick=purchaseRes()''>결제</button>"
                             +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
                             +"</div>";
                     }else{
@@ -610,13 +606,26 @@
                 $('.modal-footer').remove();
                 $('.modal-content').append(modalFooter);
                 $('.modal-body').html(div);
+
+
                 $('#staticBackdrop').modal('show');
+
 
             },
             error : function(err){
                 console.log('에러')
             }
         });
+
+    }
+
+    function purchaseRes(){
+        var modal = $('#staticBackdrop');
+        /*
+            결제 - 아임포트? 이건 성원이꺼 붙이기
+
+            결제 후 성공시 문자전송.
+         */
 
     }
     /* 이용자 취소(2), 사업자 취소(3) */
