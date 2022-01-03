@@ -208,5 +208,22 @@ select * from optiongroup order by OPTION_GROUP_NO desc limit 1
 	</delete>
 
 
+	<!-- SQL : SELECT ROW Count -->
+	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+		SELECT COUNT(*)
+		FROM(	SELECT *
+		FROM menu
+		<if test="searchCondition != null">
+			<where>
+				<if test="searchCondition == 0 and searchKeyword !='' ">
+					menu_name LIKE '%'||#{searchKeyword}||'%'
+				</if>
+				<if test="searchCondition == 1 and searchKeyword !='' ">
+					menu_truck_id LIKE '%'||#{searchKeyword}||'%'
+				</if>
+			</where>
+		</if> ) countTable
+	</select>
+
 
 </mapper>

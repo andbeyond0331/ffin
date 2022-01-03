@@ -1,132 +1,302 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-         pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+         pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>∏ﬁ¥∫ ∏Ò∑œ ¡∂»∏</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <link rel="stylesheet" href="/css/admin.css" type="text/css">
-    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script type="text/javascript">
-
-        window.onload = function() {
-            alert("why? : " + $("tr.ct_list_pop td").find("input[name=menuNo]").val());
-
-
-                //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-                // var menuNo = trim($(this.find("input[name=menuNo]").val()));
-                $("tr.ct_list_pop td").on("click", function () {
-                    self.location = "/menu/getMenu?menuNo="+$("tr.ct_list_pop td").find("input[name=menuNo]").val();
-                });
-
-        };
-
-
-
-    </script>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
+<body>
 
-<body bgcolor="#ffffff" text="#000000">
+<div class="container mt-3">
+    <h2>Card Image</h2>
+    <p>Image at the top (card-img-top):</p>
 
-<div style="width:98%; margin-left:10px;">
+                <c:set var="i" value="0"/>
+                <c:forEach var="menu" items="${list}">
+                    <c:set var="i" value="${i+1}"/>
+    <div class="card" style="width:400px">
+        <img class="card-img-top" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDExMjhfMTg4%2FMDAxNjA2NDk3MTczMzM2.riqYHvwFgthRWLyNZRpmS_kowH0bKLdFJKwYjRn5TWsg.dkRa5rWPtUwKH2XUdWfA5FOhrIZi16vtisfGy8-FqBwg.JPEG.djaalswl5356%2FIMG_0438.jpg&type=sc960_832" alt="Card image" style="width:100%">
+        <div class="card-body">
+            <h4 class="card-title">${menu.menuName}</h4>
+            <p class="card-text">${menu.menuDetail}</p>
+            <a href="#" class="btn btn-primary">Ïû•Î∞îÍµ¨ÎãàÏóê Îã¥Í∏∞</a>
+        </div>
+    </div>
+    <br>
+                </c:forEach>
 
-    <form name="detailForm">
-        <input type="hidden" id="tranNo" name="tranNo"/>
-        <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
-            <tr>
-                <td width="15" height="37">
-                    <img src="/images/ct_ttl_img01.gif" width="15" height="37">
-                </td>
-                <td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <td width="93%" class="ct_ttl01">
-                                ∏ﬁ¥∫ ∏Ò∑œ ¡∂»∏
-                           </td>
-                        </tr>
-
-                    </table>
-                </td>
-                <td width="12" height="37">
-                    <img src="/images/ct_ttl_img03.gif" width="12" height="37">
-                </td>
-            </tr>
-        </table>
-
-
-
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
-
-            <tr>
-                <td class="ct_list_b" width="100">no</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" width="150">∏ﬁ¥∫ ¿Ã∏ß</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" width="150">∏ﬁ¥∫ º≥∏Ì</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b" width="150">∏ﬁ¥∫ ∞°∞›</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b">¥Î«• ∏ﬁ¥∫ ø©∫Œ</td>
-                <td class="ct_line02"></td>
-                <td class="ct_list_b">∏ﬁ¥∫ ¿ÃπÃ¡ˆ</td>
-            </tr>
-            <tr>
-                <td colspan="11" bgcolor="808285" height="1"></td>
-            </tr>
-
-
-            <c:set var="i" value="0"/>
-            <c:forEach var="menu" items="${list}">
-                <c:set var="i" value="${i+1}" />
-                <tr class="ct_list_pop">
-                    <td align="center">
-
-                            ${i}
-                    </td>
-                    <td></td>
-
-                    <td align="left">
-
-                        <span class="menu">${menu.menuName}
-                        <input type="hidden" id="menuNo" name="menuNo" value="${menu.menuNo}"/></span>
-                        <span class="menu" hidden="">${menu.menuNo}</span>
-                        <span class="menu" hidden="">${menu.menuTruckId}</span>
-
-                    </td>
-
-                    <td></td>
-                    <td align="left">
-
-                            ${menu.menuDetail}
-                    </td>
-                    <td></td>
-                    <td align="left">
-                            ${menu.menuPrice}
-                    </td>
-                    <td></td>
-                    <td align="left">
-                            ${menu.isSigMenu}
-                    </td>
-                <tr>
-                    <td id="${menu.menuImg1}" colspan="11" bgcolor="D6D7D6" height="1"></td>
-                </tr>
-            </c:forEach>
-
-        </table>
-
-        <table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top:10px;">
-            <tr>
-
-            </tr>
-        </table>
-        <!--  ∆‰¿Ã¡ˆ Navigator ≥° -->
-    </form>
+    <p>Image at the bottom (card-img-bottom):</p>
+    <div class="card" style="width:400px">
+        <div class="card-body">
+            <h4 class="card-title">Jane Doe</h4>
+            <p class="card-text">Some example text some example text. Jane Doe is an architect and engineer</p>
+            <a href="#" class="btn btn-primary">See Profile</a>
+        </div>
+        <img class="card-img-bottom" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxNzA5MDlfNTYg%2FMDAxNTA0OTI5MDg5MDQ5.glzVvaUUF1Mlx1xINUlgkpVu8ot9PjoQiTNY1RpJOUQg.YVLpz_ucQ_idz8jo5feSHItLU1xw9rGRlqrlcwkxSwsg.JPEG.star3012777%2F5.jpg&type=sc960_832" alt="Card image" style="width:100%">
+    </div>
 </div>
 
 </body>
 </html>
+
+
+<%--<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">--%>
+<%--<%@ page contentType="text/html; charset=euc-kr" %>--%>
+<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
+<%--<html>--%>
+<%--<head>--%>
+
+<%--    <title>Î©îÎâ¥ Î™©Î°ùÏù¥Ïñë</title>--%>
+
+<%--    <meta charset="EUC-KR">--%>
+
+<%--    <meta name="viewport" content="width=device-width, initial-scale=1">--%>
+
+<%--    <!-- Latest compiled and minified CSS -->--%>
+<%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">--%>
+<%--    <!-- Optional theme -->--%>
+<%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">--%>
+<%--    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>--%>
+<%--    <!-- Latest compiled and minified JavaScript -->--%>
+<%--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>--%>
+<%--    <!-- <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script> -->--%>
+<%--    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>--%>
+<%--    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">--%>
+
+<%--    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>--%>
+<%--    <script type="text/javascript">--%>
+<%--        $(function(){--%>
+
+<%--            $.ajax(--%>
+<%--                {--%>
+<%--                    url : "/product/rest/listProduct/search",--%>
+<%--                    method : "POST",--%>
+<%--                    headers : {--%>
+<%--                        "Accept" : "application/json",--%>
+<%--                        "Content-Type" : "application/json"--%>
+<%--                    },--%>
+<%--                    dataType : "json",--%>
+<%--                    data : JSON.stringify({--%>
+<%--                        currentPage : 1--%>
+<%--                    }),--%>
+<%--                    success : function(JSONData,status){--%>
+<%--                        console.log(JSONData);--%>
+<%--                        var list = JSONData.list;--%>
+<%--                        for(var i=0; i<4; i++){--%>
+
+<%--                            var temp = list[i];--%>
+<%--                            console.log(temp.fileName);--%>
+
+<%--                            $($('.image')[i]).attr('src','/images/uploadFiles/'+temp.fileName);--%>
+<%--                            $($('.prodName')[i]).text(temp.prodName);--%>
+<%--                            $($('.price')[i]).text(temp.price+"Ïõê");--%>
+<%--                            $($('.prodDetail')[i]).text(temp.prodDetail);--%>
+<%--                            $($('.btn-success:contains("Íµ¨Îß§")')[i]).attr('href','/purchase/addPurchaseView?prodNo='+temp.prodNo);--%>
+<%--                            $($('.btn-default:contains("Ïû•Î∞îÍµ¨Îãà")')[i]).attr('href','/purchase/addPurchaseCart?prodNo='+temp.prodNo);--%>
+<%--                        }--%>
+<%--                    }--%>
+<%--                });--%>
+
+<%--            $.ajax(--%>
+<%--                {--%>
+<%--                    url : "/product/rest/listProduct/search",--%>
+<%--                    method : "POST",--%>
+<%--                    headers : {--%>
+<%--                        "Accept" : "application/json",--%>
+<%--                        "Content-Type" : "application/json"--%>
+<%--                    },--%>
+<%--                    dataType : "json",--%>
+<%--                    data : JSON.stringify({--%>
+<%--                        currentPage : 2--%>
+<%--                    }),--%>
+<%--                    success : function(JSONData,status){--%>
+<%--                        console.log(JSONData);--%>
+<%--                        var list = JSONData.list;--%>
+<%--                        for(var i=4; i<8; i++){--%>
+
+<%--                            var temp = list[i-4];--%>
+<%--                            console.log(temp.fileName);--%>
+
+<%--                            $($('.image')[i]).attr('src','/images/uploadFiles/'+temp.fileName);--%>
+<%--                            $($('.prodName')[i]).text(temp.prodName);--%>
+<%--                            $($('.price')[i]).text(temp.price+"Ïõê");--%>
+<%--                            $($('.prodDetail')[i]).text(temp.prodDetail);--%>
+<%--                            $($('.btn-success:contains("Íµ¨Îß§")')[i]).attr('href','/purchase/addPurchaseView?prodNo='+temp.prodNo);--%>
+<%--                            $($('.btn-default:contains("Ïû•Î∞îÍµ¨Îãà")')[i]).attr('href','/purchase/addPurchaseCart?prodNo='+temp.prodNo);--%>
+<%--                        }--%>
+<%--                    }--%>
+<%--                });--%>
+
+<%--            $('input[name="searchKeyword"]').keyup(function(){--%>
+<%--                var searchKeyword = $(this).val();--%>
+
+<%--                $.ajax(--%>
+<%--                    {--%>
+<%--                        url : "/product/rest/productAutoComplete/"+searchKeyword+"/1",--%>
+<%--                        method : "GET",--%>
+<%--                        headers : {--%>
+<%--                            "Accept" : "application/json",--%>
+<%--                            "Content-Type" : "application/json"--%>
+<%--                        },--%>
+<%--                        dataType:"json",--%>
+<%--                        success : function(JSONData,status){--%>
+<%--                            var availableTags = JSONData;--%>
+<%--                            console.log(JSONData);--%>
+<%--                            $(function(){--%>
+<%--                                $('input[name="searchKeyword"]').autocomplete({--%>
+<%--                                    source: availableTags--%>
+<%--                                });--%>
+<%--                            });--%>
+<%--                        },--%>
+<%--                    });--%>
+
+<%--            });--%>
+
+<%--            $('.searchContainer').css('margin','50px');--%>
+
+<%--            $('.search').css('display','flex');--%>
+
+<%--            $('.thumbnail-container').css('margin','90px');--%>
+
+<%--        });--%>
+
+<%--        var page = 2;--%>
+<%--        var isflag = true;--%>
+<%--        $(window).scroll(function(e) {--%>
+
+<%--            if (isflag && $(window).scrollTop() == $(document).height() - $(window).height()) {--%>
+<%--                page += 1;--%>
+<%--                console.log(page)--%>
+<%--                $.ajax(--%>
+<%--                    {--%>
+<%--                        url : "/product/rest/listProduct/search",--%>
+<%--                        method : "POST",--%>
+<%--                        headers : {--%>
+<%--                            "Accept" : "application/json",--%>
+<%--                            "Content-Type" : "application/json"--%>
+<%--                        },--%>
+<%--                        dataType : "json",--%>
+<%--                        data : JSON.stringify({--%>
+<%--                            currentPage : page--%>
+<%--                        }),--%>
+<%--                        success : function(JSONData,status){--%>
+<%--                            console.log('JSONData'+JSONData);--%>
+
+<%--                            var str = "";--%>
+<%--                            var list = JSONData.list;--%>
+<%--                            for(var i=0; i<4; i++){--%>
+
+<%--                                var temp = list[i];--%>
+<%--                                console.log(temp);--%>
+<%--                                if(list[i] == undefined){--%>
+<%--                                    console.log('Ïã§Ìñâ');--%>
+<%--                                    isflag = false;--%>
+<%--                                    break;--%>
+<%--                                }--%>
+<%--                                var stringHtml =--%>
+<%--                                    '<div class="col-sm-6 col-md-3">'--%>
+<%--                                    +'<div class="thumbnail">'--%>
+<%--                                    +'<img class="image" src="/images/uploadFiles/'+temp.fileName+'" border="0px" width="240px" height="180px">'--%>
+<%--                                    +'<div class="caption">'--%>
+<%--                                    +'<h3 class="prodName">'+temp.prodName+'</h3>'--%>
+<%--                                    +'<h4 class="price">'+temp.price+'</h4>'--%>
+<%--                                    +'<p class="prodDetail">'+temp.prodDetail+'</p>'--%>
+<%--                                    +'<p><a href="/purchase/addPurchaseView?prodNo='+temp.prodNo+'" class="btn btn-success" role="button">Íµ¨Îß§</a> <a href="/purchase/addPurchaseCart?prodNo='+temp.prodNo+'" class="btn btn-default" role="button">Ïû•Î∞îÍµ¨Îãà</a></p>'--%>
+<%--                                    +'</div></div></div>';--%>
+<%--                                str += stringHtml;--%>
+
+
+<%--                            }--%>
+
+<%--                            $('form').append('<div class="container-fluid" style="margin: 90px;"><div class="row"><div class="col-md-1"></div><div class="col-md-10"><div class="row">'--%>
+<%--                                + str + '</div></div><div class="col-md-1"></div></div></div>');--%>
+<%--                        }--%>
+<%--                    });--%>
+<%--            }--%>
+
+<%--        });--%>
+
+<%--    </script>--%>
+
+<%--    <style>--%>
+<%--        body{--%>
+<%--            padding-top:70px;--%>
+<%--        }--%>
+<%--    </style>--%>
+<%--</head>--%>
+<%--<body>--%>
+<%--<form>--%>
+
+
+<%--    <div class="container-fluid searchContainer">--%>
+<%--        <div class="row">--%>
+<%--            <div class="col-md-3"></div>--%>
+<%--            <div class="col-md-6">--%>
+<%--                <div class="form-group form-group-lg search">--%>
+<%--                    <input class="form-control" type="text" id="formGroupInputLarge" name="searchKeyword" placeholder="SearchKeyword...">--%>
+<%--                    <button type="button" class="btn btn-default">--%>
+<%--                        <span class="glyphicon glyphicon-search"></span>--%>
+<%--                    </button>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <div class="col-md-3"></div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+
+<%--    <div class="container-fluid thumbnail-container">--%>
+<%--        <div class="row">--%>
+<%--            <div class="col-md-1"></div>--%>
+<%--            <div class="col-md-10">--%>
+<%--                <div class="row">--%>
+<%--                    <c:forEach begin="0" end="3" step="1">--%>
+<%--                        <div class="col-sm-6 col-md-3">--%>
+<%--                            <div class="thumbnail">--%>
+<%--                                <img class="image" src="" border="0px" width="200px" height="200px">--%>
+<%--                                <div class="caption">--%>
+<%--                                    <h3 class="menuName"></h3>--%>
+<%--                                    <h4 class="menuPrice"></h4>--%>
+<%--                                    <p class="menuDetail"></p>--%>
+
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </c:forEach>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <div class="col-md-1"></div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+
+<%--    <div class="container-fluid thumbnail-container">--%>
+<%--        <div class="row">--%>
+<%--            <div class="col-md-1"></div>--%>
+<%--            <div class="col-md-10">--%>
+<%--                <div class="row">--%>
+<%--                    <c:forEach begin="0" end="3" step="1">--%>
+<%--                        <div class="col-sm-6 col-md-3">--%>
+<%--                            <div class="thumbnail">--%>
+<%--                                <img class="image" src="" border="0px" width="240px" height="240px">--%>
+<%--                                <div class="caption">--%>
+<%--                                    <h3 class="menuName"></h3>--%>
+<%--                                    <h4 class="menuPrice"></h4>--%>
+<%--                                    <p class="menuDetail"></p>--%>
+
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </c:forEach>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--            <div class="col-md-1"></div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+
+<%--</form>--%>
+<%--</body>--%>
+<%--</html>--%>

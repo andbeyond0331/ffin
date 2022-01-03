@@ -388,7 +388,8 @@ public class MenuController {
 
         menuService.updateMenu(menu);
 
-//        optionGroup.setMenuNo(menuNo);
+//        optionGroup.setMenuNo(menuNo);Gksmfchlrh0331)
+
 
         model.addAttribute("menu", menu);
 //        model.addAttribute("menuNo", menuNo);

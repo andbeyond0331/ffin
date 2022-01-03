@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service("reviewServiceImpl")
@@ -42,6 +40,11 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public Map<String, Object> getReviewListTruck(Search search, String truckId) throws Exception {
         return reviewDao.getReviewListTruck(search, truckId);
+    }
+
+    @Override
+    public float getReviewAvg(Search search, String truckId) throws Exception {
+        return reviewDao.getReviewAvg(search, truckId);
     }
 
     @Override
