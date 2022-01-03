@@ -149,7 +149,7 @@ public class PurchaseController {
             map = purchaseService.getOrderDetail(purchase.getOrderNo());
         System.out.println("map//////////"+map);
             model.addObject("map",map);
-            model.addObject("cart",purchase);
+            model.addObject("purchase",purchase);
             model.setViewName("forward:/views/purchase/getOrderUser.jsp");
 
     return  model;
@@ -178,8 +178,6 @@ public class PurchaseController {
     //우측은!! 여기서 왼쪽을 클릭하게 되면 나오는 화면으로 따로 해야되나?? 같이 해야되나???
     //getOrderList로 출력한 Map으로 처음들어갔을때 나오는 화면으로 최신주문orderNo를 가져와서 보여주는것도!!!
     @RequestMapping(value = "getOrderList", method= RequestMethod.GET)
-    /*public String getOrderList(@ModelAttribute("truckId")String truckId,@ModelAttribute("orderNo")int orderNo, Model model,Purchase purchase) throws Exception{
-    */
     public String getOrderList(@RequestParam("truckId")String truckId, Model model,Purchase purchase) throws Exception{
 
         System.out.println("/purchase/getOrderList : POST");
