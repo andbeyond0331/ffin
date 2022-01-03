@@ -2,16 +2,23 @@ package com.ffin.web.user;
 
 import com.ffin.service.domain.User;
 import com.ffin.service.user.UserService;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 @RestController
 @RequestMapping("/user/*")
@@ -21,6 +28,8 @@ public class UserRestController {
     @Qualifier("userServiceImpl")
     private UserService userService;
 
+    // 파일 저장경로 지정
+    //private static final String FILE_SERVER_PATH = "C:\\ffinPJT\\src\\main\\webapp\\resources\\image";
 
     public UserRestController(){
         System.out.println(this.getClass());
@@ -136,12 +145,38 @@ public class UserRestController {
 
     @RequestMapping(value = "json/updateUserProfile/{userId}", method = RequestMethod.POST)
     public User updateUserProfile(User user, @PathVariable String userId, HttpServletRequest request) throws Exception {
-        System.out.println("UserRestController.updateUserProfile : POST");
 
+        System.out.println("UserRestController.updateUserProfile : POST");
         request.setCharacterEncoding("UTF-8");
+
         userService.updateUserProfile(user);
 
         return user;
     }
+
+
+/*    @RequestMapping(value = "json/updateProImg/{userId}", method = RequestMethod.POST)
+    public String updateProImg(@PathVariable String userId, MultipartFile file, HttpSession session, RedirectAttributes redirectAttributes) throws Exception{
+
+        if(file == null) {
+            redirectAttributes.addFlashAttribute("msg","FAIL");
+            return "redirect:/user/getUserProfile.jsp";
+        }
+
+        String uploadFile = UploadFileUtils.uploadFile(userProImgPath, file.getOriginalFilename(), file.getBytes());
+        String front = uploadFile.substring(0,12);
+        String end = uploadFile.substring(14);
+        String userProImg = front + end;
+        userService.updateProImg(userId, userProImg);
+
+        Object userObj = session.getAttribute("user");
+        User user = (User) userObj;
+        user.setUserProImg(userProImg);
+        session.setAttribute("user", user);
+        redirectAttributes.addFlashAttribute("msg", "SUCCESS");
+        return "redirect:/user/getUserProfile.jsp";
+    }*/
+
+
 
 }

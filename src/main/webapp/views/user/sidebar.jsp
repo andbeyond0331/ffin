@@ -102,6 +102,7 @@
             </div>
             <div class="sb-sidenav-footer">
             </div>
+            <div class="toggle" onclick="toggleMenu()"></div>
         </nav>
     </div>
 </div>
