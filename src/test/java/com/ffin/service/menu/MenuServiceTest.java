@@ -61,31 +61,55 @@ public class MenuServiceTest {
 //
 //    }
 
+    @Test
+    public void getLatestOptionGroupNo() throws Exception{
 
+        OptionGroup optionGroup = menuService.getLatestOptionGroupNo();
+
+        Assert.assertEquals(14, optionGroup.getOptionGroupNo());
+    }
 
 //
 //    @Test  //OKAY
 //    public void addOptionGroup() throws Exception {
+//        OptionGroup optionGroup1 = new OptionGroup();
 //
-//        OptionGroup optionGroup = new OptionGroup();
+//        optionGroup1.setMenuNo(27);
+//        optionGroup1.setOptionGroupNo(517);
+//        optionGroup1.setOptionNo(517);
+//        optionGroup1.setOptionGroupName("ogname517");
+//        optionGroup1.setOptionName("oname517");
+//        optionGroup1.setOptionPrice("517");
 //
-//        optionGroup.setMenuNo(8);
-//        optionGroup.setOptionGroupNo(100);
-//        optionGroup.setOptionNo(100);
-//        optionGroup.setOptionGroupName("ogname100");
-//        optionGroup.setOptionName("oname100");
-//        optionGroup.setOptionPrice(10000);
+//        OptionGroup optionGroup2 = new OptionGroup();
+//
+//        optionGroup2.setMenuNo(27);
+//        optionGroup2.setOptionGroupNo(517);
+//        optionGroup2.setOptionNo(518);
+//        optionGroup2.setOptionGroupName("ogname517");
+//        optionGroup2.setOptionName("oname518");
+//        optionGroup2.setOptionPrice("518");
+//
+//        OptionGroup optionGroup3 = new OptionGroup();
+//
+//        optionGroup3.setMenuNo(27);
+//        optionGroup3.setOptionGroupNo(517);
+//        optionGroup3.setOptionNo(519);
+//        optionGroup3.setOptionGroupName("ogname517");
+//        optionGroup3.setOptionName("oname519");
+//        optionGroup3.setOptionPrice("519");
+//
+//
+//
+//        List<OptionGroup> optionGroup = new ArrayList<OptionGroup>();
+//        optionGroup.add(optionGroup1);
+//        optionGroup.add(optionGroup2);
+//        optionGroup.add(optionGroup3);
+//
 //
 //        menuService.addOptionGroup(optionGroup);
 //
 //        System.out.println("optionGroup : " + optionGroup);
-//
-//        Assert.assertEquals(8, optionGroup.getMenuNo());
-//        Assert.assertEquals(100, optionGroup.getOptionGroupNo());
-//        Assert.assertEquals(100, optionGroup.getOptionNo());
-//        Assert.assertEquals("ogname100", optionGroup.getOptionGroupName());
-//        Assert.assertEquals("oname100", optionGroup.getOptionName());
-//        Assert.assertEquals(10000, optionGroup.getOptionPrice());
 //
 //    }
 

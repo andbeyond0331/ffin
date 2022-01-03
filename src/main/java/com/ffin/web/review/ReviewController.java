@@ -39,6 +39,10 @@ public class ReviewController {
     @Qualifier("truckServiceImpl")
     private TruckService truckService;
 
+    @Autowired
+    @Qualifier("userServiceImpl")
+    private UserService userService;
+
     @Value("100") //pageUnit은 propertySource를 위에 선언하고 @value의 값을 지정해줌
     //추후 pageUnit과 pageSize 출력되는지 jUnit에서 확인이 필요합니다.
     //@Value("#{commonProperties['pageUnit'] ?: 3}")
@@ -77,7 +81,12 @@ public class ReviewController {
         System.out.println("/review/addReview:POST");
         System.out.println("rvOrderNo = " + rvOrderNo + ", review = " + review + ", model = " + model);
 
+        Purchase purchase = purchaseService.getPurchase(rvOrderNo);
+
+
         review.setRvOrderNo(rvOrderNo);
+        review.setRvTruckId(purchase.getOrderTruckId().getTruckId());
+        review.setRvUserId(purchase.getOrderUserId().getUserId());
 
         reviewService.addReview(review);
 
@@ -189,6 +198,7 @@ public class ReviewController {
         return "/views/review/updateRVUpdateTruckCommentView.jsp";
     }
 
+    //truckcommnet를 update하기 위한 update review
     @RequestMapping(value="updateRVUpdateTruckComment", method=RequestMethod.POST)
     public String updateRVUpdateTruckComment(@ModelAttribute("rvNo") int rvNo, @ModelAttribute("review") Review review, Model model) throws Exception{
 
@@ -206,20 +216,37 @@ public class ReviewController {
 
     }
 
-//    @RequestMapping("getReviewListTruck")
-//    public ModelAndView getReviewListTruck(@ModelAttribute("search") Search search, @RequestParam("truckId") String truckId,
-//                                    ModelAndView modelAndView) throws Exception{
-//
-//        search.setPageSize(pageSize);
-//        Truck truck  = truckService.getTruck(truckId);
-//
-////        Map<String , Object> map= reviewService.getReviewList(search, truck.getTruckId());
-//
-//        modelAndView.addObject("list", map.get("list"));
-//        modelAndView.setViewName("/views/menu/getTruck.jsp");
-//
-//        return modelAndView;
-//    }
+    //truck에 의한 getReview List
+    @RequestMapping("getReviewListTruck")
+    public ModelAndView getReviewListTruck(@ModelAttribute("search") Search search, @RequestParam("truckId") String truckId,
+                                    ModelAndView modelAndView) throws Exception{
+
+        search.setPageSize(pageSize);
+        Truck truck  = truckService.getTruck(truckId);
+
+        Map<String , Object> map= reviewService.getReviewListTruck(search, truck.getTruckId());
+
+        modelAndView.addObject("list", map.get("list"));
+        modelAndView.setViewName("/views/review/getReviewList.jsp");
+
+        return modelAndView;
+    }
+
+    //user에 의한 getReviewList
+    @RequestMapping("getReviewListUser")
+    public ModelAndView getReviewListUser(@ModelAttribute("search") Search search, @RequestParam("userId") String userId,
+                                    ModelAndView modelAndView) throws Exception{
+
+        search.setPageSize(pageSize);
+        User user  = userService.getUser(userId);
+
+        Map<String , Object> map= reviewService.getReviewListTruck(search, user.getUserId());
+
+        modelAndView.addObject("list", map.get("list"));
+        modelAndView.setViewName("/views/review/getReviewList.jsp");
+
+        return modelAndView;
+    }
 
 
 

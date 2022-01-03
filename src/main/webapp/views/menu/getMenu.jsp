@@ -112,15 +112,18 @@
                <td></td>
 
                <td align="left">
-
 <%--                   <span class="odMenuName">${cart.odMenuName}</span>--%>
                    <span class="optionGroupName" >${optionGroup.optionGroupName}</span>
+               </td>
+               <td align="left">
                    <span class="optionName" >${optionGroup.optionName}</span>
-                   <span class="optionPrice" >${optionGroup.optionPrice}</span>
 
                </td>
+               <td align="left">
+                   <span class="optionPrice" >${optionGroup.optionPrice}</span>
+               </td> v
 
-       </c:forEach>
+               </c:forEach>
    </table>
 
 

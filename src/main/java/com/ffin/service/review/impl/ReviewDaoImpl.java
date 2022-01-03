@@ -42,7 +42,22 @@ public class ReviewDaoImpl implements ReviewDao {
     public Map<String, Object> getReviewListTruck(Search search, String truckId) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("search", search);
+        map.put("truckId", truckId);
         List<Review> list =sqlSession.selectList("ReviewMapper.getReviewListTruck", map);
+        System.out.println("list : " + list);
+
+        map.clear();
+        map.put("list", list);
+
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> getReviewListUser(Search search, String userId) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("search", search);
+        map.put("userId", userId);
+        List<Review> list =sqlSession.selectList("ReviewMapper.getReviewListUser", map);
         System.out.println("list : " + list);
 
         map.clear();

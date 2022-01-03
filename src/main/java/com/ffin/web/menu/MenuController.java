@@ -72,43 +72,101 @@ public class MenuController {
         return modelAndView;
     }
 
-    @Transactional //menu만 들어가고 optionGroup은 들어가지 않는 상황 방지
+    @Transactional(rollbackFor = Exception.class) //menu만 들어가고 optionGroup은 들어가지 않는 상황 방지
     @RequestMapping(value="addMenuOptionGroup", method=RequestMethod.POST)
-    public String addMenuOptionGroup(@ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
+    public String addMenuOptionGroup(HttpServletRequest request,@ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
    // public String addMenuOptionGroup(@ModelAttribute("optionGroup")OptionGroup optionGroup, Model model) throws Exception{
 //    public String addMenuOptionGroup(HttpServletRequest request, Model model) throws Exception{
 
-        System.out.println("/menu/addMenu:POST");
+        System.out.println("/menu/addMenuOptionGroup:POST");
 
-
-//        Menu menu = (Menu) request.getAttribute("menu");
-//        OptionGroup optionGroup = (OptionGroup) request.getAttribute("optionGroup");
-               // System.out.println("optionGroup = " + optionGroup + ", model = " + model);
         System.out.println("optionGroup = " + optionGroup + ", menu = " + menu + ", model = " + model);
 
-       // menu.setMenuTruckId(truck.getTruckId());
-
-//        int optionGroupNo = 10000;
-//        int optionNo = 10000;
-
-//        optionGroup.setOptionGroupNo(optionGroupNo);
-//        optionGroup.setOptionNo(optionNo);
-
         int menuNo = menuService.addMenu(menu);
-        optionGroup.setMenuNo(menuNo);
-//        int menuNo =1;
-//        optionGroup.setMenuNo(menuNo);
-        List list = new ArrayList();
-        list.add(optionGroup);
-        menuService.addOptionGroup(list);
+
         System.out.println("menuNo : " + menuNo);
 
-//        menu = menuService.getMenu(menuNo);
-        Menu menu1 = menuService.getMenu(menuNo);
-//        menuService.addOptionGroup(list);
 
-        model.addAttribute("menu", menu1);
-        model.addAttribute("optionGroup-list", list);
+            optionGroup.setMenuNo(menuNo);
+
+//        optionGroup.setMenuNo(menuNo);
+            Menu menu1 = new Menu();
+
+            System.out.println("/////////////////");
+
+
+            System.out.println("optionGroupName : " + optionGroup.getOptionGroupName());
+            System.out.println("optionName : " + optionGroup.getOptionName());
+//        System.out.println("optionPrice : " + optionGroup.getOptionPrice());
+            System.out.println("optionPrice : " + request.getParameterValues("optionPrice")[0]);
+
+
+            String[] optionGroupName = optionGroup.getOptionGroupName().split(",");
+            String [] optionName = optionGroup.getOptionName().split(",");
+            String [] optionPrice = optionGroup.getOptionPrice().split(",");
+
+            System.out.println("optionGroupName length: " + optionGroupName.length);
+            System.out.println("optionName length: " + optionName.length);
+            System.out.println("optionPrice length: " + optionPrice.length);
+
+            List<OptionGroup> optionGroupList = new ArrayList<OptionGroup>();
+
+            int optGroupNo = menuService.getLatestOptionGroupNo().getOptionGroupNo()+1;
+            System.out.println("optGroupNo : " + optGroupNo);
+            for(int i = 0; i<optionName.length; i++){
+
+
+
+                OptionGroup optionGroup1 = new OptionGroup();
+
+                optionGroup1.setMenuNo(menuNo);
+                optionGroup1.setOptionPrice(optionPrice[i]);
+                optionGroup1.setOptionName(optionName[i]);
+                optionGroup1.setOptionGroupName(optionGroupName[i]);
+//            if(optionGroupName[i]==null){
+//                for(int j=i; j>0; j--){
+//                    if(optionGroupName[j]!=null){
+//                        optionGroup1.setOptionGroupName(optionGroupName[j]);
+//                    }
+//                    if(optionGroup1.getOptionGroupName()!=null){
+//                        break;
+//                    }
+//                }
+//
+//            }else{
+//                optionGroup1.setOptionGroupName(optionGroupName[i]);
+//            }
+
+                if(i==0){
+                    optionGroup1.setOptionGroupNo(optGroupNo);
+                }else{
+                    if(optionGroupName[i].equals(optionGroupName[i-1])){
+                        optionGroup1.setOptionGroupNo(optGroupNo);
+                    }else{
+                        optGroupNo++;
+                        optionGroup1.setOptionGroupNo(optGroupNo);
+                    }
+                }
+                System.out.println("optionGroup1 : " + optionGroup1);
+                System.out.println("///// optGroupNo : " + optGroupNo);
+                System.out.println("request = " + request + ", optionGroup = " + optionGroup + ", menu = " + menu + ", model = " + model);
+
+                optionGroupList.add(optionGroup1);
+
+            }
+
+            menuService.addOptionGroup(optionGroupList);
+            System.out.println("menuNo : " + menuNo);
+
+//        menu = menuService.getMenu(menuNo);
+            // Menu menu1 = menuService.getMenu(menuNo);
+//        menuService.addOptionGroup(list);
+//            model.addAttribute("menu", menu1);
+            model.addAttribute("optionGroup-list", optionGroupList);
+
+
+
+        model.addAttribute("menu", menu);
         model.addAttribute("menuNo", menuNo);
 
         System.out.println("model 확인 : " + model);
@@ -116,6 +174,66 @@ public class MenuController {
         return "redirect:/views/menu/getTruck.jsp";
 
     }
+
+    @RequestMapping(value="addMenu", method=RequestMethod.POST)
+    public String addMenu(HttpServletRequest request,@ModelAttribute("menu") Menu menu, Model model) throws Exception{
+
+        System.out.println("/menu/addMenu:POST");
+
+        System.out.println("request = " + request + ", menu = " + menu + ", model = " + model);
+
+        int menuNo = menuService.addMenu(menu);
+
+        System.out.println("menuNo : " + menuNo);
+
+
+        model.addAttribute("menu", menu);
+        model.addAttribute("truckId", menu.getMenuTruckId());
+
+        System.out.println("model 확인 : " + model);
+
+        return "redirect:/views/menu/getTruck.jsp";
+
+    }
+
+//    @Transactional //menu만 들어가고 optionGroup은 들어가지 않는 상황 방지
+//    @RequestMapping(value="addMenuOptionGroup", method=RequestMethod.POST)
+//    public String addMenuOptionGroup(@ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
+//   // public String addMenuOptionGroup(@ModelAttribute("optionGroup")OptionGroup optionGroup, Model model) throws Exception{
+////    public String addMenuOptionGroup(HttpServletRequest request, Model model) throws Exception{
+//
+//        System.out.println("/menu/addMenu:POST");
+//
+//
+////        Menu menu = (Menu) request.getAttribute("menu");
+////        OptionGroup optionGroup = (OptionGroup) request.getAttribute("optionGroup");
+//               // System.out.println("optionGroup = " + optionGroup + ", model = " + model);
+//        System.out.println("optionGroup = " + optionGroup + ", menu = " + menu + ", model = " + model);
+//
+//
+//
+//        int menuNo = menuService.addMenu(menu);
+//        optionGroup.setMenuNo(menuNo);
+////        int menuNo =1;
+////        optionGroup.setMenuNo(menuNo);
+//        List list = new ArrayList();
+//        list.add(optionGroup);
+//        menuService.addOptionGroup(list);
+//        System.out.println("menuNo : " + menuNo);
+//
+////        menu = menuService.getMenu(menuNo);
+//        Menu menu1 = menuService.getMenu(menuNo);
+////        menuService.addOptionGroup(list);
+//
+//        model.addAttribute("menu", menu1);
+//        model.addAttribute("optionGroup-list", list);
+//        model.addAttribute("menuNo", menuNo);
+//
+//        System.out.println("model 확인 : " + model);
+//
+//        return "redirect:/views/menu/getTruck.jsp";
+//
+//    }
 
 
     @RequestMapping(value="getMenu", method=RequestMethod.GET)
@@ -143,49 +261,140 @@ public class MenuController {
         return "forward:/views/menu/getMenu.jsp";
     }
 
-    @RequestMapping(value="getMenu", method=RequestMethod.POST)
-    public String getMenu(@ModelAttribute("menuNo") int menuNo, Model model, HttpSession session) throws Exception{
-        System.out.println("/menu/getMenu : POST");
-
-        //BL
-        Menu menu = menuService.getMenu(menuNo);
-
-        session.setAttribute("menu", menu);
-
-        return "redirect:/views/menu/getMenu?menuNo="+menu.getMenuNo();
-
-    }
+//    @RequestMapping(value="getMenu", method=RequestMethod.POST)
+//    public String getMenu(@ModelAttribute("menuNo") int menuNo, Model model, HttpSession session) throws Exception{
+//        System.out.println("/menu/getMenu : POST");
+//
+//        //BL
+//        Menu menu = menuService.getMenu(menuNo);
+//
+//        session.setAttribute("menu", menu);
+//
+//        return "redirect:/views/menu/getMenu?menuNo="+menu.getMenuNo();
+//
+//    }
 
     @RequestMapping(value="updateMenu", method=RequestMethod.GET)
-    public ModelAndView updateMenu(HttpServletRequest request, ModelAndView modelAndView) throws Exception{
+    public String updateMenu(@ModelAttribute("search") Search search, @RequestParam(value="menuNo", required = false) int menuNo, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception{
 
         System.out.println("/menu/updateMenu : GET");
 
         //Business Logic
 
-        String menuNoo = request.getParameter("menuNo");
-
-        int menuNo = Integer.parseInt(menuNoo);
+        search.setPageSize(pageSize);
 
         Menu menu = menuService.getMenu(menuNo);
 
-        //Model - View 연결
-        modelAndView.addObject("menu", menu);
-        modelAndView.addObject("menuNo", menuNo);
-        modelAndView.setViewName("/views/menu/updateMenuView.jsp");
+        Map optionGroup = menuService.getOptionGroupByMenu(search, menuNo);
 
-        System.out.println("request = " + request + ", modelAndView = " + modelAndView);
+        System.out.println("menu : " + menu);
 
-        return modelAndView;
+        model.addAttribute("menu", menu);
+        model.addAttribute("menuNo", menuNo);
+        model.addAttribute("list", optionGroup.get("list"));
+//
+//        String menuNoo = request.getParameter("menuNo");
+//
+//        int menuNo = Integer.parseInt(menuNoo);
+//
+//        Menu menu = menuService.getMenu(menuNo);
+//
+//        //Model - View 연결
+//        modelAndView.addObject("menu", menu);
+//        modelAndView.addObject("menuNo", menuNo);
+//        modelAndView.setViewName("/views/menu/updateMenuView.jsp");
+//
+//        System.out.println("request = " + request + ", modelAndView = " + modelAndView);
+//
+//        return modelAndView;
+        System.out.println("search = " + search + ", menuNo = " + menuNo + ", model = " + model + ", request = " + request + ", response = " + response);
+
+        return "forward:/views/menu/updateMenuView.jsp";
     }
 
-    @RequestMapping(value="updateMenu", method=RequestMethod.POST)
-    public String updateMenu(@ModelAttribute("menu") Menu menu, Model model, HttpSession session) throws Exception{
-        System.out.println("/menu/updateMenu : POST");
+    //@Transactional(rollbackFor = Exception.class)//menu만 update 방지
+    @RequestMapping(value="updateMenuOptionGroup", method=RequestMethod.POST)
+    public String updateMenuOptionGroup(HttpServletRequest request,@ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
+        System.out.println("/menu/updateMenuOptionGroup : POST");
+
+        System.out.println("request = " + request + ", optionGroup = " + optionGroup + ", menu = " + menu + ", model = " + model);
+
+//        int menuNo = menu.getMenuNo();
 
         menuService.updateMenu(menu);
 
-        session.setAttribute("menu", menu);
+//        optionGroup.setMenuNo(menuNo);
+
+        Menu menu1 = new Menu();
+
+        System.out.println("/////////////////");
+
+        System.out.println("optionGroupName : " + optionGroup.getOptionGroupName());
+        System.out.println("optionName : " + optionGroup.getOptionName());
+//        System.out.println("optionPrice : " + optionGroup.getOptionPrice());
+        System.out.println("optionPrice : " + request.getParameterValues("optionPrice")[0]);
+        System.out.println("///////////////////optionNo : " + optionGroup.getOptionNo());
+
+        String[] optionGroupName = optionGroup.getOptionGroupName().split(",");
+        String [] optionName = optionGroup.getOptionName().split(",");
+        String [] optionPrice = optionGroup.getOptionPrice().split(",");
+        String [] optionNo = optionGroup.getOptionNo().split(",");
+
+        System.out.println("optionGroupName length: " + optionGroupName.length);
+        System.out.println("optionName length: " + optionName.length);
+        System.out.println("optionPrice length: " + optionPrice.length);
+        System.out.println("optionNo length : " + optionNo.length);
+
+        List<OptionGroup> optionGroupList = new ArrayList<OptionGroup>();
+
+        //int optGroupNo = menuService.getLatestOptionGroupNo().getOptionGroupNo()+1;
+        //System.out.println("optGroupNo : " + optGroupNo);
+
+        /////
+        for(int i = 0; i<optionName.length; i++){
+            OptionGroup optionGroup1 = menuService.getOption(Integer.parseInt(optionNo[i]));
+
+            optionGroup1.setOptionGroupName(optionGroupName[i]);
+            optionGroup1.setOptionName(optionName[i]);
+            optionGroup1.setOptionPrice(optionPrice[i]);
+
+            optionGroupList.add(optionGroup1);
+
+            menuService.updateOptionGroup(optionGroup1);
+
+        }
+
+
+        model.addAttribute("menu", menu1);
+        model.addAttribute("optionGroupList", optionGroupList);
+//        model.addAttribute("menuNo", menuNo);
+
+        System.out.println("model 확인 : " + model);
+
+
+
+        return "redirect:/menu/getMenu?menuNo="+menu.getMenuNo();
+
+    }
+
+    //@Transactional(rollbackFor = Exception.class)//menu만 update 방지
+    @RequestMapping(value="updateMenu", method=RequestMethod.POST)
+    public String updateMenu(HttpServletRequest request, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
+        System.out.println("/menu/updateMenu : POST");
+
+        System.out.println("request = " + request + ", menu = " + menu + ", model = " + model);
+
+//        int menuNo = menu.getMenuNo();
+
+        menuService.updateMenu(menu);
+
+//        optionGroup.setMenuNo(menuNo);
+
+        model.addAttribute("menu", menu);
+//        model.addAttribute("menuNo", menuNo);
+
+        System.out.println("model 확인 : " + model);
+
 
 
         return "redirect:/menu/getMenu?menuNo="+menu.getMenuNo();

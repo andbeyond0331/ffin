@@ -55,7 +55,7 @@
 			VALUES
 			<foreach collection="list" item="item" separator=",">
 				(${item.menuNo},
-				(select ifnull(max(OPTION_GROUP_NO)+1,1)from optiongroup b),
+				${item.optionGroupNo},
 				(select ifnull(max(OPTION_NO)+1,1)from optiongroup c),
 				'${item.optionGroupName}',
 				'${item.optionName}',
@@ -63,6 +63,11 @@
 				)
 			</foreach>
 	</insert>
+
+	<select id="getLatestOptionGroupNo" resultMap="OptionGroupSelectMap">
+# 		select ifnull(max(OPTION_GROUP_NO)+1,1) as optionGroupNo from optiongroup
+select * from optiongroup order by OPTION_GROUP_NO desc limit 1
+	</select>
 
 	<select id="getOptionGroupList" parameterType="int" resultMap="OptionGroupSelectMap">
 		SELECT
@@ -169,13 +174,17 @@
 	</update>
 
 	<update id="updateOptionGroup" parameterType="optionGroup">
-		UPDATE optiongroup
-		<set>
-			OPTION_GROUP_NAME = #{optionGroupName:VARCHAR},
-			OPTION_NAME = #{optionName:VARCHAR},
-			OPTION_PRICE = #{optionPrice:INTEGER}
-		</set>
-		WHERE OPTION_NO = #{optionNo}
+
+<!--		    <foreach collection="list" item="item" separator=",">-->
+				UPDATE optiongroup
+				<set>
+				OPTION_GROUP_NAME = #{optionGroupName:VARCHAR},
+				OPTION_NAME = #{optionName:VARCHAR},
+				OPTION_PRICE = #{optionPrice:INTEGER}
+				</set>
+				WHERE OPTION_NO = #{optionNo}
+<!--			</foreach>-->
+
 	</update>
 
 	<delete id="deleteMenu">

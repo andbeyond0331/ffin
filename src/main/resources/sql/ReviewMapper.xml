@@ -10,6 +10,8 @@
 	<resultMap id="ReviewSelectMap" type="review">
 		<result property="rvNo" 			column="RV_NO" 			jdbcType="INTEGER"/>
 		<result property="rvOrderNo"	column="RV_ORDER_NO" 		jdbcType="INTEGER" />
+		<result property="rvTruckId"	column="RV_TRUCK_ID" 		jdbcType="VARCHAR" />
+		<result property="rvUserId"	column="RV_USER_ID" 		jdbcType="VARCHAR" />
 		<result property="rvRegTime" 	column="RV_REG_TIME" 		jdbcType="DATE" />
 		<result property="rvStar" 			column="RV_STAR" 	jdbcType="FLOAT" />
 		<result property="rvContent" 			column="RV_CONTENT" 	jdbcType="VARCHAR" />
@@ -59,6 +61,21 @@
 			RV_IMG2,
 			RV_IMG3
 		FROM 	review
+		WHERE RV_TRUCK_ID=#{truckId}
+	</select>
+
+	<select id="getReviewListUser"	parameterType="map"	resultMap="ReviewSelectMap">
+		SELECT
+			RV_NO,
+			RV_ORDER_NO,
+			RV_REG_TIME,
+			RV_STAR,
+			RV_CONTENT,
+			RV_IMG1,
+			RV_IMG2,
+			RV_IMG3
+		FROM 	review
+		WHERE RV_USER_ID = #{userId}
 	</select>
 
 	<update id="updateReview"	parameterType="review">
