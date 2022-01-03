@@ -1,42 +1,47 @@
 <%@ page contentType="text/html; charset=utf-8" %>
-<%@ page pageEncoding="utf-8"%>
+<%@ page pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 
 <html lang="ko">
 
 
 <head>
     <!-- Basic -->
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <!-- Site Metas -->
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
 
     <title>F.FIN | FOODTRUCK FINDER</title>
 
     <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="../../resources/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="../../resources/bootstrap/css/bootstrap.css"/>
 
     <!-- fonts style -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
 
     <!-- font awesome style -->
-    <link href="../../resources/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="../../resources/bootstrap/css/font-awesome.min.css" rel="stylesheet"/>
     <!-- nice select -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css"
+          integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous"/>
     <!-- slidck slider -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" integrity="sha256-UK1EiopXIL+KVhfbFa8xrmAWPeBjMVdvYMYkTAEv/HI=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css.map" integrity="undefined" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"
+          integrity="sha256-UK1EiopXIL+KVhfbFa8xrmAWPeBjMVdvYMYkTAEv/HI=" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css.map"
+          integrity="undefined" crossorigin="anonymous"/>
 
     <!-- Custom styles for this template -->
-    <link href="../../resources/bootstrap/css/style.css" rel="stylesheet" />
+    <link href="../../resources/bootstrap/css/style.css" rel="stylesheet"/>
     <!-- responsive style -->
-    <link href="../../resources/bootstrap/css/responsive.css" rel="stylesheet" />
+    <link href="../../resources/bootstrap/css/responsive.css" rel="stylesheet"/>
 
     <!--    Favicons-->
     <link rel="apple-touch-icon" sizes="180x180" href="../../resources/bootstrap/assets/favicons/apple-touch-icon.png">
@@ -54,7 +59,8 @@
     <!-- slick  slider -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
     <!-- nice select -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"
+            integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
     <!-- custom js -->
     <script src="../../resources/bootstrap/js/custom.js"></script>
 
@@ -99,110 +105,167 @@
             alert("게시물 작성이 완료되었습니다.");
         }
 
+        $(function () {
+            //댓글 쓰기 (버튼을 눌러서 id값이 넘어와 실행되는 자바스크립트 구문)
+            $("#btnReply").click(function () {
+                //alert("댓글쓰기를 클릭했다");
+                var replytext = $("#commentContent").val(); //댓글 내용
+                <%--var bno = "${post.postNo}"; //게시물 번호--%>
+                var param = {"commentContent": replytext};
+                //var param="replytext="+replytext+"&bno="+bno;
+
+                if (replytext == null || replytext.length < 1) {
+                    alert("댓글 내용은 반드시 입력하셔야 합니다.");
+                    return;
+                }
+
+                $.ajax({
+                    type   : "post", //데이터를 보낼 방식
+                    url    : "/community/addComment", //데이터를 보낼 url
+                    data   : param, //보낼 데이터
+                    success: function () { //데이터를 보내는것이 성공했을시 출력되는 메시지
+                        alert("댓글이 등록되었습니다.");
+                        listReply2(); //댓글 목록 출력
+                    }
+                });
+            });
+
+
+            //댓글 목록 출력 함수
+            function listReply(num) {
+                alert("listReply function excute");
+                $.ajax({
+                    type   : "post", //get방식으로 자료를 전달한다
+                    url    : "/community/getCommentList?commentPostNo=${commentPostNo}&curPage", //컨트롤러에 있는 list.do로 맵핑하고 게시판 번호도 같이 보낸다.
+                    success: function (result) { //자료를 보내는것이 성공했을때 출력되는 메시지
+                        //result : responseText 응답텍스트(html)
+                        console.log(result);
+                        alert(result);
+                        $("#listReply").html(result);
+                        alert("댓글 출력");
+                    }
+                });
+            }
+        })
+
 
     </script>
 
 </head>
 
 
-
 <body id="page-top">
 
-<jsp:include page="/views/toolbar.jsp" />
+<jsp:include page="/views/toolbar.jsp"/>
 <br/><br/>
 
 
+<div class="container">
+    <div class="page-header text-info">
+        <h3> 게시글조회 </h3>
+    </div>
+
+    <!-- 게시글 조회 -->
+    <div class="container">
+        <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+
+            <tbody>
+            <tr>
+                <td style="width: 20%;">게시글 제목</td>
+                <td colspan="2">${post.postTitle}</td>
+            </tr>
+            <tr>
+                <td>게시글 작성자</td>
+                <td colspan="2">${post.postUser.userId}${post.postTruck.truckId}</td>
+            </tr>
+            <tr>
+                <td>게시글 작성일</td>
+                <td colspan="2">${post.postRegDate}</td>
+            </tr>
+            <tr>
+                <td>게시글 내용</td>
+                <td colspan="2" style="min-height: 300px; text-align: center">${post.postContent}</td>
+            </tr>
+
+            <tr>
+                <td>첨부파일이 아직 출력안되서 주석처리</td>
+<%--                <td colspan="1">--%>
+<%--                    첨부파일1<br/>--%>
+<%--                    <img src="/Users/js/IdeaProjects/ffin/src/main/webapp/resources/image/${post.postFile1}" width="200"--%>
+<%--                         height="200"/>--%>
+<%--                </td>--%>
+
+<%--                <td colspan="1">--%>
+<%--                    첨부파일2<br/>--%>
+<%--                    <img src="/Users/js/IdeaProjects/ffin/src/main/webapp/resources/image/${post.postFile2}" width="200"--%>
+<%--                         height="200"/>--%>
+<%--                </td>--%>
+
+<%--                <td colspan="1">--%>
+<%--                    첨부파일3<br/>--%>
+<%--                    <img src="/Users/js/IdeaProjects/ffin/src/main/webapp/resources/image/${post.postFile3}" width="200"--%>
+<%--                         height="200"/>--%>
+<%--                </td>--%>
+
+            </tr>
+            </tbody>
+
+        </table>
+
+        <a href="getPostList" class="btn-secondary">게시글 목록으로</a>
+
+        <c:if test="${sessionScope.user.userId.equals(post.postUser.userId) || sessionScope.truck.truckId.equals(post.postTruck.truckId)}">
+            <a href="updatePost?postNo=${postNo}" class="btn-secondary">수정</a>
+            <a href="deleteAction.jsp?postNo=${postNo}" class="btn-secondary">삭제</a>
+        </c:if>
+    </div>
+    <!-- 게시판 글쓰기 양식 영역 끝 -->
+
+
+    <br/>
+
+    <form name="detailForm">
+        <!-- 댓글 작성 -->
+        <!-- 너비와 정렬방식 설정 -->
+        <div style="width:700px; text-align:center;">
+
+            <!-- 세션에 저장되어있는 userid가 null이 아닐때 -->
+            <!-- 그러니까 로그인을 한 상태이어야만 댓글을 작성 할 수 있다.-->
+            <c:if test="${sessionScope.user != null || sessionScope.truck != null}">
                 <div class="container">
-                    <div class="page-header text-info">
-                        <h3> 게시글조회 </h3>
-                    </div>
-                    <form name="detailForm">
-
-
-                        <table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top: 13px;">
-                            <tr>
-                                <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                            </tr>
-                            <tr>
-                                <td width="104" class="ct_write">
-                                    게시글제목 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-                                </td>
-                                <td bgcolor="D6D6D6" width="1"></td>
-                                <td class="ct_write01">
-                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                        <tr>
-                                            <td width="105">${post.postTitle}</td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                            </tr>
-                            <tr>
-                                <td width="104" class="ct_write">
-                                    게시글내용 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-                                </td>
-                                <td bgcolor="D6D6D6" width="1"></td>
-                                <td class="ct_write01" height="300">${post.postContent}</td>
-                                <input type='hidden' name='postContent' value='${post.postContent}'/>
-                            </tr>
-                            <tr>
-                                <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                            </tr>
-                            <tr>
-                                <td width="104" class="ct_write">
-                                    첨부파일1 <img 	src="/Users/js/IdeaProjects/ffin/src/main/webapp/resources/image/${post.postFile1}" width="3" height="3" align="absmiddle"/>
-                                </td>
-                                <td bgcolor="D6D6D6" width="1"></td>
-                                <td class="ct_write01">
-                                    ${post.postFile1}
-                                    <img src="/Users/js/IdeaProjects/ffin/src/main/webapp/resources/image/${post.postFile1}" width="200" height="200" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                            </tr>
-
-                            <tr>
-                                <td width="104" class="ct_write">
-                                    첨부파일2 <img 	src="/image/${post.postFile2}" width="3" height="3" align="absmiddle"/>
-                                </td>
-                                <td bgcolor="D6D6D6" width="1"></td>
-                                <td class="ct_write01">
-                                    <img src="../../resources/image/${post.postFile2}" width="200" height="200" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                            </tr>
-
-                            <tr>
-                                <td width="104" class="ct_write">
-                                    첨부파일3 <img 	src="/image/${post.postFile3}" width="3" height="3" align="absmiddle"/>
-                                </td>
-                                <td bgcolor="D6D6D6" width="1"></td>
-                                <td class="ct_write01">
-                                    <img src="../../resources/image/${post.postFile3}" width="200" height="200" />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                            </tr>
-                        </table>
-
-
-                        <br/>
-        <div class="form-group">
-            <div class="col-sm-offset-6  col-sm-6 text-center">
-                <button type="button" class="btn btn-secondary">작 성 완 료</button>
-                <a class="btn btn-secondary btn" href="#" role="button">취 소</a>
-            </div>
+                    <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+                <tr>
+                <td><h3>댓글작성하기</h3></td>
+                </tr>
+                        <tr>
+                            <td>
+                <textarea rows="5" cols="80" id="commentContent" placeholder="댓글을 작성하세요"></textarea>
+                            </td></tr><br/>
+                <!-- 댓글쓰기 버튼을 누르면 id값인 btnReply값이 넘어가서 -->
+                <!-- 위쪽에 있는 스크립트 구문이 실행되고 -->
+                <!-- 내가 댓글을 작성한 값이 스크립트문을 거쳐서 컨트롤러로 맵핑되게 된다. -->
+                        <tr><td>
+                <button type="button" id="btnReply">댓글등록</button>
+                        </td></tr>
+                    </table>
+                </div>
+            </c:if>
         </div>
+        <!-- 댓글 목록 -->
+        <!-- 댓글이 등록이 되면 listReply에 댓글이 쌓이게 된다 -->
+        <div id="listReply"></div>
+
+        <%--        <div class="form-group">--%>
+        <%--            <div class="col-sm-offset-6  col-sm-6 text-center">--%>
+        <%--                <button type="button" class="btn btn-secondary">작 성 완 료</button>--%>
+        <%--                <a class="btn btn-secondary btn" href="#" role="button">취 소</a>--%>
+        <%--            </div>--%>
+        <%--        </div>--%>
     </form>
 
+
 </div>
-<jsp:include page="/views/footer.jsp" />
+<jsp:include page="/views/footer.jsp"/>
 
 </body>
 

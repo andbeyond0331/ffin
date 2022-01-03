@@ -96,7 +96,7 @@ public class CommunityController {
     }
 
     @RequestMapping(value = "getPost", method = RequestMethod.GET)
-    public ModelAndView getPost(@RequestParam("postNo") int postNo, HttpServletRequest request, ModelAndView m) throws Exception {
+    public ModelAndView getPost(@RequestParam("postNo") int postNo, HttpServletRequest request, ModelAndView m, HttpSession session) throws Exception {
 
         System.out.println("/community/getPost : GET");
         postNo = Integer.parseInt(request.getParameter("postNo"));
@@ -105,6 +105,10 @@ public class CommunityController {
         Post post = communityService.getPost(postNo);
         System.out.println("post = " + post);
 
+        session.setAttribute("postNo", postNo);
+
+        System.out.println("session에 담긴 postNo = " +session.getAttribute("postNo"));
+
         m.addObject("post", post);
         m.setViewName("/views/community/getPost.jsp");
 
@@ -112,14 +116,20 @@ public class CommunityController {
     }
 
     @RequestMapping(value = "updatePost", method = RequestMethod.GET)
-    public String updatePost(@ModelAttribute("postNo") int postNo, Model model, HttpSession httpSession) throws Exception {
+    public String updatePost(@ModelAttribute("postNo") int postNo, Model model, HttpSession session) throws Exception {
+
         System.out.println("/community/updatePost : GET");
         //Business Logic
+        postNo = (int) session.getAttribute("postNo");
+
+        System.out.println("postNo = " + postNo);
+
         Post post = communityService.getPost(postNo);
+
         //Model 과 View 연결
         model.addAttribute("post", post);
 
-        return "forward:/community/updatePost.jsp";
+        return "/views/community/updatePostView.jsp";
     }
 
     @RequestMapping(value = "updatePost", method = RequestMethod.POST)
@@ -127,13 +137,21 @@ public class CommunityController {
 
         System.out.println("/community/updatePost : POST");
         //Business Logic
+        int postNo = (int) session.getAttribute("postNo");
+
+        System.out.println("postNo = " + postNo);
+
+        post = (Post) model.getAttribute("post");
+
+        post.setPostNo(postNo);
+
+        System.out.println("post = " + post);
+
         communityService.updatePost(post);
 
-        int sessionNo = ((Post) session.getAttribute("post")).getPostNo();
-        if (sessionNo == post.getPostNo()) {
-            session.setAttribute("post", post);
-        }
-        return "redirect:/community/getPost?postNo=" + post.getPostNo();
+        communityService.getPost(postNo);
+
+        return "redirect:/community/getPost?postNo="+postNo;
     }
 
     @RequestMapping(value = "getPostList")
@@ -162,42 +180,53 @@ public class CommunityController {
 
 
     ////////////////////// 코멘트 관련 메소드 ////////////////////////////
-    @RequestMapping(value = "addComment", method = RequestMethod.GET)
-    public String addComment() throws Exception {
-        System.out.println("/community/addComment : GET");
-
-        return "/community/getPost.jsp";
-    }
-
-    @RequestMapping(value = "addComment", method = RequestMethod.POST)
-    public String addComment(@ModelAttribute("comment") Comment comment, @ModelAttribute("truck") Truck truck, @ModelAttribute("user") User user, Model model, HttpSession session) throws Exception {
-        System.out.println("/community/addComment : POST");
-
-        if (session.getAttribute("role").equals("user")) {
-            String commentUser = ((User) session.getAttribute("user")).getUserId();
-            System.out.println("댓글 작성자(user) : " + session.getAttribute("userId"));
-            comment.setCommentUserId(commentUser);
-        } else if (session.getAttribute("role").equals("truck")) {
-            String commentTruck = ((Truck) session.getAttribute("truck")).getTruckId();
-            System.out.println("댓글 작성자(truck) : " + session.getAttribute("truckId"));
-            comment.setCommentTruckId(commentTruck);
-        }
-        communityService.addComment(comment);
-
-        return "/views/community/getPost.jsp";
-    }
+//    @RequestMapping(value = "addComment", method = RequestMethod.GET)
+//    public String addComment() throws Exception {
+//
+//        System.out.println("/community/addComment : GET");
+//
+//        return "/views/community/getPost.jsp";
+//    }
+//
+//    @RequestMapping(value = "addComment", method = RequestMethod.POST)
+//    public String addComment(@ModelAttribute("comment") Comment comment, HttpSession session) throws Exception {
+//
+//        System.out.println("/community/addComment : POST");
+//
+//        String role =(String) session.getAttribute("role");
+//
+//        System.out.println("role = " + role);
+//
+//        User commentUser = null;
+//        Truck commentTruck = null;
+//
+//        if (session.getAttribute("role").equals("user")) {
+//            commentUser = (User) session.getAttribute("user");
+//            System.out.println("댓글 작성자(user) : " + commentUser);
+//            comment.setCommentUser(commentUser);
+//        } else if (session.getAttribute("role").equals("truck")) {
+//            commentTruck = (Truck) session.getAttribute("truck");
+//            System.out.println("댓글 작성자(truck) : " + commentTruck);
+//            comment.setCommentTruck(commentTruck);
+//        }
+//
+//        communityService.addComment(comment);
+//
+//        return "rediect:/community/getPost";
+//    }
 
     @RequestMapping(value = "getComment", method = RequestMethod.GET)
     public ModelAndView getComment(HttpServletRequest request, ModelAndView m) throws Exception {
 
-        System.out.println("CommunityContoller.getComment : GET");
+        System.out.println("/community/getComment : GET");
         int commentNo = Integer.parseInt(request.getParameter("commentNo"));
-
         System.out.println("commentNo = " + commentNo);
+
         Comment comment = communityService.getComment(commentNo);
         System.out.println("comment = " + comment);
+
         m.addObject("comment", comment);
-        m.setViewName("/community/getComment.jsp");
+        m.setViewName("/community/getComment");
 
         return m;
     }
@@ -227,29 +256,29 @@ public class CommunityController {
         return "redirect:/community/getComment?commentNo=" + comment.getCommentNo();
     }
 
-    @RequestMapping(value = "getCommentList")
-    public String getCommentList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
-
-        System.out.println("/community/getCommentList : GET/POST");
-
-        if (search.getCurrentPage() == 0) {
-            search.setCurrentPage(1);
-        }
-        search.setPageSize(pageSize);
-
-        // Business Logic 수행
-        Map<String, Object> map = communityService.getCommentList(search);
-
-        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
-        System.out.println(resultPage);
-
-        //  Model 과 View 연결
-        model.addAttribute("list", map.get("list"));
-        model.addAttribute("resultPage", resultPage);
-        model.addAttribute("search", search);
-
-        return "forward:/community/getCommentList.jsp";
-    }
+//    @RequestMapping(value = "getCommentList")
+//    public String getCommentList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+//
+//        System.out.println("/community/getCommentList : GET/POST");
+//
+//        if (search.getCurrentPage() == 0) {
+//            search.setCurrentPage(1);
+//        }
+//        search.setPageSize(pageSize);
+//
+//        // Business Logic 수행
+//        Map<String, Object> map = communityService.getCommentList(Integer.parseInt("commentPostNo"));
+//
+//        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+//        System.out.println(resultPage);
+//
+//        //  Model 과 View 연결
+//        model.addAttribute("list", map.get("list"));
+//        model.addAttribute("resultPage", resultPage);
+//        model.addAttribute("search", search);
+//
+//        return "forward:/community/getCommentList.jsp";
+//    }
 
 
     ////////////////////// 좋아요 관련 메소드 ////////////////////////////

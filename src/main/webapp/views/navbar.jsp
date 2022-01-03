@@ -194,6 +194,14 @@
             });
         });
 
+        // 진석 추가
+        // ============= 게시판 ===============
+        $( function() {
+            $("#goPost").on("click" , function() {
+                self.location = "/community/getPostList"
+            });
+        });
+
     </script>
 
 
@@ -225,8 +233,8 @@
                         <ul class="navbar-nav mr-auto">
                         </ul>
                     </div>
-                    <div class="collapse navbar-collapse nav-user" id="navbarSupportedContent" >
-                        <ul class="navbar-nav mr-auto">
+                    <div class="collapse navbar-collapse justify-content-end nav-user" id="navbarSupportedContent" >
+                        <ul class="navbar-nav">
                             <form class="form-inline my-2 my-lg-0">
                                     <%--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
                                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>--%>
@@ -271,8 +279,8 @@
                         </c:if>
                     </ul>
                 </div>
-                <div class="collapse navbar-collapse nav-user" id="navbarSupportedContent" >
-                    <ul class="navbar-nav mr-auto">
+                <div class="collapse navbar-collapse justify-content-end nav-user" id="navbarSupportedContent" >
+                    <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" id="goMsg" href="#" style="margin-top: 3px;"><i class="fas fa-envelope fa-lg" ></i></a>
                         </li>

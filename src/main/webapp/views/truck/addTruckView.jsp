@@ -464,7 +464,7 @@
         <div class="form-group">
             <label for="truckCEOName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
             <div class="col-sm-4">
-                <input id="truckCEOName" class="form-control" name="truckCEOName" placeholder="대표자이름">
+                <input id="truckCEOName" class="form-control" name="truckCEOName" placeholder="대표자이름"/>
                 <span id="result_id_msg" class="help-block"></span>
             </div>
         </div>
@@ -476,7 +476,7 @@
         <div class="form-group">
             <label for="truckCEOBirth" class="col-sm-offset-1 col-sm-3 control-label">생년월일</label>
             <div class="col-sm-4">
-                <input id="truckCEOBirth" class="form-control" name="truckCEOBirth" placeholder="대표자 생년월일">
+                <input id="truckCEOBirth" class="form-control" name="truckCEOBirth" placeholder="대표자 생년월일"/>
             </div>
         </div>
 
@@ -487,7 +487,7 @@
         <div class="form-group">
             <label for="truckAddr" class="col-sm-offset-1 col-sm-3 control-label">주소</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="truckAddr" name="truckAddr" placeholder="사업자등록증에 등록된 주소">
+                <input type="text" class="form-control" id="truckAddr" name="truckAddr" placeholder="사업자등록증에 등록된 주소"/>
             </div>
             <div>
                 <input type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
@@ -495,7 +495,7 @@
             <br/>
             <label for="truckAddrDetail" class="col-sm-offset-1 col-sm-3 control-label">주소 상세</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="truckAddrDetail" name="truckAddrDetail" placeholder="주소 상세">
+                <input type="text" class="form-control" id="truckAddrDetail" name="truckAddrDetail" placeholder="주소 상세"/>
                 <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
             </div>
         </div>
@@ -533,7 +533,7 @@
             <label for="truckEmail" class="col-sm-offset-1 col-sm-3 control-label">Email</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="truckEmail" name="truckEmail"
-                       placeholder="인증번호 확인이 가능한 Email">
+                       placeholder="인증번호 확인이 가능한 Email"/>
             </div>
             <div class="col-sm-3">
                 <button type="button" id="emailChk" class="btn btn-warning email-auth">인증번호 요청</button>
@@ -543,7 +543,7 @@
             <label for="truckEmail" class="col-sm-offset-1 col-sm-3 control-label"></label>
             <div class="col-sm-4 mail-check-input-box" id="mail-check-input-box-fail">
                 <input type="text" class="form-control mail-check-input" id="truckEmailAuth" name="truckEmailAuth"
-                       placeholder="인증번호" disabled required>
+                       placeholder="인증번호" disabled required/>
                 <span class="point successEmailChk">인증번호 확인이 가능한 메일 주소를 먼저 입력해주세요.</span>
                 <span id="mail-check-input-box-warn"></span>
                 <div class="clearfix"></div>
@@ -617,7 +617,7 @@
         <div class="form-group">
             <label for="truckCEOIntro" class="col-sm-offset-1 col-sm-3 control-label">사장님 한마디</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="truckCEOIntro" name="truckCEOIntro" placeholder="사장님 한마디">
+                <input type="text" class="form-control" id="truckCEOIntro" name="truckCEOIntro" placeholder="사장님 한마디"/>
             </div>
         </div>
 

@@ -63,13 +63,13 @@
             FROM post
         <if test="searchCondition != null">
             <where>
-                <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+                <bind name="searchKeyword" value="'%' + searchKeyword + '%'"/>
                 <if test="searchCondition == 0 and searchKeyword !='' ">
-                    AND post_user_id LIKE #{searchKeyword}
+                    post_user_id LIKE #{searchKeyword}
                     OR post_truck_id LIKE #{searchKeyword}
                 </if>
                 <if test="searchCondition == 1 and searchKeyword !='' ">
-                    AND post_title LIKE #{searchKeyword}
+                    post_title LIKE #{searchKeyword}
                 </if>
             </where>
         </if>
@@ -85,6 +85,7 @@
         <set>
             post_title = #{postTitle},
             post_content = #{postContent},
+            post_reg_date = SYSDATE(),
             post_file1 = #{postFile1},
             post_file2 = #{postFile2},
             post_file2 = #{postFile3}

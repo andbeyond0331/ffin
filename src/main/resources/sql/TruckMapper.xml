@@ -113,7 +113,7 @@
 			FROM truck
 				<if test="searchCondition != null">
 					<where>
-						<bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+						<bind name="searchKeyword" value="'%' + searchKeyword + '%'"/>
 						<if test="searchCondition == 0 and searchKeyword !='' ">
 							AND truck_id LIKE #{searchKeyword}
 						</if>

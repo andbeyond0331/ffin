@@ -5,6 +5,7 @@ import com.ffin.service.domain.Comment;
 import com.ffin.service.domain.Heart;
 import com.ffin.service.domain.Post;
 
+import java.util.List;
 import java.util.Map;
 
 public interface CommunityService {
@@ -26,7 +27,9 @@ public interface CommunityService {
     // SELECT LIST
     public Map<String, Object> getPostList(Search search) throws Exception;
 
-    public Map<String, Object> getCommentList(Search search) throws Exception;
+    public List<Comment> getCommentList(int commentPostNo) throws Exception;
+
+    public int count(int commentPostNo) throws Exception;
 
     public Map<String, Object> getHeartList(Search search) throws Exception;
 
