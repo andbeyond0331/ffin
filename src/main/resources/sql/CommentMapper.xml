@@ -8,11 +8,11 @@
     <resultMap id="commentSelectMap" type="comment">
         <result property="commentNo"            column="COMMENT_NO"             jdbcType="NUMERIC"/>
         <result property="commentPostNo"        column="COMMENT_POST_NO"        jdbcType="NUMERIC"/>
-        <result property="commentContent"       column="COMMENT_CONTENT"        jdbcType="VARCHAR"/>
         <result property="commentUserId"        column="COMMENT_USER_ID"        jdbcType="VARCHAR"/>
         <result property="commentTruckId"       column="COMMENT_TRUCK_ID"       jdbcType="VARCHAR"/>
+        <result property="commentContent"       column="COMMENT_CONTENT"        jdbcType="VARCHAR"/>
         <result property="commentDate"          column="COMMENT_DATE"           jdbcType="DATE"/>
-        <result property="secretKey"            column="SECRET_KET"             jdbcType="CHAR"/>
+        <result property="secretKey"            column="SECRET_KEY"             jdbcType="CHAR"/>
     </resultMap>
 
     <!-- SQL : INSERT -->
@@ -31,34 +31,26 @@
 
     <select id="getComment2"     parameterType="String"         resultMap="commentSelectMap">
         SELECT
-            COMMENT_POST_NO, COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
+            COMMENT_POST_NO, COMMENT_USER_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
         FROM comment
         WHERE comment_user_id = #{value}
     </select>
 
     <select id="getComment3"     parameterType="String"         resultMap="commentSelectMap">
         SELECT
-            COMMENT_POST_NO, COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
+            COMMENT_POST_NO, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
         FROM comment
         WHERE comment_truck_id = #{value}
     </select>
 
 
     <!-- SQL : SELECT LIST -->
-    <select id="getCommentList"     parameterType="search"      resultMap="commentSelectMap">
-        SELECT inner_table.*
-        FROM( SELECT COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
+    <select id="getCommentList"     resultType="comment">
+        SELECT COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
         FROM comment
-        <if test="searchCondition != null">
-            <where>
-                <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
-                <if test="searchCondition == 0 and searchKeyword !='' ">
-                    AND comment_post_no LIKE #{searchKeyword}
-                </if>
-            </where>
-        </if>
-        order by comment_no ) inner_table
-        limit 0,8;
+        WHERE comment_post_no = ${commentPostNo}
+        order by comment_no
+--         limit 0,8;
     </select>
 
     <!-- SQL : UPDATE -->

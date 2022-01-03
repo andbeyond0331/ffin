@@ -70,8 +70,13 @@ public class CommunityDaoImpl implements CommunityDao {
 
     // 댓글 목록 조회
     @Override
-    public List<Comment> getCommentList(Search search) throws Exception {
-        return sqlSession.selectList("CommentMapper.getCommentList", search);
+    public List<Comment> getCommentList(int commentPostNo) throws Exception {
+        return sqlSession.selectList("CommentMapper.getCommentList", commentPostNo);
+    }
+
+    @Override
+    public int count(int commentPostNo) throws Exception {
+        return 0;
     }
 
     // 댓글 수정
