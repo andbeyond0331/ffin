@@ -191,12 +191,12 @@
 
 		INSERT
 		INTO purchase (ORDER_USER_ID,ORDER_TRUCK_ID,ORDER_QTY,
-							ORDER_STATUS,ORDER_PICK_UP_TIME,ORDER_TOTAL_PRICE)
+							ORDER_REQUEST,ORDER_PICK_UP_TIME,ORDER_TOTAL_PRICE)
 		VALUES(
 				  #{orderUserId.userId:VARCHAR},
 				  #{orderTruckId.truckId:VARCHAR},
 				  #{orderQty:NUMERIC},
-				  #{orderStatus:CHAR},
+				  #{orderRequest:VARCHAR},
 				  #{orderPickUpTime:NUMERIC},
 				  #{orderTotalPrice:NUMERIC}
 			  )
@@ -270,19 +270,26 @@
 	<update id="updatePurchase"	parameterType="purchase"   >
 		UPDATE ffin.purchase
 		<set>
+
 			ORDER_STATUS = #{orderStatus},
 			PAY_DATE_TIME = SYSDATE(),
 			PAY_PRICE = #{payPrice},
 			PAY_SERVICE_TYPE = #{payServiceType},
-			<if test="payPointNo.pointNo =! 0">
+			<if test="payPointNo != null">
+			<if test="payPointNo.pointNo != null and payPointNo.pointNo != ''">
 			PAY_POINT_NO = #{payPointNo.pointNo},
 			</if>
-			<if test="payCouponNo.couponNo =! 0">
-			PAY_COUPON_NO = #{payCouponNo.couponNo},
-			</if>
-			<if test="payResNo.ctNo =! 0">
-			PAY_RES_NO = #{payResNo.ctNo},
 		    </if>
+		    <if test="payCouponNo != null">
+			<if test="payCouponNo.couponNo != null and payCouponNo.couponNo != ''">
+				PAY_COUPON_NO = #{payCouponNo.couponNo},
+			</if>
+			</if>
+		    <if test="payResNo != null">
+			<if test="payResNo.ctNo != null and payResNo.ctNo != ''">
+				PAY_RES_NO = #{payResNo.ctNo},
+			</if>
+			</if>
 			PAY_OPTION = #{payOption}
 		</set>
 

@@ -29,6 +29,13 @@
     $(function() {
         $("button.btn.btn-primary:Contains('확인')").click(function () {
             alert("넘거간다.");
+
+            var order = to_ajax()
+
+            append = "<input type=\"hidden\" id=\"orderNo\" name=\"orderNo\" value=\""+order+"\">";
+            alert(append + ":append");
+            $('#app').append(append);
+
             $("form").attr("method" , "POST").attr("action" , "/purchase/addCart").submit();
 
         });
@@ -41,21 +48,86 @@
         });
     });
     function  to_ajax(){
+        var reOrderNo;
+        var odMenuName =[];
+        var odOptionGroupName = [];
+        var odOptionName = [];
+        var odMenuQty = [];
+        var odMenuPrice = [];
+        var odOptionPrice = [];
+        var odMenuImage = [];
+        var orderPickUpTime = $('input[name="orderPickUpTime"]:checked').val();
+        var orderTotalPrice = $('#orderTotalPrice').val();
+        var orderUserId = $('#orderUserId').val();
+        var orderTruckId = $('#orderTruckId').val();
+        var orderRequest = $('#orderRequest').val();
+        var orderQty = $('#orderQty').val();
 
+        $('input[name="odMenuName"]').each(function (i){
+            odMenuName.push($(this).val());
+        });
+
+        $('input[name="odOptionGroupName"]').each(function (i){
+            odOptionGroupName.push($(this).val());
+        });
+
+        $('input[name="odOptionName"]').each(function (i){
+            odOptionName.push($(this).val());
+        });
+
+        $('input[name="odMenuQty"]').each(function (i){
+            odMenuQty.push($(this).val());
+        });
+
+        $('input[name="odMenuPrice"]').each(function (i){
+            odMenuPrice.push($(this).val());
+        });
+
+        $('input[name="odOptionPrice"]').each(function (i){
+            odOptionPrice.push($(this).val());
+        });
+
+        $('input[name="odMenuImage"]').each(function (i){
+            odMenuImage.push($(this).val());
+        });
+        alert(orderPickUpTime)
+        alert(orderTotalPrice)
+        alert(orderUserId)
+        alert(orderTruckId)
+        alert(orderRequest)
+        alert(orderQty)
+
+        var data ={
+            "odMenuName" : odMenuName,
+            "odOptionGroupName" : odOptionGroupName,
+            "odOptionName" : odOptionName,
+            "odMenuQty" : odMenuQty,
+            "odMenuPrice" : odMenuPrice,
+            "odOptionPrice" : odOptionPrice,
+            "odMenuImage" : odMenuImage,
+            "orderPickUpTime" : orderPickUpTime,
+            "orderTotalPrice" : orderTotalPrice,
+            "orderUserId" : orderUserId,
+            "orderTruckId" : orderTruckId,
+            "orderRequest" : orderRequest,
+            "orderQty" : orderQty,
+        }
         $.ajax({
             type: "post",
             url: '/purchase/json/addCartList',
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            data : $("#form input").serialize(),
+            data : data,
+            async: false,
             dataType: 'json',
-            success: function(response){
-                if(response === 1){
-                    //load chech.php file
-                }  else {
-                    //show error
-                }
-            }
+            success: function(retVal) {
+                reOrderNo = retVal.orderNo;
+                alert("value"+reOrderNo)
+            },
+            error: function (xhr,status,error) { alert("[Error]"+error); return; }
+
+
         });
+        return reOrderNo;
     }
 
 </script>
@@ -65,7 +137,7 @@
     html,
     body {
         margin: 0; }
-    .header {
+    head {
         height: 80px;
         position: sticky;
         top: 0;
@@ -113,30 +185,30 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="orderPickUpTime" class="col-form-label">픽업희망시간:</label>
-                        <div class="btn-group" role="group" id="orderPickUpTime" aria-label="Basic radio toggle button group">
-                            <input type="radio" class="btn-check"  id="btnradio1" autocomplete="off" checked>
-                            <label class="btn btn-outline-primary" for="btnradio1" value="5">5분</label>
+                        <div class="btn-group" role="group"  aria-label="Basic radio toggle button group">
+                            <input type="radio" class="btn-check" id="orderPickUpTime" name="orderPickUpTime" value="5" id="btnradio1" autocomplete="off" checked>
+                            <label class="btn btn-outline-primary" for="btnradio1" >5분</label>
 
-                            <input type="radio" class="btn-check"  id="btnradio2" autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio2" value="10">10분</label>
+                            <input type="radio" class="btn-check"  name="orderPickUpTime" value="10"  id="btnradio2" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio2">10분</label>
 
-                            <input type="radio" class="btn-check" id="btnradio3" autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio3" value="15">15분</label>
+                            <input type="radio" class="btn-check" name="orderPickUpTime" value="15" id="btnradio3" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio3" >15분</label>
 
-                            <input type="radio" class="btn-check"  id="btnradio4" autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio4" value="20">20분</label>
+                            <input type="radio" class="btn-check" name="orderPickUpTime" value="20"  id="btnradio4" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio4" >20분</label>
 
-                            <input type="radio" class="btn-check"  id="btnradio5" autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio5" value="30">30분</label>
+                            <input type="radio" class="btn-check" name="orderPickUpTime" value="30" id="btnradio5" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio5" >30분</label>
 
-                            <input type="radio" class="btn-check"  id="btnradio6" autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio6" value="40">40분</label>
+                            <input type="radio" class="btn-check" name="orderPickUpTime" value="40"  id="btnradio6" autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio6" >40분</label>
 
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="message-text" class="col-form-label">주문요청사항:</label>
-                        <textarea class="form-control" id="message-text"  value="${purchase.orderRequest}"></textarea>
+                        <label for="orderRequest" class="col-form-label">주문요청사항:</label>
+                        <textarea class="form-control" id="orderRequest" name="orderRequest"  value="${purchase.orderRequest}"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -157,7 +229,7 @@
 
 
 
-            <div class="page-header text-info">
+            <div class="page-header text-info" id="app">
                 <h3>장바구니</h3>
             </div>
 
@@ -175,11 +247,11 @@
                 <td class="ct_list_b" width="150">메뉴 가격</td>
                 <td class="ct_line02"></td>
                 <td class="ct_list_b">대표 메뉴 여부
-                    <input type="hidden"   name="orderUserId.userId" value="user01"/>
-                    <input type="hidden"  name="orderTruckId.truckId" value="truck01"/>
-                    <input type="hidden"  name="orderQty" value="3"/>
-               <input type="hidden"  name="orderPickUpTime" value="15"/>
-                    <input type="hidden"  name="orderTotalPrice" value="3000"/>
+                    <input type="hidden" id="orderUserId" name="orderUserId.userId" value="user01"/>
+                    <input type="hidden" id="orderTruckId"   name="orderTruckId.truckId" value="truck01"/>
+                    <input type="hidden" id="orderQty" name="orderQty" value="3"/>
+                    <input type="hidden" id="orderTotalPrice" name="orderTotalPrice" value="3000"/>
+
 
                 </td>
                 <td class="ct_line02"></td>
@@ -202,6 +274,10 @@
                     <span class="odMenuName">${cart.odMenuName}</span>
                     <span class="odOptionGroupName" hidden="">${cart.odOptionGroupName}</span>
                     <span class="odOptionName" hidden="">${cart.odOptionName}</span>
+                    <span class="odMenuQty" hidden="">${cart.odMenuQty}</span>
+                    <span class="odMenuPrice" hidden="">${cart.odMenuPrice}</span>
+                    <span class="odOptionPrice" hidden="">${cart.odOptionPrice}</span>
+
 
                 </td>
 
@@ -233,43 +309,7 @@
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">주문하기</button>
             <button type="button" class="btn btn-primary">json</button>
         </div>
-       <%-- <table border=1>
-            <tr>
-                <td>메뉴이름</td>
-                <td>${cart.odMenuName}</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>옵션그룹이름</td>
-                <td>${cart.odOptionGroupName}</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>옵션이름</td>
-                <td>${cart.odOptionName}</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>메뉴수량</td>
-                <td>${cart.odMenuQty}</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>메뉴가격</td>
-                <td>${cart.odMenuPrice}</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>옵션가격</td>
-                <td>${cart.odOptionPrice}</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>메뉴이미지</td>
-                <td>${cart.odMenuImage}</td>
-                <td></td>
-            </tr>
-        </table>--%>
+
     </div>
 </div>
 

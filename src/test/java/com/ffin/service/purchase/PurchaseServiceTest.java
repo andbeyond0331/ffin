@@ -255,7 +255,7 @@ public class PurchaseServiceTest {
 
 ///////////////////Update////////////////////////////
 
-    //@Test
+    @Test
     public void testUpdatePurchase() throws Exception {
         int payPointNo;
         Purchase purchase = new Purchase();
@@ -263,7 +263,7 @@ public class PurchaseServiceTest {
         coupon.setCouponNo(0);
 
         Point point = new Point();
-        point.setPointNo(0);
+        point.setPointNo(3);
 
         Catering catering = new Catering();
         catering.setCtNo(0);
@@ -272,11 +272,11 @@ public class PurchaseServiceTest {
         purchase.setPayOption(1);
         purchase.setPayPrice(3000);
         purchase.setPayServiceType(0);
-        purchase.setPayPointNo(point);
-        purchase.setPayCouponNo(coupon);
-        purchase.setPayResNo(catering);
+       purchase.setPayPointNo(point);
+       /*  purchase.setPayCouponNo(coupon);
+        purchase.setPayResNo(catering);*/
 
-        purchase.setOrderNo(1);
+        purchase.setOrderNo(566);
 
 
         purchaseService.updatePurchase(purchase);
@@ -286,9 +286,9 @@ public class PurchaseServiceTest {
         Assert.assertEquals(1, purchase.getPayOption());
         Assert.assertEquals(3000, purchase.getPayPrice());
         Assert.assertEquals(0, purchase.getPayServiceType());
-        Assert.assertEquals(0, purchase.getPayPointNo());
-        Assert.assertEquals(0, purchase.getPayCouponNo());
-        Assert.assertEquals(0, purchase.getPayResNo());
+        Assert.assertEquals(10, purchase.getPayPointNo().getPointNo());
+        Assert.assertEquals("", purchase.getPayCouponNo().getCouponNo());
+        Assert.assertEquals("", purchase.getPayResNo().getCtNo());
 
     }
 
