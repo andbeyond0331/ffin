@@ -17,6 +17,9 @@ public interface ReviewService {
     //리뷰 목록 조회 - 트럭
     public Map<String, Object> getReviewListTruck(Search search, String truckId) throws Exception;
 
+    //리뷰 목록 조회 - 유저
+    public Map<String, Object> getReviewListUser(Search search, String userId) throws Exception;
+
     //리뷰 수정
     public void updateReview(Review review) throws Exception;
 

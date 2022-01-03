@@ -97,6 +97,11 @@ public class MenuServiceImpl implements MenuService {
 //        return menuDao.getLargestOptionNo();
 //    }
 
+    @Override
+    public OptionGroup getLatestOptionGroupNo() throws Exception{
+        return menuDao.getLatestOptionGroupNo();
+    }
+
 
     ///////////////update//////////////
     @Override

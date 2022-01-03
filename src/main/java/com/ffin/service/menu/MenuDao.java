@@ -15,6 +15,9 @@ public interface MenuDao {
     //INSERT
     public void addOptionGroup(List list) throws Exception;
 
+    //SELECT ONE
+    public OptionGroup getLatestOptionGroupNo()throws Exception;
+
     //SELECT LIST
     public List<OptionGroup> getOptionGroupList(int optionGroupNo) throws Exception;
 

@@ -6,6 +6,8 @@ public class Review {
 	
 	private int rvNo; 
 	private int rvOrderNo;
+	private String rvTruckId;
+	private String rvUserId;
 	private String rvRegTime; 
 	private float rvStar;
 	private String rvContent; 

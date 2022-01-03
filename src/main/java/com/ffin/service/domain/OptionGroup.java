@@ -9,10 +9,11 @@ public class OptionGroup {
 	
 	private int MenuNo;
 	private int optionGroupNo;
-	private int optionNo;
+	private String optionNo;
+	//private int optionNo;
 	private String optionGroupName;
 	private String optionName;
-	private int optionPrice;
-	
+//	private int optionPrice;
+	private String optionPrice;
 	
 }

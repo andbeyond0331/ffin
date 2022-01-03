@@ -11,6 +11,7 @@ public class Menu {
 	private String menuTruckId;
 	private String menuName;
 	private int menuPrice;
+//	private String menuPrice;
 	private String menuDetail;
 	private int isSigMenu;
 	private Date menuRegDate;

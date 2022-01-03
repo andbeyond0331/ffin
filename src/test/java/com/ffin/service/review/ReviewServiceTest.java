@@ -1,5 +1,6 @@
 package com.ffin.service.review;
 
+import com.ffin.common.Search;
 import com.ffin.service.domain.Review;
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -24,37 +28,50 @@ public class ReviewServiceTest {
     @Qualifier("reviewServiceImpl")
     private ReviewService reviewService;
 
-    @Test  //okay
-    public void addReview() throws Exception {
-        Review review = new Review();
+//    @Test  //okay
+//    public void addReview() throws Exception {
+//        Review review = new Review();
+//
+//        review.setRvNo(6);
+//        review.setRvOrderNo(1);
+//        review.setRvStar(5);
+//        review.setRvContent("reviewContentTest1");
+//        review.setRvImg1("rvImgTest1");
+//        review.setRvImg2("rvImgTest2");
+//        review.setRvImg3("rvImgTest3");
+//        review.setRvDelete('0');
+//        review.setRvTCDelete('0');
+//
+//        reviewService.addReview(review);
+//
+//        Assert.assertEquals(6, review.getRvNo());
+//        Assert.assertEquals(1, review.getRvOrderNo());
+//        Assert.assertEquals(5.0, review.getRvStar(),0);
+//        Assert.assertEquals("reviewContentTest1", review.getRvContent());
+//        Assert.assertEquals("rvImgTest1", review.getRvImg1());
+//        Assert.assertEquals("rvImgTest2", review.getRvImg2());
+//        Assert.assertEquals("rvImgTest3", review.getRvImg3());
+//        Assert.assertEquals('0', review.getRvDelete());
+//        Assert.assertEquals('0', review.getRvTCDelete());
+//
+//    }
 
-        review.setRvNo(6);
-        review.setRvOrderNo(1);
-        review.setRvStar(5);
-        review.setRvContent("reviewContentTest1");
-        review.setRvImg1("rvImgTest1");
-        review.setRvImg2("rvImgTest2");
-        review.setRvImg3("rvImgTest3");
-        review.setRvDelete('0');
-        review.setRvTCDelete('0');
+    @Test
+    public void getReviewListTruck() throws Exception {
 
-        reviewService.addReview(review);
+        Search search = new Search();
+        search.setCurrentPage(1);
+        search.setPageSize(8);
+        search.setSearchCondition("0");
+        search.setSearchKeyword("");
+        Map<String, Object> map = reviewService.getReviewListTruck(search, "truck01");
 
-        Assert.assertEquals(6, review.getRvNo());
-        Assert.assertEquals(1, review.getRvOrderNo());
-        Assert.assertEquals(5.0, review.getRvStar(),0);
-        Assert.assertEquals("reviewContentTest1", review.getRvContent());
-        Assert.assertEquals("rvImgTest1", review.getRvImg1());
-        Assert.assertEquals("rvImgTest2", review.getRvImg2());
-        Assert.assertEquals("rvImgTest3", review.getRvImg3());
-        Assert.assertEquals('0', review.getRvDelete());
-        Assert.assertEquals('0', review.getRvTCDelete());
+        List<Object> list = (List<Object>)map.get("list");
+        Assert.assertEquals(1, list.size());
+
+        System.out.println("list : " + list);
 
     }
-
-//    @Test
-//    public void getReviewList() {
-//    }
 
 //    @Test
 //    public void updateReview() throws Exception {

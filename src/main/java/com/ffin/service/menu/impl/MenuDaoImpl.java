@@ -71,6 +71,11 @@ public class MenuDaoImpl implements MenuDao {
 //        return sqlSession.selectOne("MenuMapper.getLargestOptionNo");
 //    }
 
+    @Override
+    public OptionGroup getLatestOptionGroupNo() throws Exception{
+        return sqlSession.selectOne("MenuMapper.getLatestOptionGroupNo");
+    }
+
     //옵션 그룹의 모든 옵션 받아오기
     @Override
     public Map<String, Object> getOptionGroup(Search search, int optionGroupNo) throws Exception {
@@ -136,6 +141,7 @@ public class MenuDaoImpl implements MenuDao {
 
     @Override
     public void updateOptionGroup(OptionGroup optionGroup) throws Exception {
+        System.out.println("optionGroup : " +optionGroup);
 
         sqlSession.update("MenuMapper.updateOptionGroup", optionGroup);
     }
