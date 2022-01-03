@@ -52,17 +52,22 @@
         var payOption = $("input[name='payOption']:checked").val();
         var payPrice =  $("input[name='payPrice']").val();
         var pointAmt =  $("input[name='pointAmt']").val();
-        var couponDcPrice =  $("input[name='couponDcPrice']").val();
+        var couponNo =  $("input[name='couponNo']").val();
         var orderNo = $("input[name='orderNo']").val();
 
-
-
+        if(couponNo == "" || couponNo === undefined){
+            couponNo = 0;
+        }
+        if(pointAmt == "" || pointAmt === undefined){
+            pointAmt =0;
+        }
         var postData = { "payOption" : payOption,
             "orderTotalPrice" :orderTotalPrice,
             "orderTruckId" : orderTruckId,
             "orderNo"  :  orderNo}
         alert(postData)
-
+        alert(pointAmt)
+        alert(couponNo)
         alert(payOption);
         if(payOption=='1'){
             IMP.request_pay({
@@ -77,6 +82,7 @@
 
             }, function(rsp) {
                 if ( rsp.success ) {
+
                     alert("결제 들어왔어")
 
                     //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
@@ -91,6 +97,11 @@
                             "orderTotalPrice" :orderTotalPrice,
                             "orderUserId" : orderUserId,
                             "orderTruckId" : orderTruckId,
+                            "orderNo" : orderNo,
+                            "pointAmt" : pointAmt,
+                            "couponNo" : couponNo,
+                            "imp_uid" : rsp.merchant_uid,
+
 
 
                         }
@@ -125,30 +136,39 @@
                 pg : 'kakaopay',
                 pay_method : 'card',
                 merchant_uid : 'merchant_' + new Date().getTime(),
-                name : '치킨',
-                amount : 2000,
-                buyer_email : 'flora@naver.com',
-                buyer_name : receiverName,
-                buyer_tel : receiverPhone,
-                buyer_addr : divyAddr,
-                buyer_postcode : '123-456',
-                //m_redirect_url : 'http://www.naver.com'
+                name : '주문명:결제테스트',
+                amount : orderTotalPrice,
+                buyer_tel : '010-2056-1658',
+                buyer_name : 'receiverName'
+
             }, function(rsp) {
                 if ( rsp.success ) {
                     //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
                     jQuery.ajax({
-                        url: "/purchase/json/addPayView", //cross-domain error가 발생하지 않도록 주의해주세요
                         type: 'POST',
-                        dataType: 'json',
-                        data: postData
+                        dataType : 'json',
+                        url: "/purchase/json/addPayView", //cross-domain error가 발생하지 않도록 주의해주세요
+                        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+
+                        data : {
+                            "payOption" : payOption,
+                            "orderTotalPrice" :orderTotalPrice,
+                            "orderUserId" : orderUserId,
+                            "orderTruckId" : orderTruckId,
+                            "orderNo" : orderNo,
+                            "pointAmt" : pointAmt,
+                            "couponNo" : couponNo,
+
+
+                        }
                     }).done(function(data) {
                         //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
                         if ( everythings_fine ) {
                             msg = '결제가 완료되었습니다.';
-                            msg += '\n고유ID : ' + rsp.imp_uid;
+                            msg += '\n고유ID : ' + rsp.name;
                             msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-                            msg += '\결제 금액 : ' + rsp.paid_amount;
-                            msg += '카드 승인번호 : ' + rsp.apply_num;
+                            msg += '결제 금액 : ' + rsp.amount;
+
 
                             alert(msg);
                         } else {
@@ -157,7 +177,7 @@
                         }
                     });
                     //성공시 이동할 페이지
-                    location.href="http://127.0.0.1:8080/purchase/getOrderUser";
+                    $("form").attr("method" , "POST").attr("action" , "/purchase/getOrderUser").submit();
                 } else {
                     msg = '결제에 실패하였습니다.';
                     msg += '에러내용 : ' + rsp.error_msg;
@@ -299,7 +319,7 @@
         });
     });
 
-    //옵션그룹추가 모달 로직
+    // coupon modal
     var count = 0;
 
     $(function(){
@@ -311,15 +331,35 @@
             alert("ssa")
 
             realCouponDcPrice = modal.find('input[name=options]:checked').val();
-
+          /*  var couponNo =modal.find('input[name=couponNumber]').val();*/
             console.log(realCouponDcPrice + " : realOptionGroupName");
+            data = realCouponDcPrice.split(",");
+            var couponDcPrice = data[0];
+            var couponNo = data[1];
+            console.log(couponNo + ": couponNo");
 
+            append = "<input type=\"hidden\" id=\"couponNo\" name=\"couponNo\" value=\""+couponNo+"\">";
 
+            alert(append + ":append");
 
-            $('#couponDcPrice').val(realCouponDcPrice);
+            $('#couponDcPrice').val(couponDcPrice);
+            $('#test').append(append);
 
-            // modal.modal('hide');
+             modal.modal('hide');
 
+        });
+
+    });
+
+    $(function() {
+        $("button.btn.btn-outline-secondary:contains('적용')").click(function () {
+
+            usePoint = $('input[name="usePoint"]').val();
+
+            alert(usePoint)
+            append = "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\""+usePoint+"\">";
+
+            $('#usePointAmt').append(append);
         });
 
     });
@@ -351,15 +391,18 @@
                         <c:set var="i" value="0"/>
                         <c:forEach var="couponLis" items="${couponList.get('list')}">
                             <c:set var="i" value="${i+1}" />
+                            <c:if test="${couponLis.couponStatus == 0}">
                             <tr>
                                 <th scope="row">${i}</th>
                                 <td><label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option${i}" autocomplete="off" value="${couponLis.couponDcPrice}" checked> Active
+                                    <input type="hidden" name="couponNumber" id="option${i}" value="${couponLis.couponNo}">
+                                    <input type="radio" name="options" id="option${i}" autocomplete="off" value="${couponLis.couponDcPrice},${couponLis.couponNo}" checked> Active
                                 </label></td>
                                 <td>${couponLis.couponDcPrice}</td>
                                 <td>${couponLis.couponType}</td>
                                 <td>${couponLis.couponStatus}</td>
                             </tr>
+                            </c:if>
                         </c:forEach>
                     </table>
                 </div>
@@ -372,43 +415,40 @@
     </div>
 
 
-    <div class="container overflow-hidden">
+    <div class="container py-4">
+        <header class="pb-4 mb-5 border-bottom">
+            <span class="fs-1">결제하기</span>
+        </header>
         <div class="row gx-5">
-
-
             <div class="col">
-
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-12">
-                            <h3>결제하기</h3>
-                        </div>
-
-                    </div>
-                    <hr class="my-2">
-                    <div class="row">
+                        <br>
                         <div class="col-sm-12">
                             <input type="hidden" name="orderTruckId.truckId" value="${purchase.orderTruckId.truckId}">
                             <input type="hidden" name="payPrice" value="${purchase.payPrice}">
                             <input type="hidden" name="orderUserId.userId" value="${purchase.orderUserId.userId}">
                             <input type="hidden" name="orderNo" value="${purchase.orderNo}">
+                            <input type="hidden" name="orderTotalPrice" value="${purchase.orderTotalPrice}"/>
                             <h3>할인 및 적립금</h3>
                         </div>
                     </div>
-                    <div class="row">
+                    <br>
+                    <div class="row" id="test">
                         <label for="couponDcPrice" class="col-sm-offset-1 col-sm-3 control-label">할인쿠폰</label>
+                        <br>
                         <div class="input-group w-100">
-                            <input type="text" class="form-control" id="couponDcPrice" name="couponDcPrice" placeholder="쿠폰을 적용하세요" value="${coupon.couponDcPrice}" >
+                            <input type="text" class="form-control" id="couponDcPrice" name="couponDcPrice" placeholder="쿠폰을 적용하세요" value="${coupon.couponDcPrice}" disabled>
                             <span class="input-group-text">원</span>
                             <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#myModal">쿠폰적용</button>
                         </div>
                     </div>
-
+                    <br>
                     <div class="row">
-                        <label for="pointAmt" class="col-sm-offset-1 col-sm-3 control-label">적립금</label>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">${user.userTotalPoint}</span>
-                            <input type="text" class="form-control" id="pointAmt" naem="pointAmt" placeholder="입력" value="${point.pointAmt}" >
+                        <label for="usePoint" class="col-sm-offset-1 col-sm-3 control-label">적립금</label>
+                        <div class="input-group mb-3" id="usePointAmt">
+                            <span class="input-group-text">${totalPoint.userTotalPoint}</span>
+                            <input type="text" class="form-control" id="usePoint" name="usePoint" placeholder="입력"  value="${point.pointAmt}" >
                             <button class="btn btn-outline-secondary" type="button" id="button-addon2">적용</button>
                         </div>
                     </div>
@@ -419,21 +459,22 @@
                             </div>
                         </div>
                     </div>
-                    <hr class="my-lg-4">
+                 <br>
+                    <hr class="my-lg-12">
                     <div class="row">
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                             <h3>결제방법</h3>
                         </div>
                     </div>
 
 
-                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <div class="container">
                         <div class="row row-cols-2">
                             <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio1" value="1" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary" for="btnradio1" >다날</label>
+                                <label class="btn btn-outline-primary w-100" for="btnradio1" >다날</label>
                             </div>
                             <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio2" value="2" autocomplete="off" >
-                                <label class="btn btn-outline-primary" for="btnradio2">카카오페이</label>
+                                <label class="btn btn-outline-primary w-100" for="btnradio2">카카오 페이</label>
                             </div>
 
                         </div>
@@ -441,10 +482,10 @@
                     <div class="container">
                         <div class="row row-cols-2">
                             <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio3" value="3" autocomplete="off" >
-                                <label class="btn btn-outline-primary" for="btnradio3">신용카드</label>
+                                <label class="btn btn-outline-primary w-100" for="btnradio3">신용카드</label>
                             </div>
                             <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio4" value="4" autocomplete="off" >
-                                <label class="btn btn-outline-primary" for="btnradio4">무통장입금</label>
+                                <label class="btn btn-outline-primary w-100" for="btnradio4">무통장입금</label>
                             </div>
 
                         </div>
@@ -483,166 +524,53 @@
 
             <div class="col">
                 <div class="jumbotron ">
-                    <input type="hidden" name="prodName"
-                           value="<%--${orderDetail.odOrderMenuName}--%>" />
+                    <div class="tip-off">
+                        <h6>주문 상품 정보</h6>
+                        <div class="row">
+                            <div class="col-xs-12 col_ctr">
+                                <!--상품정보에서 상품 이미지 및 가격과 가격 생성-->
 
-                    <table width="600" border="0" cellspacing="0" cellpadding="0"
-                           align="center" style="margin-top: 13px;">
-                        <tr>
-                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                        </tr>
+                                <div class="shop_item_thumb">
 
-                        <tr>
-                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                        </tr>
-                        <tr>
-                            <td width="104" class="ct_write">상품명
-                            </td>
-                            <td bgcolor="D6D6D6" width="1"></td>
-                            <td class="ct_write01"><%--${product.prodName}--%>
-                                <input type="hidden" name="prodNo" value="<%--${product.prodNo}--%>" /></td>
+                                        <div class="product_img_wrap">
+                                            <img src="/resources/image/1.jpg" width="90" height="90" alt="주문상품 이미지">
+                                        </div>
+                                        <div class="product_info_wrap">
+                                            <span class="shop_item_title">Aqua Culture Large Vase</span>
+                                            <div class="shop_item_opt">
+                                                <p>1개</p>
+                                            </div>
+                                            <div class="shop_item_pay">
+                                                <span class="text-bold text-14">KRW 31,000</span>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tip-off">
+                        <h6>주문 상품 정보</h6>
+                        <div class="row">
+                            <div class="col-xs-12 col_ctr">
+                                <!--상품정보에서 상품 이미지 및 가격과 가격 생성-->
 
-
-                        </tr>
-                        <tr>
-                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                        </tr>
-                        <tr>
-                            <td width="104" class="ct_write">상품상세정보
-                            </td>
-                            <td bgcolor="D6D6D6" width="1"></td>
-                            <td class="ct_write01"><%--${product.prodDetail}--%><input
-                                    type="hidden" name="fileName" value="<%--${product.fileName}--%>" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                        </tr>
-                        <tr>
-                            <td width="104" class="ct_write">상품수량
-                            </td>
-                            <td bgcolor="D6D6D6" width="1"></td>
-                            <td class="ct_write01"><%--${product.amount}--%><input type="hidden"
-                                                                                   name="amount" value="<%--${product.amount}--%>" /></td>
-                        </tr>
-
-
-                        <tr>
-                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                        </tr>
-                        <tr>
-                            <td width="104" class="ct_write">결제금액</td>
-                            <td bgcolor="D6D6D6" width="1"></td>
-                            <input type="hidden" name="orderTotalPrice" value="${purchase.orderTotalPrice}"/>
-                            <td class="ct_write01">${purchase.orderTotalPrice}<input type="hidden"
-                                                                                     name="price" value="${purchase.orderTotalPrice}" /></td>
-                        </tr>
-                        <tr>
-                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                        </tr>
-                        <tr>
-                            <td width="104" class="ct_write">등록일자</td>
-                            <td bgcolor="D6D6D6" width="1"></td>
-                            <td class="ct_write01">${orderDetail.odMenuImage}<input type="hidden"
-                                                                                    name="regDate" value="<%--${product.regDate}--%>" /></td>
-                        </tr>
-                        <tr>
-                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                        </tr>
-                        <tr>
-                            <td width="104" class="ct_write">구매자아이디 <img
-                                    src="/images/ct_icon_red.gif" width="3" height="3"
-                                    align="absmiddle" />
-                            </td>
-                            <td bgcolor="D6D6D6" width="1"></td>
-                            <td class="ct_write01"><%--${purchase.orderUserId.userId}--%><input type="hidden"
-                                                                                                name="buyer" value="<%--${purchase.orderUserId.userId}--%>" /></td>
-
-                        </tr>
-                        <tr>
-                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                        </tr>
-                        <%--<tr>
-                            <td width="104" class="ct_write">구매방법</td>
-                            <td bgcolor="D6D6D6" width="1"></td>
-                            <td class="ct_write01"><select name="payOption"
-                                                           class="ct_input_g" style="width: 100px; height: 19px"
-                                                           maxLength="20">
-                                <option value="1" selected="selected">현금구매</option>
-                                <option value="2">신용구매</option>
-                                <option value="3">카카오페이</option>
-                            </select></td>
-
-                        </tr>--%>
-                        <tr>
-                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                        </tr>
-                        <tr>
-                            <td width="104" class="ct_write">구매수량</td>
-                            <td bgcolor="D6D6D6" width="1"></td>
-                            <td class="ct_write01"><input type="text" name="quantity"
-                                                          class="ct_input_g" style="width: 100px; height: 19px"
-                                                          maxLength="20" /></td>
-                        </tr>
-                        <tr>
-                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                        </tr>
-                        <tr>
-                            <td width="104" class="ct_write">구매자이름</td>
-                            <td bgcolor="D6D6D6" width="1"></td>
-                            <td class="ct_write01">
-                                <input type="hidden" name="pointAmt" value="${point.pointAmt}">
-                                <input type="text" name="receiverName"
-                                       class="ct_input_g" style="width: 100px; height: 19px"
-                                       maxLength="20" /></td>
-                        </tr>
-                        <tr>
-                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                        </tr>
-                        <tr>
-                            <td width="104" class="ct_write">구매자연락처</td>
-                            <td bgcolor="D6D6D6" width="1"></td>
-                            <td class="ct_write01"><input type="text" name="receiverPhone"
-                                                          class="ct_input_g" style="width: 100px; height: 19px"
-                                                          maxLength="20" /></td>
-                        </tr>
-                        <tr>
-                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                        </tr>
-                        <tr>
-                            <td width="104" class="ct_write">구매자주소</td>
-                            <td bgcolor="D6D6D6" width="1"></td>
-                            <td class="ct_write01"><input type="text" name="divyAddr"
-                                                          class="ct_input_g" style="width: 100px; height: 19px"
-                                                          maxLength="20" /></td>
-                        </tr>
-                        <tr>
-                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                        </tr>
-                        <tr>
-                            <td width="104" class="ct_write">구매요청사항</td>
-                            <td bgcolor="D6D6D6" width="1"></td>
-                            <td class="ct_write01"><input type="text" name="divyRequest"
-                                                          class="ct_input_g" style="width: 100px; height: 19px"
-                                                          maxLength="20" /></td>
-                        </tr>
-                        <tr>
-                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                        </tr>
-                        <tr>
-                            <td width="104" class="ct_write">배송희망일자</td>
-                            <td bgcolor="D6D6D6" width="1"></td>
-                            <td width="200" class="ct_write01"><input type="text"
-                                                                      readonly="readonly" id="datepicker" name="divyDate"
-                                                                      class="ct_input_g" style="width: 100px; height: 19px"
-                                                                      maxLength="20" /></td>
-                        </tr>
-                        <tr>
-                            <td height="1" colspan="3" bgcolor="D6D6D6"></td>
-                        </tr>
-                    </table>
-
-
+                                <div class="shop_item_thumb">
+                                        <div class="product_img_wrap">
+                                            <img src="https://cdn.imweb.me/thumbnail/20211107/84d566e0697a2.jpg" width="90" height="90" alt="주문상품 이미지">
+                                        </div>
+                                        <div class="product_info_wrap">
+                                            <span class="shop_item_title">1year diary(ver.02) [pvc커버 포함]</span>
+                                            <div class="shop_item_opt">
+                                                <p>1개</p>
+                                            </div>
+                                            <div class="shop_item_pay">
+                                                <span class="text-bold text-14">16,500원</span>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <button type="button" class="btn btn-primary btn-lg" name="clickPay">
                         결제하기
                     </button>

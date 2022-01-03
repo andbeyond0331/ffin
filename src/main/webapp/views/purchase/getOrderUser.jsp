@@ -70,18 +70,17 @@
             "type": "POST",
             "contentType": "application/json",
             "data": JSON.stringify({
-                "merchant_uid": "{결제건의 주문번호}", // 예: ORD20180131-0000011
+                "merchant_uid": "merchant_1641102958197", // 예: ORD20180131-0000011
                 "cancel_request_amount": 2000, // 환불금액
                 "reason": "테스트 결제 환불" // 환불사유
-                "refund_holder": "홍길동", // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
-                "refund_bank": "88" // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
-                "refund_account": "56211105948400" // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
             }),
             "dataType": "json"
         });
     }
 
 </script>
+
+
 <main>
     <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -91,10 +90,33 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Show a second modal and hide this one with the button below.
+
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <div class="container-fluid">
+                        <div class="row">
+                        <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio1" autocomplete="off" checked>
+                        <label class="btn btn-outline-primary" for="btnradio1">구매의사 취소</label>
+                     </div>
+                        </div>
+                        <div class="row">
+                        <div class="container-fluid">
+                        <div class="row">
+                        <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio2" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio2">메뉴 및 수량 변경</label>
+                        </div>
+                        </div>
+                        </div>
+                        <div class="container-fluid">
+                        <div class="row">
+                        <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio3" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio3">주문접수 지연</label>
+                        </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
+                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">다음</button>
                 </div>
             </div>
         </div>
@@ -107,11 +129,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Hide this modal and show the first with the button below.
+                    정말로 주문취소 하나요??
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to first</button>
-                    <button onclick="cancelPay()">환불하기</button>
+                    <button class="btn btn-primary"  data-bs-dismiss="modal" aria-label="Close">취소</button>
+                    <button onclick="cancelPay()">확인</button>
                 </div>
             </div>
         </div>
@@ -157,9 +179,7 @@
                         </tbody>
 
                     </table>
-
-                    <button type="button" class="btn btn-secondary">결제취소</button>
-                    <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Open first modal</a>
+                    <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">주문취소</a>
                 </div>
             </div>
             <div class="col-md-6">

@@ -62,137 +62,37 @@ public class PurchaseController {
         return model;
     }
 
-    //장바구니에서 주문하기 클릭시 선택한 주문정보와 픽업희망시간 주문요청사항을 입력받아서 같이 등록한다.
+
+
+
+        //장바구니에서 주문하기 클릭시 선택한 주문정보와 픽업희망시간 주문요청사항을 입력받아서 같이 등록한다.
     @RequestMapping(value = "addCart", method= RequestMethod.POST)
     public String addCart(@ModelAttribute("orderDetail") OrderDetail orderDetail, @ModelAttribute("purchase") Purchase purchase, Model model) throws Exception{
 
         System.out.println("/purchase/addCart : POST");
         System.out.println("orderDetail11111 = " + orderDetail + ", purchase2222 = " + purchase);
-      int orderNo = purchaseService.addPurchase(purchase);
-        orderDetail.setOdOrderNo(purchase);
+        Point point = new Point();
         Purchase pur = new Purchase();
-
-/*        List list = new ArrayList();
-        String[] splitMenu = orderDetail.getOdMenuName().split(",");
-        String[] splitGroup = orderDetail.getOdOptionGroupName().split(",");
-        String[] splitOption = orderDetail.getOdOptionName().split(",");
-        String[] splitImage = orderDetail.getOdMenuImage().split(",");
-        for (int i=0; i<splitMenu.length; i++) {
-            list.add(splitImage);
-            list.add(splitGroup);
-            list.add(splitMenu);
-            list.add(splitOption);
-        }
-        */
-        System.out.println("1112222333");
-        System.out.println("odMenuName"+orderDetail.getOdMenuName());
-        System.out.println("odOptionGroupName"+orderDetail.getOdOptionGroupName());
-        System.out.println("odOptionName"+orderDetail.getOdOptionName());
-        System.out.println("odMenuQty"+orderDetail.getOdMenuQty());
-        System.out.println("odMenuPrice"+orderDetail.getOdMenuPrice());
-        System.out.println("odOptionPrice"+orderDetail.getOdOptionPrice());
-        System.out.println("odMenuImage"+orderDetail.getOdMenuImage());
-        System.out.println("odOrderNo"+orderDetail.getOdOrderNo());
-
-        String[] odMenuName = orderDetail.getOdMenuName().split(",");
-        String[] odOptionGroupName = orderDetail.getOdOptionGroupName().split(",");
-        String[] odOptionName = orderDetail.getOdOptionName().split(",");
-        String[] odMenuQty = Integer.toString(orderDetail.getOdMenuQty()).split(",");
-        String[] odMenuPrice = Integer.toString(orderDetail.getOdMenuPrice()).split(",");
-        String[] odOptionPrice = Integer.toString(orderDetail.getOdOptionPrice()).split(",");
-        String[] odMenuImage = orderDetail.getOdMenuImage().split(",");
-        String[] odOrderNo = String.valueOf(orderDetail.getOdOrderNo()).split(",");
-
-        System.out.println("odMenuName length"+odMenuName.length);
-        System.out.println("odOptionGroupName length"+odOptionGroupName.length);
-        System.out.println("odOptionName length"+odOptionName.length);
-        System.out.println("odMenuQty length"+odMenuQty.length);
-        System.out.println("odMenuPrice length"+odMenuPrice.length);
-        System.out.println("odOptionPrice length"+odOptionPrice.length);
-        System.out.println("odMenuImage length"+odMenuImage.length);
-        System.out.println("odOrderNo length"+odOrderNo.length);
-
-        List <OrderDetail> orderList = new ArrayList<OrderDetail>();
-
-        for (int i = 0; i< odMenuName.length; i++){
-            OrderDetail order = new OrderDetail();
-
-            order.setOdMenuName(odMenuName[i]);
-            if(i>=odOptionGroupName.length){
-                order.setOdOptionGroupName(null);
-            }else{
-                order.setOdOptionGroupName(odOptionGroupName[i]);
-            }
-            if(i>=odOptionName.length){
-                order.setOdOptionName(null);
-            }else{
-                order.setOdOptionName(odOptionName[i]);
-            }
-            if(i>=odOptionName.length){
-                order.setOdOptionName(null);
-            }else{
-                order.setOdOptionName(odOptionName[i]);
-            }
-            if(i>=odMenuQty.length){
-                order.setOdMenuQty(0);
-            }else{
-                order.setOdMenuQty(Integer.parseInt(odMenuQty[i]));
-            }
-            if(i>=odMenuPrice.length){
-                order.setOdMenuPrice(0);
-            }else{
-                order.setOdMenuPrice(Integer.parseInt(odMenuPrice[i]));
-            }
-            if(i>=odOptionPrice.length){
-                order.setOdOptionPrice(0);
-            }else{
-                order.setOdOptionPrice(Integer.parseInt(odOptionPrice[i]));
-            }
-            if(i>=odMenuImage.length){
-                order.setOdMenuImage(null);
-            }else{
-                order.setOdMenuImage(odMenuImage[i]);
-            }
-            if(i>=odOrderNo.length){
-                order.setOdOrderNo(null);
-            }else{
-                pur.setOrderNo(orderNo);
-            }
-            order.setOdOrderNo(pur);
-
-
-            orderList.add(order);
-        }
-/*        List list = Arrays.asList(orderDetail.getOdMenuImage().split(","));
-        list.add(orderDetail);
-        list = Arrays.asList(orderDetail.getOdMenuName().split(","));
-
-        System.out.println("list>>>>>>>>>>>"+list);*/
-
-      /*  List list = new ArrayList<>();
-        list.add(orderDetail);*/
-        purchaseService.addCart(orderList);
-        System.out.println(orderNo);
         Coupon coupon = new Coupon();
+        Map<String,Object> coupontList = new HashMap<String,Object>();
+
+        orderDetail.setOdOrderNo(purchase);
+        System.out.println(purchase.getOrderNo());
         coupon.setCouponReceivedUserId(purchase.getOrderUserId());
-        Map coupontList = new HashMap();
 
         coupontList = purchaseService.getCouponList(coupon);
-        Map cart = purchaseService.getCartList(orderNo);
-        purchase = purchaseService.getPurchase(orderNo);
+        Map cart = purchaseService.getCartList(purchase.getOrderNo());
+        purchase = purchaseService.getPurchase(purchase.getOrderNo());
         User totalPoint = purchaseService.getTotalPoint(purchase.getOrderUserId().getUserId());
-        Point point = new Point();
-        point.setPointAmt(0);
-        System.out.println("couponList>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+coupontList);
-//        model.addObject("cart", cart);
+
+
         model.addAttribute("couponList",coupontList);
         model.addAttribute("point",point);
         model.addAttribute("purchase",purchase);
         model.addAttribute("cart",cart);
-        model.addAttribute("orderNo",orderNo);
+        model.addAttribute("orderNo",purchase.getOrderNo());
         model.addAttribute("totalPoint",totalPoint);
 
-        System.out.println("model에 들어간 정보:::::::::::"+model);
 
         return "forward:/views/purchase/addPayView.jsp";
     }
