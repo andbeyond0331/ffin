@@ -53,6 +53,8 @@
 	<select id="getReviewListTruck"	parameterType="map"	resultMap="ReviewSelectMap">
 		SELECT
 			RV_NO,
+		       RV_TRUCK_ID,
+		       RV_USER_ID,
 			RV_ORDER_NO,
 			RV_REG_TIME,
 			RV_STAR,
@@ -64,10 +66,19 @@
 		WHERE RV_TRUCK_ID=#{truckId}
 	</select>
 
+	<select id="getReviewAvg" parameterType="map" resultMap="ReviewSelectMap">
+		select round(avg(RV_STAR),1) as RV_STAR
+		from review
+		where RV_TRUCK_ID=#{truckId}
+		group by RV_TRUCK_ID;
+	</select>
+
 	<select id="getReviewListUser"	parameterType="map"	resultMap="ReviewSelectMap">
 		SELECT
 			RV_NO,
 			RV_ORDER_NO,
+		       RV_TRUCK_ID,
+		       RV_USER_ID,
 			RV_REG_TIME,
 			RV_STAR,
 			RV_CONTENT,
@@ -107,6 +118,15 @@
 		</set>
 		WHERE RV_NO = #{rvNo}
 	</update>
+
+	<!-- SQL : SELECT ROW Count -->
+	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+		SELECT COUNT(*)
+		FROM(	SELECT *
+		FROM review
+				 WHERE RV_TRUCK_ID=#{truckId}
+			) countTable
+	</select>
 
 
 </mapper>

@@ -17,6 +17,9 @@ public interface ReviewDao {
     //SELECT LIST
     public Map<String, Object> getReviewListTruck(Search search, String truckId) throws Exception;
 
+
+    public float getReviewAvg(Search search, String truckId) throws Exception;
+
     //SELECT LIST
     public Map<String, Object> getReviewListUser(Search search, String userId) throws Exception;
 

@@ -1,5 +1,6 @@
 package com.ffin.web.review;
 
+import com.ffin.common.Page;
 import com.ffin.common.Search;
 import com.ffin.service.domain.*;
 import com.ffin.service.purchase.PurchaseService;
@@ -222,11 +223,17 @@ public class ReviewController {
                                     ModelAndView modelAndView) throws Exception{
 
         search.setPageSize(pageSize);
+
         Truck truck  = truckService.getTruck(truckId);
+        float rvAvg = reviewService.getReviewAvg(search,truckId);
 
         Map<String , Object> map= reviewService.getReviewListTruck(search, truck.getTruckId());
 
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+
+        modelAndView.addObject("resultPage", resultPage);
         modelAndView.addObject("list", map.get("list"));
+        modelAndView.addObject("rvAvg", rvAvg);
         modelAndView.setViewName("/views/review/getReviewList.jsp");
 
         return modelAndView;
