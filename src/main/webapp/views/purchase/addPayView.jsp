@@ -10,7 +10,7 @@
 
 
 <head>
-    <jsp:include page="/views/toolbar.jsp" />
+    <jsp:include page="/views/navbar.jsp" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -32,7 +32,10 @@
 
 <style>
 
+body{
+    margin-top: 122px;
 
+}
 
 
 </style>
@@ -65,10 +68,7 @@
             "orderTotalPrice" :orderTotalPrice,
             "orderTruckId" : orderTruckId,
             "orderNo"  :  orderNo}
-        alert(postData)
-        alert(pointAmt)
-        alert(couponNo)
-        alert(payOption);
+
         if(payOption=='1'){
             IMP.request_pay({
                 pg : 'danal',
@@ -85,6 +85,7 @@
 
                     alert("결제 들어왔어")
 
+
                     //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
                     $.ajax({
                         type: 'POST',
@@ -100,7 +101,7 @@
                             "orderNo" : orderNo,
                             "pointAmt" : pointAmt,
                             "couponNo" : couponNo,
-                            "imp_uid" : rsp.merchant_uid,
+                            "imp_uid" : rsp.imp_uid,
 
 
 
@@ -158,7 +159,7 @@
                             "orderNo" : orderNo,
                             "pointAmt" : pointAmt,
                             "couponNo" : couponNo,
-
+                            "imp_uid" : rsp.imp_uid,
 
                         }
                     }).done(function(data) {
@@ -407,7 +408,7 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
                     <button type="button" class="btn btn-primary">쿠폰 적용</button>
                 </div>
             </div>

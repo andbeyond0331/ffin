@@ -2,6 +2,10 @@ package com.ffin.web.purchase;
 
 import com.ffin.service.domain.*;
 import com.ffin.service.purchase.PurchaseService;
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.request.CancelData;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,10 +44,6 @@ public class PurchaseRestController {
                                    HttpServletResponse response  )throws Exception{
 
         request.setCharacterEncoding("UTF-8");
-        System.out.println("///////////////////////////////////////////////////////////////////////////////");
-        System.out.println("///////////////////////////////////////////////////////////////////////////////");
-        System.out.println("///////////////////////////////////////////////////////////////////////////////");
-        System.out.println("///////////////////////////////////////////////////////////////////////////////");
         System.out.println("request = " + request + ", payOption = " + payOption + ", orderTotalPrice = " + orderTotalPrice + ", orderUserId = " + orderUserId + ", orderTruckId = " + orderTruckId + ", orderNo = " + orderNo + ", pointAmt = " + pointAmt + ", couponNo = " + couponNo + ", imp_uid = " + imp_uid + ", response = " + response);
 
         Purchase purchase = new Purchase();
@@ -75,6 +76,7 @@ public class PurchaseRestController {
         purchase.setOrderTruckId(truck);
         purchase.setPayServiceType(1);
         purchase.setOrderStatus(1);
+        purchase.setPayId(imp_uid);
 
 
 
@@ -207,6 +209,60 @@ public class PurchaseRestController {
     }
 
 
+///////////////////////////////////환불////////////////////////////////////////
+
+    IamportClient client;
+
+    public void setup() throws Exception {
+        String api_key = "4137265660436852";
+        String api_secret = "cddee6e3a9dcb5f0fd4c8d7fa6c8949fc346c818f164e6bad7a7d94848da04a36756a3f60a031a5d";
+
+        client = new IamportClient(api_key, api_secret);
+    }
+
+    public void testGetToken() throws Exception {
+        String token = String.valueOf(client.getAuth());
+        System.out.println("token : " + token);
+    }
+
+    @RequestMapping(value = "/json/payRefund/{payId}")
+    public Map payRefund(@PathVariable String payId ) throws Exception {
+        // 이미 취소된 거래 imp_uid
+        System.out.println("testCancelPaymentByImpUid --- Start!---");
+
+        Purchase purchase = new Purchase();
+        purchase.setPayId(payId);
+        purchase.setOrderStatus(5);
+
+       /* Map<String, Object> map =  orderService.getOrderRefund(order);*/
+        Map<String, Object> map =  new HashMap<String,Object>();
+
+        setup();
+        testGetToken();
+        setup();
+        //Order order = orderService.getFlightOrder(orderId);
+
+        CancelData cancel = new CancelData(payId, true);
+        System.out.println("imp_uid : " + payId);
+        IamportResponse<Payment> cancelpayment = client.cancelPaymentByImpUid(cancel);
+        System.out.println(cancelpayment.getMessage());
+        System.out.println("testCancelPaymentByImpUid --- End!---");
+
+
+        //환불 일시를 controller에서 할지 Mapper에서 할지 수정,,
+/*        SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
+
+        String time1 = format1.format(System.currentTimeMillis());
+        order.setRefundDate(time1);*/
+/*        System.out.println("time : "+time1);
+        System.out.println("order : "+order);
+        map.put("orderId", orderId);
+        map.put("order", order);*/
+
+        return map;
+    }
+
+    ///////////////////////////////환불 끝///////////////////////////////////////////////
 
     //addIamport
     //cancelIamport

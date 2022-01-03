@@ -29,6 +29,8 @@
 		<result property="payOption" 			column="PAY_OPTION" 			jdbcType="CHAR" />
 		<result property="payRefundStatus" 		column="PAY_REFUND_STATUS" 		jdbcType="CHAR" />
 		<result property="payPrice" 			column="PAY_PRICE" 				jdbcType="NUMERIC" />
+		<result property="payId" 				column="PAY_ID" 				jdbcType="VARCHAR" />
+
 
 		<association property="payCouponNo" 				javaType="coupon">
 			<id 	property="couponNo"						column="PAY_COUPON_NO" 				jdbcType="NUMERIC"/>
@@ -100,6 +102,7 @@
 			<result property="payOption" 			column="PAY_OPTION" 			jdbcType="CHAR" />
 			<result property="payRefundStatus" 		column="PAY_REFUND_STATUS" 		jdbcType="CHAR" />
 			<result property="payPrice" 			column="PAY_PRICE" 				jdbcType="NUMERIC" />
+			<result property="payId" 				column="PAY_ID" 				jdbcType="VARCHAR" />
 
 			<association property="payCouponNo" javaType="coupon">
 				<id property="couponNo"							column="PAY_COUPON_NO" 				jdbcType="NUMERIC"/>
@@ -275,6 +278,7 @@
 			PAY_DATE_TIME = SYSDATE(),
 			PAY_PRICE = #{payPrice},
 			PAY_SERVICE_TYPE = #{payServiceType},
+		    PAY_ID = #{payId},
 			<if test="payPointNo != null">
 			<if test="payPointNo.pointNo != null and payPointNo.pointNo != ''">
 			PAY_POINT_NO = #{payPointNo.pointNo},
@@ -358,7 +362,7 @@
 
 		</set>
 
-		WHERE order_no = #{orderNo}
+		WHERE PAY_ID = #{payId}
 	</update>
 
 	<!--주문거절로 주문상태변경,주문취소사유-->
@@ -501,7 +505,7 @@
 	<select id="getPurchase" parameterType="purchase" resultMap="purchaseSelectMap">
 		SELECT
 			order_no,order_user_id,order_truck_id,pay_point_no,pay_coupon_no,pay_res_no,order_qty,order_request,order_status,order_pick_up_time,order_cooking_time,
-			order_cancel_reason,order_nope_reason,order_total_price,pay_date_time,pay_refund_date_time
+			order_cancel_reason,order_nope_reason,order_total_price,pay_date_time,pay_refund_date_time,pay_id
 		FROM ffin.purchase
 		WHERE order_no = #{value}
 

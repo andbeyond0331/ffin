@@ -8,7 +8,7 @@
 <meta charset="EUC-KR">
 
 <head>
-    <jsp:include page="/views/toolbar.jsp" />
+    <jsp:include page="/views/navbar.jsp" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
@@ -28,12 +28,9 @@
 
     $(function() {
         $("button.btn.btn-primary:Contains('확인')").click(function () {
-            alert("넘거간다.");
-
             var order = to_ajax()
 
             append = "<input type=\"hidden\" id=\"orderNo\" name=\"orderNo\" value=\""+order+"\">";
-            alert(append + ":append");
             $('#app').append(append);
 
             $("form").attr("method" , "POST").attr("action" , "/purchase/addCart").submit();
@@ -90,12 +87,12 @@
         $('input[name="odMenuImage"]').each(function (i){
             odMenuImage.push($(this).val());
         });
-        alert(orderPickUpTime)
+ /*       alert(orderPickUpTime)
         alert(orderTotalPrice)
         alert(orderUserId)
         alert(orderTruckId)
         alert(orderRequest)
-        alert(orderQty)
+        alert(orderQty)*/
 
         var data ={
             "odMenuName" : odMenuName,
@@ -121,7 +118,6 @@
             dataType: 'json',
             success: function(retVal) {
                 reOrderNo = retVal.orderNo;
-                alert("value"+reOrderNo)
             },
             error: function (xhr,status,error) { alert("[Error]"+error); return; }
 
@@ -320,3 +316,4 @@
 
 
 </html>
+
