@@ -21,6 +21,9 @@
 	<!-- bootstrap core css -->
 	<link rel="stylesheet" type="text/css" href="../../resources/bootstrap/css/bootstrap.css" />
 
+	<!-- lightbox css -->
+	<link href="../../resources/bootstrap/css/lightbox.css" rel="stylesheet" />
+
 	<!-- fonts style -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
 
@@ -57,6 +60,8 @@
 	<!-- custom js -->
 	<script src="../../resources/bootstrap/js/custom.js"></script>
 
+	<script src="../../resources/bootstrap/js/lightbox.js"></script>
+
 	<%--주소API--%>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
@@ -77,20 +82,19 @@
 
 	<script type="text/javascript">
 
-		/* 입력완료 버튼 클릭 */
+		/* 수정 */
 		$(function () {
 			$("a[href='#' ]").click(function () {
 
-				alert(1234);
+				//alert(1234);
 
 				var userId = $("#userId").val();
-				var userProImg = $("#fileName1").val();
 				var userFavMenu = $("#userFavMenu").val();
 				var userFavPlace = $("#userFavPlace").val();
 				var userFavPlaceDetail = $("#userFavPlaceDetail").val();
 				var userIntro = $("#userIntro").val();
 
-				console.log(userProImg+userFavMenu+userFavPlace+userFavPlaceDetail+userIntro);
+				console.log(userFavMenu+userFavPlace+userFavPlaceDetail+userIntro);
 
 				$.ajax({
 					type:"POST",
@@ -99,7 +103,6 @@
 					contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 					data:{
 						userId : userId,
-						userProImg : userProImg,
 						userFavMenu : userFavMenu,
 						userFavPlace : userFavPlace,
 						userFavPlaceDetail : userFavPlaceDetail,
@@ -112,7 +115,18 @@
 			});
 		});
 
-				/* Daum API */
+		/*프로필 수정*/
+		$(function () {
+			$(".pro-img").change(function () {
+				alert(1234);
+
+				$(".pro-img").attr("method", "POST").attr("action","/user/updateProImg").attr("enctype", "multipart/form-data").submit();
+
+			});
+		});
+
+
+		/* Daum API */
 		function addrApi(){
 			new daum.Postcode({
 				oncomplete: function(data) {
@@ -172,9 +186,9 @@
 </head>
 
 <body id="page-top">
-
+<div>
 <jsp:include page="/views/navbar.jsp" />
-
+</div>
 <!-- client section -->
 
 <section class="client_section layout_padding">
@@ -194,16 +208,17 @@
 
 							<div class="col-md-6 data-input-box">
 
-								<div class="data-input-box">
-									<%--<input type="text" class="form-control" id="userId" name="userId" placeholder="아이디">--%>
-									<div class="mb-3">
-										<label for="fileName1" class="form-label">프로필 이미지</label>
-										<div class="pro-img" style="margin-top: 5px; margin-bottom: 10px">
-											<img src="../../resources/image/${user.userProImg}" class="img-thumbnail" id="userProImg" alt="...">
+									<div class="data-input-box">
+										<%--<input type="text" class="form-control" id="userId" name="userId" placeholder="아이디">--%>
+										<div class="mb-3">
+											<label for="fileName1" class="form-label">프로필 이미지</label>
+											<div class="pro-img" style="margin-top: 5px; margin-bottom: 10px">
+												<img src="../../resources/image/${user.userProImg}" class="img-thumbnail" alt="...">
+											</div>
+											<input class="form-control pro-img" type="file" id="fileName1" name="fileName1">
+											<button type="button" class="btn btn-outline-warning" id="update-img"><i class="fas fa-camera"></i></button>
 										</div>
-										<input class="form-control pro-img" type="file" id="fileName1" name="fileName1">
 									</div>
-								</div>
 
 								<div class="data-input-box">
 									<label for="userFavPlace" class="form-label label-name">자주찾는 장소</label>
@@ -216,7 +231,7 @@
 
 								<div class="data-input-box">
 									<label for="userFavMenu" class="form-label label-name">좋아하는 메뉴</label>
-									<select class="form-select form-control" id="userFavMenu" value="${user.userFavMenu}" name="userFavMenu" aria-label="Default select example" style="padding-left: 0; size: 100%;">
+									<select class="form-select form-control" id="userFavMenu" value="${user.userFavMenu}" name="userFavMenu" aria-label="Default select example" style="padding-left: 0;">
 										<option selected>Menu Category</option>
 										<option value="1">고기???</option>
 										<option value="2">한식</option>

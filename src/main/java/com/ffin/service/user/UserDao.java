@@ -35,6 +35,8 @@ public interface UserDao {
     public void updateUserInfo(User user) throws Exception;
     //프로필수정
     public void updateUserProfile(User user) throws Exception;
+    //프로필이미지 수정
+    public void updateProImg(String userId, String userProImg) throws Exception;
     //위치수정
     public void updateUserMap(User user) throws Exception;
 

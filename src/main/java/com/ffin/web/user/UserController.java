@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -176,8 +177,24 @@ public class UserController {
 
     }
 
+    @RequestMapping(value = "updateProImg", method = RequestMethod.POST)
+    public String updateProImg(@ModelAttribute("user") User user, @RequestParam("userId")String userId, @RequestParam("fileName1") MultipartFile file,
+                               Model model, HttpSession session) throws Exception{
+        System.out.println("UserController.updateProImg : POST");
 
+        if(!Objects.requireNonNull(file.getOriginalFilename()).isEmpty()){
+            file.transferTo(new File(FILE_SERVER_PATH, file.getOriginalFilename()));
+            model.addAttribute("msg", "File uploaded successfully.");
+        }else {
+            model.addAttribute("msgs", "Please select a valid mediaFile..");
+        }
 
+        System.out.println("!!!!!"+file.getOriginalFilename());
 
+        //user.setUserProImg(file.getOriginalFilename());
+        userService.updateProImg(userId, file.getOriginalFilename());
+
+        return "redirect:/views/user/getUserProfile.jsp";
+    }
 
 }

@@ -74,10 +74,10 @@
 			height: 100px;
 		}
 
-		.card-img{
-			width: 100px;
-			height: 100px;
+		button.btn.btn-outline-warning.addrApi{
+			margin: 0;
 		}
+
 	</style>
 
 

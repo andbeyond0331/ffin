@@ -104,6 +104,15 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public void updateProImg(String userId, String userProImg) throws Exception {
+        System.out.println("UserDaoImpl.updateProImg");
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("userId", userId);
+        paramMap.put("userProImg", userProImg);
+        sqlSession.update("UserMapper.updateProImg", paramMap);
+    }
+
+    @Override
     public void updateUserMap(User user) throws Exception {
         System.out.println("UserDaoImpl.updateUserMap");
         sqlSession.update("UserMapper.updateUserMap",user);
