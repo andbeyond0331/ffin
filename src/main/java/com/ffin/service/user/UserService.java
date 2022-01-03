@@ -41,6 +41,8 @@ public interface UserService {
     public void getUserId(String userId) throws Exception;
     //PW변경
     public void updatePassword(User user) throws Exception;
+    //phone auth
+    public void sendSMS(String inputPhone, int randomNumber);
 
 
     //회원탈퇴

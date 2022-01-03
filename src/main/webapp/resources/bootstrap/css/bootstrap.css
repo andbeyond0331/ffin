@@ -4168,7 +4168,7 @@ input[type="button"].btn-block {
   -ms-flex-align: center;
   align-items: center;
   -ms-flex-pack: justify;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
 }
 
 .navbar-brand {
@@ -9931,7 +9931,6 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .text-hide {
-  font: 0/0 a;
   color: transparent;
   text-shadow: none;
   background-color: transparent;

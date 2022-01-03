@@ -71,7 +71,7 @@
 <div class="hero_area">
 
     <!-- toolbar -->
-    <jsp:include page="/views/toolbar.jsp" />
+    <jsp:include page="/views/navbar.jsp" />
 
 
     <!-- slider section -->
@@ -90,7 +90,7 @@
                             <div class="row">
                                 <div class="col">
                                     <form>
-                                        <div class="form-row">
+                                        <div class="form-row" style="margin-top: 70px;">
                                             <div class="form-group col-lg-6">
                                                 <input type="text" class="form-control" id="inputLocation" placeholder="What's your address?">
                                                 <span class="location_icon">
