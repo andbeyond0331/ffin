@@ -50,10 +50,16 @@ public class CommunityServiceImpl implements CommunityService {
     @Override
     public Map<String, Object> getPostList(Search search) throws Exception {
         List<Post> list = communityDao.getPostList(search);
-        //int totalCount = truckDao.getTatalCount(search);
+
+        int totalCount = communityDao.getTotalCountPost(search);
+//        int totalCountU = communityDao.getTotalCountPostU(search);
+//        int totalCountT = communityDao.getTotalCountPostT(search);
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("list", list);
+        map.put("totalCount", new Integer(totalCount));
+//        map.put("totalCountU", new Integer(totalCountU));
+//        map.put("totalCountT", new Integer(totalCountT));
 
         return map;
     }

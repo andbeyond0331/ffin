@@ -83,14 +83,6 @@
 		WHERE truck_name = #{truckName}
 	</select>
 
-	<!-- SQL : 푸드트럭 탈퇴 전 Password 체크 -->
-	<select id="checkDuPw" resultType="integer">
-		SELECT count(*)
-		FROM truck
-		WHERE truck_password = #{truckPassword}
-	</select>
-
-
 	<!-- SQL : 아이디 찾기 -->
 	<select id="findTruckId"   parameterType="map"    resultType="string" >
 		SELECT
@@ -171,6 +163,17 @@
 		WHERE truck_id = #{truckId}
 	</update>
 
+
+	<!-- 사업자 회원탈퇴 -->
+	<update id="byeTruck" parameterType="truck">
+		UPDATE truck
+		<set>
+			truck_bye_status = #{truckByeStatus},
+		    truck_bye_reason = #{truckByeReason}
+		</set>
+		WHERE truck_id = #{truckId}
+	</update>
+
 	<!-- login 유지 -->
 	<update id="autoLogin">
 		UPDATE truck
@@ -188,5 +191,22 @@
 		WHERE SESSION_KEY = #{value}
 	</select>
 
- 
+	<!-- SQL : SELECT ROW Count -->
+	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+		SELECT COUNT(*)
+		FROM(	SELECT truck_name, truck_map_la, truck_map_lo, truck_cate, truck_avg_star, truck_busi_status
+		FROM truck
+		<if test="searchCondition != null">
+			<where>
+				<bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+				<if test="searchCondition == 0 and searchKeyword !='' ">
+					AND truck_name LIKE #{searchKeyword}
+					ORDER BY truck_avg_star DESC
+				</if>
+				<if test="searchCondition == 1 and searchKeyword !='' ">
+					AND  LIKE #{searchKeyword}
+				</if>
+			</where>
+		</if> ) countTable
+	</select>
 </mapper>

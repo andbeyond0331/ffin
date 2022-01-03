@@ -65,7 +65,8 @@
             <where>
                 <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
                 <if test="searchCondition == 0 and searchKeyword !='' ">
-                    AND post_no LIKE #{searchKeyword}
+                    AND post_user_id LIKE #{searchKeyword}
+                    OR post_truck_id LIKE #{searchKeyword}
                 </if>
                 <if test="searchCondition == 1 and searchKeyword !='' ">
                     AND post_title LIKE #{searchKeyword}
@@ -90,6 +91,62 @@
         </set>
         WHERE post_no = #{postNo}
     </update>
+
+
+    <!-- SQL : SELECT ROW Count -->
+    <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+        SELECT COUNT(*)
+        FROM(	SELECT post_no, post_title, post_user_id, post_reg_date
+        FROM post
+        <if test="searchCondition != null">
+            <where>
+                <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+                <if test="searchCondition == 0 and searchKeyword !='' ">
+                    AND post_user_id LIKE #{searchKeyword}
+                    OR post_truck_id LIKE #{searchKeyword}
+                </if>
+                <if test="searchCondition == 1 and searchKeyword !='' ">
+                    AND post_title LIKE #{searchKeyword}
+                </if>
+            </where>
+        </if> ) countTable
+    </select>
+
+    <select  id="getTotalCountUser"  parameterType="search"	 resultType="int">
+        SELECT COUNT(*)
+        FROM(	SELECT post_no, post_title, post_user_id, post_reg_date
+        FROM post
+        <if test="searchCondition != null">
+            <where>
+                <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+                <if test="searchCondition == 0 and searchKeyword !='' ">
+                    AND post_user_id LIKE #{searchKeyword}
+                </if>
+                <if test="searchCondition == 1 and searchKeyword !='' ">
+                    AND post_title LIKE #{searchKeyword}
+                </if>
+            </where>
+        </if> ) countTable
+        WHERE post_user_id IS NOT NULL
+    </select>
+
+    <select  id="getTotalCountTruck"  parameterType="search"	 resultType="int">
+        SELECT COUNT(*)
+        FROM(	SELECT post_no, post_title, post_truck_id, post_reg_date
+        FROM post
+        <if test="searchCondition != null">
+            <where>
+                <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+                <if test="searchCondition == 0 and searchKeyword !='' ">
+                    AND post_truck_id LIKE #{searchKeyword}
+                </if>
+                <if test="searchCondition == 1 and searchKeyword !='' ">
+                    AND post_title LIKE #{searchKeyword}
+                </if>
+            </where>
+        </if> ) countTable
+        WHERE post_truck_id IS NOT NULL
+    </select>
 
 
 </mapper>

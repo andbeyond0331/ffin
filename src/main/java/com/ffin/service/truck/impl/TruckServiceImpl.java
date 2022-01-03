@@ -10,8 +10,13 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +27,8 @@ import java.util.Map;
 public class TruckServiceImpl implements TruckService {
 
     ///Field
+    @Autowired
+    private JavaMailSender mailSender;
     @Autowired
     @Qualifier("truckDaoImpl")
     private TruckDao truckDao;
@@ -91,6 +98,38 @@ public class TruckServiceImpl implements TruckService {
     public String findTruckId(String truckName, String truckPhone) throws Exception {
         return truckDao.findTruckId(truckName, truckPhone);
     }
+
+    // 푸드트럭 비밀번호 찾기
+
+
+//    @Override
+//    public void mailSendWithPassword(String truckId, String truckEmail, HttpServletRequest request) throws Exception {
+//        System.out.println("TruckServiceImpl.mailSentWithPassword");
+//
+//        Truck truck = new Truck();
+//
+//        // 비밀번호는 6자리로 보내고 데이터베이스 비밀번호를 바꿔준다
+//        String key = getKey(false, 6);
+//        truckDao.updateTruckPassword(truck);
+//
+//        MimeMessage mail = mailSender.createMimeMessage();
+//        String htmlStr = "<h2>F.Fin</h2><br><br>"
+//                + "<p>임시 비밀번호를 발급해드립니다.</p>"
+//                + "<p>임시 비밀번호는 <h2 style='color : blue'>'" + key +"'</h2>이며 로그인 후 마이페이지에서 비밀번호를 변경해주시면 됩니다.</p><br>"
+//                + "<h3><a href='http://localhost:8080'>홈페이지로</a></h3><br><br>";
+//        try {
+//            mail.setSubject("임시 비밀번호가 발급되었습니다", "utf-8");
+//            mail.setText(htmlStr, "utf-8", "html");
+//            mail.addRecipient(MimeMessage.RecipientType.TO, new InternetAddress(truckEmail));
+//            mailSender.send(mail);
+//        } catch (MessagingException e) {
+//            e.printStackTrace();
+//        }
+//        // 비밀번호 암호화해주는 메서드
+//        key = UserSha256.encrypt(key);
+//        // 데이터 베이스 값은 암호한 값으로 저장시킨다.
+//        truckDao.findPassword(truckId, truckEmail, key);
+//    }
 
     // 푸드트럭 영업상태변경
     @Override
@@ -177,11 +216,6 @@ public class TruckServiceImpl implements TruckService {
         return truckDao.checkDuTruckName(truckName);
     }
 
-    // 푸드트럭 상호 중복체크
-    @Override
-    public int checkDuPw(String truckPassword) throws Exception {
-        return truckDao.checkDuPw(truckPassword);
-    }
 
     // 새로 가입한 푸드트럭 목록보기(관리자)
     @Override

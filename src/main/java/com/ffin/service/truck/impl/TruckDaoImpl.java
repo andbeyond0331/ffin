@@ -133,7 +133,7 @@ public class TruckDaoImpl implements TruckDao {
     // 푸드트럭 회원탈퇴
     @Override
     public void byeTruck(Truck truck) throws Exception {
-        sqlSession.update("TruckMapper.updateTruck", truck);
+        sqlSession.update("TruckMapper.byeTruck", truck);
     }
     // 푸드트럭 파일업로드
     @Override
@@ -174,11 +174,6 @@ public class TruckDaoImpl implements TruckDao {
         return sqlSession.selectOne("TruckMapper.checkDuTruckName", truckName);
     }
 
-    // 푸드트럭 회원탈퇴 전 Password 체크
-    @Override
-    public int checkDuPw(String truckPassword) throws Exception {
-        return sqlSession.selectOne("TruckMapper.checkDuPw", truckPassword);
-    }
 
     // 게시판 Page 처리를 위한 전체Row(totalCount)  return
     @Override

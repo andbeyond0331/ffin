@@ -76,8 +76,6 @@ public interface TruckDao {
     // 푸드트럭 상호 중복체크
     public int checkDuTruckName(String truckName) throws Exception;
 
-    // 푸드트럭 탈퇴 전 Password 체크
-    public int checkDuPw(String truckPassword) throws Exception;
 
     // 게시판 Page 처리를 위한 전체Row(totalCount)  return
     public int getTotalCount(Search search) throws Exception ;
@@ -87,5 +85,14 @@ public interface TruckDao {
     void autoLogin(String truckId, String sessionKey, Date sessionLimit) throws Exception;
     //세션키 검증
     Truck SessionKeyAuth(String sessionKey) throws Exception;
+
+    // 인증키 생성
+    //int GetKey(String truckId, String truckKey) throws Exception;
+
+    // 인증키 Y로 바꿔주는 메소드
+    //int alter_truckKey(String truckId, String key) throws Exception;
+
+    // 임시비밀번호 변경 메소드
+    //int findPassword(String truckId, String truckEmail, String key);
 
 }

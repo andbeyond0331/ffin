@@ -4,9 +4,11 @@ import com.ffin.common.Page;
 import com.ffin.common.Search;
 import com.ffin.service.domain.Truck;
 import com.ffin.service.truck.TruckService;
+import com.ffin.service.truck.impl.TruckServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,8 @@ import java.util.Map;
 public class TruckController {
 
     ///Field
+    @Autowired
+    private JavaMailSender mailSender;
     @Autowired
     @Qualifier("truckServiceImpl")
     private TruckService truckService;
@@ -46,6 +50,7 @@ public class TruckController {
 
         return "/truck/addTruckView.jsp";
     }
+
     // 회원가입
     @RequestMapping(value = "addTruck", method = RequestMethod.POST)
     public String addTruck(@ModelAttribute("truck") Truck truck, @RequestParam("busiLice") MultipartFile file1, @RequestParam("proImg") MultipartFile file2, Model model, HttpServletRequest request) throws Exception {
@@ -71,6 +76,7 @@ public class TruckController {
 
         return "redirect:/views/home.jsp";
     }
+
     // 트럭조회
     @RequestMapping(value = "getTruck", method = RequestMethod.GET)
     public ModelAndView getTruck(HttpServletRequest request, ModelAndView m) throws Exception {
@@ -122,6 +128,7 @@ public class TruckController {
 
         return "/truck/loginTruck.jsp";
     }
+
     // 트럭 로그인 // 이제 안씀
     @RequestMapping(value = "loginTruck", method = RequestMethod.POST)
     public String login(@ModelAttribute("truck") Truck truck, HttpSession session) throws Exception {
@@ -143,6 +150,7 @@ public class TruckController {
 
         return "redirect:/views/home.jsp";
     }
+
     // 로그아웃
     @RequestMapping(value = "logoutTruck", method = RequestMethod.GET)
     public String logout(HttpSession session) throws Exception {
@@ -155,6 +163,7 @@ public class TruckController {
 
         return "redirect:/views/home.jsp";
     }
+
     // 트럭 리스트
     @RequestMapping(value = "getTruckList")
     public String getTruckList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
@@ -182,34 +191,87 @@ public class TruckController {
 
     // 회원탈퇴화면 요청
     @RequestMapping(value = "byeTruck", method = RequestMethod.GET)
-    public String byeTruck(@RequestParam("truckId")String truckId, Model model, HttpSession session) throws Exception{
+    public String byeTruck() throws Exception {
 
         System.out.println("/truck/byeTruck : GET");
-        //Business Logic
-        Truck truck = truckService.getTruck(truckId);
-        //Model 과 View 연결
-        model.addAttribute("truck", truck);
 
-        return "/truck/byeTruck.jsp";
+        return "/views/truck/byeTruck.jsp";
     }
 
     // 회원탈퇴
     @RequestMapping(value = "byeTruck", method = RequestMethod.POST)
-    //public String byeTruck(@ModelAttribute("truck") Truck truck, @RequestParam("truckByeReason") int truckByeReason , HttpSession session) throws Exception{
-    public String byeTruck(@ModelAttribute("truck") Truck truck, HttpSession session) throws Exception{
+    public String byeTruck(@ModelAttribute("truckId") String truckId, @ModelAttribute("truckPassword") String truckPassword, @ModelAttribute("truck") Truck truck, @RequestParam("truckByeReason") int truckByeReason, Model model, HttpSession session, HttpServletRequest request) throws Exception {
 
         System.out.println("/truck/byeTruck : POST");
         //Business Logic
-        Truck dbTruck = truckService.getTruck(truck.getTruckId());
+        // 세션 값 불러오기
+        truckId = (String) (session.getAttribute("truckId"));
 
-        if(truck.getTruckPassword().equals(dbTruck.getTruckPassword())){
-            session.setAttribute("truck", truck);
-            dbTruck.setTruckByeStatus(1);
-            truckService.byeTruck(dbTruck);
-            System.out.println("회원탈퇴완료");
-        }
+        System.out.println("truckId = " + truckId);
 
-        return "redirect:/views/home.jsp";
+        truck = (Truck) session.getAttribute("truck");
+
+        // 탈퇴사유 받아오기 getParameter
+        truckByeReason = Integer.parseInt(request.getParameter("truckByeReason"));
+        System.out.println("truckByeReason = " + truckByeReason);
+
+        truck.setTruckByeStatus(1);
+        truck.setTruckByeReason(truckByeReason);
+
+        // DB Update
+        truckService.byeTruck(truck);
+
+        System.out.println("탈퇴성공");
+
+        // 세션 값 삭제
+        session.invalidate();
+
+        // 홈화면으로 이동
+        return "redirect:/views/homeTest.jsp";
     }
+
+    // 사업자 아이디 찾기 화면 요청
+    @RequestMapping(value = "findTruckId", method = RequestMethod.GET)
+    public String findTruckId() throws Exception {
+
+        System.out.println("/truck/findTruckId : GET");
+
+        return "/truck/findTruckId.jsp";
+    }
+
+    // 사업자 아이디 찾기
+    @RequestMapping(value = "findTruckId", method = RequestMethod.POST)
+    @ResponseBody
+    public String findTruckId(@ModelAttribute("truckId") String truckId, @RequestParam("inputName_1") String truckName, @RequestParam("inputPhone_1") String truckPhone, HttpServletRequest request) throws Exception {
+
+        System.out.println("/truck/findTruckId : POST");
+
+        truckName = request.getParameter("inputName_1");
+        truckPhone = request.getParameter("inputPhone_1");
+
+        System.out.println("truckName = " + truckName);
+        System.out.println("truckPhone = " + truckPhone);
+
+        Truck truck = new Truck();
+
+        truck.setTruckName(truckName);
+        truck.setTruckPhone(truckPhone);
+
+        String result = truckService.findTruckId(truckName, truckPhone);
+
+        return result;
+    }
+//
+//    // 사업자 비밀번호 찾기
+//    @RequestMapping(value = "findPassword", method = RequestMethod.GET)
+//    @ResponseBody
+//    public String passwordSearch(@RequestParam("truckId")String truckId,
+//                                 @RequestParam("truckEmail")String truckEmail,
+//                                 HttpServletRequest request) {
+//
+//        mailSender.mailSendWithPassword(truckId, truckEmail, request);
+//
+//        return "truck/truckFindPassword";
+//    }
 
 }

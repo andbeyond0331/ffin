@@ -30,7 +30,7 @@ public class CommunityServiceTest {
     @Qualifier("communityServiceImpl")
     private CommunityService communityService;
 
-    //@Test
+    @Test
     public void testAddPost() throws Exception {
         Truck truck = new Truck();
         truck.setTruckId("truck04");

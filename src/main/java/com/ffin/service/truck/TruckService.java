@@ -4,6 +4,7 @@ import com.ffin.common.Search;
 import com.ffin.service.domain.Truck;
 import com.ffin.service.domain.User;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -72,9 +73,6 @@ public interface TruckService {
 
     // 푸드트럭 상호 중복체크
     public int checkDuTruckName(String truckName) throws Exception;
-
-    // 푸드트럭 탈퇴 전 Password 체크
-    public int checkDuPw(String truckPassword) throws Exception;
 
     // 게시판 Page 처리를 위한 전체Row(totalCount)  return
     public int getTotalCount(Search search) throws Exception ;

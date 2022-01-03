@@ -5,6 +5,7 @@ import com.ffin.service.community.CommunityDao;
 import com.ffin.service.domain.Comment;
 import com.ffin.service.domain.Heart;
 import com.ffin.service.domain.Post;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -102,7 +103,17 @@ public class CommunityDaoImpl implements CommunityDao {
 
     // 게시판 Page 처리를 위한 전체Row(totalCount)  return
     @Override
-    public int getTotalCount(Search search) throws Exception {
-        return sqlSession.selectOne("CommunityMapper.getTotalCount", search);
+    public int getTotalCountPost(Search search) throws Exception {
+        return sqlSession.selectOne("PostMapper.getTotalCount", search);
     }
+
+//    @Override
+//    public int getTotalCountPostU(Search search) throws Exception {
+//        return sqlSession.selectOne("PostMapper.getTotalCountUser", search);
+//    }
+//
+//    @Override
+//    public int getTotalCountPostT(Search search) throws Exception {
+//        return sqlSession.selectOne("PostMapper.getTotalCountTruck", search);
+//    }
 }

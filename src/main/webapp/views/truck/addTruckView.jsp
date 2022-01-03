@@ -99,7 +99,7 @@
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
             $("a[href='#' ]").on("click", function () {
-                self.location = "/views/truck/loginTruck.jsp"
+                self.location = "/views/homeTest.jsp"
             });
         });
 
@@ -508,7 +508,7 @@
             <label for="truckPhone" class="col-sm-offset-1 col-sm-3 control-label">연락처</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="truckPhone" name="truckPhone"
-                       placeholder="인증번호 확인이 가능한 전화번호 입력"/>
+                       placeholder=" - 를 제외한 전화번호 입력"/>
             </div>
             <div class="col-sm-3">
                 <button id="phoneChk" type="button" class="btn btn-warning sms-auth">인증번호 요청</button>
