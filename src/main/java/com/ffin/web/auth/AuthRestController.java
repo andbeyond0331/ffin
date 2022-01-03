@@ -1,7 +1,10 @@
 package com.ffin.web.auth;
 
+import com.ffin.service.auth.AuthService;
 import com.ffin.service.auth.Coolsms;
+import com.ffin.service.truck.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
@@ -53,18 +56,5 @@ public class AuthRestController {
         return authNumChk;
     }
 
-    @RequestMapping(value = "json/sendSMS ", method = RequestMethod.GET)
-    @ResponseBody
-    public String sendSMS(@RequestParam("phone")String userPhone) throws Exception{
 
-        //난수생성
-        Random random = new Random();
-        String numStr = "";
-        for(int i = 0; i<6; i++){
-            String ran = Integer.toString(random.nextInt(10));
-            numStr += ran;
-        }
-        Coolsms.phoneAuthCoolSMS(userPhone, numStr);
-        return "SEND SMS OK";
-    }
 }

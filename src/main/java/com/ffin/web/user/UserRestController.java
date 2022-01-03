@@ -27,6 +27,23 @@ public class UserRestController {
     }
     
     //Method
+    //phone 인증
+    @RequestMapping(value = "json/sendSMS/{inputPhone}", method = RequestMethod.GET)
+    @ResponseBody
+    public String sendSMS(@PathVariable String inputPhone) {
+
+        System.out.println("TruckRestController.sendSMS");// 휴대폰 문자보내기
+        System.out.println("truckPhoneNumber = " + inputPhone);
+
+        int randomNumber = (int) ((Math.random() * (9999 - 1000 + 1)) + 1000);//난수 생성
+        System.out.println("randomNumber = " + randomNumber);
+        userService.sendSMS(inputPhone, randomNumber);
+
+        return Integer.toString(randomNumber);
+    }
+
+
+    //email 인증
     @RequestMapping(value = "json/checkDuplication/{userId:.+}", method = RequestMethod.GET)
     public String idChkDuplication(@PathVariable String userId, Model model) throws Exception{
 
@@ -102,7 +119,29 @@ public class UserRestController {
         System.out.println("UserRestController.addUser");
 
         userService.addUserInfo(user);
+        session.setAttribute("user", user);
+
         return userService.getUser(user.getUserId());
+    }
+
+    @RequestMapping(value = "json/updateUserInfo/{userId}", method = RequestMethod.POST)
+    public User updateUserInfo(User user, @PathVariable String userId, HttpServletRequest request) throws Exception {
+        System.out.println("UserRestController.updateUserInfo : POST");
+
+        request.setCharacterEncoding("UTF-8");
+        userService.updateUserInfo(user);
+
+        return user;
+    }
+
+    @RequestMapping(value = "json/updateUserProfile/{userId}", method = RequestMethod.POST)
+    public User updateUserProfile(User user, @PathVariable String userId, HttpServletRequest request) throws Exception {
+        System.out.println("UserRestController.updateUserProfile : POST");
+
+        request.setCharacterEncoding("UTF-8");
+        userService.updateUserProfile(user);
+
+        return user;
     }
 
 }

@@ -64,7 +64,7 @@
 
 <body id="page-top">
 
-<jsp:include page="/views/toolbar.jsp" />
+<jsp:include page="/views/navbar.jsp" />
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
 

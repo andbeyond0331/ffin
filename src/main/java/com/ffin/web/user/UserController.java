@@ -1,13 +1,16 @@
 package com.ffin.web.user;
 
+import com.ffin.service.domain.Purchase;
 import com.ffin.service.domain.User;
 import com.ffin.service.user.UserService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
@@ -15,7 +18,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.Date;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/user/*")
@@ -26,6 +31,10 @@ public class UserController {
     private UserService userService;
 
     private ModelAndView modelAndView;
+
+    // 파일 저장경로 지정
+    private static final String FILE_SERVER_PATH = "C:\\ffinPJT\\src\\main\\webapp\\resources\\image";
+
 
     @Autowired
     private JavaMailSender mailSender;
@@ -109,20 +118,20 @@ public class UserController {
 
         System.out.println("/user/addUser : GET");
 
-
-
-
         return "/views/user/addUserInfo.jsp";
     }
 
     @RequestMapping( value="addUser", method=RequestMethod.POST )
-    public String addUser( @ModelAttribute("user") User user ) throws Exception {
+    public String addUser( @ModelAttribute("user") User user, HttpSession session, Model model ) throws Exception {
 
         System.out.println("/user/addUser : POST");
         //Business Logic
         userService.addUserInfo(user);
+        model.addAttribute(user);
+        session.setAttribute("user", user);
+        System.out.println("UserController.addUser : session "+user);
 
-        return "redirect:views/user/login.jsp";
+        return "/views/user/addUserProfile.jsp";
     }
 
     @RequestMapping( value="getUser", method=RequestMethod.GET )
@@ -133,6 +142,38 @@ public class UserController {
         model.addAttribute("user", user);
 
         return "views/user/getUser.jsp";
+    }
+
+/*    @RequestMapping(value="updateUserProfile", method=RequestMethod.GET)
+    public String updatePurchase(@RequestParam("userId") String userId, Model model) throws Exception {
+
+        System.out.println("UserController.updatePurchase : GET");
+
+        return "views/user/addUserProfile.jsp";
+    }*/
+
+    @RequestMapping(value = "updateUserProfile", method = RequestMethod.POST)
+    public String updateUserProfile(@ModelAttribute("user") User user, @RequestParam("userId") String userId,
+                                    @RequestParam("fileName1")MultipartFile file,
+                                    Model model, HttpSession session) throws Exception {
+
+        System.out.println("UserController.updateUserProfile : POST");
+        System.out.println("!!!!!!!!userId!!!!!!!!!!!!"+userId);
+
+        if(!Objects.requireNonNull(file.getOriginalFilename()).isEmpty()){
+            file.transferTo(new File(FILE_SERVER_PATH, file.getOriginalFilename()));
+            model.addAttribute("msg", "File uploaded successfully.");
+        }else {
+            model.addAttribute("msgs", "Please select a valid mediaFile..");
+        }
+
+        user.setUserProImg(file.getOriginalFilename());
+        userService.updateUserProfile(user);
+
+        System.out.println("UserController.updateUserProfile"+user);
+
+        return "redirect:/views/homeTest.jsp";
+
     }
 
 

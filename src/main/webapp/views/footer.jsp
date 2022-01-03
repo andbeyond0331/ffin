@@ -53,9 +53,6 @@
 
 <body id="page-top">
 
-
-<br/><br/><br/><br/><br/><br/><br/><br/><br/>
-
 <div class="footer_div">
 
     <div class="footer_container">

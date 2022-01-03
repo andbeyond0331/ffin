@@ -71,7 +71,8 @@
 		var userNameEx = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
 		var userMailEx = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 		var userBirthEx = /^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
-		var userPhoneEx = /^01([0|1|6|7|8|9]?)?([0-9]{3,4})?([0-9]{4})$/;
+		var userPhoneEx = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+		var userEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
 
 		/* V.C */
@@ -79,12 +80,15 @@
 		var idDupleChk = false;
 		var idExChk = false;
 		var pwChk = false;
+		var rePwChk = false;
 		var pwExChk = false;
 		var pwCorrectChk = false;
 		var nameChk = false;
 		var nameExChk = false;
 		var phoneChk = false;
 		var phoneExChke = false;
+		var phoneAuthChke = false;
+		var birthChk = false;
 
 
 		/* 가입하기 버튼 클릭 */
@@ -96,6 +100,7 @@
 				var reUserPassword = $("#reUserPassword").val();
 				var userName = $("#userName").val();
 				var userPhone = $("#userPhone").val();
+				var userBirth = $("#userBirth").val();
 
 				/* Id V.C */
 				if(userId === "") {
@@ -121,6 +126,19 @@
 				}else {
 					$(".pw_input_chk").css("display","none");
 					pwChk = true;
+				}
+
+				/* RePassword V.C */
+				if(reUserPassword === ""){
+					$(".rePw_input_chk").css("display","block");
+					$("#reUserPassword").css({
+						"border-color" : "#f17228",
+						"box-shadow" : "0 0 0 0.1rem rgb(241, 114, 40)"
+					});
+					rePwChk = false;
+				}else {
+					$(".rePw_input_chk").css("display","none");
+					rePwChk = true;
 				}
 
 				/* name V.C */
@@ -155,7 +173,22 @@
 					phoneChk = true;
 				}
 
+				if(userBirth === ""){
+					$("#userBirth").css({
+						"border-color" : "#f17228",
+						"box-shadow" : "0 0 0 0.1rem rgb(241, 114, 40)"
+					});
+					birthChk = false;
+				}else {
+					birthChk = true;
+				}
 
+				//문자인증은 유료라서 빼놨음
+				if(idChk&&idDupleChk&&idExChk&&pwChk&&rePwChk&&pwExChk&&pwCorrectChk&&nameChk&&nameExChk&&phoneChk&&phoneExChke&&birthChk){
+					$("#user_join_form").attr("method", "POST").attr("action","/user/addUser").submit();
+					alert("가입 축하축하");
+				}
+				return false;
 			});
 		});
 
@@ -270,65 +303,53 @@
 				var rePw = $("#reUserPassword").val();
 				$(".pw_input_chk").css("display","none");
 
-				if(userPassword === ""){
-					$(".pw_input_chk").css("display","block");
-					$("#userPassword").css({
-						"border-color" : "#f17228",
-						"box-shadow" : "0 0 0 0.1rem rgb(241, 114, 40)"
-					});
-					pwChk = false;
-				}else {
-					$(".pw_input_chk").css("display","none");
-					pwChk = true;
-				}
+					if (pw !== "") {
 
+						//정규식
+						if (userPwEx.test(pw) === false) {
 
-				if(pw !== "") {
+							$(".pw_ex_chk").css("display", "block");
+							$("#userPassword").css({
+								"border-color": "#f17228",
+								"box-shadow": "0 0 0 0.1rem rgb(241, 114, 40)"
+							});
+							pwExChk = false;
 
-					//정규식
-					if (userPwEx.test(pw) === false) {
+						} else {
+							//비밀번호 확인
+							if (pw === rePw) {
+								$(".rePw_vc_chk").css("display", "none");
+								$("#userPassword").css({
+									"border-color": "#ffe537",
+									"box-shadow": "0 0 0 0.1rem rgb(255, 229, 55)"
+								});
+								$("#reUserPassword").css({
+									"border-color": "#ffe537",
+									"box-shadow": "0 0 0 0.1rem rgb(255, 229, 55)"
+								});
+								pwCorrectChk = true;
+							} else {
+								$(".rePw_vc_chk").css("display", "block");
+								$("#reUserPassword").css({
+									"border-color": "#f17228",
+									"box-shadow": "0 0 0 0.1rem rgb(241, 114, 40)"
+								});
+								pwCorrectChk = false;
+							}
 
-						$(".pw_ex_chk").css("display", "block");
-						$("#userPassword").css({
-							"border-color": "#f17228",
-							"box-shadow": "0 0 0 0.1rem rgb(241, 114, 40)"
-						});
-						pwExChk = false;
-
-					} else {
-						//비밀번호 확인
-						if (pw === rePw) {
-							$(".rePw_vc_chk").css("display", "none");
+							$(".pw_ex_chk").css("display", "none");
+							$(".rePw_input_chk").css("display", "none");
 							$("#userPassword").css({
 								"border-color": "#ffe537",
 								"box-shadow": "0 0 0 0.1rem rgb(255, 229, 55)"
 							});
-							$("#reUserPassword").css({
-								"border-color": "#ffe537",
-								"box-shadow": "0 0 0 0.1rem rgb(255, 229, 55)"
-							});
-							pwCorrectChk = true;
-						} else {
-							$(".rePw_vc_chk").css("display", "block");
-							$("#reUserPassword").css({
-								"border-color": "#f17228",
-								"box-shadow": "0 0 0 0.1rem rgb(241, 114, 40)"
-							});
-							pwCorrectChk = false;
+							pwExChk = true;
 						}
-
+					} else {
+						$(".pw_input_chk").css("display", "none");
 						$(".pw_ex_chk").css("display", "none");
-						$("#userPassword").css({
-							"border-color": "#ffe537",
-							"box-shadow": "0 0 0 0.1rem rgb(255, 229, 55)"
-						});
-						pwExChk = true;
+						$(".rePw_input_chk").css("display", "none");
 					}
-				} else {
-					$(".pw_input_chk").css("display", "none");
-					$(".pw_ex_chk").css("display", "none");
-					$(".rePw_input_chk").css("display", "none");
-				}
 			});
 		});
 
@@ -395,8 +416,112 @@
 
 				//정규식
 				if (userPhoneEx.test(userPhone) === true) {
+
+					$(".phone_ex_chk").css("display", "none");
+					$(".phone_auth_chk").css("display", "block");
+					$("#userPhone").css({
+						"border-color": "#ffe537",
+						"box-shadow": "0 0 0 0.1rem rgb(255, 229, 55)"
+					});
+
+					phoneExChke = true;
+
 				} else {
 					$(".phone_ex_chk").css("display", "block");
+					$(".phone_auth_chk").css("display", "none");
+					$("#userPhone").css({
+						"border-color": "#f17228",
+						"box-shadow": "0 0 0 0.1rem rgb(241, 114, 40)"
+					});
+
+					phoneExChke = false;
+				}
+			});
+		});
+
+		/* 휴대폰 인증 */
+		$(function () {
+
+			var code2 = "";
+
+			$(".auth-phone").click(function () {
+
+				alert(1234);
+
+				var inputPhone = $("#userPhone").val();
+				var authInputBox = $("#authNumPhone");
+				alert(inputPhone);
+				$.ajax({
+					type : "GET",
+					url : "/user/json/sendSMS/" + inputPhone,
+					success : function (data){
+						console.log(data);
+						authInputBox.attr("disabled", false);
+						$("#auth-email").text("인증번호 재전송")
+						code2 = data;
+					}
+				});
+
+
+
+			});
+
+			//휴대폰 인증번호 대조
+			$("#authNumPhone").on("keyup", function () {
+
+				var inputCode = $("#authNumPhone").val();
+
+				if (inputCode.length >= 4) {
+					if (inputCode === code2) {
+						console.log("SMS OK!!!")
+						$(".phone_auth_chk_ok").css("display", "block");
+						$(".phone_auth_chk").css("display", "none");
+						$(".phone_auth_chk_fail").css("display", "none");
+						$("#auth-email").css("disabled",true);
+						$("#authNumPhone").css({
+							"border-color": "#ffe537",
+							"box-shadow": "0 0 0 0.1rem rgb(255, 229, 55)"
+						});
+						phoneAuthChke = true;
+					} else {
+						console.log("NOPE");
+						$(".phone_auth_chk_fail").css("display", "block");
+						$(".phone_auth_chk").css("display", "none");
+						$("#authNumPhone").css({
+							"border-color": "#f17228",
+							"box-shadow": "0 0 0 0.1rem rgb(241, 114, 40)"
+						});
+						phoneAuthChke = false;
+					}
+				}
+			});
+		});
+
+
+		/* Email Ex */
+		$(function () {
+			$("#userEmail").on("propertyChange change keyup paste input", function () {
+
+				var userEmail = $("#userEmail").val();
+
+				//정규식
+				if (userMailEx.test(userEmail) === true) {
+
+					$(".email_ex_chk").css("display", "none");
+					$(".email_auth_chk").css("display", "block");
+					$("#userEmail").css({
+						"border-color": "#ffe537",
+						"box-shadow": "0 0 0 0.1rem rgb(255, 229, 55)"
+					});
+
+				} else {
+
+					$(".email_ex_chk").css("display", "block");
+					$(".email_auth_chk").css("display", "none");
+					$("#userEmail").css({
+						"border-color": "#f17228",
+						"box-shadow": "0 0 0 0.1rem rgb(241, 114, 40)"
+					});
 				}
 			});
 		});
@@ -411,53 +536,47 @@
 			$(".auth-email").click(function () {
 
 				var inputEmail = $("#userEmail").val();
-				var authInputBox = $(".mail-check-input");
-				var boxWrap = $(".mail-check-input-box");
+				var authInputBox = $("#authEmail");
 
 				alert(inputEmail);
+
 				$.ajax({
 					type:"GET",
 					url:"/auth/json/emailAuth/"+inputEmail,
 					success:function (data){
-						//console.log("data : "+data);
-						/*$("#userEmailAuth").attr("disabled",false);*/
 						authInputBox.attr("disabled",false);
-						boxWrap.attr("id", "mail-check-input-box-ture")
 						code = data;
 					}
 				});
 			});
 
 			/* email 인증번호 비교 */
-			$(".mail-check-input").on("keyup",function (){
+			$("#authEmail").on("keyup",function (){
 
-				var inputCode = $(".mail-check-input").val();
-				var checkResult = $("#mail-check-input-box-warn");
+				var inputCode = $("#authEmail").val();
 
 				if(inputCode.length >= 6){
-					if(inputCode == code){
-						checkResult.html("OK");
-						checkResult.attr("class", "correct");
+					if(inputCode === code){
+						console.log("OKOKOOKOKOK");
+						$(".email_auth_chk").css("display", "none");
+						$(".email_auth_chk_ok").css("display", "block");
+
+						$("#authEmail").css({
+							"border-color": "#ffe537",
+							"box-shadow": "0 0 0 0.1rem rgb(255, 229, 55)"
+						});
 					}else {
-						checkResult.html("NOPE");
-						checkResult.attr("class","incorrect");
+						console.log("NONONONONONONONON");
+						$(".email_auth_chk").css("display", "none");
+						$(".email_auth_chk_ok").css("display", "none");
+						$(".email_auth_chk_fail").css("display", "block");
+						$("#authEmail").css({
+							"border-color": "#f17228",
+							"box-shadow": "0 0 0 0.1rem rgb(241, 114, 40)"
+						});
 					}
 				}
-
 			});
-
-
-			/* coolSMS */
-			// $(".sms-auth").click(function (){
-			//
-			// 	alert("zzz...");
-			// 	/*var code = "";*/
-			// 	var userPhone = $("#userPhone").val();
-			// 	$("form").attr("method","POST").attr("action", "/auth/sendSMS").submit();
-			//
-			// 	alert("인증번호가 전송되었습니다.");
-			// });
-
 		});
 
 		/* Daum API */
@@ -465,8 +584,8 @@
 			new daum.Postcode({
 				oncomplete: function(data) {
 
-					alert(data);
-					alert(data.roadAddress);
+					/*alert(data);
+					alert(data.roadAddress);*/
 
 					// 각 주소의 노출 규칙에 따라 주소를 조합한다.
 					// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
@@ -523,6 +642,7 @@
 
 <jsp:include page="/views/toolbar.jsp" />
 
+
 <!-- client section -->
 
 <section class="client_section layout_padding">
@@ -532,18 +652,18 @@
 				<div class="carousel-inner">
 					<div class="carousel-item active">
 						<div class="detail-box">
-							<i class="fa fa-quote-left" aria-hidden="true"></i>
+							<i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
 							<h4 style="margin-top: 10px;">
 								회원가입
 							</h4>
 						</div>
-						<form class="row justify-content-center">
+						<form class="row justify-content-center" id="user_join_form">
 
 							<div class="col-md-6 data-input-box">
 
 								<div class="data-input-box">
 									<label for="userId" class="form-label label-name">ID</label>
-									<input type="text" class="form-control" id="userId" placeholder="아이디" name="userTest">
+									<input type="text" class="form-control" id="userId" name="userId" placeholder="아이디">
 									<span class="id_vc_chk_1">사용 가능한 아이디입니다.</span>
 									<span class="id_vc_chk_2">사용 중인 아이디입니다.</span>
 									<span class="id_input_chk">아이디를 입력해주세요.</span>
@@ -552,7 +672,7 @@
 
 								<div class="data-input-box">
 									<label for="userPassword" class="form-label label-name">Password</label>
-									<input type="password" class="form-control" id="userPassword" placeholder="비밀번호">
+									<input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="비밀번호">
 									<span class="pw_input_chk">비밀번호를 입력해주세요.</span>
 									<span class="pw_ex_chk">대소문자, 숫자를 포함하여 8자 이상으로 입력해주세요.</span>
 									<input type="password" class="form-control" id="reUserPassword" placeholder="비밀번호 확인" style="margin-top: 10px">
@@ -562,33 +682,36 @@
 
 								<div class="data-input-box">
 									<label for="userName" class="form-label label-name">이름</label>
-									<input type="text" class="form-control" id="userName">
+									<input type="text" class="form-control" id="userName" name="userName">
 									<span class="name_input_chk">이름을 입력해주세요.</span>
 									<span class="name_ex_chk">이름을 정확하게 입력해주세요.</span>
 								</div>
 
 								<div class="data-input-box">
 									<label for="userBirth" class="form-label label-name">생년월일</label>
-									<input type="text" class="form-control" id="userBirth">
+									<input type="text" class="form-control" id="userBirth" name="userBirth">
 									<div id="birthHelp" class="form-text" style="font-size: 10pt; margin-left: 5px; color: grey">연 1회 생일 축하 쿠폰이 발급됩니다.</div>
 									<span class="brith_ex_chK">생년월일을 'YYYY-DD-MM' 형식으로 입력해주세요.</span>
 								</div>
 
 								<div class="data-input-box">
 									<label for="userPhone" class="form-label label-name">Phone</label>
-									<input type="text" class="form-control" id="userPhone" placeholder="전화번호를 입력하세요.">
+									<input type="text" class="form-control" id="userPhone" name="userPhone" placeholder="전화번호를 입력하세요.">
 									<%--<div id="phoneHelp" class="form-text" style="font-size: 10pt; float:left; margin-right:10px; margin-top: 12px; margin-left: 5px;">인증번호를 요청하세요.</div>--%>
-									<span class="phone_input_chk">전화번호를 입력해주세요.</span>
-									<span class="phone_ex_chk">전화번호를 '010-0000-0000' 형식으로 입력해주세요</span>
+									<span class="phone_input_chk">휴대폰번호를 입력해주세요.</span>
+									<span class="phone_ex_chk">휴대폰번호를 정확하게 입력해주세요</span>
 									<span class="phone_auth_chk">인증번호를 요청하세요.</span>
+
 									<button type="button" class="btn btn-outline-warning auth-phone" style="float: right; margin-bottom: 5px;" >인증번호 요청</button>
-									<input type="text" class="form-control" id="authPhone" placeholder="인증번호 확인" disabled="disabled" >
+									<input type="text" class="form-control auth-Num-Phone" id="authNumPhone" placeholder="인증번호 확인" disabled="disabled" >
+									<span class="phone_auth_chk_ok">휴대폰번호 인증 완료</span>
+									<span class="phone_auth_chk_fail">인증번호가 일치하지 않습니다.</span>
 								</div>
 
 								<div class="data-input-box">
 									<label for="userAddr" class="form-label label-name">주소</label>
 									<div>
-										<input type="text" class="form-control" id="userAddr" placeholder="주소 검색" style="width: 80%; display: inline-block;">
+										<input type="text" class="form-control" id="userAddr" name="userAddr" placeholder="주소 검색" style="width: 80%; display: inline-block;">
 										<button type="button" class="btn btn-outline-warning addrApi" onclick="addrApi()">검색</button>
 									</div>
 									<input type="text" class="form-control" id="userAddrDetail" placeholder="상세주소" style="margin-top: 8px">
@@ -597,10 +720,15 @@
 								<div class="data-input-box">
 									<label for="userEmail" class="form-label label-name">Email</label>
 									<input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="이메일을 입력하세요.">
-									<div id="emailHelp" class="form-text" style="font-size: 10pt; float:left; margin-right:10px; margin-top: 12px; margin-left: 5px;">인증번호를 요청하세요.</div>
+									<span class="email_input_chk">이메일을 입력해주세요.</span>
+									<span class="email_ex_chk">이메일을 정확하게 입력해주세요</span>
+									<span class="email_auth_chk">인증번호를 요청하세요.</span>
+
 									<button type="button" class="btn btn-outline-warning auth-email" style="float: right; margin-bottom: 5px;" >인증번호 요청</button>
 									<label for="authEmail" class="form-label label-name"></label>
 									<input type="text" class="form-control" id="authEmail" placeholder="인증번호 확인" disabled="disabled" style="margin-top: 25px">
+									<span class="email_auth_chk_ok">이메일 인증 완료</span>
+									<span class="email_auth_chk_fail">인증번호가 일치하지 않습니다.</span>
 								</div>
 
 							</div>
