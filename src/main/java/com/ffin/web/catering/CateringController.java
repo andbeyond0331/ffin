@@ -54,13 +54,6 @@ public class CateringController {
             이용자, 사업자 구분
             full Calendar ...*/
 
-        //session.setAttribute("role", "truck");
-        //User testUser = new User();
-        //testUser.setUserId("user01");
-        //Truck testTruck = new Truck();
-        // testTruck.setTruckId("truck01");
-        // session.setAttribute("truck", testTruck);
-
         String id="";
         Map<String , Object> map= new HashMap<String , Object>();
         String role = (String)session.getAttribute("role");// role로 구분할 예정 - user / truck
@@ -73,16 +66,17 @@ public class CateringController {
             User user = (User) session.getAttribute("user");
             id = user.getUserId();
             System.out.println("user id: "+id);
-            search.setSearchCondition("2");
+            search.setSearchCondition("3"); //user는 mainCalendar에서 내가 예약한건 + 예약가능한 건을 출력한다.
+            map = cateringService.getCtDateList(search, id);
 
         }else if(role == "truck" || role.equals("truck")){
             // truck이라면
             id = ((Truck)session.getAttribute("truck")).getTruckId();
             System.out.println("truck id: "+id);
-            search.setSearchCondition("1");
-
+            search.setSearchCondition("0"); // truck은 mainCalendar에서 내가 등록한 모든 건을 출력한다.
+            map = cateringService.getCtDateList(search, id);
         }
-        map = cateringService.getCtList(search, id);
+
         System.out.println("map = " + map);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -91,33 +85,50 @@ public class CateringController {
         return modelAndView;
     }
 
-/*
 
-
-    @RequestMapping( value="getUserResList")
-    public ModelAndView getUserResList(@ModelAttribute("search") Search search, @RequestParam("userId") String userId) throws Exception {
-        */
-/*
+    @RequestMapping( value="listCatering")
+    public ModelAndView listCatering(@ModelAttribute("search") Search search, HttpSession session) throws Exception {
+          /*
             이용자가 '예약내역목록'을 출력했을 때 노출되는 화면
             초기값 : 전체값
-         *//*
+         */
 
-        System.out.println("CateringController.getUserResList");
+        System.out.println("CateringController.listCatering");
+        String id="";
+        Map<String , Object> map= new HashMap<String , Object>();
+        String role = (String)session.getAttribute("role");// role로 구분할 예정 - user / truck
+        System.out.println("role = " + role);
 
-        Map<String , Object> map =  cateringService.getCtList(search, userId);
+        if (role == "user" || role.equals("user")){
+            // session 처리 되면 주석 풀어서 체크하기. 지금은 임의로 한거.
+            //id = ((User)session.getAttribute("user")).getUserId();
+            //id = (String) session.getAttribute("userId");
+            User user = (User) session.getAttribute("user");
+            id = user.getUserId();
+            System.out.println("user id: "+id);
+            search.setSearchCondition("0"); // user가 예약한 모든 내역을 출력한다.
+            map =  cateringService.getCtList(search, id);
+
+        }else if(role == "truck" || role.equals("truck")){
+            // truck이라면
+            id = ((Truck)session.getAttribute("truck")).getTruckId();
+            System.out.println("truck id: "+id);
+            search.setSearchCondition("0");
+            map =  cateringService.getCtDateList(search, id);
+        }
+
 
         System.out.println("map = " + map);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("list", map.get("list"));
-        modelAndView.setViewName("/views/catering/userList.jsp");
+        modelAndView.setViewName("/views/catering/ListCatering.jsp");
 
         return modelAndView;
     }
-*/
 
 
     @RequestMapping( value="getCtStatusList", method= RequestMethod.GET)
-    public ModelAndView getCtStatusList(@ModelAttribute("search") Search search, @RequestParam("ctStatusCode") String ctStatusCode, HttpSession session) throws Exception {
+    public ModelAndView getCtStatusList(@ModelAttribute("search") Search search, @RequestParam("ctStatusCode") String ctStatusCode, @RequestParam("cate") String cate, HttpSession session) throws Exception {
         /*
             '예약내역목록' 에서 탭별로 다른 값 노출
            0 : 이용자의 STATUS 값 조회
@@ -138,11 +149,11 @@ public class CateringController {
                 // user 라면
 
                 id = ((User) session.getAttribute("user")).getUserId();
-                if (ctStatusCode.equals("0")){
+               /* if (ctStatusCode.equals("0")){
                     search.setSearchCondition("2");
-                }else {
-                    search.setSearchCondition("0");
-                }
+                }else {*/
+                    search.setSearchCondition("0"); //statusCode에 따라 출력
+                //}
             } else if (role == "truck" || role.equals("truck")) {
                 // truck이라면
 
@@ -159,8 +170,64 @@ public class CateringController {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
         System.out.println(map.get("list"));
         modelAndView.addObject("list", map.get("list"));
-        modelAndView.setViewName("/views/catering/mainCalendar.jsp");
 
+        if (cate == "list" || cate.equals("list")) {
+            modelAndView.setViewName("/views/catering/ListCatering.jsp");
+        }else{
+            modelAndView.setViewName("/views/catering/mainCalendar.jsp");
+        }
+        return modelAndView;
+    }
+
+
+
+    @RequestMapping( value="getCtServAllList", method= RequestMethod.GET)
+    public ModelAndView getCtServAllList(@ModelAttribute("search") Search search, @RequestParam("cate") String cate, HttpSession session) throws Exception {
+        /*
+            예약 가능한 서비스 출력, 즉 statusCode=0 인 것 출력
+            이 때, user는 전체 서비스고 (condition=2)
+            truck은 본인의 서비스만 출력
+            search.condition 값 (1) 로 구분한당.
+         */
+
+        System.out.println("CateringController.getCtStatusList");
+        String id="";
+
+        Map<String , Object> map= new HashMap<String , Object>();
+        String role = (String)session.getAttribute("role");// role로 구분할 예정 - user / truck
+        System.out.println("role = " + role);
+        ModelAndView modelAndView = new ModelAndView();
+
+
+        if (role == "user" || role.equals("user")) {
+            // user 라면
+
+            id = ((User) session.getAttribute("user")).getUserId();
+            search.setSearchCondition("2");
+
+        } else if (role == "truck" || role.equals("truck")) {
+            // truck이라면
+
+            id = ((Truck) session.getAttribute("truck")).getTruckId();
+
+            search.setSearchCondition("1");
+
+
+        }
+
+
+        map = cateringService.getCtDateList(search, id);
+
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
+        System.out.println(map.get("list"));
+        modelAndView.addObject("list", map.get("list"));
+
+
+        if (cate == "list" || cate.equals("list")) {
+            modelAndView.setViewName("/views/catering/ListCatering.jsp");
+        }else{
+            modelAndView.setViewName("/views/catering/mainCalendar.jsp");
+        }
         return modelAndView;
     }
 

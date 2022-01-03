@@ -107,6 +107,7 @@
         #calendar {
             max-width: 900px;
             margin: 20px auto;
+            margin-top: 132px
         }
         img{ max-width:100%;}
         .allCT{
@@ -119,15 +120,15 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=51615d81a030d0475e576eb41e443c14&libraries=services"></script>
 
 <body id="page-top">
-<jsp:include page="/views/toolbar.jsp" />
+<jsp:include page="/views/navbar.jsp" />
 
 <div id="calendar-container">
     <div id="calendar"></div>
     <div id="calStatus"> <a href="/catering/mainCalendar"> 메인 </a>
-        <a href="/catering/getCtStatusList?ctStatusCode=0" style=" background-color : #008d62;"> 예약가능 </a>
-        <a href="/catering/getCtStatusList?ctStatusCode=1" style=" background-color : #bcb5f3;"> 수락대기 </a>
-        <a href="/catering/getCtStatusList?ctStatusCode=4" style=" background-color : #fcab31;"> 수락완료(결제대기) </a>
-        <a href="/catering/getCtStatusList?ctStatusCode=5" style=" background-color : #f81f59;"> 예약완료 </a></div>
+        <a href="/catering/getCtServAllList?cate=cld" style=" background-color : #008d62;"> 예약가능 </a>
+        <a href="/catering/getCtStatusList?ctStatusCode=1&cate=cld" style=" background-color : #bcb5f3;"> 수락대기 </a>
+        <a href="/catering/getCtStatusList?ctStatusCode=4&cate=cld" style=" background-color : #fcab31;"> 수락완료(결제대기) </a>
+        <a href="/catering/getCtStatusList?ctStatusCode=5&cate=cld" style=" background-color : #f81f59;"> 예약완료 </a></div>
 
 </div>
 
@@ -180,6 +181,7 @@
                     data: {
                         ctNo: modal.find("input[name='ctNo']").val(),
                         ctUserId: '${sessionScope.user.userId}',
+                        ctUserName: '${sessionScope.user.userName}',
                         ctUserPhone: modal.find("input[name='ctUserPhone']").val(),
                         ctUserAddr: modal.find("input[name='ctUserAddr']").val(),
                         ctUserAddrDetail: modal.find("input[name='ctUserAddrDetail']").val(),

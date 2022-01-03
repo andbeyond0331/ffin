@@ -52,10 +52,10 @@ public class CateringDaoImpl implements CateringDao {
     }
 
     @Override
-    public Map<String, Object> getCtDateList(Search search, String ctDate) throws Exception {
+    public Map<String, Object> getCtDateList(Search search, String id) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("search",search);
-        map.put("ctDate", ctDate);
+        map.put("id", id);
 
         List<Catering> list = sqlSession.selectList("CateringMapper.getCtDateList", map);
         map.put("list",list);

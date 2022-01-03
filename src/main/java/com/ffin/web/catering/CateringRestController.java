@@ -91,6 +91,7 @@ public class CateringRestController {
 
         int ctNo = Integer.parseInt(request.getParameter("ctNo"));
         String ctUserId = request.getParameter("ctUserId");
+        String ctUserName = request.getParameter("ctUserName");
         String ctPhone = request.getParameter("ctUserPhone");
         String ctAdd = request.getParameter("ctUserAddr");
         String ctAddDetail = request.getParameter("ctUserAddrDetail");
@@ -102,6 +103,7 @@ public class CateringRestController {
 
         User user = new User();
         user.setUserId(ctUserId);
+        user.setUserName(ctUserName);
         Catering catering = new Catering();
         catering.setCtNo(ctNo);
         catering.setCtUser(user);
