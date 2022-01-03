@@ -46,16 +46,7 @@ public class CateringController {
 
     @RequestMapping( value="mainCalendar", method= RequestMethod.GET)
     public ModelAndView mainCalendar(@ModelAttribute("search") Search search , HttpSession session) throws Exception {
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
+
 
         System.out.println("CateringController.mainCalendar");
            /* 메인 화면
@@ -82,7 +73,7 @@ public class CateringController {
             User user = (User) session.getAttribute("user");
             id = user.getUserId();
             System.out.println("user id: "+id);
-            search.setSearchCondition("0");
+            search.setSearchCondition("2");
 
         }else if(role == "truck" || role.equals("truck")){
             // truck이라면
@@ -125,7 +116,7 @@ public class CateringController {
 */
 
 
-    @RequestMapping( value="/getCtStatusList", method= RequestMethod.GET)
+    @RequestMapping( value="getCtStatusList", method= RequestMethod.GET)
     public ModelAndView getCtStatusList(@ModelAttribute("search") Search search, @RequestParam("ctStatusCode") String ctStatusCode, HttpSession session) throws Exception {
         /*
             '예약내역목록' 에서 탭별로 다른 값 노출
@@ -133,10 +124,8 @@ public class CateringController {
            1 : 사업자의 STATUS 값 조회
             Ajax 로 노출시킬지 고민 중.
          */
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
+
         System.out.println("CateringController.getCtStatusList");
-        System.out.println("////////////////////////////////////////////////////");
         String id="";
         System.out.println("/////////ctStatusCode: "+ctStatusCode);
         Map<String , Object> map= new HashMap<String , Object>();
@@ -144,24 +133,31 @@ public class CateringController {
         System.out.println("role = " + role);
         ModelAndView modelAndView = new ModelAndView();
 
-        if (ctStatusCode =="0"){ //이용 가능한 서비스만 노출되도록
-            search.setSearchCondition("2");
-        }else {
+
             if (role == "user" || role.equals("user")) {
                 // user 라면
-                id = ((User) session.getAttribute("user")).getUserId();
-                System.out.println("user id: " + id);
-                search.setSearchCondition("0");
 
+                id = ((User) session.getAttribute("user")).getUserId();
+                if (ctStatusCode.equals("0")){
+                    search.setSearchCondition("2");
+                }else {
+                    search.setSearchCondition("0");
+                }
             } else if (role == "truck" || role.equals("truck")) {
                 // truck이라면
+
                 id = ((Truck) session.getAttribute("truck")).getTruckId();
                 System.out.println("truck id: " + id);
                 search.setSearchCondition("1");
 
-            }
+
         }
+
+
         map = cateringService.getCtStatusList(search, id, ctStatusCode);
+
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
+        System.out.println(map.get("list"));
         modelAndView.addObject("list", map.get("list"));
         modelAndView.setViewName("/views/catering/mainCalendar.jsp");
 

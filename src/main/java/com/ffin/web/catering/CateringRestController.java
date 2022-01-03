@@ -38,9 +38,7 @@ public class CateringRestController {
     @RequestMapping( value="json/updateUserRes")
     @ResponseBody
     public Catering updateUserRes(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
+
 
         System.out.println("json/updateUserRes   : POST");
         request.setCharacterEncoding("UTF-8");
@@ -63,12 +61,10 @@ public class CateringRestController {
                 상세정보조회.
              */
         request.setCharacterEncoding("UTF-8");
-        System.out.println("////////////////////////////////////////////////////");
+
         System.out.println("CateringController.REST");
         System.out.println("ctNo = " + ctNo);
-        System.out.println("////////////////////////////////////////////////////");
 
-        System.out.println("////////////////////////////////////////////////////");
 
         Catering catering = cateringService.getCtDetail(ctNo);
         System.out.println("catering = " + catering);
@@ -88,9 +84,7 @@ public class CateringRestController {
         /*
             이용자가 예약을 등록함
          */
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
+
 
         request.setCharacterEncoding("UTF-8");
         System.out.println("CateringController.updateCtResAdd");
@@ -139,9 +133,7 @@ public class CateringRestController {
            /* 사업자가 등록한 서비스를 수정함
             기준 ; status = 0 이어야 함 (애초에 status가 0이어야 수정 버튼을 보이게 하려고 해서 따로 where절에 조건을 붙이지는 않았음
             추후 견고한 코딩을 위하여 이 부분은 수정할 예정임*/
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
+
 
         System.out.println("CateringController.updateCtMenuQty");
         int ctNo = Integer.parseInt(request.getParameter("ctNo"));
@@ -161,9 +153,7 @@ public class CateringRestController {
         /*
             statusCode = 6
          */
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
+
 
         System.out.println("CateringController.updateCtServDelete");
         System.out.println("ctno: "+ctNo);
@@ -184,10 +174,7 @@ public class CateringRestController {
                 예약 내역을 불러온다. 상세정보조회.
              */
         request.setCharacterEncoding("UTF-8");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
+
 
         System.out.println("CateringController.REST");
         System.out.println("ctNo = " + ctNo);
@@ -211,10 +198,7 @@ public class CateringRestController {
             이용자 혹은 트럭이 취소를 할 수 있음
             추후 메모가 생기면 메모도 같이 보낼 수 있어야 할 듯
          */
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
+
 
         System.out.println("Rest. CateringController.updateCtResCancel");
 
@@ -235,10 +219,7 @@ public class CateringRestController {
             사업자가 서비스를 등록하기 위해 사용하는 화면
             truckId로 truck의 정보 및 메뉴 정보를 불러와서 화면에 뿌려준다.
          */
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
+
 
         System.out.println("addCt   : GET/REST");
         System.out.println("truckId = " + truckId);
@@ -262,10 +243,7 @@ public class CateringRestController {
             addCtView
             사업자가 서비스를 등록하기 위해 사용하는 화면
          */
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
+
 
         System.out.println("REST  addCt   : POST");
         String truckId = ((Truck)session.getAttribute("truck")).getTruckId();

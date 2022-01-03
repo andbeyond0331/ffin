@@ -116,19 +116,19 @@
 
 </head>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=51615d81a030d0475e576eb41e443c14&libraries=services"></script>"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=51615d81a030d0475e576eb41e443c14&libraries=services"></script>
 
 <body id="page-top">
 <jsp:include page="/views/toolbar.jsp" />
 
 <div id="calendar-container">
     <div id="calendar"></div>
-    <div id="calStatus"> <a href="/catering/mainCalendar" class="allCT"> 전  체 </a>
-        <a href="#" style=" background-color : #ced4da;"> 예약가능 </a>
-        <a href="#" class="allCT"> 수락대기 </a>
-        <a href="#" class="allCT"> 수락완료(결제대기) </a>
-        <a href="#" class="allCT"> 예약완료 </a></div>
-         <button type="button" class="btn btn-primary" id="gogogogogogo">예약가능</button>
+    <div id="calStatus"> <a href="/catering/mainCalendar"> 메인 </a>
+        <a href="/catering/getCtStatusList?ctStatusCode=0" style=" background-color : #008d62;"> 예약가능 </a>
+        <a href="/catering/getCtStatusList?ctStatusCode=1" style=" background-color : #bcb5f3;"> 수락대기 </a>
+        <a href="/catering/getCtStatusList?ctStatusCode=4" style=" background-color : #fcab31;"> 수락완료(결제대기) </a>
+        <a href="/catering/getCtStatusList?ctStatusCode=5" style=" background-color : #f81f59;"> 예약완료 </a></div>
+
 </div>
 
 <!-- Modal -->
@@ -142,7 +142,7 @@
                 </button>
             </div>
             <div class="modal-body"></div>
-
+            <div id="map" style='width:100%;height:350px; display:none;'></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-default" id="AddCtRes" name="AddCtRes">예약</button>
@@ -155,10 +155,6 @@
 <script>
     var role = '${sessionScope.role}';
 
-    $( "#gogogogogogo" ).on("click" , function() {
-        alert(1)
-        self.location ="/msg/getCtStatus";
-    });
 
     $(function() {
         var modal = $('#staticBackdrop');
@@ -168,23 +164,13 @@
             e.stopImmediatePropagation();
         });
 
+
+
         $(".btn-default").on("click", function () {
             /*
                 사장님께 문자 고 고
              */
 
-            //  var
-            /* var ctUserName = modal.find("input[name='ctUserName']").val();
-             var ctUserPhone = modal.find("input[name='ctUserPhone']").val();
-             var ctUserAddr = modal.find("input[name='ctUserAddr']").val();
-             var ctUserAddrDetail = modal.find("input[name='ctUserAddrDetail']").val();
-             var ctMenuQty = modal.find("input[name='ctMenuQty']").val();
-             var ctQuotation = modal.find("input[name='ctQuotation']").val();
-             var ctStartTime = modal.find("input[name='ctStartTime']").val();
-             var ctEndTime = modal.find("input[name='ctEndTime']").val();
-             var ctUserRequest = modal.find("textarea[name='ctUserRequest']").val();*/
-
-            //console.log(ctUserName + ":" + ctUserPhone + ":" +' ctUserAddr + ":" +ctUserAddrDetail + ":" +ctMenuQty + ":" +ctQuotation + ":" +ctStartTime + ":" +ctEndTime + ":" +ctUserRequest)
 
             $.ajax(
                 {
@@ -193,7 +179,7 @@
                     contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                     data: {
                         ctNo: modal.find("input[name='ctNo']").val(),
-                        ctUserId: modal.find("input[name='ctUserId']").val(),
+                        ctUserId: '${sessionScope.user.userId}',
                         ctUserPhone: modal.find("input[name='ctUserPhone']").val(),
                         ctUserAddr: modal.find("input[name='ctUserAddr']").val(),
                         ctUserAddrDetail: modal.find("input[name='ctUserAddrDetail']").val(),
@@ -214,23 +200,54 @@
                 });//end ajax
         });
 
+    });
+
+
+
+    function lookMap(){
+        var modal = $('#staticBackdrop');
+
+
+        /* 지도 */
+        var address =modal.find("input[name='ctAdd']").val()+" "+modal.find("input[name='ctAddDetail']").val();
+        console.log("address: "+address)
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div
             mapOption = {
                 center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
                 level: 3 // 지도의 확대 레벨
             };
 
-// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+// 지도를 생성합니다
         var map = new kakao.maps.Map(mapContainer, mapOption);
-        map.layout;
-        console.log(mapContainer.innerText)
 
-    });
+// 주소-좌표 변환 객체를 생성합니다
+        var geocoder = new kakao.maps.services.Geocoder();
+
+// 주소로 좌표를 검색합니다
+        geocoder.addressSearch(address, function(result, status) {
+
+            // 정상적으로 검색이 완료됐으면
+            if (status === kakao.maps.services.Status.OK) {
+
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                // 결과값으로 받은 위치를 마커로 표시합니다
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: coords
+                });
 
 
 
-    function lookMap(){
-        //document.getElementById('calendar');
+                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                map.setCenter(coords);
+            }
+
+
+        });
+
+        $("#map").css("display","");
+        map.relayout();
 
     }
 
@@ -351,8 +368,6 @@
             data:{
             },
             success: function (data) {
-                // alert(data);
-                //t.TRUCK_ID, t.TRUCK_NAME, t.TRUCK_PHONE, m.IS_SIG_MENU, m.MENU_IMG1, m.MENU_NO, m.MENU_NAME, m.MENU_PRICE
 
                 var div="";
                 // var role = '${sessionScope.role}';
@@ -429,15 +444,17 @@
                     +"<div ><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
                     +"<input type='hidden' id='ctNo' name='ctNo' value='"+data.catering.ctNo+"'/>"
                 if (role=="user") {
+
+
                     div +=
                         "<div class='row'>"
                         +"<div ><strong>최소 수량</strong> : "+data.catering.ctMenuMinQty+"</div></div>"
                         +"<div class='row'>"
                         +"<div ><strong>최대 수량</strong> : "+data.catering.ctMenuMaxQty+"</div></div>"
                         +"<div class='row'>"
-                        +"<div ><strong>예약자 아이디</strong> : <input type='text' id='ctUserId' name='ctUserId'/></div></div>"
+                        +"<div ><strong>예약자 아이디</strong> : "+'${sessionScope.user.userId}'+"</div></div>"
                         +"<div class='row'>"
-                        +"<div ><strong>예약자 전화번호</strong> : <input type='text' id='ctUserPhone' name='ctUserPhone'/></div></div>"
+                        +"<div ><strong>예약자 전화번호</strong> : <input type='text' id='ctUserPhone' name='ctUserPhone' value="+'${sessionScope.user.userPhone}'+"></div></div>"
                         +"<div class='row'>"
                         +"<div ><strong>예약자 주소</strong> : " +
                         "<input type='text'  id='ctUserAddr' name='ctUserAddr' placeholder='주소검색' readonly='readonly'></div>" +
@@ -534,11 +551,6 @@
                     +"<div class='row'>"
                     +"<div ><strong>종료 시간</strong> : "+data.catering.ctEndTime+"</div></div>"
                     +"<div class='row'>"
-                    +"<div ><strong>주소</strong> : "+data.catering.ctAdd+" "+data.catering.ctAddDetail+"</div></div>"
-                    +"<div class='row'>"
-                    +"<div id ='map' name='map' style='width:100%;height:350px;'>b"
-                    +"</div></div>"
-                    +"<div class='row'>"
                     +"<div ><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
                     +"<div class='row'>"
                     +"<div ><strong></strong> <img src='../../../resources/image/"+data.catering.ctMenu.menuImg1+"'></div></div>"
@@ -550,10 +562,12 @@
                     +"<div ><strong>요청사항</strong> : "+data.catering.ctUserRequest+"</div></div>"
                     +"<div class='row'>"
                     +"<div ><strong>견적</strong> : "+data.catering.ctQuotation+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>주소</strong> : "+data.catering.ctAdd+" "+data.catering.ctAddDetail+"</div><button type='button' class='btn btn-outline-danger' id='lookMap' name='lookMap' onclick='lookMap();'>지도가 궁금행?</button></div>"
+
                     +"<input type='hidden' id='ctNo' name='ctNo' value='"+data.catering.ctNo+"'/>"
                 +"<input type='hidden' id='ctAdd' name='ctAdd' value='"+data.catering.ctAdd+"'/>"
-                +"<input type='hidden' id='ctAddDetail' name='ctAddDetail' value='"+data.catering.ctAddDetail+"'/>"
-                +"<button type='button' class='btn btn-outline-danger' id='lookMap' name='lookMap' onclick='lookMap();'>지도나와봐</button>";
+                +"<input type='hidden' id='ctAddDetail' name='ctAddDetail' value='"+data.catering.ctAddDetail+"'/>";
 
 
 
@@ -732,6 +746,9 @@
 
     /* Daum API */
     function addrApi(){
+
+        var element_wrap = document.getElementById("wrap");
+
         new daum.Postcode({
             oncomplete: function(data) {
 
@@ -784,9 +801,6 @@
             }
         }).open();
     }
-
-
-
 
 
 </script>

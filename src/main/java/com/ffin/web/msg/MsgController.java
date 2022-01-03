@@ -64,6 +64,7 @@ public class MsgController {
         return modelAndView;
     }
 
+/*
 
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public ModelAndView login() throws Exception{
@@ -98,19 +99,8 @@ public class MsgController {
 
 
     }
+*/
 
-
-
-    @RequestMapping( value="/getCtStatus", method= RequestMethod.GET)
-    public String getCtStatus(HttpSession session) throws Exception {
-
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////////////");
-        System.out.println("CateringController.getCtStatusList");
-        System.out.println("////////////////////////////////////////////////////");
-
-        return "yes";
-    }
 
 
 /*
