@@ -69,7 +69,7 @@ public class CateringServiceTest {
             search.setSearchCondition("1");
 
         }
-        map = cateringService.getCtList(search, id);
+        map = cateringService.getCtList(search, id, "cld");
         //System.out.println("map = " + map);
         List<Catering> list = (List<Catering>) map.get("list");
         System.out.println("list = " + list);
@@ -102,7 +102,7 @@ public class CateringServiceTest {
         String id="user01";
 
 
-        Map<String, Object>  map = cateringService.getCtList(search, id);
+        Map<String, Object>  map = cateringService.getCtList(search, id, "cld");
 
     }
 
@@ -114,7 +114,7 @@ public class CateringServiceTest {
         String id="truck01";
         String ctStatusCode = "0";
 
-        Map<String, Object>  map = cateringService.getCtStatusList(search, id, ctStatusCode);
+        Map<String, Object>  map = cateringService.getCtStatusList(search, id, ctStatusCode, "cld");
 
     }
 
@@ -125,7 +125,7 @@ public class CateringServiceTest {
         String ctDate="2021-12-22";
 
 
-        Map<String, Object>  map = cateringService.getCtDateList(search, ctDate);
+        Map<String, Object>  map = cateringService.getCtDateList(search, ctDate, "cld");
 
     }
 

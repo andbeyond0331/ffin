@@ -44,9 +44,13 @@ public class CateringController {
     @Value("${pageSize}")
     int pageSize;
 
+    private int count=0;
     @RequestMapping( value="mainCalendar", method= RequestMethod.GET)
     public ModelAndView mainCalendar(@ModelAttribute("search") Search search , HttpSession session) throws Exception {
 
+        count++;
+        System.out.println("=============================================================");
+        System.out.println("count = " + count);
 
         System.out.println("CateringController.mainCalendar");
            /* 메인 화면
@@ -59,6 +63,8 @@ public class CateringController {
         String role = (String)session.getAttribute("role");// role로 구분할 예정 - user / truck
         System.out.println("role = " + role);
 
+        String cate = "cld"; // calender 와 list 구분
+
         if (role == "user" || role.equals("user")){
             // session 처리 되면 주석 풀어서 체크하기. 지금은 임의로 한거.
             //id = ((User)session.getAttribute("user")).getUserId();
@@ -67,14 +73,15 @@ public class CateringController {
             id = user.getUserId();
             System.out.println("user id: "+id);
             search.setSearchCondition("3"); //user는 mainCalendar에서 내가 예약한건 + 예약가능한 건을 출력한다.
-            map = cateringService.getCtDateList(search, id);
+            map = cateringService.getCtDateList(search, id, cate);
+
 
         }else if(role == "truck" || role.equals("truck")){
             // truck이라면
             id = ((Truck)session.getAttribute("truck")).getTruckId();
             System.out.println("truck id: "+id);
             search.setSearchCondition("0"); // truck은 mainCalendar에서 내가 등록한 모든 건을 출력한다.
-            map = cateringService.getCtDateList(search, id);
+            map = cateringService.getCtDateList(search, id, cate);
         }
 
         System.out.println("map = " + map);
@@ -93,11 +100,20 @@ public class CateringController {
             초기값 : 전체값
          */
 
+        if(search.getCurrentPage() ==0 ){
+            search.setCurrentPage(1);
+        }
+        search.setPageSize(pageSize);
+
+
+
+
         System.out.println("CateringController.listCatering");
         String id="";
         Map<String , Object> map= new HashMap<String , Object>();
         String role = (String)session.getAttribute("role");// role로 구분할 예정 - user / truck
         System.out.println("role = " + role);
+        String cate = "list";
 
         if (role == "user" || role.equals("user")){
             // session 처리 되면 주석 풀어서 체크하기. 지금은 임의로 한거.
@@ -107,27 +123,29 @@ public class CateringController {
             id = user.getUserId();
             System.out.println("user id: "+id);
             search.setSearchCondition("0"); // user가 예약한 모든 내역을 출력한다.
-            map =  cateringService.getCtList(search, id);
+            map =  cateringService.getCtList(search, id, cate);
 
         }else if(role == "truck" || role.equals("truck")){
             // truck이라면
             id = ((Truck)session.getAttribute("truck")).getTruckId();
             System.out.println("truck id: "+id);
             search.setSearchCondition("0");
-            map =  cateringService.getCtDateList(search, id);
+            map =  cateringService.getCtDateList(search, id, cate);
         }
 
 
         System.out.println("map = " + map);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("list", map.get("list"));
+        modelAndView.addObject("flag", "0");
+
         modelAndView.setViewName("/views/catering/ListCatering.jsp");
 
         return modelAndView;
     }
 
 
-    @RequestMapping( value="getCtStatusList", method= RequestMethod.GET)
+    @RequestMapping( value="getCtStatusList")
     public ModelAndView getCtStatusList(@ModelAttribute("search") Search search, @RequestParam("ctStatusCode") String ctStatusCode, @RequestParam("cate") String cate, HttpSession session) throws Exception {
         /*
             '예약내역목록' 에서 탭별로 다른 값 노출
@@ -137,6 +155,15 @@ public class CateringController {
          */
 
         System.out.println("CateringController.getCtStatusList");
+
+
+        if(search.getCurrentPage() ==0 ){
+            search.setCurrentPage(1);
+        }
+        search.setPageSize(pageSize);
+
+
+
         String id="";
         System.out.println("/////////ctStatusCode: "+ctStatusCode);
         Map<String , Object> map= new HashMap<String , Object>();
@@ -164,13 +191,18 @@ public class CateringController {
 
         }
 
+        if (ctStatusCode.equals("2")){
+            search.setSearchCondition("3"); // 이용자 취소 및 사업자 거절 출력
+        }
 
-        map = cateringService.getCtStatusList(search, id, ctStatusCode);
+        map = cateringService.getCtStatusList(search, id, ctStatusCode, cate);
 
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
         System.out.println(map.get("list"));
-        modelAndView.addObject("list", map.get("list"));
 
+        modelAndView.addObject("list", map.get("list"));
+        modelAndView.addObject("flag", "1");
+        modelAndView.addObject("ctStatusCode", ctStatusCode);
         if (cate == "list" || cate.equals("list")) {
             modelAndView.setViewName("/views/catering/ListCatering.jsp");
         }else{
@@ -181,7 +213,7 @@ public class CateringController {
 
 
 
-    @RequestMapping( value="getCtServAllList", method= RequestMethod.GET)
+    @RequestMapping( value="getCtServAllList")
     public ModelAndView getCtServAllList(@ModelAttribute("search") Search search, @RequestParam("cate") String cate, HttpSession session) throws Exception {
         /*
             예약 가능한 서비스 출력, 즉 statusCode=0 인 것 출력
@@ -191,6 +223,16 @@ public class CateringController {
          */
 
         System.out.println("CateringController.getCtStatusList");
+
+
+        if(search.getCurrentPage() ==0 ){
+            search.setCurrentPage(1);
+        }
+        search.setPageSize(pageSize);
+
+
+
+
         String id="";
 
         Map<String , Object> map= new HashMap<String , Object>();
@@ -216,12 +258,12 @@ public class CateringController {
         }
 
 
-        map = cateringService.getCtDateList(search, id);
+        map = cateringService.getCtDateList(search, id, cate);
 
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
         System.out.println(map.get("list"));
         modelAndView.addObject("list", map.get("list"));
-
+        modelAndView.addObject("flag", "2");
 
         if (cate == "list" || cate.equals("list")) {
             modelAndView.setViewName("/views/catering/ListCatering.jsp");
@@ -230,136 +272,6 @@ public class CateringController {
         }
         return modelAndView;
     }
-
-
-
-
-
-/*
-
-
-    @RequestMapping( value="getCtDateList")
-    public ModelAndView getCtDateList(@ModelAttribute("search") Search search, @RequestParam("ctDate") String ctDate) throws Exception {
-        */
-/*
-            달력에서 필요한 내용
-            날짜 눌렀을때 해당 날짜에 나오는 리스트.
-            아마도 ajax 일 듯.
-            넘기는 jsp는 대충 써놓음
-         *//*
-
-        System.out.println("CateringController.getCtDateList");
-
-        Map<String , Object> map =  cateringService.getCtDateList(search, ctDate);
-
-        System.out.println("map = " + map);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("list", map.get("list"));
-        modelAndView.setViewName("/views/catering/userList.jsp");
-
-        return modelAndView;
-    }
-
-
-    @RequestMapping( value="addCt", method=RequestMethod.POST)
-    public ModelAndView addCt(@ModelAttribute("catering") Catering catering) throws Exception {
-          */
-/*
-            서비스를 등록!
-            이것도 ajax인 것 같기도...^^
-         *//*
-
-
-        System.out.println("addCt   : POST") ;
-        System.out.println("catering = " + catering);
-
-        cateringService.addCt(catering);
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("catering", catering);
-        modelAndView.setViewName("/views/catering/mainCalendar.jsp");
-
-        return modelAndView;
-    }
-
-    @RequestMapping( value="getCtDetail")
-    public ModelAndView getCtDetail(@RequestParam("ctNo") int ctNo) throws Exception {
-        */
-/*
-            서비스내역, 예약 내역을 불러온다.
-            상세정보조회.
-
-            0일떄랑 아닐떄를 나눠야하나 고민.
-         *//*
-
-        System.out.println("CateringController.getCtDetail");
-        System.out.println("ctNo = " + ctNo);
-
-        Catering catering = cateringService.getCtDetail(ctNo);
-        System.out.println("catering = " + catering);
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("catering", catering);
-        modelAndView.setViewName("/views/catering/getCtDetail.jsp");
-
-        return modelAndView;
-    }
-
-
-
-
-    @RequestMapping( value="addCtUser", method=RequestMethod.GET)
-    public ModelAndView addCtUser(@RequestParam("ctNo") int ctNo)  throws Exception {
-        */
-/*
-            이용자가 예약하기 눌렀을 때 보이는 view 화면.
-            우선 서비스 값 담아와서 뿌려줘야하기때문에
-            getCtDetail을 함
-         *//*
-
-        System.out.println("addCtUser   : GET");
-        System.out.println("ctNo = " + ctNo);
-
-
-        Catering catering = cateringService.getCtDetail(ctNo);
-        System.out.println("catering = " + catering);
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("catering", catering);
-        modelAndView.setViewName("/views/catering/getCtDetail.jsp");
-
-        return modelAndView;
-    }
-
-
-
-
-
-    @RequestMapping( value="updateCtRes", method=RequestMethod.POST)
-    public ModelAndView updateCtRes(@ModelAttribute("catering") Catering catering) throws Exception {
-        */
-/*
-            이용자가 예약한 내용을 수정함
-            기준 ; status = 1 이어야 함 (애초에 status가 1이어야 수정 버튼을 보이게 하려고 해서 따로 where절에 조건을 붙이지는 않았음
-            추후 견고한 코딩을 위하여 이 부분은 수정할 예정임
-         *//*
-
-        System.out.println("CateringController.updateCtRes");
-        System.out.println("catering = " + catering);
-
-        cateringService.updateCtRes(catering);
-
-        Catering resCatering = cateringService.getCtDetail(catering.getCtNo());
-        // 업데이트 이후, 등록된 전체 내용을 보내고자 함
-
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("catering", resCatering);
-        modelAndView.setViewName("/views/catering/getCtDetail.jsp");
-        return modelAndView;
-    }
-
-
-*/
 
 
 

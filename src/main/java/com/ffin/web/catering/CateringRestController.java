@@ -12,6 +12,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,6 +36,16 @@ public class CateringRestController {
     public CateringRestController(){
         System.out.println(this.getClass());
     }
+
+
+    @Value("${pageUnit}") //pageUnit은 propertySource를 위에 선언하고 @value의 값을 지정해줌
+    //추후 pageUnit과 pageSize 출력되는지 jUnit에서 확인이 필요합니다.
+    //@Value("#{commonProperties['pageUnit'] ?: 3}")
+    int pageUnit;
+
+    @Value("${pageSize}")
+    int pageSize;
+
 
     @RequestMapping( value="json/updateUserRes")
     @ResponseBody
@@ -281,6 +293,109 @@ public class CateringRestController {
         return truckId;
     }
 
+    @RequestMapping( value="json/listCatering", method= RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView listCatering(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+        System.out.println("Rest. CateringController.listCatering");
+        request.setCharacterEncoding("UTF-8");
 
+        int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+        System.out.println("currentPage : "+currentPage);
+        Search search = new Search();
+        search.setCurrentPage(currentPage);
+        search.setPageSize(pageSize);
+        String id="";
+        Map<String , Object> map= new HashMap<String , Object>();
+        String role = (String)session.getAttribute("role");// role로 구분할 예정 - user / truck
+        System.out.println("role = " + role);
+        /*
+            data
+            - ctStatusCode
+            - cate : list
+            - flag : 0 / 1 / 2
+                    0 : listCalendar
+                    1 : getCtStatusList
+                    2 : getCtServAllList
+         */
+
+        String ctStatusCode = request.getParameter("ctStatusCode");
+        String cate = request.getParameter("cate");
+        String flag = request.getParameter("flag");
+
+        if ( flag.equals("0") ){ // listCalendar
+            if (role == "user" || role.equals("user")){
+                // session 처리 되면 주석 풀어서 체크하기. 지금은 임의로 한거.
+                //id = ((User)session.getAttribute("user")).getUserId();
+                //id = (String) session.getAttribute("userId");
+                User user = (User) session.getAttribute("user");
+                id = user.getUserId();
+                System.out.println("user id: "+id);
+                search.setSearchCondition("0"); // user가 예약한 모든 내역을 출력한다.
+                map =  cateringService.getCtList(search, id, cate);
+
+            }else if(role == "truck" || role.equals("truck")){
+                // truck이라면
+                id = ((Truck)session.getAttribute("truck")).getTruckId();
+                System.out.println("truck id: "+id);
+                search.setSearchCondition("0");
+                map =  cateringService.getCtDateList(search, id, cate);
+            }
+
+        }else if ( flag.equals("1")){ //getCtStatusList
+            if (role == "user" || role.equals("user")) {
+                // user 라면
+
+                id = ((User) session.getAttribute("user")).getUserId();
+               /* if (ctStatusCode.equals("0")){
+                    search.setSearchCondition("2");
+                }else {*/
+                search.setSearchCondition("0"); //statusCode에 따라 출력
+                //}
+            } else if (role == "truck" || role.equals("truck")) {
+                // truck이라면
+
+                id = ((Truck) session.getAttribute("truck")).getTruckId();
+                System.out.println("truck id: " + id);
+                search.setSearchCondition("1");
+            }
+
+            if (ctStatusCode.equals("2")){
+                search.setSearchCondition("3"); // 이용자 취소 및 사업자 거절 출력
+            }
+
+            map = cateringService.getCtStatusList(search, id, ctStatusCode, cate);
+
+
+        }else if( flag.equals("2")){ //getCtServAllList
+            if (role == "user" || role.equals("user")) {
+                // user 라면
+
+                id = ((User) session.getAttribute("user")).getUserId();
+                search.setSearchCondition("2");
+
+            } else if (role == "truck" || role.equals("truck")) {
+                // truck이라면
+
+                id = ((Truck) session.getAttribute("truck")).getTruckId();
+
+                search.setSearchCondition("1");
+
+
+            }
+
+
+            map = cateringService.getCtDateList(search, id, cate);
+
+
+        }
+
+
+
+        ModelAndView modelAndView = new ModelAndView("jsonView");
+        modelAndView.addObject("list", map.get("list"));
+
+
+        return modelAndView;
+    }
 
 }

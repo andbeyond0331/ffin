@@ -17,7 +17,7 @@
 
     </script>
 
-
+<%--
 
     <!-- Basic -->
     <meta charset="utf-8" />
@@ -59,7 +59,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="../resources/bootstrap/assets/favicons/favicon.ico">
     <link rel="manifest" href="../resources/bootstrap/assets/favicons/manifest.json">
     <meta name="msapplication-TileImage" content="../resources/bootstrap/assets/favicons/mstile-150x150.png">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">--%>
 
 </head>
 
@@ -295,16 +295,16 @@
 
 <!-- footer -->
 <jsp:include page="/views/footer.jsp" />
-
+<%--
 <!-- jQery -->
-<script src="../resources/bootstrap/js/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <!-- bootstrap js -->
 <script src="../resources/bootstrap/js/bootstrap.js"></script>
 <!-- slick  slider -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
 <!-- nice select -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
-<!-- custom js -->
+<!-- custom js -->--%>
 <script src="../resources/bootstrap/js/custom.js"></script>
 
 </body>

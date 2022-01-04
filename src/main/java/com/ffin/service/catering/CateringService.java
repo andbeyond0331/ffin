@@ -29,9 +29,12 @@ public interface CateringService {
                 1 : 사업자의 STATUS 값 조회
         3) getCtDateList(Search search, String ctDate) // 4
      */
-    public Map<String, Object> getCtList(Search search, String id) throws Exception;
-    public Map<String, Object> getCtStatusList(Search search, String id, String ctStatusCode) throws Exception;
-    public Map<String, Object> getCtDateList(Search search, String ctDate) throws Exception;
+    public Map<String, Object> getCtList(Search search, String id, String cate) throws Exception;
+    public Map<String, Object> getCtStatusList(Search search, String id, String ctStatusCode, String cate) throws Exception;
+    public Map<String, Object> getCtDateList(Search search, String ctDate, String cate) throws Exception;
+
+
+
 
      /*
         21. 12. 22

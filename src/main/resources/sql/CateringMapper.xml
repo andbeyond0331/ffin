@@ -89,6 +89,12 @@
 				CT_STATUS_CODE='0' AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO AND ct.ct_user_id = u.user_id
 			</where>
 		</if>
+		<!-- 이용자 취소 및 사업자 거절 출력  -->
+		<if test="search.searchCondition ==3">
+			<where>
+				CT_USER_ID = #{id} AND (CT_STATUS_CODE='2' OR CT_STATUS_CODE='3') AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO AND ct.ct_user_id = u.user_id
+			</where>
+		</if>
 	</select>
 
 	<select id="getCtDateList"	parameterType="map"	resultMap="cateringSelectMap">
@@ -121,6 +127,115 @@
 		</if>
 
 	</select>
+
+
+	<!-- 캘린더에서 보여지는거랑 리스트에서 보여지는거랑 쿼리를 다르게 써야 함
+	이유는 캘린더는 한번에 전체를 다 불러온다면,
+	리스트는 페이지 처리가 가능하므로...... ㅜ껚 -->
+
+
+	<select id="getCtList2"	parameterType="map"	resultMap="cateringSelectMap">
+		SELECT inner_table.*
+		FROM (SELECT
+				ct.*, tr.TRUCK_ID, tr.TRUCK_NAME, tr.TRUCK_PHONE, m.IS_SIG_MENU, m.MENU_IMG1, m.MENU_NO, m.MENU_NAME, m.MENU_PRICE, u.user_name
+				FROM catering ct, truck tr, menu m, user u
+					<if test="search.searchCondition ==0">
+						<where>
+							ct.CT_USER_ID = #{id} AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_STATUS_CODE !='6' AND ct.CT_MENU_NO = m.MENU_NO AND ct.CT_USER_ID = u.USER_ID
+						</where>
+					</if>
+					<if test="search.searchCondition ==1">
+						<where>
+							ct.CT_TRUCK_ID = #{id} AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_STATUS_CODE !='6' AND ct.CT_MENU_NO = m.MENU_NO AND ct.CT_USER_ID = u.USER_ID
+						</where>
+					</if>
+					<if test="search.searchCondition ==2">
+						<where>
+							(ct.CT_STATUS_CODE='0' OR (ct.CT_USER_ID=#{id} AND ct.CT_STATUS_CODE='5')) AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO AND ct.CT_USER_ID = u.USER_ID
+						</where>
+					</if>
+				ORDER BY ct.CT_DATE ) inner_table
+		limit #{search.startRowNum}, #{search.endRowNum}
+	</select>
+
+
+	<select id="getCtStatusList2"	parameterType="map"	resultMap="cateringSelectMap">
+		SELECT inner_table.*
+		FROM (SELECT
+		ct.*, tr.TRUCK_ID, tr.TRUCK_NAME, tr.TRUCK_PHONE, m.IS_SIG_MENU, m.MENU_IMG1, m.MENU_NO, m.MENU_NAME, m.MENU_PRICE, u.user_name
+		FROM catering ct, truck tr, menu m, user u
+		<if test="search.searchCondition ==0">
+			<where>
+				CT_USER_ID = #{id} AND CT_STATUS_CODE=#{ctStatusCode} AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO AND ct.ct_user_id = u.user_id
+			</where>
+		</if>
+		<if test="search.searchCondition ==1">
+			<where>
+				CT_TRUCK_ID = #{id} AND CT_STATUS_CODE=#{ctStatusCode} AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO AND ct.ct_user_id = u.user_id
+			</where>
+		</if>
+		<if test="search.searchCondition ==2">
+			<where>
+				CT_STATUS_CODE='0' AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO AND ct.ct_user_id = u.user_id
+			</where>
+		</if>
+		<!-- 이용자 취소 및 사업자 거절 출력  -->
+		<if test="search.searchCondition ==3">
+			<where>
+				CT_USER_ID = #{id} AND (CT_STATUS_CODE='2' OR CT_STATUS_CODE='3') AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO AND ct.ct_user_id = u.user_id
+			</where>
+		</if>
+		ORDER BY ct.CT_DATE ) inner_table
+		limit #{search.startRowNum}, #{search.endRowNum}
+	</select>
+
+	<select id="getCtDateList2"	parameterType="map"	resultMap="cateringSelectMap">
+		SELECT inner_table.*
+		FROM (SELECT
+		ct.*, tr.TRUCK_ID, tr.TRUCK_NAME, tr.TRUCK_PHONE, m.IS_SIG_MENU, m.MENU_IMG1, m.MENU_NO, m.MENU_NAME, m.MENU_PRICE
+		FROM  catering ct, truck tr, menu m
+		<if test="search.searchCondition ==0">
+			<where>
+				ct.CT_TRUCK_ID = #{id} AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_STATUS_CODE !='6' AND ct.CT_MENU_NO = m.MENU_NO
+			</where>
+		</if>
+		<if test="search.searchCondition ==1">
+			<where>
+				CT_STATUS_CODE = '0' AND CT_DATE > NOW()
+				AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO
+				AND ct.CT_TRUCK_ID=#{id}
+			</where>
+		</if>
+		<if test="search.searchCondition ==2">
+			<where>
+				CT_STATUS_CODE = '0' AND CT_DATE > NOW()
+				AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO
+
+			</where>
+		</if>
+		<if test="search.searchCondition ==3">
+			<where>
+				(ct.CT_STATUS_CODE='0' OR (ct.CT_USER_ID=#{id} AND ct.CT_STATUS_CODE='5')) AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO
+			</where>
+		</if>
+		ORDER BY ct.CT_DATE ) inner_table
+		limit #{search.startRowNum}, #{search.endRowNum}
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	<select id="getCtTruckMenu"	parameterType="string"	resultMap="cateringSelectMap">
 		SELECT

@@ -24,19 +24,22 @@ public class CateringServiceImpl implements CateringService {
     }
 
     @Override
-    public Map<String, Object> getCtList(Search search, String id) throws Exception {
-        return cateringDao.getCtList(search, id);
+    public Map<String, Object> getCtList(Search search, String id, String cate) throws Exception {
+        return cateringDao.getCtList(search, id, cate);
     }
 
     @Override
-    public Map<String, Object> getCtStatusList(Search search, String id, String ctStatusCode) throws Exception {
-        return cateringDao.getCtStatusList(search, id, ctStatusCode);
+    public Map<String, Object> getCtStatusList(Search search, String id, String ctStatusCode, String cate) throws Exception {
+        return cateringDao.getCtStatusList(search, id, ctStatusCode, cate);
     }
 
     @Override
-    public Map<String, Object> getCtDateList(Search search, String ctDate) throws Exception {
-        return cateringDao.getCtDateList(search, ctDate);
+    public Map<String, Object> getCtDateList(Search search, String ctDate, String cate) throws Exception {
+        return cateringDao.getCtDateList(search, ctDate, cate);
     }
+
+
+
 
     @Override
     public Catering getCtTruckMenu(String truckId) throws Exception {

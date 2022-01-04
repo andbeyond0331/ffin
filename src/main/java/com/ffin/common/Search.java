@@ -18,4 +18,14 @@ public class Search {
 	public Search() {
 	}
 
+	//==> Select Query 시 ROWNUM 마지막 값
+	public int getEndRowNum() {
+		return getCurrentPage()*getPageSize();
+	}
+	//==> Select Query 시 ROWNUM 시작 값
+	public int getStartRowNum() {
+		return (getCurrentPage()-1)*getPageSize();
+	}
+
+
 }
