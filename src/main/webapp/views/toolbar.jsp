@@ -164,6 +164,106 @@
                     });
                 });
         */
+        $(function() {
+            $("button.btn.btn-primary:Contains('확인')").click(function () {
+                var order = to_ajax()
+                alert(order)
+                append = "<input type=\"hidden\" id=\"orderNo\" name=\"orderNo\" value=\""+order+"\">";
+                $('#app').append(append);
+                alert(append)
+                self.location = "/purchase/addCart?orderNo="+order
+               /* $("form").attr("method" , "POST").attr("action" , "/purchase/addCart").submit();*/
+
+            });
+        });
+        $(function() {
+            $("button.btn.btn-primary:Contains('json')").click(function () {
+                alert("ddk");
+                to_ajax();
+                $("form").attr("method" , "POST").attr("action" , "/purchase/addCart").submit();
+            });
+        });
+        function  to_ajax(){
+            var reOrderNo;
+            var odMenuName =[];
+            var odOptionGroupName = [];
+            var odOptionName = [];
+            var odMenuQty = [];
+            var odMenuPrice = [];
+            var odOptionPrice = [];
+            var odMenuImage = [];
+            var orderPickUpTime = $('input[name="orderPickUpTime"]:checked').val();
+            var orderTotalPrice = $('#orderTotalPrice').val();
+            var orderUserId = $('#orderUserId').val();
+            var orderTruckId = $('#orderTruckId').val();
+            var orderRequest = $('#orderRequest').val();
+            var orderQty = $('#orderQty').val();
+
+            $('input[name="odMenuName"]').each(function (i){
+                odMenuName.push($(this).val());
+            });
+
+            $('input[name="odOptionGroupName"]').each(function (i){
+                odOptionGroupName.push($(this).val());
+            });
+
+            $('input[name="odOptionName"]').each(function (i){
+                odOptionName.push($(this).val());
+            });
+
+            $('input[name="odMenuQty"]').each(function (i){
+                odMenuQty.push($(this).val());
+            });
+
+            $('input[name="odMenuPrice"]').each(function (i){
+                odMenuPrice.push($(this).val());
+            });
+
+            $('input[name="odOptionPrice"]').each(function (i){
+                odOptionPrice.push($(this).val());
+            });
+
+            $('input[name="odMenuImage"]').each(function (i){
+                odMenuImage.push($(this).val());
+            });
+                   alert(orderPickUpTime)
+                   alert(orderTotalPrice)
+                   alert(orderUserId)
+                   alert(orderTruckId)
+                   alert(orderRequest)
+                   alert(orderQty)
+
+            var data ={
+                "odMenuName" : odMenuName,
+                "odOptionGroupName" : odOptionGroupName,
+                "odOptionName" : odOptionName,
+                "odMenuQty" : odMenuQty,
+                "odMenuPrice" : odMenuPrice,
+                "odOptionPrice" : odOptionPrice,
+                "odMenuImage" : odMenuImage,
+                "orderPickUpTime" : orderPickUpTime,
+                "orderTotalPrice" : orderTotalPrice,
+                "orderUserId" : orderUserId,
+                "orderTruckId" : orderTruckId,
+                "orderRequest" : orderRequest,
+                "orderQty" : orderQty,
+            }
+            $.ajax({
+                type: "post",
+                url: '/purchase/json/addCartList',
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data : data,
+                async: false,
+                dataType: 'json',
+                success: function(retVal) {
+                    reOrderNo = retVal.orderNo;
+                },
+                error: function (xhr,status,error) { alert("[Error]"+error); return; }
+
+
+            });
+            return reOrderNo;
+        }
 
 
     </script>
@@ -176,6 +276,7 @@
 </head>
 
 <body id="page-top">
+<form>
 
 <div class="hero_area">
 
@@ -339,7 +440,7 @@
                     </div>
 
                     <div class="custom_menu-btn">
-                        <button onclick="openNav()">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
                                 <i class="fas fa-shopping-basket fa-lg" style="color: #ffffff;"></i>
                         </button>
                     </div>
@@ -356,11 +457,139 @@
                 </div>
             </nav>
         </div>
+        <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel" style="margin-top: 80px">
+            <div class="offcanvas-header" id="add">
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">장바구니</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="content">
+
+
+
+                        <c:set var="i" value="0"/>
+                        <c:forEach var="cart" items="${map.get('list')}">
+                            <c:set var="i" value="${i+1}" />
+
+                            <script>
+                                var orderNo = 'fff';
+                                console.log(${cart.odMenuPrice});
+                                if(${cart.odMenuPrice}){
+
+                                }
+                            </script>
+
+
+                            <c:if test="${menu.option == 2}">
+
+                                </c:if>
+                            <c:choose>
+                                <c:when test="">
+
+                                </c:when>
+                                <c:when test="">
+
+                                </c:when>
+                                <c:when test=""></c:when>
+                                <c:when test=""></c:when>
+                                <c:otherwise>
+
+                                </c:otherwise>
+                            </c:choose>
+
+
+
+
+
+
+                                <div class="card mb-3" style="max-width: 540px;">
+                                    <div class="row g-0">
+                                        <div class="col-md-4">
+                                                ${i}
+                                            <img src="/resources/image/1.jpg" class="img-fluid rounded-start" alt="image">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${cart.odMenuName}</h5>
+                                                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                                <p class="card-text"><small class="text-muted">${cart.odMenuPrice + cart.odOptionPrice}</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                    <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
+                                    <input type="hidden" id="odOptionGroupName" name="odOptionGroupName" value="${cart.odOptionGroupName}"/>
+                                    <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.odOptionName}"/>
+                                    <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.odMenuQty}"/>
+                                    <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.odMenuPrice}"/>
+                                    <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
+                                    <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
+
+                        </c:forEach>
+
+
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">주문하기</button>
+                    <button type="button" class="btn btn-primary">json</button>
+                </div>
+            </div>
+        </div>
     </header>
 
 </div>
 
 
+<%--modal--%>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="orderPickUpTime" class="col-form-label">픽업희망시간:</label>
+                    <div class="btn-group" role="group"  aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" id="orderPickUpTime" name="orderPickUpTime" value="5" id="btnradio1" autocomplete="off" checked>
+                        <label class="btn btn-outline-primary" for="btnradio1" >5분</label>
+
+                        <input type="radio" class="btn-check"  name="orderPickUpTime" value="10"  id="btnradio2" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio2">10분</label>
+
+                        <input type="radio" class="btn-check" name="orderPickUpTime" value="15" id="btnradio3" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio3" >15분</label>
+
+                        <input type="radio" class="btn-check" name="orderPickUpTime" value="20"  id="btnradio4" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio4" >20분</label>
+
+                        <input type="radio" class="btn-check" name="orderPickUpTime" value="30" id="btnradio5" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio5" >30분</label>
+
+                        <input type="radio" class="btn-check" name="orderPickUpTime" value="40"  id="btnradio6" autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio6" >40분</label>
+
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="orderRequest" class="col-form-label">주문요청사항:</label>
+                    <textarea class="form-control" id="orderRequest" name="orderRequest"  value="${purchase.orderRequest}"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary">확인</button>
+
+
+                <input type="hidden" id="orderUserId" name="orderUserId.userId" value="user01"/>
+                <input type="hidden" id="orderTruckId"   name="orderTruckId.truckId" value="truck01"/>
+                <input type="hidden" id="orderQty" name="orderQty" value="3"/>
+                <input type="hidden" id="orderTotalPrice" name="orderTotalPrice" value="3000"/>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
 </body>
 
 </html>

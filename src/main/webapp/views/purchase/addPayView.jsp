@@ -236,53 +236,6 @@ body{
     }
 
 
-
-
-
-    function fncAddPurchase() {
-
-        /*        var amount = $("input[name='amount']").val();
-                var quantity = $("input[name='quantity']").val();
-                var divyDate = $("input[name='divyDate']").val();
-                var paymentOption = $("select[name='paymentOption']").val();
-                var price = $("input[name='price']").val();
-                var receiverName = $("input[name='receiverName']").val();
-                var receiverPhone = $("input[name='receiverPhone']").val();
-                var divyRequest = $("input[name='divyRequest']").val();*/
-        alert(amount)
-        alert(quantity)
-        /*      if(quantity != null && quantity > amount ){
-                  alert("수량 확인 부탁드립니다");
-                  return;
-              }
-              if(divyDate == null || divyDate < 1){
-                  alert("날짜를 한번 확인하세요");
-                  return;
-              }
-              if(paymentOption == null || paymentOption < 1){
-                  alert("구매형식을 한번 확인하세요");
-                  return;
-              }
-              if(price == null || price < 1){
-                  alert("가격을 한번 확인하세요");
-                  return;
-              }
-              if(receiverName == null || receiverName < 1){
-                  alert("구매자이름을 한번 확인하세요");
-                  return;
-              }
-              if(receiverPhone == null || receiverPhone < 1){
-                  alert("구매자 연락처 한번 확인하세요");
-                  return;
-              }
-              if(divyRequest == null || divyRequest < 1){
-                  alert("구매요청사항 한번 확인하세요");
-                  return;
-              }*/
-
-
-        $("form").attr("method" , "POST").attr("action" , "/purchase/addPurchase").submit();
-    }
     $(function() {
         $("button.btn.btn-primary:contains('진짜결제')").click(function() {
 
@@ -291,31 +244,10 @@ body{
 
         });
     });
+
     $(function() {
-        $("td.ct_btn01:contains('취소')").click(function() {
+        $("button.btn.btn-primary:contains('뒤로가기')").click(function () {
             history.go(-1);
-        });
-    });
-
-    $(function() {
-        $("td.ct_btn01:contains('건너뛰기')").click(function() {
-            alert("djkdjdk");
-            $("form").attr("method" , "POST").attr("action" , "/purchase/addOrder").submit();
-
-        });
-    });
-    /*     $(function() {
-            $( "#datepicker" ).datepicker({
-              changeYear: true,
-              changeMonth: true
-            });
-          });   */
-
-
-    $(function() {
-        $("button.btn.btn-primary:contains('결제하기')").click(function () {
-            alert("djkdjdk");
-            $("form").attr("method" , "POST").attr("action" , "/purchase/getOrderUser").submit();
 
         });
     });
@@ -368,7 +300,7 @@ body{
 </script>
 
 
-<form name="addPurchase">
+<form name="addPurchase" style="margin-top: 90px">
     <!-- Modal -->
     <%--Modal 작은칸--%>
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -380,32 +312,33 @@ body{
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
-                        </tr>
-                        </thead>
-                        <c:set var="i" value="0"/>
-                        <c:forEach var="couponLis" items="${couponList.get('list')}">
-                            <c:set var="i" value="${i+1}" />
-                            <c:if test="${couponLis.couponStatus == 0}">
-                            <tr>
-                                <th scope="row">${i}</th>
-                                <td><label class="btn btn-secondary active">
-                                    <input type="hidden" name="couponNumber" id="option${i}" value="${couponLis.couponNo}">
-                                    <input type="radio" name="options" id="option${i}" autocomplete="off" value="${couponLis.couponDcPrice},${couponLis.couponNo}" checked> Active
-                                </label></td>
-                                <td>${couponLis.couponDcPrice}</td>
-                                <td>${couponLis.couponType}</td>
-                                <td>${couponLis.couponStatus}</td>
-                            </tr>
-                            </c:if>
-                        </c:forEach>
-                    </table>
+                    <c:set var="i" value="0"/>
+                    <c:forEach var="cart" items="${map.get('list')}">
+                        <c:set var="i" value="${i+1}" />
+                        <div class="card mb-3" style="max-width: 540px;">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                        ${i}
+                                    <img src="/resources/image/1.jpg" class="img-fluid rounded-start" alt="image">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${cart.odMenuName}</h5>
+                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                        <p class="card-text"><small class="text-muted">${cart.odMenuPrice + cart.odOptionPrice}</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
+                        <input type="hidden" id="odOptionGroupName" name="odOptionGroupName" value="${cart.odOptionGroupName}"/>
+                        <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.odOptionName}"/>
+                        <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.odMenuQty}"/>
+                        <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.odMenuPrice}"/>
+                        <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
+                        <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
+                    </c:forEach>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
@@ -438,10 +371,11 @@ body{
                     <div class="row" id="test">
                         <label for="couponDcPrice" class="col-sm-offset-1 col-sm-3 control-label">할인쿠폰</label>
                         <br>
-                        <div class="input-group w-100">
+                        <div class="input-group">
                             <input type="text" class="form-control" id="couponDcPrice" name="couponDcPrice" placeholder="쿠폰을 적용하세요" value="${coupon.couponDcPrice}" disabled>
                             <span class="input-group-text">원</span>
-                            <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#myModal">쿠폰적용</button>
+                            <button type="button" class="btn-close" aria-label="Close"></button>
+                            <input class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#myModal" value="쿠폰적용"></input>
                         </div>
                     </div>
                     <br>
@@ -450,7 +384,7 @@ body{
                         <div class="input-group mb-3" id="usePointAmt">
                             <span class="input-group-text">${totalPoint.userTotalPoint}</span>
                             <input type="text" class="form-control" id="usePoint" name="usePoint" placeholder="입력"  value="${point.pointAmt}" >
-                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">적용</button>
+                            <input class="btn btn-outline-secondary" type="button" id="button-addon2" value="적용"></input>
                         </div>
                     </div>
                     <div class="row">
@@ -572,12 +506,10 @@ body{
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary btn-lg" name="clickPay">
-                        결제하기
-                    </button>
                     <button type="button" class="btn btn-primary btn-lg" >
-                        controller 2번 타기
+                        뒤로가기
                     </button>
+
                     <button type="button" class="btn btn-primary btn-lg" >
                         진짜결제
                     </button>

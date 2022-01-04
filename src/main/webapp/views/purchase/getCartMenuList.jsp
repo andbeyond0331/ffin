@@ -8,7 +8,7 @@
 <meta charset="EUC-KR">
 
 <head>
-    <jsp:include page="/views/navbar.jsp" />
+    <jsp:include page="/views/toolbar.jsp" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
@@ -26,7 +26,7 @@
 
 <script type="text/javascript">
 
-    $(function() {
+  /*  $(function() {
         $("button.btn.btn-primary:Contains('확인')").click(function () {
             var order = to_ajax()
 
@@ -87,12 +87,12 @@
         $('input[name="odMenuImage"]').each(function (i){
             odMenuImage.push($(this).val());
         });
- /*       alert(orderPickUpTime)
+ /!*       alert(orderPickUpTime)
         alert(orderTotalPrice)
         alert(orderUserId)
         alert(orderTruckId)
         alert(orderRequest)
-        alert(orderQty)*/
+        alert(orderQty)*!/
 
         var data ={
             "odMenuName" : odMenuName,
@@ -125,12 +125,12 @@
         });
         return reOrderNo;
     }
-
+*/
 </script>
 <style type="text/css">
 
 
-    html,
+   /* html,
     body {
         margin: 0; }
     head {
@@ -155,7 +155,7 @@
     .footer {
         background: #333;
         height: 200px; }
-
+*/
 
 
 
@@ -171,7 +171,7 @@
 <form name="form">
 
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <%-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -213,11 +213,11 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--%>
 
 <div class="container">
     <div class="content">Main content</div>
-    <div class="sidebar">
+   <%-- <div class="sidebar">
 
 
 
@@ -307,7 +307,7 @@
         </div>
 
     </div>
-</div>
+</div>--%>
 
 </form>
 <jsp:include page="/views/footer.jsp" />
