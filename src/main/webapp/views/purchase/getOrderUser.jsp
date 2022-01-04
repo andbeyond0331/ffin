@@ -21,6 +21,9 @@
             clear: both;
             border: solid 1px red;
         }
+        h5.card-title{
+            font-size: 15px;
+        }
 
     </style>
 </head>
@@ -187,42 +190,46 @@
 
         </header>
 
-        <div class="row align-items-md-stretch">
+        <div class="row">
             <div class="col-md-6">
                 <div class="h-100 p-5 bg-light border rounded-3">
-                    <table class="table table-hover table-striped">
+                    <c:set var="i" value="0"/>
+                    <c:forEach var="cart" items="${map.get('list')}">
+                        <c:set var="i" value="${i+1}" />
+<script>
+    var orderNo = 'fff';
+    console.log(orderNo);
+</script>
 
-                        <thead>
-                        <tr>
-                            <th align="center">No</th>
-                            <th align="left">회원 ID</th>
-                            <th align="left">회원명</th>
-                            <th align="left">이메일</th>
-                            <th align="left">간략정보</th>
-                        </tr>
-                        </thead>
 
-                        <tbody>
 
-                        <c:set var="i" value="0"/>
-                        <c:forEach var="cart" items="${map.get('list')}">
-                            <c:set var="i" value="${ i+1 }"/>
-                            <tr>
-                                <td align="center">${ i }</td>
-                                <td align="left" title="Click : 회원정보 확인">${cart.odMenuName}</td>
-                                <td align="left">${cart.odOptionGroupName}</td>
-                                <td align="left">${cart.odOptionName}</td>
-                                <td align="left">
-                                    <i class="glyphicon glyphicon-ok" id="${cart.odMenuQty}"></i>
-                                    <input type="hidden" value="${cart.odMenuPrice}">
-                                </td>
-                            </tr>
-                        </c:forEach>
 
-                        </tbody>
 
-                    </table>
-                    <button type="submit" class="btn btn-primary"
+
+                        <div class="card mb-3 h-10" style="width: 300px; height: 90px" >
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="/resources/image/1.jpg" class="img-fluid rounded-start" alt="image">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${cart.odMenuName}</h5>
+                                        <p class="card-text"></p>
+                                        <p class="card-text"><small class="text-muted">${cart.odMenuPrice + cart.odOptionPrice}</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
+                        <input type="hidden" id="odOptionGroupName" name="odOptionGroupName" value="${cart.odOptionGroupName}"/>
+                        <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.odOptionName}"/>
+                        <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.odMenuQty}"/>
+                        <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.odMenuPrice}"/>
+                        <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
+                        <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
+                    </c:forEach>
+                    <button type="submit" class="btn btn-primary"></button>
                     <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">주문취소</a>
                 </div>
             </div>

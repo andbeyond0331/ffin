@@ -64,12 +64,39 @@ public class PurchaseController {
 
 
 
+    @RequestMapping(value = "addCart", method= RequestMethod.GET)
+    public String addCart(@RequestParam("orderNo") int orderNo, Model model) throws Exception{
+
+        System.out.println("/purchase/addCart : GET");
+        System.out.println("orderNo = " + orderNo + ", model = " + model);
+        Map<String,Object> coupontList = new HashMap<String,Object>();
+        Purchase purchase = new Purchase();
+        User user = new User();
+        Coupon coupon = new Coupon();
+
+
+
+        Map cart = purchaseService.getCartList(orderNo);
+        purchase = purchaseService.getPurchase(orderNo);
+        user = purchaseService.getTotalPoint(purchase.getOrderUserId().getUserId());
+        coupon.setCouponReceivedUserId(purchase.getOrderUserId());
+        coupontList = purchaseService.getCouponList(coupon);
+
+        model.addAttribute("couponList",coupontList);
+        model.addAttribute("purchase",purchase);
+        model.addAttribute("cart",cart);
+        model.addAttribute("orderNo",purchase.getOrderNo());
+        model.addAttribute("totalPoint",user);
+
+
+        return "forward:/views/purchase/addPayView.jsp";
+    }
 
         //장바구니에서 주문하기 클릭시 선택한 주문정보와 픽업희망시간 주문요청사항을 입력받아서 같이 등록한다.
     @RequestMapping(value = "addCart", method= RequestMethod.POST)
     public String addCart(@ModelAttribute("orderDetail") OrderDetail orderDetail, @ModelAttribute("purchase") Purchase purchase, Model model) throws Exception{
 
-        System.out.println("/purchase/addCart : POST");
+        System.out.println("/purchase/addCart : GET");
         System.out.println("orderDetail11111 = " + orderDetail + ", purchase2222 = " + purchase);
         Point point = new Point();
         Purchase pur = new Purchase();
