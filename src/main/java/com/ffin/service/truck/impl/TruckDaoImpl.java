@@ -58,8 +58,8 @@ public class TruckDaoImpl implements TruckDao {
     }
     // 푸드트럭 내정보보기
     @Override
-    public Truck getTruckInfo(String truckid) throws Exception {
-        return sqlSession.selectOne("TruckMapper.getTruck", truckid);
+    public Truck getTruckInfo(String truckId) throws Exception {
+        return sqlSession.selectOne("TruckMapper.getTruck", truckId);
     }
     // 새로 가입한 푸드트럭 보기(관리자)
     @Override
@@ -69,7 +69,6 @@ public class TruckDaoImpl implements TruckDao {
     // 푸드트럭 수정...
     @Override
     public void updateTruck(Truck truck) throws Exception {
-
         sqlSession.update("TruckMapper.updateTruck", truck);
     }
     // 푸드트럭 프로필 입력(수정)
@@ -80,7 +79,7 @@ public class TruckDaoImpl implements TruckDao {
     // 푸드트럭 내정보 수정
     @Override
     public void updateTruckInfo(Truck truck) throws Exception {
-        sqlSession.update("TruckMapper.updateTruck", truck);
+        sqlSession.update("TruckMapper.updateTruckI", truck);
     }
     // 푸드트럭 영업상태변경
     @Override

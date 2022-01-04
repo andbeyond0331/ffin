@@ -7,67 +7,6 @@
 <html lang="ko">
 
 <head>
-    <!-- Basic -->
-    <meta charset="UTF-8">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <!-- Site Metas -->
-    <meta name="keywords" content=""/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-
-    <title>F.FIN | FOODTRUCK FINDER</title>
-
-    <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="../../resources/bootstrap/css/bootstrap.css"/>
-
-    <!-- fonts style -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
-
-    <!-- font awesome style -->
-    <link href="../../resources/bootstrap/css/font-awesome.min.css" rel="stylesheet"/>
-    <!-- nice select -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css"
-          integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous"/>
-    <!-- slidck slider -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css"
-          integrity="sha256-UK1EiopXIL+KVhfbFa8xrmAWPeBjMVdvYMYkTAEv/HI=" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css.map"
-          integrity="undefined" crossorigin="anonymous"/>
-
-    <!-- Custom styles for this template -->
-    <link href="../../resources/bootstrap/css/style.css" rel="stylesheet"/>
-    <!-- responsive style -->
-    <link href="../../resources/bootstrap/css/responsive.css" rel="stylesheet"/>
-
-    <!--    Favicons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="../../resources/bootstrap/assets/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../../resources/bootstrap/assets/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../../resources/bootstrap/assets/favicons/favicon-16x16.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../../resources/bootstrap/assets/favicons/favicon.ico">
-    <link rel="manifest" href="../../resources/bootstrap/assets/favicons/manifest.json">
-    <meta name="msapplication-TileImage" content="../../resources/bootstrap/assets/favicons/mstile-150x150.png">
-    <meta name="theme-color" content="#ffffff">
-
-    <!-- jQery -->
-    <script src="../../resources/bootstrap/js/jquery-3.4.1.min.js"></script>
-    <!-- bootstrap js -->
-    <script src="../../resources/bootstrap/js/bootstrap.js"></script>
-    <!-- slick  slider -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
-    <!-- nice select -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"
-            integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
-    <!-- custom js -->
-    <script src="../../resources/bootstrap/js/custom.js"></script>
 
     <!-- 참조 : http://getbootstrap.com/css/   참조 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -98,7 +37,8 @@
         //============= "취소"  Event 처리 및  연결 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $("a[href='#' ]").on("click", function () {
+            $("button.btn.btn-warning").on("click", function () {
+                alert("회원가입을 취소하시겠습니까? 확인을 누르시면 메인화면으로 이동합니다.")
                 self.location = "/views/homeTest.jsp"
             });
         });
@@ -408,8 +348,8 @@
 
 <body id="page-top">
 
-<jsp:include page="/views/toolbar.jsp"/>
-<br/><br/>
+<jsp:include page="/views/navbar.jsp"/>
+<br/><br/><br/><br/>
 <div class="container">
 
     <div class="page-header">
@@ -511,7 +451,7 @@
                        placeholder=" - 를 제외한 전화번호 입력"/>
             </div>
             <div class="col-sm-3">
-                <button id="phoneChk" type="button" class="btn btn-warning sms-auth">인증번호 요청</button>
+                <button id="phoneChk" type="button" class="btn btn-dark sms-auth">인증번호 요청</button>
             </div>
         </div>
         <div class="form-group phone-check-wrap">
@@ -536,7 +476,7 @@
                        placeholder="인증번호 확인이 가능한 Email"/>
             </div>
             <div class="col-sm-3">
-                <button type="button" id="emailChk" class="btn btn-warning email-auth">인증번호 요청</button>
+                <button type="button" id="emailChk" class="btn btn-dark email-auth">인증번호 요청</button>
             </div>
         </div>
         <div class="form-group mail-check-wrap">
@@ -582,7 +522,7 @@
         <div class="form-group">
             <label for="truckCate" class="col-sm-offset-1 col-sm-3 control-label">푸드트럭 카테고리</label>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <select name="truckCate" class="col-sm-4 ct_input_g"
+            <select name="truckCate" class="col-sm-offset-4 col-sm-4 ct_input_g"
                     style="width: 120px; height: 24px" maxLength="30">
                 <option value="0" selected="selected">카테고리 선택</option>
                 <option value="1">고기</option>
@@ -637,7 +577,7 @@
         <div class="form-group">
             <div class="col-sm-offset-1  col-sm-4 text-center">
                 <button type="button" class="btn btn-primary">가 입</button>
-                <a class="btn btn-primary btn" href="#" role="button">취 소</a>
+                <button type="button" class="btn btn-warning">취 소</button>
             </div>
         </div>
     </form>

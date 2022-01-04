@@ -6,57 +6,52 @@
 
 
 <head>
-    <!-- Basic -->
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <!-- Site Metas -->
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
-    <title>F.FIN | FOODTRUCK FINDER</title>
+    <!--  ///////////////////////// JavaScript ////////////////////////// -->
+    <script type="text/javascript">
 
-    <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="../../resources/bootstrap/css/bootstrap.css" />
 
-    <!-- fonts style -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+        //============= "확인"  Event 연결 =============
+        $(function () {
+            //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+            $("button.btn.btn-primary").on("click", function () {
+                fncAddTruck();
+            });
+        });
 
-    <!-- font awesome style -->
-    <link href="../../resources/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
-    <!-- nice select -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
-    <!-- slidck slider -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" integrity="sha256-UK1EiopXIL+KVhfbFa8xrmAWPeBjMVdvYMYkTAEv/HI=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css.map" integrity="undefined" crossorigin="anonymous" />
+        //============= "취소"  Event 처리 및  연결 =============
+        $(function () {
+            //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+            $("button.btn.btn-danger").on("click", function () {
+                alert("Password 변경을 취소하시겠습니까? 확인을 누르시면 이전화면으로 이동합니다.")
+                self.location = "/truck/updateTruckInfo"
+            });
+        });
 
-    <!-- Custom styles for this template -->
-    <link href="../../resources/bootstrap/css/style.css" rel="stylesheet" />
-    <!-- responsive style -->
-    <link href="../../resources/bootstrap/css/responsive.css" rel="stylesheet" />
 
-    <!--    Favicons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="../../resources/bootstrap/assets/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../../resources/bootstrap/assets/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../../resources/bootstrap/assets/favicons/favicon-16x16.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../../resources/bootstrap/assets/favicons/favicon.ico">
-    <link rel="manifest" href="../../resources/bootstrap/assets/favicons/manifest.json">
-    <meta name="msapplication-TileImage" content="../../resources/bootstrap/assets/favicons/mstile-150x150.png">
-    <meta name="theme-color" content="#ffffff">
+        function fncAddTruck() {
+            // 유효성체크
+            var passwordC = $("input[name='passwordC']").val();
 
-    <!-- jQery -->
-    <script src="../../resources/bootstrap/js/jquery-3.4.1.min.js"></script>
-    <!-- bootstrap js -->
-    <script src="../../resources/bootstrap/js/bootstrap.js"></script>
-    <!-- slick  slider -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
-    <!-- nice select -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
-    <!-- custom js -->
-    <script src="../../resources/bootstrap/js/custom.js"></script>
 
+            if (passwordC == null || passwordC.length < 1) {
+                alert("기존 Password를 반드시 입력하셔야 합니다.");
+                return;
+            }
+
+            $("form").attr("method", "GET").attr("action", "/views/truck/updateTruckPassword.jsp").submit();
+            alert("Password 변경화면으로 이동합니다.");
+        }
+
+
+
+
+
+
+
+
+
+    </script>
 
 </head>
 
@@ -64,8 +59,29 @@
 
 <body id="page-top">
 
-<jsp:include page="/views/toolbar.jsp" />
-<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<jsp:include page="/views/navbar.jsp" />
+<br/><br/><br/><br/>
+
+<div class="container">
+    <div class="area_inputs wow fadeIn">
+        <div class="sub_title font-weight-bold">
+            <h3>기존 Password 확인</h3>
+        </div>
+            <div class="form-group">
+                <label class="font-weight-bold" for="passwordC">기존 Password 확인 후 변경이 가능합니다 :)</label>
+                <div>
+                    <input type="password" class="form-control" id="passwordC" name="passwordC"
+                           placeholder="현재 사용중인 Password를 입력하세요">
+                </div>
+            </div>
+            <div class="form-group">
+                <button id="searchBtn" type="button" onclick="idSearch_click()" class="btn btn-primary">확인</button>
+
+                <button class="btn btn-danger">취소</button>
+            </div>
+        </div>
+    </div>
+
 
 
 <jsp:include page="/views/footer.jsp" />

@@ -164,6 +164,59 @@
 	</update>
 
 
+	<update	id="updateTruckP" 	parameterType="truck" >
+		UPDATE truck
+		<set>
+			truck_id = #{truckId},
+			truck_password = #{truckPassword},
+			truck_ceo_name= #{truckCEOName},
+			truck_ceo_birth = #{truckCEOBirth},
+			truck_addr = #{truckAddr},
+			truck_addr_detail = #{truckAddrDetail},
+			truck_phone	= #{truckPhone},
+			truck_email	= #{truckEmail},
+			truck_name	= #{truckName},
+			truck_busi_lice	= #{truckBusiLice},
+			truck_busi_no = #{truckBusiNo},
+			truck_cate = #{truckCate},
+			truck_pro_img = #{truckProImg},
+			truck_ceo_intro	= #{truckCEOIntro},
+			truck_avg_star = #{truckAVGStar},
+			truck_map_la = #{truckMapLa},
+			truck_map_lo = #{truckMapLo},
+			truck_join_req_status = #{truckJoinReqStatus},
+			truck_join_req_date = #{truckJoinReqDate},
+			truck_notice_title = #{truckNoticeTitle},
+			truck_notice_content = #{truckNoticeContent},
+			truck_notice_img = #{truckNoticeImg},
+			truck_bye_status = #{truckByeStatus},
+			truck_bye_reason = #{truckByeReason},
+			truck_busi_status = #{truckBusiStatus},
+			truck_reg_date = #{truckRegDate},
+			role = #{role}
+		</set>
+		WHERE truck_id = #{truckId}
+	</update>
+
+
+	<update	id="updateTruckI" 	parameterType="truck" >
+		UPDATE truck
+		<set>
+			truck_ceo_name= #{truckCEOName},
+			truck_ceo_birth = #{truckCEOBirth},
+			truck_addr = #{truckAddr},
+			truck_addr_detail = #{truckAddrDetail},
+			truck_phone	= #{truckPhone},
+			truck_email	= #{truckEmail},
+			truck_name	= #{truckName},
+			truck_busi_lice	= #{truckBusiLice},
+			truck_busi_no = #{truckBusiNo},
+			truck_cate = #{truckCate}
+		</set>
+		WHERE truck_id = #{truckId}
+	</update>
+
+
 	<!-- 사업자 회원탈퇴 -->
 	<update id="byeTruck" parameterType="truck">
 		UPDATE truck
