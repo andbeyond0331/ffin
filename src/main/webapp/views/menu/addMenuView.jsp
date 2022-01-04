@@ -7,28 +7,9 @@
 
 <html lang="ko">
 <head>
-    <meta charset="utf-8">
 
-    <!-- 참조 : http://getbootstrap.com/css/   참조 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-
-    <%--    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/modals/">--%>
 
     <!--//////////////////////-->
-    <!-- Custom styles for this template -->
-    <link href="../../resources/bootstrap/css/style.css" rel="stylesheet" />
-    <!-- responsive style -->
-    <link href="../../resources/bootstrap/css/responsive.css" rel="stylesheet" />
-
-    <!--    Favicons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="../../resources/bootstrap/assets/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../../resources/bootstrap/assets/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../../resources/bootstrap/assets/favicons/favicon-16x16.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../../resources/bootstrap/assets/favicons/favicon.ico">
-    <link rel="manifest" href="../../resources/bootstrap/assets/favicons/manifest.json">
-    <meta name="msapplication-TileImage" content="../../resources/bootstrap/assets/favicons/mstile-150x150.png">
-    <meta name="theme-color" content="#ffffff">
-<!--//////////////////////-->
 
     <!-- Bootstrap core CSS -->
     <%--    <link href="/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">--%>
@@ -36,17 +17,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <meta name="theme-color" content="#7952b3">
-
-    <%--    <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->--%>
-    <%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >--%>
-    <%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >--%>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <%--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>--%>
-
-
-    <!-- //////////cdn 옵션그룹추가////////////////-->
-
-    <%--    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>--%>
+ <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 
     <!--  ///////////////////////// CSS ////////////////////////// -->
@@ -78,36 +49,7 @@
             });
         });
 
-        //
-        // function applyOptionGroupName(){ // 모달에서 옵션그룹이름 적용누르면 돌아가는 function
-        //
-        //     var modal = $('#exampleModal');
-        //     realOptionGroupName = modal.find('input#optionGroupName.form-control').val();
-        //
-        //     console.log(realOptionGroupName + " : realOptionGroupName");
-        //     //alert(realOptionGroupName)
-        //
-        //     // divElem = "<div class=\"form-group\" id=\""+realOptionGroupName+"-target\" name=\"optionGroupName\">"+
-        //     //     "<input type=\"text\" id=\"applyOptionGroupName+"+realOptionGroupName+"\" name=\"applyOptionGroupName\" value=\""+realOptionGroupName+"\"/>22222"+
-        //     //     "</div>";
-        //
-        //
-        //     divElem = "<input type=\"hidden\" id=\"applyOptionGroupName+"+realOptionGroupName+"\" name=\"applyOptionGroupName\" value=\""+realOptionGroupName+"\"/>";
-        //
-        //     alert("applyOptionGroupName을 name으로 가진 태그가 있는가 ??? 있다면 몇 개?"+modal.find('input[name="applyOptionGroupName"]').length);
-        //
-        //     if(modal.find('input[name="applyOptionGroupName"]').length!=0) {
-        //         modal.find('input[name="applyOptionGroupName"]').val(realOptionGroupName);
-        //     }else{
-        //         modal.find('.modal-body').append($(divElem));
-        //     }
-        //
-        //
-        //     // modal.find('.modal-body').append($(divElem));
-        //     // modal.find('.col-from-label').text("옵션그룹이름 : " + realOptionGroupName);
-        //     // modal.find('div[name="optionGroupName"]').html(divElem);
-        //
-        // }
+
 
 
         function applyOptionGroupNamer(){ // 모달에서 옵션그룹이름 적용누르면 돌아가는 function
@@ -273,9 +215,6 @@
 
                 $('#exampleModal').html(forResetModal);
 
-
-
-
             });
 
         });
@@ -291,18 +230,11 @@
 
             }
 
-            //confirm("옵션을 삭제하시겠습니까?");
-            //$('div#'+idIndex+'.form-group').remove();
-
-            //count--;
         }
 
         function removeELOption(idIndex){
             console.log("removeELOption(옵션그룹 삭제)");
             console.log("삭제 타겟 : " + $('div#removeTarget'+idIndex+'.form-group').html());
-
-            //confirm("옵션 그룹을 삭제하시겠습니까?");
-            //$('div#removeTarget'+idIndex+'.form-group').remove();
 
             if(!confirm("옵션 그룹"+idIndex+"을(를) 삭제하시겠습니까?")){
 
@@ -317,14 +249,14 @@
         function fncAddMenu(){
 
             //var truckId = $("input[name='truckId']").val();
-            alert("fncAddMenu-target : "+$("form.form-horizontal").html());
+            //alert("fncAddMenu-target : "+$("form.form-horizontal").html());
 
             alert("optionGroup개수 : " +$('input#optionGroupName.form-control').length);
 
             if($('input#optionGroupName.form-control').length===1){
-                $("form").attr("method", "POST").attr("action","/menu/addMenu").submit();
+                $("form").attr("method", "POST").attr("action","/menu/addMenu").attr("enctype", "multipart/form-data").submit();
             }else{
-                $("form").attr("method", "POST").attr("action","/menu/addMenuOptionGroup").submit();
+                $("form").attr("method", "POST").attr("action","/menu/addMenuOptionGroup").attr("enctype", "multipart/form-data").submit();
                 // $("form").post("/menu/addMenuOptionGroup", {}, "text")
             }
 
@@ -337,7 +269,7 @@
 
 <body>
 
-<jsp:include page="/views/toolbar.jsp" />
+<jsp:include page="/views/navbar.jsp" />
 
 <!-- ToolBar Start /////////////////////////////////////-->
 <!-- ToolBar End /////////////////////////////////////-->
@@ -346,7 +278,7 @@
 <div class="container">
 
 <div class="row justify-content-center">
-    <div class="page-header text-center">
+    <div class="page-header">
         <h3 class=" text-info">${truck.truckId}에 대한 메뉴 추가</h3>
     </div>
 
@@ -392,23 +324,34 @@
         <div class="form-group">
             <label for="menuImg1" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지1</label>
             <div class="col-sm-4">
-                <input type="file" class="form-control" id="menuImg1" name="menuImg1"  value="${menu.menuImg1}" placeholder="메뉴 이미지1">
+                <input type="file" class="form-control" id="menuImg1" name="menuImg11"  value="${menu.menuImg1}" placeholder="메뉴 이미지1">
             </div>
         </div>
 
         <div class="form-group">
             <label for="menuImg2" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지2</label>
             <div class="col-sm-4">
-                <input type="file" class="form-control" id="menuImg2" name="menuImg2"  value="${menu.menuImg2}" placeholder="메뉴 이미지2">
+                <input type="text" class="form-control" id="menuImg2" name="menuImg2"  value="${menu.menuImg2}" placeholder="메뉴 이미지2">
             </div>
         </div>
 
         <div class="form-group">
             <label for="menuImg3" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지3</label>
             <div class="col-sm-4">
-                <input type="file" class="form-control" id="menuImg3" name="menuImg3"  value="${menu.menuImg3}" placeholder="메뉴 이미지3">
+                <input type="text" class="form-control" id="menuImg3" name="menuImg3"  value="${menu.menuImg3}" placeholder="메뉴 이미지3">
             </div>
         </div>
+
+<%--        <div class="form-group">--%>
+<%--            <label for="multiMenuImg" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지3</label>--%>
+<%--            <div class="col-sm-4">--%>
+<%--                <input multiple="multiple" type="file" class="form-control" id="multiMenuImg" name="multiMenuImg"  value="${menu.multiMenuImg}" placeholder="멀티메뉴이미지"/>--%>
+<%--                <input type="text" name="src"/>--%>
+
+<%--            </div>--%>
+<%--        </div>--%>
+
+
 
         <div id="here"></div>
         <!--////////////////모달 옵션그룹 추가 시작////////////-->
