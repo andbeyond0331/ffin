@@ -6,57 +6,66 @@
 
 
 <head>
-    <!-- Basic -->
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <!-- Site Metas -->
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
-    <title>F.FIN | FOODTRUCK FINDER</title>
+    <!--  ///////////////////////// JavaScript ////////////////////////// -->
+    <script type="text/javascript">
 
-    <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="../../resources/bootstrap/css/bootstrap.css" />
 
-    <!-- fonts style -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+        //============= "변경완료"  Event 연결 =============
+        $(function () {
+            //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+            $("button.btn.btn-primary").on("click", function () {
+                fncAddTruck();
+            });
+        });
 
-    <!-- font awesome style -->
-    <link href="../../resources/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
-    <!-- nice select -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
-    <!-- slidck slider -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" integrity="sha256-UK1EiopXIL+KVhfbFa8xrmAWPeBjMVdvYMYkTAEv/HI=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css.map" integrity="undefined" crossorigin="anonymous" />
+        //============= "취소"  Event 처리 및  연결 =============
+        $(function () {
+            //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+            $("button.btn.btn-danger").on("click", function () {
+                alert("Password 변경을 취소하시겠습니까? 확인을 누르시면 이전화면으로 이동합니다.")
+                self.location = "/truck/updateTruckInfo"
+            });
+        });
 
-    <!-- Custom styles for this template -->
-    <link href="../../resources/bootstrap/css/style.css" rel="stylesheet" />
-    <!-- responsive style -->
-    <link href="../../resources/bootstrap/css/responsive.css" rel="stylesheet" />
 
-    <!--    Favicons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="../../resources/bootstrap/assets/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../../resources/bootstrap/assets/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../../resources/bootstrap/assets/favicons/favicon-16x16.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../../resources/bootstrap/assets/favicons/favicon.ico">
-    <link rel="manifest" href="../../resources/bootstrap/assets/favicons/manifest.json">
-    <meta name="msapplication-TileImage" content="../../resources/bootstrap/assets/favicons/mstile-150x150.png">
-    <meta name="theme-color" content="#ffffff">
+        function fncAddTruck() {
+            // 유효성체크
+            var pw = $("input[name='truckPassword']").val();
+            var pw_confirm = $("input[name='truckPasswordChk']").val();
 
-    <!-- jQery -->
-    <script src="../../resources/bootstrap/js/jquery-3.4.1.min.js"></script>
-    <!-- bootstrap js -->
-    <script src="../../resources/bootstrap/js/bootstrap.js"></script>
-    <!-- slick  slider -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
-    <!-- nice select -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
-    <!-- custom js -->
-    <script src="../../resources/bootstrap/js/custom.js"></script>
+            if (pw == null || pw.length < 1) {
+                alert("패스워드는 반드시 입력하셔야 합니다.");
+                return;
+            }
+            if (pw_confirm == null || pw_confirm.length < 1) {
+                alert("패스워드 확인은 반드시 입력하셔야 합니다.");
+                return;
+            }
 
+            $("form").attr("method", "POST").attr("action", "/truck/updateTruckPassword").submit();
+            alert("Password 변경이 완료되었습니다. 변경된 Password로 다시 로그인 해주세요.");
+        }
+
+        // <!-- 푸드트럭 비밀번호 체크 -->
+        $(function () {
+            $("#truckPasswordChk").keyup(function () {
+                if ($("#tPassword").val() == $("#truckPasswordChk").val()) {
+                    $(".successPwChk").text("비밀번호가 일치합니다.");
+                    $(".successPwChk").css("color", "blue");
+                    $("#pwDoubleChk").val("true");
+                } else {
+                    $(".successPwChk").text("비밀번호가 일치하지 않습니다.");
+                    $(".successPwChk").css("color", "red");
+                    $("#pwDoubleChk").val("false");
+                }
+            })
+        });
+
+
+
+
+    </script>
 
 </head>
 
@@ -64,8 +73,45 @@
 
 <body id="page-top">
 
-<jsp:include page="/views/toolbar.jsp" />
-<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<jsp:include page="/views/navbar.jsp" />
+<br/><br/><br/><br/>
+
+<div class="container">
+    <div class="area_inputs wow fadeIn">
+        <div class="sub_title font-weight-bold">
+            <h3>Password 변경</h3>
+        </div>
+        <!-- 비밀번호 확인 -->
+        <div class="form-group">
+            <label for="tPassword" class="col-sm-offset-1 col-sm-3 control-label">Password</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" id="tPassword" name="truckPassword" placeholder="Password"
+                       required maxlength="8"
+                       autocomplete="off"/>
+                <span class="point">※ 비밀번호는 총 8자 까지 입력가능</span><br/>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div class="form-group">
+            <label for="truckPasswordChk" class="col-sm-offset-1 col-sm-3 control-label">Password 확인</label>
+            <div class="col-sm-4">
+                <input id="truckPasswordChk" type="password" class="form-control" name="truckPasswordChk"
+                       placeholder="동일하게 입력해주세요." required
+                       maxlength="8" autocomplete="off"/>
+                <span class="point successPwChk"></span>
+                <input type="hidden" id="pwDoubleChk"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <button id="searchBtn" type="button" onclick="idSearch_click()" class="btn btn-primary">변경완료</button>
+
+            <button class="btn btn-danger">취소</button>
+        </div>
+    </div>
+</div>
+
 
 
 <jsp:include page="/views/footer.jsp" />

@@ -4,7 +4,6 @@ import com.ffin.common.Page;
 import com.ffin.common.Search;
 import com.ffin.service.domain.Truck;
 import com.ffin.service.truck.TruckService;
-import com.ffin.service.truck.impl.TruckServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +47,7 @@ public class TruckController {
 
         System.out.println("/truck/addTruck : GET");
 
-        return "/truck/addTruckView.jsp";
+        return "/views/truck/addTruckView.jsp";
     }
 
     // 회원가입
@@ -88,9 +87,22 @@ public class TruckController {
         Truck truck = truckService.getTruck(truckId);
         System.out.println("truck = " + truck);
         m.addObject("truck", truck);
-        m.setViewName("/truck/getTruck.jsp");
+        m.setViewName("/views/truck/getTruck.jsp");
 
         return m;
+    }
+
+    // 트럭조회
+    @RequestMapping(value = "getTruckInfo", method = RequestMethod.GET)
+    public String getTruckInfo(Model model, HttpSession session) throws Exception {
+
+        System.out.println("/truck/getTruckInfo : GET");
+
+        Truck truck = (Truck) session.getAttribute("truck");
+        //Model 과 View 연결
+        model.addAttribute("truck", truck);
+
+        return "forward:/views/truck/getTruckInfo.jsp";
     }
 
 //    @RequestMapping(value = "updateTruck", method = RequestMethod.GET)
@@ -119,6 +131,88 @@ public class TruckController {
 //
 //        return "redirect:/truck/getTruck?truckId=" + truck.getTruckId();
 //    }
+
+
+    @RequestMapping(value = "updateTruckInfo", method = RequestMethod.GET)
+    public String updateTruckInfo(Model model, HttpSession session) throws Exception {
+
+        System.out.println("/truck/updateTruckInfo : GET");
+        //Business Logic
+        String truckId = (String) session.getAttribute("truckId");
+
+        Truck truck = truckService.getTruck(truckId);
+        //Model 과 View 연결
+        model.addAttribute("truck", truck);
+
+        return "/views/truck/updateTruckInfo.jsp";
+    }
+
+    @RequestMapping(value = "updateTruckInfo", method = RequestMethod.POST)
+    public String updateTruckInfo(@ModelAttribute("truck") Truck truck, @RequestParam("busiLice") MultipartFile file1, @RequestParam("proImg") MultipartFile file2, Model model, HttpSession session) throws Exception {
+
+        System.out.println("/truck/updateTruckInfo : POST");
+        //Business Logic
+
+        String temDir = "/Users/js/IdeaProjects/ffin/src/main/webapp/resources/image";
+
+        if (!file1.getOriginalFilename().isEmpty()) {
+            file1.transferTo(new File(temDir, file1.getOriginalFilename()));
+        }
+        if (!file2.getOriginalFilename().isEmpty()) {
+            file2.transferTo(new File(temDir, file2.getOriginalFilename()));
+        }
+
+        truck.setTruckBusiLice(file1.getOriginalFilename());
+        truck.setTruckBusiLice(file2.getOriginalFilename());
+
+        truckService.updateTruckInfo(truck);
+
+        session.setAttribute("truck", truck);
+
+        return "redirect:/truck/getTruckInfo?truckId=" + truck.getTruckId();
+    }
+
+
+    @RequestMapping(value = "updateTruckPassword", method = RequestMethod.GET)
+    public String updateTruckPassword() throws Exception {
+
+        System.out.println("/truck/updateTruckPassword : GET");
+
+        return "/views/truck/updateTruckPasswordBefore.jsp";
+    }
+
+
+    // 트럭 Password 변경
+    @RequestMapping(value = "updateTruckPasswordB", method = RequestMethod.GET)
+    public String updateTruckPasswordB(@ModelAttribute("truck") Truck truck , Model model, HttpSession session) throws Exception {
+
+        System.out.println("/truck/updateTruckPasswordB : GET");
+        //Business Logic
+        Truck dbTruck = truckService.getTruck(truck.getTruckId());
+
+        if(truck.getTruckPassword().equals(dbTruck.getTruckPassword())){
+
+            model.addAttribute(truck);
+        }
+
+        return "forward:/views/truck/updateTruckPassword.jsp" ;
+    }
+
+
+    // 트럭 Password 변경
+    @RequestMapping(value = "updateTruckPassword", method = RequestMethod.POST)
+    public String updateTruckPassword(@ModelAttribute("truck") Truck truck,  Model model, HttpSession session) throws Exception {
+
+        System.out.println("/truck/updateTruckPassword : POST");
+        //Business Logic
+        truck = (Truck) session.getAttribute("truck");
+
+        truckService.updateTruckPassword(truck);
+
+        session.invalidate();
+
+        return "redirect:/views/homeTest.jsp";
+    }
 
     // 트럭 로그인 화면 요청 // 이제 안씀
     @RequestMapping(value = "loginTruck", method = RequestMethod.GET)
@@ -236,7 +330,7 @@ public class TruckController {
 
         System.out.println("/truck/findTruckId : GET");
 
-        return "/truck/findTruckId.jsp";
+        return "/views/truck/findTruckId.jsp";
     }
 
     // 사업자 아이디 찾기

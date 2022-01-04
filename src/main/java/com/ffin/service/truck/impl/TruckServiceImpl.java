@@ -56,6 +56,11 @@ public class TruckServiceImpl implements TruckService {
         return truckDao.getTruck(truckId);
     }
 
+    @Override
+    public Truck getTruckInfo(String truckId) throws Exception {
+        return truckDao.getTruckInfo(truckId);
+    }
+
     // 푸드트럭 목록조회
     @Override
     public Map<String, Object> getTruckList(Search search) throws Exception {

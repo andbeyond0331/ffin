@@ -20,6 +20,8 @@ public interface TruckService {
     // 푸드트럭 상세조회
     public Truck getTruck(String truckId) throws Exception ;
 
+    public Truck getTruckInfo(String truckId) throws Exception;
+
     // 새로 가입한 푸드트럭 보기(관리자)
     public void getNewTruck(Truck truck) throws Exception ;
 
