@@ -20,6 +20,9 @@ public interface MenuService {
     //옵션 등록 중 옵션 그룹 번호를 위한 최근 옵션그룹 번호 가져오기
     public OptionGroup getLatestOptionGroupNo() throws Exception;
 
+//    //이미지 업로드
+//    public
+
     //메뉴와 옵션 한꺼번에 등록하는 방법 고안 2를 위한 옵션 그룹 리스트 get!
     public Map getOptionGroupList(int optionGroupNo) throws Exception;
 

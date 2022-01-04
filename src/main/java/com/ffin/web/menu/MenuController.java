@@ -18,13 +18,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +58,12 @@ public class MenuController {
     @Value("100")
     int pageSize;
 
+
+    //FILE UPLOAD를 위한 FIELD 설정
+    private static final String FILE_UPLOAD_PATH = "C:/CRUD/ffin/src/main/webapp/resources/image/";
+//    private static final String FILE_UPLOAD_PATH = "/resources/image/";
+//    private static final String FILE_UPLOAD_PATH = "C:/CRUD/ffin/src/main/webapp/resources/image/";
+
     @RequestMapping(value = "addMenu", method= RequestMethod.GET)
     public ModelAndView addMenu(@RequestParam("truckId") String truckId) throws Exception{
 
@@ -74,13 +86,63 @@ public class MenuController {
 
     @Transactional(rollbackFor = Exception.class) //menu만 들어가고 optionGroup은 들어가지 않는 상황 방지
     @RequestMapping(value="addMenuOptionGroup", method=RequestMethod.POST)
-    public String addMenuOptionGroup(HttpServletRequest request,@ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
+//    public String addMenuOptionGroup(HttpServletRequest request,@ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
+//    public String addMenuOptionGroup(HttpServletRequest request,MultipartHttpServletRequest mtfRequest, @ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
+    public String addMenuOptionGroup(@RequestParam("menuImg1")MultipartFile file1,HttpServletRequest request,@ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
+//    public String addMenuOptionGroup(@RequestParam("menuImg1")MultipartFile file1,@RequestParam(value="menuImg2", required = false)MultipartFile file2,@RequestParam(value="menuImg3", required = false)MultipartFile file3,HttpServletRequest request,@ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
    // public String addMenuOptionGroup(@ModelAttribute("optionGroup")OptionGroup optionGroup, Model model) throws Exception{
 //    public String addMenuOptionGroup(HttpServletRequest request, Model model) throws Exception{
 
         System.out.println("/menu/addMenuOptionGroup:POST");
 
         System.out.println("optionGroup = " + optionGroup + ", menu = " + menu + ", model = " + model);
+
+//        request.getParameterValues("file");
+
+//        List<MultipartFile> fileList = mtfRequest.getFiles("file");
+
+        String menuImg1  = file1.getOriginalFilename();
+//        String menuImg2  = file2.getOriginalFilename();
+//        String menuImg3  = file3.getOriginalFilename();
+
+        if(!file1.getOriginalFilename().isEmpty()){
+            file1.transferTo(new File(FILE_UPLOAD_PATH, menuImg1));
+            model.addAttribute("msg", "File uploaded successfully.");
+            model.addAttribute("menuImg1", menuImg1);
+        }else {
+            model.addAttribute("msg", "Please select a valid mediaFile..");
+        }
+//
+//        if(!file2.getOriginalFilename().isEmpty()){
+//            file2.transferTo(new File(FILE_UPLOAD_PATH, menuImg2));
+//            model.addAttribute("msg", "File uploaded successfully.");
+//            model.addAttribute("menuImg2", menuImg2);
+//        }else {
+//            model.addAttribute("msg", "Please select a valid mediaFile..");
+//        }
+//
+//        if(!file3.getOriginalFilename().isEmpty()){
+//            file3.transferTo(new File(FILE_UPLOAD_PATH, menuImg3));
+//            model.addAttribute("msg", "File uploaded successfully.");
+//            model.addAttribute("menuImg3", menuImg3);
+//        }else {
+//            model.addAttribute("msg", "Please select a valid mediaFile..");
+//        }
+
+
+//        //경로 생성
+//        if (! new File(FILE_UPLOAD_PATH).exists()){
+//            new File(FILE_UPLOAD_PATH).mkdirs();
+//        }
+//        //파일 복사
+//        try{
+//            FileCopyUtils.copy(file.getBytes(), target);
+//            model.addAttribute("file", file);
+//        }catch(Exception e){
+//            e.printStackTrace();
+//            model.addAttribute("file", "error");
+//        }
+
 
         int menuNo = menuService.addMenu(menu);
 
@@ -176,11 +238,45 @@ public class MenuController {
     }
 
     @RequestMapping(value="addMenu", method=RequestMethod.POST)
-    public String addMenu(HttpServletRequest request,@ModelAttribute("menu") Menu menu, Model model) throws Exception{
+    public String addMenu(@RequestParam(value="menuImg11", required = false) MultipartFile file1,HttpServletRequest request,@ModelAttribute("menu") Menu menu, Model model) throws Exception{
+//    public String addMenu(@RequestParam("menuImg1")MultipartFile file1,@RequestParam(value="menuImg2", required = false)MultipartFile file2,@RequestParam(value="menuImg3", required = false)MultipartFile file3,HttpServletRequest request,@ModelAttribute("menu") Menu menu, Model model) throws Exception{
 
         System.out.println("/menu/addMenu:POST");
 
         System.out.println("request = " + request + ", menu = " + menu + ", model = " + model);
+
+//        MultipartFile file1 = (MultipartFile) request.getAttribute("menuImg1");
+
+        String menuImg1  = file1.getOriginalFilename();
+
+//        String menuImg2  = file2.getOriginalFilename();
+//        String menuImg3  = file3.getOriginalFilename();
+
+        if(!file1.getOriginalFilename().isEmpty()){
+            file1.transferTo(new File(FILE_UPLOAD_PATH, menuImg1));
+//            model.addAttribute("msg", "File uploaded successfully.");
+//            model.addAttribute("menuImg1", menuImg1);
+        }
+
+        menu.setMenuImg1(file1.getOriginalFilename());
+
+
+//        if(!file2.getOriginalFilename().isEmpty()){
+//            file2.transferTo(new File(FILE_UPLOAD_PATH, menuImg2));
+//            model.addAttribute("msg", "File uploaded successfully.");
+//            model.addAttribute("menuImg2", menuImg2);
+//        }else {
+//            model.addAttribute("msg", "Please select a valid mediaFile..");
+//        }
+//
+//        if(!file3.getOriginalFilename().isEmpty()){
+//            file3.transferTo(new File(FILE_UPLOAD_PATH, menuImg3));
+//            model.addAttribute("msg", "File uploaded successfully.");
+//            model.addAttribute("menuImg3", menuImg3);
+//        }else {
+//            model.addAttribute("msg", "Please select a valid mediaFile..");
+//        }
+
 
         int menuNo = menuService.addMenu(menu);
 

@@ -3,10 +3,8 @@
 //import com.ffin.service.menu.MenuService;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.beans.factory.annotation.Qualifier;
-//import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.ResponseBody;
-//import org.springframework.web.bind.annotation.RestController;
+//import org.springframework.web.bind.annotation.*;
+//import org.springframework.web.multipart.MultipartFile;
 //import org.springframework.web.servlet.ModelAndView;
 //
 //@RestController
@@ -22,9 +20,11 @@
 //        System.out.println(this.getClass());
 //    }
 //
-//    @RequestMapping(value="json/addOptionGroup")
+//    @PostMapping(value="json/imageUpload")
 //    @ResponseBody
-//    public ModelAndView addOptionGroup(@PathVariable(""))
+//    public String imageUpload(@ModelAttribute MultipartFile file){
+//        return menuService.imageUpload(file.getMultipartFile());
+//    }
 //
 //
 //}

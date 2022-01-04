@@ -18,6 +18,7 @@ public class Menu {
 	private String menuImg1;
 	private String menuImg2;
 	private String menuImg3;
+	//private String multiMenuImg;
 	
 	
 }
