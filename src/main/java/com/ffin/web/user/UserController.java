@@ -44,6 +44,7 @@ public class UserController {
         System.out.println(this.getClass());
     }
 
+
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String login2() throws Exception{
         System.out.println("UserController.login : GET");
@@ -111,7 +112,7 @@ public class UserController {
                 userService.autoLogin(user.getUserId(), session.getId(), date);
             }
         }
-        return "redirect:/views/home.jsp";
+        return "/views/homeTest.jsp";
     }
 
     @RequestMapping( value="addUser", method=RequestMethod.GET )

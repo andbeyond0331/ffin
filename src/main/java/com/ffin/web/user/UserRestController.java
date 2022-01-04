@@ -54,16 +54,19 @@ public class UserRestController {
 
     //email 인증
     @RequestMapping(value = "json/checkDuplication/{userId:.+}", method = RequestMethod.GET)
-    public String idChkDuplication(@PathVariable String userId, Model model) throws Exception{
+    public Boolean idChkDuplication(@PathVariable String userId, Model model) throws Exception{
 
-        System.out.println("/user/checkDuplication : POST");
+        System.out.println("/user/checkDuplication : GET");
         //Business Logic
         boolean result=userService.idChkDuplication(userId);
         // Model 과 View 연결
         /*model.addAttribute("result", new Boolean(result));
         model.addAttribute("userId", userId);*/
+
         System.out.println("gogo!!");
-        return userId;
+        System.out.println("!!!!!!!!!!"+userId);
+        System.out.println("!!!!!!!!!!"+result);
+        return result;
     }
 
     @RequestMapping(value = "json/idChkDuplication", method = RequestMethod.POST)
@@ -120,6 +123,14 @@ public class UserRestController {
             System.out.println("로그인Nope");
         }
         return userId;
+    }
+
+    @RequestMapping(value = "json/addUser", method = RequestMethod.GET)
+    public String addUser() throws Exception{
+
+        System.out.println("/user/addUser : GET");
+
+        return "/views/user/addUserInfo.jsp";
     }
 
 
