@@ -11,20 +11,15 @@
 
     <!-- Basic -->
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <!-- Site Metas -->
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
 
     <title>F.FIN | FOODTRUCK FINDER</title>
 
     <!-- jQery -->
-    <script src="../resources/bootstrap/js/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <!-- bootstrap js -->
-    <script src="../resources/bootstrap/js/bootstrap.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
     <!-- slick  slider -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
     <!-- nice select -->
@@ -32,9 +27,17 @@
     <!-- custom js -->
     <script src="../resources/bootstrap/js/custom.js"></script>
 
+    <!-- 카카오 로그인 -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
+
+
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- bootstrap core css -->
     <link rel="stylesheet" type="text/css" href="../resources/bootstrap/css/bootstrap.css" />
+
 
     <!-- fonts style -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
@@ -46,7 +49,6 @@
     <!-- slidck slider -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" integrity="sha256-UK1EiopXIL+KVhfbFa8xrmAWPeBjMVdvYMYkTAEv/HI=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css.map" integrity="undefined" crossorigin="anonymous" />
-
     <!-- Custom styles for this template -->
     <link href="../resources/bootstrap/css/style.css" rel="stylesheet" />
     <!-- responsive style -->
@@ -67,6 +69,7 @@
     <style>
         .nav-user{
             width: 0;
+            margin-right: 100px;
         }
         .navbar.navbar-expand-md{
             background-color: #fff;
@@ -74,17 +77,31 @@
             padding-left: 100px;
         }
 
-        button.btn{
+        .btn.btn-default{
             color: #fff;
             background-color: #ffe537;
             margin-left: 10px;
             padding: 10px 15px 10px 15px;
         }
-        button.btn:hover{
+        .btn.btn-default:hover{
             color: #ffe537;
             background-color: #ffffff;
             border-color: #ffe537;
             border-width: 2px;
+        }
+
+        .btn.btn-default.login{
+            width:500px;
+            margin-left: 0;
+            background-color: #ffba49;
+        }
+
+        .btn.btn-default.login:hover{
+            width:500px;
+            margin-left: 0;
+            background-color: #f17228;
+            color: #ffe537;
+            border: 0;
         }
 
        .navbar-toggler{
@@ -112,13 +129,103 @@
         .nav-link{
             color: #110000;
         }
+
+        .dropdown-item.user-menu:hover{
+            background-color: #ecf0fd;
+        }
+/*        li.form-inline.my-2.my-lg-0.show > ul:before{
+            content: "";
+            border-bottom: 10px solid #fff;
+            border-right: 10px solid transparent;
+            border-left: 10px solid transparent;
+            position: absolute;
+            top: -10px;
+            right: 16px;
+            z-index: 10;
+        }*/
+
     </style>
 
     <script type="text/javascript">
 
+        /*카카오 로그인*/
+        $(function () {
+
+            Kakao.init('b729adcc43707d7099ee5f895c968b62');
+            var id = "";
+
+            $("#kakaoLogin").on("click", function () {
+
+                alert("카카오로그인");
+                console.log("카카오 로그인");
+
+
+                Kakao.Auth.login({
+                    success: function (authObj) {
+                        //console.log(JSON.stringify(authObj));
+                        //console.log(Kakao.Auth.getAccessToken());
+
+                        //2. 로그인 성공시, API를 호출합니다.
+                        Kakao.API.request({
+                            url: '/v2/user/me',
+                            success: function (res) {
+                                //console.log(JSON.stringify(res));
+                                id = res.kakao_account.email;
+
+                                $.ajax({
+                                    url: "/user/json/checkDuplication/" + res.kakao_account.email,
+                                    type : "GET",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Content-Type": "application/json"
+                                    },
+                                    success: function (idChk) {
+                                        console.log("hey kakao");
+                                        console.log(idChk);
+                                        if (idChk === id) { //DB에 아이디가 없을 경우 => 회원가입
+                                            console.log("회원가입중...");
+                                            $.ajax({
+                                                url: "views/user/addUser.jsp",
+                                                method: "POST",
+                                                headers: {
+                                                    "Accept": "application/json",
+                                                    "Content-Type": "application/json"
+                                                },
+                                                data: JSON.stringify({
+                                                    userId: res.kakao_account.email,
+                                                    userName: res.properties.nickname
+                                                    /*userPassword: "kakao123",*/
+                                                }),
+                                                success: function (JSONData) {
+                                                    console.log(JSONData)
+                                                    alert("회원가입이 정상적으로 되었습니다.");
+                                                    $("form").attr("method", "POST").attr("action", "/user/snsLogin/" + res.id).attr("target", "_parent").submit();
+                                                }
+                                            })
+                                        }
+                                        if (!(idChk === id)) { //DB에 아이디가 존재할 경우 => 로그인
+                                            console.log("로그인중...");
+                                            $("form").attr("method", "POST").attr("action", "/user/snsLogin/" + res.kakao_account.email).attr("target", "_parent").submit();
+                                        }
+                                    }
+                                })
+                            },
+                            fail: function (error) {
+                                alert(JSON.stringify(error));
+                            }
+                        });
+                    },
+                    fail: function (err) {
+                        alert(JSON.stringify(err));
+                    }
+                });
+
+            });
+        });
+
+
         /*로그인 Modal*/
         function loginModal(){
-           alert(1234);
             $('#openLoginModal').modal('show');
         }
 
@@ -174,6 +281,15 @@
             });
         });
 
+        //왜때문에 경로에 user가 자꾸 붙는지...ㅠ
+        $( function() {
+            $(".navbar-brand").on("click" , function() {
+                alert(1234);
+                location.replace("http://localhost:8080/views/homeTest.jsp");
+            });
+        });
+
+
         // 혜지 추가
         // ============= 쪽지 ===============
         $( function() {
@@ -202,6 +318,8 @@
             });
         });
 
+
+
     </script>
 
 
@@ -221,7 +339,7 @@
                     <!-- navbar-brand의 content 변경 -->
                         <%--<a class="navbar-brand" href="#">F.Fin</a>--%>
                     <div class="logo">
-                        <a class="navbar-brand" href="homeTest.jsp">
+                        <a class="navbar-brand" href="">
                             <img class="d-inline-block" src="../resources/bootstrap/assets/logo.svg" alt="logo" />
                             <span style="color: #ffba49; ">F.FIN</span>
                         </a>
@@ -247,7 +365,7 @@
             </div>
         </c:if>
         <%-- 로그인 O --%>
-        <c:if test="${ user.userId != null || truck.truckId != null }">
+        <c:if test="${ (user.userId != null && sessionScope.role == 'user') || (truck.truckId != null && sessionScope.role == 'truck') }">
         <div class="container-fluid">
             <nav class="navbar navbar-expand-md fixed-top">
                 <!-- navbar-brand의 content 변경 -->
@@ -272,7 +390,7 @@
                         <li class="nav-item">
                             <a class="nav-link" id="goPost" href="#"><i class="fas fa-globe"></i>게시판</a>
                         </li>
-                        <c:if test="${user.userId != null}">
+                        <c:if test="${user.userId != null && sessionScope.role == 'user'}">
                         <li class="nav-item">
                             <a class="nav-link" id="goChat" href="#"><i class="fas fa-comments"></i>채팅방</a>
                         </li>
@@ -287,20 +405,31 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#" style="margin-top: 3px;"><i class="fas fa-shopping-cart fa-lg"></i></a>
                         </li>
-                        <form class="form-inline my-2 my-lg-0">
+                        <li class="form-inline my-2 my-lg-0" style="position: relative;">
                             <%--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>--%>
-                            <c:if test="${user.userId != null}">
-                                <button type="button" class="btn btn-default">
+                            <c:if test="${user.userId != null && sessionScope.role == 'user'}">
+                                <button type="button" class="btn btn-default dropdown-toggle" id="user-dropdown" data-toggle="dropdown"  aria-expanded="false">
                                     <i class="fas fa-user-alt"></i>${user.userId}
                                 </button>
+                                <ul class="dropdown-menu" aria-labelledby="user-dropdown">
+                                    <li><a class="dropdown-item user-menu" href="./user/userMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
+                                    <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-question-circle"></i>문의</a></li>
+                                    <li><a class="dropdown-item user-menu" href="/user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+                                </ul>
                             </c:if>
-                                <c:if test="${truck.truckId != null}">
-                                    <button type="button" class="btn btn-default">
-                                        <i class="fas fa-user-alt"></i>${truck.truckId}
-                                    </button>
-                                </c:if>
-                        </form>
+                            <c:if test="${truck.truckId != null && sessionScope.role == 'truck' }">
+                                <button type="button" class="btn btn-default dropdown-toggle" id="truck-dropdown" data-toggle="dropdown"  aria-expanded="false">
+                                    <i class="fas fa-user-alt"></i>${truck.truckId}
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="user-dropdown">
+                                    <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-user-circle"></i>MyPage</a></li>
+                                    <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-power-off"></i>장사모드?</a></li>
+                                    <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-question-circle"></i>문의</a></li>
+                                    <li><a class="dropdown-item user-menu" href="/truck/logoutTruck"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+                                </ul>
+                            </c:if>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -329,7 +458,7 @@
                             <a class="nav-link" data-toggle="tab" href="#CEO">CEO</a>
                         </li>
                     </ul>
-                    <form id = "modalForm" name="modalForm">
+                    <form id = "modalForm" name="modalFormmodalFormmodalForm">
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="user">
                                 <div class="mb-3">
@@ -364,6 +493,9 @@
                                 <div class="mb-3 form-check">
                                     <input type="checkbox" class="form-check-input" id="autoLoginTruck">
                                     <label class="form-check-label" for="autoLoginTruck">자동로그인</label>
+                                    <a class="findId" href="/views/truck/findTruckId.jsp" style="color: #ffba49; margin-left: 5px; font-size: 14px;">
+                                        <strong style="float: right; stroke: #ffba49; margin-right: 5px; margin-top: 2px;">ID/PW 찾기</strong>
+                                    </a>
                                 </div>
                                 <div class="mb-3">
                                     <span style="color: #0b1727; margin-left: 5px; font-size: 14px">아직 회원이 아니신가요?</span>
@@ -371,14 +503,24 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-warning btn-lg btn-block" id="modalLoginBtn" style="color: #ffffff">login</button>
+
+                        <div class="d-grid gap-2 mx-auto modal-footer" style="padding-bottom: 5px;">
+                            <button type="submit" class="btn btn-default login" id="modalLoginBtn" style="color: #ffffff; margin-bottom: 10px;">login</button>
+                        </div>
+                        <div class="d-grid gap-10 mx-auto" style="margin-bottom: 5px; padding: 0 15px; text-align: center;">
+                            <input type="hidden" name="kakaoEmail" id="kakaoEmail">
+                            <input type="hidden" name="kakaoName" id="kakaoName">
+                            <a id="kakaoLogin">
+                                <img src="../resources/image/kakao_login_medium_wide.png">
+                            </a>
+                            <button type="submit" class="btn btn-default col-5 btn-sm login" id="googleLogin" style="color: #ffffff;">Google 로그인</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
 </body>
 
 </html>

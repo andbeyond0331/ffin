@@ -89,19 +89,14 @@
 
 	<script type="text/javascript">
 
-
 	</script>
 </head>
 
-<body id="page-top">
+<body>
 
 <jsp:include page="/views/navbar.jsp" />
 
-
-
-
 <!-- client section -->
-
 <section class="client_section layout_padding">
 	<div class="container">
 		<div class="col-md-11 col-lg-10 mx-auto">
@@ -120,8 +115,8 @@
 								<div class="card" style="width: 14rem;">
 									<div class="card-body">
 										<span class="box-icon"><i class="fas fa-user-alt page-icon fa-2x"></i></span>
-										<h6 class="card-subtitle mb-2 text-muted">프사</h6>
-										<a href="#" class="card-link" style="float: right"><i class="fas fa-angle-double-right"></i></a>
+										<h6 class="card-subtitle mb-2 text-muted">내정보</h6>
+										<a href="./getUserInfo.jsp" class="card-link" style="float: right"><i class="fas fa-angle-double-right"></i></a>
 									</div>
 								</div>
 								<div class="card" style="width: 14rem;">
@@ -143,8 +138,8 @@
 								<div class="card" style="width: 14rem;">
 									<div class="card-body">
 										<span class="box-icon"><i class="fas fa-user-alt page-icon fa-2x"></i></span>
-										<h6 class="card-subtitle mb-2 text-muted">내정보</h6>
-										<a href="#" class="card-link" style="float: right"><i class="fas fa-angle-double-right"></i></a>
+										<h6 class="card-subtitle mb-2 text-muted">프로필</h6>
+										<a href="./getUserProfile.jsp" class="card-link" style="float: right"><i class="fas fa-angle-double-right"></i></a>
 									</div>
 								</div>
 								<div class="card" style="width: 14rem;">
@@ -156,7 +151,7 @@
 								</div>
 								<div class="card" style="width: 14rem;">
 									<div class="card-body">
-										<span class="box-icon"><i class="fas fa-angle-down fa-2x"></i></span>
+										<span class="box-icon"><i class="fas fa-edit fa-2x"></i></span>
 										<h6 class="card-subtitle mb-2 text-muted">글•댓글</h6>
 										<a href="#" class="card-link" style="float: right"><i class="fas fa-angle-double-right"></i></a>
 									</div>
@@ -179,7 +174,7 @@
 								</div>
 								<div class="card" style="width: 14rem;">
 									<div class="card-body">
-										<span class="box-icon"><i class="fas fa-angle-down fa-2x"></i></span>
+										<span class="box-icon"><i class="fas fa-question-circle fa-2x"></i></span>
 										<h6 class="card-subtitle mb-2 text-muted">문의•신고</h6>
 										<a href="#" class="card-link" style="float: right"><i class="fas fa-angle-double-right"></i></a>
 									</div>
@@ -200,8 +195,6 @@
 		</div>
 	</div>
 </section>
-
-<jsp:include page="/views/footer.jsp" />
 
 </body>
 </html>
