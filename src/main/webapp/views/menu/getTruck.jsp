@@ -5,6 +5,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>메뉴 목록</title>
+    <jsp:include page="../../common/lib.jsp"/>
+
     <style>
         .card {
             display: flex;

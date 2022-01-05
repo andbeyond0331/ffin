@@ -10,6 +10,7 @@
 <head>
 
     <title>메뉴 수정</title>
+    <jsp:include page="../../common/lib.jsp"/>
 
     <!-- 참조 : http://getbootstrap.com/css/   참조 -->
     <meta name="viewport" content="width=device-width, initial-scale=1" />

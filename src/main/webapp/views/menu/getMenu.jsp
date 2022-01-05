@@ -8,6 +8,8 @@
 <html lang="ko">
 
 <head>
+    <title>메뉴 조회</title>
+    <jsp:include page="../../common/lib.jsp"/>
     <meta charset="EUC-KR">
 
     <!-- 참조 : http://getbootstrap.com/css/   참조 -->
@@ -49,7 +51,7 @@
 </head>
 
 <body>
-
+<jsp:include page="/views/navbar.jsp" />
 <!--  화면구성 div Start /////////////////////////////////////-->
 <div class="container">
 
@@ -137,7 +139,7 @@
 
 </div>
 <!--  화면구성 div Start /////////////////////////////////////-->
-
+<jsp:include page="/views/footer.jsp" />
 </body>
 
 </html>
