@@ -337,31 +337,41 @@ public class CateringRestController {
                 // truck이라면
                 id = ((Truck)session.getAttribute("truck")).getTruckId();
                 System.out.println("truck id: "+id);
-                search.setSearchCondition("0");
-                map =  cateringService.getCtDateList(search, id, cate);
+                search.setSearchCondition("1");
+                map =  cateringService.getCtList(search, id, cate);
             }
 
         }else if ( flag.equals("1")){ //getCtStatusList
+
+
+
             if (role == "user" || role.equals("user")) {
                 // user 라면
 
                 id = ((User) session.getAttribute("user")).getUserId();
-               /* if (ctStatusCode.equals("0")){
-                    search.setSearchCondition("2");
-                }else {*/
-                search.setSearchCondition("0"); //statusCode에 따라 출력
-                //}
+                if (ctStatusCode.equals("2") ){
+                    search.setSearchCondition("3");
+                }else {
+                    search.setSearchCondition("0"); //statusCode에 따라 출력
+                }
             } else if (role == "truck" || role.equals("truck")) {
                 // truck이라면
 
                 id = ((Truck) session.getAttribute("truck")).getTruckId();
                 System.out.println("truck id: " + id);
-                search.setSearchCondition("1");
+                if (ctStatusCode.equals("2") ){
+
+                    search.setSearchCondition("4");
+
+                }else {
+                    search.setSearchCondition("1"); //statusCode에 따라 출력
+                }
+
+
+
             }
 
-            if (ctStatusCode.equals("2")){
-                search.setSearchCondition("3"); // 이용자 취소 및 사업자 거절 출력
-            }
+
 
             map = cateringService.getCtStatusList(search, id, ctStatusCode, cate);
 

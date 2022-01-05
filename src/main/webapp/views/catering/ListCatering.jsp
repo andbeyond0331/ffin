@@ -93,174 +93,104 @@
         </div>
     </div>
 </div>
+
+
+<div class="card-colums" id="all_posting">
+    <div class="container">
+
+        <div class="detail-box" >
+            <h4 style="margin-top: 10px; align: center">
+                예약목록조회
+            </h4>
+            <a href="/catering/getCtServAllList?cate=list">예약가능 서비스 조회</a>
+            <input type="text" id="ctct" name="ctct" value="${ctct}"/>
+            <input type="text" id="currentPage" name="currentPage" value=""/>
+            <input type="text" id="cate" name="cate" value="list"/>
+            <input type="text" id="flag" name="flag" value="${flag}"/>
+        </div>
+        <form name="detailForm">
+    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
+    <div class="row">
+
+        <div class="col-md-6 text-left">
+            <div id="calStatus">
+                <input type="button" value="전체"/>
+                <input type="button" value="예약가능"/>
+                <input type="button" value="수락대기"/>
+                <input type="button" value="수락완료(결제대기)"/>
+                <input type="button" value="예약완료"/>
+                <input type="button" value="취소 및 거절"/>
+                <!-- 여기 수정
+                <a href="/catering/listCatering"> 전체 </a>
+                <a href="/catering/getCtServAllList?cate=list" style=" background-color : #008d62;"> 예약가능 </a>
+                <a href="/catering/getCtStatusList?ctStatusCode=1&cate=list" style=" background-color : #bcb5f3;"> 수락대기 </a>
+                <a href="/catering/getCtStatusList?ctStatusCode=4&cate=list" style=" background-color : #fcab31;"> 수락완료(결제대기) </a>
+                <a href="/catering/getCtStatusList?ctStatusCode=5&cate=list" style=" background-color : #f81f59;"> 예약완료 </a>
+                <a href="/catering/getCtStatusList?ctStatusCode=2&cate=list" style=" background-color : #f81f59;"> 취소 및 거절 </a>-->
+            </div>
+        </div>
+
+    </div>
+    <div id="card-box" class="cards-box">
+        <c:forEach var="catering" items="${list}">
+            <div class="card" style="width: 23rem; margin-bottom:15px; margin-left: 10px;">
+                <img class="card-img-top" src="../../resources/image/${catering.ctMenu.menuImg1}" alt="Card image cap"
+                     style="border-bottom: 1px solid #eee; height: 300px;">
+                <div class="card-body">
+                    <ul class='card-body-ul'>
+
+                        <c:if test="${sessionScope.role eq 'user'}">
+                        <li> 푸드트럭 상호명 :${catering.ctTruck.truckName}</li>
+                        </c:if>
+                        <c:if test="${sessionScope.role eq 'truck'}">
+                            <li> 이용자 이름 :${catering.ctUser.userName}</li>
+                        </c:if>
+                        <li> 서비스 날짜 : ${catering.ctDate}</li>
+                        <li> 견적 : ${catering.ctQuotation}</li>
+                        <li> 상태코드 :
+                        <c:if test="${catering.ctStatusCode eq '0'}">예약가능</c:if>
+                        <c:if test="${catering.ctStatusCode eq '1'}">수락 대기</c:if>
+                        <c:if test="${catering.ctStatusCode eq '2'}">이용자 취소</c:if>
+                        <c:if test="${catering.ctStatusCode eq '3'}">사업자 거절</c:if>
+                        <c:if test="${catering.ctStatusCode eq '4'}">결제 대기</c:if>
+                        <c:if test="${catering.ctStatusCode eq '5'}">예약 완료</c:if>
+                        </li>
+                    </ul>
+                    <div class="btn-detail">
+                        <input type="text" id="ctNo${catering.ctNo}" name="ctNo" value="${catering.ctNo}"/>
+                        <input type="text" id="ctStatusCode${catering.ctNo}" name="ctStatusCode" value="${catering.ctStatusCode}"/>
+                        <c:if test="${catering.ctStatusCode eq '0'}">
+
+                            <button  name="getCateringDetail" class="button is-warning is-light" style='margin-left: 100px; margin-bottom: 13px; height: 25px'>자세히
+                            </button>
+                            <%--onclick="getCateringDetail(${catering.ctNo})--%>
+                        </c:if>
+                        <c:if test="${catering.ctStatusCode ne '0'}">
+
+
+                            <button  name="getResDetail" class="button is-warning is-light" style='margin-left: 100px; margin-bottom: 13px; height: 25px' >자세히
+                            </button>
+                            <%--onclick="getResDetail(${catering.ctNo},${catering.ctStatusCode})"--%>
+                        </c:if>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+        </form>
+
+</div>
+</div>
 <script>
     var role = '${sessionScope.role}';
-    function fncGetCateringList(currentPage) {
-        //document.getElementById("currentPage").value = currentPage;
-        $("#currentPage").val(currentPage)
-        $("#flag").val("0")
-        $("form").attr("method" , "POST").attr("action" , "/catering/listCatering").submit();
-    }
-    function fncGetCtStatusList(currentPage, ctStatusCode) {
-        //document.getElementById("currentPage").value = currentPage;
-        $("#currentPage").val(currentPage)
-        $("#ctStatusCode").val(ctStatusCode)
-        $("#cate").val("list");
-        $("#flag").val("1")
-        $("form").attr("method" , "POST").attr("action" , "/catering/getCtStatusList?ctStatusCode="+ctStatusCode+"&cate=list").submit();
-    }
-    function fncGetCtServAllList(currentPage) {
-        //document.getElementById("currentPage").value = currentPage;
-        $("#currentPage").val(currentPage)
-        $("#cate").val("list");
-        $("#flag").val("2")
-        $("form").attr("method" , "POST").attr("action" , "/catering/getCtServAllList?cate=list").submit();
-    }
-    let isEnd = false;
-    var page=1;
-    var roleUT = '${sessionScope.role}';
-
-
-
-        $(window).scroll(function(){
-            let $window = $(this);
-            let scrollTop = $window.scrollTop();
-            let windowHeight = $window.height();
-            let documentHeight = $(document).height();
-
-            //console.log("documentHeight:" + documentHeight + " | scrollTop:" + scrollTop + " | windowHeight: " + windowHeight );
-
-            // scrollbar의 thumb가 바닥 전 30px까지 도달 하면 리스트를 가져온다.
-            //if( scrollTop + windowHeight + 30 > documentHeight ){
-            //if ($(window).scrollTop()  == $(document).height() - $(window).height()) {
-
-            var isBottom =  (window.innerHeight + window.scrollY) >= document.body.offsetHeight;
-
-
-            if (isBottom) {
-                if(isEnd===true || isEnd){
-                    return;
-                }
-                isEnd = true;
-                page++;
-                loadList();
-            }
-        })
-       // loadList();
-
-
-
-
-    var loadList = function(){
-       /* if(isEnd === true){
-            return;
-        }*/
-
-        $.ajax({
-
-            url : "/catering/json/listCatering",
-            method : "POST",
-            dataType : "json",
-            data : { currentPage : page,
-                ctStatusCode : $("input[name='ctStatusCode']").val(),
-                cate : "list",
-                flag : $("input[name='flag']").val()
-            },
-
-            //contentType:"application/json;charset=UTF-8",
-            contentType: "application/x-www-form-urlencoded;",
-            success : function(jsonData) {
-
-               // page++;
-                var list = jsonData.list;
-                console.log("list: "+list)
-                let length = list.length;
-
-                console.log("length: "+length)
-
-
-
-                for(var i=0; i<list.length; i++){
-                    var div="";
-
-
-
-                    div +=  "<div class='card' style='width: 23rem; margin-bottom:15px; margin-left: 10px;'>"
-                +"<img class='card-img-top' src='../../resources/image/"+list[i].ctMenu.menuImg1+"' alt='Card image cap' style='border-bottom: 1px solid #eee; height: 300px;'>"
-                +"<div class='card-body'>"
-                    +"<ul class='card-body-ul'>";
-
-                    if ( roleUT == 'user'){
-                        div += "<li> 푸드트럭 상호명 :"+list[i].ctTruck.truckName+"</li>";
-                    }else{
-                        div += "<li> 이용자 이름 :"+list[i].ctUser.userName+"</li>";
-                    }
-                     div += " <li> 서비스 날짜 : "+list[i].ctDate+"</li>"
-                         +" <li> 견적 : "+list[i].ctQuotation+"</li>";
-                    if(list[i].ctStatusCode == "0"){
-                        div += "<li> 상태코드 : 예약가능</li>";
-                    }else if(list[i].ctStatusCode == "1"){
-                        div += "<li> 상태코드 : 수락 대기</li>";
-                    }else if(list[i].ctStatusCode == "2"){
-                        div += "<li> 상태코드 : 이용자 취소</li>";
-                    }else if(list[i].ctStatusCode == "3"){
-                        div += "<li> 상태코드 : 사업자 거절</li>";
-                    }else if(list[i].ctStatusCode == "4"){
-                        div += "<li> 상태코드 : 결제 대기</li>";
-                    }else {
-                        div += "<li> 상태코드 : 예약 완료</li>";
-                    }
-                    div += "</ul>"
-                    +"<div class='btn-detail'>"
-                       + "<input type='hidden' id='ctNo' name='ctNo' value='"+list[i].ctNo+"'/>"
-                    + "<input type='hidden' id='statusCode' name='statusCode' value='"+list[i].ctStatusCode+"'/>";
-
-                    if(list[i].ctStatusCode == "0") {
-                        div += " <button id ='getCateringDetail' name='getCateringDetail' class='button is-warning is-light'"
-                            + "style='margin-left: 100px; margin-bottom: 13px; height: 25px'"
-                            + "onclick='getCateringDetail(" + list[i].ctNo + ")'>자세히 "
-                            + "</button>";
-                    }else{
-                        div += " <button id ='getResDetail' name='getResDetail' class='button is-warning is-light'"
-                            + "style='margin-left: 100px; margin-bottom: 13px; height: 25px'"
-                            + "onclick='getResDetail(" + list[i].ctNo + ", "+list[i].ctStatusCode+")'>자세히 "
-                            + "</button>";
-                    }
-
-                    div += "</div></div> </div>";
-
-
-                    $('.cards-box').append(div);
-                    if( length < 6 ){
-                        isEnd = true;
-                        // return;
-                    }
-
-                }
-
-
-
-            },
-
-            error : function() {
-
-                alert("1에러가 발생하였습니다.")
-
-            },
-
-        });
-
-
-    }
-
 
 
     $(function() {
         var modal = $('#staticBackdrop');
 
         $("#staticBackdrop").on('hide.bs.modal', function (e) {
-           // self.location = "/catering/listCatering"
-           window.location.reload();
+            // self.location = "/catering/listCatering"
+            window.location.reload();
             e.stopImmediatePropagation();
         });
 
@@ -300,8 +230,228 @@
 
                 });//end ajax
         });
+        $( "input[value='전체']" ).on("click" , function() {
+
+            fncGetCateringList('1');
+        });
+
+        $( "input[value='예약가능']" ).on("click" , function() {
+
+            fncGetCtServAllList('1');
+        });
+
+        $( "input[value='수락대기']" ).on("click" , function() {
+            $("input[name='ctct']").val('1')
+            fncGetCtStatusList('1', '1');
+        });
+
+        $( "input[value='수락완료(결제대기)']" ).on("click" , function() {
+            $("input[name='ctct']").val('4')
+            fncGetCtStatusList('1', '4');
+        });
+
+        $( "input[value='예약완료']" ).on("click" , function() {
+            $("input[name='ctct']").val('5')
+            fncGetCtStatusList('1', '5');
+        });
+
+        $( "input[value='취소 및 거절']" ).on("click" , function() {
+            $("input[name='ctct']").val('2')
+            fncGetCtStatusList('1', '2');
+        });
+
+        $("body").on("click", "button[name='getCateringDetail']", function() {
+            alert("1")
+            var ctNo = $(this).parent().find("input[name='ctNo']").val();
+            alert("ctno : "+ctNo)
+            getCateringDetail(ctNo);
+        });
+
+        $("body").on("click", "button[name='getResDetail']", function() {
+            alert("2")
+            var ctNo = $(this).parent().find("input[name='ctNo']").val();
+            alert("ctno : "+ctNo)
+            var ctStatusCode= $(this).parent().find("input[name='ctct']").val();
+            alert("ctStatusCode : "+ctStatusCode)
+            getResDetail(ctNo, ctStatusCode);
+        });
 
     });
+
+
+    function fncGetCateringList(currentPage) {
+        //document.getElementById("currentPage").value = currentPage;
+        //$("#currentPage").val(currentPage)
+        //$("#flag").val("0")
+        $("input[name='flag']").val('0')
+        self.location="/catering/listCatering";
+        //$("form").attr("method" , "POST").attr("action" , "/catering/listCatering").submit();
+    }
+    function fncGetCtStatusList(currentPage, ctStatusCode) {
+
+        //document.getElementById("currentPage").value = currentPage;
+        //$("#currentPage").val(currentPage)
+       // $("#ctStatusCode").val(ctStatusCode)
+        $("input[name='ctct']").val(ctStatusCode)
+        $("input[name='flag']").val('1')
+        //$("#cate").val("list");
+        self.location="/catering/getCtStatusList?ctct="+ctStatusCode+"&cate=list";
+        //alert("야")
+        //$("form").attr("method" , "POST").attr("action" , "/catering/getCtStatusList?ctStatusCode="+ctStatusCode+"&cate=list").submit();
+    }
+    function fncGetCtServAllList(currentPage) {
+        //document.getElementById("currentPage").value = currentPage;
+        //$("#currentPage").val(currentPage)
+        //$("#cate").val("list");
+
+
+        $("input[name='flag']").val('2')
+        self.location="/catering/getCtServAllList?cate=list";
+       // $("form").attr("method" , "POST").attr("action" , "/catering/getCtServAllList?cate=list").submit();
+    }
+
+
+
+    /* 무한스크롤 */
+    let isEnd = false; // 다 불러왔을 때 더이상 노출 되지 않기 위함
+    var page=2;
+    var roleUT = '${sessionScope.role}';
+
+
+
+    $(window).scroll(function(){
+        let $window = $(this);
+        let scrollTop = $window.scrollTop();
+        let windowHeight = $window.height();
+        let documentHeight = $(document).height();
+
+        //console.log("documentHeight:" + documentHeight + " | scrollTop:" + scrollTop + " | windowHeight: " + windowHeight );
+
+        // scrollbar의 thumb가 바닥 전 30px까지 도달 하면 리스트를 가져온다.
+        //if( scrollTop + windowHeight + 30 > documentHeight ){
+        //if ($(window).scrollTop()  == $(document).height() - $(window).height()) {
+
+        var isBottom =  (window.innerHeight + window.scrollY) >= document.body.offsetHeight; // 바닥
+
+
+        if (isBottom) {
+            if(isEnd===true || isEnd){
+                return;
+            }
+            isEnd = true; // 스크롤시 무한대로 함수 호출하는것을 막기 위함
+            /* 마지막에 한 번 더 호출하는 현상이 있긴 함.... */
+
+            loadList();
+        }
+    })
+    // loadList();
+
+
+
+
+    var loadList = function(){
+        /* if(isEnd === true){
+             return;
+         }*/
+
+        $.ajax({
+
+            url : "/catering/json/listCatering",
+            method : "POST",
+            dataType : "json",
+            data : { currentPage : page,
+                ctStatusCode : $("input[name='ctStatusCode']").val(),
+                cate : "list",
+                flag : $("input[name='flag']").val()
+            },
+
+            //contentType:"application/json;charset=UTF-8",
+            contentType: "application/x-www-form-urlencoded;",
+            success : function(jsonData) {
+
+                page++;
+                var list = jsonData.list;
+                console.log("list: "+list)
+                let length = list.length;
+
+                console.log("length: "+length)
+
+
+
+                for(var i=0; i<list.length; i++){
+                    var div="";
+
+
+
+                    div +=  "<div class='card' style='width: 23rem; margin-bottom:15px; margin-left: 10px;'>"
+                        +"<img class='card-img-top' src='../../resources/image/"+list[i].ctMenu.menuImg1+"' alt='Card image cap' style='border-bottom: 1px solid #eee; height: 300px;'>"
+                        +"<div class='card-body'>"
+                        +"<ul class='card-body-ul'>";
+
+                    if ( roleUT == 'user'){
+                        div += "<li> 푸드트럭 상호명 :"+list[i].ctTruck.truckName+"</li>";
+                    }else{
+                        div += "<li> 이용자 이름 :"+list[i].ctUser.userName+"</li>";
+                    }
+                    div += " <li> 서비스 날짜 : "+list[i].ctDate+"</li>"
+                        +" <li> 견적 : "+list[i].ctQuotation+"</li>";
+                    if(list[i].ctStatusCode == "0"){
+                        div += "<li> 상태코드 : 예약가능</li>";
+                    }else if(list[i].ctStatusCode == "1"){
+                        div += "<li> 상태코드 : 수락 대기</li>";
+                    }else if(list[i].ctStatusCode == "2"){
+                        div += "<li> 상태코드 : 이용자 취소</li>";
+                    }else if(list[i].ctStatusCode == "3"){
+                        div += "<li> 상태코드 : 사업자 거절</li>";
+                    }else if(list[i].ctStatusCode == "4"){
+                        div += "<li> 상태코드 : 결제 대기</li>";
+                    }else {
+                        div += "<li> 상태코드 : 예약 완료</li>";
+                    }
+                    div += "</ul>"
+                        +"<div class='btn-detail'>"
+                        + "<input type='text' id='ctNo"+list[i].ctNo+"' name='ctNo' value='"+list[i].ctNo+"'/>"
+                        + "<input type='text' id='ctStatusCode"+list[i].ctNo+"' name='ctStatusCode' value='"+list[i].ctStatusCode+"'/>";
+
+                    if(list[i].ctStatusCode == "0") {
+                        div += " <button  name='getCateringDetail' class='button is-warning is-light'"
+                            + "style='margin-left: 100px; margin-bottom: 13px; height: 25px'>자세히</button>";
+
+                    }else{
+                        div += " <button  name='getResDetail' class='button is-warning is-light'"
+                            + "style='margin-left: 100px; margin-bottom: 13px; height: 25px'>자세히</button>";
+
+                    }
+
+                    div += "</div></div> </div>";
+
+
+                    $('.cards-box').append(div);
+                    if( length < 6 ){
+                        isEnd = true;
+                        // return;
+                    }
+                    isEnd=false;
+
+                }
+
+
+
+            },
+
+            error : function() {
+
+                alert("1에러가 발생하였습니다.")
+
+            },
+
+        });
+
+
+    }
+
+
+
 
     function lookMap(){
         var modal = $('#staticBackdrop');
@@ -513,137 +663,22 @@
     }
 
     $( function() {
-        $( "input[value='전체']" ).on("click" , function() {
 
-            fncGetCateringList('1');
-        });
-
-        $( "input[value='예약가능']" ).on("click" , function() {
-            fncGetCtServAllList('1');
-        });
-
-        $( "input[value='수락대기']" ).on("click" , function() {
-            fncGetCtStatusList('1', '1');
-        });
-
-        $( "input[value='수락완료(결제대기)']" ).on("click" , function() {
-            fncGetCtStatusList('1', '4');
-        });
-
-        $( "input[value='예약완료']" ).on("click" , function() {
-            fncGetCtStatusList('1', '5');
-        });
-
-        $( "input[value='취소 및 거절']" ).on("click" , function() {
-            fncGetCtStatusList('1', '2');
-        });
 
     });
 
-
-</script>
-
-<div class="card-colums" id="all_posting">
-    <div class="container">
-
-        <div class="detail-box" >
-            <h4 style="margin-top: 10px; align: center">
-                예약목록조회
-            </h4>
-            <a href="/catering/getCtServAllList?cate=list">예약가능 서비스 조회</a>
-            <input type="text" id="ctStatusCode" name="ctStatusCode" value="${ctStatusCode}"/>
-            <input type="text" id="currentPage" name="currentPage" value=""/>
-            <input type="text" id="cate" name="cate" value="list"/>
-            <input type="text" id="flag" name="flag" value="${flag}"/>
-        </div>
-        <form name="detailForm">
-    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
-    <div class="row">
-
-        <div class="col-md-6 text-left">
-            <div id="calStatus">
-                <input type="button" value="전체"/>
-                <input type="button" value="예약가능"/>
-                <input type="button" value="수락대기"/>
-                <input type="button" value="수락완료(결제대기)"/>
-                <input type="button" value="예약완료"/>
-                <input type="button" value="취소 및 거절"/>
-                <!-- 여기 수정
-                <a href="/catering/listCatering"> 전체 </a>
-                <a href="/catering/getCtServAllList?cate=list" style=" background-color : #008d62;"> 예약가능 </a>
-                <a href="/catering/getCtStatusList?ctStatusCode=1&cate=list" style=" background-color : #bcb5f3;"> 수락대기 </a>
-                <a href="/catering/getCtStatusList?ctStatusCode=4&cate=list" style=" background-color : #fcab31;"> 수락완료(결제대기) </a>
-                <a href="/catering/getCtStatusList?ctStatusCode=5&cate=list" style=" background-color : #f81f59;"> 예약완료 </a>
-                <a href="/catering/getCtStatusList?ctStatusCode=2&cate=list" style=" background-color : #f81f59;"> 취소 및 거절 </a>-->
-            </div>
-        </div>
-
-    </div>
-    <div id="card-box" class="cards-box">
-        <c:forEach var="catering" items="${list}">
-            <div class="card" style="width: 23rem; margin-bottom:15px; margin-left: 10px;">
-                <img class="card-img-top" src="../../resources/image/${catering.ctMenu.menuImg1}" alt="Card image cap"
-                     style="border-bottom: 1px solid #eee; height: 300px;">
-                <div class="card-body">
-                    <ul class='card-body-ul'>
-
-                        <c:if test="${sessionScope.role eq 'user'}">
-                        <li> 푸드트럭 상호명 :${catering.ctTruck.truckName}</li>
-                        </c:if>
-                        <c:if test="${sessionScope.role eq 'truck'}">
-                            <li> 이용자 이름 :${catering.ctUser.userName}</li>
-                        </c:if>
-                        <li> 서비스 날짜 : ${catering.ctDate}</li>
-                        <li> 견적 : ${catering.ctQuotation}</li>
-                        <li> 상태코드 :
-                        <c:if test="${catering.ctStatusCode eq '0'}">예약가능</c:if>
-                        <c:if test="${catering.ctStatusCode eq '1'}">수락 대기</c:if>
-                        <c:if test="${catering.ctStatusCode eq '2'}">이용자 취소</c:if>
-                        <c:if test="${catering.ctStatusCode eq '3'}">사업자 거절</c:if>
-                        <c:if test="${catering.ctStatusCode eq '4'}">결제 대기</c:if>
-                        <c:if test="${catering.ctStatusCode eq '5'}">예약 완료</c:if>
-                        </li>
-                    </ul>
-                    <div class="btn-detail">
-                        <input type="hidden" id="ctNo" name="ctNo" value="${catering.ctNo}"/>
-                        <input type="hidden" id="statusCode" name="statusCode" value="${catering.ctStatusCode}"/>
-                        <c:if test="${catering.ctStatusCode eq '0'}">
-
-                            <button id ="getCateringDetail" name="getCateringDetail" class="button is-warning is-light"
-                                    style='margin-left: 100px; margin-bottom: 13px; height: 25px'
-                                    onclick="getCateringDetail(${catering.ctNo})">자세히
-                            </button>
-                        </c:if>
-                        <c:if test="${catering.ctStatusCode ne '0'}">
-
-
-                            <button id ="getResDetail" name="getResDetail" class="button is-warning is-light"
-                                    style='margin-left: 100px; margin-bottom: 13px; height: 25px' onclick="getResDetail(${catering.ctNo},${catering.ctStatusCode})">자세히
-                            </button>
-                        </c:if>
-                    </div>
-                </div>
-            </div>
-        </c:forEach>
-    </div>
-        </form>
-
-</div>
-</div>
-<script>
-
     //$("#getCateringDetail").on("click", function () {
+    //    alert("1")
     function getCateringDetail(ctNo) {
         /* statusCode == 0 */
-       // var ctNo= $(this).parent().find("input[name='ctNo']").val()
-        console.log("ctNo : "+ctNo);
+        alert("ccccctt : "+ctNo);
+        console.log("111ctNo : "+ctNo);
         $.ajax({
             url:"/catering/json/getCtDetail/"+ctNo,
             method:"get",
-            data:{
-            },
+
             success: function (data) {
-                // alert(data);
+                alert(data);
                 console.log("data : "+data.catering.ctTruck.truckId)
                 var div="";
                 // var role = '${sessionScope.role}';
@@ -664,7 +699,7 @@
                     +"<div ><strong></strong> <img src='../../../resources/image/"+data.catering.ctMenu.menuImg1+"'></div></div>"
                     +"<div class='row'>"
                     +"<div ><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
-                    +"<input type='hidden' id='ctNo' name='ctNo' value='"+data.catering.ctNo+"'/>"
+                    +"<input type='hidden' id='ctNo"+data.catering.ctNo+"' name='ctNo' value='"+data.catering.ctNo+"'/>"
                 if (role=="user") {
 
 
@@ -724,24 +759,21 @@
 
 
     //$("#getResDetail").on("click", function () {
-
+    //    alert("2")
     function getResDetail(ctNo, statusCode) {
         /* statusCode == 0 */
-       // var ctNo= $(this).parent().find("input[name='ctNo']").val()
-       // var statusCode =  $(this).parent().find("input[name='statusCode']").val()
+        //var ctNo= $(this).parent().find("input[name='ctNo']").val()
+        //var statusCode =  $(this).parent().find("input[name='ctStatusCode']").val()
 
         //  function getResDetail(ctNo, statusCode) {
 
-
-        console.log("ctno L " + ctNo);
-        console.log("code::: " + statusCode);
         $.ajax({
             url:"/catering/json/getResDetail/"+ctNo,
             method:"get",
             data:{
             },
             success: function (data) {
-                // alert(data);
+
                 console.log("data : "+data.catering.ctTruck.truckId)
                 var div="";
                 // var role = '${sessionScope.role}';
@@ -778,9 +810,9 @@
                     +"<div class='row'>"
                     +"<div ><strong>주소</strong> : "+data.catering.ctAdd+" "+data.catering.ctAddDetail+"</div><button type='button' class='btn btn-outline-danger' id='lookMap' name='lookMap' onclick='lookMap();'>지도가 궁금행?</button></div>"
 
-                    +"<input type='hidden' id='ctNo' name='ctNo' value='"+data.catering.ctNo+"'/>"
-                    +"<input type='hidden' id='ctAdd' name='ctAdd' value='"+data.catering.ctAdd+"'/>"
-                    +"<input type='hidden' id='ctAddDetail' name='ctAddDetail' value='"+data.catering.ctAddDetail+"'/>";
+                    +"<input type='hidden' id='ctNo"+data.catering.ctNo+"' name='ctNo' value='"+data.catering.ctNo+"'/>"
+                    +"<input type='hidden' id='ctAdd"+data.catering.ctNo+"' name='ctAdd' value='"+data.catering.ctAdd+"'/>"
+                    +"<input type='hidden' id='ctAddDetail"+data.catering.ctNo+"' name='ctAddDetail' value='"+data.catering.ctAddDetail+"'/>";
 
 
 
@@ -830,8 +862,8 @@
                         +"</div>";
                 }else {
                     modalFooter+=  "<div class='modal-footer'>"
-                    +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
-                    +"</div>";
+                        +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
+                        +"</div>";
                 }
 
                 $('.modal-footer').remove();
@@ -849,6 +881,8 @@
         });
 
     }
+
+
 </script>
 <%--
 <jsp:include page="/views/footer.jsp" />

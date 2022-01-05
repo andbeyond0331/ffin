@@ -89,12 +89,18 @@
 				CT_STATUS_CODE='0' AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO AND ct.ct_user_id = u.user_id
 			</where>
 		</if>
-		<!-- 이용자 취소 및 사업자 거절 출력  -->
+		<!-- 이용자 취소 및 사업자 거절 출력  / 이용자-->
 		<if test="search.searchCondition ==3">
 			<where>
 				CT_USER_ID = #{id} AND (CT_STATUS_CODE='2' OR CT_STATUS_CODE='3') AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO AND ct.ct_user_id = u.user_id
 			</where>
 		</if>
+		<!-- 이용자 취소 및 사업자 거절 출력  / 사업자-->
+		<if test="search.searchCondition ==4">
+		<where>
+			CT_TRUCK_ID= #{id} AND (CT_STATUS_CODE='2' OR CT_STATUS_CODE='3') AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO AND ct.ct_user_id = u.user_id
+		</where>
+	</if>
 	</select>
 
 	<select id="getCtDateList"	parameterType="map"	resultMap="cateringSelectMap">
@@ -138,24 +144,24 @@
 		SELECT inner_table.*
 		FROM (SELECT
 				ct.*, tr.TRUCK_ID, tr.TRUCK_NAME, tr.TRUCK_PHONE, m.IS_SIG_MENU, m.MENU_IMG1, m.MENU_NO, m.MENU_NAME, m.MENU_PRICE, u.user_name
-				FROM catering ct, truck tr, menu m, user u
-					<if test="search.searchCondition ==0">
+				FROM truck tr, menu m, catering ct LEFT OUTER JOIN user AS u ON  ct.CT_USER_ID = u.USER_ID
+		<if test="search.searchCondition ==0">
 						<where>
-							ct.CT_USER_ID = #{id} AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_STATUS_CODE !='6' AND ct.CT_MENU_NO = m.MENU_NO AND ct.CT_USER_ID = u.USER_ID
+							ct.CT_USER_ID = #{id} AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_STATUS_CODE !='6' AND ct.CT_MENU_NO = m.MENU_NO
 						</where>
 					</if>
 					<if test="search.searchCondition ==1">
 						<where>
-							ct.CT_TRUCK_ID = #{id} AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_STATUS_CODE !='6' AND ct.CT_MENU_NO = m.MENU_NO AND ct.CT_USER_ID = u.USER_ID
+							ct.CT_TRUCK_ID = #{id} AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_STATUS_CODE !='6' AND ct.CT_MENU_NO = m.MENU_NO
 						</where>
 					</if>
 					<if test="search.searchCondition ==2">
 						<where>
-							(ct.CT_STATUS_CODE='0' OR (ct.CT_USER_ID=#{id} AND ct.CT_STATUS_CODE='5')) AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO AND ct.CT_USER_ID = u.USER_ID
+							(ct.CT_STATUS_CODE='0' OR (ct.CT_USER_ID=#{id} AND ct.CT_STATUS_CODE='5')) AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO
 						</where>
 					</if>
 				ORDER BY ct.CT_DATE ) inner_table
-		limit #{search.startRowNum}, #{search.endRowNum}
+		limit #{search.startRowNum}, #{search.pageSize}
 	</select>
 
 
@@ -185,8 +191,14 @@
 				CT_USER_ID = #{id} AND (CT_STATUS_CODE='2' OR CT_STATUS_CODE='3') AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO AND ct.ct_user_id = u.user_id
 			</where>
 		</if>
+		<!-- 이용자 취소 및 사업자 거절 출력  / 사업자-->
+		<if test="search.searchCondition ==4">
+			<where>
+				CT_TRUCK_ID= #{id} AND (CT_STATUS_CODE='2' OR CT_STATUS_CODE='3') AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO AND ct.ct_user_id = u.user_id
+			</where>
+		</if>
 		ORDER BY ct.CT_DATE ) inner_table
-		limit #{search.startRowNum}, #{search.endRowNum}
+		limit #{search.startRowNum}, #{search.pageSize}
 	</select>
 
 	<select id="getCtDateList2"	parameterType="map"	resultMap="cateringSelectMap">
@@ -219,7 +231,7 @@
 			</where>
 		</if>
 		ORDER BY ct.CT_DATE ) inner_table
-		limit #{search.startRowNum}, #{search.endRowNum}
+		limit #{search.startRowNum}, #{search.pageSize}
 	</select>
 
 

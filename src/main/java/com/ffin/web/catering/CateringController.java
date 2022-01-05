@@ -129,8 +129,8 @@ public class CateringController {
             // truck이라면
             id = ((Truck)session.getAttribute("truck")).getTruckId();
             System.out.println("truck id: "+id);
-            search.setSearchCondition("0");
-            map =  cateringService.getCtDateList(search, id, cate);
+            search.setSearchCondition("1");
+            map =  cateringService.getCtList(search, id, cate);
         }
 
 
@@ -146,7 +146,7 @@ public class CateringController {
 
 
     @RequestMapping( value="getCtStatusList")
-    public ModelAndView getCtStatusList(@ModelAttribute("search") Search search, @RequestParam("ctStatusCode") String ctStatusCode, @RequestParam("cate") String cate, HttpSession session) throws Exception {
+    public ModelAndView getCtStatusList(@ModelAttribute("search") Search search, @RequestParam("ctct") String ctct, @RequestParam("cate") String cate, HttpSession session) throws Exception {
         /*
             '예약내역목록' 에서 탭별로 다른 값 노출
            0 : 이용자의 STATUS 값 조회
@@ -165,7 +165,7 @@ public class CateringController {
 
 
         String id="";
-        System.out.println("/////////ctStatusCode: "+ctStatusCode);
+        System.out.println("/////////ctStatusCode: "+ctct);
         Map<String , Object> map= new HashMap<String , Object>();
         String role = (String)session.getAttribute("role");// role로 구분할 예정 - user / truck
         System.out.println("role = " + role);
@@ -176,33 +176,39 @@ public class CateringController {
                 // user 라면
 
                 id = ((User) session.getAttribute("user")).getUserId();
-               /* if (ctStatusCode.equals("0")){
-                    search.setSearchCondition("2");
-                }else {*/
+                if (ctct.equals("2")){
+                    search.setSearchCondition("3");
+                }else {
                     search.setSearchCondition("0"); //statusCode에 따라 출력
-                //}
+                }
             } else if (role == "truck" || role.equals("truck")) {
                 // truck이라면
 
                 id = ((Truck) session.getAttribute("truck")).getTruckId();
                 System.out.println("truck id: " + id);
-                search.setSearchCondition("1");
+                if (ctct.equals("2") ){
+
+                    search.setSearchCondition("4");
+
+                }else {
+                    search.setSearchCondition("1"); //statusCode에 따라 출력
+                }
+
 
 
         }
 
-        if (ctStatusCode.equals("2")){
-            search.setSearchCondition("3"); // 이용자 취소 및 사업자 거절 출력
-        }
 
-        map = cateringService.getCtStatusList(search, id, ctStatusCode, cate);
+
+        map = cateringService.getCtStatusList(search, id, ctct, cate);
 
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
+        System.out.println("ctStatus : "+ctct);
         System.out.println(map.get("list"));
 
         modelAndView.addObject("list", map.get("list"));
         modelAndView.addObject("flag", "1");
-        modelAndView.addObject("ctStatusCode", ctStatusCode);
+        modelAndView.addObject("ctct", ctct);
         if (cate == "list" || cate.equals("list")) {
             modelAndView.setViewName("/views/catering/ListCatering.jsp");
         }else{
