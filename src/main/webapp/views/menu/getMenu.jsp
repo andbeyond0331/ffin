@@ -69,7 +69,7 @@
 
     <div class="row">
         <div class="col-xs-4 col-md-2 "><strong>ªÛ«∞∏Ì</strong></div>
-        <div class="col-xs-8 col-md-4">${menu.menuName}</div>
+        <div class="col-xs-8 col-md-4"><img src="/resources/image/${menu.menuImg1}" style="border-bottom: 1px solid #eee; height: 200px;"></div>
     </div>
 
     <hr/>

@@ -27,9 +27,21 @@
 
 	<insert id="addReview"	parameterType="review">
 		INSERT
-		INTO review (RV_ORDER_NO, RV_REG_TIME, RV_STAR, RV_CONTENT, RV_IMG1, RV_IMG2, RV_IMG3, ffin.review.RV_DELETE, ffin.review.RV_TC_DELETE)
+		INTO review (RV_ORDER_NO,
+		             RV_TRUCK_ID,
+		             RV_USER_ID,
+		             RV_REG_TIME,
+		             RV_STAR,
+		             RV_CONTENT,
+		             RV_IMG1,
+		             RV_IMG2,
+		             RV_IMG3,
+		             ffin.review.RV_DELETE,
+		             ffin.review.RV_TC_DELETE)
 		VALUES (
 				   #{rvOrderNo},
+		        #{rvTruckId},
+		        #{rvUserId},
 				   SYSDATE(),
 				   #{rvStar},
 				   #{rvContent},
@@ -77,8 +89,8 @@
 		SELECT
 			RV_NO,
 			RV_ORDER_NO,
-		       RV_TRUCK_ID,
-		       RV_USER_ID,
+		    RV_TRUCK_ID,
+		    RV_USER_ID,
 			RV_REG_TIME,
 			RV_STAR,
 			RV_CONTENT,

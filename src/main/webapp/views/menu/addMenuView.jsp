@@ -71,7 +71,7 @@
 
             alert("applyOptionGroupName을 name으로 가진 태그가 있는가 ??? 있다면 몇 개?"+modal.find('input[name="applyOptionGroupName"]').length);
 
-            if(modal.find('input[name="applyOptionGroupName"]').length!=0) {
+            if(modal.find('input[name="applyOptionGroupName"]').length!==0) {
                 modal.find('input[name="applyOptionGroupName"]').val(realOptionGroupName);
             }else{
                 modal.find('.modal-body').append($(divElem));
@@ -333,14 +333,14 @@
         <div class="form-group">
             <label for="menuImg2" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지2</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="menuImg2" name="menuImg2"  value="${menu.menuImg2}" placeholder="메뉴 이미지2">
+                <input type="file" class="form-control" id="menuImg2" name="menuImg22"  value="${menu.menuImg2}" placeholder="메뉴 이미지2">
             </div>
         </div>
 
         <div class="form-group">
             <label for="menuImg3" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지3</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="menuImg3" name="menuImg3"  value="${menu.menuImg3}" placeholder="메뉴 이미지3">
+                <input type="file" class="form-control" id="menuImg3" name="menuImg33"  value="${menu.menuImg3}" placeholder="메뉴 이미지3">
             </div>
         </div>
 

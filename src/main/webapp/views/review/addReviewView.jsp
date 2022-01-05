@@ -7,8 +7,9 @@
 
 <html>
 <head>
-    <meta charset="x-UTF-16LE-BOM">
+
     <title>리뷰 등록</title>
+    <jsp:include page="../../common/lib.jsp"/>
 
     <!-- 참조 : http://getbootstrap.com/css/   참조 -->
 <%--    <meta name="viewport" content="width=device-width, initial-scale=1.0" />--%>
@@ -22,30 +23,20 @@
 
 
     <!--  ///////////////////////// CSS ////////////////////////// -->
-<%--    <style>--%>
-<%--        body {--%>
-<%--            padding-top : 50px;--%>
-<%--        }--%>
-<%--    </style>--%>
+    <style>
+        body {
+            padding-top : 50px;
+        }
+    </style>
 
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">
 
-        $(document).ready(function(){
-            alert("너 왜 그래");
-        });
-
-        // $("body").on("click", "button[name='getCateringDetail']", function() {
-
-        // jQuery(doccument).ready(function(){
-        //
-        //     alert("너 왜 그래");
-        // })
 
         //============= "추가"  Event 연결 =============
         $(function() {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            alert("나와라 : " +  $( "#addReviewButton" ).html());
+            // alert("나와라 : " +  $( "#addReviewButton" ).html());
             $( "#addReviewButton" ).on("click" , function() {
                 fncAddReview();
             });
@@ -62,7 +53,7 @@
         function fncAddReview(){
 
         // var rvOrderNo = $("input[name='rvOrderNo']").val();
-        $(".form-horizontal").attr("method","POST").attr("action","/review/addReviewER").submit();
+        $(".form-horizontal").attr("method","POST").attr("action","/review/addReviewER").attr("enctype", "multipart/form-data").submit();
         // $(".form-horizontal").attr("method","POST").attr("action","/review/addReviewER").submit();
     }
 // })
@@ -112,7 +103,7 @@
 <body>
 
 <!-- ToolBar Start /////////////////////////////////////-->
-<%--<jsp:include page="/views/navbar.jsp" />--%>
+<jsp:include page="/views/navbar.jsp" /><br><br><br><br><br>
 <!-- ToolBar End /////////////////////////////////////-->
 
 <!--  화면구성 div Start /////////////////////////////////////-->
@@ -195,7 +186,7 @@
         <div class="form-group">
 <%--            <label for="rvStar" class="col-sm-offset-1 col-sm-3 control-label">리뷰 별점</label>--%>
 <%--            <input type="text" value="${purchase.orderNo}" name="rvOrderNo"/>--%>
-            <input type="hidden" value="${purchase.orderNo}" name="orderNo"/>
+            <input type="hidden" value="${purchase.orderNo}" name="rvOrderNo"/>
 
             <div class="col-sm-4">
 <%--                <input type="text" class="form-control" id="rvStar" name="rvStar" value="${review.rvStar }" placeholder="리뷰 별점을 입력하세요.">--%>
@@ -221,19 +212,40 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label for="rvImg1" class="col-sm-offset-1 col-sm-3 control-label">리뷰 이미지1</label>
+            <div class="col-sm-4">
+                <input type="file" class="form-control" id="rvImg1" name="rvImg11"  value="${review.rvImg1}" placeholder="리뷰 이미지1">
+            </div>
+        </div>
 
         <div class="form-group">
-            <div class="col-sm-offset-4  col-sm-4 text-center">
-                <button type="button" class="btn btn-primary"  id="addReviewButton">추 &nbsp;가</button>
-                <a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
+            <label for="rvImg2" class="col-sm-offset-1 col-sm-3 control-label">리뷰 이미지2</label>
+            <div class="col-sm-4">
+                <input type="file" class="form-control" id="rvImg2" name="rvImg22"  value="${review.rvImg2}" placeholder="리뷰 이미지2">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="rvImg3" class="col-sm-offset-1 col-sm-3 control-label">리뷰 이미지3</label>
+            <div class="col-sm-4">
+                <input type="file" class="form-control" id="rvImg3" name="rvImg33"  value="${review.rvImg3}" placeholder="리뷰 이미지3">
             </div>
         </div>
     </form>
 
+    <div class="form-group">
+    <div class="col-sm-offset-4  col-sm-4 text-center">
+    <button type="submit" class="btn btn-primary"  id="addReviewButton">추 &nbsp;가</button>
+    <a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
+</div>
+</div>
+
+
 
 </div>
 
-<%--<jsp:include page="/views/footer.jsp" />--%>
+<jsp:include page="/views/footer.jsp" />
 </body>
 
 

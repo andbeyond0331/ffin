@@ -102,7 +102,7 @@
                 alert("optionGroup개수 : " +$('input#optionGroupName.form-control').length);
 
                 if($('input#optionGroupName.form-control').length===0){
-                    $("form").attr("method", "POST").attr("action", "/menu/updateMenu").submit();
+                    $("form").attr("method", "POST").attr("action", "/menu/updateMenu").attr("enctype","multipart/form-data").submit();
                 } else{
                     console.log("fncUpdateMenu-target : "+$("form.form-horizontal").html());
 
