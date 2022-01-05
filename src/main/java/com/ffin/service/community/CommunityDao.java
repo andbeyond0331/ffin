@@ -26,7 +26,7 @@ public interface CommunityDao {
     // SELECT LIST
     public List<Post> getPostList(Search search) throws Exception;
 
-    public List<Comment> getCommentList(int commentPostNo) throws Exception;
+    public List<Comment> getCommentList(Object commentPostNo) throws Exception;
 
     public int count(int commentPostNo) throws Exception;
 

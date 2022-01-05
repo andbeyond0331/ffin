@@ -110,9 +110,6 @@ public class CommunityController {
 
         System.out.println("session에 담긴 postNo = " +session.getAttribute("postNo"));
 
-//        List<Comment> commentList = communityService.getCommentList(post.getPostNo());
-//        m.addObject("commentList", commentList);
-
         m.addObject("post", post);
         m.setViewName("/views/community/getPost.jsp");
 

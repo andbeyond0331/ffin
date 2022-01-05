@@ -7,6 +7,8 @@
 
 <head>
 
+    <title>푸드트럭(사업자) Password 수정</title>
+    <jsp:include page="../../common/lib.jsp"/>
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">
 

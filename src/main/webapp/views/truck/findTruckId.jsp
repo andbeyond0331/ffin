@@ -4,93 +4,71 @@
 
 <html lang="ko">
 
-
 <head>
 
+    <title>푸드트럭(사업자) 아이디찾기</title>
+    <jsp:include page="../../common/lib.jsp"/>
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">
-        $(function () {
-            $("button.btn-close").on("click", function () {
+
+        $("button.btn-close").on("click", function () {
+            $('#findid_modal').modal('hide');
+        });
+
+        //체크 버튼에 따라 아이디/비밀번호 기능이 달라진다
+        // function search_check(num) {
+        //     if (num == '1') {
+        //         document.getElementById("searchP").style.display = "none";
+        //         document.getElementById("searchI").style.display = "";
+        //     } else {
+        //         document.getElementById("searchI").style.display = "none";
+        //         document.getElementById("searchP").style.display = "";
+        //     }
+        // }
+
+
+        $(document).ready(function () {
+            /////////모///달///기///능///////////
+            // 1. 모달창 히든 불러오기
+            $('#searchBtn').on('click', function () {
+                $('#findid_modal').modal('show');
+            });
+            // 2. 모달창 닫기 버튼
+            $('.close').on('click', function () {
                 $('#findid_modal').modal('hide');
+            });
+            // 3. 모달창 윈도우 클릭 시 닫기
+            $(window).on('click', function () {
+                if (event.target == $('#findid_modal').get(0)) {
+                    $('#findid_modal').modal('hide');
+                }
             });
         });
 
-            //체크 버튼에 따라 아이디/비밀번호 기능이 달라진다
-            // function search_check(num) {
-            //     if (num == '1') {
-            //         document.getElementById("searchP").style.display = "none";
-            //         document.getElementById("searchI").style.display = "";
-            //     } else {
-            //         document.getElementById("searchI").style.display = "none";
-            //         document.getElementById("searchP").style.display = "";
-            //     }
-            // }
-            function idSearch_click(){
-                $('#findid_modal').modal('show');
+        // 아이디 & 스토어 값 저장하기 위한 변수
+        var idV = "";
+        // 아이디 값 받고 출력하는 ajax
+        var idSearch_click = function () {
+            //alert(1111);
+            $.ajax({
+                url    : "/truck/findTruckId?inputName_1="
+                    + $('#inputName_1').val() + "&inputPhone_1=" + $('#inputPhone_1').val(),
+                type   : "post",
 
-                $.ajax({
-                        url : "/truck/findTruckId?inputName_1="
-                            + $('#inputName_1').val() + "&inputPhone_1=" + $('#inputPhone_1').val(),
-                        type: "post",
-
-                        success: function (data) {
-                            //alert(2222);
-                            if (data == 0) {
-                                $('#id_value').text("회원 정보를 확인해주세요!");
-                            } else {
-                                $('#id_value').text(data);
-                                //alert(data);
-                                // 아이디값 별도로 저장
-                                idV = data;
-                            }
-                            //alert(3333);
-                        }
-                    });
-            }
-
-            $(document).ready(function () {
-                /////////모///달///기///능///////////
-                // 1. 모달창 히든 불러오기
-                // $('#searchBtn').on('click', function () {
-                //     alert(1234);
-                //     $('#findid_modal').modal('show');
-                // });
-                // 2. 모달창 닫기 버튼
-                $('.close').on('click', function () {
-                    $('#findid_modal').modal('hide');
-                });
-                // 3. 모달창 윈도우 클릭 시 닫기
-                $(window).on('click', function () {
-                    if (event.target === $('#findid_modal').get(0)) {
-                        $('#findid_modal').modal('hide');
+                success: function (data) {
+                    //alert(2222);
+                    if (data == 0) {
+                        $('#id_value').text("회원 정보를 확인해주세요!");
+                    } else {
+                        $('#id_value').text(data);
+                        //alert(data);
+                        // 아이디값 별도로 저장
+                        idV = data;
                     }
-                });
+                    //alert(3333);
+                }
             });
-
-            // 아이디 & 스토어 값 저장하기 위한 변수
-            var idV = "";
-            // 아이디 값 받고 출력하는 ajax
-            var idSearch_click = function () {
-                //alert(1111);
-                // $.ajax({
-                //     url : "/truck/findTruckId?inputName_1="
-                //         + $('#inputName_1').val() + "&inputPhone_1=" + $('#inputPhone_1').val(),
-                //     type: "post",
-                //
-                //     success: function (data) {
-                //         //alert(2222);
-                //         if (data == 0) {
-                //             $('#id_value').text("회원 정보를 확인해주세요!");
-                //         } else {
-                //             $('#id_value').text(data);
-                //             //alert(data);
-                //             // 아이디값 별도로 저장
-                //             idV = data;
-                //         }
-                //         //alert(3333);
-                //     }
-                // });
-            };
+        };
 
     </script>
 </head>

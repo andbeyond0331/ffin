@@ -15,7 +15,7 @@
 <body id="page-top">
 
 <jsp:include page="/views/navbar.jsp" />
-<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/>
 
 
 <jsp:include page="/views/footer.jsp" />

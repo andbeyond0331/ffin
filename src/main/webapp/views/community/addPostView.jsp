@@ -4,13 +4,12 @@
 
 <html lang="ko">
 
-
 <head>
 
+    <title>게시글 작성</title>
+    <jsp:include page="../../common/lib.jsp"/>
     <!-- 참조 : http://getbootstrap.com/css/   참조 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-    <title>게시글 작성</title>
 
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">
