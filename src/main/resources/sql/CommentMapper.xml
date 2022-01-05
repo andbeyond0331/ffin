@@ -45,10 +45,10 @@
 
 
     <!-- SQL : SELECT LIST -->
-    <select id="getCommentList"     resultType="comment">
+    <select id="getCommentList"   parameterType="int"   resultMap="commentSelectMap">
         SELECT COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
         FROM comment
-        WHERE comment_post_no = ${commentPostNo}
+        WHERE comment_post_no = ${value}
         order by comment_no
 --         limit 0,8;
     </select>

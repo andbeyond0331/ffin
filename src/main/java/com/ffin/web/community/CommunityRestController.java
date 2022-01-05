@@ -1,11 +1,10 @@
 package com.ffin.web.community;
 
 import com.ffin.service.community.CommunityService;
-import com.ffin.service.community.impl.CommunityServiceImpl;
 import com.ffin.service.domain.Comment;
+import com.ffin.service.domain.Post;
 import com.ffin.service.domain.Truck;
 import com.ffin.service.domain.User;
-import com.ffin.service.truck.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,17 +36,30 @@ public class CommunityRestController {
     int pageSize;
 
     //댓글리스트를 호출할때 맵핑되는 메소드
-    @RequestMapping(value = "getCommentList", method = RequestMethod.POST)
+    @RequestMapping(value = "getCommentList", method = RequestMethod.GET)
     @ResponseBody
-    public ModelAndView getCommentList(@RequestParam("commentPostNo") int commentPostNo, HttpServletRequest request, ModelAndView m) throws Exception{
+    public ModelAndView getCommentList(@RequestParam("commentPostNo") int commentPostNo, HttpServletRequest request, ModelAndView m, HttpSession session) throws Exception{
 
-        System.out.println("/community/getCommentList : POST");
-        commentPostNo = Integer.parseInt(request.getParameter("commentPostNo"));
+        System.out.println("/community/getCommentList : GET");
+
+        int postNo = (int) session.getAttribute("postNo");
+
+        System.out.println("postNo = " + postNo);
+
+        commentPostNo = postNo;
+
         System.out.println("commentPostNo = " + commentPostNo);
 
-        List<Comment> list = (List<Comment>) communityService.getCommentList(commentPostNo); //댓글 목록
-        m.setViewName("/community/getCommenList.jsp"); //뷰의 이름
+        List<Comment> list = communityService.getCommentList(commentPostNo); //댓글 목록
+
+        System.out.println("list = " + list);
+
+        //m.setViewName("/community/getPost?postNo="+postNo); //뷰의 이름
+        m.setViewName("/community/json/getCommentList?commentPostNo="+commentPostNo); //뷰의 이름
+
         m.addObject("list", list); //뷰에 전달할 데이터 저장
+
+        //System.out.println("m = " + m);
 
         return m; //뷰로 이동
     }
@@ -56,7 +68,7 @@ public class CommunityRestController {
     @RequestMapping(value = "json/getCommentList", method = RequestMethod.GET)
     @ResponseBody
     public List<Comment> list_json(@RequestParam("commentPostNo") int commentPostNo) throws Exception {
-        return (List<Comment>) communityService.getCommentList(commentPostNo);
+        return communityService.getCommentList(commentPostNo);
     }
 
     @RequestMapping(value = "addComment", method = RequestMethod.POST) //세부적인 url pattern

@@ -6,8 +6,6 @@
 
 <head>
 
-<%--    <title>F.FIN | FOODTRUCK FINDER</title>--%>
-
     <title>게시글 목록</title>
     <jsp:include page="../../common/lib.jsp"/>
     <!--  ///////////////////////// JavaScript ////////////////////////// -->

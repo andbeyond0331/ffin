@@ -3,19 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-
 <html lang="ko">
 
-
 <head>
+
+    <title>게시글 조회</title>
+    <jsp:include page="../../common/lib.jsp"/>
 
     <!-- 참조 : http://getbootstrap.com/css/   참조 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
     <!-- ajax 모듈 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-    <title>게시글 조회</title>
 
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">
@@ -53,6 +52,23 @@
             alert("게시물 작성이 완료되었습니다.");
         }
 
+        //댓글 목록 출력 함수
+        function listReply() {
+            alert("listReply function excute");
+            $.ajax({
+                type   : "get", //get방식으로 자료를 전달한다
+                url    : "/community/getCommentList?commentPostNo="+${post.postNo},
+                data    : "commentList", //컨트롤러에 있는 list.do로 맵핑하고 게시판 번호도 같이 보낸다.
+                success: function (result) { //자료를 보내는것이 성공했을때 출력되는 메시지
+                    //result : responseText 응답텍스트(html)
+                    console.log(result);
+                    alert(result);
+                    $("#listReply").html(result);
+                    alert("댓글 출력");
+                }
+            });
+        }
+
         $(function () {
             //댓글 쓰기 (버튼을 눌러서 id값이 넘어와 실행되는 자바스크립트 구문)
             $("#btnReply").click(function () {
@@ -73,27 +89,10 @@
                     data   : param, //보낼 데이터
                     success: function () { //데이터를 보내는것이 성공했을시 출력되는 메시지
                         alert("댓글이 등록되었습니다.");
-                        listReply2(); //댓글 목록 출력
+                        listReply(); //댓글 목록 출력
                     }
                 });
             });
-
-
-            //댓글 목록 출력 함수
-            function listReply(num) {
-                alert("listReply function excute");
-                $.ajax({
-                    type   : "post", //get방식으로 자료를 전달한다
-                    url    : "/community/getCommentList?commentPostNo=${commentPostNo}&curPage", //컨트롤러에 있는 list.do로 맵핑하고 게시판 번호도 같이 보낸다.
-                    success: function (result) { //자료를 보내는것이 성공했을때 출력되는 메시지
-                        //result : responseText 응답텍스트(html)
-                        console.log(result);
-                        alert(result);
-                        $("#listReply").html(result);
-                        alert("댓글 출력");
-                    }
-                });
-            }
         })
 
 
@@ -194,33 +193,54 @@
                 <!-- 위쪽에 있는 스크립트 구문이 실행되고 -->
                 <!-- 내가 댓글을 작성한 값이 스크립트문을 거쳐서 컨트롤러로 맵핑되게 된다. -->
                         <tr><td>
-                <button type="button" id="btnReply">댓글등록</button>
+                <button type="button" id="btnReply" class="btn-secondary">댓글등록</button>
                         </td></tr>
                     </table>
+                </div>
+<%--                <!-- 댓글 목록 -->--%>
+<%--                <!-- 댓글이 등록이 되면 listReply에 댓글이 쌓이게 된다 -->--%>
+<%--                <div id="listReply">--%>
+<%--                        ${result.commentContent}--%>
+<%--                </div>--%>
+                <!-- 댓글 -->
+                <div id="listReply">
+                    <ol class="replyList">
+                        <c:forEach items="${result.commentList}" var="result">
+                            <li>
+                                <p>
+                                    작성자 : ${result.commentUserId}<br />
+                                    작성자 : ${result.commentTruckId}<br />
+                                    작성 날짜 :  <fmt:formatDate value="${result.commentDate}" pattern="yyyy-MM-dd" />
+                                </p>
+
+                                <p>${result.commentContent}</p>
+                            </li>
+                        </c:forEach>
+                    </ol>
                 </div>
             </c:if>
         </div>
         <!-- 댓글 목록 -->
         <!-- 댓글이 등록이 되면 listReply에 댓글이 쌓이게 된다 -->
-        <div id="listReply">
-            ${comment.commentContent}
-        </div>
-        <!-- 댓글 -->
-        <div id="reply">
-            <ol class="replyList">
-                <c:forEach items="${commentList}" var="commentList">
-                    <li>
-                        <p>
-                            작성자 : ${comment.commentUserId}<br />
-                            작성자 : ${comment.commentTruckId}<br />
-                            작성 날짜 :  <fmt:formatDate value="${comment.commentDate}" pattern="yyyy-MM-dd" />
-                        </p>
+<%--        <div id="listReply">--%>
+<%--            ${comment.commentContent}--%>
+<%--        </div>--%>
+<%--        <!-- 댓글 -->--%>
+<%--        <div id="reply">--%>
+<%--            <ol class="replyList">--%>
+<%--                <c:forEach items="${commentList}" var="commentList">--%>
+<%--                    <li>--%>
+<%--                        <p>--%>
+<%--                            작성자 : ${comment.commentUserId}<br />--%>
+<%--                            작성자 : ${comment.commentTruckId}<br />--%>
+<%--                            작성 날짜 :  <fmt:formatDate value="${comment.commentDate}" pattern="yyyy-MM-dd" />--%>
+<%--                        </p>--%>
 
-                        <p>${replyList.content}</p>
-                    </li>
-                </c:forEach>
-            </ol>
-        </div>
+<%--                        <p>${comment.commentContent}</p>--%>
+<%--                    </li>--%>
+<%--                </c:forEach>--%>
+<%--            </ol>--%>
+<%--        </div>--%>
 
     </form>
 

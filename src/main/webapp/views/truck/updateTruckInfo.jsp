@@ -6,12 +6,15 @@
 
 <html lang="ko">
 
+
 <head>
+
+    <title>푸드트럭(사업자) 정보수정</title>
+    <jsp:include page="../../common/lib.jsp"/>
 
     <!-- 참조 : http://getbootstrap.com/css/   참조 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>푸드트럭(사업자) 정보수정</title>
 
     <!-- datepicker -->
     <!-- jQuery UI CSS 파일 -->
@@ -434,7 +437,7 @@
                        placeholder=" - 를 제외한 전화번호 입력"/>
             </div>
             <div class="col-sm-3">
-                <button id="phoneChk" type="button" class="btn btn-box sms-auth">인증번호 요청</button>
+                <button id="phoneChk" type="button" class="btn btn-secondary sms-auth">인증번호 요청</button>
             </div>
         </div>
         <div class="form-group phone-check-wrap">
@@ -459,7 +462,7 @@
                        value="${truck.truckEmail}" placeholder="인증번호 확인이 가능한 Email">
             </div>
             <div class="col-sm-3">
-                <button type="button" id="emailChk" class="btn btn-box email-auth">인증번호 요청</button>
+                <button type="button" id="emailChk" class="btn btn-secondary email-auth">인증번호 요청</button>
             </div>
         </div>
         <div class="form-group mail-check-wrap">

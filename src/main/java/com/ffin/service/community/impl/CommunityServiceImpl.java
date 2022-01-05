@@ -84,15 +84,8 @@ public class CommunityServiceImpl implements CommunityService {
 
     // 댓글 목록 조회
     @Override
-    public List<Comment> getCommentList(int commentPostNo) throws Exception {
-
-        List<Comment> list = communityDao.getCommentList(commentPostNo);
-        //int totalCount = truckDao.getTatalCount(search);
-
-//        Map<String, Object> map = new HashMap<String, Object>();
-//        map.put("list", list);
-
-        return list;
+    public List<Comment> getCommentList(Object commentPostNo) throws Exception {
+        return communityDao.getCommentList(commentPostNo);
     }
 
     // 댓글 수정

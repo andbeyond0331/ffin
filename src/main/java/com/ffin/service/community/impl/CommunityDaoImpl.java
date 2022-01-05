@@ -5,7 +5,6 @@ import com.ffin.service.community.CommunityDao;
 import com.ffin.service.domain.Comment;
 import com.ffin.service.domain.Heart;
 import com.ffin.service.domain.Post;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -70,7 +69,7 @@ public class CommunityDaoImpl implements CommunityDao {
 
     // 댓글 목록 조회
     @Override
-    public List<Comment> getCommentList(int commentPostNo) throws Exception {
+    public List<Comment> getCommentList(Object commentPostNo) throws Exception {
         return sqlSession.selectList("CommentMapper.getCommentList", commentPostNo);
     }
 

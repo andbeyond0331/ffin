@@ -4,9 +4,10 @@
 
 <html lang="ko">
 
-
 <head>
 
+    <title>댓글 목록 조회</title>
+    <jsp:include page="../../common/lib.jsp"/>
 
 
 </head>

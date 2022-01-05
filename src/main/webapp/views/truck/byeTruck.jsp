@@ -4,9 +4,10 @@
 
 <html lang="ko">
 
-
 <head>
 
+    <title>푸드트럭(사업자) 회원탈퇴</title>
+    <jsp:include page="../../common/lib.jsp"/>
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">
 
