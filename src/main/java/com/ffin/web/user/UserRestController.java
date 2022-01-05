@@ -2,28 +2,17 @@ package com.ffin.web.user;
 
 import com.ffin.service.domain.User;
 import com.ffin.service.user.UserService;
-import org.apache.commons.io.FilenameUtils;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.SQLException;
-import java.util.*;
+import java.util.Date;
+import java.util.Random;
 
 @RestController
 @RequestMapping("/user/*")
@@ -46,8 +35,8 @@ public class UserRestController {
     @ResponseBody
     public String sendSMS(@PathVariable String inputPhone) {
 
-        System.out.println("TruckRestController.sendSMS");// 휴대폰 문자보내기
-        System.out.println("truckPhoneNumber = " + inputPhone);
+        System.out.println("UserRestController.sendSMS");// 휴대폰 문자보내기
+        System.out.println("userPhone = " + inputPhone);
 
         int randomNumber = (int) ((Math.random() * (9999 - 1000 + 1)) + 1000);//난수 생성
         System.out.println("randomNumber = " + randomNumber);
@@ -131,26 +120,6 @@ public class UserRestController {
         return userId;
     }
 
-/*    @RequestMapping(value = "json/addUser", method = RequestMethod.GET)
-    public String addUser(Model model, HttpSession session, HttpServletRequest request) throws Exception{
-
-        System.out.println("/user/addUser : GET");
-
-        BufferedReader input = new BufferedReader(new InputStreamReader(request.getInputStream()));
-        StringBuilder builder = new StringBuilder();
-        String buffer;
-        while ((buffer = input.readLine()) != null) {
-            if (builder.length() > 0) {
-                builder.append("\n");
-            }
-            builder.append(buffer);
-        }
-
-        System.out.println("!?!?!?!?!?"+builder);
-
-        return "/views/user/addUserInfo.jsp";
-    }*/
-
 
     @RequestMapping(value = "json/addUser", method = RequestMethod.POST)
     public User addUser( @RequestBody User user, HttpSession session) throws Exception {
@@ -183,27 +152,68 @@ public class UserRestController {
         return user;
     }
 
+    //아이디 찾기
+    @RequestMapping(value = "json/getUserId", method = RequestMethod.POST)
+    @ResponseBody
+    public String getUserId(@RequestParam("userName") String userName, @RequestParam("userPhone") String userPhone,
+                            HttpServletRequest request) throws Exception{
 
-/*    @RequestMapping(value = "json/updateProImg/{userId}", method = RequestMethod.POST)
-    public String updateProImg(@PathVariable String userId, MultipartFile file, HttpSession session, RedirectAttributes redirectAttributes) throws Exception{
+        System.out.println("UserRestController.getUserId : POST ");
 
-        if(file == null) {
-            redirectAttributes.addFlashAttribute("msg","FAIL");
-            return "redirect:/user/getUserProfile.jsp";
-        }
+/*        userName = request.getParameter("userName");
+        userPhone = request.getParameter("userPhone");*/
 
-        String uploadFile = UploadFileUtils.uploadFile(userProImgPath, file.getOriginalFilename(), file.getBytes());
-        String front = uploadFile.substring(0,12);
-        String end = uploadFile.substring(14);
-        String userProImg = front + end;
-        userService.updateProImg(userId, userProImg);
+        System.out.println("!!!!!!!!!!!!!! : userName = " + userName + ", userPhone = " + userPhone);
 
-        Object userObj = session.getAttribute("user");
-        User user = (User) userObj;
-        user.setUserProImg(userProImg);
-        session.setAttribute("user", user);
-        redirectAttributes.addFlashAttribute("msg", "SUCCESS");
-        return "redirect:/user/getUserProfile.jsp";
+        User user = new User();
+
+        user.setUserName(userName);
+        user.setUserPhone(userPhone);
+
+        String result = userService.getUserId(userName, userPhone);
+
+        return result;
+    }
+
+    //임시비밀번호 전송을 위한 user check
+    @RequestMapping(value = "json/getUserIdForPassword", method = RequestMethod.POST)
+    @ResponseBody
+    public String getUserIdForPassword(@RequestParam("userId") String userId, @RequestParam("userName") String userName,
+                                  @RequestParam("userPhone") String userPhone, HttpServletRequest request) throws Exception {
+        System.out.println("UserRestController.getUserPassword : POST");
+
+/*        userId = request.getParameter("userId");
+        userName = request.getParameter("userName");
+        userPhone = request.getParameter("userPhone");*/
+
+        User user = new User();
+
+        user.setUserId(userId);
+        user.setUserName(userName);
+        user.setUserPhone(userPhone);
+
+        String result = userService.getUserIdForPassword(userId, userName, userPhone);
+        System.out.println("임시비밀번호 전송을 위한 user get!!"+result);
+        return result;
+    }
+
+
+    //임시비밀번호
+/*    @RequestMapping(value = "json/sendSMSForPassword", method = RequestMethod.GET)
+    @ResponseBody
+    public String getUserPassword(@RequestParam("userId") String userId, @RequestParam("userName") String userName,
+                                  @RequestParam("userPhone") String userPhone, HttpServletRequest request) throws Exception {
+
+        System.out.println("UserRestController.sendSMSForPassword");// 휴대폰 문자보내기
+        System.out.println("userPhone = " + userPhone);
+
+        Random random = new Random();
+        int authNum = random.nextInt(888888)+111111;
+
+        userService.sendSMS(userPhone, authNum);
+
+        return Integer.toString(authNum);
+
     }*/
 
 

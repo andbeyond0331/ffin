@@ -131,9 +131,48 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void getUserId(String userId) throws Exception {
+    public String getUserId(String userName, String userPhone) throws Exception {
+
         System.out.println("UserServiceImpl.getUserId");
-        userDao.getUserId(userId);
+        return userDao.getUserId(userName, userPhone);
+    }
+
+    @Override
+    public String getUserIdForPassword(String userId, String userName, String userPhone) throws Exception {
+
+        System.out.println("UserServiceImpl.getUserIdForPassword");
+        return userDao.getUserIdForPassword(userId, userName, userPhone);
+    }
+
+    //임시비밀번호 전송&저장
+    @Override
+    public void sendSMSForPassword(String userId, String userPhone, int randomNumber) throws Exception {
+
+        String api_key = "NCSZ8KC6ERB3YVCA";
+        String api_secret = "FYKRI2N8YKOR8BUGOKSLPQ3LKOJTYMMX";
+        
+        User user = userDao.getUser(userId);
+        String userName = user.getUserName();
+
+        Message coolsms = new Message(api_key, api_secret); // 4 params(to, from, type, text) are mandatory. must be filled
+        HashMap<String, String> params = new HashMap<String, String>();
+
+        params.put("to", userPhone); // 수신전화번호
+        params.put("from", "01071484785"); // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
+        params.put("type", "SMS");
+        params.put("text", "[TEST]<br>"+userName+"님의 임시 비밀번호는" + "["+randomNumber+"]" + "입니다." +
+                            "로그인 후 비밀번호를 변경해주세요."); // 문자 내용 입력
+        params.put("app_version", "test app 1.2"); // application name and version
+
+        try { JSONObject obj = (JSONObject) coolsms.send(params);
+            System.out.println(obj.toString());
+        } catch (CoolsmsException e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getCode());
+        }
+        
+        userDao.updatePassword(user);
+
     }
 
     @Override

@@ -40,7 +40,11 @@ public interface UserService {
     public void updateUserMap(User user) throws Exception;
 
     //Id찾기
-    public void getUserId(String userId) throws Exception;
+    public String getUserId(String userName, String userPhone) throws Exception;
+    //pw변경을 위한 findUser
+    public String getUserIdForPassword(String userId, String userName, String userPhone) throws Exception;
+    //임시비밀번호 발송&저장
+    public void sendSMSForPassword(String userId, String userPhone, int randomNumber) throws Exception;
     //PW변경
     public void updatePassword(User user) throws Exception;
     //phone auth

@@ -87,7 +87,7 @@
                             <ul class="dropdown-menu" aria-labelledby="user-dropdown">
                                 <li><a class="dropdown-item user-menu" href="./user/userMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
                                 <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-question-circle"></i>문의</a></li>
-                                <li><a class="dropdown-item user-menu" href="user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+                                <li><a class="dropdown-item user-menu" href="/user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
                             </ul>
                         </c:if>
                         <c:if test="${truck.truckId != null && sessionScope.role == 'truck' }">
@@ -145,7 +145,7 @@
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="autoLoginUser">
                                 <label class="form-check-label" for="autoLoginUser">자동로그인</label>
-                                <a class="findUserId" href="" style="color: #ffba49; margin-left: 5px; font-size: 14px;"> <strong style="float: right; stroke: #ffba49; margin-right: 5px; margin-top: 2px;">ID/PW 찾기</strong></a>
+                                <a class="findUserId" style="color: #ffba49; margin-left: 5px; font-size: 14px;" onclick="findUser()"> <strong style="float: right; stroke: #ffba49; margin-right: 5px; margin-top: 2px;">ID/PW 찾기</strong></a>
                             </div>
                             <div class="mb-3">
                                 <span style="color: #0b1727; margin-left: 5px; font-size: 14px">아직 회원이 아니신가요?</span>
@@ -190,7 +190,7 @@
                         <button class='btn-social-login google' style='background:#D93025'><i class="xi-3x xi-google"></i></button>
                         <button class='btn-social-login kakao' style='background:#FFEB00'><i class="xi-3x xi-kakaotalk text-dark"></i></button>
 --%>
-                        <a class="g-signin2" >Google Login</a>
+                        <%--<a class="g-signin2" >Google Login</a>--%>
                     </div>
                 </form>
             </div>
@@ -212,10 +212,10 @@
             <div class="modal-body">
                 <ul class="nav nav-pills nav-fill" id="id-pw-tab">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#user" style="margin-left: 0;">ID</a>
+                        <a class="nav-link active" id="findIdBtn" data-toggle="tab" href="#findId" style="margin-left: 0;">ID 찾기</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#CEO">PW</a>
+                        <a class="nav-link" id="findPwBtn" data-toggle="tab" href="#findPw">PW 찾기</a>
                     </li>
                 </ul>
                 <form id = "fineUsermodalForm" name="fineUsermodalForm">
@@ -229,6 +229,10 @@
                             <div class="mb-3">
                                 <label for="userPhoneForId" class="form-label">연락처</label>
                                 <input type="text" class="form-control" id="userPhoneForId">
+                            </div>
+                            <hr/>
+                            <div class="d-grid gap-2 col-6 mx-auto">
+                                <button class="btn findIdBtn" type="button" onclick="getUserId()">아이디 찾기</button>
                             </div>
                         </div>
                         <%-- PW modal --%>
@@ -245,13 +249,38 @@
                                 <label for="userPhoneforPw" class="form-label">연락처</label>
                                 <input type="text" class="form-control" id="userPhoneforPw">
                             </div>
+                            <hr/>
+                            <div class="d-grid gap-2 col-6 mx-auto">
+                                <button class="btn findPwBtn" type="button">비밀번호 찾기</button>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="d-grid gap-2 mx-auto modal-footer" style="padding-bottom: 5px;">
-                        <button type="submit" class="btn btn-default login" id="modalFindBtn" style="color: #ffffff; margin-bottom: 10px;">찾아보아요</button>
-                    </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 아이디 출력 Modal -->
+<div class="modal modal-child" id="background_modal" aria-hidden="true" style="display: none; z-index: 1060;" data-modal-parent="#findUserModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">아이디 찾기</h5>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body" style="float: left;">
+                <span>아이디는</span>
+                <span id="id_value"></span>
+                <span>입니다.</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="longinGoBtn" class="btn peach-gradient btn-rounded waves-effect" onclick="longinGoBtn()">
+                    로그인
+                </button>
+                <button type="button" id="findUserPw" class="btn peach-gradient btn-rounded waves-effect" onclick="findUserPw()">
+                   비밀번호 찾기
+                </button>
             </div>
         </div>
     </div>

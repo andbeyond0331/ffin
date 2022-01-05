@@ -159,6 +159,10 @@
     }
     .text-dark { color: #343a40!important; }
 
+    .background_modal{
+        display: none;
+    }
+
 
 </style>
 
@@ -358,16 +362,103 @@
     });
 
     /* userId 찾기 */
+    function findUser(){
+        //alert("ID/PW찾기");
+        $('#openLoginModal').modal('hide');
+        $('#findUserModal').modal('show');
+    }
+
     $(function () {
-        $(".findUserId").click(function () {
+        $('.findIdBtn').click(function () {
 
-            alert("id찾으러가자");
+           var userName = $('#userIdforId').val();
+           var userPhone = $('#userPhoneForId').val();
 
-            $('#openLoginModal').modal('hide');
-            $('#findUserModal').modal('show');
+           console.log(userName);
+           console.log(userPhone);
 
+           $.ajax({
+               type:"POST",
+               url: "/user/json/getUserId",
+               data   : {
+                   userName : userName,
+                   userPhone : userPhone},
+               success:function (data) {
+                   console.log("아이디 찾기 data : "+data);
+                   if(data === null ){
+                       $('#id_value').text("회원 정보를 확인해주세요!");
+                   } else {
+                       $('#id_value').text(data);
+                       // 아이디값 별도로 저장
+                       idV = data;
+                   }
+               }
+
+           })
         });
     });
+
+    /* PW찾기 */
+    $(function () {
+       $('.findPwBtn').click(function () {
+          alert("비밀번호를 찾자")
+
+            var userName  = $('#userNameforPw').val();
+            var userId  = $('#userIdforPw').val();
+            var userPhone  = $('#userPhoneforPw').val();
+
+            console.log(userName);
+            console.log(userId);
+            console.log(userPhone);
+
+           $.ajax({
+               type:"POST",
+               url: "/user/json/getUserIdForPassword",
+               data   : {
+                   userId : userId,
+                   userName : userName,
+                   userPhone : userPhone},
+               success:function (data) {
+                   console.log("비밀번호 찾기 data : "+data);
+
+               }
+
+           })
+
+       });
+    });
+
+
+
+
+    function getUserId(){
+        //alert("떠라떠라");
+        $('#background_modal').show();
+    }
+
+    $(function () {
+        $('.close').on('click', function() {
+            $('#background_modal').hide();
+        });
+    });
+    $(window).on('click', function() {
+        if (event.target == $('#background_modal').get(0)) {
+            $('#background_modal').hide();
+        }
+    });
+
+    function longinGoBtn(){
+        $('#background_modal').hide();
+        $('#findUserModal').hide();
+        $('#openLoginModal').modal('show');
+    }
+
+    function findUserPw(){
+        $('#background_modal').hide();
+        /*$('#findIdBtn').removeClass('active');
+        $('#findPwBtn').addClass('active');*/
+    }
+
 
 
 </script>
