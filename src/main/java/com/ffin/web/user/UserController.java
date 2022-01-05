@@ -112,7 +112,7 @@ public class UserController {
                 userService.autoLogin(user.getUserId(), session.getId(), date);
             }
         }
-        return "/views/homeTest.jsp";
+        return "redirect:/views/homeTest.jsp";
     }
 
     @RequestMapping( value="addUser", method=RequestMethod.GET )
@@ -196,6 +196,18 @@ public class UserController {
         userService.updateProImg(userId, file.getOriginalFilename());
 
         return "redirect:/views/user/getUserProfile.jsp";
+    }
+
+    @RequestMapping(value="kakaoLogin", method=RequestMethod.POST)
+    public String kakaoLogin( @RequestParam("userId") String userId, HttpSession session ) throws Exception{
+
+        System.out.println("/user/snsLogin : POST");
+
+        User dbUser = userService.getUser(userId);
+        session.setAttribute("user", dbUser);
+        session.setAttribute("role","user");
+
+        return "redirect:/views/homeTest.jsp";
     }
 
 }

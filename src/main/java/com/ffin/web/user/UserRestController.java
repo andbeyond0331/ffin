@@ -3,6 +3,7 @@ package com.ffin.web.user;
 import com.ffin.service.domain.User;
 import com.ffin.service.user.UserService;
 import org.apache.commons.io.FilenameUtils;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
@@ -14,10 +15,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.*;
 
 @RestController
@@ -54,19 +59,17 @@ public class UserRestController {
 
     //email 인증
     @RequestMapping(value = "json/checkDuplication/{userId:.+}", method = RequestMethod.GET)
-    public Boolean idChkDuplication(@PathVariable String userId, Model model) throws Exception{
+    public String idChkDuplication(@PathVariable String userId, Model model) throws Exception{
 
         System.out.println("/user/checkDuplication : GET");
         //Business Logic
         boolean result=userService.idChkDuplication(userId);
-        // Model 과 View 연결
-        /*model.addAttribute("result", new Boolean(result));
-        model.addAttribute("userId", userId);*/
+        System.out.println("kakaoLogin 아이디 중복체크 :: "+result);
 
-        System.out.println("gogo!!");
-        System.out.println("!!!!!!!!!!"+userId);
-        System.out.println("!!!!!!!!!!"+result);
-        return result;
+        if(!result){
+            return "";
+        }
+        return userId;
     }
 
     @RequestMapping(value = "json/idChkDuplication", method = RequestMethod.POST)
@@ -77,15 +80,18 @@ public class UserRestController {
         return userService.idChkDuplication(userId);
     }
 
-    @RequestMapping(value="snsLogin/{userId}", method=RequestMethod.POST)
-    public String snsLogin( @PathVariable String userId, HttpSession session ) throws Exception{
+    @RequestMapping(value="kakaoLogin/{userId:.+}", method=RequestMethod.POST)
+    public String kakaoLogin( @PathVariable String userId, HttpSession session ) throws Exception{
+
         System.out.println("/user/snsLogin : POST");
 
         User dbUser = userService.getUser(userId);
         session.setAttribute("user", dbUser);
+        session.setAttribute("role","user");
 
-        return "redirect:/index.jsp";
+        return userId;
     }
+
 
 
     @RequestMapping(value = "json/login/{userId}", method = RequestMethod.POST)
@@ -125,13 +131,25 @@ public class UserRestController {
         return userId;
     }
 
-    @RequestMapping(value = "json/addUser", method = RequestMethod.GET)
-    public String addUser() throws Exception{
+/*    @RequestMapping(value = "json/addUser", method = RequestMethod.GET)
+    public String addUser(Model model, HttpSession session, HttpServletRequest request) throws Exception{
 
         System.out.println("/user/addUser : GET");
 
+        BufferedReader input = new BufferedReader(new InputStreamReader(request.getInputStream()));
+        StringBuilder builder = new StringBuilder();
+        String buffer;
+        while ((buffer = input.readLine()) != null) {
+            if (builder.length() > 0) {
+                builder.append("\n");
+            }
+            builder.append(buffer);
+        }
+
+        System.out.println("!?!?!?!?!?"+builder);
+
         return "/views/user/addUserInfo.jsp";
-    }
+    }*/
 
 
     @RequestMapping(value = "json/addUser", method = RequestMethod.POST)
