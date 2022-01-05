@@ -30,6 +30,9 @@
     <!-- 카카오 로그인 -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
+    <!-- 구글 로그인 -->
+    <script src="https://apis.google.com/js/client:platform.js?onload=renderButton" async defer></script>
+    <meta name="google-signin-client_id" content="548740743413-4o51iohu918i0ukg4s9tcqpdrr3bnroj.apps.googleusercontent.com"/>
 
 
 
@@ -65,6 +68,8 @@
 
     <!-- Favicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.2.0/css/all.min.css" integrity="sha512-6c4nX2tn5KbzeBJo9Ywpa0Gkt+mzCzJBrE1RB6fmpcsoN+b/w/euwIMuQKNyUoU/nToKN3a8SgNOtPrbW12fug==" crossorigin="anonymous" />
+
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css"/>
 
     <style>
         .nav-user{
@@ -144,6 +149,19 @@
             z-index: 10;
         }*/
 
+        .btn-social-login {
+            transition: all .2s;
+            outline: 0;
+            border: 1px solid transparent;
+            padding: .5rem !important;
+            border-radius: 50%;
+            color: #fff;
+        }
+        .btn-social-login:focus {
+            box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
+        }
+        .text-dark { color: #343a40!important; }
+
     </style>
 
     <script type="text/javascript">
@@ -159,69 +177,93 @@
                 alert("카카오로그인");
                 console.log("카카오 로그인");
 
-
                 Kakao.Auth.login({
-                    success: function (authObj) {
-                        //console.log(JSON.stringify(authObj));
-                        //console.log(Kakao.Auth.getAccessToken());
+                    success: function (authObj) { //성공시
+                        console.log("카카오 token :: "+Kakao.Auth.getAccessToken());
 
-                        //2. 로그인 성공시, API를 호출합니다.
-                        Kakao.API.request({
+                        Kakao.API.request({ //로그인 성공시
                             url: '/v2/user/me',
-                            success: function (res) {
-                                //console.log(JSON.stringify(res));
-                                id = res.kakao_account.email;
+                            success: function (response) {
+                                const id = response.kakao_account.email;
+                                console.log(id);
 
                                 $.ajax({
-                                    url: "/user/json/checkDuplication/" + res.kakao_account.email,
-                                    type : "GET",
-                                    headers: {
-                                        "Accept": "application/json",
-                                        "Content-Type": "application/json"
+                                   url : "/user/json/checkDuplication/"+id,
+                                   method : "GET",
+                                    headers : {
+                                        "Accept" : "application/json",
+                                        "Content-Type" : "application/json"
                                     },
-                                    success: function (idChk) {
-                                        console.log("hey kakao");
-                                        console.log(idChk);
-                                        if (idChk === id) { //DB에 아이디가 없을 경우 => 회원가입
-                                            console.log("회원가입중...");
-                                            $.ajax({
-                                                url: "views/user/addUser.jsp",
-                                                method: "POST",
-                                                headers: {
-                                                    "Accept": "application/json",
-                                                    "Content-Type": "application/json"
-                                                },
-                                                data: JSON.stringify({
-                                                    userId: res.kakao_account.email,
-                                                    userName: res.properties.nickname
-                                                    /*userPassword: "kakao123",*/
-                                                }),
-                                                success: function (JSONData) {
-                                                    console.log(JSONData)
-                                                    alert("회원가입이 정상적으로 되었습니다.");
-                                                    $("form").attr("method", "POST").attr("action", "/user/snsLogin/" + res.id).attr("target", "_parent").submit();
-                                                }
-                                            })
-                                        }
-                                        if (!(idChk === id)) { //DB에 아이디가 존재할 경우 => 로그인
-                                            console.log("로그인중...");
-                                            $("form").attr("method", "POST").attr("action", "/user/snsLogin/" + res.kakao_account.email).attr("target", "_parent").submit();
-                                        }
+                                    success : function (data) {
+                                       console.log("중복체크 성공 :: "+data);
+
+                                       if( data === id ){
+                                           console.log("--------------------------");
+                                           console.log("여기 오니?");
+                                           console.log("카카오로그인 data :: "+data);
+                                           console.log("카카오로그인 id :: "+id);
+
+                                           $.ajax({
+                                              url : "/user/json/addUser",
+                                              method : "POST",
+                                               headers : {
+                                                   "Accept" : "application/json",
+                                                   "Content-Type" : "application/json"
+                                               },
+                                               data : JSON.stringify({
+                                                   userId : id,
+                                                   userName : response.properties.nickname,
+                                                   userPassword : "1234kakao",
+                                                   userRegDate : "2021-02-02",
+                                                   userPhone : "010-0000-0000"
+                                               }),
+                                               success: function (JSONData){
+                                                  alert("가입 완료");
+                                                  $("form").attr("method","POST").attr("action","/user/kakaoLogin/"+id).attr("target","_parent").submit();
+                                               }
+                                           });
+                                       }
+                                       if( data !== id ){
+                                           console.log("로그인ing...");
+                                           $("form").attr("method","post").attr("action","/user/kakaoLogin/"+id).attr("target","_parent").submit();
+                                       }
+                                    },
+                                    fail: function (error){
+                                       console.log("중복체크 실패 :: "+error);
                                     }
-                                })
+                                });
                             },
                             fail: function (error) {
-                                alert(JSON.stringify(error));
-                            }
+                                console.log(error);
+                            },
                         });
                     },
-                    fail: function (err) {
-                        alert(JSON.stringify(err));
+                    fail: function (error){
+                        console.log(error);
                     }
                 });
-
             });
         });
+
+        /* 구글 로그인 */
+/*        $(function () {
+
+            $(".g-signin2").click(function () {
+                alert("구글 로그인");
+
+                gapi.client.load('plus', 'v1', function () {
+                    gapi.client.plus.people.get({
+                        'userId': 'me'
+                    }).execute(function (res) {
+
+                        console.log("reponse data :: "+JSON.stringify(res));
+
+                        //res.id += "@g";
+                    })
+                });
+            })
+        });*/
+
 
 
         /*로그인 Modal*/
@@ -318,6 +360,17 @@
             });
         });
 
+        /* userId 찾기 */
+        $(function () {
+           $(".findUserId").click(function () {
+
+               alert("id찾으러가자");
+
+               $('#openLoginModal').modal('hide');
+               $('#findUserModal').modal('show');
+
+           });
+        });
 
 
     </script>
@@ -415,7 +468,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="user-dropdown">
                                     <li><a class="dropdown-item user-menu" href="./user/userMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
                                     <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-question-circle"></i>문의</a></li>
-                                    <li><a class="dropdown-item user-menu" href="/user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+                                    <li><a class="dropdown-item user-menu" href="user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
                                 </ul>
                             </c:if>
                             <c:if test="${truck.truckId != null && sessionScope.role == 'truck' }">
@@ -473,13 +526,14 @@
                                 <div class="mb-3 form-check">
                                     <input type="checkbox" class="form-check-input" id="autoLoginUser">
                                     <label class="form-check-label" for="autoLoginUser">자동로그인</label>
-                                    <a class="findId" href="" style="color: #ffba49; margin-left: 5px; font-size: 14px;"> <strong style="float: right; stroke: #ffba49; margin-right: 5px; margin-top: 2px;">ID/PW 찾기</strong></a>
+                                    <a class="findUserId" href="" style="color: #ffba49; margin-left: 5px; font-size: 14px;"> <strong style="float: right; stroke: #ffba49; margin-right: 5px; margin-top: 2px;">ID/PW 찾기</strong></a>
                                 </div>
                                 <div class="mb-3">
                                     <span style="color: #0b1727; margin-left: 5px; font-size: 14px">아직 회원이 아니신가요?</span>
                                     <a class="addChk" href="./user/addUserInfo.jsp" style="color: #ffba49; margin-left: 0; font-size: 14px;"> <strong style="float: right; stroke: #ffba49; margin-right: 5px;">회원가입</strong></a>
                                 </div>
                             </div>
+                            <%-- CEO modal --%>
                             <div class="tab-pane fade" id="CEO">
                                 <div class="mb-3">
                                     <label for="truckId" class="form-label">ID</label>
@@ -513,7 +567,70 @@
                             <a id="kakaoLogin">
                                 <img src="../resources/image/kakao_login_medium_wide.png">
                             </a>
-                            <button type="submit" class="btn btn-default col-5 btn-sm login" id="googleLogin" style="color: #ffffff;">Google 로그인</button>
+<%--
+                            <button class='btn-social-login google' style='background:#D93025'><i class="xi-3x xi-google"></i></button>
+                            <button class='btn-social-login kakao' style='background:#FFEB00'><i class="xi-3x xi-kakaotalk text-dark"></i></button>
+--%>
+                            <a class="g-signin2" >Google Login</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%-- 아이디 / 비밀번호 찾기 Modal --%>
+    <div class="modal fade" id="findUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="findUserModalTitle">ID/PW 찾기</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-pills nav-fill" id="id-pw-tab">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#user" style="margin-left: 0;">ID</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#CEO">PW</a>
+                        </li>
+                    </ul>
+                    <form id = "fineUsermodalForm" name="fineUsermodalForm">
+                        <div class="tab-content">
+                            <%-- ID modal --%>
+                            <div class="tab-pane fade show active" id="findId">
+                                <div class="mb-3">
+                                    <label for="userIdforId" class="form-label" style="margin-top: 12px;">이름</label>
+                                    <input type="text" class="form-control" id="userIdforId" >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="userPhoneForId" class="form-label">연락처</label>
+                                    <input type="text" class="form-control" id="userPhoneForId">
+                                </div>
+                            </div>
+                            <%-- PW modal --%>
+                            <div class="tab-pane fade" id="findPw">
+                                <div class="mb-3">
+                                    <label for="userNameforPw" class="form-label">이름</label>
+                                    <input type="text" class="form-control" id="userNameforPw">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="userIdforPw" class="form-label">Id</label>
+                                    <input type="text" class="form-control" id="userIdforPw">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="userPhoneforPw" class="form-label">연락처</label>
+                                    <input type="text" class="form-control" id="userPhoneforPw">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mx-auto modal-footer" style="padding-bottom: 5px;">
+                            <button type="submit" class="btn btn-default login" id="modalFindBtn" style="color: #ffffff; margin-bottom: 10px;">찾아보아요</button>
                         </div>
                     </form>
                 </div>
