@@ -7,10 +7,8 @@
 <meta charset="EUC-KR">
 
 <head>
+    <jsp:include page="../../common/lib.jsp"/>
 
-    <!-- Required meta tags -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
@@ -28,7 +26,7 @@
     </style>
 </head>
 <body>
-<jsp:include page="/views/toolbar.jsp"/>
+<jsp:include page="/views/navbar.jsp"/>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
@@ -194,19 +192,15 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="h-100 p-5 bg-light border rounded-3">
+                    <div id="order"></div>
                     <c:set var="i" value="0"/>
                     <c:forEach var="cart" items="${map.get('list')}">
-                        <c:set var="i" value="${i+1}" />
-<script>
-    var orderNo = 'fff';
-    console.log(orderNo);
-</script>
+                        <c:set var="i" value="${i+1}"/>
 
 
-
-
-
-
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                            <label class="form-check-label" for="flexCheckChecked">
                         <div class="card mb-3 h-10" style="width: 300px; height: 90px" >
                             <div class="row g-0">
                                 <div class="col-md-4">
@@ -221,15 +215,23 @@
                                 </div>
                             </div>
                         </div>
+                    </label>
+                </div>
 
                         <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
-                        <input type="hidden" id="odOptionGroupName" name="odOptionGroupName" value="${cart.odOptionGroupName}"/>
+                        <input type="hidden" id="odOptionGroupName" name="odOptionGroupName"
+                               value="${cart.odOptionGroupName}"/>
                         <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.odOptionName}"/>
                         <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.odMenuQty}"/>
                         <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.odMenuPrice}"/>
                         <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
                         <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
+                        <input type="hidden" id="odMenuQtyFlag" name="odMenuQtyFlag" value="${cart.odMenuQtyFlag}"/>
+
+
                     </c:forEach>
+
+                    <div id="total"></div>
                     <button type="submit" class="btn btn-primary"></button>
                     <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">주문취소</a>
                 </div>
@@ -249,6 +251,176 @@
     </div>
 </main>
 <jsp:include page="/views/footer.jsp"/>
+
+
+
+
+<%--
+<script>
+    $(function () {
+        var odMenuNameCount = $("input[name='odMenuName']").length;
+
+
+        var odMenuNameL;
+        var odOptionGroupNameL;
+        var odOptionNameL;
+        var odMenuQtyL;
+        var odMenuPriceL;
+        var odOptionPriceL;
+        var odMenuImageL;
+
+        for (var i = 0; i < odMenuNameCount; i++) {
+            var odMenuName = $("input[name='odMenuName']").eq(i).val();
+            var odOptionGroupName = $("input[name='odOptionGroupName']").eq(i).val();
+            var odOptionName = $("input[name='odOptionName']").eq(i).val();
+            var odMenuQty = $("input[name='odMenuQty']").eq(i).val();
+            var odMenuPrice = $("input[name='odMenuPrice']").eq(i).val();
+            var odOptionPrice = $("input[name='odOptionPrice']").eq(i).val();
+            var odMenuImage = $("input[name='odMenuImage']").eq(i).val();
+            var odMenuQtyFlag = $("input[name='odMenuQtyFlag']").eq(i).val();
+
+
+            var odMenuImageCopy;
+            var odMenuNameCopy;
+            var odOptionGroupNameCopy;
+            var odOptionNameCopy;
+            var odMenuQtyCopy;
+            var odMenuPriceCopy;
+            var odOptionPriceCopy;
+            var test2;
+            var totalPrice;
+
+
+            if (odMenuNameCopy != undefined && odMenuQtyFlag == 0) {
+                odMenuNameCopy = odMenuNameCopy + "," + odMenuName;
+                odMenuImageCopy = odMenuImageCopy + "," + odMenuImage;
+                odMenuQtyCopy = odMenuQtyCopy + "," + odMenuQty;
+                odMenuPriceCopy = odMenuPriceCopy + "," + odMenuPrice;
+                totalPrice = totalPrice + parseInt(odMenuPrice);
+            } else if (odMenuNameCopy == undefined) {
+
+                odMenuNameCopy = odMenuName;
+                odMenuImageCopy = odMenuImage;
+                odMenuQtyCopy = odMenuQty;
+                odMenuPriceCopy = odMenuPrice;
+                totalPrice = parseInt(odMenuPrice);
+
+            }
+
+            odMenuNameL = odMenuNameCopy.split(",");
+            odMenuImageL = odMenuImageCopy.split(",");
+            odMenuQtyL = odMenuQtyCopy.split(",");
+            odMenuPriceL = odMenuPriceCopy.split(",").map(Number);
+
+            if(odOptionNameCopy == undefined){
+                odOptionNameCopy = odOptionName;
+                test2 = odMenuName;
+                odOptionGroupNameCopy = odOptionGroupName;
+                odOptionPriceCopy = odOptionPrice;
+
+            }else if(test2 != odMenuName &&  odOptionNameCopy.substring(odOptionNameCopy.length-1,odOptionNameCopy.length) != "/"){
+                odOptionNameCopy = odOptionNameCopy +"/"+odOptionName;
+                odOptionGroupNameCopy = odOptionGroupNameCopy +"/"+odOptionGroupName;
+                odOptionPriceCopy = odOptionPriceCopy +"/"+odOptionPrice;
+
+            }else if(odOptionNameCopy != undefined){
+
+                odOptionNameCopy = odOptionNameCopy +","+odOptionName;
+                test2 = odMenuName;
+                odOptionGroupNameCopy = odOptionGroupNameCopy +","+odOptionGroupName;
+                odOptionPriceCopy = odOptionPriceCopy+odOptionPrice;
+            }
+
+            odOptionNameL = odOptionNameCopy.split("/");
+            odOptionGroupNameL = odOptionGroupNameCopy.split("/");
+            odOptionPriceL = odOptionPriceCopy.split("/").map(Number);
+
+
+            alert("total"+odMenuPriceL)
+            alert("price"+odOptionPriceL)
+
+
+        }
+
+
+
+
+        var menuPrice = 0;
+        for (var i = 0; i < odMenuNameL.length; i++) {
+
+            alert(odMenuNameL[i]);
+            alert(odOptionNameL[i]);
+
+            menuPrice += (odOptionPriceL[i]+odMenuPriceL[i]);
+
+
+
+
+            divElemApply1 = "<div class=\"card mb-3\" style=\"max-width:300px; height: 90px\">" +
+                " <div class=\"row g-0\">" +
+                "<div class=\"col-md-4\">" +
+                "<img src=\"/resources/image/1.jpg\" class=\"img-fluid rounded-start\" alt=\"image\">" +
+                "</div>" +
+                "<div class=\"col-md-8\">" +
+                "<div class=\"card-body\">" +
+                "<h5 class=\"card-title\">" + odMenuNameL[i] + "</h5>" +
+                "<p class=\"card-text\"><small class=\"text-muted\">옵션 "+odOptionNameL[i]+" :"+odOptionGroupNameL[i]+"  :</small></p>" +
+                "<p class=\"card-text\"><small class=\"text-muted\">수량 :"+odMenuQtyL[i]+" 가격 :"+(odOptionPriceL[i]+odMenuPriceL[i])+" </small></p>" +
+                "</div>" +
+                "</div>" +
+                "</div>" +
+                "</div>"
+
+
+            $('#order').append(divElemApply1);
+
+        }
+        alert(menuPrice)
+
+        divElemApply2 = "<input type=\"text\" name=\"orderPrice\" id=\"orderPrice\" value=\""+menuPrice+"\">"
+
+        $('#total').append(divElemApply2);
+
+
+    });
+--%>
+
+
+    /*
+
+
+
+
+                        <div class="card mb-3 h-10" style="width: 300px; height: 90px" >
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="/resources/image/1.jpg" class="img-fluid rounded-start" alt="image">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${cart.odMenuName}</h5>
+                                        <p class="card-text"></p>
+                                        <p class="card-text"><small class="text-muted">${cart.odMenuPrice + cart.odOptionPrice}</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                                        <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
+                                    <input type="hidden" id="odOptionGroupName" name="odOptionGroupName" value="${cart.odOptionGroupName}"/>
+                                    <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.odOptionName}"/>
+                                    <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.odMenuQty}"/>
+                                    <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.odMenuPrice}"/>
+                                    <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
+                                    <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
+
+
+
+*/
+
+
+</script>
 </body>
 </html>
 
