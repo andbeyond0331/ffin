@@ -7,6 +7,8 @@
 
 <html lang="ko">
 <head>
+    <title>메뉴 추가</title>
+    <jsp:include page="../../common/lib.jsp"/>
 
 
     <!--//////////////////////-->
