@@ -15,6 +15,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
+    <%-- 타임피커 --%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
     <%
         List<Catering> list = (List<Catering>) request.getAttribute("list");
@@ -65,7 +68,10 @@
         .container{
             margin-top: 132px
         }
-
+        .ui-timepicker-container{
+            z-index:1151 !important;
+        }
+        .ui-datepicker-div { z-index: 999999; }
     </style>
 
 </head>
@@ -103,13 +109,13 @@
             <h4 style="margin-top: 10px; align: center">
                 예약목록조회
             </h4>
-            <a href="/catering/getCtServAllList?cate=list">예약가능 서비스 조회</a>
-            <input type="text" id="ctct" name="ctct" value="${ctct}"/>
-            <input type="text" id="currentPage" name="currentPage" value=""/>
-            <input type="text" id="cate" name="cate" value="list"/>
-            <input type="text" id="flag" name="flag" value="${flag}"/>
+            <a href="/catering/mainCalendar">캘린더로 보기</a>
+            <input type="hidden" id="ctct" name="ctct" value="${ctct}"/>
+            <input type="hidden" id="currentPage" name="currentPage" value=""/>
+            <input type="hidden" id="cate" name="cate" value="list"/>
+            <input type="hidden" id="flag" name="flag" value="${flag}"/>
         </div>
-        <form name="detailForm">
+
     <!-- table 위쪽 검색 Start /////////////////////////////////////-->
     <div class="row">
 
@@ -158,8 +164,8 @@
                         </li>
                     </ul>
                     <div class="btn-detail">
-                        <input type="text" id="ctNo${catering.ctNo}" name="ctNo" value="${catering.ctNo}"/>
-                        <input type="text" id="ctStatusCode${catering.ctNo}" name="ctStatusCode" value="${catering.ctStatusCode}"/>
+                        <input type="hidden" id="ctNo${catering.ctNo}" name="ctNo" value="${catering.ctNo}"/>
+                        <input type="hidden" id="ctStatusCode${catering.ctNo}" name="ctct" value="${catering.ctStatusCode}"/>
                         <c:if test="${catering.ctStatusCode eq '0'}">
 
                             <button  name="getCateringDetail" class="button is-warning is-light" style='margin-left: 100px; margin-bottom: 13px; height: 25px'>자세히
@@ -178,7 +184,7 @@
             </div>
         </c:forEach>
     </div>
-        </form>
+
 
 </div>
 </div>
@@ -262,23 +268,142 @@
         });
 
         $("body").on("click", "button[name='getCateringDetail']", function() {
-            alert("1")
+
             var ctNo = $(this).parent().find("input[name='ctNo']").val();
-            alert("ctno : "+ctNo)
+          //  alert("ctno : "+ctNo)
             getCateringDetail(ctNo);
         });
 
         $("body").on("click", "button[name='getResDetail']", function() {
-            alert("2")
+           // alert("2")
             var ctNo = $(this).parent().find("input[name='ctNo']").val();
-            alert("ctno : "+ctNo)
+          //  alert("ctno : "+ctNo)
             var ctStatusCode= $(this).parent().find("input[name='ctct']").val();
-            alert("ctStatusCode : "+ctStatusCode)
+          //  alert("ctStatusCode : "+ctStatusCode)
             getResDetail(ctNo, ctStatusCode);
         });
 
     });
+    function getResDetail(ctNo, statusCode) {
+     //   alert("cc : "+statusCode)
+        /* statusCode == 0 */
+        //var ctNo= $(this).parent().find("input[name='ctNo']").val()
+        //var statusCode =  $(this).parent().find("input[name='ctStatusCode']").val()
 
+        //  function getResDetail(ctNo, statusCode) {
+
+        $.ajax({
+            url:"/catering/json/getResDetail/"+ctNo,
+            method:"get",
+            success: function (data) {
+
+                console.log("data : "+data.catering.ctTruck.truckId)
+                var div="";
+                // var role = '${sessionScope.role}';
+                var modalFooter = "";
+
+                <%--${sessionScope.role};--%>
+                console.log("role : "+role)
+                div += "<div class='row'>"+
+                    "<div><strong>서비스 번호</strong> : "+data.catering.ctNo+"</div></div>" +
+                    "<div class='row'>"
+                    + "<div><strong>이용자 이름</strong> : "+data.catering.ctUser.userName+"</div></div>"
+                    +"<div class='row'>"
+                    + "<div><strong>이용자 전화번호</strong> : "+data.catering.ctPhone+"</div></div>"
+                    +"<div class='row'>"
+                    + "<div><strong>푸드트럭 이름</strong> : "+data.catering.ctTruck.truckName+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>예약 날짜</strong> : "+data.catering.ctDate+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>시작 시간</strong> : "+data.catering.ctStartTime+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>종료 시간</strong> : "+data.catering.ctEndTime+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong></strong> <img src='../../../resources/image/"+data.catering.ctMenu.menuImg1+"'></div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>필요 수량</strong> : "+data.catering.ctMenuQty+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>요청사항</strong> : "+data.catering.ctUserRequest+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>견적</strong> : "+data.catering.ctQuotation+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div ><strong>주소</strong> : "+data.catering.ctAdd+" "+data.catering.ctAddDetail+"</div><button type='button' class='btn btn-outline-danger' id='lookMap' name='lookMap' onclick='lookMap();'>지도가 궁금행?</button></div>"
+
+                    +"<input type='hidden' id='ctNo"+data.catering.ctNo+"' name='ctNo' value='"+data.catering.ctNo+"'/>"
+                    +"<input type='hidden' id='ctAdd"+data.catering.ctNo+"' name='ctAdd' value='"+data.catering.ctAdd+"'/>"
+                    +"<input type='hidden' id='ctAddDetail"+data.catering.ctNo+"' name='ctAddDetail' value='"+data.catering.ctAddDetail+"'/>";
+
+
+
+
+                if (statusCode == '1') {
+                    /* 이용자: 취소가능 , 사업자: 수락 or 거절 */
+                    if (role=="user") { // '취소'버튼, '확인'버튼
+                        modalFooter += "<div class='modal-footer'>"
+                            +"<button type='button' class='btn btn-outline-danger' id='resCancel' name='resCancel' onclick='updateCtResCancel(2);'>예약 취소</button>"
+                            +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
+                            +"</div>";
+                    }else{
+                        modalFooter += "<div class='modal-footer'>"
+                            +"<button type='button' class='btn btn-outline-success' id='resAccept' name='resAccept' onclick='updateCtResCancel(4);'>수락</button>"
+                            +"<button type='button' class='btn btn-outline-danger' id='resReject' name='resReject' onclick='updateCtResCancel(3);'>거절</button>"
+                            +"</div>";
+                    }
+
+                }else if (statusCode == '4'){
+                    /*
+                    role = user - 결제 버튼 출력
+                         truck - 수락 취소 버튼 출력 > statusCode = 1로 변경
+                     */
+                    if (role=="user") { // '취소'버튼, '확인'버튼
+                        modalFooter += "<div class='modal-footer'>"
+                            +"<button type='button' class='btn btn-outline-danger' id='purchaseRes' name='purchaseRes' onclick=purchaseRes()''>결제</button>"
+                            +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
+                            +"</div>";
+                    }else{
+                        modalFooter += "<div class='modal-footer'>"
+                            +"<button type='button' class='btn btn-outline-success' id='resAccept' name='resAccept' onclick='updateCtResCancel(1);'>수락 취소</button>"
+                            +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
+                            +"</div>";
+                    }
+
+
+                }else if (statusCode =='5'){
+                    /*
+                     ( 예약 완료, 핑크 ) statuscode = 5
+                         예약 상세 보기 (동일)
+
+                         예약정보 불러오기?
+                         아니면 1대1연락하기? 이런건 좀 고민해보기!!!!
+                     */
+                    modalFooter += "<div class='modal-footer'>"
+                        +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
+                        +"</div>";
+                }else {
+                    modalFooter+=  "<div class='modal-footer'>"
+                        +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
+                        +"</div>";
+                }
+
+                $('.modal-footer').remove();
+                $('.modal-content').append(modalFooter);
+                $('.modal-body').html(div);
+
+
+                $('#staticBackdrop').modal('show');
+
+
+            },
+            error : function(err){
+                console.log('에러')
+            }
+        });
+
+    }
 
     function fncGetCateringList(currentPage) {
         //document.getElementById("currentPage").value = currentPage;
@@ -289,10 +414,10 @@
         //$("form").attr("method" , "POST").attr("action" , "/catering/listCatering").submit();
     }
     function fncGetCtStatusList(currentPage, ctStatusCode) {
-
         //document.getElementById("currentPage").value = currentPage;
         //$("#currentPage").val(currentPage)
        // $("#ctStatusCode").val(ctStatusCode)
+
         $("input[name='ctct']").val(ctStatusCode)
         $("input[name='flag']").val('1')
         //$("#cate").val("list");
@@ -361,7 +486,7 @@
             method : "POST",
             dataType : "json",
             data : { currentPage : page,
-                ctStatusCode : $("input[name='ctStatusCode']").val(),
+                ctct : $("input[name='ctct']").val(),
                 cate : "list",
                 flag : $("input[name='flag']").val()
             },
@@ -411,8 +536,8 @@
                     }
                     div += "</ul>"
                         +"<div class='btn-detail'>"
-                        + "<input type='text' id='ctNo"+list[i].ctNo+"' name='ctNo' value='"+list[i].ctNo+"'/>"
-                        + "<input type='text' id='ctStatusCode"+list[i].ctNo+"' name='ctStatusCode' value='"+list[i].ctStatusCode+"'/>";
+                        + "<input type='hidden' id='ctNo"+list[i].ctNo+"' name='ctNo' value='"+list[i].ctNo+"'/>"
+                        + "<input type='hidden' id='ctStatusCode"+list[i].ctNo+"' name='ctct' value='"+list[i].ctStatusCode+"'/>";
 
                     if(list[i].ctStatusCode == "0") {
                         div += " <button  name='getCateringDetail' class='button is-warning is-light'"
@@ -663,23 +788,20 @@
         }).open();
     }
 
-    $( function() {
 
-
-    });
 
     //$("#getCateringDetail").on("click", function () {
     //    alert("1")
     function getCateringDetail(ctNo) {
         /* statusCode == 0 */
-        alert("ccccctt : "+ctNo);
-        console.log("111ctNo : "+ctNo);
+      //  alert("ccccctt : "+ctNo);
+      //  console.log("111ctNo : "+ctNo);
         $.ajax({
             url:"/catering/json/getCtDetail/"+ctNo,
             method:"get",
 
             success: function (data) {
-                alert(data);
+              //  alert(data);
                 console.log("data : "+data.catering.ctTruck.truckId)
                 var div="";
                 // var role = '${sessionScope.role}';
@@ -710,6 +832,17 @@
                         +"<div class='row'>"
                         +"<div ><strong>최대 수량</strong> : "+data.catering.ctMenuMaxQty+"</div></div>"
                         +"<div class='row'>"
+                        +"<div ><strong>필요 수량</strong> : "
+                        +"<input type='button' name='minus' value='-'/>"
+                        +"<input type='hidden' id='minQ' name='minQ' value='"+data.catering.ctMenuMinQty+"' readOnly />"
+                        +"<input type='hidden' id='minQ' name='minQ' value='"+data.catering.ctMenuMinQty+"' readOnly />"
+                        +"<input type='hidden' id='prc' name='prc' value='"+data.catering.ctMenu.menuPrice+"' readOnly />"
+                        +"<input type='text' id='ctMenuQty' name='ctMenuQty' value='"+data.catering.ctMenuMinQty+"' readOnly />"
+                        +"<input type='button' name='plus' value='+'/>"
+                        +"</div></div>"
+                        +"<div class='row'>"
+                        +"<div ><strong>예상 견적</strong> : <input type='text' id='ctQuotation' name='ctQuotation' readOnly /></div></div>"
+                        +"<div class='row'>"
                         +"<div ><strong>예약자 아이디</strong> : "+'${sessionScope.user.userId}'+"</div></div>"
                         +"<div class='row'>"
                         +"<div ><strong>예약자 전화번호</strong> : <input type='text' id='ctUserPhone' name='ctUserPhone' value="+'${sessionScope.user.userPhone}'+"></div></div>"
@@ -719,16 +852,13 @@
                         "<button type='button' onclick='addrApi()'>주소검색</button></div>"
                         +"<div class='row'>"
                         +"<div ><strong>예약자 상세 주소</strong> : <input type='text' id='ctUserAddrDetail' name='ctUserAddrDetail' placeholder='상세주소를 입력해주세요' readonly='readonly'>	</div></div>"
-                        +"<div class='row'>"
-                        +"<div ><strong>필요 수량</strong> : <input type='text' id='ctMenuQty' name='ctMenuQty'/></div></div>"
-                        +"<div class='row'>"
-                        +"<div ><strong>예상 견적</strong> : <input type='text' id='ctQuotation' name='ctQuotation'/></div></div>"
+
                         // 예상견적 자동 계산되도록 하자
                         // input data 값 더 깔끔하게 수정
                         +"<div class='row'>"
-                        +"<div><strong>시작 시간</strong> : <input type='text' id='ctStartTime' name='ctStartTime'/></div></div>"
+                        +"<div><strong>시작 시간</strong> : <input type='text' id='ctStartTime' name='ctStartTime'  class='form-control' style='width:200px;'/></div></div>"
                         +"<div class='row'>"
-                        +"<div><strong>종료 시간</strong> : <input type='text' id='ctEndTime' name='ctEndTime'/></div></div>"
+                        +"<div><strong>종료 시간</strong> : <input type='text' id='ctEndTime' name='ctEndTime'  class='form-control' style='width:200px;'/></div></div>"
                         +"<div class='row'>"
                         +"<div><strong>요청 사항</strong> : <textarea name='ctUserRequest' rows='3'></textarea></div></div>"
                         + "</div><hr/>";
@@ -761,128 +891,81 @@
 
     //$("#getResDetail").on("click", function () {
     //    alert("2")
-    function getResDetail(ctNo, statusCode) {
-        /* statusCode == 0 */
-        //var ctNo= $(this).parent().find("input[name='ctNo']").val()
-        //var statusCode =  $(this).parent().find("input[name='ctStatusCode']").val()
-
-        //  function getResDetail(ctNo, statusCode) {
-
-        $.ajax({
-            url:"/catering/json/getResDetail/"+ctNo,
-            method:"get",
-            data:{
-            },
-            success: function (data) {
-
-                console.log("data : "+data.catering.ctTruck.truckId)
-                var div="";
-                // var role = '${sessionScope.role}';
-                var modalFooter = "";
-
-                <%--${sessionScope.role};--%>
-                console.log("role : "+role)
-                div += "<div class='row'>"+
-                    "<div><strong>서비스 번호</strong> : "+data.catering.ctNo+"</div></div>" +
-                    "<div class='row'>"
-                    + "<div><strong>이용자 이름</strong> : "+data.catering.ctUser.userName+"</div></div>"
-                    +"<div class='row'>"
-                    + "<div><strong>이용자 전화번호</strong> : "+data.catering.ctPhone+"</div></div>"
-                    +"<div class='row'>"
-                    + "<div><strong>푸드트럭 이름</strong> : "+data.catering.ctTruck.truckName+"</div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong>예약 날짜</strong> : "+data.catering.ctDate+"</div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong>시작 시간</strong> : "+data.catering.ctStartTime+"</div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong>종료 시간</strong> : "+data.catering.ctEndTime+"</div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong></strong> <img src='../../../resources/image/"+data.catering.ctMenu.menuImg1+"'></div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong>필요 수량</strong> : "+data.catering.ctMenuQty+"</div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong>요청사항</strong> : "+data.catering.ctUserRequest+"</div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong>견적</strong> : "+data.catering.ctQuotation+"</div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong>주소</strong> : "+data.catering.ctAdd+" "+data.catering.ctAddDetail+"</div><button type='button' class='btn btn-outline-danger' id='lookMap' name='lookMap' onclick='lookMap();'>지도가 궁금행?</button></div>"
-
-                    +"<input type='hidden' id='ctNo"+data.catering.ctNo+"' name='ctNo' value='"+data.catering.ctNo+"'/>"
-                    +"<input type='hidden' id='ctAdd"+data.catering.ctNo+"' name='ctAdd' value='"+data.catering.ctAdd+"'/>"
-                    +"<input type='hidden' id='ctAddDetail"+data.catering.ctNo+"' name='ctAddDetail' value='"+data.catering.ctAddDetail+"'/>";
 
 
+    $(function(){
+
+        $("body").on("click", "input[name='minus']", function() {
+//        $("input:button[name='minus']").on("click" , function() {
+            var min = $(this).parent().find("#minQ").val()
+            var cnt = $(this).parent().find("#ctMenuQty").val()
+            var prc = $(this).parent().find("#prc").val()
+            if (cnt-1 < min)
+            {
+                alert("최소 수량은 "+min+"개 입니다.")
+            }else
+                $(this).parent().find("#ctMenuQty").val(cnt-1)
+            var price = cnt * prc;
+            $(this).parents().find("#ctQuotation").val(price)
 
 
-                if (statusCode == '1') {
-                    /* 이용자: 취소가능 , 사업자: 수락 or 거절 */
-                    if (role=="user") { // '취소'버튼, '확인'버튼
-                        modalFooter += "<div class='modal-footer'>"
-                            +"<button type='button' class='btn btn-outline-danger' id='resCancel' name='resCancel' onclick='updateCtResCancel(2);'>예약 취소</button>"
-                            +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
-                            +"</div>";
-                    }else{
-                        modalFooter += "<div class='modal-footer'>"
-                            +"<button type='button' class='btn btn-outline-success' id='resAccept' name='resAccept' onclick='updateCtResCancel(4);'>수락</button>"
-                            +"<button type='button' class='btn btn-outline-danger' id='resReject' name='resReject' onclick='updateCtResCancel(3);'>거절</button>"
-                            +"</div>";
-                    }
+        });
+        $("body").on("click", "input[name='plus']", function() {
 
-                }else if (statusCode == '4'){
-                    /*
-                    role = user - 결제 버튼 출력
-                         truck - 수락 취소 버튼 출력 > statusCode = 1로 변경
-                     */
-                    if (role=="user") { // '취소'버튼, '확인'버튼
-                        modalFooter += "<div class='modal-footer'>"
-                            +"<button type='button' class='btn btn-outline-danger' id='purchaseRes' name='purchaseRes' onclick=purchaseRes()''>결제</button>"
-                            +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
-                            +"</div>";
-                    }else{
-                        modalFooter += "<div class='modal-footer'>"
-                            +"<button type='button' class='btn btn-outline-success' id='resAccept' name='resAccept' onclick='updateCtResCancel(1);'>수락 취소</button>"
-                            +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
-                            +"</div>";
-                    }
+            var max = $(this).parent().find("#maxQ").val()
+            var cnt = $(this).parent().find("#ctMenuQty").val()
+            var prc = $(this).parent().find("#prc").val()
+            // var stockCnt = $(this).parent().find("input[name='stockCnt']").val()
 
+            var num = cnt*1 + 1
 
-                }else if (statusCode =='5'){
-                    /*
-                     ( 예약 완료, 핑크 ) statuscode = 5
-                         예약 상세 보기 (동일)
+            if ( num > max*1)
+            {
+                alert("구매는 최대 " +max+ "개 까지 가능합니다.")
+            }else
+                $(this).parent().find("#ctMenuQty").val(num)
+            var price = cnt * prc;
 
-                         예약정보 불러오기?
-                         아니면 1대1연락하기? 이런건 좀 고민해보기!!!!
-                     */
-                    modalFooter += "<div class='modal-footer'>"
-                        +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
-                        +"</div>";
-                }else {
-                    modalFooter+=  "<div class='modal-footer'>"
-                        +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
-                        +"</div>";
-                }
+            $(this).parents().find("#ctQuotation").val(price)
+        });
+        $(document).on("click", "#ctStartTime", function(event){
+            // console.log($(event.currentTarget));
+            // console.log($("#ctStartTime"));
+            $(event.currentTarget).timepicker({
 
-                $('.modal-footer').remove();
-                $('.modal-content').append(modalFooter);
-                $('.modal-body').html(div);
+                timeFormat: 'HH:mm p',
+                interval: 60,
+                /* minTime: '10',
+                 maxTime: '6:00pm',*/
+                defaultTime: '10',
+                /*  startTime: '10:00',*/
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true,
+                template: 'modal'
+            });
 
+        });
+        $(document).on("click", "#ctEndTime", function(event){
+            // console.log($(event.currentTarget));
+            // console.log($("#ctStartTime"));
+            $(event.currentTarget).timepicker({
 
-                $('#staticBackdrop').modal('show');
+                timeFormat: 'HH:mm p',
+                interval: 60,
+                /* minTime: '10',
+                 maxTime: '6:00pm',*/
+                defaultTime: '10',
+                /*  startTime: '10:00',*/
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true,
+                template: 'modal'
+            });
 
-
-            },
-            error : function(err){
-                console.log('에러')
-            }
         });
 
-    }
-
+    })
 
 </script>
 <%--

@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,8 +48,17 @@ public class SocketHandler extends TextWebSocketHandler {
         String msgType = (String) obj.get("type"); //메시지의 타입을 확인한다.
         System.out.println("::::: msg = " + msg);
         String userName = (String) obj.get("userName");
+        //String time = (String) obj.get("time");
         User user=userService.getUser(userName); //user 정보를 받아옴
 
+
+        LocalTime now = LocalTime.now();
+
+        int hour = now.getHour();
+        int minute = now.getMinute();
+        int second = now.getSecond();
+        String time = hour+" : "+minute+" : "+second;
+        obj.put("time", time);
         System.out.println("user = " + user);
         obj.put("profile", user.getUserProImg());
 

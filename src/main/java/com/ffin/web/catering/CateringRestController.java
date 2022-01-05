@@ -318,7 +318,7 @@ public class CateringRestController {
                     2 : getCtServAllList
          */
 
-        String ctStatusCode = request.getParameter("ctStatusCode");
+        String ctct = request.getParameter("ctct");
         String cate = request.getParameter("cate");
         String flag = request.getParameter("flag");
 
@@ -349,7 +349,7 @@ public class CateringRestController {
                 // user 라면
 
                 id = ((User) session.getAttribute("user")).getUserId();
-                if (ctStatusCode.equals("2") ){
+                if (ctct.equals("2") ){
                     search.setSearchCondition("3");
                 }else {
                     search.setSearchCondition("0"); //statusCode에 따라 출력
@@ -359,7 +359,7 @@ public class CateringRestController {
 
                 id = ((Truck) session.getAttribute("truck")).getTruckId();
                 System.out.println("truck id: " + id);
-                if (ctStatusCode.equals("2") ){
+                if (ctct.equals("2") ){
 
                     search.setSearchCondition("4");
 
@@ -373,7 +373,7 @@ public class CateringRestController {
 
 
 
-            map = cateringService.getCtStatusList(search, id, ctStatusCode, cate);
+            map = cateringService.getCtStatusList(search, id, ctct, cate);
 
 
         }else if( flag.equals("2")){ //getCtServAllList
@@ -403,7 +403,7 @@ public class CateringRestController {
 
         ModelAndView modelAndView = new ModelAndView("jsonView");
         modelAndView.addObject("list", map.get("list"));
-
+        modelAndView.addObject("ctct", ctct);
 
         return modelAndView;
     }

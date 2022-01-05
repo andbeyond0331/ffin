@@ -24,6 +24,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
+    <%-- 타임피커 --%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
     <%
         List<Catering> list = (List<Catering>) request.getAttribute("list");
@@ -63,6 +66,13 @@
         .allCT{
             background-color : #ced4da;
         }
+        .ui-timepicker-container{
+            z-index:999999 !important;
+        }
+        .ui-datepicker-div { z-index: 999999; !important;}
+        .ui-timepicker-hidden{
+            z-index:999999 !important;
+        }
     </style>
 
 </head>
@@ -74,15 +84,17 @@
 
 <div id="calendar-container">
 
-    <div id="calendar"></div>
-    <div id="calStatus">
-        <a href="/catering/listCatering"> 리스트로보기 </a>
-        <a href="/catering/mainCalendar"> 메인 </a>
-        <a href="/catering/getCtServAllList?cate=cld" style=" background-color : #008d62;"> 예약가능 </a>
-        <a href="/catering/getCtStatusList?ctStatusCode=1&cate=cld" style=" background-color : #bcb5f3;"> 수락대기 </a>
-        <a href="/catering/getCtStatusList?ctStatusCode=4&cate=cld" style=" background-color : #fcab31;"> 수락완료(결제대기) </a>
-        <a href="/catering/getCtStatusList?ctStatusCode=5&cate=cld" style=" background-color : #f81f59;"> 예약완료 </a>
+    <div id="calendar">
+        <div id="calStatus">
+            <a href="/catering/listCatering"> 리스트로보기 </a>
+            <a href="/catering/mainCalendar"> 메인 </a>
+            <a href="/catering/getCtServAllList?cate=cld" style=" background-color : #008d62;"> 예약가능 </a>
+            <a href="/catering/getCtStatusList?ctct=1&cate=cld" style=" background-color : #bcb5f3;"> 수락대기 </a>
+            <a href="/catering/getCtStatusList?ctct=4&cate=cld" style=" background-color : #fcab31;"> 수락완료(결제대기) </a>
+            <a href="/catering/getCtStatusList?ctct=5&cate=cld" style=" background-color : #f81f59;"> 예약완료 </a>
+        </div>
     </div>
+
 
 </div>
 
@@ -156,6 +168,8 @@
 
                 });//end ajax
         });
+
+
 
     });
 
@@ -409,6 +423,17 @@
                         +"<div class='row'>"
                         +"<div ><strong>최대 수량</strong> : "+data.catering.ctMenuMaxQty+"</div></div>"
                         +"<div class='row'>"
+                        +"<div ><strong>필요 수량</strong> : "
+                        +"<input type='button' name='minus' value='-'/>"
+                        +"<input type='hidden' id='minQ' name='minQ' value='"+data.catering.ctMenuMinQty+"' readOnly />"
+                        +"<input type='hidden' id='minQ' name='minQ' value='"+data.catering.ctMenuMinQty+"' readOnly />"
+                        +"<input type='hidden' id='prc' name='prc' value='"+data.catering.ctMenu.menuPrice+"' readOnly />"
+                        +"<input type='text' id='ctMenuQty' name='ctMenuQty' value='"+data.catering.ctMenuMinQty+"' readOnly />"
+                        +"<input type='button' name='plus' value='+'/>"
+                        +"</div></div>"
+                        +"<div class='row'>"
+                        +"<div ><strong>예상 견적</strong> : <input type='text' id='ctQuotation' name='ctQuotation' readOnly /></div></div>"
+                        +"<div class='row'>"
                         +"<div ><strong>예약자 아이디</strong> : "+'${sessionScope.user.userId}'+"</div></div>"
                         +"<div class='row'>"
                         +"<div ><strong>예약자 전화번호</strong> : <input type='text' id='ctUserPhone' name='ctUserPhone' value="+'${sessionScope.user.userPhone}'+"></div></div>"
@@ -418,16 +443,13 @@
                         "<button type='button' onclick='addrApi()'>주소검색</button></div>"
                         +"<div class='row'>"
                         +"<div ><strong>예약자 상세 주소</strong> : <input type='text' id='ctUserAddrDetail' name='ctUserAddrDetail' placeholder='상세주소를 입력해주세요' readonly='readonly'>	</div></div>"
-                        +"<div class='row'>"
-                        +"<div ><strong>필요 수량</strong> : <input type='text' id='ctMenuQty' name='ctMenuQty'/></div></div>"
-                        +"<div class='row'>"
-                        +"<div ><strong>예상 견적</strong> : <input type='text' id='ctQuotation' name='ctQuotation'/></div></div>"
+
                         // 예상견적 자동 계산되도록 하자
                         // input data 값 더 깔끔하게 수정
                         +"<div class='row'>"
-                        +"<div><strong>시작 시간</strong> : <input type='text' id='ctStartTime' name='ctStartTime'/></div></div>"
+                        +"<div><strong>시작 시간</strong> : <input type='text' id='ctStartTime' name='ctStartTime'  class='form-control' style='width:200px;'/></div></div>"
                         +"<div class='row'>"
-                        +"<div><strong>종료 시간</strong> : <input type='text' id='ctEndTime' name='ctEndTime'/></div></div>"
+                        +"<div><strong>종료 시간</strong> : <input type='text' id='ctEndTime' name='ctEndTime'  class='form-control' style='width:200px;'/></div></div>"
                         +"<div class='row'>"
                         +"<div><strong>요청 사항</strong> : <textarea name='ctUserRequest' rows='3'></textarea></div></div>"
                         + "</div><hr/>";
@@ -759,6 +781,79 @@
         }).open();
     }
 
+    $(function(){
+
+        $("body").on("click", "input[name='minus']", function() {
+//        $("input:button[name='minus']").on("click" , function() {
+            var min = $(this).parent().find("#minQ").val()
+            var cnt = $(this).parent().find("#ctMenuQty").val()
+            var prc = $(this).parent().find("#prc").val()
+            if (cnt-1 < min)
+            {
+                alert("최소 수량은 "+min+"개 입니다.")
+            }else
+                $(this).parent().find("#ctMenuQty").val(cnt-1)
+            var price = cnt * prc;
+            $(this).parents().find("#ctQuotation").val(price)
+
+
+        });
+        $("body").on("click", "input[name='plus']", function() {
+
+            var max = $(this).parent().find("#maxQ").val()
+            var cnt = $(this).parent().find("#ctMenuQty").val()
+            var prc = $(this).parent().find("#prc").val()
+           // var stockCnt = $(this).parent().find("input[name='stockCnt']").val()
+
+            var num = cnt*1 + 1
+
+            if ( num > max*1)
+            {
+                alert("구매는 최대 " +max+ "개 까지 가능합니다.")
+            }else
+                $(this).parent().find("#ctMenuQty").val(num)
+            var price = cnt * prc;
+
+            $(this).parents().find("#ctQuotation").val(price)
+        });
+       // $(document).on("click", "#ctStartTime", function(event){
+            // console.log($(event.currentTarget));
+            // console.log($("#ctStartTime"));
+            $(#ctStartTime).timepicker({
+
+                timeFormat: 'HH:mm p',
+                interval: 60,
+               /* minTime: '10',
+                maxTime: '6:00pm',*/
+                defaultTime: '10',
+              /*  startTime: '10:00',*/
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true,
+                template: 'modal'
+            });
+
+       // });
+        $(document).on("click", "#ctEndTime", function(event){
+            // console.log($(event.currentTarget));
+            // console.log($("#ctStartTime"));
+            $(event.currentTarget).timepicker({
+
+                timeFormat: 'HH:mm p',
+                interval: 60,
+                /* minTime: '10',
+                 maxTime: '6:00pm',*/
+                defaultTime: '10',
+                /*  startTime: '10:00',*/
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true,
+                template: 'modal'
+            });
+
+        });
+
+    })
 
 </script>
 

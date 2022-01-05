@@ -7,7 +7,7 @@
     <jsp:include page="../../common/lib.jsp"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <meta charset="UTF-8">
-
+    <link href="../../resources/css/message_list.css" rel="stylesheet">
     <style>
         *{
             margin:0;
@@ -26,18 +26,23 @@
             margin-bottom: 20px;
         }
         .chating{
-            background-color: #000;
-            width: 500px;
+            background-color: #ffffff;
+            width: 430px;
             height: 500px;
             overflow: auto;
+            margin-bottom: 20px;
         }
         .chating .me{
             color: #F6F6F6;
             text-align: right;
+            padding-left: 15px;
+            padding-right: 15px;
         }
         .chating .others{
             color: #FFE400;
             text-align: left;
+            padding-left: 15px;
+            padding-right: 15px;
         }
         input{
             width: 330px;
@@ -46,6 +51,7 @@
         .msgImg{
             width: 200px;
             height: 125px;
+
         }
         .clearBoth{
             clear: both;
@@ -61,6 +67,7 @@
             /*border: 1px solid #cecece;*/
             border-radius: 50%;
         }
+
     </style>
 </head>
 
@@ -68,6 +75,8 @@
     var ws;
     var userName = '${sessionScope.user.userId}';
     console.log("userName: "+userName);
+    let today = new Date();
+
     $(document).ready(function(){
         // 메세지 리스트 리로드
 
@@ -88,6 +97,7 @@
             //소켓이 열리면 동작
         }
 
+
         ws.onmessage = function(data) {
             //메시지를 받으면 동작
             var msg = data.data;
@@ -102,13 +112,38 @@
                         $("#sessionName").val(d.userName);
                     }
                 }else if(d.type == "message"){
-                    console.log("d2: "+d)
+                    console.log("d2: "+d.time)
                     if(d.sessionId == $("#sessionId").val()){
-                        $("#chating").append("<p class='me'>" +
+                        var div = "";
+                       div += "<div class='outgoing_msg'>"
+                +"<div class='sent_msg'>"
+                   +" <p>"+d.msg+"</p>"
+                    +"<span class='time_date'>"+d.time+"</span>"
+                +"</div>"
+            +"</div>";
+
+                       /* $("#chating").append("<p class='me'>" +
                             "<a href='/views/home.jsp'><img src='../../../resources/image/"+d.profile+"' alt='sunil' ></a>"
-                            +userName+" :" + d.msg + "</p>");
+                            +userName+" :" + d.msg + "</p>");*/
+                        $("#chating").append(div);
                     }else{
-                        $("#chating").append("<p class='others'><a href='/views/home.jsp'><img src='../../../resources/image/"+d.profile+"' alt='sunil' ></a>" + d.userName + " :" + d.msg + "</p>");
+                        var div2 = "";
+                        div2 +=" <div class='incoming_msg'>"
+                            + "<div class='incoming_msg_img'>"
+                            +"<a href='other_profile?other_id="+d.userName+"'>"
+                            + "<img src='../../../resources/image/"+d.profile+"' alt='sunil' >"
+                            +"</a>"
+                            +"<span class='time_date'>"+d.userName+"</span>"
+                            + "</div>"
+                            +"  <div class='received_msg'>"
+                            +"<div class='received_withd_msg'>"
+                            + "<p>"+d.msg+"</p>"
+                            +"<span class='time_date' style='text-align:right;'>"+d.time+"</span>"
+                            + " </div>"
+                            +  "</div>"
+                            + " </div>";
+                        $("#chating").append(div2);
+                        //$("#chating").append("<p class='others'><a href='/views/home.jsp'><img src='../../../resources/image/"+d.profile+"' alt='sunil' ></a>" + d.userName + " :" + d.msg + "</p>");
                     }
 
                 }else{
@@ -167,6 +202,7 @@
             sessionId : $("#sessionId").val(),
             userName : userName,
             msg : $("#chatting").val()
+            //time : today.getHours()+" : "+today.getMinutes()+" : "+today.getSeconds()
         }
         ws.send(JSON.stringify(option))
         $('#chatting').val("");
@@ -216,20 +252,34 @@
             </tr>
         </table>
     </div>--%>
-    <div id="yourMsg">
+
+    <%--<div id="yourMsg">
         <table class="inputTable">
             <tr>
                 <th>메시지</th>
                 <th><input id="chatting" placeholder="보내실 메시지를 입력하세요."></th>
                 <th><button onclick="send()" id="sendBtn">보내기</button></th>
             </tr>
-            <tr>
+           &lt;%&ndash; <tr>
                 <th>파일업로드</th>
                 <th><input type="file" id="fileUpload"></th>
                 <th><button onclick="fileSend()" id="sendFileBtn">파일올리기</button></th>
-            </tr>
+            </tr>&ndash;%&gt;
         </table>
+    </div>--%>
+
+    <div class='type_msg'>
+        <div class='input_msg_write row'>
+            <div class='col-11'>
+                <input type='text' id="chatting" class='write_msg form-control' placeholder='보내실 메시지를 입력하세요.' />
+            </div>
+            <div class='col-1'>
+                <button class='msg_send_btn' type='button' onclick="send()" id="sendBtn"><i class='fa fa-paper-plane-o' aria-hidden='true'></i></button>
+            </div>
+        </div>
     </div>
 </div>
 </body>
 </html>
+
+
