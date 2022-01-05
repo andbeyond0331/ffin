@@ -25,6 +25,14 @@
 <!-- 카카오 로그인 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
+<!-- 구글 로그인 -->
+<script src="https://apis.google.com/js/client:platform.js?onload=renderButton" async defer></script>
+<meta name="google-signin-client_id" content="548740743413-4o51iohu918i0ukg4s9tcqpdrr3bnroj.apps.googleusercontent.com"/>
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css"/>
+
+
 
 
 
@@ -138,6 +146,19 @@
                 right: 16px;
                 z-index: 10;
             }*/
+    .btn-social-login {
+        transition: all .2s;
+        outline: 0;
+        border: 1px solid transparent;
+        padding: .5rem !important;
+        border-radius: 50%;
+        color: #fff;
+    }
+    .btn-social-login:focus {
+        box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
+    }
+    .text-dark { color: #343a40!important; }
+
 
 </style>
 
@@ -154,69 +175,92 @@
             alert("카카오로그인");
             console.log("카카오 로그인");
 
-
             Kakao.Auth.login({
-                success: function (authObj) {
-                    //console.log(JSON.stringify(authObj));
-                    //console.log(Kakao.Auth.getAccessToken());
+                success: function (authObj) { //성공시
+                    console.log("카카오 token :: "+Kakao.Auth.getAccessToken());
 
-                    //2. 로그인 성공시, API를 호출합니다.
-                    Kakao.API.request({
+                    Kakao.API.request({ //로그인 성공시
                         url: '/v2/user/me',
-                        success: function (res) {
-                            //console.log(JSON.stringify(res));
-                            id = res.kakao_account.email;
+                        success: function (response) {
+                            const id = response.kakao_account.email;
+                            console.log(id);
 
                             $.ajax({
-                                url: "/user/json/checkDuplication/" + res.kakao_account.email,
-                                type : "GET",
-                                headers: {
-                                    "Accept": "application/json",
-                                    "Content-Type": "application/json"
+                                url : "/user/json/checkDuplication/"+id,
+                                method : "GET",
+                                headers : {
+                                    "Accept" : "application/json",
+                                    "Content-Type" : "application/json"
                                 },
-                                success: function (idChk) {
-                                    console.log("hey kakao");
-                                    console.log(idChk);
-                                    if (idChk === id) { //DB에 아이디가 없을 경우 => 회원가입
-                                        console.log("회원가입중...");
+                                success : function (data) {
+                                    console.log("중복체크 성공 :: "+data);
+
+                                    if( data === id ){
+                                        console.log("--------------------------");
+                                        console.log("여기 오니?");
+                                        console.log("카카오로그인 data :: "+data);
+                                        console.log("카카오로그인 id :: "+id);
+
                                         $.ajax({
-                                            url: "views/user/addUser.jsp",
-                                            method: "POST",
-                                            headers: {
-                                                "Accept": "application/json",
-                                                "Content-Type": "application/json"
+                                            url : "/user/json/addUser",
+                                            method : "POST",
+                                            headers : {
+                                                "Accept" : "application/json",
+                                                "Content-Type" : "application/json"
                                             },
-                                            data: JSON.stringify({
-                                                userId: res.kakao_account.email,
-                                                userName: res.properties.nickname
-                                                /*userPassword: "kakao123",*/
+                                            data : JSON.stringify({
+                                                userId : id,
+                                                userName : response.properties.nickname,
+                                                userPassword : "1234kakao",
+                                                userRegDate : "2021-02-02",
+                                                userPhone : "010-0000-0000"
                                             }),
-                                            success: function (JSONData) {
-                                                console.log(JSONData)
-                                                alert("회원가입이 정상적으로 되었습니다.");
-                                                $("form").attr("method", "POST").attr("action", "/user/snsLogin/" + res.id).attr("target", "_parent").submit();
+                                            success: function (JSONData){
+                                                alert("가입 완료");
+                                                $("form").attr("method","POST").attr("action","/user/kakaoLogin/"+id).attr("target","_parent").submit();
                                             }
-                                        })
+                                        });
                                     }
-                                    if (!(idChk === id)) { //DB에 아이디가 존재할 경우 => 로그인
-                                        console.log("로그인중...");
-                                        $("form").attr("method", "POST").attr("action", "/user/snsLogin/" + res.kakao_account.email).attr("target", "_parent").submit();
+                                    if( data !== id ){
+                                        console.log("로그인ing...");
+                                        $("form").attr("method","post").attr("action","/user/kakaoLogin/"+id).attr("target","_parent").submit();
                                     }
+                                },
+                                fail: function (error){
+                                    console.log("중복체크 실패 :: "+error);
                                 }
-                            })
+                            });
                         },
                         fail: function (error) {
-                            alert(JSON.stringify(error));
-                        }
+                            console.log(error);
+                        },
                     });
                 },
-                fail: function (err) {
-                    alert(JSON.stringify(err));
+                fail: function (error){
+                    console.log(error);
                 }
             });
-
         });
     });
+
+    /* 구글 로그인 */
+    /*        $(function () {
+
+                $(".g-signin2").click(function () {
+                    alert("구글 로그인");
+
+                    gapi.client.load('plus', 'v1', function () {
+                        gapi.client.plus.people.get({
+                            'userId': 'me'
+                        }).execute(function (res) {
+
+                            console.log("reponse data :: "+JSON.stringify(res));
+
+                            //res.id += "@g";
+                        })
+                    });
+                })
+            });*/
 
 
     /*로그인 Modal*/
@@ -310,6 +354,18 @@
     $( function() {
         $("#goPost").on("click" , function() {
             self.location = "/community/getPostList"
+        });
+    });
+
+    /* userId 찾기 */
+    $(function () {
+        $(".findUserId").click(function () {
+
+            alert("id찾으러가자");
+
+            $('#openLoginModal').modal('hide');
+            $('#findUserModal').modal('show');
+
         });
     });
 
