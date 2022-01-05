@@ -7,7 +7,7 @@
 <meta charset="EUC-KR">
 
 <head>
-    <jsp:include page="/views/toolbar.jsp"/>
+
     <!-- Required meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
@@ -28,6 +28,7 @@
     </style>
 </head>
 <body>
+<jsp:include page="/views/toolbar.jsp"/>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>

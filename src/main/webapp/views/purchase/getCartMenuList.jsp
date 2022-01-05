@@ -8,7 +8,7 @@
 <meta charset="EUC-KR">
 
 <head>
-    <jsp:include page="/views/toolbar.jsp" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
@@ -167,7 +167,7 @@
     <link rel="stylesheet" href="/css/admin.css" type="text/css">
 </head>
 <body bgcolor="#ffffff" text="#000000">
-
+<jsp:include page="/views/toolbar.jsp" />
 <form name="form">
 
 
