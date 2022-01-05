@@ -41,7 +41,9 @@ public interface UserDao {
     public void updateUserMap(User user) throws Exception;
 
     //Id찾기
-    public void getUserId(String userId) throws Exception;
+    public String getUserId(String userName, String userPhone) throws Exception;
+    //user찾기
+    public String getUserIdForPassword(String userId, String userName, String userPhone) throws Exception;
     //PW변경
     public void updatePassword(User user) throws Exception;
 

@@ -4,6 +4,7 @@ import antlr.NameSpace;
 import com.ffin.common.Search;
 import com.ffin.service.domain.User;
 import com.ffin.service.user.UserDao;
+import com.sun.xml.internal.ws.api.ha.StickyFeature;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -119,9 +120,28 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void getUserId(String userId) throws Exception {
+    public String getUserId(String userName, String userPhone) throws Exception {
         System.out.println("UserDaoImpl.getUserId");
-        sqlSession.selectOne("UserMapper.getUserId", userId);
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("userName", userName);
+        map.put("userPhone", userPhone);
+
+        return sqlSession.selectOne("UserMapper.getUserId", map);
+    }
+
+    @Override
+    public String getUserIdForPassword(String userId, String userName, String userPhone) throws Exception {
+
+        System.out.println("UserDaoImpl.getUserIdForPassword");
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("userName", userName);
+        map.put("userPhone", userPhone);
+
+        return sqlSession.selectOne("UserMapper.getUserIdForPassword", map);
     }
 
     @Override
