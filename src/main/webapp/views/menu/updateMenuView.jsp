@@ -8,7 +8,7 @@
 
 <html lang="ko">
 <head>
-    <meta charset="utf-8">
+
     <title>메뉴 수정</title>
 
     <!-- 참조 : http://getbootstrap.com/css/   참조 -->
@@ -19,22 +19,12 @@
 
 
     <!-- Bootstrap core CSS -->
-    <%--    <link href="/docs/5.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">--%>
-    <%--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">--%>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-    <meta name="theme-color" content="#7952b3">
+<%--    <meta name="theme-color" content="#7952b3">--%>
 
     <%--    <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->--%>
-    <%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >--%>
-    <%--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >--%>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <%--    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>--%>
-
-
-    <!-- //////////cdn 옵션그룹추가////////////////-->
-
-    <%--    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>--%>
+<%--    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>--%>
 
 
     <!--  ///////////////////////// CSS ////////////////////////// -->
@@ -131,6 +121,7 @@
 <body>
 
 <!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="/views/navbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
 
 <!--  화면구성 div Start /////////////////////////////////////-->
@@ -204,6 +195,7 @@
         <c:set var="i" value="0"/>
         <c:forEach var="optionGroup" items="${list}">
             <c:set var="i" value="${i+1}"/>
+
             <div class="form-group">
                 <label for="optionGroupName" class="col-sm-offset-1 col-sm-3 control-label\">옵션그룹이름</label>
                 <div class="col-sm-4">
@@ -213,6 +205,7 @@
                 </div>
                 </div>
 
+<div class="float-left">
         <div class="form-group">
         <label for="optionName" class="col-sm-offset-1 col-sm-3 control-label">옵션이름</label>
         <div class="col-sm-4">
@@ -226,8 +219,8 @@
             <input type="text" class="form-control" id="optionPrice" name="optionPrice"  value="${optionGroup.optionPrice}" placeholder="${optionGroup.optionPrice}">
             </div>
         </div>
+</div>
 
-        </div>
         </c:forEach>
 
         <div id="here"></div>
@@ -293,13 +286,15 @@
                 <a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
             </div>
         </div>
+
     </form>
 
 
 </div>
-
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
+<jsp:include page="/views/footer.jsp" />
 </body>
 
 

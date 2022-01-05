@@ -50,7 +50,7 @@
                 <c:forEach var="menu" items="${list}">
                     <c:set var="i" value="${i+1}"/>
                     <div class="card" style="width: 17rem; margin-bottom:15px; margin-left: 10px;">
-                        <img class="card-img-top" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxNzA5MDlfNTYg%2FMDAxNTA0OTI5MDg5MDQ5.glzVvaUUF1Mlx1xINUlgkpVu8ot9PjoQiTNY1RpJOUQg.YVLpz_ucQ_idz8jo5feSHItLU1xw9rGRlqrlcwkxSwsg.JPEG.star3012777%2F5.jpg&type=sc960_832" alt="Card image cap"
+                        <img class="card-img-top" src="/resources/image/${menu.menuImg1}" alt="Card image cap"
                              style="border-bottom: 1px solid #eee; height: 200px;">
                         <div class="card-body">
                             <ul class='card-body-ul'>

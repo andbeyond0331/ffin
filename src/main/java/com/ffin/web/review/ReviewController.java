@@ -59,6 +59,15 @@ public class ReviewController {
             이용자가 리뷰를 등록하기 위해 사용하는 화면
             orderNo로 이용자의 주문 정보를 화면에 뿌려주고, 추가할 리뷰 정보를 받는다.
          */
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
         System.out.println("/review/addReview : GET");
         System.out.println("orderNo : " + orderNo);
 
@@ -76,27 +85,54 @@ public class ReviewController {
         return modelAndView;
     }
 
-    @RequestMapping(value="addReview", method=RequestMethod.POST)
-    public String addReview(@ModelAttribute("rvOrderNo") int rvOrderNo, @ModelAttribute("review") Review review, Model model) throws Exception{
+//    @RequestMapping(value="addReviewER", method=RequestMethod.POST)
+//    public String addReviewER(Model model) throws Exception{
+    @RequestMapping(value = "addReviewER", method=RequestMethod.POST)
+    public String addReviewER(@ModelAttribute("review") Review review, Model model) throws Exception{
 
         System.out.println("/review/addReview:POST");
-        System.out.println("rvOrderNo = " + rvOrderNo + ", review = " + review + ", model = " + model);
+        System.out.println("review = " + review + ", model = " + model);
 
-        Purchase purchase = purchaseService.getPurchase(rvOrderNo);
+        Purchase purchase = purchaseService.getPurchase(review.getRvOrderNo());
 
 
-        review.setRvOrderNo(rvOrderNo);
+//        review.setRvOrderNo(rvOrderNo);
         review.setRvTruckId(purchase.getOrderTruckId().getTruckId());
         review.setRvUserId(purchase.getOrderUserId().getUserId());
 
         reviewService.addReview(review);
 
         model.addAttribute("review", review);
+//        model.addAttribute("orderNo", rvOrderNo);
 
-        return "redirect:/views/menu/getMenu.jsp"; //송화님&진석님과 얘기해보기
+        return "forward:/views/menu/getMenu.jsp"; //송화님&진석님과 얘기해보기
 
 
     }
+//
+//    @RequestMapping(value="addReviewER", method=RequestMethod.POST)
+//    public String addReviewER(Model model) throws Exception{
+////    public String addReview(@ModelAttribute("review") Review review, @RequestParam(value="orderNo", required = false)int orderNo, Model model) throws Exception{
+//
+//        System.out.println("/review/addReview:POST");
+////        System.out.println("review = " + review + ", model = " + model);
+////
+////        Purchase purchase = purchaseService.getPurchase(review.getRvOrderNo());
+////
+////
+//////        review.setRvOrderNo(rvOrderNo);
+////        review.setRvTruckId(purchase.getOrderTruckId().getTruckId());
+////        review.setRvUserId(purchase.getOrderUserId().getUserId());
+////
+////        reviewService.addReview(review);
+////
+////        model.addAttribute("review", review);
+//////        model.addAttribute("orderNo", rvOrderNo);
+//
+//        return "redirect:/views/menu/getMenu.jsp"; //송화님&진석님과 얘기해보기
+//
+//
+//    }
 
     @RequestMapping(value="updateReview", method=RequestMethod.GET)
     public ModelAndView updateReview(HttpServletRequest request, ModelAndView modelAndView) throws Exception{
