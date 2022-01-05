@@ -89,7 +89,14 @@ public class MenuController {
     @RequestMapping(value="addMenuOptionGroup", method=RequestMethod.POST)
 //    public String addMenuOptionGroup(HttpServletRequest request,@ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
 //    public String addMenuOptionGroup(HttpServletRequest request,MultipartHttpServletRequest mtfRequest, @ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
-    public String addMenuOptionGroup(@RequestParam("menuImg11")MultipartFile file1,@RequestParam("menuImg22")MultipartFile file2,@RequestParam("menuImg33")MultipartFile file3,HttpServletRequest request,@ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
+    public String addMenuOptionGroup
+            (@RequestParam("menuImg11")MultipartFile file1,
+             @RequestParam("menuImg22")MultipartFile file2,
+             @RequestParam("menuImg33")MultipartFile file3,
+             HttpServletRequest request,
+             @ModelAttribute("optionGroup")OptionGroup optionGroup,
+             @ModelAttribute("menu") Menu menu,
+             Model model) throws Exception{
 //    public String addMenuOptionGroup(@RequestParam("menuImg1")MultipartFile file1,@RequestParam(value="menuImg2", required = false)MultipartFile file2,@RequestParam(value="menuImg3", required = false)MultipartFile file3,HttpServletRequest request,@ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
    // public String addMenuOptionGroup(@ModelAttribute("optionGroup")OptionGroup optionGroup, Model model) throws Exception{
 //    public String addMenuOptionGroup(HttpServletRequest request, Model model) throws Exception{
@@ -103,32 +110,36 @@ public class MenuController {
 //        List<MultipartFile> fileList = mtfRequest.getFiles("file");
 
         String menuImg1  = file1.getOriginalFilename();
-//        String menuImg2  = file2.getOriginalFilename();
-//        String menuImg3  = file3.getOriginalFilename();
+        String menuImg2  = file2.getOriginalFilename();
+        String menuImg3  = file3.getOriginalFilename();
 
         if(!file1.getOriginalFilename().isEmpty()){
             file1.transferTo(new File(FILE_UPLOAD_PATH, menuImg1));
-            model.addAttribute("msg", "File uploaded successfully.");
-            model.addAttribute("menuImg1", menuImg1);
-        }else {
-            model.addAttribute("msg", "Please select a valid mediaFile..");
+//            model.addAttribute("msg", "File uploaded successfully.");
+//            model.addAttribute("menuImg1", menuImg1);
+//        }else {
+//            model.addAttribute("msg", "Please select a valid mediaFile..");
         }
+        menu.setMenuImg1(file1.getOriginalFilename());
 //
-//        if(!file2.getOriginalFilename().isEmpty()){
-//            file2.transferTo(new File(FILE_UPLOAD_PATH, menuImg2));
+
+        if(!file2.getOriginalFilename().isEmpty()){
+            file2.transferTo(new File(FILE_UPLOAD_PATH, menuImg2));
 //            model.addAttribute("msg", "File uploaded successfully.");
 //            model.addAttribute("menuImg2", menuImg2);
 //        }else {
 //            model.addAttribute("msg", "Please select a valid mediaFile..");
-//        }
+        }
+        menu.setMenuImg2(file2.getOriginalFilename());
 //
-//        if(!file3.getOriginalFilename().isEmpty()){
-//            file3.transferTo(new File(FILE_UPLOAD_PATH, menuImg3));
+        if(!file3.getOriginalFilename().isEmpty()){
+            file3.transferTo(new File(FILE_UPLOAD_PATH, menuImg3));
 //            model.addAttribute("msg", "File uploaded successfully.");
 //            model.addAttribute("menuImg3", menuImg3);
 //        }else {
 //            model.addAttribute("msg", "Please select a valid mediaFile..");
-//        }
+        }
+        menu.setMenuImg3(file3.getOriginalFilename());
 
 
 //        //경로 생성
@@ -335,7 +346,11 @@ public class MenuController {
 
 
     @RequestMapping(value="getMenu", method=RequestMethod.GET)
-    public String getMenu(@ModelAttribute("search") Search search, @RequestParam(value="menuNo", required = false) int menuNo, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public String getMenu(@ModelAttribute("search") Search search,
+                          @RequestParam(value="menuNo", required = false) int menuNo,
+                          Model model,
+                          HttpServletRequest request,
+                          HttpServletResponse response) throws Exception{
 
         System.out.println("/menu/getMenu : GET");
 
@@ -495,8 +510,10 @@ public class MenuController {
     }
 
     @RequestMapping("getMenuList")
-    public ModelAndView getMenuList(@ModelAttribute("search") Search search, @RequestParam("truckId") String truckId,
-                                  HttpServletResponse response, ModelAndView modelAndView) throws Exception{
+    public ModelAndView getMenuList(@ModelAttribute("search") Search search,
+                                    @RequestParam("truckId") String truckId,
+                                  HttpServletResponse response,
+                                    ModelAndView modelAndView) throws Exception{
 
 //        File file = new File(FILE_UPLOAD_PATH, fileName);
 //        byte[] bytes = FileCopyUtils.copyToByteArray(file);

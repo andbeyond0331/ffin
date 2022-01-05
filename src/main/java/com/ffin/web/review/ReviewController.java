@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.Map;
 
 // 리뷰 관리 Controller
@@ -52,6 +53,9 @@ public class ReviewController {
     @Value("100")
     int pageSize;
 
+    //FILE UPLOAD를 위한 FIELD 설정
+    private static final String FILE_UPLOAD_PATH = "C:/CRUD/ffin/src/main/webapp/resources/image/";
+
     @RequestMapping(value = "addReview", method= RequestMethod.GET)
     public ModelAndView addReview(@RequestParam("orderNo") int orderNo) throws Exception{
 
@@ -59,14 +63,6 @@ public class ReviewController {
             이용자가 리뷰를 등록하기 위해 사용하는 화면
             orderNo로 이용자의 주문 정보를 화면에 뿌려주고, 추가할 리뷰 정보를 받는다.
          */
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
         System.out.println("/review/addReview : GET");
         System.out.println("orderNo : " + orderNo);
@@ -88,10 +84,40 @@ public class ReviewController {
 //    @RequestMapping(value="addReviewER", method=RequestMethod.POST)
 //    public String addReviewER(Model model) throws Exception{
     @RequestMapping(value = "addReviewER", method=RequestMethod.POST)
-    public String addReviewER(@ModelAttribute("review") Review review, Model model) throws Exception{
+    public String addReviewER(@RequestParam("rvImg11")MultipartFile file1,
+                              @RequestParam("rvImg22")MultipartFile file2,
+                              @RequestParam("rvImg33")MultipartFile file3,
+                              HttpServletRequest request,
+                              @ModelAttribute("review") Review review, Model model) throws Exception{
+        // TODO: 2022-01-05 truckId, userId 적용되도록! - 해결!
+        // TODO: 2022-01-05 리뷰 이미지 추가 - 해결!
 
         System.out.println("/review/addReview:POST");
         System.out.println("review = " + review + ", model = " + model);
+
+        String rvImg1  = file1.getOriginalFilename();
+        String rvImg2  = file2.getOriginalFilename();
+        String rvImg3  = file3.getOriginalFilename();
+
+        if(!file1.getOriginalFilename().isEmpty()){
+            file1.transferTo(new File(FILE_UPLOAD_PATH, rvImg1));
+        }
+        review.setRvImg1(file1.getOriginalFilename());
+
+        if(!file2.getOriginalFilename().isEmpty()){
+            file2.transferTo(new File(FILE_UPLOAD_PATH, rvImg2));
+
+        }
+        review.setRvImg2(file2.getOriginalFilename());
+//
+        if(!file3.getOriginalFilename().isEmpty()){
+            file3.transferTo(new File(FILE_UPLOAD_PATH, rvImg3));
+//            model.addAttribute("msg", "File uploaded successfully.");
+//            model.addAttribute("menuImg3", menuImg3);
+//        }else {
+//            model.addAttribute("msg", "Please select a valid mediaFile..");
+        }
+        review.setRvImg3(file3.getOriginalFilename());
 
         Purchase purchase = purchaseService.getPurchase(review.getRvOrderNo());
 
@@ -99,6 +125,10 @@ public class ReviewController {
 //        review.setRvOrderNo(rvOrderNo);
         review.setRvTruckId(purchase.getOrderTruckId().getTruckId());
         review.setRvUserId(purchase.getOrderUserId().getUserId());
+
+        System.out.println("aaaaa review : " + review);
+        System.out.println("//////rvTruckId, rvUserId 확인/////////review.getRvTruckId : " + review.getRvTruckId());
+        System.out.println("//////rvTruckId, rvUserId 확인/////////review.getRvUserId : " + review.getRvUserId());
 
         reviewService.addReview(review);
 
@@ -147,8 +177,17 @@ public class ReviewController {
 
         Review review = reviewService.getReview(rvNo);
 
+        Purchase purchase = purchaseService.getPurchase(review.getRvOrderNo());
+
+        Map orderDetail = purchaseService.getOrderDetail(review.getRvOrderNo());
+        System.out.println("/////////////////");
+        System.out.println("orderDetail Map : " + orderDetail);
+        System.out.println("/////////////////");
+
         //Model - View 연결
         modelAndView.addObject("review", review);
+        modelAndView.addObject("orderDetail", orderDetail);
+        modelAndView.addObject("purchase",purchase);
         modelAndView.setViewName("/views/review/updateReviewView.jsp");
 
         System.out.println("request = " + request + ", modelAndView = " + modelAndView);
@@ -157,18 +196,47 @@ public class ReviewController {
     }
 
     @RequestMapping(value="updateReview", method=RequestMethod.POST)
-    public String updateReview(@ModelAttribute("rvNo") int rvNo, @ModelAttribute("review") Review review, Model model) throws Exception{
+    public String updateReview(
+            @RequestParam("rvImg11")MultipartFile file1,
+            @RequestParam("rvImg22")MultipartFile file2,
+            @RequestParam("rvImg33")MultipartFile file3,
+            @ModelAttribute("rvNo") int rvNo,
+            @ModelAttribute("review") Review review,
+            Model model) throws Exception{
 
         System.out.println("/review/updateReview:POST");
         System.out.println("rvNo = " + rvNo + ", review = " + review + ", model = " + model);
+
+        String rvImg1  = file1.getOriginalFilename();
+        String rvImg2  = file2.getOriginalFilename();
+        String rvImg3  = file3.getOriginalFilename();
+
+        if(!file1.getOriginalFilename().isEmpty()){
+            file1.transferTo(new File(FILE_UPLOAD_PATH, rvImg1));
+        }
+        review.setRvImg1(file1.getOriginalFilename());
+
+        if(!file2.getOriginalFilename().isEmpty()){
+            file2.transferTo(new File(FILE_UPLOAD_PATH, rvImg2));
+
+        }
+        review.setRvImg2(file2.getOriginalFilename());
+
+        if(!file3.getOriginalFilename().isEmpty()){
+            file3.transferTo(new File(FILE_UPLOAD_PATH, rvImg3));
+
+        }
+        review.setRvImg3(file3.getOriginalFilename());
+
 
         review.setRvNo(rvNo);
 
         reviewService.updateReview(review);
 
         model.addAttribute("review", review);
+        model.addAttribute("truckId", review.getRvTruckId());
 
-        return "redirect:/views/review/addReviewView.jsp"; //송화님&진석님과 얘기해보기
+        return "redirect:/views/review/getReviewList.jsp"; //송화님&진석님과 얘기해보기
 
 
     }
