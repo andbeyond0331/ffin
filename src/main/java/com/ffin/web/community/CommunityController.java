@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 // 소통관리 Controller
@@ -108,6 +109,9 @@ public class CommunityController {
         session.setAttribute("postNo", postNo);
 
         System.out.println("session에 담긴 postNo = " +session.getAttribute("postNo"));
+
+//        List<Comment> commentList = communityService.getCommentList(post.getPostNo());
+//        m.addObject("commentList", commentList);
 
         m.addObject("post", post);
         m.setViewName("/views/community/getPost.jsp");

@@ -12,7 +12,10 @@
     <!-- 참조 : http://getbootstrap.com/css/   참조 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>게시글 작성</title>
+    <!-- ajax 모듈 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <title>게시글 조회</title>
 
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">
@@ -201,6 +204,22 @@
         <!-- 댓글이 등록이 되면 listReply에 댓글이 쌓이게 된다 -->
         <div id="listReply">
             ${comment.commentContent}
+        </div>
+        <!-- 댓글 -->
+        <div id="reply">
+            <ol class="replyList">
+                <c:forEach items="${commentList}" var="commentList">
+                    <li>
+                        <p>
+                            작성자 : ${comment.commentUserId}<br />
+                            작성자 : ${comment.commentTruckId}<br />
+                            작성 날짜 :  <fmt:formatDate value="${comment.commentDate}" pattern="yyyy-MM-dd" />
+                        </p>
+
+                        <p>${replyList.content}</p>
+                    </li>
+                </c:forEach>
+            </ol>
         </div>
 
     </form>
