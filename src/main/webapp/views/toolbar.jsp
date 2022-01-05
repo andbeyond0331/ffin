@@ -504,29 +504,15 @@
                             aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
-                    <div class="content" id="order">
+                    <div class="content">
 
-
+                        <div id="order"></div>
                         <c:set var="i" value="0"/>
                         <c:forEach var="cart" items="${map.get('list')}">
                             <c:set var="i" value="${i+1}"/>
 
 
-                            <%--                     <div class="card mb-3" style="max-width: 540px;">
-                                                     <div class="row g-0">
-                                                         <div class="col-md-4">
-                                                                 ${i}
-                                                             <img src="/resources/image/1.jpg" class="img-fluid rounded-start" alt="image">
-                                                         </div>
-                                                         <div class="col-md-8">
-                                                             <div class="card-body">
-                                                                 <h5 class="card-title">${cart.odMenuName}</h5>
-                                                                 <p class="card-text"><small class="text-muted">옵션 : ${cart.odOptionGroupName} : ${cart.odOptionName}</small></p>
-                                                                 <p class="card-text"><small class="text-muted">수량 : ${cart.odMenuQty} 가격 : ${cart.odMenuPrice + cart.odOptionPrice}</small></p>
-                                                             </div>
-                                                         </div>
-                                                     </div>
-                                                 </div>--%>
+
 
 
                             <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
@@ -542,12 +528,18 @@
 
                         </c:forEach>
 
-
+                        <div id="total"></div>
+                        <div class="row">
+                        <div class="col-6">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#exampleModal">주문하기
-                        </button>
-                        <button type="button" class="btn btn-primary">json</button>
-                    </div>
+                        </button></div>
+                        <div class="col-2">
+
+                        </div>
+                        <div class="col-4">
+                        <button type="button" class="btn btn-primary">삭제</button>
+                    </div></div></div>
                 </div>
             </div>
         </header>
@@ -649,44 +641,60 @@
             var odMenuQtyFlagCopy;
             var test;
             var test2;
+            var totalPrice;
 
 
             if (odMenuNameCopy != undefined && odMenuQtyFlag == 0) {
                 odMenuNameCopy = odMenuNameCopy + "," + odMenuName;
                 odMenuImageCopy = odMenuImageCopy + "," + odMenuImage;
-
+                odMenuQtyCopy = odMenuQtyCopy + "," + odMenuQty;
+                odMenuPriceCopy = odMenuPriceCopy + "," + odMenuPrice;
+                totalPrice = totalPrice + parseInt(odMenuPrice);
             } else if (odMenuNameCopy == undefined) {
 
                 odMenuNameCopy = odMenuName;
                 odMenuImageCopy = odMenuImage;
+                odMenuQtyCopy = odMenuQty;
+                odMenuPriceCopy = odMenuPrice;
+                totalPrice = parseInt(odMenuPrice);
 
             }
 
             odMenuNameL = odMenuNameCopy.split(",");
             odMenuImageL = odMenuImageCopy.split(",");
-
+            odMenuQtyL = odMenuQtyCopy.split(",");
+            odMenuPriceL = odMenuPriceCopy.split(",").map(Number);
 
 /*            let last_cart = test.substring(test.length-1,test.length);*/
 
-            if(test == undefined){
-                test = odOptionName;
+            if(odOptionNameCopy == undefined){
+                odOptionNameCopy = odOptionName;
                 test2 = odMenuName;
                 odOptionGroupNameCopy = odOptionGroupName;
 
-            }else if(test2 != odMenuName &&  test.substring(test.length-1,test.length) != "/"){
-                test = test +"/"+odOptionName;
+                    odOptionPriceCopy = odOptionPrice;
+
+
+            }else if(test2 != odMenuName &&  odOptionNameCopy.substring(odOptionNameCopy.length-1,odOptionNameCopy.length) != "/"){
+                odOptionNameCopy = odOptionNameCopy +"/"+odOptionName;
                 odOptionGroupNameCopy = odOptionGroupNameCopy +"/"+odOptionGroupName;
+                odOptionPriceCopy = odOptionPriceCopy +"/"+odOptionPrice;
 
-            }else if(test != undefined){
+            }else if(odOptionNameCopy != undefined){
 
-                test = test +","+odOptionName;
+                odOptionNameCopy = odOptionNameCopy +","+odOptionName;
                 test2 = odMenuName;
                 odOptionGroupNameCopy = odOptionGroupNameCopy +","+odOptionGroupName;
+                odOptionPriceCopy = odOptionPriceCopy+odOptionPrice;
             }
-            alert("jdiaf"+test2)
-            odOptionNameL = test.split("/");
-            odOptionGroupNameL = odOptionGroupNameCopy.split("/");
 
+            odOptionNameL = odOptionNameCopy.split("/");
+            odOptionGroupNameL = odOptionGroupNameCopy.split("/");
+            odOptionPriceL = odOptionPriceCopy.split("/").map(Number);
+
+
+/*            alert("total"+odMenuPriceL)
+            alert("price"+odOptionPriceL)*/
 
             /*  if (odOptionGroupNameCopy == undefined || odOptionGroupNameCopy != odOptionGroupName) {
                   odOptionGroupNameCopy = odOptionGroupNameCopy+","+odOptionGroupName;
@@ -732,7 +740,9 @@
 
 
         }
-        alert(test);
+
+
+
         /*    var arr = new Array(10);
             for(var i=0; i<odMenuNameCount; i++){
                 var odMenuName = $("input[name='odMenuName']").eq(i).val();
@@ -775,32 +785,66 @@
          for(var i=0; i<odMenuNameL.length; i++){
 
          }*/
+        var menuPrice = 0;
         for (var i = 0; i < odMenuNameL.length; i++) {
-
+/*
             alert(odMenuNameL[i]);
+            alert(odOptionNameL[i]);*/
 
-            divElemApply1 = "<div class=\"card mb-3\" style=\"max-width: 540px;\">" +
+            menuPrice += (odOptionPriceL[i]+odMenuPriceL[i]);
+
+
+
+
+            divElemApply1 =
+                "<div class=\"form-check\">" +
+                "<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"flexCheckChecked\" checked>" +
+                "<label class=\"form-check-label\" for=\"flexCheckChecked\">" +
+                "<div class=\"card mb-3\" style=\"max-width: 540px;\">" +
                 " <div class=\"row g-0\">" +
                 "<div class=\"col-md-4\">" +
-                i +
                 "<img src=\"/resources/image/1.jpg\" class=\"img-fluid rounded-start\" alt=\"image\">" +
                 "</div>" +
                 "<div class=\"col-md-8\">" +
                 "<div class=\"card-body\">" +
                 "<h5 class=\"card-title\">" + odMenuNameL[i] + "</h5>" +
                 "<p class=\"card-text\"><small class=\"text-muted\">옵션 "+odOptionNameL[i]+" :"+odOptionGroupNameL[i]+"  :</small></p>" +
-                "<p class=\"card-text\"><small class=\"text-muted\">수량 : 가격 : </small></p>" +
+                "<p class=\"card-text\"><small class=\"text-muted\">수량 :"+odMenuQtyL[i]+" 가격 :"+(odOptionPriceL[i]+odMenuPriceL[i])+" </small></p>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +
-                "</div>"
+                "</div>" +
+                "</div>" ;
+
+
+
             $('#order').append(divElemApply1);
 
         }
+/*        alert(menuPrice)*/
+
+        divElemApply2 = "<input type=\"hidden\" name=\"orderPrice\" id=\"orderPrice\" value=\""+menuPrice+"\">"+
+            "<h3>합계 : "+menuPrice+"</h3>"
+
+        $('#total').append(divElemApply2);
 
 
     });
-
+    <%--                     <div class="card mb-3" style="max-width: 540px;">
+                                     <div class="row g-0">
+                                         <div class="col-md-4">
+                                                 ${i}
+                                             <img src="/resources/image/1.jpg" class="img-fluid rounded-start" alt="image">
+                                         </div>
+                                         <div class="col-md-8">
+                                             <div class="card-body">
+                                                 <h5 class="card-title">${cart.odMenuName}</h5>
+                                                 <p class="card-text"><small class="text-muted">옵션 : ${cart.odOptionGroupName} : ${cart.odOptionName}</small></p>
+                                                 <p class="card-text"><small class="text-muted">수량 : ${cart.odMenuQty} 가격 : ${cart.odMenuPrice + cart.odOptionPrice}</small></p>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>--%>
 
     /*
 
