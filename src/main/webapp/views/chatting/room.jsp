@@ -3,9 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Room
+    </title>
+    <jsp:include page="../../common/lib.jsp"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <meta charset="UTF-8">
-    <title>Room</title>
+
     <style>
         *{
             margin:0;

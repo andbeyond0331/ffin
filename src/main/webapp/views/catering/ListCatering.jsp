@@ -6,7 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    <title>케이터링 리스트 </title>
+    <jsp:include page="../../common/lib.jsp"/>
     <%--주소API--%>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 

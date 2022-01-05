@@ -6,7 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    <title>메인 캘린더</title>
+    <jsp:include page="../../common/lib.jsp"/>
 
 
     <%--주소API--%>
