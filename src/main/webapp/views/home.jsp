@@ -1,120 +1,262 @@
-<%@ page pageEncoding="EUC-KR"%>
-<%@ page contentType="text/html; charset=EUC-KR" %>
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ page pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
+
+
+<!DOCTYPE html>
+
+<html lang="ko">
+
 <head>
-    <meta charset="EUC-KR">
 
-    <!-- ¬¸¡∂ : http://getbootstrap.com/css/   -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>F.FIN | FOODTRUCK FINDER</title>
 
-    <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-
-    <title>HELLO</title>
+    <jsp:include page="../common/lib.jsp"/>
 
     <script type="text/javascript">
-        //============= ¿Ø¿˙»∏ø¯ø¯∞°¿‘ »≠∏È¿Ãµø =============
-        $( function() {
-            //==> √ﬂ∞°µ»∫Œ∫– : "addUser"  Event ø¨∞·
-            $("a[href='#' ]:contains('¿ÃøÎ¿⁄ »∏ø¯∞°¿‘')").on("click" , function() {
-                self.location = "views/user/addUser.jsp"
-            });
-        });
 
-        //============= ¿ÃøÎ¿⁄ ∑Œ±◊¿Œ »≠∏È¿Ãµø =============
-        $( function() {
-            //==> √ﬂ∞°µ»∫Œ∫– : "addUser"  Event ø¨∞·
-            $("a[href='#' ]:contains('¿ÃøÎ¿⁄ ∑Œ ±◊ ¿Œ')").on("click" , function() {
-                self.location = "views/user/login.jsp"
-            });
-        });
-
-        //============= ªÁæ˜¿⁄ ∑Œ±◊¿Œ »≠∏È¿Ãµø =============
-        $( function() {
-            $("a[href='#' ]:contains('ªÁæ˜¿⁄ ∑Œ ±◊ ¿Œ')").on("click" , function() {
-                self.location = "views/truck/loginTruck.jsp"
-            });
-        });
-
-        // ============= ¿ÃøÎ¿⁄ ∑Œ±◊æ∆øÙ ===============
-        $( function() {
-            $("a[href='#' ]:contains('¿ÃøÎ¿⁄ ∑Œ ±◊ æ∆ øÙ')").on("click" , function() {
-                self.location = "/user/logout"
-            });
-        });
-
-        // ============= ªÁæ˜¿⁄ ∑Œ±◊æ∆øÙ ===============
-        $( function() {
-            $("a[href='#' ]:contains('ªÁæ˜¿⁄ ∑Œ ±◊ æ∆ øÙ')").on("click" , function() {
-                self.location = "/truck/logoutTruck"
-            });
-        });
-
-        // ============= ªÁæ˜¿⁄ ∑Œ±◊æ∆øÙ ===============
-        $( function() {
-            $("a[href='#' ]:contains('homeTest')").on("click" , function() {
-                self.location = "views/homeTest.jsp"
-            });
-        });
-        // ============= ¬ ¡ˆ ===============
-        $( function() {
-            $("a[href='#' ]:contains('¬ ¡ˆ')").on("click" , function() {
-                self.location = "/msg/message_list"
-            });
-        });
-        // ============= √§∆√ ===============
-        $( function() {
-            $("a[href='#' ]:contains('√§∆√')").on("click" , function() {
-                self.location = "/room"
-            });
-        });
-        // ============= ƒ…¿Ã≈Õ∏µ ===============
-        $( function() {
-            $("a[href='#' ]:contains('ƒ…¿Ã≈Õ∏µ')").on("click" , function() {
-                self.location = "/catering/mainCalendar"
-            });
-        });
+        function loginModal(){
+            $('#openLoginModal').modal('show');
+        }
 
     </script>
 
 </head>
-<body>
 
-    <div class="navbar  navbar-default">
+<body id="page-top">
 
-        <div class="container">
-            <a class="navbar-brand" href="#">F.FIN</a>
-            <!-- toolBar Button Start //////////////////////// -->
-            <div class="navbar-header">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+
+
+
+<div class="hero_area">
+
+    <!-- toolbar -->
+    <jsp:include page="/views/navbar.jsp" />
+
+
+    <!-- slider section -->
+    <section class="slider_section ">
+        <div class="container ">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="detail-box" style="margin-bottom: -40px;">
+                        <h1 class="display-1 fs-md-5 fs-lg-6 fs-xl-8 text-light">
+                            FoodTruck Finder
+                        </h1>
+                        <h5 class="text-800 mb-5 fs-4">Within a few clicks,<br class="d-none d-xxl-block" /><br/>find foodtruck are accessible near you</h5>
+                    </div>
+                    <div class="find_container ">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <form>
+                                        <div class="form-row" style="margin-top: 70px;">
+                                            <div class="form-group col-lg-6">
+                                                <input type="text" class="form-control" id="inputLocation" placeholder="What's your address?">
+                                                <span class="location_icon">
+                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                  </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row"  style="margin-top: -15px;">
+                                            <div class="form-group col-md-4">
+                                                <div class="btn-box">
+                                                    <button type="submit" class="btn ">Use current location</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- toolBar Button End //////////////////////// -->
-
-            <div class="collapse navbar-collapse"  id="target">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">¿ÃøÎ¿⁄ »∏ø¯∞°¿‘</a></li>
-                    <li><a href="#">¿ÃøÎ¿⁄ ∑Œ ±◊ ¿Œ</a></li>
-                    <li><a href="#">ªÁæ˜¿⁄ ∑Œ ±◊ ¿Œ</a></li>
-                    <li><a href="#">¿ÃøÎ¿⁄ ∑Œ ±◊ æ∆ øÙ</a> </li>
-                    <li><a href="#">ªÁæ˜¿⁄ ∑Œ ±◊ æ∆ øÙ</a> </li>
-                    <li><a href="#">homeTest</a> </li>
-                    <li><a href="#">¬ ¡ˆ</a> </li>
-                    <li><a href="#">√§∆√</a> </li>
-                    <li><a href="#">ƒ…¿Ã≈Õ∏µ</a> </li>
-                </ul>
+        </div>
+        <div class="slider_container">
+            <div class="item">
+                <div class="img-box">
+                    <img src="../resources/bootstrap/images/foodtruck_default.jpg" alt="" />
+                </div>
             </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="../resources/bootstrap/images/foodtruck_default.jpg" alt="" />
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="../resources/bootstrap/images/foodtruck_default.jpg" alt="" />
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="../resources/bootstrap/images/foodtruck_default.jpg" alt="" />
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="../resources/bootstrap/images/foodtruck_default.jpg" alt="" />
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="../resources/bootstrap/images/foodtruck_default.jpg" alt="" />
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="../resources/bootstrap/images/foodtruck_default.jpg" alt="" />
+                </div>
+            </div>
+            <div class="item">
+                <div class="img-box">
+                    <img src="../resources/bootstrap/images/foodtruck_default.jpg" alt="" />
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end slider section -->
+</div>
 
+
+<!-- Popular Foodtruck section -->
+
+<section class="recipe_section layout_padding-top">
+    <div class="container">
+        <div class="heading_container heading_center">
+            <h2>
+                Popular Foodtruck
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-4 mx-auto">
+                <div class="box">
+                    <div class="img-box">
+                        <img src="../resources/bootstrap/images/food1.png" class="box-img" alt="">
+                    </div>
+                    <div class="detail-box">
+                        <h5> MenuName </h5>
+                        <div><span class="text-warning me-2"><i class="fas fa-map-marker-alt"></i></span><span class="text-primary">TruckName</span></div><span class="text-1000 fw-bold">‚Ç©5,000</span>
+                        <br/>
+                        <a href="">
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mx-auto">
+                <div class="box">
+                    <div class="img-box">
+                        <img src="../resources/bootstrap/images/food2.png" class="box-img" alt="">
+                    </div>
+                    <div class="detail-box">
+                        <h5> MenuName </h5>
+                        <div><span class="text-warning me-2"><i class="fas fa-map-marker-alt"></i></span><span class="text-primary">TruckName</span></div><span class="text-1000 fw-bold">‚Ç©5,000</span>
+                        <br/>
+                        <a href="">
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-4 mx-auto">
+                <div class="box">
+                    <div class="img-box">
+                        <img src="../resources/bootstrap/images/food3.png" class="box-img" alt="">
+                    </div>
+                    <div class="detail-box">
+                        <h5> MenuName </h5>
+                        <div><span class="text-warning me-2"><i class="fas fa-map-marker-alt"></i></span><span class="text-primary">TruckName</span></div><span class="text-1000 fw-bold">‚Ç©5,000</span>
+                        <br/>
+                        <a href="">
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-box">
+            <a href="">
+                more FoodTruck
+            </a>
         </div>
     </div>
+</section>
+<!-- end Popular Foodtruck section -->
 
-${user.userId}
+
+<!-- coupon section -->
+<section class="about_section layout_padding">
+    <div class="container">
+        <div class="col-md-11 col-lg-10 mx-auto">
+            <div class="heading_container heading_center">
+                <h2>
+                    Coupon
+                </h2>
+            </div>
+            <div class="box">
+                <div class="col-md-7 mx-auto">
+                    <div class="img-box">
+                        <img src="../resources/bootstrap/images/weather01.png" class="box-img" alt="">
+                    </div>
+                </div>
+                <div class="detail-box">
+                    <p>coupon Î∞õÏïÑÍ∞ÄÎùº... font Ï†ÅÏö© Ïñ¥ÎñªÍ≤åÌïòÎÉê....</p>
+                </div>
+                <div class="btn-box">
+                    <a href="">
+                        coupon
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- end coupon section -->
+
+<!-- end select start-->
+
+<section class="about_section layout_padding">
+    <div class="container">
+        <div class="col-md-11 col-lg-10 mx-auto">
+            <div class="heading_container heading_center">
+                <h2>
+                    Let's do it together
+                </h2>
+            </div>
+            <div class="box">
+                <div class="col-md-7 mx-auto">
+                    <div class="img-box">
+                        <img src="../resources/bootstrap/images/handshake.png" class="box-img" alt="">
+                    </div>
+                </div>
+                <div class="detail-box">
+                    <p>Grow with F.FIN! <br/> Our technology and user base can help you boost sales and unlock new opportunities!</p>
+
+                    <%--<a href="">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </a>--%>
+                </div>
+                <div class="btn-box">
+                    <a href="">
+                        Join us!
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- end select end-->
+
+
+<!-- footer -->
+<jsp:include page="/views/footer.jsp" />
+
+<script src="../resources/bootstrap/js/custom.js"></script>
 
 </body>
 
