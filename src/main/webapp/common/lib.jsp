@@ -22,6 +22,11 @@
 <!-- custom js -->
 <script src="../resources/bootstrap/js/custom.js"></script>
 
+<!-- Custom styles for this template -->
+<link href="../resources/bootstrap/css/style.css" rel="stylesheet" />
+<!-- responsive style -->
+<link href="../resources/bootstrap/css/responsive.css" rel="stylesheet" />
+
 <!-- 카카오 로그인 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
@@ -43,7 +48,7 @@
 
 
 <!-- fonts style -->
-<link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 
 <!-- font awesome style -->
 <link href="../resources/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
@@ -90,21 +95,21 @@
         color: #ffe537;
         background-color: #ffffff;
         border-color: #ffe537;
-        border-width: 2px;
     }
 
     .btn.btn-default.login{
         width:500px;
         margin-left: 0;
-        background-color: #ffba49;
+        color: #fff;
+        background-color: #ffe537;
     }
 
     .btn.btn-default.login:hover{
         width:500px;
         margin-left: 0;
-        background-color: #f17228;
+        background-color: #ffffff;
         color: #ffe537;
-        border: 0;
+        border-color: #ffe537;
     }
 
     .navbar-toggler{
@@ -163,6 +168,29 @@
         display: none;
     }
 
+    .btn.findIdBtn, .btn.findPwBtn, #longinGoBtn, #findUserPw{
+        color: #fff;
+        background-color: #ffe537;
+        margin-left: 10px;
+        padding: 10px 15px 10px 15px;
+    }
+
+    .btn.findIdBtn:hover , .btn.findPwBtn:hover, #longinGoBtn:hover, #findUserPw:hover{
+        color: #ffe537;
+        background-color: #ffffff;
+        border-color: #ffe537;
+        margin-left: 10px;
+        padding: 10px 15px 10px 15px;
+    }
+
+    .btn.findIdBtn, .btn.findPwBtn{
+        width: inherit;
+    }
+
+    #longinGoBtn, #findUserPw{
+        justify-content: center;
+    }
+
 
 </style>
 
@@ -176,7 +204,7 @@
 
         $("#kakaoLogin").on("click", function () {
 
-            alert("카카오로그인");
+            //alert("카카오로그인");
             console.log("카카오 로그인");
 
             Kakao.Auth.login({
@@ -201,7 +229,6 @@
 
                                     if( data === id ){
                                         console.log("--------------------------");
-                                        console.log("여기 오니?");
                                         console.log("카카오로그인 data :: "+data);
                                         console.log("카카오로그인 id :: "+id);
 
@@ -292,7 +319,8 @@
                     userPassword : userPasswordModal},
                 success: function (data) {
                     /*javascript redirect 방법*/
-                    location.replace("http://localhost:8080/views/homeTest.jsp");
+                    /*location.replace("http://localhost:8080/views/homeTest.jsp");*/
+                    window.location.reload();
                 }
             });
         });
@@ -393,7 +421,6 @@
                        idV = data;
                    }
                }
-
            })
         });
     });
@@ -420,9 +447,13 @@
                    userPhone : userPhone},
                success:function (data) {
                    console.log("비밀번호 찾기 data : "+data);
+                   if(data === ""){
+                       alert("회원정보를 찾을 수 없습니다.");
+                   } else {
+                       alert("입력하신 연락처로 임시비밀번호가 발송되었습니다.");
+                   }
 
                }
-
            })
 
        });

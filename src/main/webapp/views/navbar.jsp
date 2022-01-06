@@ -43,7 +43,7 @@
             <!-- navbar-brand의 content 변경 -->
             <%--<a class="navbar-brand" href="#">F.Fin</a>--%>
             <div class="logo">
-                <a class="navbar-brand" href="homeTest.jsp">
+                <a class="navbar-brand" href="home.jsp">
                     <img class="d-inline-block" src="../resources/bootstrap/assets/logo.svg" alt="logo" />
                     <span style="color: #ffba49; ">F.FIN</span>
                 </a>
@@ -85,7 +85,7 @@
                                 <i class="fas fa-user-alt"></i>${user.userId}
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="user-dropdown">
-                                <li><a class="dropdown-item user-menu" href="./user/userMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
+                                <li><a class="dropdown-item user-menu" href="/views/user/userMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
                                 <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-question-circle"></i>문의</a></li>
                                 <li><a class="dropdown-item user-menu" href="/user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
                             </ul>
@@ -178,7 +178,7 @@
                     </div>
 
                     <div class="d-grid gap-2 mx-auto modal-footer" style="padding-bottom: 5px;">
-                        <button type="submit" class="btn btn-default login" id="modalLoginBtn" style="color: #ffffff; margin-bottom: 10px;">login</button>
+                        <button type="submit" class="btn btn-default login" id="modalLoginBtn" style="margin-bottom: 10px;">login</button>
                     </div>
                     <div class="d-grid gap-10 mx-auto" style="margin-bottom: 5px; padding: 0 15px; text-align: center;">
                         <input type="hidden" name="kakaoEmail" id="kakaoEmail">

@@ -817,10 +817,10 @@ a:focus {
 .footer_section {
   /*  background-image: url(../images/cta-one-bg.png);*/
   background-size: 100%;
-  background-repeat: no-repeat;
+  background-repeat: round;
   background-position: top;
-  padding-top: 245px;
-  margin-top: -175px;
+  padding-top: 100px;
+  margin-top: 150px;
   background-position-x: 100%;
   bottom:0;
 }
