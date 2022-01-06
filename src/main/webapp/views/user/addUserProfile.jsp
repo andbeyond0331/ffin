@@ -6,36 +6,14 @@
 
 
 <head>
-	<!-- Basic -->
-	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<!-- Mobile Metas -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<!-- Site Metas -->
-	<meta name="keywords" content="" />
-	<meta name="description" content="" />
-	<meta name="author" content="" />
 
-	<title>F.FIN | FOODTRUCK FINDER</title>
+	<title>F.FIN | FOODTRUCK FINDER | 회원가입</title>
+	<jsp:include page="../../common/lib.jsp"/>
 
 	<!-- bootstrap core css -->
 	<link rel="stylesheet" type="text/css" href="../../resources/bootstrap/css/bootstrap.css" />
-
-	<!-- fonts style -->
-	<link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
-
-	<!-- font awesome style -->
-	<link href="../../resources/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
-	<!-- nice select -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
-	<!-- slidck slider -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" integrity="sha256-UK1EiopXIL+KVhfbFa8xrmAWPeBjMVdvYMYkTAEv/HI=" crossorigin="anonymous" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css.map" integrity="undefined" crossorigin="anonymous" />
-
 	<!-- Custom styles for this template -->
 	<link href="../../resources/bootstrap/css/style.css" rel="stylesheet" />
-	<!-- responsive style -->
-	<link href="../../resources/bootstrap/css/responsive.css" rel="stylesheet" />
 
 	<!--    Favicons-->
 	<link rel="apple-touch-icon" sizes="180x180" href="../../resources/bootstrap/assets/favicons/apple-touch-icon.png">
@@ -45,17 +23,6 @@
 	<link rel="manifest" href="../../resources/bootstrap/assets/favicons/manifest.json">
 	<meta name="msapplication-TileImage" content="../../resources/bootstrap/assets/favicons/mstile-150x150.png">
 	<meta name="theme-color" content="#ffffff">
-
-	<!-- jQery -->
-	<script src="../../resources/bootstrap/js/jquery-3.4.1.min.js"></script>
-	<!-- bootstrap js -->
-	<script src="../../resources/bootstrap/js/bootstrap.js"></script>
-	<!-- slick  slider -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
-	<!-- nice select -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
-	<!-- custom js -->
-	<script src="../../resources/bootstrap/js/custom.js"></script>
 
 	<%--주소API--%>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -151,91 +118,84 @@
 </head>
 
 <body id="page-top">
+<jsp:include page="/views/navbar.jsp" />
 
-<jsp:include page="/views/toolbar.jsp" />
 
 <!-- client section -->
-
 <section class="client_section layout_padding">
 	<div class="container">
 		<div class="col-md-11 col-lg-10 mx-auto">
-			<div id="customCarousel1" class="carousel slide">
-				<div class="carousel-inner">
-					<div class="carousel-item active">
-						<div class="detail-box">
-							<i class="fa fa-quote-left" aria-hidden="true"></i>
-							<h4 style="margin-top: 10px;">
-								추가정보입력
-							</h4>
-						</div>
-						<form class="row justify-content-center" id="user_pro_form" >
-							<input type="hidden" id="userId" name="userId" value="${user.userId}">
+			<div class="detail-box">
+				<i class="fa fa-quote-left" aria-hidden="true"></i>
+				<h4 style="margin-top: 10px;">
+					추가정보입력
+				</h4>
+			</div>
+			<form class="row justify-content-center" id="user_pro_form" >
+				<input type="hidden" id="userId" name="userId" value="${user.userId}">
 
-							<div class="col-md-6 data-input-box">
+				<div class="col-md-6 data-input-box">
 
-								<div class="data-input-box">
-									<%--<input type="text" class="form-control" id="userId" name="userId" placeholder="아이디">--%>
-									<div class="mb-3">
-										<label for="fileName1" class="form-label">프로필 이미지</label>
-										<div class="pro-img" style="margin-top: 5px; margin-bottom: 10px">
-											<%--<img src="../../resources/image/${user.proImg}" class="img-thumbnail" alt="...">--%>
-										</div>
-										<input class="form-control pro-img" type="file" id="fileName1" name="fileName1">
-									</div>
-								</div>
-
-								<div class="data-input-box">
-									<label for="userFavPlace" class="form-label label-name">자주찾는 장소</label>
-									<div>
-										<input type="text" class="form-control" id="userFavPlace" name="userFavPlace" placeholder="주소 검색" style="width: 80%; display: inline-block;">
-										<button type="button" class="btn btn-outline-warning addrApi" onclick="addrApi()">검색</button>
-									</div>
-									<input type="text" class="form-control" id="userFavPlaceDetail" placeholder="상세주소" style="margin-top: 8px">
-								</div>
-
-								<div class="data-input-box">
-									<label for="userFavMenu" class="form-label label-name">좋아하는 메뉴</label>
-									<select class="form-select form-control" id="userFavMenu" name="userFavMenu" aria-label="Default select example" style="padding-left: 0; size: 100%;">
-										<option selected>Menu Category</option>
-										<option value="1">고기???</option>
-										<option value="2">한식</option>
-										<option value="3">분식</option>
-										<option value="4">양식</option>
-										<option value="5">일식</option>
-										<option value="6">음료</option>
-										<option value="7">디저트</option>
-										<option value="8">기타</option>
-									</select>
-									<div id="img_container">
-										<img src="../../resources/image/menu1.jpg" id="menu1" alt="당근"/>
-									</div>
-								</div>
-
-								<div class="data-input-box">
-									<label for="userIntro">한줄 소개</label>
-									<textarea class="form-control label-name" id="userIntro" style="resize: none; height: 100px"></textarea>
-								</div>
-
+					<div class="data-input-box">
+						<%--<input type="text" class="form-control" id="userId" name="userId" placeholder="아이디">--%>
+						<div class="mb-3">
+							<label for="fileName1" class="form-label">프로필 이미지</label>
+							<div class="pro-img" style="margin-top: 5px; margin-bottom: 10px">
+								<%--<img src="../../resources/image/${user.proImg}" class="img-thumbnail" alt="...">--%>
 							</div>
-						</form>
-
-						<div class="btn-box" style="margin-top: -30px;">
-							<a href="#">
-								입력완료
-							</a>
+							<input class="form-control pro-img" type="file" id="fileName1" name="fileName1">
 						</div>
-						<br/>
-						<hr/>
-						<div class="col-md-9">
-							<span style="color: #0b1727; margin-left: 5px; font-size: 14px">입력하기 귀찮으신가요??</span>
-							<a class="jump" href="/views/homeTest.jsp" style="color: #ffba49; margin-left: 0; font-size: 14px;"> <strong style="float: right; stroke: #ffba49; margin-right: 5px;">건너뛰기</strong></a>
-						</div>
-
 					</div>
+
+					<div class="data-input-box">
+						<label for="userFavPlace" class="form-label label-name">자주찾는 장소</label>
+						<div>
+							<input type="text" class="form-control" id="userFavPlace" name="userFavPlace" placeholder="주소 검색" style="width: 80%; display: inline-block;">
+							<button type="button" class="btn btn-outline-warning addrApi" onclick="addrApi()">검색</button>
+						</div>
+						<input type="text" class="form-control" id="userFavPlaceDetail" placeholder="상세주소" style="margin-top: 8px">
+					</div>
+
+					<div class="data-input-box">
+						<label for="userFavMenu" class="form-label label-name">좋아하는 메뉴</label>
+						<select class="form-select form-control" id="userFavMenu" name="userFavMenu" aria-label="Default select example" style="padding-left: 0; size: 100%;">
+							<option selected>Menu Category</option>
+							<option value="1">고기???</option>
+							<option value="2">한식</option>
+							<option value="3">분식</option>
+							<option value="4">양식</option>
+							<option value="5">일식</option>
+							<option value="6">음료</option>
+							<option value="7">디저트</option>
+							<option value="8">기타</option>
+						</select>
+					<%--	<div id="img_container">
+							<img src="../../resources/image/menu1.jpg" id="menu1" alt="당근"/>
+						</div>--%>
+					</div>
+
+					<div class="data-input-box">
+						<label for="userIntro">한줄 소개</label>
+						<textarea class="form-control label-name" id="userIntro" style="resize: none; height: 100px"></textarea>
+					</div>
+
 				</div>
+			</form>
+
+			<div class="btn-box" style="margin-top: -30px;">
+				<a href="#">
+					입력완료
+				</a>
+			</div>
+			<br/>
+			<hr/>
+			<div class="col-md-9">
+				<span style="color: #0b1727; margin-left: 5px; font-size: 14px">입력하기 귀찮으신가요??</span>
+				<a class="jump" href="/" style="color: #ffba49; margin-left: 0; font-size: 14px;"> <strong style="float: right; stroke: #ffba49; margin-right: 5px;">건너뛰기</strong></a>
 			</div>
 		</div>
 	</div>
+
 </section>
 
 <jsp:include page="/views/footer.jsp" />

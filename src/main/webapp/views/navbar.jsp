@@ -11,8 +11,8 @@
                 <!-- navbar-brand의 content 변경 -->
                     <%--<a class="navbar-brand" href="#">F.Fin</a>--%>
                 <div class="logo">
-                    <a class="navbar-brand" href="">
-                        <img class="d-inline-block" src="../resources/bootstrap/assets/logo.svg" alt="logo" />
+                    <a class="navbar-brand" href="/">
+                        <img class="d-inline-block" src="/resources/bootstrap/assets/logo.svg" alt="logo" />
                         <span style="color: #ffba49; ">F.FIN</span>
                     </a>
                 </div>
@@ -43,8 +43,8 @@
             <!-- navbar-brand의 content 변경 -->
             <%--<a class="navbar-brand" href="#">F.Fin</a>--%>
             <div class="logo">
-                <a class="navbar-brand" href="home.jsp">
-                    <img class="d-inline-block" src="../resources/bootstrap/assets/logo.svg" alt="logo" />
+                <a class="navbar-brand" href="/">
+                    <img class="d-inline-block" src="/resources/bootstrap/assets/logo.svg" alt="logo" />
                     <span style="color: #ffba49; ">F.FIN</span>
                 </a>
             </div>
@@ -149,7 +149,7 @@
                             </div>
                             <div class="mb-3">
                                 <span style="color: #0b1727; margin-left: 5px; font-size: 14px">아직 회원이 아니신가요?</span>
-                                <a class="addChk" href="./user/addUserInfo.jsp" style="color: #ffba49; margin-left: 0; font-size: 14px;"> <strong style="float: right; stroke: #ffba49; margin-right: 5px;">회원가입</strong></a>
+                                <a class="addChk" href="/views/user/addUserInfo.jsp" style="color: #ffba49; margin-left: 0; font-size: 14px;"> <strong style="float: right; stroke: #ffba49; margin-right: 5px;">회원가입</strong></a>
                             </div>
                         </div>
                         <%-- CEO modal --%>
@@ -178,13 +178,13 @@
                     </div>
 
                     <div class="d-grid gap-2 mx-auto modal-footer" style="padding-bottom: 5px;">
-                        <button type="submit" class="btn btn-default login" id="modalLoginBtn" style="margin-bottom: 10px;">login</button>
+                        <button type="button" class="btn btn-default login" id="modalLoginBtn" style="margin-bottom: 10px;">login</button>
                     </div>
                     <div class="d-grid gap-10 mx-auto" style="margin-bottom: 5px; padding: 0 15px; text-align: center;">
                         <input type="hidden" name="kakaoEmail" id="kakaoEmail">
                         <input type="hidden" name="kakaoName" id="kakaoName">
                         <a id="kakaoLogin">
-                            <img src="../resources/image/kakao_login_medium_wide.png">
+                            <img src="/resources/image/kakao_login_medium_wide.png">
                         </a>
 <%--
                         <button class='btn-social-login google' style='background:#D93025'><i class="xi-3x xi-google"></i></button>
@@ -270,9 +270,7 @@
                 <span class="close">&times;</span>
             </div>
             <div class="modal-body" style="float: left;">
-                <span>아이디는</span>
                 <span id="id_value"></span>
-                <span>입니다.</span>
             </div>
             <div class="modal-footer">
                 <button type="button" id="longinGoBtn" class="btn peach-gradient btn-rounded waves-effect" onclick="longinGoBtn()">
