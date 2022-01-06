@@ -20,6 +20,9 @@ public interface ReviewService {
     //리뷰 평균 별점 조회
    public float getReviewAvg(Search search, String truckId) throws Exception;
 
+    //리뷰 총 개수 조회
+    public int getReviewTotalCount(Search search, String truckId) throws Exception;
+
     //리뷰 목록 조회 - 유저
     public Map<String, Object> getReviewListUser(Search search, String userId) throws Exception;
 

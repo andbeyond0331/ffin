@@ -56,20 +56,34 @@ public class ReviewServiceTest {
 //
 //    }
 
+//    @Test //okay
+//    public void getReviewListTruck() throws Exception {
+//
+//        Search search = new Search();
+//        search.setCurrentPage(1);
+//        search.setPageSize(8);
+//        search.setSearchCondition("0");
+//        search.setSearchKeyword("");
+//        Map<String, Object> map = reviewService.getReviewListTruck(search, "truck01");
+//
+//        List<Object> list = (List<Object>)map.get("list");
+//        Assert.assertEquals(1, list.size());
+//
+//        System.out.println("list : " + list);
+//
+//    }
+
     @Test
-    public void getReviewListTruck() throws Exception {
+    public void getReviewTotalCount() throws Exception{
 
         Search search = new Search();
         search.setCurrentPage(1);
         search.setPageSize(8);
         search.setSearchCondition("0");
         search.setSearchKeyword("");
-        Map<String, Object> map = reviewService.getReviewListTruck(search, "truck01");
+        int totalReview = reviewService.getReviewTotalCount(search, "truck01");
 
-        List<Object> list = (List<Object>)map.get("list");
-        Assert.assertEquals(1, list.size());
-
-        System.out.println("list : " + list);
+        Assert.assertEquals(1, totalReview);
 
     }
 

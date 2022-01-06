@@ -14,11 +14,17 @@ public interface ReviewDao {
 
     //SELECT ONE
     public Review getReview(int reviewNo) throws Exception;
+
+
+
     //SELECT LIST
     public Map<String, Object> getReviewListTruck(Search search, String truckId) throws Exception;
 
 
     public float getReviewAvg(Search search, String truckId) throws Exception;
+
+    //select one
+    public int getReviewTotalCount(Search search, String truckId) throws Exception;
 
     //SELECT LIST
     public Map<String, Object> getReviewListUser(Search search, String userId) throws Exception;
@@ -34,5 +40,6 @@ public interface ReviewDao {
 
     // 게시판 page 처리를 위한 전체 Row(totalCount) return
     public int getTotalCount(Search search) throws Exception;
+
 
 }

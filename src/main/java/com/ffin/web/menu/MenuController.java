@@ -8,6 +8,7 @@ import com.ffin.service.domain.OptionGroup;
 import com.ffin.service.domain.Truck;
 import com.ffin.service.domain.User;
 import com.ffin.service.menu.MenuService;
+import com.ffin.service.review.ReviewService;
 import com.ffin.service.truck.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -50,6 +51,11 @@ public class MenuController {
     @Autowired
     @Qualifier("truckServiceImpl")
     private TruckService truckService;
+
+    //getMenuList에서 truck 평균 별점을 위한 attribute
+    @Autowired
+    @Qualifier("reviewServiceImpl")
+    private ReviewService reviewService;
 
     @Value("100") //pageUnit은 propertySource를 위에 선언하고 @value의 값을 지정해줌
     //추후 pageUnit과 pageSize 출력되는지 jUnit에서 확인이 필요합니다.
@@ -521,15 +527,22 @@ public class MenuController {
 //        response.setHeader("Content-Disposition", "attachment;filename=\""+fn+"\"");
 //        response.setContentLength(bytes.length);
 
-
-
         search.setPageSize(pageSize);
         Truck truck  = truckService.getTruck(truckId);
+        float rvAvg = reviewService.getReviewAvg(search,truckId);
+        int rvTotal = reviewService.getReviewTotalCount(search,truckId);
+        truck.setTruckAVGStar(rvAvg);
 
         Map<String , Object> map= menuService.getMenuList(search, truck.getTruckId());
 
         modelAndView.addObject("list", map.get("list"));
         modelAndView.addObject("path", FILE_UPLOAD_PATH);
+        modelAndView.addObject("truck", truck);
+        if (rvTotal!=0){
+
+            modelAndView.addObject("rvTotal", rvTotal);
+        }
+
         modelAndView.setViewName("/views/menu/getTruck.jsp");
 
         return modelAndView;
