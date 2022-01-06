@@ -141,4 +141,14 @@
 	</select>
 
 
+	<!-- SQL : SELECT ROW Count -->
+	<select  id="getReviewTotalCount"  parameterType="map"	 resultMap="ReviewSelectMap">
+		SELECT COUNT(*) as rv_no
+		FROM(	SELECT *
+		FROM review
+				 WHERE RV_TRUCK_ID=#{truckId}
+			) countTable
+	</select>
+
+
 </mapper>

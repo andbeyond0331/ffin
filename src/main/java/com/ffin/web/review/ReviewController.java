@@ -7,6 +7,7 @@ import com.ffin.service.purchase.PurchaseService;
 import com.ffin.service.review.ReviewService;
 import com.ffin.service.truck.TruckService;
 import com.ffin.service.user.UserService;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -91,6 +92,7 @@ public class ReviewController {
                               @ModelAttribute("review") Review review, Model model) throws Exception{
         // TODO: 2022-01-05 truckId, userId 적용되도록! - 해결!
         // TODO: 2022-01-05 리뷰 이미지 추가 - 해결!
+        // TODO: 2022-01-06 truck의 avgStar 건드리게끔 바꾸기! 
 
         System.out.println("/review/addReview:POST");
         System.out.println("review = " + review + ", model = " + model);

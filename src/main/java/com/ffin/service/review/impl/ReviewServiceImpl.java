@@ -48,6 +48,11 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public int getReviewTotalCount(Search search, String truckId) throws Exception {
+        return reviewDao.getReviewTotalCount(search, truckId);
+    }
+
+    @Override
     public Map<String, Object> getReviewListUser(Search search, String userId) throws Exception {
         return reviewDao.getReviewListTruck(search, userId);
     }

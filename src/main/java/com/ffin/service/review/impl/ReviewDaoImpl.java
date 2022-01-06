@@ -65,9 +65,36 @@ public class ReviewDaoImpl implements ReviewDao {
 
         map.clear();
         map.put("list", list);
-        float avg = list.get(0).getRvStar();
+        float avg;
+        if(list.size()!=0){
+            avg=list.get(0).getRvStar();
+        }else{
+            avg=0;
+        }
+
 
         return avg;
+    }
+
+    @Override
+    public int getReviewTotalCount(Search search, String truckId) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("search", search);
+        map.put("truckId", truckId);
+        List<Review> list =sqlSession.selectList("ReviewMapper.getReviewTotalCount", map);
+        System.out.println("list : " + list);
+
+        map.clear();
+        map.put("list", list);
+//        float avg = list.get(0).getRvStar();
+        int total;
+        if(list.size()!=0){
+            total = list.get(0).getRvNo();
+        }else{
+            total = 0;
+        }
+
+        return total;
     }
 
     @Override
