@@ -53,16 +53,47 @@
         }
 
         //댓글 목록 출력 함수
+        <%--function listReply() {--%>
+        <%--    alert("listReply function excute");--%>
+        <%--    $.ajax({--%>
+        <%--        type   : "get", //get방식으로 자료를 전달한다--%>
+        <%--        url    : "/community/getCommentList?commentPostNo="+${post.postNo},--%>
+        <%--        data    : "commentList", //컨트롤러에 있는 list.do로 맵핑하고 게시판 번호도 같이 보낸다.--%>
+        <%--        dataType : "json",--%>
+        <%--        success: function (result) { //자료를 보내는것이 성공했을때 출력되는 메시지--%>
+        <%--            //result : responseText 응답텍스트(html)--%>
+        <%--            console.log(result);--%>
+        <%--            alert(JSON.stringify(result));--%>
+        <%--            $("#listReply").html(result);--%>
+        <%--            alert("댓글 출력");--%>
+        <%--        }--%>
+        <%--    });--%>
+        <%--}--%>
+
+        //댓글 목록 출력 함수
         function listReply() {
             alert("listReply function excute");
             $.ajax({
                 type   : "get", //get방식으로 자료를 전달한다
                 url    : "/community/getCommentList?commentPostNo="+${post.postNo},
                 data    : "commentList", //컨트롤러에 있는 list.do로 맵핑하고 게시판 번호도 같이 보낸다.
+                dataType : "json",
                 success: function (result) { //자료를 보내는것이 성공했을때 출력되는 메시지
                     //result : responseText 응답텍스트(html)
+                    if(result.length>0){
+                        var td = $("<table/>");
+
+                        for (var i in result){
+
+                            var $comment_content = result[i].commentContent
+
+                            var row = $("<tr/>").append($("<td/>").text($comment_content));
+                            td.append(row);
+                        }
+                        $(".listReply").append(td);
+                    }
                     console.log(result);
-                    alert(result);
+                    alert(JSON.stringify(result));
                     $("#listReply").html(result);
                     alert("댓글 출력");
                 }
@@ -199,52 +230,55 @@
                 </div>
 <%--                <!-- 댓글 목록 -->--%>
 <%--                <!-- 댓글이 등록이 되면 listReply에 댓글이 쌓이게 된다 -->--%>
-<%--                <div id="listReply">--%>
-<%--                        ${result.commentContent}--%>
-<%--                </div>--%>
+                <div id="listReply"></div>
                 <!-- 댓글 -->
-                <div id="listReply">
-                    <ol class="replyList">
-                        <c:forEach items="${result.commentList}" var="result">
-                            <li>
-                                <p>
-                                    작성자 : ${result.commentUserId}<br />
-                                    작성자 : ${result.commentTruckId}<br />
-                                    작성 날짜 :  <fmt:formatDate value="${result.commentDate}" pattern="yyyy-MM-dd" />
-                                </p>
+<%--                <div id="listReply">--%>
+<%--                    <ol class="replyList">--%>
+<%--                        <c:forEach items="${result.commentList}" var="result">--%>
+<%--                            <li>--%>
+<%--                                <p>--%>
+<%--                                    작성자 : ${result.commentUserId}<br />--%>
+<%--                                    작성자 : ${result.commentTruckId}<br />--%>
+<%--                                    작성 날짜 :  <fmt:formatDate value="${result.commentDate}" pattern="yyyy-MM-dd" />--%>
+<%--                                </p>--%>
 
-                                <p>${result.commentContent}</p>
-                            </li>
-                        </c:forEach>
-                    </ol>
-                </div>
+<%--                                <p>${result.commentContent}</p>--%>
+<%--                            </li>--%>
+<%--                        </c:forEach>--%>
+<%--                    </ol>--%>
+<%--                </div>--%>
             </c:if>
         </div>
-        <!-- 댓글 목록 -->
-        <!-- 댓글이 등록이 되면 listReply에 댓글이 쌓이게 된다 -->
-<%--        <div id="listReply">--%>
-<%--            ${comment.commentContent}--%>
-<%--        </div>--%>
-<%--        <!-- 댓글 -->--%>
-<%--        <div id="reply">--%>
-<%--            <ol class="replyList">--%>
-<%--                <c:forEach items="${commentList}" var="commentList">--%>
-<%--                    <li>--%>
-<%--                        <p>--%>
-<%--                            작성자 : ${comment.commentUserId}<br />--%>
-<%--                            작성자 : ${comment.commentTruckId}<br />--%>
-<%--                            작성 날짜 :  <fmt:formatDate value="${comment.commentDate}" pattern="yyyy-MM-dd" />--%>
-<%--                        </p>--%>
-
-<%--                        <p>${comment.commentContent}</p>--%>
-<%--                    </li>--%>
-<%--                </c:forEach>--%>
-<%--            </ol>--%>
-<%--        </div>--%>
 
     </form>
 
+</div>
 
+<!-- 댓글 목록 -->
+<!-- 댓글이 등록이 되면 listReply에 댓글이 쌓이게 된다 -->
+<%--<div class="container">--%>
+<%--    <div id="listReply">--%>
+<%--        <td>${result.commentContent}</td>--%>
+<%--    </div>--%>
+<%--    <!-- 댓글 -->--%>
+<%--    <div id="reply">--%>
+<%--        <ol class="replyList">--%>
+<%--            <c:forEach items="${result.commentList}" var="result" varStatus="status">--%>
+<%--                <li>--%>
+<%--                    <p>--%>
+<%--                        <span><c:out value="${result.commentUserId}"/></span>--%>
+<%--                        작성자 : <td>${result.commentUserId}</td><br/>--%>
+<%--                    <span><c:out value="${result.commentTruckId}"/></span>--%>
+<%--                    작성자 : <td>${result.commentTruckId}</td><br />--%>
+<%--                    <span><c:out value="${result.commentDate}"/></span>--%>
+<%--                    작성 날짜 :  <fmt:formatDate value="${result.commentDate}"/>--%>
+<%--                    </p>--%>
+<%--                    <td>${result.commentContent}</td>--%>
+<%--                    <p><c:out value="${result.commentContent}"/></p>--%>
+<%--                </li>--%>
+<%--            </c:forEach>--%>
+<%--        </ol>--%>
+<%--    </div>--%>
 </div>
 <jsp:include page="/views/footer.jsp"/>
 
