@@ -260,7 +260,7 @@
                 "orderTruckId": orderTruckId,
                 "orderRequest": orderRequest,
                 "orderQty": orderQty,
-                "odMenuQtyFlag" : odMenuQtyFlag,
+                "odMenuQtyFlag": odMenuQtyFlag,
             }
             $.ajax({
                 type: "post",
@@ -519,9 +519,6 @@
                             <c:set var="i" value="${i+1}"/>
 
 
-
-
-
                             <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
                             <input type="hidden" id="odOptionGroupName" name="odOptionGroupName"
                                    value="${cart.odOptionGroupName}"/>
@@ -537,16 +534,19 @@
 
                         <div id="total"></div>
                         <div class="row">
-                        <div class="col-6">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">주문하기
-                        </button></div>
-                        <div class="col-2">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">주문하기
+                                </button>
+                            </div>
+                            <div class="col-2">
 
+                            </div>
+                            <div class="col-4">
+                                <button type="button" class="btn btn-primary">삭제</button>
+                            </div>
                         </div>
-                        <div class="col-4">
-                        <button type="button" class="btn btn-primary">삭제</button>
-                    </div></div></div>
+                    </div>
                 </div>
             </div>
         </header>
@@ -672,27 +672,27 @@
             odMenuQtyL = odMenuQtyCopy.split(",");
             odMenuPriceL = odMenuPriceCopy.split(",").map(Number);
 
-/*            let last_cart = test.substring(test.length-1,test.length);*/
+            /*            let last_cart = test.substring(test.length-1,test.length);*/
 
-            if(odOptionNameCopy == undefined){
+            if (odOptionNameCopy == undefined) {
                 odOptionNameCopy = odOptionName;
                 test2 = odMenuName;
                 odOptionGroupNameCopy = odOptionGroupName;
 
-                    odOptionPriceCopy = odOptionPrice;
+                odOptionPriceCopy = odOptionPrice;
 
 
-            }else if(test2 != odMenuName &&  odOptionNameCopy.substring(odOptionNameCopy.length-1,odOptionNameCopy.length) != "/"){
-                odOptionNameCopy = odOptionNameCopy +"/"+odOptionName;
-                odOptionGroupNameCopy = odOptionGroupNameCopy +"/"+odOptionGroupName;
-                odOptionPriceCopy = odOptionPriceCopy +"/"+odOptionPrice;
+            } else if (test2 != odMenuName && odOptionNameCopy.substring(odOptionNameCopy.length - 1, odOptionNameCopy.length) != "/") {
+                odOptionNameCopy = odOptionNameCopy + "/" + odOptionName;
+                odOptionGroupNameCopy = odOptionGroupNameCopy + "/" + odOptionGroupName;
+                odOptionPriceCopy = odOptionPriceCopy + "/" + odOptionPrice;
 
-            }else if(odOptionNameCopy != undefined){
+            } else if (odOptionNameCopy != undefined) {
 
-                odOptionNameCopy = odOptionNameCopy +","+odOptionName;
+                odOptionNameCopy = odOptionNameCopy + "," + odOptionName;
                 test2 = odMenuName;
-                odOptionGroupNameCopy = odOptionGroupNameCopy +","+odOptionGroupName;
-                odOptionPriceCopy = odOptionPriceCopy+odOptionPrice;
+                odOptionGroupNameCopy = odOptionGroupNameCopy + "," + odOptionGroupName;
+                odOptionPriceCopy = odOptionPriceCopy + odOptionPrice;
             }
 
             odOptionNameL = odOptionNameCopy.split("/");
@@ -700,8 +700,8 @@
             odOptionPriceL = odOptionPriceCopy.split("/").map(Number);
 
 
-/*            alert("total"+odMenuPriceL)
-            alert("price"+odOptionPriceL)*/
+            /*            alert("total"+odMenuPriceL)
+                        alert("price"+odOptionPriceL)*/
 
             /*  if (odOptionGroupNameCopy == undefined || odOptionGroupNameCopy != odOptionGroupName) {
                   odOptionGroupNameCopy = odOptionGroupNameCopy+","+odOptionGroupName;
@@ -749,7 +749,6 @@
         }
 
 
-
         /*    var arr = new Array(10);
             for(var i=0; i<odMenuNameCount; i++){
                 var odMenuName = $("input[name='odMenuName']").eq(i).val();
@@ -794,13 +793,11 @@
          }*/
         var menuPrice = 0;
         for (var i = 0; i < odMenuNameL.length; i++) {
-/*
-            alert(odMenuNameL[i]);
-            alert(odOptionNameL[i]);*/
+            /*
+                        alert(odMenuNameL[i]);
+                        alert(odOptionNameL[i]);*/
 
-            menuPrice += (odOptionPriceL[i]+odMenuPriceL[i]);
-
-
+            menuPrice += (odOptionPriceL[i] + odMenuPriceL[i]);
 
 
             divElemApply1 =
@@ -815,25 +812,24 @@
                 "<div class=\"col-md-8\">" +
                 "<div class=\"card-body\">" +
                 "<h5 class=\"card-title\">" + odMenuNameL[i] + "</h5>" +
-                "<p class=\"card-text\"><small class=\"text-muted\">옵션 "+odOptionNameL[i]+" :"+odOptionGroupNameL[i]+"  :</small></p>" +
-                "<p class=\"card-text\"><small class=\"text-muted\">수량 :"+odMenuQtyL[i]+" 가격 :"+(odOptionPriceL[i]+odMenuPriceL[i])+" </small></p>" +
+                "<p class=\"card-text\"><small class=\"text-muted\">옵션 " + odOptionNameL[i] + " :" + odOptionGroupNameL[i] + "  :</small></p>" +
+                "<p class=\"card-text\"><small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 가격 :" + (odOptionPriceL[i] + odMenuPriceL[i]) + " </small></p>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +
-                "</div>" ;
-
+                "</div>";
 
 
             $('#order').append(divElemApply1);
 
         }
-/*        alert(menuPrice)*/
+        /*        alert(menuPrice)*/
 
-        divElemApply2 = "<input type=\"hidden\" name=\"orderPrice\" id=\"orderPrice\" value=\""+menuPrice+"\">"+
-            "<h3>합계 : "+menuPrice+"</h3>"
-
-        $('#total').append(divElemApply2);
+        divElemApply2 = "<input type=\"hidden\" name=\"orderPrice\" id=\"orderPrice\" value=\"" + menuPrice + "\">" +
+            "<h3>합계 : " + menuPrice + "</h3>"
+            < p >
+            $('#total').append(divElemApply2);
 
 
     });

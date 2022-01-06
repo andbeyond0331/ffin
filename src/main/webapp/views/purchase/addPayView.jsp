@@ -24,8 +24,7 @@
         crossorigin="anonymous"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
-        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
-        crossorigin="anonymous" type="text/javascript"></script>
+/>//        crossorigin="anonymous" type="text/javascript"></script>
 <!-- 아임포트 -->
 <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javascript"></script>
 
@@ -35,6 +34,9 @@
     body {
         margin-top: 122px;
 
+    }
+    #priceT{
+        margin: 1px;
     }
 
 
@@ -517,6 +519,19 @@
 
             <div class="col">
                 <div class="jumbotron ">
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>주문내역</h3>
+                        </div>
+                    </div>
+                    <hr class="my-lg-12">
+                    <div class="row">
+                    <div class="col-sm-12">
+                        <h3>${purchase.orderTruckId.truckId}</h3>
+                    </div>
+                </div>
                     <div id="order"></div>
                     <c:set var="i" value="0"/>
                     <c:forEach var="cart" items="${map.get('list')}">
@@ -535,7 +550,7 @@
 
 
                     </c:forEach>
-
+                    <hr class="my-lg-12">
                     <div id="total"></div>
 
 
@@ -675,7 +690,9 @@
         }
         /*alert(menuPrice)*/
 
-        divElemApply2 = "<input type=\"text\" name=\"orderPrice\" id=\"orderPrice\" value=\"" + menuPrice + "\">"
+        divElemApply2 = "<input type=\"hidden\" name=\"orderPrice\" id=\"orderPrice\" value=\""+menuPrice+"\">"+
+            "<h5 id='price'>합계 : "+menuPrice+"</h5>"
+
 
         $('#total').append(divElemApply2);
 

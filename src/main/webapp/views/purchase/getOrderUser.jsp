@@ -19,8 +19,17 @@
             clear: both;
             border: solid 1px red;
         }
-        h5.card-title{
+
+        h5.card-title {
             font-size: 15px;
+        }
+
+        main {
+            margin-top: 80px;
+        }
+
+        footer {
+            margin-top: 1000px;
         }
 
     </style>
@@ -78,30 +87,26 @@
     /* Iamport 환불시스템*/
     function cancelPay() {
         alert("dddd")
-        var orderId = $("input[name='payId']").val();
-        jQuery.ajax({
-            url: "/purchase/json/payRefund/" + orderId, // 예: http://www.myservice.com/payments/cancel
-            type: "GET",
+        var payId = $("input[name='payId']").val();
+        var orderNo = $("input[name='orderNo']").val();
+        var orderCancelReason = $("input[name='orderCancelReason']:checked").val();
+        $.ajax({
+            url: "/purchase/json/payRefund", // 예: http://www.myservice.com/payments/cancel
+            type: "POST",
+            async: false,
             dataType: "json",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
+            data: {
+                "payId": payId,
+                "orderNo": orderNo,
+                "orderCancelReason": orderCancelReason,
             },
-            success: function (JSONData, status) {
 
-                /* var displayValue = "<select class='custom-select' name='orderStatus' id='
+            success: function (map) {
 
-                ${flight.orderId}' onChange='order2('
-
-                ${flight.orderId}')' >"
- 	 	 							 displayValue +=   "<option selected value='4'>환불완료</option>"
- 	 	 							+ "</select>";
- 	 	 						var value = "<td>"+JSONData.order.refundDate+"</td>";
- 	 							 */
-                /*var result = "<p>환불완료 <i class='far fa-clock'></i>" + JSONData.order.refundDate + "</p>";*/
-
-                /*      $("#" + JSONData.orderId + "s").remove();
-                      $("#" + JSONData.orderId + "").html(result);*/
+            },
+            error: function (xhr, status, error) {
+                alert("[Error]" + error);
+                return;
             }
 
         });
@@ -109,6 +114,15 @@
 
 
 </script>
+
+<style>
+    .img-fluid {
+
+        height: auto;
+        width: 100px;
+    }
+
+</style>
 
 
 <main>
@@ -150,7 +164,7 @@
                         <div class="row">
                             <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio4"
                                    autocomplete="off" value="4">
-                            <label class="btn btn-outline-primary" for="btnradio4">기    타</label>
+                            <label class="btn btn-outline-primary" for="btnradio4">기 타</label>
                         </div>
                     </div>
 
@@ -192,6 +206,17 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="h-100 p-5 bg-light border rounded-3">
+                    <div class="row">
+                        <p class="text-start">주문번호 : ${purchase.orderNo}</p>
+                    </div>
+                    <div class="row">
+                        <p class="text-start">사장님연락처 : ${purchase.orderTruckId.truckPhone}</p>
+                    </div>
+                    <div class="row">
+                        <c:if test="${purchase.orderStatus == '1'}">
+                            <p class="text-start">주문정보 : 주문접수되었습니다</p>
+                        </c:if>
+                    </div>
                     <div id="order"></div>
                     <c:set var="i" value="0"/>
                     <c:forEach var="cart" items="${map.get('list')}">
@@ -210,29 +235,60 @@
 
 
                     </c:forEach>
+                    <div class="mb-3">
+                        <label for="orderRequest" class="col-form-label">주문요청사항:</label>
+                        <textarea class="form-control" id="orderRequest" name="orderRequest"
+                                  value="${purchase.orderRequest}" disabled>${purchase.orderRequest}</textarea>
+                    </div>
+                    <div class="row">
+                        <p class="text-start">픽업희망시간 : ${purchase.orderPickUpTime}</p>
+                    </div>
+                    <div class="row">
+                        <p class="text-start">예상조리시간 : ${purchase.orderCookingTime}</p>
+                    </div>
+                    <hr class="my-lg-12">
+                    <h3>결제정보</h3>
+                    <div class="row">
+                        <c:if test="${purchase.payOption == '0'}">
+                            <p class="text-start">결제방법 : 휴대폰결제</p>
+                        </c:if>
+                        <c:if test="${purchase.payOption == '2'}">
+                            <p class="text-start">결제방법 : 카카오결제</p>
+                        </c:if>
+                    </div>
+                    <div class="row">
+                        <p class="text-start">결제금액 : ${purchase.payPrice}</p>
+                    </div>
 
                     <div id="total"></div>
-                    <button type="submit" class="btn btn-primary"></button>
-                    <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">주문취소</a>
+                    <dev class="row justify-content-evenly">
+                        <div class="col-3">
+                            <button type="submit" class="btn btn-secondary btn-lg">확 인</button>
+                        </div>
+                        <div class="col-3">
+                            <a class="btn btn-secondary btn-lg" data-bs-toggle="modal" href="#exampleModalToggle"
+                               role="button">주문취소</a>
+                        </div>
+                    </dev>
                 </div>
             </div>
+            <input type="hidden" name="payId" value="${purchase.payId}">
+            <input type="hidden" name="orderNo" value="${purchase.orderNo}">
             <div class="col-md-6">
                 <div class="h-100 p-5 bg-light border rounded-3">
+                    <br><br>
                     <h2>푸드트럭위치</h2>
+                    <br><br><br><br>
                     <div id="map_ma"></div>
 
 
                 </div>
             </div>
         </div>
-        <input type="text" name="payId" id="payId" value="${purchase.payId}">
 
 
     </div>
 </main>
-<jsp:include page="/views/footer.jsp"/>
-
-
 
 
 <script>
@@ -291,23 +347,23 @@
             odMenuQtyL = odMenuQtyCopy.split(",");
             odMenuPriceL = odMenuPriceCopy.split(",").map(Number);
 
-            if(odOptionNameCopy == undefined){
+            if (odOptionNameCopy == undefined) {
                 odOptionNameCopy = odOptionName;
                 test2 = odMenuName;
                 odOptionGroupNameCopy = odOptionGroupName;
                 odOptionPriceCopy = odOptionPrice;
 
-            }else if(test2 != odMenuName &&  odOptionNameCopy.substring(odOptionNameCopy.length-1,odOptionNameCopy.length) != "/"){
-                odOptionNameCopy = odOptionNameCopy +"/"+odOptionName;
-                odOptionGroupNameCopy = odOptionGroupNameCopy +"/"+odOptionGroupName;
-                odOptionPriceCopy = odOptionPriceCopy +"/"+odOptionPrice;
+            } else if (test2 != odMenuName && odOptionNameCopy.substring(odOptionNameCopy.length - 1, odOptionNameCopy.length) != "/") {
+                odOptionNameCopy = odOptionNameCopy + "/" + odOptionName;
+                odOptionGroupNameCopy = odOptionGroupNameCopy + "/" + odOptionGroupName;
+                odOptionPriceCopy = odOptionPriceCopy + "/" + odOptionPrice;
 
-            }else if(odOptionNameCopy != undefined){
+            } else if (odOptionNameCopy != undefined) {
 
-                odOptionNameCopy = odOptionNameCopy +","+odOptionName;
+                odOptionNameCopy = odOptionNameCopy + "," + odOptionName;
                 test2 = odMenuName;
-                odOptionGroupNameCopy = odOptionGroupNameCopy +","+odOptionGroupName;
-                odOptionPriceCopy = odOptionPriceCopy+odOptionPrice;
+                odOptionGroupNameCopy = odOptionGroupNameCopy + "," + odOptionGroupName;
+                odOptionPriceCopy = odOptionPriceCopy + odOptionPrice;
             }
 
             odOptionNameL = odOptionNameCopy.split("/");
@@ -315,27 +371,17 @@
             odOptionPriceL = odOptionPriceCopy.split("/").map(Number);
 
 
-            alert("total"+odMenuPriceL)
-            alert("price"+odOptionPriceL)
-
-
         }
-
-
 
 
         var menuPrice = 0;
         for (var i = 0; i < odMenuNameL.length; i++) {
 
-            alert(odMenuNameL[i]);
-            alert(odOptionNameL[i]);
 
-            menuPrice += (odOptionPriceL[i]+odMenuPriceL[i]);
+            menuPrice += (odOptionPriceL[i] + odMenuPriceL[i]);
 
 
-
-
-            divElemApply1 = "<div class=\"card mb-3\" style=\"max-width:300px; height: 90px\">" +
+            divElemApply1 = "<div class=\"card mb-3\" >" +
                 " <div class=\"row g-0\">" +
                 "<div class=\"col-md-4\">" +
                 "<img src=\"/resources/image/1.jpg\" class=\"img-fluid rounded-start\" alt=\"image\">" +
@@ -343,8 +389,7 @@
                 "<div class=\"col-md-8\">" +
                 "<div class=\"card-body\">" +
                 "<h5 class=\"card-title\">" + odMenuNameL[i] + "</h5>" +
-                "<p class=\"card-text\"><small class=\"text-muted font-size 12px\">옵션 "+odOptionNameL[i]+" :"+odOptionGroupNameL[i]+"  :</small></p>" +
-                "<p class=\"card-text\"><small class=\"text-muted\">수량 :"+odMenuQtyL[i]+" 가격 :"+(odOptionPriceL[i]+odMenuPriceL[i])+" </small></p>" +
+                "<p class=\"card-text\"><small class=\"text-muted font-size 12px\">옵션 " + odOptionNameL[i] + " :" + odOptionGroupNameL[i] + "  :</small><br><small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 가격 :" + (odOptionPriceL[i] + odMenuPriceL[i]) + " </small></p>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +
@@ -354,12 +399,6 @@
             $('#order').append(divElemApply1);
 
         }
-        alert(menuPrice)
-
-        divElemApply2 = "<input type=\"text\" name=\"orderPrice\" id=\"orderPrice\" value=\""+menuPrice+"\">"
-
-        $('#total').append(divElemApply2);
-
 
     });
 

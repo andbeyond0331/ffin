@@ -1,7 +1,10 @@
 package com.ffin.web.purchase;
 
+import com.ffin.common.Search;
 import com.ffin.service.domain.*;
+import com.ffin.service.menu.MenuService;
 import com.ffin.service.purchase.PurchaseService;
+import com.ffin.service.truck.TruckService;
 import com.sun.javafx.collections.MappingChange;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
@@ -27,6 +31,15 @@ public class PurchaseController {
     @Qualifier("purchaseServiceImpl")
     private PurchaseService purchaseService;
     //setter Method 구현 않음
+
+    @Autowired
+    @Qualifier("menuServiceImpl")
+    private MenuService menuService;
+    //Setter method 구현 안 한다.
+
+    @Autowired
+    @Qualifier("truckServiceImpl")
+    private TruckService truckService;
 
     public PurchaseController() {
         System.out.println(this.getClass());
@@ -42,6 +55,33 @@ public class PurchaseController {
     //@Value("#{commonProperties['pageSize'] ?: 2}")
         int pageSize;
 
+
+
+    @RequestMapping("getMenuList")
+    public ModelAndView getMenuList(@ModelAttribute("search") Search search,
+                                    @RequestParam("truckId") String truckId,
+                                    HttpServletResponse response,
+                                    ModelAndView modelAndView) throws Exception{
+
+//        File file = new File(FILE_UPLOAD_PATH, fileName);
+//        byte[] bytes = FileCopyUtils.copyToByteArray(file);
+//        String fn = new String(file.getName().getBytes(), "utf-8");
+//        response.setHeader("Content-Disposition", "attachment;filename=\""+fn+"\"");
+//        response.setContentLength(bytes.length);
+
+
+
+        search.setPageSize(pageSize);
+        Truck truck  = truckService.getTruck(truckId);
+
+        Map<String , Object> map= menuService.getMenuList(search, truck.getTruckId());
+
+        modelAndView.addObject("list", map.get("list"));
+
+        modelAndView.setViewName("/views/purchase/getTruck.jsp");
+
+        return modelAndView;
+    }
     //장바구니에 출력할 데이터이다 현재는 UI가 없어서 저장된 데이터를 불러오고 있다
     //Session에 저장할때 어떻게 할지 생각해보자
     @RequestMapping(value = "getCartMenuList", method= RequestMethod.GET)
@@ -178,6 +218,7 @@ public class PurchaseController {
             purchase = purchaseService.getPurchase(purchase.getOrderNo());
             Map map = new HashMap();
             map = purchaseService.getOrderDetail(purchase.getOrderNo());
+
         System.out.println("map//////////"+map);
             model.addObject("map",map);
             model.addObject("purchase",purchase);

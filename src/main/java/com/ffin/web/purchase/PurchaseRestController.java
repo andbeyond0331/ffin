@@ -234,14 +234,22 @@ public class PurchaseRestController {
         System.out.println("token : " + token);
     }
 
-    @RequestMapping(value = "/json/payRefund/{payId}")
-    public Map payRefund(@PathVariable String payId ) throws Exception {
+    @RequestMapping(value = "/json/payRefund",  method = RequestMethod.POST)
+    @ResponseBody
+    public Map payRefund(@RequestParam(value = "payId")String payId,
+                         @RequestParam(value = "orderNo")int orderNo,
+                         @RequestParam(value = "orderCancelReason")int orderCancelReason) throws Exception {
         // 이미 취소된 거래 imp_uid
         System.out.println("testCancelPaymentByImpUid --- Start!---");
+        System.out.println("payId = " + payId + ", orderNo = " + orderNo + ", orderCancelReason = " + orderCancelReason);
 
         Purchase purchase = new Purchase();
         purchase.setPayId(payId);
         purchase.setOrderStatus(5);
+        purchase.setOrderNo(orderNo);
+        purchase.setOrderCancelReason(orderCancelReason);
+        purchase.setPayRefundStatus(1);
+
 
        /* Map<String, Object> map =  orderService.getOrderRefund(order);*/
         Map<String, Object> map =  new HashMap<String,Object>();
@@ -256,6 +264,9 @@ public class PurchaseRestController {
         IamportResponse<Payment> cancelpayment = client.cancelPaymentByImpUid(cancel);
         System.out.println(cancelpayment.getMessage());
         System.out.println("testCancelPaymentByImpUid --- End!---");
+
+
+        purchaseService.updateOrderCancel(purchase);
 
 
         //환불 일시를 controller에서 할지 Mapper에서 할지 수정,,

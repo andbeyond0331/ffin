@@ -358,7 +358,9 @@
 		UPDATE ffin.purchase
 		<set>
 			ORDER_STATUS = #{orderStatus},
-			ORDER_CANCEL_REASON = #{orderCancelReason}
+			ORDER_CANCEL_REASON = #{orderCancelReason},
+			PAY_REFUND_DATE_TIME = SYSDATE(),
+			PAY_REFUND_STATUS = #{payRefundStatus}
 
 		</set>
 
@@ -370,7 +372,9 @@
 		UPDATE ffin.purchase
 		<set>
 			ORDER_STATUS = #{orderStatus},
-			ORDER_NOPE_REASON = #{orderNopeReason}
+			ORDER_NOPE_REASON = #{orderNopeReason},
+			PAY_REFUND_DATE_TIME = SYSDATE(),
+			PAY_REFUND_STATUS = #{payRefundStatus}
 		</set>
 
 		WHERE order_no = #{orderNo}
@@ -504,10 +508,13 @@
 
 	<select id="getPurchase" parameterType="purchase" resultMap="purchaseSelectMap">
 		SELECT
-			order_no,order_user_id,order_truck_id,pay_point_no,pay_coupon_no,pay_res_no,order_qty,order_request,order_status,order_pick_up_time,order_cooking_time,
-			order_cancel_reason,order_nope_reason,order_total_price,pay_date_time,pay_refund_date_time,pay_id
-		FROM ffin.purchase
+			p.order_no,p.order_user_id,p.order_truck_id,p.pay_point_no,p.pay_coupon_no,p.pay_res_no,p.order_qty,p.order_request,p.order_status,p.order_pick_up_time,p.order_cooking_time,
+			p.order_cancel_reason,p.order_nope_reason,p.order_total_price,p.pay_date_time,p.pay_refund_date_time,p.pay_id,u.user_phone,u.user_name,u.user_pro_img,
+		       t.truck_name,t.truck_phone,t.truck_map_la,t.truck_map_lo,t.truck_ceo_name
+		FROM ffin.purchase p, ffin.user u, ffin.truck t
 		WHERE order_no = #{value}
+			AND p.order_user_id = u.user_id
+			AND p.order_truck_id = t.truck_id
 
 	</select>
 
