@@ -2,6 +2,7 @@
 <%@ page pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html lang="ko">
 
@@ -16,7 +17,11 @@
     <!-- ajax 모듈 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
+    <!-- moment -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
+
     <script type="text/javascript">
 
         //============= "작성완료"  Event 연결 =============
@@ -72,30 +77,18 @@
 
         //댓글 목록 출력 함수
         function listReply() {
-            alert("listReply function excute");
+            //alert("listReply function excute");
             $.ajax({
                 type   : "get", //get방식으로 자료를 전달한다
                 url    : "/community/getCommentList?commentPostNo="+${post.postNo},
                 data    : "commentList", //컨트롤러에 있는 list.do로 맵핑하고 게시판 번호도 같이 보낸다.
                 dataType : "json",
                 success: function (result) { //자료를 보내는것이 성공했을때 출력되는 메시지
-                    //result : responseText 응답텍스트(html)
-                    if(result.length>0){
-                        var td = $("<table/>");
-
-                        for (var i in result){
-
-                            var $comment_content = result[i].commentContent
-
-                            var row = $("<tr/>").append($("<td/>").text($comment_content));
-                            td.append(row);
-                        }
-                        $(".listReply").append(td);
-                    }
                     console.log(result);
-                    alert(JSON.stringify(result));
-                    $("#listReply").html(result);
-                    alert("댓글 출력");
+                    //alert(JSON.stringify(result));
+                    //$("#listReply").html(JSON.stringify(result));
+                    //alert("댓글 출력");
+                    location.reload();
                 }
             });
         }
@@ -119,13 +112,12 @@
                     url    : "/community/addComment", //데이터를 보낼 url
                     data   : param, //보낼 데이터
                     success: function () { //데이터를 보내는것이 성공했을시 출력되는 메시지
-                        alert("댓글이 등록되었습니다.");
+                        //alert("댓글이 등록되었습니다.");
                         listReply(); //댓글 목록 출력
                     }
                 });
             });
         })
-
 
     </script>
 
@@ -143,7 +135,13 @@
     </div>
 
     <br/>
-
+    <div class="container">
+        <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+            <tr>
+                <td><h3>게시글</h3></td>
+            </tr>
+        </table>
+    </div>
     <!-- 게시글 조회 -->
     <div class="container">
         <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
@@ -159,7 +157,7 @@
             </tr>
             <tr>
                 <td>게시글 작성일</td>
-                <td colspan="2">${post.postRegDate}</td>
+                <td colspan="2"><fmt:formatDate value="${post.postRegDate}" pattern="yyyy-MM-dd"/></td>
             </tr>
             <tr>
                 <td>게시글 내용</td>
@@ -167,24 +165,24 @@
             </tr>
 
             <tr>
-                <td>첨부파일이 아직 출력안되서 주석처리</td>
-<%--                <td colspan="1">--%>
-<%--                    첨부파일1<br/>--%>
-<%--                    <img src="/Users/js/IdeaProjects/ffin/src/main/webapp/resources/image/${post.postFile1}" width="200"--%>
-<%--                         height="200"/>--%>
-<%--                </td>--%>
 
-<%--                <td colspan="1">--%>
-<%--                    첨부파일2<br/>--%>
-<%--                    <img src="/Users/js/IdeaProjects/ffin/src/main/webapp/resources/image/${post.postFile2}" width="200"--%>
-<%--                         height="200"/>--%>
-<%--                </td>--%>
+                <td colspan="1">
+                    첨부파일1<br/>
+                    <img src="../../resources/image/${post.postFile1}" width="300"
+                         height="300"/>
+                </td>
 
-<%--                <td colspan="1">--%>
-<%--                    첨부파일3<br/>--%>
-<%--                    <img src="/Users/js/IdeaProjects/ffin/src/main/webapp/resources/image/${post.postFile3}" width="200"--%>
-<%--                         height="200"/>--%>
-<%--                </td>--%>
+                <td colspan="1">
+                    첨부파일2<br/>
+                    <img src="../../resources/image/${post.postFile2}" width="300"
+                         height="300"/>
+                </td>
+
+                <td colspan="1">
+                    첨부파일3<br/>
+                    <img src="../../resources/image/${post.postFile3}" width="300"
+                         height="300"/>
+                </td>
 
             </tr>
             </tbody>
@@ -206,47 +204,93 @@
     <form name="detailForm">
         <!-- 댓글 작성 -->
         <!-- 너비와 정렬방식 설정 -->
-        <div style="width:700px; text-align:center;">
-
             <!-- 세션에 저장되어있는 userid가 null이 아닐때 -->
             <!-- 그러니까 로그인을 한 상태이어야만 댓글을 작성 할 수 있다.-->
             <c:if test="${sessionScope.user != null || sessionScope.truck != null}">
-                <div class="container">
-                    <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
-                <tr>
-                <td><h3>댓글작성하기</h3></td>
-                </tr>
-                        <tr>
-                            <td>
-                <textarea rows="5" cols="80" id="commentContent" placeholder="댓글을 작성하세요"></textarea>
-                            </td></tr><br/>
+
+                        <div class="input-group" role="group" aria-label="..." style="margin-top: 10px; width: 100%;">
+                            <div class="container">
+                                <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+                                    <tr>
+                                        <td><h3>댓글</h3></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <table class="table table-hover table-striped" id="writeComment">
+
+                                <textarea class="form-control" rows="3" id="commentContent" placeholder="댓글을 입력하세요." style="width: 100%;"></textarea>
+                                <div class="btn-group btn-group-sm" role="group" aria-label="..." >
+                                    <c:if test="${sessionScope.user.userId == null && sessionScope.truck.truckId == null}">
+                                        <input type="button" class="btn btn-default" value="댓글 쓰기" disabled="disabled">
+                                    </c:if>
+                                    <c:if test="${sessionScope.user.userId != null || sessionScope.truck.truckId != null}">
+                                        <input type="button" class="btn btn-default" value="댓글 쓰기" id="btnReply">
+                                    </c:if>
+                                </div>
+                            </table>
+
+                            <table class="table table-hover table-striped" id="list">
+                                <br/><hr>
+                                <div>
+                                <thead>
+                                <tr>
+                                    <th align="left">댓글작성자</th>
+                                    <th align="left">댓글내용</th>
+                                    <th align="left">댓글작성일</th>
+                                    <th align="left"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach var="comment" items="${list}">
+
+                                    <c:set var="i" value="${ i+1 }" />
+                                    <tr>
+                                        <td align="left">${comment.commentUserId}${comment.commentTruckId}</td>
+                                        <td align="left" >${comment.commentContent}</td>
+                                        <td align="left" ><fmt:formatDate value="${comment.commentDate}" pattern="yyyy-MM-dd"/></td>
+                                        <td align="left" >
+                                    <c:if test="${sessionScope.user.userId.equals(comment.commentUserId) || sessionScope.truck.truckId.equals(comment.commentTruckId)}">
+                                        <a href="community/json/updateComment" class="btn-dark" role="button">수정</a>
+                                        <a href="community/json/deletecomment" class="btn-dark" role="button">삭제</a>
+                                    </c:if>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                                </div>
+                            </table>
+
+                        </div>
                 <!-- 댓글쓰기 버튼을 누르면 id값인 btnReply값이 넘어가서 -->
                 <!-- 위쪽에 있는 스크립트 구문이 실행되고 -->
                 <!-- 내가 댓글을 작성한 값이 스크립트문을 거쳐서 컨트롤러로 맵핑되게 된다. -->
-                        <tr><td>
-                <button type="button" id="btnReply" class="btn-secondary">댓글등록</button>
-                        </td></tr>
-                    </table>
-                </div>
+<%--                        <tr><td>--%>
+<%--                <button type="button" id="btnReply" class="btn-secondary">댓글등록</button>--%>
+<%--                        </td></tr>--%>
+<%--                    </table>--%>
+
+        <br/><br/>
 <%--                <!-- 댓글 목록 -->--%>
 <%--                <!-- 댓글이 등록이 되면 listReply에 댓글이 쌓이게 된다 -->--%>
-                <div id="listReply"></div>
+<%--                <div id="listReply"></div>--%>
                 <!-- 댓글 -->
 <%--                <div id="listReply">--%>
 <%--                    <ol class="replyList">--%>
-<%--                        <c:forEach items="${result.commentList}" var="result">--%>
+<%--                        <c:forEach items="${commentList}" var="result">--%>
 <%--                            <li>--%>
 <%--                                <p>--%>
-<%--                                    작성자 : ${result.commentUserId}<br />--%>
-<%--                                    작성자 : ${result.commentTruckId}<br />--%>
-<%--                                    작성 날짜 :  <fmt:formatDate value="${result.commentDate}" pattern="yyyy-MM-dd" />--%>
+<%--                                    작성자 : ${commentUserId}<br />--%>
+<%--                                    작성자 : ${commentTruckId}<br />--%>
+<%--                                    작성 날짜 :  <fmt:formatDate value="${commentDate}" pattern="yyyy-MM-dd" />--%>
 <%--                                </p>--%>
 
-<%--                                <p>${result.commentContent}</p>--%>
+<%--                                <p>${commentContent}</p>--%>
 <%--                            </li>--%>
 <%--                        </c:forEach>--%>
 <%--                    </ol>--%>
 <%--                </div>--%>
+
             </c:if>
         </div>
 
@@ -283,5 +327,12 @@
 <jsp:include page="/views/footer.jsp"/>
 
 </body>
+<script>
+    $(document).ready(function (){
+        var date = new Date();
+        $("#commentDate").text(moment(date).format('YYYY-MM-DD'));
+        $("#postRegDate").text(moment(date).format('YYYY-MM-DD'));
+    });
+</script>
 
 </html>

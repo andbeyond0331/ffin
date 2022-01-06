@@ -40,7 +40,7 @@
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
             $("button.btn.btn-warning").on("click", function () {
                 //alert("수정을 취소하시겠습니까? 확인을 누르시면 홈화면으로 이동합니다.")
-                self.location = "/views/homeTest.jsp"
+                self.location = "/views/home.jsp"
             });
         });
 
@@ -211,6 +211,7 @@
                 <%--                <input id="busiLice" type="file" name="busiLice" class="form-control" value="${truck.truckBusiLice}" readonly/>--%>
                 ${truck.truckBusiLice}
             </div>
+            <div class="col-xs-8 col-md-4"><img src="../../resources/image/${truck.truckBusiLice}" style="border-bottom: 1px solid #eee; height: 200px;" alt="${truck.truckName}의 사업자등록증 이미지" title="트럭사업자등록증"></div>
         </div>
         <input type="hidden" id="checkL"/>
 
@@ -269,10 +270,8 @@
         <br/>
         <div class="form-group">
             <label for="proImg" class="col-sm-offset-1 col-sm-3 control-label">프로필 이미지</label>
-            <div class="col-sm-4">
-                <%--                <input id="proImg" type="file" name="proImg" class="form-control" value="${truck.truckProImg}"/>--%>
-                ${truck.truckProImg}
-            </div>
+
+            <div class="col-xs-8 col-md-4"><img src="../../resources/image/${truck.truckProImg}" style="border-bottom: 1px solid #eee; height: 200px;" alt="${truck.truckName}의 프로필 이미지" title="트럭프로필"></div>
         </div>
         <input type="hidden" id="checkP"/>
 

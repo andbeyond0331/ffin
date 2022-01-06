@@ -72,7 +72,7 @@ public class CommunityController {
             post.setPostTruck(postTruck);
         }
 
-        String temDir = "/Users/js/IdeaProjects/ffin/src/main/webapp/resources/image";
+        String temDir = "../../resources/image";
 
         if (!file1.getOriginalFilename().isEmpty()) {
             file1.transferTo(new File(temDir, file1.getOriginalFilename()));
@@ -110,7 +110,12 @@ public class CommunityController {
 
         System.out.println("session에 담긴 postNo = " +session.getAttribute("postNo"));
 
+        List<Comment> list = communityService.getCommentList(postNo);
+        System.out.println("list = " + list);
+
         m.addObject("post", post);
+        m.addObject("list", list);
+
         m.setViewName("/views/community/getPost.jsp");
 
         return m;
@@ -256,30 +261,6 @@ public class CommunityController {
         }
         return "redirect:/community/getComment?commentNo=" + comment.getCommentNo();
     }
-
-//    @RequestMapping(value = "getCommentList")
-//    public String getCommentList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
-//
-//        System.out.println("/community/getCommentList : GET/POST");
-//
-//        if (search.getCurrentPage() == 0) {
-//            search.setCurrentPage(1);
-//        }
-//        search.setPageSize(pageSize);
-//
-//        // Business Logic 수행
-//        Map<String, Object> map = communityService.getCommentList(Integer.parseInt("commentPostNo"));
-//
-//        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
-//        System.out.println(resultPage);
-//
-//        //  Model 과 View 연결
-//        model.addAttribute("list", map.get("list"));
-//        model.addAttribute("resultPage", resultPage);
-//        model.addAttribute("search", search);
-//
-//        return "forward:/community/getCommentList.jsp";
-//    }
 
 
     ////////////////////// 좋아요 관련 메소드 ////////////////////////////

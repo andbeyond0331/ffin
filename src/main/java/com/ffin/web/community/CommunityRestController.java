@@ -8,6 +8,7 @@ import com.ffin.service.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -104,4 +105,19 @@ public class CommunityRestController {
 
         return "redirect:/community/getPost";
     }
+
+    @RequestMapping(value = "json/updateComment", method = RequestMethod.GET)
+    public String updateComment(@ModelAttribute("comment") Comment comment, Model model, HttpSession session) throws Exception {
+
+        System.out.println("/community/updateComment : POST");
+        //Business Logic
+        communityService.updateComment(comment);
+
+        int sessionNo = ((Comment) session.getAttribute("comment")).getCommentNo();
+        if (sessionNo == comment.getCommentNo()) {
+            session.setAttribute("comment", comment);
+        }
+        return "redirect:/community/getComment?commentNo=" + comment.getCommentNo();
+    }
+
 }
