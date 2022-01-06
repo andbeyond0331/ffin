@@ -56,7 +56,7 @@
 			text-align: initial;
 		}
 
-/*		.sidebar-div{
+		.sidebar-div{
 			margin: 0;
 			padding: 0;
 			box-sizing: border-box;
@@ -66,7 +66,7 @@
 		.sidebar-user{
 			min-height: 1vh;
 			background: white;
-		}*/
+		}
 
 /*		.sidebar-div{
 			position: fixed;
@@ -127,7 +127,7 @@
 
 <!-- client section -->
 <section class="client_section layout_padding">
-
+	<div style="display: flex;">
 	<!-- sidebar -->
 	<div class="navigation col-sm sidebar-div">
 		<ul class="sidebar-user">
@@ -265,6 +265,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 </section>
 <jsp:include page="/views/footer.jsp" />
