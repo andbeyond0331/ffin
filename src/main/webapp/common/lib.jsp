@@ -304,8 +304,6 @@
 
         $("#modalLoginBtn").click(function () {
 
-            console.log("user")
-
             var userIdModal = $("#userIdModal").val();
             var userPasswordModal = $("#userPasswordModal").val();
 
@@ -318,9 +316,19 @@
                 data: {userId : userIdModal,
                     userPassword : userPasswordModal},
                 success: function (data) {
-                    /*javascript redirect 방법*/
-                    /*location.replace("http://localhost:8080/views/homeTest.jsp");*/
-                    window.location.reload();
+
+                    console.log(data.userId);
+                    //alert("안녕좀비야..");
+                    if( data.userId == userIdModal) {
+                        //alert(data.userId);
+                        window.location.reload();
+                    } else {
+                        //alert(data);
+                        window.location.reload();
+                    }
+                },
+                fail:function (error){
+                    console.log(error);
                 }
             });
         });
@@ -345,7 +353,7 @@
                     success: function (data) {
                         alert(truckId+" 사장님 환영합니다.");
                         /*javascript redirect 방법*/
-                        location.replace("http://localhost:8080/views/homeTest.jsp");
+                        location.replace("http://localhost:8080/views/home.jsp");
                     }
                 })
             });
@@ -355,8 +363,8 @@
     //왜때문에 경로에 user가 자꾸 붙는지...ㅠ
     $( function() {
         $(".navbar-brand").on("click" , function() {
-            alert(1234);
-            location.replace("http://localhost:8080/views/homeTest.jsp");
+            //alert(1234);
+            location.replace("http://localhost:8080/views/home.jsp");
         });
     });
 
@@ -413,11 +421,15 @@
                    userPhone : userPhone},
                success:function (data) {
                    console.log("아이디 찾기 data : "+data);
-                   if(data === null ){
-                       $('#id_value').text("회원 정보를 확인해주세요!");
+                   if(data === "fail" ){
+                       //alert(data);
+                       $('#id_value').text('회원 정보를 찾을 수 없습니다.');
+                       $('#longinGoBtn').css('display','none');
+                       $('#findUserPw').css('display', 'none');
                    } else {
-                       $('#id_value').text(data);
-                       // 아이디값 별도로 저장
+                       $('#id_value').text('회원님의 Id는 '+data+'입니다.');
+                       $('#longinGoBtn').css('display','flex');
+                       $('#findUserPw').css('display', 'flex');
                        idV = data;
                    }
                }
@@ -428,7 +440,6 @@
     /* PW찾기 */
     $(function () {
        $('.findPwBtn').click(function () {
-          alert("비밀번호를 찾자")
 
             var userName  = $('#userNameforPw').val();
             var userId  = $('#userIdforPw').val();
@@ -448,14 +459,32 @@
                success:function (data) {
                    console.log("비밀번호 찾기 data : "+data);
                    if(data === ""){
-                       alert("회원정보를 찾을 수 없습니다.");
+                       alert('회원정보를 찾을 수 없습니다.');
                    } else {
-                       alert("입력하신 연락처로 임시비밀번호가 발송되었습니다.");
+                       console.log("-------------------");
+                       console.log(userPhone);
+
+                       $.ajax({
+                           type:"GET",
+                           url:"/user/json/sendSMSForPassword/"+userPhone,
+                           data: {
+                               userId : userId
+                           },
+                           success:function (data) {
+                               console.log(data);
+                               alert("입력하신 연락처로 임시비밀번호가 발송되었습니다.");
+                               $('#background_modal').hide();
+                               $('#findUserModal').hide();
+                               $('#openLoginModal').modal('show');
+                           },
+                           fail:function (error){
+                               console.log(error);
+                               alert("임시비밀번호 전송이 취소되었습니다.")
+                           }
+                       });
                    }
-
                }
-           })
-
+           });
        });
     });
 
@@ -486,8 +515,6 @@
 
     function findUserPw(){
         $('#background_modal').hide();
-        /*$('#findIdBtn').removeClass('active');
-        $('#findPwBtn').addClass('active');*/
     }
 
 
