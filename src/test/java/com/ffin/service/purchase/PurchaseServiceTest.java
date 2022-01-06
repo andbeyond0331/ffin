@@ -118,7 +118,7 @@ public class PurchaseServiceTest {
 
     }
 
-    @Test
+    //@Test
     public void TestGetPurchaseList() throws Exception {
         Search search = new Search();
         search.setCurrentPage(1);
@@ -255,7 +255,7 @@ public class PurchaseServiceTest {
 
 ///////////////////Update////////////////////////////
 
-    @Test
+    //@Test
     public void testUpdatePurchase() throws Exception {
         int payPointNo;
         Purchase purchase = new Purchase();
@@ -378,16 +378,18 @@ public class PurchaseServiceTest {
 
     }
 
-    //@Test
+    @Test
     public void testUpdateOrderCancel() throws Exception {
 
         Purchase purchase = new Purchase();
         purchase = purchaseService.getPurchase(1);
-        Assert.assertEquals(4,purchase.getOrderStatus());
+
 //        Assert.assertEquals(3,purchase.getOrderCancelReason());
 
 
-        purchase.setOrderNo(1);
+
+        purchase.setPayId("imp_963123803912");
+        purchase.setPayRefundStatus(1);
         purchase.setOrderStatus(4);
         purchase.setOrderCancelReason(3);
         purchaseService.updateOrderCancel(purchase);
