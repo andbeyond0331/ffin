@@ -3,7 +3,7 @@
 
 <style>
     .footer_section{
-        background-image: url("../resources/bootstrap/images/cta-one-bg.png");
+        background-image: url("/resources/bootstrap/images/cta-one-bg.png");
     }
 </style>
 
