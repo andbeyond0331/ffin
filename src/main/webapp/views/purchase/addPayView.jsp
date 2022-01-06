@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-
 <html lang="ko">
 <meta charset="EUC-KR">
 
@@ -20,7 +19,9 @@
 <!-- Bootstrap Dropdown Hover CSS -->
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <!-- 제이쿼리 -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
         integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
@@ -266,24 +267,24 @@
         modal.find('button.btn-primary').on("click", function () {
 
             var couponCheck = $("input[name='couponNo']").val()
-            if(couponCheck == undefined ){
-            realCouponDcPrice = modal.find('input[name=options]:checked').val();
-            /*  var couponNo =modal.find('input[name=couponNumber]').val();*/
-            console.log(realCouponDcPrice + " : realOptionGroupName");
-            data = realCouponDcPrice.split(",");
-            var couponDcPrice = data[0];
-            var couponNo = data[1];
-            console.log(couponNo + ": couponNo");
+            if (couponCheck == undefined) {
+                realCouponDcPrice = modal.find('input[name=options]:checked').val();
+                /*  var couponNo =modal.find('input[name=couponNumber]').val();*/
+                console.log(realCouponDcPrice + " : realOptionGroupName");
+                data = realCouponDcPrice.split(",");
+                var couponDcPrice = data[0];
+                var couponNo = data[1];
+                console.log(couponNo + ": couponNo");
 
-            append = "<input type=\"hidden\" id=\"couponNo\" name=\"couponNo\" value=\"" + couponNo + "\">";
+                append = "<input type=\"hidden\" id=\"couponNo\" name=\"couponNo\" value=\"" + couponNo + "\">";
 
-            alert(append + ":append");
+                alert(append + ":append");
 
-            $('#couponDcPrice').val(couponDcPrice);
-            $('#test').append(append);
+                $('#couponDcPrice').val(couponDcPrice);
+                $('#test').append(append);
 
-            modal.modal('hide');
-            }else{
+                modal.modal('hide');
+            } else {
                 alert("사용중인 쿠폰이 있습니다.")
             }
 
@@ -294,20 +295,20 @@
     $(function () {
         $("#button-addon2").click(function () {
             pointCheck = $("input[name='pointAmt']").val();
-            if(pointCheck == undefined){
-            usePoint = $('input[name="usePoint"]').val();
-                    if(usePoint != ""){
-                        if(usePoint%1000 == 0 ){
-            append = "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePoint + "\">";
+            if (pointCheck == undefined) {
+                usePoint = $('input[name="usePoint"]').val();
+                if (usePoint != "") {
+                    if (usePoint % 1000 == 0) {
+                        append = "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePoint + "\">";
 
-            $('#usePointAmt').append(append);
-                        }else{
-                            alert("포인트는 1000단위로 사용가능합니다.")
-                        }
-                }else{
+                        $('#usePointAmt').append(append);
+                    } else {
+                        alert("포인트는 1000단위로 사용가능합니다.")
+                    }
+                } else {
                     alert("사용할 포인트를 입력해주세요")
                 }
-            }else{
+            } else {
                 alert("사용중인 포인트가 있습니다.")
             }
         });
@@ -317,15 +318,19 @@
 
     $(function () {
         $('#removeCoupon').click(function () {
-            var couponRe = document.getElementById("couponNo");
-            couponRe.remove();
+            var couponRe = document.getElementById("couponDcPrice");
+            var couponde = document.getElementById("couponNo");
+            couponde.remove();
+            couponRe.value = "";
         });
     });
 
     $(function () {
         $('#removePoint').click(function () {
-            var pointRe = document.getElementById("pointAmt");
-            pointRe.remove();
+            var pointde = document.getElementById("pointAmt");
+            var pointRe = document.getElementById("usePoint");
+            pointde.remove();
+            pointRe.value = "";
         });
     });
 
@@ -348,7 +353,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">뒤로</button>
-                    <button type="button" class="btn btn-primary" id="removeCoupon" name="removeCoupon" >확인</button>
+                    <button type="button" class="btn btn-primary" id="removeCoupon" name="removeCoupon">확인</button>
                 </div>
             </div>
         </div>
@@ -363,7 +368,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                   포인트 사용을 취소하겠습니까?
+                    포인트 사용을 취소하겠습니까?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">뒤로</button>
@@ -372,7 +377,6 @@
             </div>
         </div>
     </div>
-
 
 
     <%--Modal coupon적용--%>
@@ -445,9 +449,11 @@
                             <input type="text" class="form-control" id="couponDcPrice" name="couponDcPrice"
                                    placeholder="쿠폰을 적용하세요" value="${coupon.couponDcPrice}" disabled>
                             <span class="input-group-text">원</span>
-                            <a href="#myModal"> <input class="btn btn-outline-secondary" type="button" data-bs-toggle="modal"
-                                   data-bs-target="#myModal" value="쿠폰적용"/></a>
-                            <button type="button" class="btn-close" aria-label="Close" data-bs-toggle="modal" data-bs-target="#couponCancel"></button>
+                            <a href="#myModal"> <input class="btn btn-outline-secondary" type="button"
+                                                       data-bs-toggle="modal"
+                                                       data-bs-target="#myModal" value="쿠폰적용"/></a>
+                            <button type="button" class="btn-close" aria-label="Close" data-bs-toggle="modal"
+                                    data-bs-target="#couponCancel"></button>
                         </div>
                     </div>
                     <br>
@@ -459,7 +465,8 @@
                                    value="${point.pointAmt}">
                             <input class="btn btn-outline-secondary" type="button" id="button-addon2"
                                    value="적용"/>
-                            <button type="button" class="btn-close" aria-label="Close" data-bs-toggle="modal" data-bs-target="#pointCancel"></button>
+                            <button type="button" class="btn-close" aria-label="Close" data-bs-toggle="modal"
+                                    data-bs-target="#pointCancel"></button>
                         </div>
                     </div>
                     <div class="row">
@@ -516,9 +523,6 @@
                         <c:set var="i" value="${i+1}"/>
 
 
-
-
-
                         <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
                         <input type="hidden" id="odOptionGroupName" name="odOptionGroupName"
                                value="${cart.odOptionGroupName}"/>
@@ -533,6 +537,8 @@
                     </c:forEach>
 
                     <div id="total"></div>
+
+
                     <button type="button" class="btn btn-primary btn-lg">
                         뒤로가기
                     </button>
@@ -608,23 +614,23 @@
             odMenuQtyL = odMenuQtyCopy.split(",");
             odMenuPriceL = odMenuPriceCopy.split(",").map(Number);
 
-            if(odOptionNameCopy == undefined){
+            if (odOptionNameCopy == undefined) {
                 odOptionNameCopy = odOptionName;
                 test2 = odMenuName;
                 odOptionGroupNameCopy = odOptionGroupName;
                 odOptionPriceCopy = odOptionPrice;
 
-            }else if(test2 != odMenuName &&  odOptionNameCopy.substring(odOptionNameCopy.length-1,odOptionNameCopy.length) != "/"){
-                odOptionNameCopy = odOptionNameCopy +"/"+odOptionName;
-                odOptionGroupNameCopy = odOptionGroupNameCopy +"/"+odOptionGroupName;
-                odOptionPriceCopy = odOptionPriceCopy +"/"+odOptionPrice;
+            } else if (test2 != odMenuName && odOptionNameCopy.substring(odOptionNameCopy.length - 1, odOptionNameCopy.length) != "/") {
+                odOptionNameCopy = odOptionNameCopy + "/" + odOptionName;
+                odOptionGroupNameCopy = odOptionGroupNameCopy + "/" + odOptionGroupName;
+                odOptionPriceCopy = odOptionPriceCopy + "/" + odOptionPrice;
 
-            }else if(odOptionNameCopy != undefined){
+            } else if (odOptionNameCopy != undefined) {
 
-                odOptionNameCopy = odOptionNameCopy +","+odOptionName;
+                odOptionNameCopy = odOptionNameCopy + "," + odOptionName;
                 test2 = odMenuName;
-                odOptionGroupNameCopy = odOptionGroupNameCopy +","+odOptionGroupName;
-                odOptionPriceCopy = odOptionPriceCopy+odOptionPrice;
+                odOptionGroupNameCopy = odOptionGroupNameCopy + "," + odOptionGroupName;
+                odOptionPriceCopy = odOptionPriceCopy + odOptionPrice;
             }
 
             odOptionNameL = odOptionNameCopy.split("/");
@@ -632,13 +638,11 @@
             odOptionPriceL = odOptionPriceCopy.split("/").map(Number);
 
 
-           /* alert("total"+odMenuPriceL)
-            alert("price"+odOptionPriceL)*/
+            /* alert("total"+odMenuPriceL)
+             alert("price"+odOptionPriceL)*/
 
 
         }
-
-
 
 
         var menuPrice = 0;
@@ -647,9 +651,7 @@
             alert(odMenuNameL[i]);
             alert(odOptionNameL[i]);
 
-            menuPrice += (odOptionPriceL[i]+odMenuPriceL[i]);
-
-
+            menuPrice += (odOptionPriceL[i] + odMenuPriceL[i]);
 
 
             divElemApply1 = "<div class=\"card mb-3\" style=\"max-width: 540px;\">" +
@@ -660,8 +662,8 @@
                 "<div class=\"col-md-8\">" +
                 "<div class=\"card-body\">" +
                 "<h5 class=\"card-title\">" + odMenuNameL[i] + "</h5>" +
-                "<p class=\"card-text\"><small class=\"text-muted\">옵션 "+odOptionNameL[i]+" :"+odOptionGroupNameL[i]+"  :</small></p>" +
-                "<p class=\"card-text\"><small class=\"text-muted\">수량 :"+odMenuQtyL[i]+" 가격 :"+(odOptionPriceL[i]+odMenuPriceL[i])+" </small></p>" +
+                "<p class=\"card-text\"><small class=\"text-muted\">옵션 " + odOptionNameL[i] + " :" + odOptionGroupNameL[i] + "  :</small></p>" +
+                "<p class=\"card-text\"><small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 가격 :" + (odOptionPriceL[i] + odMenuPriceL[i]) + " </small></p>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +
@@ -673,7 +675,7 @@
         }
         /*alert(menuPrice)*/
 
-        divElemApply2 = "<input type=\"text\" name=\"orderPrice\" id=\"orderPrice\" value=\""+menuPrice+"\">"
+        divElemApply2 = "<input type=\"text\" name=\"orderPrice\" id=\"orderPrice\" value=\"" + menuPrice + "\">"
 
         $('#total').append(divElemApply2);
 

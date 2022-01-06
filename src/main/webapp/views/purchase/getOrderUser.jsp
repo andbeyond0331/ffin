@@ -198,26 +198,6 @@
                         <c:set var="i" value="${i+1}"/>
 
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                            <label class="form-check-label" for="flexCheckChecked">
-                        <div class="card mb-3 h-10" style="width: 300px; height: 90px" >
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="/resources/image/1.jpg" class="img-fluid rounded-start" alt="image">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${cart.odMenuName}</h5>
-                                        <p class="card-text"></p>
-                                        <p class="card-text"><small class="text-muted">${cart.odMenuPrice + cart.odOptionPrice}</small></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </label>
-                </div>
-
                         <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
                         <input type="hidden" id="odOptionGroupName" name="odOptionGroupName"
                                value="${cart.odOptionGroupName}"/>
@@ -255,7 +235,6 @@
 
 
 
-<%--
 <script>
     $(function () {
         var odMenuNameCount = $("input[name='odMenuName']").length;
@@ -364,7 +343,7 @@
                 "<div class=\"col-md-8\">" +
                 "<div class=\"card-body\">" +
                 "<h5 class=\"card-title\">" + odMenuNameL[i] + "</h5>" +
-                "<p class=\"card-text\"><small class=\"text-muted\">可记 "+odOptionNameL[i]+" :"+odOptionGroupNameL[i]+"  :</small></p>" +
+                "<p class=\"card-text\"><small class=\"text-muted font-size 12px\">可记 "+odOptionNameL[i]+" :"+odOptionGroupNameL[i]+"  :</small></p>" +
                 "<p class=\"card-text\"><small class=\"text-muted\">荐樊 :"+odMenuQtyL[i]+" 啊拜 :"+(odOptionPriceL[i]+odMenuPriceL[i])+" </small></p>" +
                 "</div>" +
                 "</div>" +
@@ -383,7 +362,6 @@
 
 
     });
---%>
 
 
     /*
