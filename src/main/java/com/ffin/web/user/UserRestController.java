@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,7 @@ public class UserRestController {
     }
     
     //Method
-    //phone 인증
+    //phone 인증(회원가입)
     @RequestMapping(value = "json/sendSMS/{inputPhone}", method = RequestMethod.GET)
     @ResponseBody
     public String sendSMS(@PathVariable String inputPhone) {
@@ -84,12 +85,13 @@ public class UserRestController {
 
 
     @RequestMapping(value = "json/login/{userId}", method = RequestMethod.POST)
-    public String login(@ModelAttribute("user") User user, @PathVariable String userId, HttpSession session,
-                        HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView login(@ModelAttribute("user") User user, @PathVariable String userId, HttpSession session,
+                              HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         System.out.println("/user/jon/login : POST");
         //Business Logic
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
+        ModelAndView modelAndView = new ModelAndView("jsonView");
         User dbUser = userService.getUser(user.getUserId());
 
         if (user.getUserPassword().equals(dbUser.getUserPassword())) {
@@ -114,10 +116,17 @@ public class UserRestController {
                 userService.autoLogin(user.getUserId(), session.getId(), sessionLimit);
             }
             System.out.println("로그인 OK");
+            modelAndView.addObject("userId", userId);
+
+            System.out.println("!!!!!!!!!!"+modelAndView);
+
+            return modelAndView;
         } else {
             System.out.println("로그인Nope");
+            modelAndView.addObject("userid", "nope");
+            System.out.println("!!!!!!!!!!"+modelAndView);
+            return modelAndView;
         }
-        return userId;
     }
 
 
@@ -172,6 +181,10 @@ public class UserRestController {
 
         String result = userService.getUserId(userName, userPhone);
 
+        if(result.isEmpty()){
+            return "fail";
+        }
+
         return result;
     }
 
@@ -198,23 +211,23 @@ public class UserRestController {
     }
 
 
-    //임시비밀번호
-/*    @RequestMapping(value = "json/sendSMSForPassword", method = RequestMethod.GET)
+    //임시비밀번호전송
+    @RequestMapping(value = "json/sendSMSForPassword/{userPhone}", method = RequestMethod.GET)
     @ResponseBody
-    public String getUserPassword(@RequestParam("userId") String userId, @RequestParam("userName") String userName,
-                                  @RequestParam("userPhone") String userPhone, HttpServletRequest request) throws Exception {
+    public String sendSMSForPassword(@RequestParam("userId") String userId, @PathVariable("userPhone") String userPhone,
+                                  HttpServletRequest request) throws Exception {
 
         System.out.println("UserRestController.sendSMSForPassword");// 휴대폰 문자보내기
         System.out.println("userPhone = " + userPhone);
 
         Random random = new Random();
-        int authNum = random.nextInt(888888)+111111;
+        int tempPassword = random.nextInt(888888)+111111;
 
-        userService.sendSMS(userPhone, authNum);
+        userService.sendSMSForPassword(userId, userPhone, tempPassword);
 
-        return Integer.toString(authNum);
+        return Integer.toString(tempPassword);
 
-    }*/
+    }
 
 
 

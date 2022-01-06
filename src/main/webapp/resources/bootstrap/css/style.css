@@ -8,7 +8,7 @@ body {
   color: #0c0c0c;
   background-color: #ffffff;
   overflow-x: hidden;
-  background-image: url(../images/body-bg.jpg);
+  background-image: url(/resources/bootstrap/images/body-bg.jpg);
   background-size: cover;
   height: 100%;
 }
@@ -803,7 +803,7 @@ a:focus {
 }
 
 .footer_container {
-  background-image: url(../images/cta-one-bg.png);
+  background-image: url(/resources/bootstrap/images/cta-one-bg.png);
   /*background-size: 100%;*/
   background-repeat: no-repeat;
   background-position: top;

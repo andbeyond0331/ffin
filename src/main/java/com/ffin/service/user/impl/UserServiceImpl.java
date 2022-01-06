@@ -146,7 +146,7 @@ public class UserServiceImpl implements UserService {
 
     //임시비밀번호 전송&저장
     @Override
-    public void sendSMSForPassword(String userId, String userPhone, int randomNumber) throws Exception {
+    public void sendSMSForPassword(String userId, String userPhone, int tempPassword) throws Exception {
 
         String api_key = "NCSZ8KC6ERB3YVCA";
         String api_secret = "FYKRI2N8YKOR8BUGOKSLPQ3LKOJTYMMX";
@@ -160,8 +160,8 @@ public class UserServiceImpl implements UserService {
         params.put("to", userPhone); // 수신전화번호
         params.put("from", "01071484785"); // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
         params.put("type", "SMS");
-        params.put("text", "[TEST]<br>"+userName+"님의 임시 비밀번호는" + "["+randomNumber+"]" + "입니다." +
-                            "로그인 후 비밀번호를 변경해주세요."); // 문자 내용 입력
+        params.put("text", "[TEST]"+userName+"님의 임시 비밀번호는 " + "["+tempPassword+"]" + " 입니다." +
+                            " 로그인 후 비밀번호를 변경해주세요."); // 문자 내용 입력
         params.put("app_version", "test app 1.2"); // application name and version
 
         try { JSONObject obj = (JSONObject) coolsms.send(params);
@@ -170,7 +170,10 @@ public class UserServiceImpl implements UserService {
             System.out.println(e.getMessage());
             System.out.println(e.getCode());
         }
-        
+
+        user.setUserPassword(String.valueOf(tempPassword));
+        System.out.println("임시비밀번호 전송 후 DB 업데이트 확인 :: "+user);
+
         userDao.updatePassword(user);
 
     }
