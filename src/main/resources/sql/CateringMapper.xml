@@ -28,6 +28,9 @@
 		<result property="ctServRegDate" 			column="CT_SERV_REG_DATE" 	jdbcType="DATE" />
 		<result property="ctResRegDate" 			column="CT_RES_REG_DATE" 	jdbcType="DATE" />
 		<result property="ctCancelDate" 			column="CT_CANCEL_DATE" 	jdbcType="DATE" />
+		<result property="ctPayDate" 			column="CT_PAY_DATE" 	jdbcType="DATE" />
+		<result property="ctPayno" 			column="CT_PAY_NO" 	jdbcType="VARCHAR" />
+		<result property="ctPayFlag" 			column="CT_PAY_FLAG" 	jdbcType="VARCHAR" />
 		<association property="ctTruck" javaType="truck">
 			<id property="truckId" column="TRUCK_ID" jdbcType="VARCHAR" />
 			<result property="truckPhone" column="TRUCK_PHONE" jdbcType="VARCHAR" />
@@ -334,8 +337,9 @@
 			<if test='ctStatusCode == "2" or ctStatusCode == "3"'>
 				CT_CANCEL_DATE=now(),
 			</if>
-			<if test="ctStatusCode =='5' or ctStatusCode.equals('5')">
-				CT_RES_REG_DATE=now(),
+			<if test='ctStatusCode =="5" or ctStatusCode.equals("5")'>
+				CT_PAY_DATE=now(),
+		    	CT_PAY_FLAG='Y',
 			</if>
 			CT_STATUS_CODE=  #{ctStatusCode}
 

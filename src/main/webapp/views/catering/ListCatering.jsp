@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
+    <!-- 아임포트 -->
+    <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javascript"></script>
+
     <%
         List<Catering> list = (List<Catering>) request.getAttribute("list");
     %>
@@ -203,7 +206,8 @@
 
 
 
-        $(".btn-default").on("click", function () {
+       // $(".btn-default").on("click", function () {
+        $("#AddCtRes").on("click", function () {
             /*
                 사장님께 문자 고 고
              */
@@ -335,7 +339,11 @@
 
                     +"<input type='hidden' id='ctNo"+data.catering.ctNo+"' name='ctNo' value='"+data.catering.ctNo+"'/>"
                     +"<input type='hidden' id='ctAdd"+data.catering.ctNo+"' name='ctAdd' value='"+data.catering.ctAdd+"'/>"
-                    +"<input type='hidden' id='ctAddDetail"+data.catering.ctNo+"' name='ctAddDetail' value='"+data.catering.ctAddDetail+"'/>";
+                    +"<input type='hidden' id='ctAddDetail"+data.catering.ctNo+"' name='ctAddDetail' value='"+data.catering.ctAddDetail+"'/>"
+                +"<input type='hidden' id='ctTruckName' name='ctTruckName' value='"+data.catering.ctTruck.truckName+"'/> "
+                +"<input type='hidden' id='ctQuotation' name='ctQuotation' value='"+data.catering.ctQuotation+"'/>"
+                +"<input type='hidden' id='ctPhone' name='ctPhone' value='"+data.catering.ctPhone+"'/>"
+                +"<input type='hidden' id='ctUserName' name='ctUserName' value='"+data.catering.ctUser.userName+"'/>";
 
 
 
@@ -361,7 +369,7 @@
                      */
                     if (role=="user") { // '취소'버튼, '확인'버튼
                         modalFooter += "<div class='modal-footer'>"
-                            +"<button type='button' class='btn btn-outline-danger' id='purchaseRes' name='purchaseRes' onclick=purchaseRes()''>결제</button>"
+                            +"<button type='button' class='btn btn-outline-danger' id='purchaseRes' name='purchaseRes' onclick='purchaseRes();'>결제</button>"
                             +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
                             +"</div>";
                     }else{
@@ -404,6 +412,78 @@
         });
 
     }
+
+    function purchaseRes(){
+
+
+        var modal = $('#staticBackdrop');
+        /*
+            결제 - 아임포트? 이건 성원이꺼 붙이기
+            결제 후 성공시 문자전송.
+         */
+
+        var ctNo = modal.find("input[name='ctNo']").val();
+        var ctAddress = modal.find("input[name='ctAdd']").val() + " " + modal.find("input[name='ctAddDetail']").val();
+        var ctTruckName = modal.find("input[name='ctTruckName']").val();
+        var ctQuotation = modal.find("input[name='ctQuotation']").val();
+        var ctUserName = modal.find("input[name='ctUserName']").val();
+        var ctPhone = modal.find("input[name='ctPhone']").val();
+
+        var IMP = window.IMP; // 생략가능
+        IMP.init('imp44681426'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+        var msg;
+
+        IMP.request_pay({
+            pg: 'html5_inicis',
+            pay_method: 'card',
+            merchant_uid: 'merchant_' + new Date().getTime(),
+            name: ctTruckName +" 예약건 ",
+            amount: ctQuotation,
+            buyer_email: 'florahhj@naver.com',
+            buyer_name: ctUserName,
+            buyer_tel: ctPhone,
+            buyer_addr: ctAddress,
+            buyer_postcode: '123-456',
+            //m_redirect_url : 'http://www.naver.com'
+        }, function (rsp) {
+            if (rsp.success) {
+                //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+                jQuery.ajax({
+                    url: "/catering/json/addPurchaseCt", //cross-domain error가 발생하지 않도록 주의해주세요
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "ctNo" : ctNo
+                    }
+                }).done(function (data) {
+                    //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+                    if (everythings_fine) {
+                        msg = '결제가 완료되었습니다.';
+                        msg += '\n고유ID : ' + rsp.imp_uid;
+                        msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+                        msg += '\결제 금액 : ' + rsp.paid_amount;
+                        msg += '카드 승인번호 : ' + rsp.apply_num;
+
+                        alert(msg);
+                    } else {
+                        //[3] 아직 제대로 결제가 되지 않았습니다.
+                        //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+                    }
+                });
+                //성공시 이동할 페이지
+                //location.href = "http://127.0.0.1:8080/catering/getCtStatusList?ctct=5&cate=cld";
+                self.location = "/catering/getCtStatusList?ctct=5&cate=cld";
+                window.location.reload(); //확인하기
+            } else {
+                msg = '결제에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+                //실패시 이동할 페이지
+
+                alert(msg);
+            }
+        });
+    }
+
 
     function fncGetCateringList(currentPage) {
         //document.getElementById("currentPage").value = currentPage;
@@ -517,7 +597,9 @@
                     if ( roleUT == 'user'){
                         div += "<li> 푸드트럭 상호명 :"+list[i].ctTruck.truckName+"</li>";
                     }else{
-                        div += "<li> 이용자 이름 :"+list[i].ctUser.userName+"</li>";
+                        if (list[i].ctUser != null) {
+                            div += "<li> 이용자 이름 :" + list[i].ctUser.userName + "</li>";
+                        }
                     }
                     div += " <li> 서비스 날짜 : "+list[i].ctDate+"</li>"
                         +" <li> 견적 : "+list[i].ctQuotation+"</li>";
@@ -644,7 +726,11 @@
                 success : function(data)
                 {
                     //alert(data.reviewText)
-                    alert(" 취소되었습니다. ")
+                    if (statusCode=='4'){
+                        alert("수락되었습니다.");
+                    }else{
+                        alert(" 취소되었습니다. ")
+                    }
                     $('#staticBackdrop').modal('hide');
                     window.location.reload();
                 }
@@ -806,6 +892,7 @@
                 var div="";
                 // var role = '${sessionScope.role}';
                 var modalFooter = "";
+                var minPrice = data.catering.ctMenu.menuPrice * data.catering.ctMenuMinQty;
 
                 <%--${sessionScope.role};--%>
                 console.log("role : "+role)
@@ -841,7 +928,7 @@
                         +"<input type='button' name='plus' value='+'/>"
                         +"</div></div>"
                         +"<div class='row'>"
-                        +"<div ><strong>예상 견적</strong> : <input type='text' id='ctQuotation' name='ctQuotation' readOnly /></div></div>"
+                        +"<div ><strong>예상 견적</strong> : <input type='text' id='ctQuotation' name='ctQuotation' value = '"+minPrice+"' readOnly /></div></div>"
                         +"<div class='row'>"
                         +"<div ><strong>예약자 아이디</strong> : "+'${sessionScope.user.userId}'+"</div></div>"
                         +"<div class='row'>"
@@ -900,12 +987,13 @@
             var min = $(this).parent().find("#minQ").val()
             var cnt = $(this).parent().find("#ctMenuQty").val()
             var prc = $(this).parent().find("#prc").val()
+            var num = cnt*1 - 1
             if (cnt-1 < min)
             {
                 alert("최소 수량은 "+min+"개 입니다.")
             }else
                 $(this).parent().find("#ctMenuQty").val(cnt-1)
-            var price = cnt * prc;
+            var price = num * prc;
             $(this).parents().find("#ctQuotation").val(price)
 
 
@@ -924,15 +1012,16 @@
                 alert("구매는 최대 " +max+ "개 까지 가능합니다.")
             }else
                 $(this).parent().find("#ctMenuQty").val(num)
-            var price = cnt * prc;
+            var price = num * prc;
 
             $(this).parents().find("#ctQuotation").val(price)
         });
+        // $(document).on("click", "#ctStartTime", function(event){
+        // console.log($(event.currentTarget));
+        // console.log($("#ctStartTime"));
+        //  $(#ctStartTime).timepicker({
         $(document).on("click", "#ctStartTime", function(event){
-            // console.log($(event.currentTarget));
-            // console.log($("#ctStartTime"));
             $(event.currentTarget).timepicker({
-
                 timeFormat: 'HH:mm p',
                 interval: 60,
                 /* minTime: '10',
@@ -944,8 +1033,9 @@
                 scrollbar: true,
                 template: 'modal'
             });
-
         });
+
+        // });
         $(document).on("click", "#ctEndTime", function(event){
             // console.log($(event.currentTarget));
             // console.log($("#ctStartTime"));
@@ -968,9 +1058,8 @@
     })
 
 </script>
-<%--
-<jsp:include page="/views/footer.jsp" />
---%>
+
+
 
 </body>
 </html>

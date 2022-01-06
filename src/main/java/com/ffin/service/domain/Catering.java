@@ -32,5 +32,7 @@ public class Catering {
     private Timestamp ctServRegDate;
     private Timestamp ctResRegDate;
     private Timestamp ctCancelDate;
-
+    private Timestamp ctPayDate;
+    private String ctPayno;
+    private String ctPayFlag;
 }

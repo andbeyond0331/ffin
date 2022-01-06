@@ -6,6 +6,7 @@
     <title>채팅</title>
     <jsp:include page="../../common/lib.jsp"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
     <meta charset="UTF-8">
     <link href="../../resources/css/message_list.css" rel="stylesheet">
     <style>
@@ -67,6 +68,8 @@
             /*border: 1px solid #cecece;*/
             border-radius: 50%;
         }
+        .incoming_msg_img{position: relative;}
+        .uuuuuddd{position: absolute; top: 20px;left: 0;}
 
     </style>
 </head>
@@ -78,7 +81,81 @@
     let today = new Date();
 
     $(document).ready(function(){
-        // 메세지 리스트 리로드
+        $("#staticBackdrop").on('hide.bs.modal', function (e) {
+            $("#staticBackdrop").find("#recvId").text("");
+            $("#staticBackdrop").find("#writeNote").val("");
+            e.stopImmediatePropagation();
+        });
+
+        /*$(document).on("click", ".user-message", function (e){
+            e.preventDefault();
+            // console.log("ㅎㅎ");
+            const userId = $(e.currentTarget).next().text();
+            const djsakl = ulUser(userId);
+            const parentEl = $(e.currentTarget).parent();
+            console.log(userId);
+            console.log(djsakl);
+            console.log(parentEl);
+
+
+            parentEl.append(djsakl);
+            console.log("제발 ㅠㅠ");
+
+
+
+
+            // console.log($(e.currentTarget).next().text());
+        })
+        function ulUser (userid){
+            let returnData = '<div><ul class="dropdown-menu uuuuuddd" aria-labelledby="user-dropdown">';
+            returnData += '<li><a class="dropdown-item user-menu" href="/views/user/userMyPage.jsp?'+userid+'"><i class="fas fa-user-circle"></i>MyPage</a></li></ul></div>';
+                // <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-question-circle"></i>문의</a></li>
+                // <li><a class="dropdown-item user-menu" href="/user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+            return returnData;
+        }*/
+
+
+        $(document).on("click", ".user-message", function (e){
+            e.preventDefault();
+
+            //var recvUserId = $(e.currentTarget).next().text();
+            var recvUserId = $(e.currentTarget).parent().parent().next().text(); // ^^..
+           // alert("send: "+sendUserId+" / recvUserId: "+recvUserId);
+            $('#staticBackdrop').find("#recvId").text(recvUserId);
+
+            $('#staticBackdrop').modal('show');
+        })
+
+        $("#sendMsg").on("click", function () {
+            var modal = $('#staticBackdrop');
+            var recvId = modal.find("#recvId").text();
+            var content = modal.find("#writeNote").val();
+            var sendUserId = '${sessionScope.user.userId}';
+
+            $.ajax(
+                {
+                    url : "/msg/json/message_send_inlist",
+                    method : "POST",
+                    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                    data :{
+                        msgRoom : 0,
+                        other_id : recvId,
+                        msgContent : content
+                    },
+                    success : function(data)
+                    {
+                        alert("메세지를 보냈습니다. ")
+                        modal.find("#recvId").text("");
+                        modal.find("#writeNote").val("");
+                        $('#staticBackdrop').modal('hide');
+                    }
+
+                });//end ajax
+
+
+
+        });
+
 
 
         wsOpen();
@@ -127,12 +204,26 @@
                             +userName+" :" + d.msg + "</p>");*/
                         $("#chating").append(div);
                     }else{
+
+
+
+
+
+
+
+
+
                         var div2 = "";
                         div2 +=" <div class='incoming_msg'>"
-                            + "<div class='incoming_msg_img'>"
-                            +"<a href='other_profile?other_id="+d.userName+"'>"
+                            + "<div class='incoming_msg_img dropdown'>"
+                            +"<a class='user-profile' href='#' data-toggle='dropdown' role='button' data-target='#' aria-haspopup='true' aria-expanded='false'>"
                             + "<img src='../../../resources/image/"+d.profile+"' alt='sunil' >"
                             +"</a>"
+                            +"<ul class='dropdown-menu' role='menu' aria-labelledby='dLabel'>"
+                        +"<li><a class='dropdown-item user-menu' href='#'><i class='fas fa-user-circle'></i>프로필보기</a></li>"
+                        +"<li><a class='dropdown-item user-menu user-message' href='#'><i class='fas fa-broom'></i>쪽지보내기</a></li>"
+                        +"<li><a class='dropdown-item user-menu' href='#'><i class='fas fa-sign-out-alt'></i>신고하기</a></li>"
+                    +"</ul>"
                             +"<span class='time_date'>"+d.userName+"</span>"
                             + "</div>"
                             +"  <div class='received_msg'>"
@@ -233,7 +324,39 @@
 
 
 </script>
-<body>
+<body id="page-top">
+<%--<jsp:include page="/views/navbar.jsp" />--%>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">쪽지 보내기</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <span>받는 사람 : </span>
+                    <span id="recvId"></span>
+                </div>
+                <div class="writing_area">
+                    <textarea id="writeNote" style="resize:none;" rows="5" cols="55" title="쪽지 내용을 입력해 주세요."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="sendMsg" name="sendMsg">보내기</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div id="container" class="container">
     <h1>${roomName}의 채팅방</h1>
     <input type="hidden" id="sessionId" value="">

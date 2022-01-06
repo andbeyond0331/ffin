@@ -408,4 +408,33 @@ public class CateringRestController {
         return modelAndView;
     }
 
+
+
+
+    @RequestMapping( value="json/addPurchaseCt", method= RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView addPurchaseCt(@RequestParam("ctNo") int ctNo, HttpServletRequest request,
+                                      HttpServletResponse response  ) throws Exception {
+        /*
+            addPurchaseCt
+            결제
+         */
+        System.out.println(">>>>>>>>>>>>>>addPurchaseCt");
+        request.setCharacterEncoding("UTF-8");
+       // System.out.println("imp uid : "+imp_uid);
+        System.out.println("ctNo = " + ctNo);
+
+        //Catering catering = cateringService.getCtTruckMenu(truckId);
+        cateringService.updateCtResCancel(ctNo, "5");
+
+
+        ModelAndView modelAndView = new ModelAndView("jsonView");
+        //modelAndView.addObject("catering", catering);
+
+
+        return modelAndView;
+    }
+
+
+
 }

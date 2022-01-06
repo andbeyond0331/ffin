@@ -28,6 +28,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
+    <!-- 아임포트 -->
+    <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javascript"></script>
+
     <%
         List<Catering> list = (List<Catering>) request.getAttribute("list");
     %>
@@ -48,19 +51,19 @@
             margin: 0;
             padding: 0;
             font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-            font-size: 14px;
+
         }
 
         #calendar-container {
             position: relative;
             z-index: 1;
-
+            font-size:14px;
         }
 
         #calendar {
             max-width: 900px;
             margin: 20px auto;
-            margin-top: 132px
+            margin-top: 80px
         }
         img{ max-width:100%;}
         .allCT{
@@ -73,6 +76,11 @@
         .ui-timepicker-hidden{
             z-index:999999 !important;
         }
+        .category-ct{
+            margin : 0 126px 21px;
+            margin-top: 90px;
+
+        }
     </style>
 
 </head>
@@ -83,9 +91,8 @@
 <jsp:include page="/views/navbar.jsp" />
 
 <div id="calendar-container">
-
-    <div id="calendar">
-        <div id="calStatus">
+    <div class="container">
+        <div id="calStatus" class="category-ct">
             <a href="/catering/listCatering"> 리스트로보기 </a>
             <a href="/catering/mainCalendar"> 메인 </a>
             <a href="/catering/getCtServAllList?cate=cld" style=" background-color : #008d62;"> 예약가능 </a>
@@ -93,8 +100,9 @@
             <a href="/catering/getCtStatusList?ctct=4&cate=cld" style=" background-color : #fcab31;"> 수락완료(결제대기) </a>
             <a href="/catering/getCtStatusList?ctct=5&cate=cld" style=" background-color : #f81f59;"> 예약완료 </a>
         </div>
+        <div id="calendar">
+        </div>
     </div>
-
 
 </div>
 
@@ -134,7 +142,12 @@
 
 
 
-        $(".btn-default").on("click", function () {
+
+
+
+
+
+        $("#AddCtRes").on("click", function () {
             /*
                 사장님께 문자 고 고
              */
@@ -397,6 +410,7 @@
                 var div="";
                // var role = '${sessionScope.role}';
                 var modalFooter = "";
+                var minPrice = data.catering.ctMenu.menuPrice * data.catering.ctMenuMinQty;
 
                 <%--${sessionScope.role};--%>
                 console.log("role : "+role)
@@ -432,7 +446,7 @@
                         +"<input type='button' name='plus' value='+'/>"
                         +"</div></div>"
                         +"<div class='row'>"
-                        +"<div ><strong>예상 견적</strong> : <input type='text' id='ctQuotation' name='ctQuotation' readOnly /></div></div>"
+                        +"<div ><strong>예상 견적</strong> : <input type='text' id='ctQuotation' name='ctQuotation' value = '"+minPrice+"' readOnly /></div></div>"
                         +"<div class='row'>"
                         +"<div ><strong>예약자 아이디</strong> : "+'${sessionScope.user.userId}'+"</div></div>"
                         +"<div class='row'>"
@@ -544,11 +558,13 @@
                     +"<div class='row'>"
                     +"<div ><strong>주소</strong> : "+data.catering.ctAdd+" "+data.catering.ctAddDetail+"</div><button type='button' class='btn btn-outline-danger' id='lookMap' name='lookMap' onclick='lookMap();'>지도가 궁금행?</button></div>"
 
-                    +"<input type='hidden' id='ctNo' name='ctNo' value='"+data.catering.ctNo+"'/>"
+                +"<input type='hidden' id='ctNo' name='ctNo' value='"+data.catering.ctNo+"'/>"
                 +"<input type='hidden' id='ctAdd' name='ctAdd' value='"+data.catering.ctAdd+"'/>"
-                +"<input type='hidden' id='ctAddDetail' name='ctAddDetail' value='"+data.catering.ctAddDetail+"'/>";
-
-
+                +"<input type='hidden' id='ctAddDetail' name='ctAddDetail' value='"+data.catering.ctAddDetail+"'/>"
+                +"<input type='hidden' id='ctTruckName' name='ctTruckName' value='"+data.catering.ctTruck.truckName+"'/> "
+                +"<input type='hidden' id='ctQuotation' name='ctQuotation' value='"+data.catering.ctQuotation+"'/>"
+                    +"<input type='hidden' id='ctPhone' name='ctPhone' value='"+data.catering.ctPhone+"'/>"
+                +"<input type='hidden' id='ctUserName' name='ctUserName' value='"+data.catering.ctUser.userName+"'/>";
 
 
                 if (statusCode == '1') {
@@ -572,7 +588,7 @@
                      */
                     if (role=="user") { // '취소'버튼, '확인'버튼
                         modalFooter += "<div class='modal-footer'>"
-                            +"<button type='button' class='btn btn-outline-danger' id='purchaseRes' name='purchaseRes' onclick=purchaseRes()''>결제</button>"
+                            +"<button type='button' class='btn btn-outline-danger' id='purchaseRes' name='purchaseRes' onclick='purchaseRes();'>결제</button>"
                             +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
                             +"</div>";
                     }else{
@@ -613,14 +629,83 @@
     }
 
     function purchaseRes(){
+
+
         var modal = $('#staticBackdrop');
         /*
             결제 - 아임포트? 이건 성원이꺼 붙이기
-
             결제 후 성공시 문자전송.
          */
 
+        var ctNo = modal.find("input[name='ctNo']").val();
+        var ctAddress = modal.find("input[name='ctAdd']").val() + " " + modal.find("input[name='ctAddDetail']").val();
+        var ctTruckName = modal.find("input[name='ctTruckName']").val();
+        var ctQuotation = modal.find("input[name='ctQuotation']").val();
+        var ctUserName = modal.find("input[name='ctUserName']").val();
+        var ctPhone = modal.find("input[name='ctPhone']").val();
+
+        var IMP = window.IMP; // 생략가능
+        IMP.init('imp44681426'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+        var msg;
+
+       IMP.request_pay({
+           pg: 'html5_inicis',
+           pay_method: 'card',
+           merchant_uid: 'merchant_' + new Date().getTime(),
+           name: ctTruckName +" 예약건 ",
+           amount: ctQuotation,
+           buyer_email: 'florahhj@naver.com',
+           buyer_name: ctUserName,
+           buyer_tel: ctPhone,
+           buyer_addr: ctAddress,
+           buyer_postcode: '123-456',
+                    //m_redirect_url : 'http://www.naver.com'
+       }, function (rsp) {
+           if (rsp.success) {
+                        //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
+               jQuery.ajax({
+                   url: "/catering/json/addPurchaseCt", //cross-domain error가 발생하지 않도록 주의해주세요
+                   type: 'POST',
+                   dataType: 'json',
+                   data: {
+                       "ctNo" : ctNo
+                   }
+               }).done(function (data) {
+                            //[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
+                   if (everythings_fine) {
+                       msg = '결제가 완료되었습니다.';
+                       msg += '\n고유ID : ' + rsp.imp_uid;
+                       msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+                       msg += '\결제 금액 : ' + rsp.paid_amount;
+                       msg += '카드 승인번호 : ' + rsp.apply_num;
+
+                       alert(msg);
+                   } else {
+                                //[3] 아직 제대로 결제가 되지 않았습니다.
+                                //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
+                            }
+               });
+                        //성공시 이동할 페이지
+                        location.href = "/catering/getCtStatusList?ctct=5&cate=cld";
+                        alert("결제가 완료되었습니다. ")
+                       //self.location = "/catering/getCtStatusList?ctct=5&cate=cld";
+                        //window.location.reload(); //확인하기
+                       //    location.href = location.href;
+                      //    location.reload(true);
+                     location.replace(location.href);
+                        //새로고침이 안되는 문제 있음
+
+           } else {
+                        msg = '결제에 실패하였습니다.';
+                        msg += '에러내용 : ' + rsp.error_msg;
+                        //실패시 이동할 페이지
+
+                        alert(msg);
+                    }
+       });
     }
+
+
     /* 이용자 취소(2), 사업자 취소(3) */
     function updateCtResCancel(statusCode){
         var modal = $('#staticBackdrop');
@@ -637,7 +722,12 @@
                 success : function(data)
                 {
                     //alert(data.reviewText)
-                    alert(" 취소되었습니다. ")
+                    if (statusCode=='4'){
+                        alert("수락되었습니다.");
+                    }else{
+                        alert(" 취소되었습니다. ")
+                    }
+
                     $('#staticBackdrop').modal('hide');
                     window.location.reload();
                 }
@@ -788,12 +878,13 @@
             var min = $(this).parent().find("#minQ").val()
             var cnt = $(this).parent().find("#ctMenuQty").val()
             var prc = $(this).parent().find("#prc").val()
+            var num = cnt*1 - 1
             if (cnt-1 < min)
             {
                 alert("최소 수량은 "+min+"개 입니다.")
             }else
                 $(this).parent().find("#ctMenuQty").val(cnt-1)
-            var price = cnt * prc;
+            var price = num * prc;
             $(this).parents().find("#ctQuotation").val(price)
 
 
@@ -812,15 +903,16 @@
                 alert("구매는 최대 " +max+ "개 까지 가능합니다.")
             }else
                 $(this).parent().find("#ctMenuQty").val(num)
-            var price = cnt * prc;
+            var price = num * prc;
 
             $(this).parents().find("#ctQuotation").val(price)
         });
        // $(document).on("click", "#ctStartTime", function(event){
             // console.log($(event.currentTarget));
             // console.log($("#ctStartTime"));
-            $(#ctStartTime).timepicker({
-
+          //  $(#ctStartTime).timepicker({
+        $(document).on("click", "#ctStartTime", function(event){
+            $(event.currentTarget).timepicker({
                 timeFormat: 'HH:mm p',
                 interval: 60,
                /* minTime: '10',
@@ -831,6 +923,7 @@
                 dropdown: true,
                 scrollbar: true,
                 template: 'modal'
+            });
             });
 
        // });
