@@ -73,17 +73,19 @@ public class PurchaseController {
         Purchase purchase = new Purchase();
         User user = new User();
         Coupon coupon = new Coupon();
+        Map map = new HashMap();
 
 
 
 
-
+        map = purchaseService.getOrderDetail(orderNo);
         Map cart = purchaseService.getCartList(orderNo);
         purchase = purchaseService.getPurchase(orderNo);
         user = purchaseService.getTotalPoint(purchase.getOrderUserId().getUserId());
         coupon.setCouponReceivedUserId(purchase.getOrderUserId());
         coupontList = purchaseService.getCouponList(coupon);
 
+        model.addAttribute("map",map);
         model.addAttribute("couponList",coupontList);
         model.addAttribute("purchase",purchase);
         model.addAttribute("cart",cart);

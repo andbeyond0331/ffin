@@ -115,10 +115,12 @@ public class PurchaseRestController {
                             @RequestParam(value="orderUserId") String orderUserId,
                             @RequestParam(value="orderTruckId") String orderTruckId,
                             @RequestParam(value="orderRequest") String orderRequest,
-                            @RequestParam(value="orderQty") int orderQty
+                            @RequestParam(value="orderQty") int orderQty,
+                            @RequestParam(value="odMenuQtyFlag[]")List<String> odMenuQtyFlag
+
                                                                       )throws IOException,Exception{
         System.out.println("json/addCartList POST");
-        System.out.println("odMenuName = " + odMenuName + ", odOptionGroupName = " + odOptionGroupName + ", odOptionName = " + odOptionName + ", odMenuQty = " + odMenuQty + ", odMenuPrice = " + odMenuPrice + ", odOptionPrice = " + odOptionPrice + ", odMenuImage = " + odMenuImage + ", orderPickUpTime = " + orderPickUpTime + ", orderTotalPrice = " + orderTotalPrice + ", orderUserId = " + orderUserId + ", orderTruckId = " + orderTruckId + ", orderRequest = " + orderRequest + ", orderQty = " + orderQty);
+        System.out.println("odMenuName = " + odMenuName + ", odOptionGroupName = " + odOptionGroupName + ", odOptionName = " + odOptionName + ", odMenuQty = " + odMenuQty + ", odMenuPrice = " + odMenuPrice + ", odOptionPrice = " + odOptionPrice + ", odMenuImage = " + odMenuImage + ", orderPickUpTime = " + orderPickUpTime + ", orderTotalPrice = " + orderTotalPrice + ", orderUserId = " + orderUserId + ", orderTruckId = " + orderTruckId + ", orderRequest = " + orderRequest + ", orderQty = " + orderQty + ", odMenuQtyFlag = " + odMenuQtyFlag);
         Purchase purchase = new Purchase();
         OrderDetail orderDetail = new OrderDetail();
         User user = new User();
@@ -134,6 +136,7 @@ public class PurchaseRestController {
         purchase.setOrderRequest(orderRequest);
         purchase.setOrderQty(orderQty);
 
+
         System.out.println("odMenuName length"+odMenuName.size());
         System.out.println("odOptionGroupName length"+odOptionGroupName.size());
         System.out.println("odOptionName length"+odOptionName.size());
@@ -141,6 +144,7 @@ public class PurchaseRestController {
         System.out.println("odMenuPrice length"+odMenuPrice.size());
         System.out.println("odOptionPrice length"+odOptionPrice.size());
         System.out.println("odMenuImage length"+odMenuImage.size());
+        System.out.println("odMenuQtyFlag length"+odMenuQtyFlag.size());
 
         int orderNo = purchaseService.addPurchase(purchase);
         orderDetail.setOdOrderNo(purchase);
@@ -187,6 +191,11 @@ public class PurchaseRestController {
                 order.setOdMenuImage(null);
             }else{
                 order.setOdMenuImage(odMenuImage.get(i));
+            }
+            if(i>=odMenuQtyFlag.size()){
+                order.setOdMenuQtyFlag(0);
+            }else{
+                order.setOdMenuQtyFlag(parseInt(odMenuQtyFlag.get(i)));
             }
 
             pur.setOrderNo(orderNo);

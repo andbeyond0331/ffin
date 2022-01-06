@@ -199,6 +199,7 @@
             var odMenuPrice = [];
             var odOptionPrice = [];
             var odMenuImage = [];
+            var odMenuQtyFlag = [];
             var orderPickUpTime = $('input[name="orderPickUpTime"]:checked').val();
             var orderTotalPrice = $('#orderTotalPrice').val();
             var orderUserId = $('#orderUserId').val();
@@ -233,12 +234,17 @@
             $('input[name="odMenuImage"]').each(function (i) {
                 odMenuImage.push($(this).val());
             });
+
+            $('input[name="odMenuQtyFlag"]').each(function (i) {
+                odMenuQtyFlag.push($(this).val());
+            });
             alert(orderPickUpTime)
             alert(orderTotalPrice)
             alert(orderUserId)
             alert(orderTruckId)
             alert(orderRequest)
             alert(orderQty)
+            alert(odMenuQtyFlag)
 
             var data = {
                 "odMenuName": odMenuName,
@@ -254,6 +260,7 @@
                 "orderTruckId": orderTruckId,
                 "orderRequest": orderRequest,
                 "orderQty": orderQty,
+                "odMenuQtyFlag" : odMenuQtyFlag,
             }
             $.ajax({
                 type: "post",
