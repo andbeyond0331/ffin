@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html lang="ko">
 
@@ -48,7 +49,6 @@
             $( "td:nth-child(1)" ).css("color" , "orange");
 
         });
-
 
     </script>
 
@@ -118,8 +118,7 @@
         <tr>
             <th align="center">No</th>
             <th align="left" >제목</th>
-            <th align="left">작성회원 ID</th>
-            <th align="left">작성사업자 ID</th>
+            <th align="left">작성자 ID</th>
             <th align="left">작성일</th>
             <th align="left">좋아요</th>
         </tr>
@@ -131,11 +130,10 @@
         <c:forEach var="post" items="${list}">
             <c:set var="i" value="${ i+1 }" />
             <tr>
-                <td align="center">${ i }</td>
+                <td align="center">${post.postNo}</td>
                 <td align="left">${post.postTitle}</td>
-                <td align="left">${post.postUser.userId}</td>
-                <td align="left">${post.postTruck.truckId}</td>
-                <td align="left">${post.postRegDate}</td>
+                <td align="left">${post.postUser.userId}${post.postTruck.truckId}</td>
+                <td align="left"><fmt:formatDate value="${post.postRegDate}" pattern="yyyy-MM-dd"/></td>
                 <td align="left">
                     <i class="glyphicon glyphicon-ok" id= "${post.postNo}"></i>
                     <input type="hidden" value="${post.postUser}">
@@ -148,14 +146,14 @@
     </table>
     <!--  table End /////////////////////////////////////-->
 
-</div>
-<!--  화면구성 div End /////////////////////////////////////-->
+
 
 
 <!-- PageNavigation Start... -->
 <jsp:include page="../../common/pageNavigator_new.jsp"/>
 <!-- PageNavigation End... -->
-
+</div>
+<!--  화면구성 div End /////////////////////////////////////-->
 
 
 <jsp:include page="/views/footer.jsp" />

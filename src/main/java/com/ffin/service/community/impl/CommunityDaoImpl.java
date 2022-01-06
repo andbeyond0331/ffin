@@ -105,6 +105,19 @@ public class CommunityDaoImpl implements CommunityDao {
         sqlSession.update("HeartMapper.updateHeart", heart);
     }
 
+
+    // 게시글 삭제
+    @Override
+    public void deletePost(Post post) throws Exception {
+        sqlSession.delete("PostMapper.deletePost", post);
+    }
+
+    // 댓글 삭제
+    @Override
+    public void deleteComment(Comment comment) throws Exception {
+        sqlSession.delete("CommentMapper.deleteComment", comment);
+    }
+
     // 게시판 Page 처리를 위한 전체Row(totalCount)  return
     @Override
     public int getTotalCountPost(Search search) throws Exception {
@@ -120,4 +133,6 @@ public class CommunityDaoImpl implements CommunityDao {
 //    public int getTotalCountPostT(Search search) throws Exception {
 //        return sqlSession.selectOne("PostMapper.getTotalCountTruck", search);
 //    }
+
+
 }

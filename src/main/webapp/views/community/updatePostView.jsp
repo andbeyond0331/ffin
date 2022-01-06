@@ -7,10 +7,11 @@
 
 <head>
 
+    <title>게시글 수정</title>
+    <jsp:include page="../../common/lib.jsp"/>
+
     <!-- 참조 : http://getbootstrap.com/css/   참조 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-    <title>게시글 작성</title>
 
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">
@@ -110,7 +111,7 @@
         <br/><br/>
         <a href="/views/user/addUserInfo.jsp" class="btn-warning">일반회원가입</a>
         <a href="/views/truck/addTruckView.jsp" class="btn-warning">사업자회원가입</a>
-        <a href="/views/homeTest.jsp" class="btn-warning">메인화면으로</a>
+        <a href="/views/home.jsp" class="btn-warning">메인화면으로</a>
     </div>
 </c:if>
 <jsp:include page="/views/footer.jsp"/>

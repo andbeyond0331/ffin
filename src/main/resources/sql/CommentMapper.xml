@@ -46,10 +46,10 @@
 
     <!-- SQL : SELECT LIST -->
     <select id="getCommentList"   parameterType="int"   resultMap="commentSelectMap">
-        SELECT COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
+        SELECT COMMENT_NO ,COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
         FROM comment
         WHERE comment_post_no = ${value}
-        order by comment_no
+        order by COMMENT_NO DESC
 --         limit 0,8;
     </select>
 
@@ -62,4 +62,11 @@
         </set>
         WHERE comment_no = #{commentNo}
     </update>
+
+    <!-- SQL : DELETE -->
+    <delete id="deleteComment"  parameterType="comment">
+        DELETE
+        FROM comment
+        where comment_no = {value }
+    </delete>
 </mapper>

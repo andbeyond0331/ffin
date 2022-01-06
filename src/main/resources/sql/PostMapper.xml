@@ -74,7 +74,7 @@
             </where>
         </if>
         order by post_no ) inner_table
-        limit 0,8;
+        limit #{startRowNum}, #{pageSize}
     </select>
 
 
@@ -97,7 +97,7 @@
     <!-- SQL : SELECT ROW Count -->
     <select  id="getTotalCount"  parameterType="search"	 resultType="int">
         SELECT COUNT(*)
-        FROM(	SELECT post_no, post_title, post_user_id, post_reg_date
+        FROM(	SELECT post_no, post_title, post_user_id, post_truck_id, post_reg_date
         FROM post
         <if test="searchCondition != null">
             <where>

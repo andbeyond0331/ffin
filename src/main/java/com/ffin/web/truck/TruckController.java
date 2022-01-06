@@ -153,7 +153,7 @@ public class TruckController {
         System.out.println("/truck/updateTruckInfo : POST");
         //Business Logic
 
-        String temDir = "/Users/js/IdeaProjects/ffin/src/main/webapp/resources/image";
+        String temDir = "../../resources/image";
 
         if (!file1.getOriginalFilename().isEmpty()) {
             file1.transferTo(new File(temDir, file1.getOriginalFilename()));

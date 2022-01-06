@@ -42,7 +42,7 @@
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
             $("button.btn.btn-warning").on("click", function () {
                 alert("수정을 취소하시겠습니까? 확인을 누르시면 홈화면으로 이동합니다.")
-                self.location = "/views/homeTest.jsp"
+                self.location = "/views/home.jsp"
             });
         });
 

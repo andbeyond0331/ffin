@@ -128,6 +128,18 @@ public class CommunityServiceImpl implements CommunityService {
         communityDao.updateHeart(heart);
     }
 
+    // 게시글 삭제
+    @Override
+    public void deletePost(Post post) throws Exception {
+        communityDao.deletePost(post);
+    }
+
+    // 댓글 삭제
+    @Override
+    public void deleteComment(Comment comment) throws Exception {
+        communityDao.deleteComment(comment);
+    }
+
     // 게시판 Page 처리를 위한 전체Row(totalCount)
     @Override
     public int getTotalCount(Search search) throws Exception {
