@@ -33,6 +33,9 @@
         body {
             padding-top : 50px;
         }
+        h3.getMenuTitle.custom {
+            color: #ffba49;
+        }
     </style>
 
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -56,33 +59,32 @@
 <div class="container">
 
     <div class="page-header">
-        <h3 class=" text-info">${menu.menuTruckId}의 ${menu.menuName} 상세 조회</h3>
-        <h5 class="text-muted">상품 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
-    </div>
+        <h3 class="getMenuTitle custom">${menu.menuTruckId}의 ${menu.menuName}</h3>
+     </div>
 
     <div class="row">
-        <div class="col-xs-4 col-md-2"><strong>상품번호</strong></div>
+        <div class="col-xs-4 col-md-2"><strong>메뉴번호</strong></div>
         <div class="col-xs-8 col-md-4">${menu.menuNo}</div>
     </div>
 
     <hr/>
 
     <div class="row">
-        <div class="col-xs-4 col-md-2 "><strong>상품명</strong></div>
-        <div class="col-xs-8 col-md-4"><img src="/resources/image/${menu.menuImg1}" style="border-bottom: 1px solid #eee; height: 200px;"></div>
+        <div class="col-xs-4 col-md-2 "><strong>메뉴 이름</strong></div>
+        <div class="col-xs-8 col-md-4">${menu.menuName}</div>
     </div>
 
     <hr/>
 
     <div class="row">
-        <div class="col-xs-4 col-md-2 "><strong>상품이미지</strong></div>
-        <div class="col-xs-8 col-md-4">${menu.menuImg1}</div>
+        <div class="col-xs-4 col-md-2 "><strong>메뉴이미지1</strong></div>
+        <div class="col-xs-8 col-md-4"><img src="/resources/image/${menu.menuImg1}" style="border-bottom: 1px solid #eee; height: 200px;" alt="${menu.menuName}의 이미지1" title="메뉴이미지1"></div>
     </div>
 
     <hr/>
 
     <div class="row">
-        <div class="col-xs-4 col-md-2 "><strong>상품상세정보</strong></div>
+        <div class="col-xs-4 col-md-2 "><strong>메뉴상세정보</strong></div>
         <div class="col-xs-8 col-md-4">${menu.menuDetail}	</div>
     </div>
 
@@ -96,7 +98,7 @@
     <hr/>
 
     <div class="row">
-        <div class="col-xs-4 col-md-2 "><strong>가격</strong></div>
+        <div class="col-xs-4 col-md-2 "><strong>메뉴가격</strong></div>
         <div class="col-xs-8 col-md-4">${menu.menuPrice}</div>
     </div>
 
