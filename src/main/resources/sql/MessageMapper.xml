@@ -16,11 +16,12 @@
   		<result property="msgReadStatus" 		column="MSG_READ_STATUS"		jdbcType="CHAR"/>
   		<result property="msgRoom" 		column="MSG_ROOM" 		jdbcType="NUMERIC"/>
 		<result property="profile" 		column="USER_PRO_IMG" 		jdbcType="VARCHAR"/>
+
   	</resultMap>
 
 	<!-- LIST  -->
 	<select id="message_list" parameterType="msg" resultMap="msgSelectMap">
-		select MSG_NO, MSG_ROOM, MSG_SEND_USER_ID, MSG_RECV_USER_ID, date_format(MSG_SEND_DATE, '%Y-%m-%d %H:%i') send_time, MSG_READ_DATE, MSG_CONTENT, MSG_READ_STATUS
+		select MSG_NO, MSG_ROOM, MSG_SEND_USER_ID, MSG_RECV_USER_ID, date_format(MSG_SEND_DATE, '%Y-%m-%d %H:%i') as MSG_SEND_DATE, MSG_READ_DATE, MSG_CONTENT, MSG_READ_STATUS
 		from msg
 		where MSG_NO in (select max(MSG_NO) from msg group by MSG_ROOM) and (MSG_SEND_USER_ID = #{id} or MSG_RECV_USER_ID=#{id})
 		order by MSG_NO desc;
@@ -47,7 +48,7 @@
 
 	<!-- 메세지 내용 가져오기 -->
 	<select id="room_content_list" parameterType="msg" resultMap="msgSelectMap">
-		select m.MSG_NO, m.MSG_ROOM, m.MSG_SEND_USER_ID, m.MSG_RECV_USER_ID, date_format(m.MSG_SEND_DATE, '%Y-%m-%d %H:%i') send_time, m.MSG_READ_DATE, m.MSG_CONTENT, m.MSG_READ_STATUS, u.USER_PRO_IMG
+		select m.MSG_NO, m.MSG_ROOM, m.MSG_SEND_USER_ID, m.MSG_RECV_USER_ID, date_format(m.MSG_SEND_DATE, '%Y-%m-%d %H:%i') as MSG_SEND_DATE, m.MSG_READ_DATE, m.MSG_CONTENT, m.MSG_READ_STATUS, u.USER_PRO_IMG
 		from msg m left outer join user u
 		on m.MSG_SEND_USER_ID = u.USER_ID
 		<choose>

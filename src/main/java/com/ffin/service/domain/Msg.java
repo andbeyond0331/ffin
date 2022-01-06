@@ -1,5 +1,6 @@
 package com.ffin.service.domain;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import lombok.Data;
@@ -11,7 +12,7 @@ public class Msg {
 	private int msgRoom;
 	private String msgSendUserId;
 	private String msgRecvUserId;
-	private Date msgSendDate;
+	private String msgSendDate;
 	private Date msgReadDate;
 	private String msgContent;
 	private int msgReadStatus;
