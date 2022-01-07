@@ -70,6 +70,7 @@
 				(ct.CT_STATUS_CODE='0' OR (ct.CT_USER_ID=#{id} AND ct.CT_STATUS_CODE='5')) AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO AND ct.CT_USER_ID = u.USER_ID
 			</where>
 		</if>
+		order by ct.ct_date
 	</select>
 
 
@@ -104,6 +105,7 @@
 			CT_TRUCK_ID= #{id} AND (CT_STATUS_CODE='2' OR CT_STATUS_CODE='3') AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO AND ct.ct_user_id = u.user_id
 		</where>
 	</if>
+		order by ct.ct_date
 	</select>
 
 	<select id="getCtDateList"	parameterType="map"	resultMap="cateringSelectMap">
@@ -134,7 +136,7 @@
 				(ct.CT_STATUS_CODE='0' OR (ct.CT_USER_ID=#{id} AND ct.CT_STATUS_CODE='5')) AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO
 			</where>
 		</if>
-
+		order by ct.ct_date
 	</select>
 
 

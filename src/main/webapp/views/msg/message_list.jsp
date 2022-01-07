@@ -49,7 +49,7 @@
 <!-- 메뉴바
    현재페이지 뭔지 param.thisPage에 넣어서 navbar.jsp에  던짐
   -->
-<jsp:include page="navbar.jsp">
+<jsp:include page="../navbar.jsp">
     <jsp:param value="msg" name="thisPage" />
 </jsp:include>
 
@@ -295,6 +295,7 @@
                 },
                 success:function(data){
                     // 전송에 성공시 알림을 주기 위하여..
+                    // 소켓!
                     var userId = '${sessionScope.user.userId}';
                     console.log("message.socket::::" + socket);
                     if(socket) {
@@ -329,7 +330,7 @@
         // 메세지 리스트 리로드
         FirstMessageList();
 
-        connectWS();
+      //  connectWS();
 
       //  connect();
     });
@@ -339,42 +340,5 @@
 
 </script>
 
-<script>
-    var socket = null; //전역변수.
-   /* $(document).ready(function(){
-        connectWS();
-    });*/
-
-    function connectWS(){
-        var ws = new WebSocket("ws://localhost:8080/push");
-        // servlet-context에 선언한 path와 일치시키도록...
-        socket = ws;
-
-        ws.onopen = function(){
-            console.log('Info : connection opened. ');
-
-
-        };
-        ws.onmessage = function(event){
-            console.log("ReceiveMessage: ", event.data+'\n');
-            let $socketAlert =  $('div#socketAlert');
-            $socketAlert.html(event.data);
-            $socketAlert.css('display', 'block');
-            setTimeout( function(){
-                $socketAlert.css('display', 'none')
-            }, 3000)
-
-        }
-
-        ws.onclose = function(event){
-            console.log('info: connection closed.');
-            setTimeout( function(){connectWS();}, 1000);
-        };
-        ws.onerror = function(err){console.log('error: connection error.', err);};
-
-    }
-
-
-</script>
 </body>
 </html>
