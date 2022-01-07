@@ -144,7 +144,7 @@
     <div id="card-box" class="cards-box">
         <c:forEach var="catering" items="${list}">
             <div class="card" style="width: 23rem; margin-bottom:15px; margin-left: 10px;">
-                <img class="card-img-top" src="../../resources/image/${catering.ctMenu.menuImg1}" alt="Card image cap"
+                <img class="card-img-top" src="../../resources/menu/${catering.ctMenu.menuImg1}" alt="Card image cap"
                      style="border-bottom: 1px solid #eee; height: 300px;">
                 <div class="card-body">
                     <ul class='card-body-ul'>
@@ -325,7 +325,7 @@
                     +"<div class='row'>"
                     +"<div ><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
                     +"<div class='row'>"
-                    +"<div ><strong></strong> <img src='../../../resources/image/"+data.catering.ctMenu.menuImg1+"'></div></div>"
+                    +"<div ><strong></strong> <img src='../../../resources/menu/"+data.catering.ctMenu.menuImg1+"'></div></div>"
                     +"<div class='row'>"
                     +"<div ><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
                     +"<div class='row'>"
@@ -590,7 +590,7 @@
 
 
                     div +=  "<div class='card' style='width: 23rem; margin-bottom:15px; margin-left: 10px;'>"
-                        +"<img class='card-img-top' src='../../resources/image/"+list[i].ctMenu.menuImg1+"' alt='Card image cap' style='border-bottom: 1px solid #eee; height: 300px;'>"
+                        +"<img class='card-img-top' src='../../resources/menu/"+list[i].ctMenu.menuImg1+"' alt='Card image cap' style='border-bottom: 1px solid #eee; height: 300px;'>"
                         +"<div class='card-body'>"
                         +"<ul class='card-body-ul'>";
 
@@ -906,7 +906,7 @@
                     +"<div class='row'>"
                     +"<div ><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
                     +"<div class='row'>"
-                    +"<div ><strong></strong> <img src='../../../resources/image/"+data.catering.ctMenu.menuImg1+"'></div></div>"
+                    +"<div ><strong></strong> <img src='../../../resources/menu/"+data.catering.ctMenu.menuImg1+"'></div></div>"
                     +"<div class='row'>"
                     +"<div ><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
                     +"<input type='hidden' id='ctNo"+data.catering.ctNo+"' name='ctNo' value='"+data.catering.ctNo+"'/>"
