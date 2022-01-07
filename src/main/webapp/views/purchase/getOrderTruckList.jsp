@@ -21,6 +21,7 @@
 
 </style>
 <main>
+
     <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
          tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -94,7 +95,7 @@
     </div>
 
 
-    <%--<div class="container py-4">--%>
+    <div class="container py-4">
     <header class="pb-4 mb-5 py-4 border-bottom">
         <span class="fs-1">주문내역</span>
     </header>
@@ -112,8 +113,8 @@
                     </div>
                     <div class="col-11">
                         <div class="row justify-content-between">
-                            <div class="col-3"> 전체 : </div>
-                            <div class="col-3">
+                            <div class="col-6 text-center"> 전체 : </div>
+                            <div class="col-6">
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
                                     <label class="form-check-label" for="flexSwitchCheckChecked">영업중</label>
@@ -211,6 +212,7 @@
 
     </div>
     <%--</div>--%>
+    </div>
 
 </main>
 
