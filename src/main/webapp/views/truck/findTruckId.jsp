@@ -55,15 +55,16 @@
                     + $('#inputName_1').val() + "&inputPhone_1=" + $('#inputPhone_1').val(),
                 type   : "post",
 
-                success: function (data) {
+                success: function (value) {
                     //alert(2222);
-                    if (data == 0) {
-                        $('#id_value').text("회원 정보를 확인해주세요!");
+                    if (value == 0) {
+                        $('#id_valueT').text("회원 정보를 확인해주세요!");
                     } else {
-                        $('#id_value').text(data);
-                        //alert(data);
+                        $('#id_valueT').text(value);
+                        //alert(value);
+                        //console.log(value);
                         // 아이디값 별도로 저장
-                        idV = data;
+                        idV = value;
                     }
                     //alert(3333);
                 }
@@ -86,7 +87,7 @@
                 <h4 class="modal-title" id="findid_modalLabel">회원님의 아이디는</h4>
             </div>
             <div class="modal-body">
-                <h2 class="modal-content" id="id_value"></h2>
+                <h2 id="id_valueT"></h2>
             </div>
             <div class="modal-footer">
                 <h4 class="modal-footer" >입니다.</h4>

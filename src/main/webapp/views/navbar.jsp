@@ -95,9 +95,9 @@
                             <button type="button" class="btn btn-default dropdown-toggle" id="truck-dropdown" data-toggle="dropdown"  aria-expanded="false">
                                 <i class="fas fa-user-alt"></i>${truck.truckId}
                             </button>
-                            <ul class="dropdown-menu" aria-labelledby="user-dropdown">
-                                <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-user-circle"></i>MyPage</a></li>
-                                <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-power-off"></i>장사모드?</a></li>
+                            <ul class="dropdown-menu" aria-labelledby="truck-dropdown">
+                                <li><a class="dropdown-item user-menu" href="/views/truck/truckMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
+                                <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-power-off"></i>영업상태변경</a></li>
                                 <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-question-circle"></i>문의</a></li>
                                 <li><a class="dropdown-item user-menu" href="/truck/logoutTruck"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
                             </ul>

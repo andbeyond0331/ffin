@@ -150,7 +150,7 @@
 
 
 <!-- PageNavigation Start... -->
-<jsp:include page="../../common/pageNavigator_new.jsp"/>
+<jsp:include page="../../common/pageNavigator.jsp"/>
 <!-- PageNavigation End... -->
 </div>
 <!--  화면구성 div End /////////////////////////////////////-->
