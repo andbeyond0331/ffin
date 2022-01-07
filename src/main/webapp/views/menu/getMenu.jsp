@@ -51,6 +51,11 @@
 
     </script>
 
+<%--    <script>--%>
+
+<%--      --%>
+<%--    </script>--%>
+
 </head>
 
 <body>
@@ -126,7 +131,7 @@
 <%--               <td align="left">--%>
 <%--                   <span class="optionPrice" >${optionGroup.optionPrice}</span>--%>
 <%--               </td> v--%>
-           <c:if test=""></c:if>
+
            <div class="row">
                    <div class="col-xs-4 col-md-2"><strong>옵션 그룹 이름</strong></div>
                    <div class="col-xs-8 col-md-4">${optionGroup.optionGroupName}</div>
