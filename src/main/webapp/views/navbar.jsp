@@ -70,6 +70,7 @@
                 </ul>
             </div>
             <div class="collapse navbar-collapse justify-content-end nav-user" id="navbarSupportedContent" >
+
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" id="goMsg" href="#" style="margin-top: 3px;"><i class="fas fa-envelope fa-lg" ></i></a>
@@ -104,11 +105,17 @@
                     </li>
                 </ul>
             </div>
+
         </nav>
+        <!-- socket alert -->
+        <div id="socketAlert" class="alert alert-warning" role="alert" style="display:none; margin-top:75px; z-index:999999"></div>
+
     </div>
+
     </c:if>
 </header>
 <!-- end header section -->
+
 
 <!-- Modal -->
 <div class="modal fade" id="openLoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -283,3 +290,45 @@
         </div>
     </div>
 </div>
+
+<!-- websocket -->
+<script>
+    var socket = null; //전역변수.다른 페이지 어디서든 접근
+
+
+     $(document).ready(function(){
+         connectWS();
+     });
+
+    function connectWS(){
+        var ws = new WebSocket("ws://localhost:8080/push");
+        // servlet-context에 선언한 path와 일치시키도록...
+        socket = ws;
+
+        ws.onopen = function(){
+            console.log('Info : connection opened. ');
+
+
+        };
+        ws.onmessage = function(event){
+            console.log("ReceiveMessage: ", event.data+'\n');
+            let $socketAlert =  $('div#socketAlert');
+            $socketAlert.html(event.data);
+            $socketAlert.css('display', 'block');
+            setTimeout( function(){
+                $socketAlert.css('display', 'none')
+            }, 3000)
+
+        }
+
+        ws.onclose = function(event){
+            console.log('info: connection closed.');
+            // 원래 이거 해야하는데 계속 끊기는데 연결을 시도해서.. 일단 주석처리
+           // setTimeout( function(){connectWS();}, 1000);
+        };
+        ws.onerror = function(err){console.log('error: connection error.', err);};
+
+    }
+
+
+</script>
