@@ -21,6 +21,31 @@
 
     </script>
 
+    <script type="text/javascript">
+
+        // $(function(){
+        //     alert("'#call': " +$('#call').html());
+        //     $('#call').on('click', function(){
+        //         self.location = "/menu/getMenu?menuNo=1";
+        //     });
+        // });
+
+        // $(function(){
+        //     alert($("input[name='toMenu']").html());
+        //     $("body").on("click", "input[name='toMenu']", function() {
+        //         // location.replace("http://127.0.0.1:8080/menu/getMenu?menuNo=1")
+        //         self.location="/menu/getMenu?menuNo=1";
+        //     });
+        // });
+
+        // function fncGetMenuOptionGroupYap(){
+        //     location.replace('http://127.0.0.1:8080/menu/getMenu?menuNo=1');
+        // };
+
+
+
+    </script>
+
 </head>
 
 <body id="page-top">
@@ -138,8 +163,9 @@
                         <h5> MenuName </h5>
                         <div><span class="text-warning me-2"><i class="fas fa-map-marker-alt"></i></span><span class="text-primary">TruckName</span></div><span class="text-1000 fw-bold">₩5,000</span>
                         <br/>
-                        <a href="">
-                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        <a href="http://127.0.0.1:8080/menu/getMenu?menuNo=1">
+                            <i class="fa fa-arrow-right" aria-hidden="true" name="minus"></i>
+<%--                            <button type="button" class="fa fa-arrow-right" aria-hidden="true" id="call" onclick="fncGetMenuOptionGroupYap();">누르렴</button>--%>
                         </a>
                     </div>
                 </div>
@@ -153,8 +179,9 @@
                         <h5> MenuName </h5>
                         <div><span class="text-warning me-2"><i class="fas fa-map-marker-alt"></i></span><span class="text-primary">TruckName</span></div><span class="text-1000 fw-bold">₩5,000</span>
                         <br/>
-                        <a href="">
-                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        <a href="http://127.0.0.1:8080/menu/getMenu?menuNo=2">
+<%--                            <i class="fa fa-arrow-right" aria-hidden="true"></i>// todo--%>
+<%--                            <input type="button" name="toMenu" value="누르렴">--%>
                         </a>
                     </div>
                 </div>
@@ -168,7 +195,7 @@
                         <h5> MenuName </h5>
                         <div><span class="text-warning me-2"><i class="fas fa-map-marker-alt"></i></span><span class="text-primary">TruckName</span></div><span class="text-1000 fw-bold">₩5,000</span>
                         <br/>
-                        <a href="">
+                        <a href="http://127.0.0.1:8080/menu/getMenu?menuNo=29">
                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </a>
                     </div>
@@ -176,7 +203,7 @@
             </div>
         </div>
         <div class="btn-box">
-            <a href="">
+            <a href="http://127.0.0.1:8080/truck/getTruckList">
                 more FoodTruck
             </a>
         </div>

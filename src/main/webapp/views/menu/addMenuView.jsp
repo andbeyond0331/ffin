@@ -275,151 +275,151 @@
 <!-- ToolBar End /////////////////////////////////////-->
 
 <!--  화면구성 div Start /////////////////////////////////////-->
-<%--<div class="container">--%>
+<div class="container">
 
-<%--<div class="row justify-content-center">--%>
-<%--    <div class="page-header">--%>
-<%--        <h3 class=" text-info">${truck.truckId}에 대한 메뉴 추가</h3>--%>
-<%--    </div>--%>
+<div class="row justify-content-center">
+    <div class="page-header">
+        <h3 class=" text-info">${truck.truckId}에 대한 메뉴 추가</h3>
+    </div>
 
-<%--    <!-- form Start /////////////////////////////////////-->--%>
-<%--    <form class="form-horizontal">--%>
-<%--        <input type="hidden" id = "menuTruckId" name="menuTruckId" value="${truck.truckId}">--%>
-<%--        &lt;%&ndash;        <div class="form-group">&ndash;%&gt;--%>
-<%--        &lt;%&ndash;            <label for="menuTruckId" class="col-sm-offset-1 col-sm-3 control-label">메뉴 트럭 아이디</label>&ndash;%&gt;--%>
-<%--        &lt;%&ndash;            <div class="col-sm-4">&ndash;%&gt;--%>
-<%--        &lt;%&ndash;                <input type="text" class="form-control" id="menuTruckId" name="menuTruckId"  value="${truck.truckId}" placeholder="메뉴 트럭아이디">&ndash;%&gt;--%>
-<%--        &lt;%&ndash;            </div>&ndash;%&gt;--%>
-<%--        &lt;%&ndash;        </div>&ndash;%&gt;--%>
+    <!-- form Start /////////////////////////////////////-->
+    <form class="form-horizontal">
+        <input type="hidden" id = "menuTruckId" name="menuTruckId" value="${truck.truckId}">
+        <%--        <div class="form-group">--%>
+        <%--            <label for="menuTruckId" class="col-sm-offset-1 col-sm-3 control-label">메뉴 트럭 아이디</label>--%>
+        <%--            <div class="col-sm-4">--%>
+        <%--                <input type="text" class="form-control" id="menuTruckId" name="menuTruckId"  value="${truck.truckId}" placeholder="메뉴 트럭아이디">--%>
+        <%--            </div>--%>
+        <%--        </div>--%>
+
+        <div class="form-group">
+            <label for="menuName" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이름</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="menuName" name="menuName" value="${menu.menuName }" placeholder="메뉴 이름">
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="menuDetail" class="col-sm-offset-1 col-sm-3 control-label">메뉴상세정보</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="menuDetail" name="menuDetail" value="${menu.menuDetail }" placeholder="메뉴상세정보">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="menuPrice" class="col-sm-offset-1 col-sm-3 control-label">메뉴 가격</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="menuPrice" name="menuPrice" value="${menu.menuPrice }" placeholder="메뉴 가격">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="isSigMenu" class="col-sm-offset-1 col-sm-3 control-label">대표메뉴여부</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="isSigMenu" name="isSigMenu" value="${menu.isSigMenu}" placeholder="대표메뉴여부">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="menuImg1" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지1</label>
+            <div class="col-sm-4">
+                <input type="file" class="form-control" id="menuImg1" name="menuImg11"  value="${menu.menuImg1}" placeholder="메뉴 이미지1">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="menuImg2" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지2</label>
+            <div class="col-sm-4">
+                <input type="file" class="form-control" id="menuImg2" name="menuImg22"  value="${menu.menuImg2}" placeholder="메뉴 이미지2">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="menuImg3" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지3</label>
+            <div class="col-sm-4">
+                <input type="file" class="form-control" id="menuImg3" name="menuImg33"  value="${menu.menuImg3}" placeholder="메뉴 이미지3">
+            </div>
+        </div>
 
 <%--        <div class="form-group">--%>
-<%--            <label for="menuName" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이름</label>--%>
+<%--            <label for="multiMenuImg" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지3</label>--%>
 <%--            <div class="col-sm-4">--%>
-<%--                <input type="text" class="form-control" id="menuName" name="menuName" value="${menu.menuName }" placeholder="메뉴 이름">--%>
+<%--                <input multiple="multiple" type="file" class="form-control" id="multiMenuImg" name="multiMenuImg"  value="${menu.multiMenuImg}" placeholder="멀티메뉴이미지"/>--%>
+<%--                <input type="text" name="src"/>--%>
 
 <%--            </div>--%>
 <%--        </div>--%>
 
-<%--        <div class="form-group">--%>
-<%--            <label for="menuDetail" class="col-sm-offset-1 col-sm-3 control-label">메뉴상세정보</label>--%>
-<%--            <div class="col-sm-4">--%>
-<%--                <input type="text" class="form-control" id="menuDetail" name="menuDetail" value="${menu.menuDetail }" placeholder="메뉴상세정보">--%>
-<%--            </div>--%>
-<%--        </div>--%>
 
-<%--        <div class="form-group">--%>
-<%--            <label for="menuPrice" class="col-sm-offset-1 col-sm-3 control-label">메뉴 가격</label>--%>
-<%--            <div class="col-sm-4">--%>
-<%--                <input type="text" class="form-control" id="menuPrice" name="menuPrice" value="${menu.menuPrice }" placeholder="메뉴 가격">--%>
-<%--            </div>--%>
-<%--        </div>--%>
 
-<%--        <div class="form-group">--%>
-<%--            <label for="isSigMenu" class="col-sm-offset-1 col-sm-3 control-label">대표메뉴여부</label>--%>
-<%--            <div class="col-sm-4">--%>
-<%--                <input type="text" class="form-control" id="isSigMenu" name="isSigMenu" value="${menu.isSigMenu}" placeholder="대표메뉴여부">--%>
-<%--            </div>--%>
-<%--        </div>--%>
+        <div id="here"></div>
+        <!--////////////////모달 옵션그룹 추가 시작////////////-->
 
-<%--        <div class="form-group">--%>
-<%--            <label for="menuImg1" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지1</label>--%>
-<%--            <div class="col-sm-4">--%>
-<%--                <input type="file" class="form-control" id="menuImg1" name="menuImg11"  value="${menu.menuImg1}" placeholder="메뉴 이미지1">--%>
-<%--            </div>--%>
-<%--        </div>--%>
+        <div class="modal fade" id="exampleModal" aria-hidden="true" aria-labelledby="exampleModalLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">옵션그룹이름</h5>
 
-<%--        <div class="form-group">--%>
-<%--            <label for="menuImg2" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지2</label>--%>
-<%--            <div class="col-sm-4">--%>
-<%--                <input type="file" class="form-control" id="menuImg2" name="menuImg22"  value="${menu.menuImg2}" placeholder="메뉴 이미지2">--%>
-<%--            </div>--%>
-<%--        </div>--%>
-
-<%--        <div class="form-group">--%>
-<%--            <label for="menuImg3" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지3</label>--%>
-<%--            <div class="col-sm-4">--%>
-<%--                <input type="file" class="form-control" id="menuImg3" name="menuImg33"  value="${menu.menuImg3}" placeholder="메뉴 이미지3">--%>
-<%--            </div>--%>
-<%--        </div>--%>
-
-<%--&lt;%&ndash;        <div class="form-group">&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <label for="multiMenuImg" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지3</label>&ndash;%&gt;--%>
-<%--&lt;%&ndash;            <div class="col-sm-4">&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <input multiple="multiple" type="file" class="form-control" id="multiMenuImg" name="multiMenuImg"  value="${menu.multiMenuImg}" placeholder="멀티메뉴이미지"/>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                <input type="text" name="src"/>&ndash;%&gt;--%>
-
-<%--&lt;%&ndash;            </div>&ndash;%&gt;--%>
-<%--&lt;%&ndash;        </div>&ndash;%&gt;--%>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group" id="rrrrrr" name="rrrrrr">
+                            <label for="optionGroupName" class="col-from-label">옵션그룹이름</label>
+                            <input type="text" class="form-control" id="optionGroupName" value="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <%--                        <button class="btn btn-primary" data-bs-target="#optionModalLabel" data-bs-toggle="modal">옵션추가</button>--%>
+<%--                        <button type="button" class="btn btn-primary custom" onclick='applyOptionGroupName();'>옵션그룹이름적용</button>--%>
+                        <button type="button" class="btn btn-primary customer" onclick='applyOptionGroupNamer();' data-bs-toggle="modal" data-bs-target="#optionModal" data-whatever="option">옵션추가</button>
+                        <button type="button" class="btn btn-primary" id="add-optionGroup">적용</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
-<%--        <div id="here"></div>--%>
-<%--        <!--////////////////모달 옵션그룹 추가 시작////////////-->--%>
-
-<%--        <div class="modal fade" id="exampleModal" aria-hidden="true" aria-labelledby="exampleModalLabel" tabindex="-1">--%>
-<%--            <div class="modal-dialog modal-dialog-centered">--%>
-<%--                <div class="modal-content">--%>
-<%--                    <div class="modal-header">--%>
-<%--                        <h5 class="modal-title" id="exampleModalLabel">옵션그룹이름</h5>--%>
-
-<%--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--%>
-<%--                    </div>--%>
-<%--                    <div class="modal-body">--%>
-<%--                        <div class="form-group" id="rrrrrr" name="rrrrrr">--%>
-<%--                            <label for="optionGroupName" class="col-from-label">옵션그룹이름</label>--%>
-<%--                            <input type="text" class="form-control" id="optionGroupName" value="">--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="modal-footer">--%>
-<%--                        &lt;%&ndash;                        <button class="btn btn-primary" data-bs-target="#optionModalLabel" data-bs-toggle="modal">옵션추가</button>&ndash;%&gt;--%>
-<%--&lt;%&ndash;                        <button type="button" class="btn btn-primary custom" onclick='applyOptionGroupName();'>옵션그룹이름적용</button>&ndash;%&gt;--%>
-<%--                        <button type="button" class="btn btn-primary customer" onclick='applyOptionGroupNamer();' data-bs-toggle="modal" data-bs-target="#optionModal" data-whatever="option">옵션추가</button>--%>
-<%--                        <button type="button" class="btn btn-primary" id="add-optionGroup">적용</button>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-
-
-
-<%--        <div class="modal fade" id="optionModal" aria-hidden="true" aria-labelledby="optionModalLabel" tabindex="-1">--%>
-<%--            <div class="modal-dialog modal-dialog-centered">--%>
-<%--                <div class="modal-content">--%>
-<%--                    <div class="modal-header">--%>
-<%--                        <h5 class="modal-title" id="optionModalLabel">옵션 추가</h5>--%>
-<%--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--%>
-<%--                    </div>--%>
-<%--                    <div class="modal-body">--%>
-<%--                        &lt;%&ndash;                        <form>&ndash;%&gt;--%>
-<%--                        &lt;%&ndash;                            <label for="optionName" class="col-form-label">옵션 이름</label>&ndash;%&gt;--%>
-<%--                        <input type="text" class="form-control" id="optionName" value="${optionGroup.optionName}">--%>
-<%--                        &lt;%&ndash;                            <label for="optionPrice" class="col-form-label">옵션 가격</label>&ndash;%&gt;--%>
-<%--                        <input type="text" class="form-control" id="optionPrice" value="${optionGroup.optionPrice}">--%>
-<%--                        &lt;%&ndash;                        </form>&ndash;%&gt;--%>
-<%--                    </div>--%>
-<%--                    <div class="modal-footer">--%>
-<%--                        <button type="button" class="btn btn-primary addOption" data-bs-target="#exampleModal" data-bs-toggle="modal">옵션 추가</button>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        &lt;%&ndash;        <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModal" role="button">옵션그룹추가</a>&ndash;%&gt;--%>
-<%--        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-whatever="optionGroup">옵션그룹추가</button>--%>
-<%--        <!--모달 옵션그룹 추가 끝-->--%>
+        <div class="modal fade" id="optionModal" aria-hidden="true" aria-labelledby="optionModalLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="optionModalLabel">옵션 추가</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <%--                        <form>--%>
+                        <%--                            <label for="optionName" class="col-form-label">옵션 이름</label>--%>
+                        <input type="text" class="form-control" id="optionName" value="${optionGroup.optionName}">
+                        <%--                            <label for="optionPrice" class="col-form-label">옵션 가격</label>--%>
+                        <input type="text" class="form-control" id="optionPrice" value="${optionGroup.optionPrice}">
+                        <%--                        </form>--%>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary addOption" data-bs-target="#exampleModal" data-bs-toggle="modal">옵션 추가</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%--        <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModal" role="button">옵션그룹추가</a>--%>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-whatever="optionGroup">옵션그룹추가</button>
+        <!--모달 옵션그룹 추가 끝-->
 
 
 
 
-<%--        <div class="form-group">--%>
-<%--            <div class="col-sm-offset-4  col-sm-4 text-center">--%>
-<%--                <button type="submit" class="btn btn-primary"  id="addMenuOptionGroupButton">추 &nbsp;가</button>--%>
-<%--                <a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </form>--%>
-<%--</div>--%>
+        <div class="form-group">
+            <div class="col-sm-offset-4  col-sm-4 text-center">
+                <button type="submit" class="btn btn-primary"  id="addMenuOptionGroupButton">추 &nbsp;가</button>
+                <a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
+            </div>
+        </div>
+    </form>
+</div>
 
-<%--</div>--%>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
