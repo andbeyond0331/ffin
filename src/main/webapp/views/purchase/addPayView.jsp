@@ -663,8 +663,8 @@
         var menuPrice = 0;
         for (var i = 0; i < odMenuNameL.length; i++) {
 
-            alert(odMenuNameL[i]);
-            alert(odOptionNameL[i]);
+   /*         alert(odMenuNameL[i]);
+            alert(odOptionNameL[i]);*/
 
             menuPrice += (odOptionPriceL[i] + odMenuPriceL[i]);
 
