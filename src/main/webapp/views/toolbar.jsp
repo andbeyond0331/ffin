@@ -173,10 +173,10 @@
         $(function () {
             $("button.btn.btn-primary:Contains('확인')").click(function () {
                 var order = to_ajax()
-                alert(order)
+
                 append = "<input type=\"hidden\" id=\"orderNo\" name=\"orderNo\" value=\"" + order + "\">";
                 $('#app').append(append);
-                alert(append)
+                /*alert(append)*/
                 self.location = "/purchase/addCart?orderNo=" + order
                 /* $("form").attr("method" , "POST").attr("action" , "/purchase/addCart").submit();*/
 
@@ -238,13 +238,13 @@
             $('input[name="odMenuQtyFlag"]').each(function (i) {
                 odMenuQtyFlag.push($(this).val());
             });
-            alert(orderPickUpTime)
+   /*         alert(orderPickUpTime)
             alert(orderTotalPrice)
             alert(orderUserId)
             alert(orderTruckId)
             alert(orderRequest)
             alert(orderQty)
-            alert(odMenuQtyFlag)
+            alert(odMenuQtyFlag)*/
 
             var data = {
                 "odMenuName": odMenuName,

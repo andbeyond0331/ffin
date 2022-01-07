@@ -491,7 +491,7 @@
                         <div class="row row-cols-2">
                             <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio1"
                                                     value="1" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary w-100" for="btnradio1">다날</label>
+                                <label class="btn btn-outline-primary w-100" for="btnradio1">휴대폰결제</label>
                             </div>
                             <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio2"
                                                     value="2" autocomplete="off">
@@ -663,8 +663,8 @@
         var menuPrice = 0;
         for (var i = 0; i < odMenuNameL.length; i++) {
 
-            alert(odMenuNameL[i]);
-            alert(odOptionNameL[i]);
+   /*         alert(odMenuNameL[i]);
+            alert(odOptionNameL[i]);*/
 
             menuPrice += (odOptionPriceL[i] + odMenuPriceL[i]);
 
