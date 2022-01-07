@@ -181,7 +181,7 @@ public class UserRestController {
 
         String result = userService.getUserId(userName, userPhone);
 
-        if(result.isEmpty()){
+        if(result == null ){
             return "fail";
         }
 
