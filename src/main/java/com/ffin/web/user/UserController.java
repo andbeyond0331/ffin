@@ -112,7 +112,7 @@ public class UserController {
                 userService.autoLogin(user.getUserId(), session.getId(), date);
             }
         }
-        return "redirect:/views/homeTest.jsp";
+        return "redirect:/";
     }
 
     @RequestMapping( value="addUser", method=RequestMethod.GET )
@@ -143,7 +143,7 @@ public class UserController {
         User user = userService.getUser(userId);
         model.addAttribute("user", user);
 
-        return "views/user/getUser.jsp";
+        return "views/user/getUserInfo.jsp";
     }
 
 /*    @RequestMapping(value="updateUserProfile", method=RequestMethod.GET)
@@ -174,7 +174,7 @@ public class UserController {
 
         System.out.println("UserController.updateUserProfile"+user);
 
-        return "redirect:/views/homeTest.jsp";
+        return "redirect:/";
 
     }
 
@@ -207,7 +207,7 @@ public class UserController {
         session.setAttribute("user", dbUser);
         session.setAttribute("role","user");
 
-        return "redirect:/views/homeTest.jsp";
+        return "redirect:/";
     }
 
 }

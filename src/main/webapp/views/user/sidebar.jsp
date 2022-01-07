@@ -1,237 +1,268 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<html lang="ko">
+<style>
+
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Noto Sans CJK KR Regular", sans-serif;
+    }
+/*    .sidebar-body{
+        min-height: 80vh;
+        background-color: #ecf0fd;
+    }*/
+    .sidebar-div{
+        position: fixed;
+        top: 130px;
+        left: 20px;
+        bottom: 20px;
+        width: 70px;
+        box-sizing: content-box;
+        border-radius: 10px;
+        /*border-left: 5px solid #ffffff;
+        background-color: #ffffff;*/
+        transition: width 0.2s;
+        overflow-x: hidden;
+        height: auto;
+    }
+    .sidebar-div.active{
+        width: 180px;
+    }
+    .sidebar-div ul{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding-left: 5px;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    .sidebar-div ul li{
+        position: relative;
+        list-style: none;
+        width: 100%;
+        border-radius: 10px;
+        /*border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;*/
+    }
+    .sidebar-div ul li.active{
+        background: #ffe537;
+    }
+    .sidebar-div ul li b:nth-child(1){
+        position: absolute;
+        top: -20px;
+        height: 20px;
+        width: 100%;
+        /*background: #ffffff;*/
+        display: none;
+    }
+    .sidebar-div ul li b:nth-child(1)::before{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-bottom-right-radius: 20px;
+        /*background: #ffffff;*/
+    }
+    .sidebar-div ul li b:nth-child(2){
+        position: absolute;
+        bottom: -20px;
+        height: 20px;
+        width: 100%;
+        /*background: #ffffff;*/
+        display: none;
+    }
+    .sidebar-div ul li b:nth-child(2)::before{
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-top-right-radius: 20px;
+        /*background: #ffffff;*/
+    }
+    .sidebar-div ul li.active b:nth-child(1),
+    .sidebar-div ul li.active b:nth-child(2){
+        display: block;
+    }
+    .sidebar-div ul li a{
+        position: relative;
+        display: block;
+        width: 100%;
+        display: flex;
+        text-decoration: none;
+        color: #110000;
+    }
+    .sidebar-div ul li.active a{
+        color: #ffffff;
+    }
+    .sidebar-div ul li a .icon{
+        position: relative;
+        display: list-item;
+        min-width: 60px;
+        height: 60px;
+        line-height:70px;
+        text-align: center;
+    }
+    .sidebar-div ul li a .icon ion-icon{
+        font-size: 1.5em;
+    }
+    .sidebar-div ul li a .title{
+        position: relative;
+        display: block;
+        padding-left: 10px;
+        height: 60px;
+        line-height: 60px;
+        white-space: normal;
+    }
+    .sidebar-toggle{
+        position: relative;
+        top: 100px;
+        left: 35px;
+        /*right: 20px;*/
+        width: 40px;
+        height: 40px;
+        /*background: #ffe537;*/
+        border-radius: 10px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .sidebar-toggle.active{
+        /*background: #ffba49;*/
+    }
+    .sidebar-toggle ion-icon{
+        position: absolute;
+        color: #ffba49;
+        font-size: 30px;
+        display: none;
+    }
+    .sidebar-toggle.active ion-icon{
+        color: #ffe537;
+    }
+    .sidebar-toggle ion-icon.open,
+    .sidebar-toggle.active ion-icon.close{
+        display: block;
+    }
+    .sidebar-toggle ion-icon.close,
+    .sidebar-toggle.active ion-icon.open{
+        display: none;
+    }
+
+</style>
 
 
-<head>
-    <!-- Basic -->
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <!-- Mobile Metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <!-- Site Metas -->
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
-    <title>F.FIN | FOODTRUCK FINDER</title>
+<!-- sidebar -->
+<div class="navigation sidebar-div">
+    <ul class="sidebar-user">
+        <li class="list active">
+            <b></b>
+            <b></b>
+            <a href="#">
+                <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                <span class="title">MyPage</span>
+            </a>
+        </li>
+        <li class="list">
+            <b></b>
+            <b></b>
+            <a href="#">
+                <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
+                <span class="title">내정보</span>
+            </a>
+        </li>
+        <li class="list">
+            <b></b>
+            <b></b>
+            <a href="#">
+                <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
+                <span class="title">내정보</span>
+            </a>
+        </li>
+        <li class="list">
+            <b></b>
+            <b></b>
+            <a href="#">
+                <span class="icon"><ion-icon name="chatbubbles-outline"></ion-icon></span>
+                <span class="title">채팅</span>
+            </a>
+        </li>
+        <li class="list">
+            <b></b>
+            <b></b>
+            <a href="#">
+                <span class="icon"><ion-icon name="cart-outline"></ion-icon></span>
+                <span class="title">구매</span>
+            </a>
+        </li>
+        <li class="list">
+            <b></b>
+            <b></b>
+            <a href="#">
+                <span class="icon"><ion-icon name="heart-outline"></ion-icon></span>
+                <span class="title">좋아요</span>
+            </a>
+        </li>
+        <li class="list">
+            <b></b>
+            <b></b>
+            <a href="#">
+                <span class="icon"><ion-icon name="star-half-outline"></ion-icon></span>
+                <span class="title">리뷰</span>
+            </a>
+        </li>
+        <li class="list">
+            <b></b>
+            <b></b>
+            <a href="#">
+                <span class="icon"><ion-icon name="reader-outline"></ion-icon></span>
+                <span class="title">글•댓글</span>
+            </a>
+        </li>
+        <li class="list">
+            <b></b>
+            <b></b>
+            <a href="#">
+                <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
+                <span class="title">문의•신고</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="toggle sidebar-toggle">
+    <ion-icon name="reorder-three-outline" class="open"></ion-icon>
+    <ion-icon name="close-outline" class="close"></ion-icon>
+</div>
 
-    <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="../../resources/bootstrap/css/bootstrap.css" />
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
-    <!-- fonts style -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+<script>
 
-    <!-- font awesome style -->
-    <link href="../../resources/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
-    <!-- nice select -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/css/nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
-    <!-- slidck slider -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" integrity="sha256-UK1EiopXIL+KVhfbFa8xrmAWPeBjMVdvYMYkTAEv/HI=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css.map" integrity="undefined" crossorigin="anonymous" />
+    let menuToggle = document.querySelector('.sidebar-toggle');
+    let navigation = document.querySelector('.sidebar-div');
+    menuToggle.onclick = function () {
+        menuToggle.classList.toggle('active');
+        navigation.classList.toggle('active');
+    }
 
-    <!-- Custom styles for this template -->
-    <link href="../../resources/bootstrap/css/style.css" rel="stylesheet" />
-    <!-- responsive style -->
-    <link href="../../resources/bootstrap/css/responsive.css" rel="stylesheet" />
-
-    <!--    Favicons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="../../resources/bootstrap/assets/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../../resources/bootstrap/assets/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../../resources/bootstrap/assets/favicons/favicon-16x16.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../../resources/bootstrap/assets/favicons/favicon.ico">
-    <link rel="manifest" href="../../resources/bootstrap/assets/favicons/manifest.json">
-    <meta name="msapplication-TileImage" content="../../resources/bootstrap/assets/favicons/mstile-150x150.png">
-    <meta name="theme-color" content="#ffffff">
-
-    <!-- jQery -->
-    <script src="../../resources/bootstrap/js/jquery-3.4.1.min.js"></script>
-    <!-- bootstrap js -->
-    <script src="../../resources/bootstrap/js/bootstrap.js"></script>
-    <!-- slick  slider -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
-    <!-- nice select -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js" integrity="sha256-Zr3vByTlMGQhvMfgkQ5BtWRSKBGa2QlspKYJnkjZTmo=" crossorigin="anonymous"></script>
-    <!-- custom js -->
-    <script src="../../resources/bootstrap/js/custom.js"></script>
-    <!-- Favicons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.2.0/css/all.min.css" integrity="sha512-6c4nX2tn5KbzeBJo9Ywpa0Gkt+mzCzJBrE1RB6fmpcsoN+b/w/euwIMuQKNyUoU/nToKN3a8SgNOtPrbW12fug==" crossorigin="anonymous" />
-
-
-    <style>
-        .container.sidebar{
-            position: fixed;
-            width: 60px;
-            height: 100%;
-            background: #ffe537;
-            transition: 0.5s;
-            overflow: hidden;
-        }
-
-        .container.sidebar:hover,
-        .container.sidebar.active{
-            width: 300px;
-        }
-
-
-        .container.sidebar ul{
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            margin-top: 250px;
-        }
-        .container.sidebar ul li{
-            position: relative;
-            width: 100%;
-            list-style: none;
-        }
-
-        .container.sidebar ul li:hover{
-            background-color: #ffba49;
-        }
-
-        .container.sidebar ul li a{
-            position: relative;
-            display: block;
-            width: 100%;
-            display: flex;
-            text-decoration: none;
-            color: #ffffff;
-        }
-
-        .container.sidebar ul li a .icon {
-            position: relative;
-            display: flex;
-            min-width: 60px;
-            height: 60px;
-            line-height: 60px;
-            text-align: center;
-        }
-
-        .container.sidebar ul li a .title {
-            position: relative;
-            display: block;
-            padding: 0 10px;
-            height: 60px;
-            line-height: 60px;
-            text-align: start;
-            white-space: nowrap;
-        }
-
-        .toggle-sidebar{
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 60px;
-            height: 60px;
-            margin-top: 250px;
-            background: #ffe537;
-            cursor: pointer;
-        }
-
-        .toggle-sidebar:active{
-            background: #ffba49;
-        }
-
-        .toggle-sidebar:before{
-            content: '\f0c9 ';
-            font-family: FontAwesome;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            line-height: 60px;
-            text-align: center;
-            font-size: 24px;
-            color: white;
-        }
-
-        .toggle-sidebar:active:before{
-            content: '\f00d ';
-        }
-
-        @media (max-width: 767px){
-            .container.sidebar{
-                left: -60px;
+    let list = document.querySelectorAll('.list');
+    for(let i=0; i<list.length; i++){
+        list[i].onclick = function () {
+            let j = 0;
+            while (j < list.length){
+                list[j++].className = 'list';
             }
-            .container.sidebar.active{
-                left: -60px;
-            }
+            list[i].className = 'list active';
         }
-    </style>
+    }
+</script>
 
-    <script type="text/javascript">
-        function toggleMenu(){
-            let navigation = document.querySelector('.container.sidebar');
-            let toggle = document.querySelector('.toggle-sidebar');
-            navigation.classList.toggle('active');
-            toggle.classList.toggle('active');
-        }
-    </script>
-</head>
 
-<body>
-    <%-- sidebar --%>
-    <div class="container sidebar">
-        <ul>
-            <li>
-                <a href="#">
-                    <span class="icon"><i class="fas fa-home"></i></span>
-                    <span class="title">Mypage</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="icon"><i class="fas fa-user-alt"></i></span>
-                    <span class="title">내정보</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="icon"><i class="fas fa-shopping-basket"></i></span>
-                    <span class="title">구매내역</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="icon"><i class="fas fa-donate"></i></span>
-                    <span class="title">적립금</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="icon"><i class="far fa-money-bill-alt"></i></span>
-                    <span class="title">쿠폰</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="icon"><i class="fas fa-heart"></i></span>
-                    <span class="title">좋아요</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="icon"><i class="fas fa-star-half-alt"></i></span>
-                    <span class="title">리뷰</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="icon"><i class="far fa-edit"></i></span>
-                    <span class="title">글•댓글</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <span class="icon"><i class="far fa-question-circle"></i></span>
-                    <span class="title">문의•신고</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="toggle-sidebar" onclick="toggleMenu()"></div>
-</body>
-</html>
