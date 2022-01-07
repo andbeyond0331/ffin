@@ -21,8 +21,8 @@
         width: 70px;
         box-sizing: content-box;
         border-radius: 10px;
-        /*border-left: 5px solid #ffffff;
-        background-color: #ffffff;*/
+        /*border-left: 5px solid #ffffff;*/
+        /*background-color: #ffe537;*/
         transition: width 0.2s;
         overflow-x: hidden;
         height: auto;
