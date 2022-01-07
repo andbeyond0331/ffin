@@ -603,7 +603,7 @@
                     <button type="button" class="btn btn-primary">확인</button>
 
 
-                    <input type="hidden" id="orderUserId" name="orderUserId.userId" value="user01"/>
+                    <input type="hidden" id="orderUserId" name="orderUserId.userId" value="hhj_01"/>
                     <input type="hidden" id="orderTruckId" name="orderTruckId.truckId" value="truck01"/>
                     <input type="hidden" id="orderQty" name="orderQty" value="3"/>
                     <input type="hidden" id="orderTotalPrice" name="orderTotalPrice" value="3000"/>
@@ -655,7 +655,7 @@
                 odMenuNameCopy = odMenuNameCopy + "," + odMenuName;
                 odMenuImageCopy = odMenuImageCopy + "," + odMenuImage;
                 odMenuQtyCopy = odMenuQtyCopy + "," + odMenuQty;
-                odMenuPriceCopy = odMenuPriceCopy + "," + odMenuPrice;
+                odMenuPriceCopy = odMenuPriceCopy + "," + parseInt(odMenuPrice);
                 totalPrice = totalPrice + parseInt(odMenuPrice);
             } else if (odMenuNameCopy == undefined) {
 
@@ -666,6 +666,7 @@
                 totalPrice = parseInt(odMenuPrice);
 
             }
+
 
             odMenuNameL = odMenuNameCopy.split(",");
             odMenuImageL = odMenuImageCopy.split(",");
@@ -692,12 +693,10 @@
                 odOptionNameCopy = odOptionNameCopy + "," + odOptionName;
                 test2 = odMenuName;
                 odOptionGroupNameCopy = odOptionGroupNameCopy + "," + odOptionGroupName;
-                odOptionPriceCopy = odOptionPriceCopy + odOptionPrice;
+                odOptionPriceCopy = odOptionPriceCopy +  odOptionPrice;
             }
 
-            odOptionNameL = odOptionNameCopy.split("/");
-            odOptionGroupNameL = odOptionGroupNameCopy.split("/");
-            odOptionPriceL = odOptionPriceCopy.split("/").map(Number);
+
 
 
             /*            alert("total"+odMenuPriceL)
@@ -796,7 +795,11 @@
             /*
                         alert(odMenuNameL[i]);
                         alert(odOptionNameL[i]);*/
+            odOptionNameL = odOptionNameCopy.split("/");
+            odOptionGroupNameL = odOptionGroupNameCopy.split("/");
+            odOptionPriceL = odOptionPriceCopy.split("/").map(Number);
 
+            /*alert(odOptionPriceL)*/
             menuPrice += (odOptionPriceL[i] + odMenuPriceL[i]);
 
 

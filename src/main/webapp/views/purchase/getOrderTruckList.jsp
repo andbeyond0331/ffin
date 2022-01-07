@@ -107,9 +107,13 @@
 
                 <div class="row ">
                     <div class="col-1">
-                        <button class="btn btn-primary" type="button">처리중</button>
 
-                        <button class="btn btn-primary" type="button">픽업완료</button>
+                            <button class="btn btn-primary" type="button">처리중</button>
+
+                           <button class="btn btn-primary" type="button">픽업완료</button>
+
+
+
                     </div>
                     <div class="col-11">
                         <div class="row justify-content-between">
@@ -124,7 +128,21 @@
                             <br><br>
                         </div>
                         <hr class="my-2">
+                        <c:set var="i" value="0"/>
+                        <c:forEach var="cart" items="${map.get('list')}">
+                            <c:set var="i" value="${i+1}"/>
 
+
+                            <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.orderNo}"/>
+                            <input type="hidden" id="odOptionGroupName" name="odOptionGroupName"
+                                   value="${cart.orderUserId}"/>
+                            <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.orderTruckId}"/>
+                            <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.orderStatus}"/>
+                            <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.orderPickUpTime}"/>
+                            <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.orderCookingTime}"/>
+                            <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.orderMenuName}"/>
+
+                        </c:forEach>
                     </div>
                 </div>
 

@@ -86,10 +86,11 @@
 
     /* Iamport 환불시스템*/
     function cancelPay() {
-        alert("dddd")
+
         var payId = $("input[name='payId']").val();
         var orderNo = $("input[name='orderNo']").val();
         var orderCancelReason = $("input[name='orderCancelReason']:checked").val();
+
         $.ajax({
             url: "/purchase/json/payRefund", // 예: http://www.myservice.com/payments/cancel
             type: "POST",
@@ -102,7 +103,7 @@
             },
 
             success: function (map) {
-
+                location.href = "http://127.0.0.1:8080/";
             },
             error: function (xhr, status, error) {
                 alert("[Error]" + error);
@@ -110,6 +111,7 @@
             }
 
         });
+
     }
 
 

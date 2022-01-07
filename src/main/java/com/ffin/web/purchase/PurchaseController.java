@@ -263,10 +263,11 @@ public class PurchaseController {
         Map map = purchaseService.getOrderList(truckTest);
         int orderNo = 0;
         if(orderNo != 0) {
-            purchaseService.getPurchase(orderNo);
+           purchase = purchaseService.getPurchase(orderNo);
         }
         System.out.println(map.get("purchase.getOrderNo"));
         model.addAttribute("map",map);
+        model.addAttribute("purchase",purchase);
 
         return "forward:/views/purchase/getOrderTruckList.jsp";
     }
