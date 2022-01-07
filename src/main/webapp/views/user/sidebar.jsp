@@ -173,10 +173,15 @@
         <li class="list">
             <b></b>
             <b></b>
-            <a href="#">
+            <a href="#" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
                 <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
                 <span class="title">내정보</span>
             </a>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                </div>
+            </div>
         </li>
         <li class="list">
             <b></b>

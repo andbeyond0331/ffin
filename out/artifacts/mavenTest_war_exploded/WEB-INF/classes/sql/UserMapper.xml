@@ -197,13 +197,7 @@
 	<select id="getUserId" parameterType="user" resultType="String">
 		SELECT user_id
 		FROM user
-		WHERE user_name = #{userName}  AND  role != '1'
-			<if test="user_phone == null and user_email != null">
-				AND user_email = #{userEmail}
-			</if>
-			<if test="user_phone != null and user_email == null">
-				AND user_phone = #{userPhone}
-			</if>
+		WHERE user_name = #{userName}  AND  role = '1' AND user_phone = #{userPhone}
 	</select>
 
 	<!--PW변경-->

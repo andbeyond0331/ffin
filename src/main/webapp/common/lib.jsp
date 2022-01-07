@@ -191,6 +191,10 @@
         justify-content: center;
     }
 
+    *{
+        font-family: "Noto Sans CJK KR Regular", sans-serif;
+    }
+
 
 </style>
 
