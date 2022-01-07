@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="ko">
 
 <!doctype html>
@@ -7,18 +7,35 @@
 <meta charset="EUC-KR">
 
 <!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 <head>
     <jsp:include page="../../common/lib.jsp"/>
 </head>
 <body>
-<jsp:include page="/views/navbar.jsp" />
+<jsp:include page="/views/navbar.jsp"/>
 <!-- Bootstrap Dropdown Hover CSS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 
 <style>
+    .row {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin-right: -28px;
+        margin-left: -17px;
+    }
 
+    /*장바구니내부 스크롤*/
+    .card-body ul, .order-wrap-pc ul {
+        max-height: 300px;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
 </style>
 <main>
 
@@ -60,7 +77,7 @@
                         <div class="row">
                             <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio4"
                                    autocomplete="off" value="4">
-                            <label class="btn btn-outline-primary" for="btnradio4">기    타</label>
+                            <label class="btn btn-outline-primary" for="btnradio4">기 타</label>
                         </div>
                     </div>
 
@@ -96,144 +113,184 @@
 
 
     <div class="container py-4">
-    <header class="pb-4 mb-5 py-4 border-bottom">
-        <span class="fs-1">주문내역</span>
-    </header>
+        <header class="pb-4 mb-5 py-4 border-bottom">
+            <span class="fs-1">주문내역</span>
+        </header>
 
-    <div class="container-fluid">
-        <div class="row justify-content-evenly">
+        <div class="container-fluid">
+            <div class="row justify-content-evenly">
 
-            <div class="col-5 p-3 mb-2  bg-light text-dark">
+                <div class="col-5 p-3 mb-2  bg-light text-dark">
 
-                <div class="row ">
-                    <div class="col-1">
+                    <div class="row ">
+                        <div class="col-2">
 
                             <button class="btn btn-primary" type="button">처리중</button>
 
-                           <button class="btn btn-primary" type="button">픽업완료</button>
+                            <button class="btn btn-primary" type="button">픽업완료</button>
 
 
+                        </div>
+                        <div class="col-10">
+                            <div class="row justify-content-between">
+                                <div class="col-6 text-center"> 전체 :</div>
+                                <div class="col-6">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch"
+                                               id="flexSwitchCheckChecked" checked>
+                                        <label class="form-check-label" for="flexSwitchCheckChecked">영업중</label>
 
-                    </div>
-                    <div class="col-11">
-                        <div class="row justify-content-between">
-                            <div class="col-6 text-center"> 전체 : </div>
-                            <div class="col-6">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
-                                    <label class="form-check-label" for="flexSwitchCheckChecked">영업중</label>
-
+                                    </div>
                                 </div>
+                                <br><br>
                             </div>
-                            <br><br>
+
+                            <c:set var="i" value="0"/>
+                            <c:forEach var="cart" items="${map.get('list')}">
+                                <c:set var="i" value="${i+1}"/>
+
+                                <hr class="my-2">
+                                <div class="row">
+                                    <div class="col-1">
+                                            ${i}
+                                    </div>
+                                    <div class="col-9">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <a href="#" class="text-break">${cart.odOrderNo.orderUserId.userId}</a>
+                                            </div>
+                                            <div class="col-6">
+                                                픽업희망시간 : ${cart.odOrderNo.orderPickUpTime}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <a href="#" class="text-break">${cart.odMenuName}</a>
+
+                                            </div>
+                                            <div class="col-6">
+                                                예상조리시간 : ${cart.odOrderNo.orderCookingTime}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-1">
+                                            ${cart.odOrderNo.orderStatus}
+                                    </div>
+                                </div>
+
+                                <input type="hidden" id="orderNo" name="orderNo" value="${cart.odOrderNo.orderNo}"/>
+                                <input type="hidden" id="userId" name="userId"
+                                       value="${cart.odOrderNo.orderUserId.userId}"/>
+                                <input type="hidden" id="truckId" name="truckId"
+                                       value="${cart.odOrderNo.orderTruckId.truckId}"/>
+                                <input type="hidden" id="orderStatus" name="orderStatus" value="${cart.odOrderNo.orderStatus}"/>
+                                <input type="hidden" id="odMenuPrice" name="orderPickUpTime"
+                                       value="${cart.odOrderNo.orderPickUpTime}"/>
+                                <input type="hidden" id="orderCookingTime" name="orderCookingTime"
+                                       value="${cart.odOrderNo.orderCookingTime}"/>
+                                <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
+
+                            </c:forEach>
                         </div>
-                        <hr class="my-2">
-                        <c:set var="i" value="0"/>
-                        <c:forEach var="cart" items="${map.get('list')}">
-                            <c:set var="i" value="${i+1}"/>
-
-
-                            <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.orderNo}"/>
-                            <input type="hidden" id="odOptionGroupName" name="odOptionGroupName"
-                                   value="${cart.orderUserId}"/>
-                            <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.orderTruckId}"/>
-                            <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.orderStatus}"/>
-                            <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.orderPickUpTime}"/>
-                            <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.orderCookingTime}"/>
-                            <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.orderMenuName}"/>
-
-                        </c:forEach>
                     </div>
+
+
                 </div>
 
+                <div class="col-6 p-3 mb-2 bg-light  text-dark">
+                    <div class="row ">
+                        <div class="col-2"> 상호 : ${purchase.orderTruckId.truckName}</div>
+                        <div class="col-2">
+                            <button class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle"
+                                    type="button">주문거절
+                            </button>
+                        </div>
+                        <div class="col-6">
 
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off"
+                                   value="5" checked>
+                            <label class="btn btn-primary btn-sm" for="btnradio5">5분</label>
+
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio6" autocomplete="off"
+                                   value="10">
+                            <label class="btn btn-primary btn-sm" for="btnradio6">10분</label>
+
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio7" autocomplete="off"
+                                   value="15">
+                            <label class="btn btn-primary btn-sm" for="btnradio7">15분</label>
+
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio8" autocomplete="off"
+                                   value="20">
+                            <label class="btn btn-primary btn-sm" for="btnradio8">20분</label>
+
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio9" autocomplete="off"
+                                   value="30">
+                            <label class="btn btn-primary btn-sm" for="btnradio9">30분</label>
+
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradi010" autocomplete="off"
+                                   value="40">
+                            <label class="btn btn-primary btn-sm" for="btnradi010">40분</label>
+                        </div>
+                        <div class="col-2">
+
+                            <button class="btn btn-primary" type="button">주문접수</button>
+
+                        </div>
+                    </div>
+                    <hr class="my-2">
+                    <div class="row">
+
+                        <div class="col-7">
+
+                            <div class="row">
+                                <label for="orderRequest" class="col-form-label">주문요청사항 :</label>
+                                <textarea class="form-control" id="orderRequest" name="orderRequest"
+                                          value="${purchase.orderRequest}" disabled></textarea>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <label for="orderRequest" class="col-form-label">픽업희망시간 :</label>
+                            </div>
+                            <hr class="my-2">
+                            <div class="row">
+                                <label for="orderRequest" class="col-form-label">주문내역 :</label>
+                            </div>
+
+                        </div>
+                        <div class="col-1">
+                            <div class="d-flex" style="height: 200px;">
+                                <div class="vr"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="row">
+                                <label for="orderRequest" class="col-form-label">고객정보 :</label>
+                            </div>
+                            <div class="row">
+
+                                <img src="/resources/image/1.jpg" width="90" height="120" alt="주문상품 이미지">
+
+                            </div>
+                            <div class="row">
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
 
-            <div class="col-6 p-3 mb-2 bg-light  text-dark">
-                <div class="row ">
-                    <div class="col-2"> 상호 : </div>
-                    <div class="col-2">
-                        <button class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" type="button">주문거절</button>
-                    </div>
-                    <div class="col-6">
-
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off" value="5" checked>
-                        <label class="btn btn-outline-primary" for="btnradio5">5분</label>
-
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio6" autocomplete="off" value="10">
-                        <label class="btn btn-outline-primary" for="btnradio6">10분</label>
-
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio7" autocomplete="off" value="15">
-                        <label class="btn btn-outline-primary" for="btnradio7">15분</label>
-
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio8" autocomplete="off" value="20">
-                        <label class="btn btn-outline-primary" for="btnradio8">20분</label>
-
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio9" autocomplete="off" value="30">
-                        <label class="btn btn-outline-primary" for="btnradio9">30분</label>
-
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradi010" autocomplete="off" value="40">
-                        <label class="btn btn-outline-primary" for="btnradi010">40분</label>
-                    </div>
-                    <div class="col-2">
-
-                        <button class="btn btn-primary" type="button">주문접수</button>
-
-                    </div>
-                </div>
-                <hr class="my-2">
-                <div class="row">
-
-                    <div class="col-7">
-
-                        <div class="row">
-                        <label for="orderRequest" class="col-form-label">주문요청사항 :</label>
-                        <textarea class="form-control" id="orderRequest" name="orderRequest"  value="${purchase.orderRequest}" disabled></textarea>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <label for="orderRequest" class="col-form-label">픽업희망시간 :</label>
-                        </div>
-                        <hr class="my-2">
-                        <div class="row">
-                            <label for="orderRequest" class="col-form-label">주문내역 :</label>
-                        </div>
-
-                    </div>
-                    <div class="col-1">
-                        <div class="d-flex" style="height: 200px;">
-                            <div class="vr"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-4">
-                        <div class="row">
-                            <label for="orderRequest" class="col-form-label">고객정보 :</label>
-                        </div>
-                        <div class="row">
-
-                            <img src="/resources/image/1.jpg" width="90" height="120" alt="주문상품 이미지">
-
-                        </div>
-                        <div class="row">
-
-
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
         </div>
-
-    </div>
-    <%--</div>--%>
+        <%--</div>--%>
     </div>
 
 </main>
 
 </body>
-<jsp:include page="/views/footer.jsp" />
+<jsp:include page="/views/footer.jsp"/>
 </html>

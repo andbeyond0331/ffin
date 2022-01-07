@@ -226,7 +226,8 @@
             background-position-x: 95%;
             background-position-y: center
         }
-        .wrap{
+
+        .wrap {
 
             max-width: 480px;
 
@@ -241,10 +242,9 @@
             box-sizing: border-box;
 
 
-
         }
 
-        .reviewform textarea{
+        .reviewform textarea {
 
             width: 100%;
 
@@ -311,8 +311,7 @@
         }
 
 
-
-        .cmd{
+        .cmd {
 
             margin-top: 20px;
 
@@ -320,7 +319,7 @@
 
         }
 
-        .cmd input[type="button"]{
+        .cmd input[type="button"] {
 
             padding: 10px 20px;
 
@@ -328,12 +327,11 @@
 
             background-color: #fff;
 
-            background-color:#000;
+            background-color: #000;
 
             color: #fff;
 
         }
-
 
 
         .warning_msg {
@@ -359,6 +357,7 @@
             border: 1px solid #e0e0e0;
 
         }
+
         <%--/////////////////////////////////////  장바구니 소스 ////////////////////////////////////--%>
     </style>
 
@@ -410,11 +409,11 @@
 
         //이벤트 리스너 등록
 
-        document.addEventListener('DOMContentLoaded', function(){
+        document.addEventListener('DOMContentLoaded', function () {
 
             // "선택 상품 삭제" 버튼 클릭
 
-            document.querySelector('.basketrowcmd a:first-child').addEventListener('click', function(){
+            document.querySelector('.basketrowcmd a:first-child').addEventListener('click', function () {
 
                 basket.delCheckedItem();
 
@@ -422,7 +421,7 @@
 
             // "장바구니 비우기" 버튼 클릭
 
-            document.querySelector('.basketrowcmd a:nth-child(2)').addEventListener('click', function(){
+            document.querySelector('.basketrowcmd a:nth-child(2)').addEventListener('click', function () {
 
                 basket.delAllItem();
 
@@ -431,66 +430,58 @@
             // 장바구니 행 "삭제" 버튼 클릭
 
             document.querySelectorAll('.basketcmd a').forEach(
+                function (item) {
 
-                function(item){
-
-                    item.addEventListener('click', function(){
+                    item.addEventListener('click', function () {
 
                         basket.delItem();
 
                     });
 
                 }
-
             );
 
             // 수량변경 - 이벤트 델리게이션으로 이벤트 종류 구분해 처리
 
             document.querySelectorAll('.updown').forEach(
-
-                function(item, idx){
+                function (item, idx) {
 
                     //수량 입력 필드 값 변경
 
-                    item.querySelector('input').addEventListener('keyup', function(){
+                    item.querySelector('input').addEventListener('keyup', function () {
 
-                        basket.changePNum(idx+1);
+                        basket.changePNum(idx + 1);
 
                     });
 
                     //수량 증가 화살표 클릭
 
-                    item.children[1].addEventListener('click', function(){
+                    item.children[1].addEventListener('click', function () {
 
-                        basket.changePNum(idx+1);
+                        basket.changePNum(idx + 1);
 
                     });
 
                     //수량 감소 화살표 클릭
 
-                    item.children[2].addEventListener('click', function(){
+                    item.children[2].addEventListener('click', function () {
 
-                        basket.changePNum(idx+1);
+                        basket.changePNum(idx + 1);
 
                     });
 
                 }
-
             );
 
             //앵커 # 대체해 스크롤 탑 차단
 
-            document.querySelectorAll('a[href="#"]').forEach(function(item){
+            document.querySelectorAll('a[href="#"]').forEach(function (item) {
 
-                item.setAttribute('href','javascript:void(0)');
+                item.setAttribute('href', 'javascript:void(0)');
 
             });
 
         });
-
-
-
-
 
 
         let basket = {
@@ -501,7 +492,7 @@
 
             //체크한 장바구니 상품 비우기
 
-            delCheckedItem: function(){
+            delCheckedItem: function () {
 
                 document.querySelectorAll("input[name=buy]:checked").forEach(function (item) {
 
@@ -510,7 +501,6 @@
                 });
 
                 //AJAX 서버 업데이트 전송
-
 
 
                 //전송 처리 결과가 성공이면
@@ -523,7 +513,7 @@
 
             //장바구니 전체 비우기
 
-            delAllItem: function(){
+            delAllItem: function () {
 
                 document.querySelectorAll('.row.data').forEach(function (item) {
 
@@ -532,7 +522,6 @@
                 });
 
                 //AJAX 서버 업데이트 전송
-
 
 
                 //전송 처리 결과가 성공이면
@@ -549,7 +538,7 @@
 
             //재계산
 
-            reCalc: function(){
+            reCalc: function () {
 
                 this.totalCount = 0;
 
@@ -557,7 +546,8 @@
 
                 document.querySelectorAll(".p_num").forEach(function (item) {
 
-                    var count = parseInt(item.getAttribute('value'));9999
+                    var count = parseInt(item.getAttribute('value'));
+                    9999
 
                     this.totalCount += count;
 
@@ -583,18 +573,18 @@
 
             changePNum: function (pos) {
 
-                var item = document.querySelector('input[name=p_num'+pos+']');
+                var item = document.querySelector('input[name=p_num' + pos + ']');
 
                 var p_num = parseInt(item.getAttribute('value'));
 
-                var newval = event.target.classList.contains('up') ? p_num+1 : event.target.classList.contains('down') ?
+                var newval = event.target.classList.contains('up') ? p_num + 1 : event.target.classList.contains('down') ?
 
-                    p_num-1 : event.target.value;
+                    p_num - 1 : event.target.value;
 
 
-
-                if (parseInt(newval) < 1 || parseInt(newval) > 99) { return false; }
-
+                if (parseInt(newval) < 1 || parseInt(newval) > 99) {
+                    return false;
+                }
 
 
                 item.setAttribute('value', newval);
@@ -602,13 +592,11 @@
                 item.value = newval;
 
 
-
                 var price = item.parentElement.parentElement.previousElementSibling.firstElementChild.getAttribute('value');
 
-                item.parentElement.parentElement.nextElementSibling.textContent = (newval * price).formatNumber()+"원";
+                item.parentElement.parentElement.nextElementSibling.textContent = (newval * price).formatNumber() + "원";
 
                 //AJAX 업데이트 전송
-
 
 
                 //전송 처리 결과가 성공이면
@@ -628,21 +616,21 @@
             }
 
         }
-/*        // 숫자 3자리 콤마찍기
+        /*        // 숫자 3자리 콤마찍기
 
-        Number.prototype.formatNumber = function(){
+                Number.prototype.formatNumber = function(){
 
-            if(this==0) return 0;
+                    if(this==0) return 0;
 
-            let regex = /(^[+-]?\d+)(\d)/;
+                    let regex = /(^[+-]?\d+)(\d)/;
 
-            let nstr = (this + '');
+                    let nstr = (this + '');
 
-            while (regex.test(nstr)) nstr = nstr.replace(regex, '$1' + ',' + '$2');
+                    while (regex.test(nstr)) nstr = nstr.replace(regex, '$1' + ',' + '$2');
 
-            return nstr;
+                    return nstr;
 
-        };*/
+                };*/
 
 
         <%--/////////////////////////////////////  장바구니 소스 ////////////////////////////////////--%>
@@ -716,86 +704,131 @@
         </div>
         <div class="card-body">
             <ul class="list-group list-group-flush">
-            <%--<div id="order"></div>--%>
+
 
                 <div class="basket" id="basket">
+
+                    <%--
+
+
+                                        <div class="row data">
+                                            <div class="subdiv">
+                                                <div class="check"><input type="checkbox" name="buy" value="260" checked="" onclick="javascript:basket.checkItem();">&nbsp;</div>
+                                                <div class="pname">
+                                                    <span>찜마마(XJ-92214/3)</span>
+                                                </div>
+                                            </div>
+                                            <div class="subdiv">
+                                                <div class="basketprice"><input type="hidden" name="p_price" id="p_price1" class="p_price" value="20000">20,000원</div>
+                                                <div class="num">
+                                                    <div class="updown">
+                                                        <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="2" onkeyup="javascript:basket.changePNum(1);">
+                                                        <span onclick="javascript:basket.changePNum(1);"><i class="fas fa-arrow-alt-circle-up up"></i></span>
+                                                        <span onclick="javascript:basket.changePNum(1);"><i class="fas fa-arrow-alt-circle-down down"></i></span>
+                                                    </div>
+                                                </div>
+                                                <div class="sum">40,000원</div>
+                                            </div>
+                                            <div class="subdiv">
+                                                <div class="basketcmd"><a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delItem();">삭제</a></div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row data">
+                                            <div class="subdiv">
+                                                <div class="check"><input type="checkbox" name="buy" value="261" checked="" onclick="javascript:basket.checkItem();">&nbsp;</div>
+                                                <div class="img"><img src="./img/basket2.jpg" width="60"></div>
+                                                <div class="pname">
+                                                    <span>노바 요거팜(JP-268T)</span>
+                                                </div>
+                                            </div>
+                                            <div class="subdiv">
+                                                <div class="basketprice"><input type="hidden" name="p_price" id="p_price2" class="p_price" value="19000">19,000원</div>
+                                                <div class="num">
+                                                    <div class="updown">
+                                                        <input type="text" name="p_num2" id="p_num2" size="2" maxlength="4" class="p_num" value="1" onkeyup="javascript:basket.changePNum(2);">
+                                                        <span onclick="javascript:basket.changePNum(2);"><i class="fas fa-arrow-alt-circle-up up"></i></span>
+                                                        <span onclick="javascript:basket.changePNum(2);"><i class="fas fa-arrow-alt-circle-down down"></i></span>
+                                                    </div>
+                                                </div>
+                                                <div class="sum">19,000원</div>
+                                            </div>
+                                            <div class="subdiv">
+                                                <div class="basketcmd"><a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delItem();">삭제</a></div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row data">
+                                            <div class="subdiv">
+                                                <div class="check"><input type="checkbox" name="buy" value="262" checked="" onclick="javascript:basket.checkItem();">&nbsp;</div>
+                                                <div class="img"><img src="./img/basket3.jpg" width="60"></div>
+                                                <div class="pname">
+                                                    <span>아날도 바시니 보스톤 가방 20인치 (ab-380)</span>
+                                                </div>
+                                            </div>
+                                            <div class="subdiv">
+                                                <div class="basketprice"><input type="hidden" name="p_price" id="p_price3" class="p_price" value="15200">15,200원</div>
+                                                <div class="num">
+                                                    <div class="updown">
+                                                        <input type="text" name="p_num3" id="p_num3" size="2" maxlength="4" class="p_num" value="1" onkeyup="javascript:basket.changePNum(3);">
+                                                        <span onclick="javascript:basket.changePNum(3);"><i class="fas fa-arrow-alt-circle-up up"></i></span>
+                                                        <span onclick="javascript:basket.changePNum(3);"><i class="fas fa-arrow-alt-circle-down down"></i></span>
+                                                    </div>
+                                                </div>
+                                                <div class="sum">15,200원</div>
+                                            </div>
+                                            <div class="subdiv">
+                                                <div class="basketcmd"><a href="javascript:void(0)" class="abutton" onclick="javascript:basket.delItem();">삭제</a></div>
+                                            </div>
+                                        </div>
+
+
+                    --%>
+
 
 
 
                     <!-- "장바구니 상품 목록" -->
 
-                    <div class="row data">
+                    <%--  <div class="row data">
 
-                        <div class="check"><input type="checkbox" name="buy" value="260" checked="">&nbsp;</div>
-
-
-                        <div class="pname">
-
-                            <span>찜마마(XJ-92214/3)</span>
-
-                        </div>
-
-                        <div class="basketprice"><input type="hidden" name="p_price" id="p_price1" class="p_price" value="20000">20,000원</div>
-
-                        <div class="num">
-
-                            <!-- "장바구니 수량 변경" -->
-
-                            <div class="updown">
-
-                                <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="2">
-
-                                <span><i class="fas fa-arrow-alt-circle-up up"></i></span>
-
-                                <span><i class="fas fa-arrow-alt-circle-down down"></i></span>
-
-                            </div>
-
-                        </div>
-
-                        <!-- "장바구니 상품 합계" -->
-
-                        <div class="sum">40,000원</div>
-
-                        <div class="basketcmd"><a href="#" class="abutton">삭제</a></div>
-
-                    </div>
-                    <div class="row data">
-
-                        <div class="check"><input type="checkbox" name="buy" value="260" checked="">&nbsp;</div>
+                          <div class="check"><input type="checkbox" name="buy" value="260" checked="">&nbsp;</div>
 
 
-                        <div class="pname">
+                          <div class="pname">
 
-                            <span>찜마마(XJ-92214/3)</span>
+                              <span>찜마마(XJ-92214/3)</span>
 
-                        </div>
+                          </div>
 
-                        <div class="basketprice"><input type="hidden" name="p_price" id="p_price2" class="p_price" value="20000">20,000원</div>
+                          <div class="basketprice"><input type="hidden" name="p_price" id="p_price1" class="p_price" value="20000">20,000원</div>
 
-                        <div class="num">
+                          <div class="num">
 
-                            <!-- "장바구니 수량 변경" -->
+                              <!-- "장바구니 수량 변경" -->
 
-                            <div class="updown">
+                              <div class="updown">
 
-                                <input type="text" name="p_num1" id="p_num2" size="2" maxlength="4" class="p_num" value="2">
+                                  <input type="text" name="p_num1" id="p_num1" size="2" maxlength="4" class="p_num" value="2">
 
-                                <span><i class="fas fa-arrow-alt-circle-up up"></i></span>
+                                  <span><i class="fas fa-arrow-alt-circle-up up"></i></span>
 
-                                <span><i class="fas fa-arrow-alt-circle-down down"></i></span>
+                                  <span><i class="fas fa-arrow-alt-circle-down down"></i></span>
 
-                            </div>
+                              </div>
 
-                        </div>
+                          </div>
 
-                        <!-- "장바구니 상품 합계" -->
+                          <!-- "장바구니 상품 합계" -->
 
-                        <div class="sum">40,000원</div>
+                          <div class="sum">40,000원</div>
 
-                        <div class="basketcmd"><a href="#" class="abutton">삭제</a></div>
+                          <div class="basketcmd"><a href="#" class="abutton">삭제</a></div>
 
-                    </div>
+                      </div>--%>
+                        <div id="order"></div>
 
                 </div>
 
@@ -816,7 +849,6 @@
                 <div class="bigtext right-align box blue summoney" id="sum_p_price">합계금액: 74,200원</div>
 
 
-
                 <div id="goorder" class="">
 
                     <div class="clear"></div>
@@ -828,22 +860,22 @@
                     </div>
 
                 </div>
-            <%--
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <div class="row border-top border-bottom">
-                                    <div class="row main align-items-center">
-                                        <div class="col">
-                                            <div class="row text-muted">Shirt</div>
-                                            <div class="row">Cotton T-shirt</div>
+                <%--
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div class="row border-top border-bottom">
+                                        <div class="row main align-items-center">
+                                            <div class="col">
+                                                <div class="row text-muted">Shirt</div>
+                                                <div class="row">Cotton T-shirt</div>
+                                            </div>
+                                            <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
+                                            <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
                                         </div>
-                                        <div class="col"> <a href="#">-</a><a href="#" class="border">1</a><a href="#">+</a> </div>
-                                        <div class="col">&euro; 44.00 <span class="close">&#10005;</span></div>
                                     </div>
-                                </div>
-                            </li>
-                        </ul>
-            --%>
+                                </li>
+                            </ul>
+                --%>
 
             </ul>
             <c:set var="i" value="0"/>
@@ -940,7 +972,6 @@
         </div>
     </div>
 </div>--%>
-
 
 
 <%--/////////////////////////////////////  장바구니 소스 ////////////////////////////////////--%>
@@ -1061,21 +1092,64 @@
                   "</div>"*/
 
 
-            divElemApply1 ="<li class='list-group-item'>"+
-            "<div class='row border-top border-bottom'>"+
-            "<div class='row main align-items-center'>"+
-            "<div class='col'>"+
-            "<div class='row text-muted'>" + odMenuNameL[i] + " :" + odOptionGroupNameL[i] + "</div>"+
-            "<div class='row'>" + odOptionNameL[i] + "</div>"+
-            "</div>"+
-            "<div class='col'> <a href='#'>-</a><a href='#' class='border'>" + odMenuQtyL[i] + "</a><a href='#'>+</a> </div>"+
-            "<div class='col'>" + (odOptionPriceL[i] + odMenuPriceL[i]) + "<span class='close'>&#10005;</span></div>"+
-            "</div>"+
-            "</div>"+
-            "</li>"
+            /*  divElemApply1 ="<li class='list-group-item'>"+
+              "<div class='row border-top border-bottom'>"+
+              "<div class='row main align-items-center'>"+
+              "<div class='col'>"+
+              "<div class='row text-muted'>" + odMenuNameL[i] + " :" + odOptionGroupNameL[i] + "</div>"+
+              "<div class='row'>" + odOptionNameL[i] + "</div>"+
+              "</div>"+
+              "<div class='col'> <a href='#'>-</a><a href='#' class='border'>" + odMenuQtyL[i] + "</a><a href='#'>+</a> </div>"+
+              "<div class='col'>" + (odOptionPriceL[i] + odMenuPriceL[i]) + "<span class='close'>&#10005;</span></div>"+
+              "</div>"+
+              "</div>"+
+              "</li>"*/
+            /*
+
+                        divElemApply1 = "<div class='row data'>"+
+                        "<div class='check'><input type='checkbox' name='buy' value='260' checked=''>&nbsp;</div>"+
+                        "<div class='pname'>"+
+                        "<span>찜마마(XJ-92214/3)</span>"+
+                        "</div>"+
+                        "<div class='basketprice'><input type='hidden' name='p_price' id='p_price2' class='p_price' value='20000'>20,000원</div>"+
+                        "<div class='num'>"+
+                        "<div class='updown'>"+
+                        "<input type='text' name='p_num1' id='p_num2' size='2' maxlength='4' class='p_num' value='2'>"+
+                        "<span><i class='fas fa-arrow-alt-circle-up up'></i></span>"+
+                        "<span><i class='fas fa-arrow-alt-circle-down down'></i></span>"+
+                        "</div>"+
+                        "</div>"+
+                        "<div class='sum'>40,000원</div>"+
+                        "<div class='basketcmd'><a href='#' class='abutton'>삭제</a></div>"+
+                        "</div>"
+            */
 
 
-alert(divElemApply1)
+            divElemApply1 = "<div class='row data'>"+
+            "<div class='subdiv'>"+
+            "<div class='check'><input type='checkbox' name='buy' value='260' checked='' onclick='javascript:basket.checkItem();'>&nbsp;</div>"+
+            "<div class='pname'>"+
+            "<span>찜마마(XJ-92214/3)</span>"+
+            "</div>"+
+            "</div>"+
+            "<div class='subdiv'>"+
+            "<div class='basketprice'><input type='hidden' name='p_price' id='p_price1' class='p_price' value='20000'>20,000원</div>"+
+            "<div class='num'>"+
+            "<div class='updown'>"+
+            "<input type='text' name='p_num1' id='p_num1' size='2' maxlength='4' class='p_num' value='2' onkeyup='javascript:basket.changePNum(" + i + ");'>"+
+            "<span onclick='javascript:basket.changePNum(" + i + ");'><i class='fas fa-arrow-alt-circle-up up'></i></span>"+
+            "<span onclick='javascript:basket.changePNum(" + i + ");'><i class='fas fa-arrow-alt-circle-down down'></i></span>"+
+            "</div>"+
+            "</div>"+
+            "<div class='sum'>40,000원</div>"+
+            "</div>"+
+            "<div class='subdiv'>"+
+            "<div class='basketcmd'><a href='javascript:void(0)' class='abutton' onclick='javascript:basket.delItem();'>삭제</a></div>"+
+            "</div>"+
+            "</div>"
+
+
+            alert(divElemApply1)
             $('#order').append(divElemApply1);
 
         }
