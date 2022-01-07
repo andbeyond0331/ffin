@@ -260,11 +260,14 @@ public class PurchaseController {
 
         System.out.println("/purchase/getOrderList : POST");
         String truckTest = "truck02";
-        Map map = purchaseService.getOrderList(truckTest);
-        int orderNo = 0;
-        if(orderNo != 0) {
-           purchase = purchaseService.getPurchase(orderNo);
+        Map map = purchaseService.getOrderList(truckId);
+ /*       List<Map<String, Object>> resultList = map;
+        for(int i = 0; i<map.size(); i++){
+            List<String> list =
+            int maporderNo =
         }
+        purchase = purchaseService.getPurchase();
+*/
         System.out.println(map.get("purchase.getOrderNo"));
         model.addAttribute("map",map);
         model.addAttribute("purchase",purchase);

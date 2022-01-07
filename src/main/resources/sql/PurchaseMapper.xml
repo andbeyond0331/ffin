@@ -432,7 +432,7 @@
 
 
 
-	<select id="getOrderList" parameterType="String" resultMap="purchaseSelectMap,orderDetailSelectMap">
+	<select id="getOrderList" parameterType="String" resultMap="orderDetailSelectMap">
 		SELECT
 			PUR.ORDER_NO,PUR.ORDER_USER_ID,PUR.ORDER_TRUCK_ID,PUR.ORDER_STATUS,PUR.ORDER_PICK_UP_TIME,PUR.ORDER_COOKING_TIME,ORD.OD_MENU_NAME
 		FROM ffin.purchase pur,ffin.orderdetail ord
