@@ -87,7 +87,7 @@
             }, function (rsp) {
                 if (rsp.success) {
 
-                    alert("결제 들어왔어")
+                    /*alert("결제 들어왔어")*/
 
 
                     //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
@@ -280,7 +280,7 @@
 
                 append = "<input type=\"hidden\" id=\"couponNo\" name=\"couponNo\" value=\"" + couponNo + "\">";
 
-                alert(append + ":append");
+                /*alert(append + ":append");*/
 
                 $('#couponDcPrice').val(couponDcPrice);
                 $('#test').append(append);
