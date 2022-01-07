@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionContext;
 import java.util.*;
 
 @Controller
@@ -61,6 +63,7 @@ public class PurchaseController {
     public ModelAndView getMenuList(@ModelAttribute("search") Search search,
                                     @RequestParam("truckId") String truckId,
                                     HttpServletResponse response,
+                                    HttpSession session,
                                     ModelAndView modelAndView) throws Exception{
 
 //        File file = new File(FILE_UPLOAD_PATH, fileName);
@@ -69,7 +72,10 @@ public class PurchaseController {
 //        response.setHeader("Content-Disposition", "attachment;filename=\""+fn+"\"");
 //        response.setContentLength(bytes.length);
 
-
+        Map sessionMenu = new HashMap();
+        sessionMenu = purchaseService.getOrderDetail(1);
+        session.setAttribute("map",sessionMenu);
+        session.setAttribute("name","박성원");
 
         search.setPageSize(pageSize);
         Truck truck  = truckService.getTruck(truckId);
