@@ -46,7 +46,7 @@
 
     <!-- SQL : SELECT LIST -->
     <select id="getCommentList"   parameterType="int"   resultMap="commentSelectMap">
-        SELECT COMMENT_NO ,COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
+        SELECT COMMENT_NO, COMMENT_POST_NO ,COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
         FROM comment
         WHERE comment_post_no = ${value}
         order by COMMENT_NO DESC

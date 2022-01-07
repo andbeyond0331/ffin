@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.awt.color.CMMException;
 import java.util.List;
 
 // @ResponseBody를 붙이지 않아도 뷰가 아닌 데이터 리턴 가능
@@ -106,7 +107,7 @@ public class CommunityRestController {
         return "redirect:/community/getPost";
     }
 
-    @RequestMapping(value = "json/updateComment", method = RequestMethod.GET)
+    @RequestMapping(value = "json/updateComment", method = RequestMethod.POST)
     public String updateComment(@ModelAttribute("comment") Comment comment, Model model, HttpSession session) throws Exception {
 
         System.out.println("/community/updateComment : POST");
@@ -120,4 +121,26 @@ public class CommunityRestController {
         return "redirect:/community/getComment?commentNo=" + comment.getCommentNo();
     }
 
+    @RequestMapping(value = "deleteComment", method = RequestMethod.GET)
+    public String deleteComment(@ModelAttribute("comment") Comment comment,@RequestParam("commentNo") int commentNo, Model model, HttpSession session)
+        throws Exception {
+
+        System.out.println("/community/deleteComment : GET");
+
+        commentNo = (int) session.getAttribute("commentNo");
+
+        System.out.println("commentNo = " + commentNo);
+
+        int commentPostNo = (int) session.getAttribute("postNo");
+
+        System.out.println("commentPostNo = " + commentPostNo);
+
+        comment.setCommentPostNo(commentPostNo);
+
+
+
+        communityService.deleteComment(comment);
+
+        return "redirect:/community/getComment?commentNo=" + comment.getCommentNo();
+    }
 }

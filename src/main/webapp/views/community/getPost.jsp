@@ -75,7 +75,7 @@
         <%--    });--%>
         <%--}--%>
 
-        //댓글 목록 출력 함수
+        //댓글 목록 출력 함수(댓글작성)
         function listReply() {
             //alert("listReply function excute");
             $.ajax({
@@ -93,6 +93,29 @@
             });
         }
 
+
+        //댓글 목록 출력 함수(댓글삭제)
+        function listReplyD() {
+            //alert("listReply function excute");
+            var postNo = $('#commentPostNo').val();
+            $.ajax({
+                type   : "get", //get방식으로 자료를 전달한다
+                url    : "/community/getCommentList?commentPostNo="+postNo,
+                data    : "commentList",
+                dataType : "json", //컨트롤러에 있는 list.do로 맵핑하고 게시판 번호도 같이 보낸다.
+
+                success: function (result) { //자료를 보내는것이 성공했을때 출력되는 메시지
+                    console.log(result);
+                    //alert(JSON.stringify(result));
+                    //$("#listReply").html(JSON.stringify(result));
+                    //alert("댓글 출력");
+                    location.reload();
+                }
+            });
+        }
+
+
+<!-- 댓글 작성 -->
         $(function () {
             //댓글 쓰기 (버튼을 눌러서 id값이 넘어와 실행되는 자바스크립트 구문)
             $("#btnReply").click(function () {
@@ -114,6 +137,36 @@
                     success: function () { //데이터를 보내는것이 성공했을시 출력되는 메시지
                         //alert("댓글이 등록되었습니다.");
                         listReply(); //댓글 목록 출력
+                    }
+                });
+            });
+        })
+
+<!-- 댓글 삭제 -->
+        $(function () {
+            //댓글 삭제 (버튼을 눌러서 id값이 넘어와 실행되는 자바스크립트 구문)
+            $("#deleteC").click(function () {
+                alert("댓글삭제를 클릭했다");
+                var replyNo = $('#commentNo').val(); //댓글 번호
+                var postNo = $('#commentPostNo').val(); //댓글을 단 게시글 번호
+                alert(replyNo);
+                alert(postNo);
+                <%--var bno = "${post.postNo}"; //게시물 번호--%>
+                var paramD = {"postNo": postNo};
+                //var param="replytext="+replytext+"&bno="+bno;
+
+                <%--if (replytext == null || replytext.length < 1) {--%>
+                <%--    alert("댓글 내용은 반드시 입력하셔야 합니다.");--%>
+                <%--    return;--%>
+                <%--}--%>
+
+                $.ajax({
+                    type   : "get", //데이터를 보낼 방식
+                    url    : "/community/deleteComment", //데이터를 보낼 url
+                    data   : "postNo", //보낼 데이터
+                    success: function () { //데이터를 보내는것이 성공했을시 출력되는 메시지
+                        alert("댓글이 삭제되었습니다.");
+                        listReplyD(); //댓글 목록 출력
                     }
                 });
             });
@@ -168,19 +221,19 @@
 
                 <td colspan="1">
                     첨부파일1<br/>
-                    <img src="../../resources/image/${post.postFile1}" width="300"
+                    <img src="../resources/image/${post.postFile1}" width="300"
                          height="300"/>
                 </td>
 
                 <td colspan="1">
                     첨부파일2<br/>
-                    <img src="../../resources/image/${post.postFile2}" width="300"
+                    <img src="../resources/image/${post.postFile2}" width="300"
                          height="300"/>
                 </td>
 
                 <td colspan="1">
                     첨부파일3<br/>
-                    <img src="../../resources/image/${post.postFile3}" width="300"
+                    <img src="../resources/image/${post.postFile3}" width="300"
                          height="300"/>
                 </td>
 
@@ -250,9 +303,11 @@
                                         <td align="left" >${comment.commentContent}</td>
                                         <td align="left" ><fmt:formatDate value="${comment.commentDate}" pattern="yyyy-MM-dd"/></td>
                                         <td align="left" >
+                                            <input type="hidden" id="commentNo" value="${comment.commentNo}">
+                                            <input type="hidden" id="commentPostNo" value="${comment.commentPostNo}">
                                     <c:if test="${sessionScope.user.userId.equals(comment.commentUserId) || sessionScope.truck.truckId.equals(comment.commentTruckId)}">
-                                        <a href="community/json/updateComment" class="btn-dark" role="button">수정</a>
-                                        <a href="community/json/deletecomment" class="btn-dark" role="button">삭제</a>
+                                        <button id="updateC" href="/community/updateComment" class="btn-dark">수정</button>
+                                        <button id="deleteC" href="/community/deleteComment" class="btn-dark">삭제</button>
                                     </c:if>
                                         </td>
                                     </tr>
