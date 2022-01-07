@@ -108,24 +108,37 @@
        <c:set var="i" value="0"/>
        <c:forEach var="optionGroup" items="${list}">
            <c:set var="i" value="${i+1}" />
-           <tr class="ct_list_pop">
-               <td align="center">
+<%--           <tr class="ct_list_pop">--%>
+<%--               <td align="center">--%>
 
-                       ${i}
-               </td>
-               <td></td>
+<%--                       ${i}--%>
+<%--               </td>--%>
+<%--               <td></td>--%>
 
-               <td align="left">
-<%--                   <span class="odMenuName">${cart.odMenuName}</span>--%>
-                   <span class="optionGroupName" >${optionGroup.optionGroupName}</span>
-               </td>
-               <td align="left">
-                   <span class="optionName" >${optionGroup.optionName}</span>
+<%--               <td align="left">--%>
+<%--&lt;%&ndash;                   <span class="odMenuName">${cart.odMenuName}</span>&ndash;%&gt;--%>
+<%--                   <span class="optionGroupName" >${optionGroup.optionGroupName}</span>--%>
+<%--               </td>--%>
+<%--               <td align="left">--%>
+<%--                   <span class="optionName" >${optionGroup.optionName}</span>--%>
 
-               </td>
-               <td align="left">
-                   <span class="optionPrice" >${optionGroup.optionPrice}</span>
-               </td> v
+<%--               </td>--%>
+<%--               <td align="left">--%>
+<%--                   <span class="optionPrice" >${optionGroup.optionPrice}</span>--%>
+<%--               </td> v--%>
+           <c:if test=""></c:if>
+           <div class="row">
+                   <div class="col-xs-4 col-md-2"><strong>옵션 그룹 이름</strong></div>
+                   <div class="col-xs-8 col-md-4">${optionGroup.optionGroupName}</div>
+               </div>
+                <div class="row">
+                   <div class="col-xs-4 col-md-2"><strong>옵션 이름</strong></div>
+                   <div class="col-xs-8 col-md-4">${optionGroup.optionName}</div>
+               </div>
+               <div class="row">
+                   <div class="col-xs-4 col-md-2"><strong>옵션 가격</strong></div>
+                   <div class="col-xs-8 col-md-4">${optionGroup.optionPrice}</div>
+               </div>
 
                </c:forEach>
    </table>
