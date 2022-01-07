@@ -33,7 +33,6 @@
     <!-- toolbar -->
     <jsp:include page="/views/navbar.jsp" />
 
-
     <!-- slider section -->
     <section class="slider_section ">
         <div class="container ">

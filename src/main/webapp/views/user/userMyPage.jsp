@@ -52,30 +52,6 @@
 			font-weight: bold;
 		}
 
-		.list{
-			text-align: initial;
-		}
-
-		.sidebar-div{
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-			font-family: "Noto Sans CJK KR Regular", sans-serif;
-		}
-
-		.sidebar-user{
-			min-height: 1vh;
-			background: white;
-		}
-
-/*		.sidebar-div{
-			position: fixed;
-			top: 20px;
-			left: 20px;
-			bottom: 20px;
-			width: 300px;
-			background: #ecf0fd;
-		}*/
 	</style>
 
 	<script type="text/javascript">
@@ -119,71 +95,14 @@
 <body>
 
 <jsp:include page="/views/navbar.jsp" />
-
-
-
+<div style="height: auto">
+	<jsp:include page="/views/user/sidebar.jsp" />
+</div>
 
 
 
 <!-- client section -->
 <section class="client_section layout_padding">
-	<div style="display: flex;">
-	<!-- sidebar -->
-	<div class="navigation col-sm sidebar-div">
-		<ul class="sidebar-user">
-			<li class="list">
-				<a href="#">
-					<span class="icon"><ion-icon name="home-outline"></ion-icon></span>
-					<span class="title">Home</span>
-				</a>
-			</li>
-			<li class="list">
-				<a href="#">
-					<span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
-					<span class="title">내정보</span>
-				</a>
-			</li>
-			<li class="list">
-				<a href="#">
-					<span class="icon"><ion-icon name="chatbubbles-outline"></ion-icon></span>
-					<span class="title">채팅</span>
-				</a>
-			</li>
-			<li class="list">
-				<a href="#">
-					<span class="icon"><ion-icon name="cart-outline"></ion-icon></span>
-					<span class="title">구매</span>
-				</a>
-			</li>
-			<li class="list">
-				<a href="#">
-					<span class="icon"><ion-icon name="heart-outline"></ion-icon></span>
-					<span class="title">좋아요</span>
-				</a>
-			</li>
-			<li class="list">
-				<a href="#">
-					<span class="icon"><ion-icon name="star-half-outline"></ion-icon></span>
-					<span class="title">리뷰</span>
-				</a>
-			</li>
-			<li class="list">
-				<a href="#">
-					<span class="icon"><ion-icon name="reader-outline"></ion-icon></span>
-					<span class="title">글•댓글</span>
-				</a>
-			</li>
-			<li class="list">
-				<a href="#">
-					<span class="icon"><ion-icon name="help-outline"></ion-icon></span>
-					<span class="title">문의•신고</span>
-				</a>
-			</li>
-		</ul>
-	</div>
-	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
 
 	<div class="container">
 		<div class="col-md-11 col-lg-10 mx-auto">
@@ -265,7 +184,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 </section>
 <jsp:include page="/views/footer.jsp" />

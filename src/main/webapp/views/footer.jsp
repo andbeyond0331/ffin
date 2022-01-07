@@ -12,8 +12,8 @@
     <div class="container">
         <p>
             &copy; <span id="displayYear"></span> All Rights Reserved By
-            <a href="https://html.design/">CRUD | PHS HHJ PSW LJS PMJ</a><br>
-            Distributed By: <a href="https://themewagon.com/">F.FIN</a>
+            <a href="https://127.0.0.1:8080/">CRUD | PSH HHJ PSW LJS PMJ</a><br>
+            Distributed By: <a href="https://127.0.0.1:8080/">F.FIN</a>
         </p>
     </div>
 </footer>
