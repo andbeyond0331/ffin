@@ -24,7 +24,6 @@
 	<meta name="msapplication-TileImage" content="../../resources/bootstrap/assets/favicons/mstile-150x150.png">
 	<meta name="theme-color" content="#ffffff">
 
-
 	<style>
 
 		#inquiryType{
@@ -35,11 +34,104 @@
 			padding-left: 4px;
 		}
 
+		/* 이미지 미리보기 css */
+		#img-card img{
+			max-width: 100%;
+			height: auto;
+			display: block;
+			padding: 5px;
+			margin-top: 10px;
+			margin: auto;
+		}
+		#img-card {
+			position: relative;
+			margin-top: 15px;
+		}
+		.imgDeleteBtn{
+			position: absolute;
+			top: 0;
+			right: 5%;
+			color: #f17228;
+			font-weight: 900;
+			width: 20px;
+			cursor: pointer;
+		}
+
+		.imgDeleteBtn ion-icon{
+			text-align: center;
+			width: 25px;
+			height: 25px;
+		}
+
+
 	</style>
 
 	<script type="text/javascript">
 
+		var inquiryTypeChk = false;
+		var inquiryTitleChk = false;
+		var inquiryContentChk = false;
+
+		/* 문의등록 */
 		$(function () {
+			$("a[href='#' ]").click(function () {
+
+				alert("등록");
+
+				var inquiryType = $('#inquiryType').val();
+				var inquiryTitle = $('#inquiryTitle').val();
+				var inquiryContent = $('#inquiryContent').val();
+
+				/* V/C */
+				if(inquiryType === ""){
+					$(".inquiryTypeChk").css("display","block");
+					$('#inquiryType').css({
+						"border-color" : "#ffba49",
+						"box-shadow" : "0 0 0 0.1rem rgb(241, 114, 40)"
+					});
+					inquiryTypeChk = false;
+				}else {
+					inquiryTypeChk = true;
+				}
+
+				if(inquiryTitle === ""){
+					$(".inquiryTitleChk").css("display","block");
+					$('#inquiryTitle').css({
+						"border-color" : "#ffba49",
+						"box-shadow" : "0 0 0 0.1rem rgb(241, 114, 40)"
+					});
+					inquiryTitleChk = false;
+				} else {
+					inquiryTitleChk = true;
+				}
+
+				if(inquiryContent === ""){
+					$(".inquiryContentChk").css("display","block");
+					$('#inquiryContent').css({
+						"border-color" : "#ffba49",
+						"box-shadow" : "0 0 0 0.1rem rgb(241, 114, 40)"
+					});
+					inquiryContentChk = false;
+				} else {
+					inquiryContentChk = true;
+				}
+
+				if(inquiryTypeChk&&inquiryTitleChk&&inquiryContentChk){
+					$("#addInquiry").attr("method", "POST").attr("action","/qna/addInquiry").attr("enctype","multipart/form-data").submit();
+				}
+
+
+			});
+		});
+
+
+		/* upload img function */
+		$(function () {
+
+			/* 이미지 존재시 삭제 */
+			if($(".imgDeleteBtn").length > 0){
+				deleteFile();
+			}
 
 			/* 이미지 업로드 */
 			$("input[type='file']").on("change", function(e){
@@ -50,6 +142,7 @@
                 let fileList = fileInput[0].files;
                 let fileObj = fileList[0];
 
+				/* 이미지 파일 체크 */
                 if(!fileCheck(fileObj.name, fileObj.size)){
                     return false;
                 }
@@ -60,16 +153,32 @@
                 //     formData.append("uploadFile", fileList[i]);
                 // }
 
-                $.ajax({
+                /*$.ajax({
                     url: '/qna/json/uploadInquiryFile',
                     processData : false,
                     contentType : false,
                     data : formData,
                     type : 'POST',
                     dataType : 'json'
-                });
+                });*/
 
-                //alert("통과");
+				$.ajax({
+					url: '/qna/json/uploadInquiryFile',
+					processData : false,
+					contentType : false,
+					data : formData,
+					type : 'POST',
+					dataType : 'json',
+					success : function(result){
+						console.log("Image View return :: "+result);
+						showUploadImage(result);
+					},
+					error : function(result) {
+						alert("이미지 파일이 아닙니다.");
+					}
+				});
+
+				//alert("통과");
 
                 console.log("fileList : " + fileList);
                 console.log("fileObj : " + fileObj);
@@ -99,6 +208,55 @@
                 return true;
             }
 
+			/* 이미지 출력 */
+			function showUploadImage(uploadResultArr){
+
+				/* 전달받은 데이터 검증 */
+				if(!uploadResultArr || uploadResultArr.length == 0){return}
+				let uploadResult = $(".uploadImg");
+				let obj = uploadResultArr[0];
+				let str = "";
+				let fileCallPath = encodeURIComponent(obj.uploadPath.replace(/\\/g, '/') + "/s_" + obj.uuid + "_" + obj.fileName);
+
+				str += "<div id='img-card'>";
+				str += "<img src='/qna/json/displayImg?fileName=" + fileCallPath +"'>";
+				str += "<div class='imgDeleteBtn' data-file='" + fileCallPath + "'><ion-icon name='"+"close-outline"+"'></ion-icon></div>";
+				str += "<input type='hidden' name='imageList[0].fileName' value='"+ obj.fileName +"'>";
+				str += "</div>";
+
+				uploadResult.append(str);
+			}
+
+			/* 이미지 삭제 */
+			function deleteFile(){
+				let targetFile = $(".imgDeleteBtn").data("file");
+
+				let targetDiv = $("#img-card");
+
+				$.ajax({
+					url: '/qna/json/deleteFile',
+					data : {fileName : targetFile},
+					dataType : 'text',
+					type : 'POST',
+					success : function(result){
+						console.log(result);
+
+						targetDiv.remove();
+						$("input[type='file']").val("");
+					},
+					error : function(result){
+						console.log(result);
+
+						alert("파일 삭제 X")
+					}
+				});
+			}
+
+			/* 이미지 삭제 클릭 */
+			$(".uploadImg").on("click", ".imgDeleteBtn", function(e){
+				deleteFile();
+			});
+
 		});
 
 	</script>
@@ -116,7 +274,7 @@
 
 <!-- client section -->
 <section class="client_section layout_padding">
-	<form class="row justify-content-center" id="user_pro_form" >
+	<form class="row justify-content-center" id="addInquiry" >
 		<input type="hidden" id="userId" name="userId" value="${user.userId}">
 <%--		<input type="hidden" id="truckId" name="truckId" value="${truck.truckId}">--%>
 
@@ -141,26 +299,43 @@
 									<option value="3">주문</option>
 									<option value="4">기타</option>
 								</select>
+								<span class="inquiryTypeChk" style="display: none;">문의유형을 선택해주세요.</span>
 							</div>
 							<div class="data-input-box">
 								<label for="inquiryTitle" class="form-label label-name">제목</label>
 								<input type="text" class="form-control" id="inquiryTitle" name="inquiryTitle">
+								<span class="inquiryTitleChk" style="display: none;">제목을 입력해주세요.</span>
 							</div>
 							<div class="data-input-box">
 								<label for="inquiryContent">내용</label>
 								<textarea class="form-control label-name" id="inquiryContent" name="inquiryContent" style="resize: none; height: 100px"></textarea>
+								<span class="inquiryContentChk" style="display: none;">내용을 입력해주세요.</span>
 							</div>
 							<div class="data-input-box">
-								<label for="inquiryFile" class="form-label">첨부파일</label>
-								<input class="form-control" type="file" id="inquiryFile" name="uploadFile" multiple>
+								<label for="uploadFile" class="form-label">첨부파일</label>
+								<input class="form-control" type="file" id="uploadFile" name="uploadFile" multiple>
+								<%-- 업로드 이미지 미리보기 --%>
+								<div class="uploadImg">
+									<%--<div id="img-card">
+										<div class="imgDeleteBtn"><ion-icon name="close-outline"></ion-icon></div>
+										<img src="/qna/displayImg?fileName=moma.png">
+									</div>--%>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</form>
+	<div class="btn-box" style="margin-top: 40px;">
+		<a onClick="history.go(-1);" style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
+			취소
+		</a>
+		<a href="#">
+			문의 등록
+		</a>
+	</div>
 </section>
 <jsp:include page="/views/footer.jsp" />
 </body>

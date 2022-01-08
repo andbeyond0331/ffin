@@ -54,17 +54,17 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 20px">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" id="goTruck" href="#"><i class="fas fa-truck"></i>푸드트럭</a>
+                        <a class="nav-link" id="goTruck" href="#">푸드트럭</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="goCatering" href="#"><i class="far fa-calendar-alt"></i>케이터링</a>
+                        <a class="nav-link" id="goCatering" href="#">케이터링</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="goPost" href="#"><i class="fas fa-globe"></i>게시판</a>
+                        <a class="nav-link" id="goPost" href="#">게시판</a>
                     </li>
                     <c:if test="${user.userId != null && sessionScope.role == 'user'}">
                     <li class="nav-item">
-                        <a class="nav-link" id="goChat" href="#"><i class="fas fa-comments"></i>채팅방</a>
+                        <a class="nav-link" id="goChat" href="#">채팅방</a>
                     </li>
                     </c:if>
                 </ul>
@@ -87,7 +87,7 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="user-dropdown">
                                 <li><a class="dropdown-item user-menu" href="/views/user/userMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
-                                <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-question-circle"></i>문의</a></li>
+                                <li><a class="dropdown-item user-menu" href="/views/qna/addInquiryView.jsp"><i class="fas fa-question-circle"></i>문의</a></li>
                                 <li><a class="dropdown-item user-menu" href="/user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
                             </ul>
                         </c:if>
