@@ -259,16 +259,45 @@ public class PurchaseController {
     public String getOrderList(@RequestParam("truckId")String truckId, Model model,Purchase purchase) throws Exception{
 
         System.out.println("/purchase/getOrderList : POST");
-        String truckTest = "truck02";
-        Map map = purchaseService.getOrderList(truckId);
- /*       List<Map<String, Object>> resultList = map;
-        for(int i = 0; i<map.size(); i++){
-            List<String> list =
-            int maporderNo =
+        System.out.println("truckId = " + truckId + ", model = " + model + ", purchase = " + purchase);
+
+
+        String truckTest = "truck01";
+        Search search = new Search();
+        search.setSearchCondition("0");
+
+
+        Map map = purchaseService.getOrderList(search,truckId);
+
+        List list = new ArrayList();
+        list.add(map.get("list"));
+        List <Map<String,Object>> listMap = list;
+
+        System.out.println("00000000000000000000000000000"+list.get(0));
+
+        //System.out.println("1111111111111111111111111111"+list.get(1));
+        /*Java Code을 이용한 예외 Message 보기 ::Index: 1, Size: 1
+        EL을 이용한 예외 Message 보기 :: Index: 1, Size: 1*/
+        //이런 에러가 난다... db에서 가져온 값은 List.size가 1인가?? 그냥 한곳에 다넣어서 전달하는거 같다.. ㅠㅠ
+        System.out.println("list.size"+list.size());
+
+        for(int i = 0; i<list.size(); i++){
+           // String orderNom = list.get(i).
+            System.out.println(list.get(i));
+            //int orderNo = Integer.parseInt(listMap.get(0).get("odOrderNo.orderNo").toString());
+            //System.out.println("orderNo."+orderNo);
+
+            //System.out.println("//////////////////"+list.get(0).get("orderNo").toString());
+           // purchase.setOrderNo();
         }
-        purchase = purchaseService.getPurchase();
-*/
+
+
+        OrderDetail orderDetail = new OrderDetail();
+        Map orderMap = purchaseService.getOrderDetail(1);
+        purchase = purchaseService.getPurchase(1);
+       // purchase = purchaseService.getPurchase();
         System.out.println(map.get("purchase.getOrderNo"));
+        model.addAttribute("orderMap",orderMap);
         model.addAttribute("map",map);
         model.addAttribute("purchase",purchase);
 
@@ -302,9 +331,5 @@ public class PurchaseController {
         //.updateOrderRefusal(),updatePoint(), updateTotalPoint()
         return "forward:/purchase/getOrderList";
     }
-
-
-
-
 
 }

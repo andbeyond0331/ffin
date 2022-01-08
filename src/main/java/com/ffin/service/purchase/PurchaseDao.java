@@ -5,6 +5,7 @@ import com.ffin.common.Search;
 import com.ffin.service.domain.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PurchaseDao {
 
@@ -26,7 +27,7 @@ public interface PurchaseDao {
 
     public List<Coupon> getCouponList(Coupon coupon)throws Exception; //이용자가 가지고 있는 쿠폰 리스트를 출력
     public List<OrderDetail> getCartList( int orderNo)throws Exception; //주문상세에 있는 정보 List?로 가져옴
-    public List<Purchase> getOrderList(String truckId)throws Exception; //푸드트럭에 대한 현재판매목록
+    public Map<String,Object> getOrderList(Search search, String truckId)throws Exception; //푸드트럭에 대한 현재판매목록
     public List<Purchase> getPurchaseList(Search search , String userId)throws Exception;//마이페이지에서 구매이력
     public List<Purchase> getSalesList(Search search , String truckId)throws Exception; //마이페이지에서 판매이력
     public List<Point> getPointList(Search search , String userId)throws Exception;//마이페이지에서 포인트내역조회

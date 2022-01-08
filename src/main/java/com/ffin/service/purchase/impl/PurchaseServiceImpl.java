@@ -105,10 +105,9 @@ public class PurchaseServiceImpl implements PurchaseService {
         return map;
     } //주문상세에 있는 정보 List?로 가져옴
     @Override
-    public Map<String,Object> getOrderList( String truckId)throws Exception{
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("list", purchaseDao.getOrderList(truckId));
-        return map;
+    public Map<String, Object> getOrderList(Search search,String truckId)throws Exception{
+        return purchaseDao.getOrderList(search , truckId);
+
     } //현재판매목록
     @Override
     public Map<String,Object> getPurchaseList(Search search , String userId)throws Exception{
