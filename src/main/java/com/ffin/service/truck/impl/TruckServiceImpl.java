@@ -65,11 +65,11 @@ public class TruckServiceImpl implements TruckService {
     @Override
     public Map<String, Object> getTruckList(Search search) throws Exception {
         List<Truck> list = truckDao.getTruckList(search);
-        //int totalCount = truckDao.getTotalCount(search);
+        int totalCount = truckDao.getTotalCount(search);
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("list", list);
-        //map.put("totalCount", new Integer(totalCount));
+        map.put("totalCount", new Integer(totalCount));
 
         return map;
     }

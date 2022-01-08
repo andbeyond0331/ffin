@@ -11,6 +11,12 @@ public class Search {
 	private String searchKeyword;
 	private int pageSize;
 
+	// TRUCK SORTING을 위한 SORTCONDITION
+	private String sortCondition;
+
+	//  2022-01-08 truck category 나누기 위한 cate condition
+	private String cateCondition;
+
 	private int endRowNum;
 	private int startRowNum;
 	

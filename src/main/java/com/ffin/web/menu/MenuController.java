@@ -66,10 +66,108 @@ public class MenuController {
     int pageSize;
 
 
+
+
+
     //FILE UPLOAD를 위한 FIELD 설정
     private static final String FILE_UPLOAD_PATH = "C:/CRUD/ffin/src/main/webapp/resources/image/";
 //    private static final String FILE_UPLOAD_PATH = "/resources/image/";
 //    private static final String FILE_UPLOAD_PATH = "C:/CRUD/ffin/src/main/webapp/resources/image/";
+
+
+
+    // 트럭 리스트 - 전체
+    @RequestMapping(value = "getTruckList")
+    public String getTruckList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+//    public String getTruckList(@RequestParam(value="cateCondition", required = false) String cateCondition, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+
+        System.out.println("/truck/getTruckList : GET / POST");
+
+        if (search.getCurrentPage() == 0) {
+            search.setCurrentPage(1);
+        }
+
+
+//        String searchKeyword = search.getSearchKeyword();
+//        System.out.println("////searchKeyword : " +searchKeyword);
+//        if(searchKeyword != null) {
+//            search.setSearchKeyword(new String(searchKeyword.getBytes("8859_1"), "euc-kr"));
+//        }
+        System.out.println("////searchKeyword : " + search.getSearchKeyword());
+
+        search.setPageSize(pageSize);
+
+
+        // Business logic 수행
+        Map<String, Object> map = truckService.getTruckList(search);
+
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+        System.out.println(resultPage);
+
+        // Model 과 View 연결
+        model.addAttribute("list", map.get("list"));
+//        model.addAttribute("list2", list2);
+        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("search", search);
+
+        return "forward:/views/menu/getTruckMenuList.jsp";
+    }
+
+    // 트럭 리스트 - 카테고리에 따른
+    @RequestMapping(value = "getTruckListCate")
+//    public String getTruckList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+    public String getTruckListCate(@RequestParam(value="cateCondition", required = false) String cateCondition, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+
+        System.out.println("/truck/getTruckList : GET / POST");
+
+        if (search.getCurrentPage() == 0) {
+            search.setCurrentPage(1);
+        }
+
+        //category 나누기
+//        String[] cate = null;
+//        String cateCondition = search.getCateCondition();
+//        if(cateCondition !=null && !cateCondition.equals("")){
+//            cate=cateCondition.split(",");
+//
+//            if(cate[0].equals("0")){
+//
+//            }
+//        }
+//        String cate=Integer.toString(cateCondition);
+        if (cateCondition!=null && !cateCondition.equals("")){
+
+            search.setCateCondition(cateCondition);
+        }
+        System.out.println("search ; " + search);
+
+//        String searchKeyword = search.getSearchKeyword();
+//        System.out.println(searchKeyword);
+//        if(searchKeyword != null) {
+//            search.setSearchKeyword(new String(searchKeyword.getBytes("8859_1"), "euc-kr"));
+//        }
+        System.out.println("searchKeyword : " +search.getSearchKeyword());
+
+        search.setPageSize(pageSize);
+
+
+        // Business logic 수행
+        Map<String, Object> map = truckService.getTruckList(search);
+
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+        System.out.println(resultPage);
+
+        // Model 과 View 연결
+        model.addAttribute("list", map.get("list"));
+//        model.addAttribute("list2", list2);
+        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("search", search);
+        model.addAttribute("cateCondition", cateCondition);
+
+        return "forward:/views/menu/getTruckMenuList.jsp";
+    }
+
+
 
     @RequestMapping(value = "addMenu", method= RequestMethod.GET)
     public ModelAndView addMenu(@RequestParam("truckId") String truckId) throws Exception{
