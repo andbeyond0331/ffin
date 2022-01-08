@@ -43,6 +43,9 @@
 		<result property="truckBusiStatus" 			column="truck_busi_status" 			jdbcType="CHAR"/>
 		<result property="truckRegDate" 			column="truck_reg_date" 			jdbcType="DATE"/>
 		<result property="role" 					column="role" 						jdbcType="CHAR"/>
+		<result property="truckSigMenuNo" 					column="truck_sig_menu_no" 						jdbcType="INTEGER"/>
+		<result property="truckSigMenuName" 					column="truck_sig_menu_name" 						jdbcType="VARCHAR"/>
+		<result property="truckSigMenuImg1" 					column="truck_sig_menu_img1" 						jdbcType="VARCHAR"/>
 	</resultMap>
 
 	<!-- SQL : INSERT -->
@@ -109,22 +112,50 @@
 	<!-- SQL : SELECT LIST -->
 	<select id="getTruckList"   parameterType="search"     resultMap="truckSelectMap">
 		SELECT inner_table.*
-		FROM( SELECT  truck_id , truck_name , truck_phone, truck_map_la, truck_map_lo, truck_cate, truck_avg_star, truck_pro_img, truck_busi_status
-			FROM truck
-				<if test="searchCondition != null">
-					<where>
-						<bind name="searchKeyword" value="'%' + searchKeyword + '%'"/>
-						<if test="searchCondition == 0 and searchKeyword !='' ">
-							AND truck_id LIKE #{searchKeyword}
-						</if>
-						<if test="searchCondition == 1 and searchKeyword !='' ">
-							AND truck_name LIKE #{searchKeyword}
-						</if>
-					</where>
-				</if>
+		FROM( SELECT  t.truck_id , t.truck_name , t.truck_phone, t.truck_map_la, t.truck_map_lo, t.truck_cate, t.truck_avg_star, t.truck_pro_img, t.truck_busi_status, t.truck_sig_menu_no, t.truck_sig_menu_name, t.truck_sig_menu_img1, m.menu_truck_id, m.menu_name
+			FROM truck t
+			left join menu m
+			on m.menu_truck_id=t.truck_id
+				<trim prefix="WHERE" prefixOverrides="AND">
+
+
+					<if test="searchKeyword !='' and searchKeyword!=null">
+						<bind name="searchKeyword" value="'%'+searchKeyword+'%'"></bind>
+						AND ((t.truck_name LIKE #{searchKeyword} or t.truck_sig_menu_name like #{searchKeyword}) or m.menu_name like #{searchKeyword})
+					</if>
+
+					<if test="cateCondition!=null and cateCondition != ''">
+						AND t.truck_cate = #{cateCondition}
+					</if>
+				</trim>
+
+					group by truck_id
+
 				order by truck_id ) inner_table
-		limit 0,8;
+		limit 0,20;
 	</select>
+
+
+
+<!--	&lt;!&ndash; SQL : SELECT LIST &ndash;&gt;-->
+<!--	<select id="getTruckList"   parameterType="search"     resultMap="truckSelectMap">-->
+<!--		SELECT inner_table.*-->
+<!--		FROM( SELECT  truck_id , truck_name , truck_phone, truck_map_la, truck_map_lo, truck_cate, truck_avg_star, truck_pro_img, truck_busi_status, truck_sig_menu_no, truck_sig_menu_name, truck_sig_menu_img1-->
+<!--			FROM truck-->
+<!--				<if test="searchCondition != null">-->
+<!--					<where>-->
+<!--						<bind name="searchKeyword" value="'%' + searchKeyword + '%'"/>-->
+<!--						<if test="searchCondition == 0 and searchKeyword !='' ">-->
+<!--							AND truck_id LIKE #{searchKeyword}-->
+<!--						</if>-->
+<!--						<if test="searchCondition == 1 and searchKeyword !='' ">-->
+<!--							AND truck_name LIKE #{searchKeyword}-->
+<!--						</if>-->
+<!--					</where>-->
+<!--				</if>-->
+<!--				order by truck_id ) inner_table-->
+<!--		limit 0,20;-->
+<!--	</select>-->
 
 
 
