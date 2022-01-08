@@ -67,7 +67,6 @@
 <link rel="icon" type="image/png" sizes="32x32" href="../resources/bootstrap/assets/favicons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="../resources/bootstrap/assets/favicons/favicon-16x16.png">
 <link rel="shortcut icon" type="image/x-icon" href="../resources/bootstrap/assets/favicons/favicon.ico">
-<link rel="manifest" href="../resources/bootstrap/assets/favicons/manifest.json">
 <meta name="msapplication-TileImage" content="../resources/bootstrap/assets/favicons/mstile-150x150.png">
 <meta name="theme-color" content="#ffffff">
 
@@ -75,6 +74,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.2.0/css/all.min.css" integrity="sha512-6c4nX2tn5KbzeBJo9Ywpa0Gkt+mzCzJBrE1RB6fmpcsoN+b/w/euwIMuQKNyUoU/nToKN3a8SgNOtPrbW12fug==" crossorigin="anonymous" />
 
 <style>
+    *{
+        font-family: "Noto Sans CJK KR Regular", sans-serif;
+    }
+
     .nav-user{
         width: 0;
         margin-right: 100px;
