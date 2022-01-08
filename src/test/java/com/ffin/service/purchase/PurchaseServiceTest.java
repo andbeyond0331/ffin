@@ -76,7 +76,7 @@ public class PurchaseServiceTest {
 
 
 ///////////////////////List/////////////////////////////////
-    @Test
+    //@Test
     public void TestGetCouponList() throws Exception {
 
         User user = new User();
@@ -96,9 +96,18 @@ public class PurchaseServiceTest {
 
     }
 
-    //@Test
+    @Test
     public void TestGetOrderList() throws Exception {
-        Map map = purchaseService.getOrderList("truck01");
+        Search search = new Search();
+        search.setSearchCondition("1");
+        search.setCurrentPage(1);
+        search.setPageSize(3);
+        System.out.println("search : " + search);
+
+
+
+
+        Map map = purchaseService.getOrderList(search,"truck01");
         System.out.println(map);
 
     }
@@ -378,7 +387,9 @@ public class PurchaseServiceTest {
 
     }
 
-    @Test
+    //
+    //
+    // @Test
     public void testUpdateOrderCancel() throws Exception {
 
         Purchase purchase = new Purchase();

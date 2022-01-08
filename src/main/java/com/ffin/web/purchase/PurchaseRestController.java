@@ -287,4 +287,54 @@ public class PurchaseRestController {
     //addIamport
     //cancelIamport
     //getCouponList
+
+
+
+
+    //트럭 주문목록에서 접수 버튼클릭!!
+    @RequestMapping( value = "json/updateTranCode", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView updateTranCode(@RequestParam("orderNo") int orderNo,@RequestParam("orderCookingTime") int orderCookingTime,HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        request.setCharacterEncoding("UTF-8");
+        System.out.println("json/updateTranCode POST");
+        System.out.println("orderNo = " + orderNo + ", request = " + request + ", response = " + response);
+       // int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+        ModelAndView mv = new ModelAndView("jsonView");
+        Purchase purchase = purchaseService.getPurchase(orderNo);
+        purchase.setOrderCookingTime(orderCookingTime);
+        if (purchase.getOrderStatus()==1) {
+            purchase.setOrderStatus(2);
+        }else if(purchase.getOrderStatus()==2){
+            purchase.setOrderStatus(3);
+        }else if(purchase.getOrderStatus()==3){
+            purchase.setOrderStatus(4);
+        }
+
+        purchaseService.updateOrderTranCode(purchase);
+        mv.addObject("purchase",purchase);
+
+        return mv;
+    }
+
+
+    //트럭 주문목록에서 이용자 아이디 클릭으로 상세보기
+    @RequestMapping( value = "json/getPurchase", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView getPurchase(@RequestParam("orderNo") int orderNo,HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        request.setCharacterEncoding("UTF-8");
+        System.out.println("json/getPurchase POST");
+        System.out.println("orderNo = " + orderNo + ", request = " + request + ", response = " + response);
+
+        Map map = purchaseService.getOrderDetail(orderNo);
+        ModelAndView mv = new ModelAndView("jsonView");
+        Purchase purchase = purchaseService.getPurchase(orderNo);
+        mv.addObject("purchase",purchase);
+        mv.addObject("map",map.get("list"));
+
+        return mv;
+    }
+
+
 }

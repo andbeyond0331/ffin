@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,8 +108,14 @@ public class PurchaseDaoImpl implements PurchaseDao {
         return sqlSession.selectList("PurchaseMapper.getCartList",orderNo);
     } //주문상세에 있는 정보 List?로 가져옴
     @Override
-    public List<Purchase> getOrderList(String truckId)throws Exception{
-        return sqlSession.selectList("PurchaseMapper.getOrderList",truckId);
+    public Map<String, Object> getOrderList(Search search,String truckId)throws Exception{
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("search",search);
+        map.put("truckId",truckId);
+        List<Purchase> list = new ArrayList<>();
+        list = sqlSession.selectList("PurchaseMapper.getOrderList",map);
+        map.put("list",list);
+        return map;
     } //현재판매목록
     @Override
     public List getPurchaseList(Search search , String userId)throws Exception{

@@ -27,7 +27,7 @@ public interface PurchaseService {
 
     public Map getCouponList(Coupon coupon)throws Exception; //쿠폰 리스트를 출력
     public Map getCartList( int orderNo)throws Exception; //주문상세에 있는 정보 List?로 가져옴
-    public Map getOrderList(String truckId)throws Exception; //현재판매목록
+    public Map<String,Object> getOrderList(Search search,String truckId)throws Exception; //현재판매목록
     public Map getPurchaseList(Search search , String userId)throws Exception;//마이페이지에서 구매이력
     public Map getSalesList(Search search , String truckId)throws Exception; //마이페이지에서 판매이력
     public Map getPointList(Search search , String userId)throws Exception;//마이페이지에서 포인트내역조회
