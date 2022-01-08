@@ -237,30 +237,30 @@ public class CommunityController {
         return m;
     }
 
-    @RequestMapping(value = "updateComment", method = RequestMethod.GET)
-    public String updateComment(@ModelAttribute("commentNo") int commentNo, Model model, HttpSession httpSession) throws Exception {
-        System.out.println("/community/updateComment : GET");
-        //Business Logic
-        Comment comment = communityService.getComment(commentNo);
-        //Model 과 View 연결
-        model.addAttribute("comment", comment);
-
-        return "forward:/community/updateComment.jsp";
-    }
-
-    @RequestMapping(value = "updateComment", method = RequestMethod.POST)
-    public String updateComment(@ModelAttribute("comment") Comment comment, Model model, HttpSession session) throws Exception {
-
-        System.out.println("/community/updateComment : POST");
-        //Business Logic
-        communityService.updateComment(comment);
-
-        int sessionNo = ((Comment) session.getAttribute("comment")).getCommentNo();
-        if (sessionNo == comment.getCommentNo()) {
-            session.setAttribute("comment", comment);
-        }
-        return "redirect:/community/getComment?commentNo=" + comment.getCommentNo();
-    }
+//    @RequestMapping(value = "updateComment", method = RequestMethod.GET)
+//    public String updateComment(@ModelAttribute("commentNo") int commentNo, Model model, HttpSession httpSession) throws Exception {
+//        System.out.println("/community/updateComment : GET");
+//        //Business Logic
+//        Comment comment = communityService.getComment(commentNo);
+//        //Model 과 View 연결
+//        model.addAttribute("comment", comment);
+//
+//        return "forward:/community/updateComment.jsp";
+//    }
+//
+//    @RequestMapping(value = "updateComment", method = RequestMethod.POST)
+//    public String updateComment(@ModelAttribute("comment") Comment comment, Model model, HttpSession session) throws Exception {
+//
+//        System.out.println("/community/updateComment : POST");
+//        //Business Logic
+//        communityService.updateComment(comment);
+//
+//        int sessionNo = ((Comment) session.getAttribute("comment")).getCommentNo();
+//        if (sessionNo == comment.getCommentNo()) {
+//            session.setAttribute("comment", comment);
+//        }
+//        return "redirect:/community/getComment?commentNo=" + comment.getCommentNo();
+//    }
 
 
     ////////////////////// 좋아요 관련 메소드 ////////////////////////////

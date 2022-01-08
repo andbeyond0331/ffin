@@ -73,6 +73,7 @@ public class CommunityRestController {
         return communityService.getCommentList(commentPostNo);
     }
 
+    // 댓글작성 메소
     @RequestMapping(value = "addComment", method = RequestMethod.POST) //세부적인 url pattern
     @ResponseBody
     public String addComment(@ModelAttribute("comment") Comment comment, HttpSession session) throws Exception {
@@ -107,22 +108,24 @@ public class CommunityRestController {
         return "redirect:/community/getPost";
     }
 
-    @RequestMapping(value = "json/updateComment", method = RequestMethod.POST)
-    public String updateComment(@ModelAttribute("comment") Comment comment, Model model, HttpSession session) throws Exception {
+//    @RequestMapping(value = "updateComment", method = RequestMethod.GET)
+//    @ResponseBody
+//    public String updateComment(@ModelAttribute("comment") Comment comment, Model model, HttpSession session) throws Exception {
+//
+//        System.out.println("/community/updateComment : GET");
+//        //Business Logic
+//        communityService.updateComment(comment);
+//
+//        int sessionNo = ((Comment) session.getAttribute("comment")).getCommentNo();
+//        if (sessionNo == comment.getCommentNo()) {
+//            session.setAttribute("comment", comment);
+//        }
+//        return "redirect:/community/getComment?commentNo=" + comment.getCommentNo();
+//    }
 
-        System.out.println("/community/updateComment : POST");
-        //Business Logic
-        communityService.updateComment(comment);
-
-        int sessionNo = ((Comment) session.getAttribute("comment")).getCommentNo();
-        if (sessionNo == comment.getCommentNo()) {
-            session.setAttribute("comment", comment);
-        }
-        return "redirect:/community/getComment?commentNo=" + comment.getCommentNo();
-    }
-
-    @RequestMapping(value = "deleteComment", method = RequestMethod.GET)
-    public String deleteComment(@ModelAttribute("comment") Comment comment,@RequestParam("commentNo") int commentNo, Model model, HttpSession session)
+    @RequestMapping(value = "/deleteComment?commentNo={commentNo}", method = RequestMethod.GET)
+    @ResponseBody
+    public String deleteComment(@ModelAttribute("comment") Comment comment,@PathVariable("commentNo") int commentNo,@RequestParam(value = "postNo") int postNo, Model model, HttpSession session)
         throws Exception {
 
         System.out.println("/community/deleteComment : GET");
@@ -137,10 +140,10 @@ public class CommunityRestController {
 
         comment.setCommentPostNo(commentPostNo);
 
-
+        model.addAttribute(commentPostNo);
 
         communityService.deleteComment(comment);
 
-        return "redirect:/community/getComment?commentNo=" + comment.getCommentNo();
+        return "redirect:/community/getPost";
     }
 }
