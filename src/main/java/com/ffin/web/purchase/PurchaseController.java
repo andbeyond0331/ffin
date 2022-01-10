@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionContext;
@@ -256,55 +257,86 @@ public class PurchaseController {
     //우측은!! 여기서 왼쪽을 클릭하게 되면 나오는 화면으로 따로 해야되나?? 같이 해야되나???
     //getOrderList로 출력한 Map으로 처음들어갔을때 나오는 화면으로 최신주문orderNo를 가져와서 보여주는것도!!!
     @RequestMapping(value = "getOrderList", method= RequestMethod.GET)
-    public String getOrderList(@RequestParam("truckId")String truckId, Model model,Purchase purchase) throws Exception{
+    public String getOrderList(@RequestParam("truckId")String truckId, Model model, Purchase purchase, HttpServletRequest request, HttpServletResponse response) throws Exception{
 
         System.out.println("/purchase/getOrderList : POST");
-        System.out.println("truckId = " + truckId + ", model = " + model + ", purchase = " + purchase);
+        System.out.println("truckId = " + truckId + ", model = " + model + ", purchase = " + purchase + ", request = " + request + ", response = " + response);
 
-
-        String truckTest = "truck01";
+        Truck truck = new Truck();
         Search search = new Search();
-        search.setSearchCondition("0");
 
+        if(request.getParameter("search").equals("1") ) {
+            search.setSearchCondition(request.getParameter("search"));
+        }else{
 
-        Map map = purchaseService.getOrderList(search,truckId);
-
-        List list = new ArrayList();
-        list.add(map.get("list"));
-        List <Map<String,Object>> listMap = list;
-
-        System.out.println("00000000000000000000000000000"+list.get(0));
-
-        //System.out.println("1111111111111111111111111111"+list.get(1));
-        /*Java Code을 이용한 예외 Message 보기 ::Index: 1, Size: 1
-        EL을 이용한 예외 Message 보기 :: Index: 1, Size: 1*/
-        //이런 에러가 난다... db에서 가져온 값은 List.size가 1인가?? 그냥 한곳에 다넣어서 전달하는거 같다.. ㅠㅠ
-        System.out.println("list.size"+list.size());
-
-        for(int i = 0; i<list.size(); i++){
-           // String orderNom = list.get(i).
-            System.out.println(list.get(i));
-            //int orderNo = Integer.parseInt(listMap.get(0).get("odOrderNo.orderNo").toString());
-            //System.out.println("orderNo."+orderNo);
-
-            //System.out.println("//////////////////"+list.get(0).get("orderNo").toString());
-           // purchase.setOrderNo();
+            search.setSearchCondition("0");
         }
 
+        Map map = purchaseService.getOrderList(search,truckId);
+        Map orderMap = new HashMap();
+        if(request.getParameter("orderNo") == null || request.getParameter("orderNo") == ""  ) {
+            int orderNo = purchaseService.getLastOrderNo(truckId);
+            orderMap = purchaseService.getOrderDetail(orderNo);
+            purchase = purchaseService.getPurchase(orderNo);
 
-        OrderDetail orderDetail = new OrderDetail();
-        Map orderMap = purchaseService.getOrderDetail(1);
-        purchase = purchaseService.getPurchase(1);
+        }else {
+
+            int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+            orderMap = purchaseService.getOrderDetail(orderNo);
+            purchase = purchaseService.getPurchase(orderNo);
+        }
+
+        truck.setTruckBusiStatus(purchaseService.getTruckBusiStatus(truckId));
        // purchase = purchaseService.getPurchase();
         System.out.println(map.get("purchase.getOrderNo"));
-        model.addAttribute("orderMap",orderMap);
+        model.addAttribute("orderMap", orderMap);
         model.addAttribute("map",map);
         model.addAttribute("purchase",purchase);
+        model.addAttribute("search",search);
+        model.addAttribute("truck",truck);
 
         return "forward:/views/purchase/getOrderTruckList.jsp";
     }
 
 
+    @RequestMapping(value = "getOrderEndList", method= RequestMethod.GET)
+    public String getOrderEndList(@RequestParam("truckId")String truckId, Model model, Purchase purchase, HttpServletRequest request, HttpServletResponse response) throws Exception{
+
+        System.out.println("/purchase/getOrderEndList : GET");
+        System.out.println("truckId = " + truckId + ", model = " + model + ", purchase = " + purchase + ", request = " + request + ", response = " + response);
+
+        String truckTest = "truck01";
+        Search search = new Search();
+        search.setSearchCondition("1");
+        Map orderMap = new HashMap();
+        Truck truck = new Truck();
+        Map map = purchaseService.getOrderList(search,truckId);
+
+
+
+        if(request.getParameter("orderNo") == null || request.getParameter("orderNo") == ""  ) {
+            int orderNo = purchaseService.getLastOrderNo(truckId);
+            orderMap = purchaseService.getOrderDetail(orderNo);
+            purchase = purchaseService.getPurchase(orderNo);
+
+
+        }else {
+            int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+            orderMap = purchaseService.getOrderDetail(orderNo);
+            purchase = purchaseService.getPurchase(orderNo);
+        }
+
+        truck.setTruckBusiStatus(purchaseService.getTruckBusiStatus(truckId));
+        // purchase = purchaseService.getPurchase();
+        System.out.println(map.get("purchase.getOrderNo"));
+        model.addAttribute("orderMap", orderMap);
+        model.addAttribute("map",map);
+        model.addAttribute("purchase",purchase);
+        model.addAttribute("search",search);
+        model.addAttribute("truck",truck);
+
+        return "forward:/views/purchase/getOrderTruckList.jsp";
+    }
     //접수클릭시 주문상태코드 변경
     @RequestMapping(value = "updateOrderTranCode", method= RequestMethod.GET)
     public String updateOrderTranCode(@RequestParam("purchase")Purchase purchase,Model model) throws Exception{

@@ -86,6 +86,10 @@ public class PurchaseServiceImpl implements PurchaseService {
     public void updateOrder(Purchase purchase)throws Exception{
         purchaseDao.updateOrder(purchase);
     } //결제이후 결제정보 추가업데이트
+    @Override
+    public void updateBusiStatus(Truck truck)throws Exception{
+        purchaseDao.updateBusiStatus(truck);
+    }
 
 
 
@@ -150,5 +154,17 @@ public class PurchaseServiceImpl implements PurchaseService {
     public User getTotalPoint (String userId)throws Exception{
         return purchaseDao.getTotalPoint(userId);
     }//보유 총포인트 조회
+    @Override
+    public int getLastOrderNo(String truckId)throws Exception{
+        return purchaseDao.getLastOrderNo(truckId);
+    }
+    @Override
+    public String getTruckBusiStatus(String truckId)throws Exception{
+        return purchaseDao.getTruckBusiStatus(truckId);
+    }
+    @Override
+    public int getUsePoint(int pointNo)throws Exception{
+        return purchaseDao.getUsePoint(pointNo);
+    }
 
 }

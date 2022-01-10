@@ -36,16 +36,16 @@ public class PurchaseRestController {
 
     @RequestMapping( value = "json/addPayView", method=RequestMethod.POST)
     @ResponseBody
-    public ModelAndView addPayView(HttpServletRequest request ,@RequestParam int payOption,
-                                   @RequestParam int orderTotalPrice,@RequestParam String orderUserId,
-                                   @RequestParam String orderTruckId,@RequestParam int orderNo,
-                                   @RequestParam int pointAmt,@RequestParam int couponNo,
-                                   @RequestParam String imp_uid,
+    public ModelAndView addPayView(HttpServletRequest request ,@RequestParam(value = "payOption") int payOption,
+                                   @RequestParam(value = "orderTotalPrice") int orderTotalPrice,@RequestParam(value = "orderUserId") String orderUserId,
+                                   @RequestParam(value = "orderTruckId") String orderTruckId,@RequestParam(value = "orderNo") int orderNo,
+                                   @RequestParam(value = "pointAmt") int pointAmt,@RequestParam(value = "couponNo") int couponNo,
+                                   @RequestParam(value = "imp_uid") String imp_uid,
                                    HttpServletResponse response  )throws Exception{
 
         request.setCharacterEncoding("UTF-8");
         System.out.println("request = " + request + ", payOption = " + payOption + ", orderTotalPrice = " + orderTotalPrice + ", orderUserId = " + orderUserId + ", orderTruckId = " + orderTruckId + ", orderNo = " + orderNo + ", pointAmt = " + pointAmt + ", couponNo = " + couponNo + ", imp_uid = " + imp_uid + ", response = " + response);
-
+        System.out.println("\n\n json/addPayView POST \n\n\n");
         Purchase purchase = new Purchase();
         ModelAndView modelAndView = new ModelAndView();
         OrderDetail orderDetail = new OrderDetail();
@@ -56,18 +56,17 @@ public class PurchaseRestController {
 
         user.setUserId(orderUserId);
         truck.setTruckId(orderTruckId);
+        int appendPoint = (orderTotalPrice*2/100);
+        //추후 payPrice를 가져오게 되면 orderTotalPrice랑 교체
+
 
         coupon.setCouponReceivedUserId(user);
         coupon.setCouponStatus(1);
         coupon.setCouponNo(couponNo);
 
-        point.setPointAmt(pointAmt);
-        point.setPointUserId(user);
-        point.setPointPlmnStatus(0);
-        point.setPointStatus(0);
-        point.setPointBirthCode(orderNo);
-        user = purchaseService.getTotalPoint(user.getUserId());
 
+        user = purchaseService.getTotalPoint(user.getUserId());
+        user.setUserTotalPoint(user.getUserTotalPoint()+appendPoint);
         purchase.setOrderNo(orderNo);
         purchase.setPayPrice(orderTotalPrice);
         purchase.setPayOption(payOption);
@@ -77,22 +76,32 @@ public class PurchaseRestController {
         purchase.setPayServiceType(1);
         purchase.setOrderStatus(1);
         purchase.setPayId(imp_uid);
+        purchaseService.updateTotalPoint(user);
+        point.setPointUserId(user);
+        point.setPointAmt(appendPoint);
+        point.setPointPlmnStatus(1);
+        point.setPointStatus(0);
+        point.setPointBirthCode(orderNo);
+        purchaseService.updatePoint(point);
 
 
-
-        if(coupon.getCouponNo() != 0) {
+        if(couponNo != 0) {
             purchaseService.updateCouponStatus(coupon);
             purchase.setPayCouponNo(coupon);
         }
 
-        if(point.getPointAmt() != 0) {
-            user.setUserTotalPoint(user.getUserTotalPoint()-point.getPointAmt());
+        if(pointAmt != 0) {
+            user = purchaseService.getTotalPoint(user.getUserId());
+            user.setUserTotalPoint(user.getUserTotalPoint()-pointAmt);
+            point.setPointAmt(pointAmt);
+            point.setPointPlmnStatus(0);
+            point.setPointBirthCode(orderNo);
             int pointNo = purchaseService.updatePoint(point);
             purchaseService.updateTotalPoint(user);
             point.setPointNo(pointNo);
             purchase.setPayPointNo(point);
         }
-        System.out.println("/n/n/n ////////////////////////////////////////n"+purchase);
+        System.out.println("\n\n\n ///////////////////////////////////////\n"+purchase);
         purchaseService.updatePurchase(purchase);
         //int orderNo = purchaseService.addPurchase(purchase);
         // orderDetail.setOdOrderNo(purchase);
@@ -267,6 +276,11 @@ public class PurchaseRestController {
 
 
         purchaseService.updateOrderCancel(purchase);
+        purchase = purchaseService.getPurchase(orderNo);
+        purchase.getOrderUserId();
+        User user = purchaseService.getTotalPoint(purchase.getOrderUserId().getUserId());
+        int usePoint = purchaseService.getUsePoint(purchase.getPayPointNo().getPointNo());
+
 
 
         //환불 일시를 controller에서 할지 Mapper에서 할지 수정,,
@@ -333,6 +347,30 @@ public class PurchaseRestController {
         mv.addObject("purchase",purchase);
         mv.addObject("map",map.get("list"));
 
+        return mv;
+    }
+
+    //영업중 모드 변경
+    @RequestMapping( value = "json/updateBusiStatus", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView updateBusiStatus(@RequestParam("tb") String tb,HttpServletRequest request,
+                                         HttpServletResponse response,@RequestParam("truckId")String truckId)throws Exception{
+        request.setCharacterEncoding("UTF-8");
+        System.out.println("json/updateBusiStatus POST");
+        System.out.println("tb = " + tb + ", request = " + request + ", response = " + response + ", truckId = " + truckId);
+        Truck truck = new Truck();
+
+
+        truck.setTruckId(truckId);
+        if(tb.equals("0")){
+            truck.setTruckBusiStatus("1");
+        }else if(tb.equals("1")){
+            truck.setTruckBusiStatus("0");
+        }
+        purchaseService.updateBusiStatus(truck);
+
+
+        ModelAndView mv = new ModelAndView("jsonView");
         return mv;
     }
 

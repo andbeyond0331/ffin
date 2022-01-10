@@ -72,6 +72,26 @@ public class PurchaseServiceTest {
 
     }
 
+    //@Test
+    public void TestGetLastOrderNo() throws Exception {
+
+
+
+        int orderNo = purchaseService.getLastOrderNo("truck01");
+
+        System.out.println("orderNo ddd"+orderNo);
+    }
+
+    //@Test
+    public void TestGetTruckBusiStatus() throws Exception {
+
+
+
+        String truckBusiStatus = purchaseService.getTruckBusiStatus("truck01");
+
+        System.out.println("orderNo ddd"+truckBusiStatus);
+    }
+
 
 
 
@@ -96,7 +116,7 @@ public class PurchaseServiceTest {
 
     }
 
-    @Test
+    //@Test
     public void TestGetOrderList() throws Exception {
         Search search = new Search();
         search.setSearchCondition("1");
@@ -155,6 +175,16 @@ public class PurchaseServiceTest {
         System.out.println(map.get("list"));
 
     }
+
+
+    @Test
+    public void TestGetUsePoint() throws Exception {
+
+        int pointAmt = purchaseService.getUsePoint(39);
+        System.out.println(pointAmt);
+
+    }
+
 
 
 
@@ -308,18 +338,18 @@ public class PurchaseServiceTest {
 
         User userOne = new User();
         userOne = purchaseService.getTotalPoint("user01");
-        Assert.assertEquals(1000, userOne.getUserTotalPoint());
+        System.out.println("totalPoint"+userOne.getUserTotalPoint());
 
 
         User user = new User();
         user.setUserId("user01");
-        user.setUserTotalPoint(1000);
+        user.setUserTotalPoint(userOne.getUserTotalPoint()-1000);
         purchaseService.updateTotalPoint(user);
 
 
         User user1 = new User();
         user1 = purchaseService.getTotalPoint("user01");
-        Assert.assertEquals(1000, user1.getUserTotalPoint());
+        Assert.assertEquals(userOne.getUserTotalPoint()-1000, user1.getUserTotalPoint());
 
 
     }
@@ -452,6 +482,17 @@ public class PurchaseServiceTest {
         purchase = purchaseService.getPurchase(1);
         Assert.assertEquals(4, purchase.getOrderStatus());
         Assert.assertEquals(1, purchase.getPayRefundStatus());
+
+    }
+
+    //@Test
+    public void testUpdatBusiStatus() throws Exception {
+
+        Truck truck = new Truck();
+        truck.setTruckId("truck01");
+        truck.setTruckBusiStatus("2");
+
+        purchaseService.updateBusiStatus(truck);
 
     }
 

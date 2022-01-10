@@ -93,6 +93,10 @@ public class PurchaseDaoImpl implements PurchaseDao {
     public void updateOrder(Purchase purchase)throws Exception{
         sqlSession.update("PurchaseMapper.updateOrder",purchase);
     } //결제이후 결제정보 추가업데이트
+    @Override
+    public void updateBusiStatus(Truck truck)throws Exception{
+        sqlSession.update("PurchaseMapper.updateBusiStatus",truck);
+    }//영업중 모드 변경
 
 
 
@@ -163,6 +167,28 @@ public class PurchaseDaoImpl implements PurchaseDao {
     public Purchase getPurchase(int orderNo)throws Exception{
         return sqlSession.selectOne("PurchaseMapper.getPurchase",orderNo);
     } // 결제정보 조회
+    @Override
+    public int getLastOrderNo (String truckId)throws Exception{
+        System.out.println("purchaseDaoImpl"+truckId);
+        Purchase purchase = sqlSession.selectOne("PurchaseMapper.getLastOrderNo",truckId);
+        System.out.println("ddd"+purchase.getOrderNo());
+        int orderNo= purchase.getOrderNo();
+        return orderNo;
+    }// 푸드트럭 주문목록에서 마지막결과 값으로 상세정보
+
+    @Override
+    public String getTruckBusiStatus(String truckId)throws Exception{
+        Truck truck = sqlSession.selectOne("PurchaseMapper.getTruckBusiStatus",truckId);
+        String truckBusiStatus = truck.getTruckBusiStatus();
 
 
+
+        return truckBusiStatus;
+    }
+    @Override
+    public int getUsePoint(int pointNo)throws Exception{
+        Point point = sqlSession.selectOne("PurchaseMapper.getUsePoint",pointNo);
+        int pointAmt = point.getPointAmt();
+        return pointAmt;
+    }
 }

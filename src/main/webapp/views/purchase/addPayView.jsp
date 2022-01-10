@@ -66,6 +66,7 @@
         if (pointAmt == "" || pointAmt === undefined) {
             pointAmt = 0;
         }
+        alert(couponNo)
         var postData = {
             "payOption": payOption,
             "orderTotalPrice": orderTotalPrice,
@@ -120,7 +121,7 @@
                             msg += '결제 금액 : ' + rsp.amount;
 
 
-                            alert(msg);
+                            alert("결제가 완료되었습니다");
                         } else {
                             //[3] 아직 제대로 결제가 되지 않았습니다.
                             //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
@@ -278,7 +279,7 @@
                 var couponNo = data[1];
                 console.log(couponNo + ": couponNo");
 
-                append = "<input type=\"hidden\" id=\"couponNo\" name=\"couponNo\" value=\"" + couponNo + "\">";
+                append = "<input type=\"text\" id=\"couponNo\" name=\"couponNo\" value=\"" + couponNo + "\">";
 
                 /*alert(append + ":append");*/
 
@@ -403,16 +404,19 @@
                         <c:set var="i" value="0"/>
                         <c:forEach var="couponLis" items="${couponList.get('list')}">
                             <c:set var="i" value="${i+1}"/>
+                            <c:if test="${couponLis.couponStatus==0}">
                             <tr>
                                 <th scope="row">${i}</th>
                                 <td><label class="btn btn-secondary active">
                                     <input type="radio" name="options" id="option${i}" autocomplete="off"
-                                           value="${couponLis.couponDcPrice}" checked> Active
+                                           value="${couponLis.couponDcPrice},${couponLis.couponNo}" checked> Active
                                 </label></td>
                                 <td>${couponLis.couponDcPrice}</td>
                                 <td>${couponLis.couponType}</td>
                                 <td>${couponLis.couponStatus}</td>
+
                             </tr>
+                            </c:if>
                         </c:forEach>
                     </table>
                 </div>

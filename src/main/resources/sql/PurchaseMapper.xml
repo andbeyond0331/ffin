@@ -13,18 +13,18 @@
         <result property="orderTruckId.truckId"	column="ORDER_TRUCK_ID"			jdbcType="VARCHAR"/>
         <result property="payCouponNo.couponNo"	column="PAY_COUPON_NO"	 		jdbcType="NUMERIC"/>
         -->
-        <result property="payPointNo.pointNo" column="PAY_POINT_NO" jdbcType="NUMERIC"/>
-        <result property="payResNo.ctNo" column="PAY_RES_NO" jdbcType="NUMERIC"/>
-        <result property="orderQty" column="ORDER_QTY" jdbcType="NUMERIC"/>
-        <result property="orderRequest" column="ORDER_REQUEST" jdbcType="VARCHAR"/>
-        <result property="orderStatus" column="ORDER_STATUS" jdbcType="CHAR"/>
-        <result property="orderPickUpTime" column="ORDER_PICK_UP_TIME" jdbcType="NUMERIC"/>
-        <result property="orderCookingTime" column="ORDER_COOKING_TIME" jdbcType="NUMERIC"/>
-        <result property="orderCancelReason" column="ORDER_CANCEL_REASON" jdbcType="CHAR"/>
-        <result property="orderNopeReason" column="ORDER_NOPE_REASON" jdbcType="CHAR"/>
-        <result property="orderTotalPrice" column="ORDER_TOTAL_PRICE" jdbcType="NUMERIC"/>
-        <result property="payDateTime" column="PAY_DATE_TIME" jdbcType="DATE"/>
-        <result property="payRefundDateTime" column="PAY_REFUND_DATE_TIME" jdbcType="DATE"/>
+        <result property="payPointNo.pointNo"   column="PAY_POINT_NO" jdbcType="NUMERIC"/>
+        <result property="payResNo.ctNo"        column="PAY_RES_NO" jdbcType="NUMERIC"/>
+        <result property="orderQty"             column="ORDER_QTY" jdbcType="NUMERIC"/>
+        <result property="orderRequest"         column="ORDER_REQUEST" jdbcType="VARCHAR"/>
+        <result property="orderStatus"          column="ORDER_STATUS" jdbcType="CHAR"/>
+        <result property="orderPickUpTime"      column="ORDER_PICK_UP_TIME" jdbcType="NUMERIC"/>
+        <result property="orderCookingTime"     column="ORDER_COOKING_TIME" jdbcType="NUMERIC"/>
+        <result property="orderCancelReason"    column="ORDER_CANCEL_REASON" jdbcType="CHAR"/>
+        <result property="orderNopeReason"      column="ORDER_NOPE_REASON" jdbcType="CHAR"/>
+        <result property="orderTotalPrice"      column="ORDER_TOTAL_PRICE" jdbcType="NUMERIC"/>
+        <result property="payDateTime"          column="PAY_DATE_TIME" jdbcType="DATE"/>
+        <result property="payRefundDateTime"    column="PAY_REFUND_DATE_TIME" jdbcType="DATE"/>
         <result property="payServiceType" column="PAY_SERVICE_TYPE" jdbcType="CHAR"/>
         <result property="payOption" column="PAY_OPTION" jdbcType="CHAR"/>
         <result property="payRefundStatus" column="PAY_REFUND_STATUS" jdbcType="CHAR"/>
@@ -56,6 +56,7 @@
             <result property="truckPhone" column="TRUCK_PHONE" jdbcType="VARCHAR"/>
             <result property="truckMapLa" column="TRUCK_MAP_LA" jdbcType="DECIMAL"/>
             <result property="truckMapLo" column="TRUCK_MAP_LO" jdbcType="DECIMAL"/>
+            <result property="truckBusiStatus" column="TRUCK_BUSI_STATUS" jdbcType="CHAR"/>
 
         </association>
 
@@ -166,6 +167,12 @@
 
 
     </resultMap>
+    <resultMap type="truck" id="truckSelectMap">
+        <!--coupon Domain-->
+        <result property="truckId" column="TRUCK_ID" jdbcType="VARCHAR"/>
+        <result property="truckBusiStatus" column="TRUCK_BUSI_STATUS" jdbcType="CHAR"/>
+
+    </resultMap>
 
 
     <!--	<association property="purchaseProd"  javaType="product">
@@ -248,7 +255,7 @@
 
     <update id="updatePurchase" parameterType="purchase">
         UPDATE ffin.purchase
-        <set>
+        point    <set>
 
             ORDER_STATUS = #{orderStatus},
             PAY_DATE_TIME = SYSDATE(),
@@ -363,6 +370,15 @@
         WHERE order_no = #{orderNo}
     </update>
 
+    <!--영업중모드변경-->
+    <update id="updateBusiStatus" parameterType="truck">
+        UPDATE truck
+        <set>
+            TRUCK_BUSI_STATUS = #{truckBusiStatus}
+        </set>
+
+        WHERE TRUCK_ID = #{truckId}
+    </update>
     <!--
     &lt;!&ndash;결제이후 결제정보 추가업데이트&ndash;&gt;
     <update id="updateOrder"	parameterType="purchase"   >
@@ -412,7 +428,7 @@
         FROM purchase
         <if test="search.searchCondition ==0">
             <where>
-                order_truck_id = #{truckId} AND ORDER_STATUS <![CDATA[<=]]> 3
+                order_truck_id = #{truckId} AND ORDER_STATUS BETWEEN 1 AND 3
             </where>
         </if>
         <if test="search.searchCondition ==1">
@@ -549,9 +565,42 @@
 
 
     <select id="getTotalPoint" parameterType="String" resultMap="userSelectMap">
-        SELECT user_total_point
+        SELECT user_total_point,user_id
         FROM ffin.user
         WHERE user_id = #{value}
+
+    </select>
+
+    <select id="getLastOrderNo" parameterType="String" resultMap="purchaseSelectMap">
+    SELECT
+    order_no
+    FROM purchase
+    where ORDER_TRUCK_ID = #{value}
+    order by order_No desc
+    limit 1;
+    </select>
+
+    <select id="getTruckBusiStatus" parameterType="String" resultMap="truckSelectMap">
+        SELECT
+            truck_busi_status
+        FROM truck
+        where TRUCK_ID = #{value}
+
+    </select>
+
+    <select id="getUsePoint" parameterType="int" resultMap="pointSelectMap">
+        SELECT
+            POINT_AMT
+        FROM point
+        where POINT_NO = #{value}
+
+    </select>
+
+    <select id="getUseCoupon" parameterType="int" resultMap="pointSelectMap">
+        SELECT
+            POINT_AMT
+        FROM point
+        where POINT_NO = #{value}
 
     </select>
 

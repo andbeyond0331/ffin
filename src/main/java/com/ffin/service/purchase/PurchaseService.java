@@ -24,6 +24,7 @@ public interface PurchaseService {
     public void updateOrderRefusal (Purchase purchase)throws Exception; //주문거절로 주문상태변경,주문취소사유
     public void updateRefundStatus(Purchase purchase)throws Exception ;//환불처리유무
     public void updateOrder(Purchase purchase)throws Exception; //결제이후 결제정보 추가업데이트
+    public void updateBusiStatus(Truck truck)throws Exception; //영업중 모드 변경
 
     public Map getCouponList(Coupon coupon)throws Exception; //쿠폰 리스트를 출력
     public Map getCartList( int orderNo)throws Exception; //주문상세에 있는 정보 List?로 가져옴
@@ -35,6 +36,8 @@ public interface PurchaseService {
     public Map getOrderDetail(int orderNo) throws Exception;//주문정보 조회 이용자의 정보도 함께
     public Coupon getCoupon(int couponNo)throws Exception;// 쿠폰 할인금
     public User getTotalPoint (String UserId)throws Exception;//보유 총포인트 조회
-
+    public int getLastOrderNo (String truckId)throws Exception; //푸드트럭 주문정보 조회에서 첫화면에 보여줄 주문번호
+    public String getTruckBusiStatus(String truckId)throws Exception; //트럭 영업중모드
+    public int getUsePoint (int pointNo)throws Exception; //환불시 사용한 포인트 조회
 
 }

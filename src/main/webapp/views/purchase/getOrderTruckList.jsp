@@ -36,6 +36,9 @@
         overflow-x: hidden;
         overflow-y: auto;
     }
+    body{
+        margin-top: 80px;
+    }
 </style>
 <main>
 
@@ -112,6 +115,33 @@
     </div>
 
 
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">영업모드</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <c:if test="${truck.truckBusiStatus.equals('1')}">
+                        영업종료하시겠습니까??
+                    </c:if>
+                    <c:if test="${truck.truckBusiStatus.equals('0')}">
+                        영업시작하시겠습니까??
+                    </c:if>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" id="busiStatus">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="container py-4">
         <header class="pb-4 mb-5 py-4 border-bottom">
             <span class="fs-1">주문내역</span>
@@ -125,9 +155,9 @@
                     <div class="row ">
                         <div class="col-2">
 
-                            <button class="btn btn-primary" type="button">처리중</button>
+                            <button class="btn btn-primary" id="ing" type="button">처리중</button>
 
-                            <button class="btn btn-primary" type="button">픽업완료</button>
+                            <button class="btn btn-primary" id="end" type="button">픽업완료</button>
 
 
                         </div>
@@ -136,9 +166,16 @@
                                 <div class="col-6 text-center"> 전체 :</div>
                                 <div class="col-6">
                                     <div class="form-check form-switch">
+                                        <c:if test="${truck.truckBusiStatus.equals('1')}">
                                         <input class="form-check-input" type="checkbox" role="switch"
-                                               id="flexSwitchCheckChecked" checked>
-                                        <label class="form-check-label" for="flexSwitchCheckChecked">영업중</label>
+                                               id="swCh" name="swCh"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" checked>
+                                        <label class="form-check-label" for="swCh">영업중</label>
+                                        </c:if>
+                                        <c:if test="${truck.truckBusiStatus.equals('0')}">
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                   id="swCh" name="swCh"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                            <label class="form-check-label" for="swCh">영업종료</label>
+                                        </c:if>
 
                                     </div>
                                 </div>
@@ -192,6 +229,8 @@
                                        value="${cart.orderPickUpTime}"/>
                                 <input type="hidden" id="orderCookingTime" name="orderCookingTime"
                                        value="${cart.orderCookingTime}"/>
+                                <input type="hidden" name="searchCondition" value="${search.searchCondition}">
+
                                 <%--<input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>--%>
 
                             </c:forEach>
@@ -293,16 +332,15 @@
                                     : ${purchase.orderPickUpTime}</label>
                             </div>
                             <hr class="my-2">
-                            <div class="row">
+                            <div class="row" id="list">
 
                                 <label for="orderRequest" class="col-form-label">주문내역 :</label>
 
                                 <div id="order"></div>
 
-                                <div id="list"></div>
-                                <c:set value="${orderMap.get('list')}" var=""></c:set>
+                                <c:set var="list" value="${orderMap.get('list')}"/>
                                 <c:set var="i" value="0"/>
-                                <c:forEach var="order" items="${orderMap.get('list')}">
+                                <c:forEach var="order" items="#{list}">
                                     <c:set var="i" value="${i+1}"/>
 
 
@@ -339,11 +377,13 @@
                         <div class="col-4">
                             <div class="row">
                                 <label for="orderRequest" class="col-form-label">고객정보
-                                    :${purchase.orderUserId.userProImg} </label>
+                                    : </label>
                             </div>
                             <input type="hidden" name="payId" id="payId" value="${purchase.payId}">
                             <input type="hidden" name="purchaseOrder" id="purchaseOrder" value="${purchase.orderNo}">
-                            <input type="text" name="cookingTime" value="${purchase.orderCookingTime}">
+                            <input type="hidden" name="truck" value="${purchase.orderTruckId.truckId}">
+                            <input type="hidden" name="cookingTime" value="${purchase.orderCookingTime}">
+                            <input type="hidden" name="truckBusiStatus" value="${truck.truckBusiStatus}">
                             <div class="row">
 
                                 <img src="/resources/image/${purchase.orderUserId.userProImg}" width="90" height="120"
@@ -464,20 +504,8 @@
 
         }
 
-/*      var set = <c:set var="i" value="0"/>+
-        <c:forEach var="order" items="${orderMap.get('list')}">+
-        <c:set var="i" value="${i+1}"/>+
-        "<input type='hidden' id='orderMenuName' name='orderMenuName' value='${order.odMenuName}'/>"+
-        "<input type='hidden' id='orderOptionGroupName' name='orderOptionGroupName' value='${order.odOptionGroupName}'/>"+
-        "<input type='hidden' id='orderOptionName' name='orderOptionName' value='${order.odOptionName}'/>"+
-        "<input type='hidden' id='orderMenuQty' name='orderMenuQty' value='${order.odMenuQty}'/>"+
-        "<input type='hidden' id='orderMenuPrice' name='orderMenuPrice' value='${order.odMenuPrice}'/>"+
-        "<input type='hidden' id='orderOptionPrice' name='orderOptionPrice' value='${order.odOptionPrice}'/>"+
-        "<input type='hidden' id='orderMenuImage' name='orderMenuImage' value='${order.odMenuImage}'/>"+
-        "<input type='hidden' id='orderMenuQtyFlag' name='orderMenuQtyFlag' value='${order.odMenuQtyFlag}'/>"+
-        </c:forEach>
-          */
-          $('#list').html(set);
+
+
 
         var menuPrice = 0;
         for (var i = 0; i < odMenuNameL.length; i++) {
@@ -542,11 +570,60 @@
 
 
 */
+    $("#busiStatus").on("click",function(){
+        var truckId = $("input[name='truck']").val();
+        var tb = $("input[name='truckBusiStatus']").val();
+        $.ajax({
+            url: "/purchase/json/updateBusiStatus",
+            method: "POST",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            data: {
+                "truckId": truckId,
+                "tb" : tb
+            },
+            success: function (data) {
+
+                alert("영업중모드 변경되었습니다!")
+
+                window.location.reload();
+            }
+        });
+
+
+    });
+
+    $("#ing").on("click",function(){
+
+        var truckId = $("input[name='truck']").val();
+        var search = "0";
+        self.location = "/purchase/getOrderList?truckId="+truckId+"&search="+search
+
+    });
+
+    $("#end").on("click",function(){
+        var truckId = $("input[name='truck']").val();
+        self.location = "/purchase/getOrderEndList?truckId="+truckId
+    })
+
+    $("#swCh").on("click",function(){
+
+        var on = $("input[name='swCh']:checked").val();
+
+    })
+
+
+
     /*이용자아이디 클릭시*/
     $("a#orderUserId.text-break").on("click", function () {
         var orderNo = $(this).parent().find("input[name='orderNo']").val();
+        var truckId = $("input[name='truck']").val();
+        var search = $("input[name='searchCondition']").val();
 
-        $.ajax({
+        self.location = "/purchase/getOrderList?truckId="+truckId+"&orderNo="+orderNo+"&search="+search;
+
+    });
+
+       /* $.ajax({
             url: "/purchase/json/getPurchase",
             method: "POST",
             contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -560,7 +637,7 @@
                 alert(data.purchase.orderNo)
                     var ordeerPickUp ="";
 
-
+                var list = data.map;
                 var usId = "";
                 var orNo = "";
                 var paDa = "";
@@ -575,9 +652,10 @@
                 var orderOptionPrice ="";
                 var orderMenuImage ="";
                 var orderMenuQtyFlag ="";
-              /* orderPickUp =  "<div class="col-6" id="orderPickUp">"
+                var list = "";
+              /!* orderPickUp =  "<div class="col-6" id="orderPickUp">"
                                 "픽업희망시간 : cart.orderPickUpTime}"
-                             "</div>"*/
+                             "</div>"*!/
 
 
                 usId = "<div class='row' id='usId'>"+data.purchase.orderUserId.userId+"</div>"
@@ -589,24 +667,45 @@
                 paOp = "<div class='row' id='paOp'>결제방법 :"+data.purchase.payOption+"</div>"
 
 
-
+                <c:remove var="list"/>
+                <% pageContext.setAttribute("list", "data.map");%>
                 data.map.forEach(x=>{
-                    alert(x.odMenuName)
+                    alert(x.odMenuName)*/
 
 
+/*
 
                         orderMenuName =     "<input type='text' id='orderMenuName' name='orderMenuName' value='"+x.odMenuName+"'/>"
-                        /*orderOptionGroupName = "<input type='text' id='orderOptionGroupName' name='orderOptionGroupName' value='"+x.odOptionGroupName+"'/>"
+                        /!*orderOptionGroupName = "<input type='text' id='orderOptionGroupName' name='orderOptionGroupName' value='"+x.odOptionGroupName+"'/>"
                         orderOptionName =   "<input type='hidden' id='orderOptionName' name='orderOptionName' value='"+x.odOptionName+"'/>"
                         orderMenuQty =      "<input type='hidden' id='orderMenuQty' name='orderMenuQty' value='"+x.odMenuQty+"'/>"
                         orderMenuPrice =    "<input type='hidden' id='orderMenuPrice' name='orderMenuPrice' value='"+x.odMenuPrice+"'/>"
                         orderOptionPrice =  "<input type='hidden' id='orderOptionPrice' name='orderOptionPrice' value='"+x.odOptionPrice+"'/>"
                         orderMenuImage =    "<input type='hidden' id='orderMenuImage' name='orderMenuImage' value='"+x.odMenuImage+"'/>"
-                        orderMenuQtyFlag =   "<input type='hidden' id='orderMenuQtyFlag' name='orderMenuQtyFlag' value='"+x.odMenuQtyFlag+"'/>"*/
+                        orderMenuQtyFlag =   "<input type='hidden' id='orderMenuQtyFlag' name='orderMenuQtyFlag' value='"+x.odMenuQtyFlag+"'/>"*!/
 
             })
+*/
 
 
+/*
+                        list =  "<label for='orderRequest' class='col-form-label'>주문내역 :</label>"+
+                "<div id='order'></div>"+
+               "<c:set var='i' value='0'/>"+
+                "<c:forEach var='order' items='${data.map}'>"+
+                "<c:set var='i' value='${i+1}'/>"+
+                "<input type='hidden' id='orderMenuName' name='orderMenuName' value='"+order.odMenuName+"'/>"+
+                "<input type='hidden' id='orderOptionGroupName' name='orderOptionGroupName' value='${order.odOptionGroupName}'/>"+
+                "<input type='hidden' id='orderOptionName' name='orderOptionName'  value='${order.odOptionName}'/>"+
+                "<input type='hidden' id='orderMenuQty' name='orderMenuQty' value='${order.odMenuQty}'/>"+
+                "<input type='hidden' id='orderMenuPrice' name='orderMenuPrice' value='${order.odMenuPrice}'/>"+
+                "<input type='hidden' id='orderOptionPrice' name='orderOptionPrice' value='${order.odOptionPrice}'/>"+
+                "<input type='hidden' id='orderMenuImage' name='orderMenuImage' value='${order.odMenuImage}'/>"+
+                "<input type='hidden' id='orderMenuQtyFlag' name='orderMenuQtyFlag' value='${order.odMenuQtyFlag}'/>"+
+                "</c:forEach>"+
+                "<div id='total'></div>"
+*/
+/*
 
                 $('#orNo').html(orNo);
                 $('#paDa').html(paDa);
@@ -615,21 +714,22 @@
                 $('#usUP').html(usUP);
                 $('#paOp').html(paOp);
                $('#orderMenuName').html(orderMenuName);
-                 /*$('#orderOptionGroupName').html(orderOptionGroupName);*/
-               /* $('#orderOptionName').html(orderOptionName);
+                 /!*$('#orderOptionGroupName').html(orderOptionGroupName);*!/
+               /!* $('#orderOptionName').html(orderOptionName);
                 $('#orderMenuQty').html(orderMenuQty);
                 $('#orderMenuPrice').html(orderMenuPrice);
                 $('#orderOptionPrice').html(orderOptionPrice);
                 $('#orderMenuImage').html(orderMenuImage);
-                $('#orderMenuQtyFlag').html(orderMenuQtyFlag);*/
+                $('#orderMenuQtyFlag').html(orderMenuQtyFlag);*!/
 
+*/
 
-                /*window.location.reload();*/
+    /*            /!*window.location.reload();*!/
             }
         });
 
     })
-
+*/
 
     /*주문접수버튼*/
     $("button[name='updateTranCode']").on("click", function () {
@@ -653,7 +753,8 @@
                 }
             });
 
-    })
+    });
+
 
 
 
@@ -691,5 +792,5 @@
 
 </script>
 </body>
-<jsp:include page="/views/footer.jsp"/>
+<%--<jsp:include page="/views/footer.jsp"/>--%>
 </html>
