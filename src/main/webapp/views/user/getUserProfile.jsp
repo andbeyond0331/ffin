@@ -177,6 +177,7 @@
 												<img src="../../resources/image/${user.userProImg}" class="img-thumbnail" alt="...">
 											</div>
 											<input class="form-control pro-img" type="file" id="fileName1" name="fileName1">--%>
+											<img src="${user.userProImg}" class="rounded float-start">
 											<button type="button" class="btn btn-outline-warning" id="update-img"><i class="fas fa-camera"></i></button>
 										</div>
 									</div>

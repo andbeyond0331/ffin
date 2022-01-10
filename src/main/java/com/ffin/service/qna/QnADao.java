@@ -5,6 +5,7 @@ import com.ffin.service.domain.Inquiry;
 import com.ffin.service.domain.Report;
 
 import java.util.List;
+import java.util.Map;
 
 public interface QnADao {
 
@@ -27,13 +28,17 @@ public interface QnADao {
     public void addInquiry(Inquiry inquiry) throws Exception;
     //문의조회
     public Inquiry getInquiry(int inquiryNo) throws Exception;
-    //문의목록
-
+    //유저문의목록
+    public List<Inquiry> getUserInquiryList(Map<String, Object> map) throws Exception;
+    //트럭문의목록
+    public List<Inquiry> getTruckInquiryList(Map<String, Object> map) throws Exception;
+    //totalCount
+    public int getInquiryTotalCount(Search search) throws Exception;
     //문의수정
-
-    //답변여부
-
+    public void updateInquiry(Inquiry inquiry) throws Exception;
     //답변등록
+    public void updateInquiryAns(Inquiry inquiry) throws Exception;
+
 
 
 }

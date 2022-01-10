@@ -81,5 +81,54 @@ public class QnAServiceImpl implements QnAService {
         return qnADao.getInquiry(inquiryNo);
     }
 
+    @Override
+    public Map<String, Object> getUserInquiryList(Search search, String inquiryUserId) throws Exception {
+
+        System.out.println("QnAServiceImpl.getUserInquiryList");
+
+        int totalCount = qnADao.getInquiryTotalCount(search);
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("search", search);
+        map.put("inquiryUserId", inquiryUserId);
+        map.put("totalCount", totalCount);
+
+        System.out.println("여기는 QnaServiceImpl!! : "+map);
+
+        List<Inquiry> list = qnADao.getUserInquiryList(map);
+
+        map.put("list", list);
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> getTruckInquiryList(Search search, String inquiryTruckId) throws Exception {
+
+        System.out.println("QnAServiceImpl.getTruckInquiryList");
+
+        int totalCount = qnADao.getInquiryTotalCount(search);
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("search", search);
+        map.put("inquiryTruckId", inquiryTruckId);
+        map.put("totalCount", totalCount);
+        List<Inquiry> list = qnADao.getUserInquiryList(map);
+
+        map.put("list", list);
+        return map;
+    }
+
+    @Override
+    public void updateInquiry(Inquiry inquiry) throws Exception {
+        System.out.println("QnAServiceImpl.updateInquiry");
+        qnADao.updateInquiry(inquiry);
+    }
+
+    @Override
+    public void updateInquiryAns(Inquiry inquiry) throws Exception {
+        System.out.println("QnAServiceImpl.updateInquiryAns");
+        qnADao.updateInquiryAns(inquiry);
+    }
+
 
 }

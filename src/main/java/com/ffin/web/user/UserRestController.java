@@ -97,7 +97,11 @@ public class UserRestController {
         if (user.getUserPassword().equals(dbUser.getUserPassword())) {
 
             session.setAttribute("user", dbUser);
-            session.setAttribute("role", "user");
+            if(dbUser.getRole() == 1 ) {
+                session.setAttribute("role", "user");
+            } else if (dbUser.getRole() == 0){
+                session.setAttribute("role","admin");
+            }
 
           if(request.getParameter("userCookie") == null) {
                 System.out.println("자동로그인");

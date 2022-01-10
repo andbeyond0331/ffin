@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository("qnADaoImpl")
 public class QnADaoImpl implements QnADao {
@@ -75,6 +76,39 @@ public class QnADaoImpl implements QnADao {
         System.out.println("QnADaoImpl.getInquiry");
         return sqlSession.selectOne("QnAMapper.getInquiry", inquiryNo);
     }
+
+    @Override
+    public List<Inquiry> getUserInquiryList(Map<String, Object> map) throws Exception {
+        System.out.println("QnADaoImpl.getUserInquiryList");
+        return sqlSession.selectList("QnAMapper.getUserInquiryList", map);
+    }
+
+    @Override
+    public List<Inquiry> getTruckInquiryList(Map<String, Object> map) throws Exception {
+        System.out.println("QnADaoImpl.getTruckInquiryList");
+        return sqlSession.selectList("QnAMapper.getTruckInquiryList", map);
+    }
+
+    @Override
+    public int getInquiryTotalCount(Search search) throws Exception {
+        System.out.println("QnADaoImpl.getInquiryTotalCount");
+        return sqlSession.selectOne("QnAMapper.getInquiryTotalCount", search);
+    }
+
+    @Override
+    public void updateInquiry(Inquiry inquiry) throws Exception {
+        System.out.println("QnADaoImpl.updateInquiry");
+        sqlSession.update("QnAMapper.updateInquiry",inquiry);
+    }
+
+    @Override
+    public void updateInquiryAns(Inquiry inquiry) throws Exception {
+        System.out.println("QnADaoImpl.updateInquiryAns");
+        sqlSession.update("QnAMapper.updateInquiryAns", inquiry);
+    }
+
+
+
 
 
 }
