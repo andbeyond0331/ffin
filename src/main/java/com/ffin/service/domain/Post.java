@@ -1,5 +1,6 @@
 package com.ffin.service.domain;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import lombok.Data;
 
@@ -13,7 +14,7 @@ public class Post {
 	private int postNo;
 	private String postTitle;
 	private String postContent;
-	private Date postRegDate;
+	private Timestamp postRegDate;
 	private int secretKey;
 	private String postFile1;
 	private String postFile2;

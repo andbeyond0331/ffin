@@ -28,7 +28,7 @@
     <insert id="addPost"    parameterType="post">
         INSERT INTO POST (POST_USER_ID, POST_TRUCK_ID, POST_TITLE, POST_CONTENT, POST_REG_DATE, SECRET_KEY, POST_FILE1,
                           POST_FILE2, POST_FILE3)
-        VALUES (#{postUser.userId}, #{postTruck.truckId}, #{postTitle}, #{postContent}, SYSDATE(), DEFAULT, #{postFile1}, #{postFile2}, #{postFile3})
+        VALUES (#{postUser.userId}, #{postTruck.truckId}, #{postTitle}, #{postContent}, DATE_FORMAT(now(), '%Y-%m-%d'), DEFAULT, #{postFile1}, #{postFile2}, #{postFile3})
     </insert>
 
     <!-- SQL :SELECT ONE-->
@@ -149,5 +149,11 @@
         WHERE post_truck_id IS NOT NULL
     </select>
 
+    <!-- SQL : DELETE -->
+    <delete id="deletePost"  parameterType="post">
+        DELETE
+        FROM post
+        where post_no = #{postNo}
+    </delete>
 
 </mapper>

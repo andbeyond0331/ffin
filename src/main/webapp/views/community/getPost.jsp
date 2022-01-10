@@ -7,6 +7,15 @@
 <html lang="ko">
 
 <head>
+    <style>
+        li {
+            list-style: none;
+        }
+
+        .btn-secondary {
+            border-radius: 5px;
+        }
+    </style>
 
     <title>게시글 조회</title>
     <jsp:include page="../../common/lib.jsp"/>
@@ -57,23 +66,6 @@
             alert("게시물 작성이 완료되었습니다.");
         }
 
-        //댓글 목록 출력 함수
-        <%--function listReply() {--%>
-        <%--    alert("listReply function excute");--%>
-        <%--    $.ajax({--%>
-        <%--        type   : "get", //get방식으로 자료를 전달한다--%>
-        <%--        url    : "/community/getCommentList?commentPostNo="+${post.postNo},--%>
-        <%--        data    : "commentList", //컨트롤러에 있는 list.do로 맵핑하고 게시판 번호도 같이 보낸다.--%>
-        <%--        dataType : "json",--%>
-        <%--        success: function (result) { //자료를 보내는것이 성공했을때 출력되는 메시지--%>
-        <%--            //result : responseText 응답텍스트(html)--%>
-        <%--            console.log(result);--%>
-        <%--            alert(JSON.stringify(result));--%>
-        <%--            $("#listReply").html(result);--%>
-        <%--            alert("댓글 출력");--%>
-        <%--        }--%>
-        <%--    });--%>
-        <%--}--%>
 
         //댓글 목록 출력 함수(댓글작성)
         function listReply() {
@@ -86,42 +78,11 @@
                 success : function (result) { //자료를 보내는것이 성공했을때 출력되는 메시지
                     console.log(result);
                     //alert(JSON.stringify(result));
-                    //$("#listReply").html(JSON.stringify(result));
+                    //$("#listReply").text(JSON.stringify(result));
                     //alert("댓글 출력");
-                    //location.reload();
-                    resultHtml(result);
+                    location.reload();
                 }
             });
-        }
-
-        function resultHtml(data) {
-            var html = "<table class="+"\"table table-warning\""+">";
-            html += "<thead>";
-            html += "<tr align = 'center'>";
-            html += "<th>댓글작성자</th>";
-            html += "<th>댓글내용</th>";
-            html += "<th>댓글작성일</th>";
-            html += "<th></th>";
-            html += "</tr>";
-            $.each(data, function (key, value) {
-                html += "<tr align = 'center'>";
-                if(value.commentTruckId == null && value.commentUserId != null){
-                    html += "<td>" + value.commentUserId+ "</td>";
-                }else if(value.commentUserId == null && value.commentTruckId != null){
-                    html += "<td>" + value.commentTruckId+ "</td>";
-                }
-                html += "<td>" + value.commentContent+ "</td>";
-                html += "<td>" + value.commentDate+ "</td>";
-                html += "<c:if test="${sessionScope.userId == value.commentUserId || sessionScope.truckId == value.commentTruckId}">";
-                html += "<td>" + "<input type='button' class='btn-dark' id='commentU' value='수정'>";
-                html += "<input type='button' class='btn-dark' id='commentD' value='삭제'>" + "</td>";
-                html += "</c:if>";
-                html += "</tr>";
-            });
-            html += "</thead>";
-            html += "</table>";
-            $("#listReply").empty();
-            $("#listReply").append(html);
         }
 
         <!-- 댓글 작성 -->
@@ -150,28 +111,32 @@
                 });
             });
         })
-        <!-- 댓글 보기 -->
-        $(function () {
-            //댓글 쓰기 (버튼을 눌러서 id값이 넘어와 실행되는 자바스크립트 구문)
-            $("#btnReplyShow").click(function () {
-                //alert("댓글보기를 클릭했다");
-                $.ajax({
-                    type    : "get", //get방식으로 자료를 전달한다
-                    url     : "/community/getCommentList?commentPostNo=" +${post.postNo},
-                    data    : "commentList", //컨트롤러에 있는 list.do로 맵핑하고 게시판 번호도 같이 보낸다.
-                    dataType: "json",
-                    success : function (result) { //자료를 보내는것이 성공했을때 출력되는 메시지
-                        console.log(result);
-                        //alert(JSON.stringify(result));
-                        //$("#listReply").html(JSON.stringify(result));
-                        //alert("댓글 출력");
-                        //location.reload();
-                        listReply();
-                    }
-                });
-            });
-        })
 
+
+        $(document).ready(function () {
+
+            $('#goPostList').on('click', function () {
+                self.location = "/community/getPostList";
+            });
+            /////////모///달///기///능///////////
+            // 1. 모달창 히든 불러오기 수정
+            $('#postU').on('click', function () {
+                $('#updateModal').modal('show');
+            });
+
+            // 2. 모달창 히든 불러오기 삭제
+            $('#postD').on('click', function () {
+                $('#deleteModal').modal('show');
+            });
+
+            $(function () {
+                $(updateC).click(function (){
+                    var data_var = $(this).data('id');
+                    $(".modal-body #commentContentU").val(data_var);
+                })
+            });
+
+        });
 
 
     </script>
@@ -190,69 +155,142 @@
     </div>
 
     <br/>
-    <div class="container">
-        <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
-            <tr>
-                <td><h3>게시글</h3></td>
-            </tr>
-        </table>
-    </div>
+    <%--    <div class="container">--%>
+    <%--        <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">--%>
+    <%--            <tr>--%>
+    <%--                <td><h3>게시글</h3></td>--%>
+    <%--            </tr>--%>
+    <%--        </table>--%>
+    <%--    </div>--%>
     <!-- 게시글 조회 -->
-    <div class="container">
-        <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
+    <div class="panel panel-default">
+        <div class="panel-heading" style="text-align: center; border: 3px solid #dddddd; border-radius:10px ">
 
-            <tbody>
-            <tr>
-                <td style="width: 20%;">게시글 제목</td>
-                <td colspan="2">${post.postTitle}</td>
-            </tr>
-            <tr>
-                <td>게시글 작성자</td>
-                <td colspan="2">${post.postUser.userId}${post.postTruck.truckId}</td>
-            </tr>
-            <tr>
-                <td>게시글 작성일</td>
-                <td colspan="2"><fmt:formatDate value="${post.postRegDate}" pattern="yyyy-MM-dd"/></td>
-            </tr>
-            <tr>
-                <td>게시글 내용</td>
-                <td colspan="2" style="min-height: 300px; text-align: center">${post.postContent}</td>
-            </tr>
+            <div class="panel-body">
+                <ul class="chat_list_box" style="font-size:20px ">
+                    <strong class="primary-font pull-left" style="padding-top:10px ">작성자</strong>
+                    <strong class="pull-right text-dark" style="padding-top:10px; padding-right:10px "><fmt:formatDate
+                            value="${post.postRegDate}" pattern="yyyy-MM-dd"/></strong>
+                    <img style="border-radius:70px; margin-left:20px; padding-top:10px"
+                         src="../resources/image/${user.userProImg}${truck.truckProImg}" width="100"
+                         height="100" class="pull-left"/>
 
-            <tr>
+                    <br/>
+                    <strong id="postingId" class="pull-left"
+                            style="padding-top:10px ">${post.postUser.userId}${post.postTruck.truckId}</strong>
+                    <br/>
+                </ul>
+                <%--                <ul style="font-size:20px ">--%>
+                <%--                    &lt;%&ndash;                <strong>게시글 작성일</strong>&ndash;%&gt;--%>
+                <%--                    <small class="pull-right text-dark" colspan="2"><fmt:formatDate value="${post.postRegDate}" pattern="yyyy-MM-dd"/></small>--%>
+                <%--                </ul>--%>
+                <br/>
+                <hr>
 
-                <td align = 'center'>
-                    첨부파일1<br/>
-                    <img src="../resources/image/${post.postFile1}" width="300"
-                         height="300"/>
-                </td>
+                <ul class="chat_list" style="font-size:30px ">
+                    <strong class="primary-font pull-left" style="font-size: 20px">제목</strong>
+                    <strong class="primary-font" style="width: 20%;">${post.postTitle}</strong>
+                    <%--                <td class="center" colspan="2">${post.postTitle}</td>--%>
+                </ul>
+                <hr>
 
-                <td align = 'center'>
-                    첨부파일2<br/>
-                    <img src="../resources/image/${post.postFile2}" width="300"
-                         height="300"/>
-                </td>
+                <ul>
+                    <strong class="pull-left" style="font-size:20px ">내용</strong>
+                    <midium colspan="2" style="font-size: 28px">${post.postContent}</midium>
+                </ul>
 
-                <td align = 'center'>
-                    첨부파일3<br/>
-                    <img src="../resources/image/${post.postFile3}" width="300"
-                         height="300"/>
-                </td>
+                <ul>
+                    <td colspan="1">
+                        <br/>
+                        <img src="../resources/image/${post.postFile1}" width="300"
+                             height="300"/>
+                        <img src="../resources/image/${post.postFile2}" width="300"
+                             height="300"/>
+                        <img src="../resources/image/${post.postFile3}" width="300"
+                             height="300"/>
+                    </td>
+                </ul>
+            </div>
 
-            </tr>
-            </tbody>
+        </div>
 
-        </table>
+        <!-- 게시물 수정 Modal -->
+        <div class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+             aria-labelledby="updateModalLabel" aria-hidden="true"
+        >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateModalLabel">게시물 수정</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">게시물을 수정하시겠습니까?</div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-primary"
+                           href="/community/updatePost?postNo=${postNo}">수정하러가기</a>
+                        <a type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <a href="getPostList" class="btn-secondary">게시글 목록으로</a>
+        <!-- 게시물 삭제 Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+             aria-labelledby="deleteModalLabel" aria-hidden="true"
+        >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">게시물 삭제</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">게시물을 삭제하시겠습니까?</div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-primary" href="/community/deletePost?postNo=${postNo}">삭제하기</a>
+                        <a type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <c:if test="${sessionScope.user.userId.equals(post.postUser.userId) || sessionScope.truck.truckId.equals(post.postTruck.truckId)}">
-            <a href="updatePost?postNo=${postNo}" class="btn-secondary">수정</a>
-            <a href="deleteAction.jsp?postNo=${postNo}" class="btn-secondary">삭제</a>
+            <button id="postD" type="button" class="btn-secondary pull-right" data-toggle="modal"
+                    data-target="#deleteModal">삭제
+            </button>
+            <button id="postU" type="button" class="btn-secondary pull-right" data-toggle="modal"
+                    data-target="#updateModal">수정
+            </button>
         </c:if>
+        <button type="button" id="goPostList" class="btn-secondary pull-right">게시글 목록으로</button>
     </div>
     <!-- 게시판 글쓰기 양식 영역 끝 -->
 
+
+    <!-- 댓글 수정 Modal -->
+    <div class="modal fade" id="updateCModal" tabindex="-1" role="dialog"
+         aria-labelledby="updateCModalLabel" aria-hidden="true"
+    >
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateCModalLabel">댓글수정</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body"><textarea class="form-control" rows="3" id="commentContentU"
+                                                  style="width: 100%;" value=""></textarea></div>
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-primary" href="/community/updateComment?commentNo=${comment.commentNo}">수정완료</a>
+                    <a type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <br/>
 
@@ -263,57 +301,100 @@
         <!-- 그러니까 로그인을 한 상태이어야만 댓글을 작성 할 수 있다.-->
         <c:if test="${sessionScope.user != null || sessionScope.truck != null}">
 
-        <div class="input-group" role="group" aria-label="..." style="margin-top: 10px; width: 100%;">
-            <div class="container">
-                <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
-                    <tr>
-                        <td><h3>댓글</h3></td>
-                    </tr>
-                </table>
+        <div class="panel panel-default" role="group" aria-label="..." style="margin-top: 10px; width: 100%;">
+
+            <br/><br/>
+            <div class='row'>
+                <div class="col-lg-12">
+                    <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-comments fa-2x"></i> Reply
+                        </div>
+
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <ul class="chat">
+                            </ul>
+                            <!-- ./ end ul -->
+                        </div>
+                        <!-- /.panel .chat-panel -->
+                    </div>
+                </div>
+                <!-- ./end row -->
             </div>
 
             <table class="table table-hover table-striped" id="writeComment">
 
-                <textarea class="form-control" rows="3" id="commentContent" placeholder="댓글을 입력하세요."
+                <textarea class="form-control" rows="3" id="commentContent" placeholder="reply.."
                           style="width: 100%;"></textarea>
-                <div class="btn-group btn-group-sm" role="group" aria-label="...">
+                <div class="btn-group btn-group-sm pull-right" role="group" aria-label="...">
                     <c:if test="${sessionScope.user.userId == null && sessionScope.truck.truckId == null}">
-                        <input type="button" class="btn btn-default" value="댓글 쓰기" disabled="disabled">
-                        <input type="button" class="btn btn-warning" value="댓글 보기" disabled="disabled">
+                        <input type="button" class="btn btn-default pull-right" value="댓글 쓰기" disabled="disabled">
                     </c:if>
                     <c:if test="${sessionScope.user.userId != null || sessionScope.truck.truckId != null}">
-                        <input type="button" class="btn btn-default" value="댓글 쓰기" id="btnReply">
-                        <input type="button" class="btn btn-warning" value="댓글 보기" id="btnReplyShow">
+                        <input type="button" class="btn btn-secondary pull-right" value="댓글 쓰기" id="btnReply">
                     </c:if>
                 </div>
             </table>
 
-            <table class="table table-hover table-striped" id="listReply">
+            <table class="table table-hover table-striped" id="list">
+                <br/>
+                <hr>
 
-            </table>
+                <c:forEach var="comment" items="${list}">
 
+                    <c:set var="i" value="${ i+1 }"/>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <ul class="chat">
 
-            <!-- 댓글 -->
-            <div class="collapse" id="comment_card{}">
-                <section class="modal-section">
-                    <div class="card card-body">
-                        <!-- 댓글 목록 -->
-                        <div class="comment-list comment-list">
-                            <!-- 댓글 목록이 들어가는곳 -->
-                        </div>
+                            <!-- start reply -->
+                            <li class="left clearfix" data-rno='12'>
+                                <div>
+                                    <div class="header">
+                                        <img style="border-radius:70px; margin-left:5px"
+                                             src="../resources/image/${user.userProImg}${truck.truckProImg}" width="60"
+                                             height="55" class="pull-left"/>
+                                        <strong style="padding-top:10px"
+                                                class="primary-font">${comment.commentUserId}${comment.commentTruckId}</strong>
+                                        <small class="pull-right text-muted"><fmt:formatDate
+                                                value="${comment.commentDate}" pattern="yyyy-MM-dd"/></small>
+                                        <br>
+                                        <c:if test="${sessionScope.user.userId.equals(comment.commentUserId) || sessionScope.truck.truckId.equals(comment.commentTruckId)}">
+                                            <a class="btn-outline-dark pull-right"
+                                               href="/community/deleteComment?commentNo=${comment.commentNo}">삭제</a>
+                                            <input type="hidden" value="${comment.commentNo}">
+                                            <input type="hidden" value="${comment.commentPostNo}">
+                                            <a name="updateC" class="btn-outline-dark pull-right" data-toggle="modal"
+                                               data-target="#updateCModal">수정</a>
+                                            <input type="hidden" value="${comment.commentNo}">
+                                            <input type="hidden" value="${comment.commentPostNo}">
+                                        </c:if>
+                                    </div>
+                                    <p>${comment.commentContent}</p>
+                                    <hr/>
+                                </div>
+
+                            </li>
+                            <!-- end reply -->
+                        </ul>
+                        <!-- ./ end ul -->
                     </div>
-                </section>
+                    <!-- /.panel .chat-panel -->
+                </c:forEach>
+            </table>
 
         </div>
 
         <br/><br/>
+
         </c:if>
 </div>
 
 </form>
 
 </div>
-
 
 </div>
 <jsp:include page="/views/footer.jsp"/>

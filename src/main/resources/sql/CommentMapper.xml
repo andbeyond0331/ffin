@@ -18,7 +18,7 @@
     <!-- SQL : INSERT -->
     <insert id="addComment"     parameterType="comment">
         INSERT INTO COMMENT (COMMENT_POST_NO, COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY)
-        VALUES (#{commentPostNo}, #{commentUserId}, #{commentTruckId}, #{commentContent}, SYSDATE(), DEFAULT);
+        VALUES (#{commentPostNo}, #{commentUserId}, #{commentTruckId}, #{commentContent}, DATE_FORMAT(now(), '%Y-%m-%d'), DEFAULT);
     </insert>
 
     <!-- SQL :SELECT ONE-->
@@ -67,6 +67,6 @@
     <delete id="deleteComment"  parameterType="comment">
         DELETE
         FROM comment
-        where comment_no = {value }
+        where comment_no = #{commentNo}
     </delete>
 </mapper>

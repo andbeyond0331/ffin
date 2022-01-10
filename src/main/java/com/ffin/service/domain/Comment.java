@@ -1,6 +1,7 @@
 package com.ffin.service.domain;
 
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import lombok.Data;
@@ -13,7 +14,7 @@ public class Comment {
 	private String commentContent;
 	private String commentUserId;
 	private String commentTruckId;
-	private Date commentDate;
+	private Timestamp commentDate;
 	private int secretKey;
 
 }

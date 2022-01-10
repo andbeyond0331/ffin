@@ -58,7 +58,7 @@
 <body id="page-top">
 
 <jsp:include page="/views/navbar.jsp"/>
-<br/><br/>
+<br/><br/><br/><br/>
 <c:if test="${sessionScope.user != null || sessionScope.truck != null}">
     <div class="container">
 
@@ -68,7 +68,7 @@
 
         </div>
 
-        <form class="form-horizontal">
+        <form name="updateP" class="form-horizontal">
             <!-- 게시판 글수정 양식 영역 시작 -->
             <div class="form-group">
                 <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
