@@ -1,26 +1,30 @@
 package com.ffin.web.user;
 
-import com.ffin.service.domain.Purchase;
+import com.ffin.common.Page;
+import com.ffin.common.Search;
 import com.ffin.service.domain.User;
 import com.ffin.service.user.UserService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
-import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 
 @Controller
@@ -32,6 +36,11 @@ public class UserController {
     private UserService userService;
 
     private ModelAndView modelAndView;
+
+    @Value("#{commonProperties['pageUnit']}")
+    int pageUnit;
+    @Value("#{commonProperties['pageSize']}")
+    int pageSize;
 
     // 파일 저장경로 지정
     private static final String FILE_SERVER_PATH = "C:\\ffinPJT\\src\\main\\webapp\\resources\\image";
@@ -137,22 +146,24 @@ public class UserController {
     }
 
     @RequestMapping( value="getUser", method=RequestMethod.GET )
-    public String getUser(@RequestParam("userId") String userId , Model model ) throws Exception {
+    public String getUser(@RequestParam("userId") String userId , Model model, HttpSession session ) throws Exception {
 
         System.out.println("/user/getUser : GET");
+
+        System.out.println("!!!!!!!!!"+session.getAttribute("role"));
+
         User user = userService.getUser(userId);
         model.addAttribute("user", user);
 
-        return "views/user/getUserInfo.jsp";
+        if( session.getAttribute("role").equals("admin") ){
+            System.out.println("관리자페이지로 이동");
+            return "/views/user/getUserByAdmin.jsp";
+        }
+
+        System.out.println("회원전용페이지로 이동");
+        return "/views/user/getUserInfo.jsp";
     }
 
-/*    @RequestMapping(value="updateUserProfile", method=RequestMethod.GET)
-    public String updatePurchase(@RequestParam("userId") String userId, Model model) throws Exception {
-
-        System.out.println("UserController.updatePurchase : GET");
-
-        return "views/user/addUserProfile.jsp";
-    }*/
 
     @RequestMapping(value = "updateUserProfile", method = RequestMethod.POST)
     public String updateUserProfile(@ModelAttribute("user") User user, @RequestParam("userId") String userId,
@@ -209,5 +220,29 @@ public class UserController {
 
         return "redirect:/";
     }
+
+    @RequestMapping(value = "getUserList")
+    public String getUserList(@ModelAttribute("search")Search search, Model model, HttpServletRequest request) throws Exception{
+
+        System.out.println("UserController.getUserList");
+
+        if(search.getCurrentPage() == 0){
+            search.setCurrentPage(1);
+        }
+        search.setPageSize(pageSize);
+
+        Map<String, Object> map = userService.getUserList(search);
+
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+        System.out.println("여기는 UserList resultPage : "+resultPage);
+
+        model.addAttribute("list", map.get("list"));
+        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("search", search);
+
+        return "/views/user/getUserList.jsp";
+    }
+
+
 
 }
