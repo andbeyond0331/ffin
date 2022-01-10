@@ -64,5 +64,8 @@ public interface MenuDao {
     // 게시판 page 처리를 위한 전체 Row(totalCount) return
     public int getTotalCount(Search search) throws Exception;
 
+    // 옵션그룹 존재 여부
+    public int isThereOG(Search search, int menuNo) throws Exception;
+
 
 }

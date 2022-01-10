@@ -61,13 +61,30 @@ public class MenuServiceTest {
 //
 //    }
 
-    @Test
-    public void getLatestOptionGroupNo() throws Exception{
+//    @Test
+//    public void getLatestOptionGroupNo() throws Exception{
+//
+//        OptionGroup optionGroup = menuService.getLatestOptionGroupNo();
+//
+//        Assert.assertEquals(14, optionGroup.getOptionGroupNo());
+//    }
 
-        OptionGroup optionGroup = menuService.getLatestOptionGroupNo();
-
-        Assert.assertEquals(14, optionGroup.getOptionGroupNo());
-    }
+//    @Test // okay!
+//    public void isThereOGTest() throws Exception{
+//
+//
+//
+//                Search search = new Search();
+//        search.setCurrentPage(1);
+//        search.setPageSize(100);
+//        search.setSearchCondition("0");
+//        search.setSearchKeyword("");
+//        //Map<String, Object> map = menuService.getOptionGroup(search, 1);
+//        int count = menuService.isThereOG(search,1);
+//
+//        Assert.assertEquals(9, count);
+//
+//    }
 
 //
 //    @Test  //OKAY
@@ -145,22 +162,22 @@ public class MenuServiceTest {
 //
 //    }
 //
-//    @Test
-//    public void getOptionGroupByMenu() throws Exception{
-//
-//        Search search = new Search();
-//        search.setCurrentPage(1);
-//        search.setPageSize(100);
-//        search.setSearchCondition("0");
-//        search.setSearchKeyword("");
-//        Map<String, Object> map = menuService.getOptionGroupByMenu(search, 1);
-//
-//        List<Object> list = (List<Object>)map.get("list");
-//
-//        Assert.assertEquals(6, list.size());
-//
-//
-//    }
+    @Test
+    public void getOptionGroupByMenu() throws Exception{
+
+        Search search = new Search();
+        search.setCurrentPage(1);
+        search.setPageSize(100);
+        search.setSearchCondition("0");
+        search.setSearchKeyword("");
+        Map<String, Object> map = menuService.getOptionGroupByMenu(search, 1);
+
+        List<Object> list = (List<Object>)map.get("list");
+
+        Assert.assertEquals(9, list.size());
+
+
+    }
 //
 //        @Test
 //    public void getLargestOptionGroupNo() throws Exception {

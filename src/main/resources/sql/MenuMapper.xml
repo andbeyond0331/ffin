@@ -225,5 +225,14 @@ select * from optiongroup order by OPTION_GROUP_NO desc limit 1
 		</if> ) countTable
 	</select>
 
+	<!-- SQL : SELECT ROW COUNT -->
+	<select id="isThereOG" parameterType="map" resultMap="OptionGroupSelectMap">
+		SELECT COUNT(*) as option_Group_no
+		FROM( SELECT *
+		    FROM optiongroup
+		    WHERE menu_no=#{menuNo})countTable
+	</select>
+
+
 
 </mapper>

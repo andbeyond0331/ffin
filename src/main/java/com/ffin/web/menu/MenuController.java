@@ -113,6 +113,8 @@ public class MenuController {
         return "forward:/views/menu/getTruckMenuList.jsp";
     }
 
+    // TODO: 2022-01-08 !!! 별점순, 거리순, 구매순 나열하기 
+
     // 트럭 리스트 - 카테고리에 따른
     @RequestMapping(value = "getTruckListCate")
 //    public String getTruckList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
@@ -612,6 +614,8 @@ public class MenuController {
         return "redirect:/menu/getMenu?menuNo="+menu.getMenuNo();
 
     }
+
+    // TODO: 2022-01-08 !!! session에 선택한 정보 담기도록 변경하기!!!
 
     @RequestMapping("getMenuList")
     public ModelAndView getMenuList(@ModelAttribute("search") Search search,

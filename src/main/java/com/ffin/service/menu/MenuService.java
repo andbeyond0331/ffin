@@ -63,4 +63,8 @@ public interface MenuService {
     //옵션 삭제
     public void deleteOption(OptionGroup optionGroup) throws Exception;
 
+    //옵션 그룹 존재 여부
+    public int isThereOG(Search search, int menuNo) throws Exception;
+
+
 }
