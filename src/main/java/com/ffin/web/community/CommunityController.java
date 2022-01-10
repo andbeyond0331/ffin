@@ -184,83 +184,42 @@ public class CommunityController {
 
     }
 
-
-    ////////////////////// 코멘트 관련 메소드 ////////////////////////////
-//    @RequestMapping(value = "addComment", method = RequestMethod.GET)
-//    public String addComment() throws Exception {
+//    @RequestMapping(value = "getComment", method = RequestMethod.GET)
+//    public ModelAndView getComment(HttpServletRequest request, ModelAndView m) throws Exception {
 //
-//        System.out.println("/community/addComment : GET");
+//        System.out.println("/community/getComment : GET");
+//        int commentNo = Integer.parseInt(request.getParameter("commentNo"));
+//        System.out.println("commentNo = " + commentNo);
 //
-//        return "/views/community/getPost.jsp";
-//    }
+//        Comment comment = communityService.getComment(commentNo);
+//        System.out.println("comment = " + comment);
 //
-//    @RequestMapping(value = "addComment", method = RequestMethod.POST)
-//    public String addComment(@ModelAttribute("comment") Comment comment, HttpSession session) throws Exception {
+//        m.addObject("comment", comment);
+//        m.setViewName("/community/getComment");
 //
-//        System.out.println("/community/addComment : POST");
-//
-//        String role =(String) session.getAttribute("role");
-//
-//        System.out.println("role = " + role);
-//
-//        User commentUser = null;
-//        Truck commentTruck = null;
-//
-//        if (session.getAttribute("role").equals("user")) {
-//            commentUser = (User) session.getAttribute("user");
-//            System.out.println("댓글 작성자(user) : " + commentUser);
-//            comment.setCommentUser(commentUser);
-//        } else if (session.getAttribute("role").equals("truck")) {
-//            commentTruck = (Truck) session.getAttribute("truck");
-//            System.out.println("댓글 작성자(truck) : " + commentTruck);
-//            comment.setCommentTruck(commentTruck);
-//        }
-//
-//        communityService.addComment(comment);
-//
-//        return "rediect:/community/getPost";
+//        return m;
 //    }
 
-    @RequestMapping(value = "getComment", method = RequestMethod.GET)
-    public ModelAndView getComment(HttpServletRequest request, ModelAndView m) throws Exception {
-
-        System.out.println("/community/getComment : GET");
-        int commentNo = Integer.parseInt(request.getParameter("commentNo"));
-        System.out.println("commentNo = " + commentNo);
-
+    @RequestMapping(value = "updateComment", method = RequestMethod.GET)
+    public String updateComment(@ModelAttribute("commentNo") int commentNo, Model model, HttpSession httpSession) throws Exception {
+        System.out.println("/community/updateComment : GET");
+        //Business Logic
         Comment comment = communityService.getComment(commentNo);
-        System.out.println("comment = " + comment);
+        //Model 과 View 연결
+        model.addAttribute("comment", comment);
 
-        m.addObject("comment", comment);
-        m.setViewName("/community/getComment");
-
-        return m;
+        return "forward:/community/updateComment.jsp";
     }
 
-//    @RequestMapping(value = "updateComment", method = RequestMethod.GET)
-//    public String updateComment(@ModelAttribute("commentNo") int commentNo, Model model, HttpSession httpSession) throws Exception {
-//        System.out.println("/community/updateComment : GET");
-//        //Business Logic
-//        Comment comment = communityService.getComment(commentNo);
-//        //Model 과 View 연결
-//        model.addAttribute("comment", comment);
-//
-//        return "forward:/community/updateComment.jsp";
-//    }
-//
-//    @RequestMapping(value = "updateComment", method = RequestMethod.POST)
-//    public String updateComment(@ModelAttribute("comment") Comment comment, Model model, HttpSession session) throws Exception {
-//
-//        System.out.println("/community/updateComment : POST");
-//        //Business Logic
-//        communityService.updateComment(comment);
-//
-//        int sessionNo = ((Comment) session.getAttribute("comment")).getCommentNo();
-//        if (sessionNo == comment.getCommentNo()) {
-//            session.setAttribute("comment", comment);
-//        }
-//        return "redirect:/community/getComment?commentNo=" + comment.getCommentNo();
-//    }
+    @RequestMapping(value = "updateComment", method = RequestMethod.POST)
+    public String updateComment(@ModelAttribute("comment") Comment comment, Model model, HttpSession session) throws Exception {
+
+        System.out.println("/community/updateComment : POST");
+        //Business Logic
+        communityService.updateComment(comment);
+
+        return "redirect:/community/getPost?postNo=" + comment.getCommentPostNo();
+    }
 
 
     ////////////////////// 좋아요 관련 메소드 ////////////////////////////
@@ -348,5 +307,44 @@ public class CommunityController {
         model.addAttribute("search", search);
 
         return "forward:/community/getHeartList.jsp";
+    }
+
+    @RequestMapping(value = "deletePost", method = RequestMethod.GET)
+    public String deletePost(@ModelAttribute("post") Post post, @RequestParam("postNo") int postNo, Model model, HttpServletRequest request, HttpSession session)
+            throws Exception {
+
+        System.out.println("/community/deletePost : GET");
+
+        postNo = (int) session.getAttribute("postNo");
+
+        System.out.println("postNo = " + postNo);
+
+        communityService.deletePost(post);
+
+        return "redirect:/community/getPostList";
+    }
+
+
+    @RequestMapping(value = "deleteComment", method = RequestMethod.GET)
+    public String deleteComment(@ModelAttribute("comment") Comment comment, @RequestParam("commentNo") int commentNo, Model model, HttpServletRequest request, HttpSession session)
+            throws Exception {
+
+        System.out.println("/community/deleteComment : GET");
+
+        commentNo = Integer.parseInt(request.getParameter("commentNo"));
+
+        System.out.println("commentNo = " + commentNo);
+
+        communityService.getComment(commentNo);
+
+        System.out.println("comment = " + comment);
+
+        int postNo = (int) session.getAttribute("postNo");
+
+        System.out.println("postNo = " + postNo);
+
+        communityService.deleteComment(comment);
+
+        return "redirect:/community/getPost?postNo="+postNo;
     }
 }
