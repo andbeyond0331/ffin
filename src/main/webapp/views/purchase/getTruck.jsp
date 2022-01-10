@@ -11,7 +11,7 @@
 
     <style>
         <%--/////////////////////////////////////  장바구니 소스 ////////////////////////////////////--%>
-        .card {
+        .card.cart{
             display: flex;
             /*justify-content: space-between;*/
             margin: 0 70px;
@@ -63,7 +63,7 @@
             margin-bottom: 5vh
         }
 
-        .card {
+        .card.cart {
             margin: auto;
             max-width: 950px;
             width: 90%;
@@ -292,7 +292,7 @@
 
             height: 60px;
 
-            background-image: url('./img/starrate.png');
+            /*background-image: url('./img/starrate.png');*/
 
             background-repeat: no-repeat;
 
@@ -660,7 +660,7 @@
     <c:set var="i" value="0"/>
     <c:forEach var="menu" items="${list}">
         <c:set var="i" value="${i+1}"/>
-        <div class="card" style="width: 17rem; margin-bottom:15px; margin-left: 10px;">
+        <div class="card cart" style="width: 17rem; margin-bottom:15px; margin-left: 10px;">
             <img class="card-img-top" src="/resources/image/${menu.menuImg1}" alt="Card image cap"
                  style="border-bottom: 1px solid #eee; height: 200px;">
             <div class="card-body">

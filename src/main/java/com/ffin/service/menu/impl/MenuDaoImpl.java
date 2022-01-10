@@ -3,6 +3,7 @@ package com.ffin.service.menu.impl;
 import com.ffin.common.Search;
 import com.ffin.service.domain.Menu;
 import com.ffin.service.domain.OptionGroup;
+import com.ffin.service.domain.Review;
 import com.ffin.service.menu.MenuDao;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,5 +171,26 @@ public class MenuDaoImpl implements MenuDao {
     @Override
     public int getTotalCount(Search search) throws Exception {
         return sqlSession.selectOne("MenuMapper.getTotalCount",search);
+    }
+
+    @Override
+    public int isThereOG(Search search, int menuNo) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("search", search);
+        map.put("menuNo", menuNo);
+        List<OptionGroup> list =sqlSession.selectList("MenuMapper.isThereOG", map);
+        System.out.println("list : " + list);
+
+        map.clear();
+        map.put("list", list);
+//        float avg = list.get(0).getRvStar();
+        int total;
+        if(list.size()!=0){
+            total = list.get(0).getOptionGroupNo();
+        }else{
+            total = 0;
+        }
+
+        return total;
     }
 }

@@ -69,8 +69,9 @@
 
             divElem = "<input type=\"hidden\" id=\"applyOptionGroupName+"+realOptionGroupName+"\" name=\"applyOptionGroupName\" value=\""+realOptionGroupName+"\"/>";
 
-            alert("applyOptionGroupName을 name으로 가진 태그가 있는가 ??? 있다면 몇 개?"+modal.find('input[name="applyOptionGroupName"]').length);
+           // alert("applyOptionGroupName을 name으로 가진 태그가 있는가 ??? 있다면 몇 개?"+modal.find('input[name="applyOptionGroupName"]').length);
 
+            //옵션그룹이름이 정해지지 않았다면
             if(modal.find('input[name="applyOptionGroupName"]').length!==0) {
                 modal.find('input[name="applyOptionGroupName"]').val(realOptionGroupName);
             }else{
@@ -78,9 +79,7 @@
             }
 
 
-            // modal.find('.modal-body').append($(divElem));
-            // modal.find('.col-from-label').text("옵션그룹이름 : " + realOptionGroupName);
-            // modal.find('div[name="optionGroupName"]').html(divElem);
+
 
         }
 
@@ -238,6 +237,13 @@
             console.log("removeELOption(옵션그룹 삭제)");
             console.log("삭제 타겟 : " + $('div#removeTarget'+idIndex+'.form-group').html());
 
+            // var removeTargetOG=[];
+            // removeTargetOG=idIndex.split();
+            // idIndex1 = idIndex.replace(/(\s*)/g, "\ ");
+
+
+
+
             if(!confirm("옵션 그룹"+idIndex+"을(를) 삭제하시겠습니까?")){
 
             }else{
@@ -318,6 +324,11 @@
             <label for="isSigMenu" class="col-sm-offset-1 col-sm-3 control-label">대표메뉴여부</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="isSigMenu" name="isSigMenu" value="${menu.isSigMenu}" placeholder="대표메뉴여부">
+
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">대표메뉴여부</label>
+                </div>
             </div>
         </div>
 
@@ -392,9 +403,13 @@
                     <div class="modal-body">
                         <%--                        <form>--%>
                         <%--                            <label for="optionName" class="col-form-label">옵션 이름</label>--%>
-                        <input type="text" class="form-control" id="optionName" value="${optionGroup.optionName}">
+
+                                <span>옵션 이름
+                                <input type="text" class="form-control" id="optionName" value="${optionGroup.optionName}"></span>
+
                         <%--                            <label for="optionPrice" class="col-form-label">옵션 가격</label>--%>
-                        <input type="text" class="form-control" id="optionPrice" value="${optionGroup.optionPrice}">
+                            <span>옵션 가격</span>
+                        <input type="text" class="form-control" id="optionPrice" value="${optionGroup.optionPrice}" placeholder="옵션 가격 - 숫자를 입력해주세요.">
                         <%--                        </form>--%>
                     </div>
                     <div class="modal-footer">

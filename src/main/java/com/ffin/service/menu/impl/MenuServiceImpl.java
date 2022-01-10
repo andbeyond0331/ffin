@@ -134,6 +134,11 @@ public class MenuServiceImpl implements MenuService {
         menuDao.deleteOption(optionGroup);
     }
 
+    @Override
+    public int isThereOG(Search search, int menuNo) throws Exception {
+        return menuDao.isThereOG(search, menuNo);
+    }
+
 
 
 }

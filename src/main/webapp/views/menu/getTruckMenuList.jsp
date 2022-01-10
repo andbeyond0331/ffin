@@ -366,6 +366,62 @@
         }
     </style>
 
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=51615d81a030d0475e576eb41e443c14&libraries=services"></script>
+
+    <script type="text/javascript">
+
+
+
+
+        window.onload = function() {
+
+            findLocation();
+        };
+
+        function findLocation() {
+
+            navigator.geolocation.getCurrentPosition(success, error, options);
+
+            var options = {
+                enableHighAccuracy : true,
+                timeout : 5000,
+                maximumAge : 0
+            };
+            function success(pos) {
+                var crd = pos.coords;
+                console.log('위도 : ' + crd.latitude);
+                console.log('경도: ' + crd.longitude);
+                lat = crd.latitude;
+                lon = crd.longitude;
+
+                getAddr(lat,lon);
+
+
+            };
+
+            function error(err) {
+                console.warn('ERROR(' + err.code + '): ' + err.message);
+            };
+
+            function getAddr(lat,lng){
+                let geocoder = new kakao.maps.services.Geocoder();
+
+                let coord = new kakao.maps.LatLng(lat, lng);
+                let callback = function(result, status) {
+                    if (status === kakao.maps.services.Status.OK) {
+                        // console.log(result[0].address.address_name);
+                        console.log(result[0].address.address_name)
+                        $("input[name='inputLocation']").val(result[0].address.address_name)
+                    }
+                }
+                geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+            }
+
+        }
+
+
+    </script>
+
 </head>
 
 <body>
@@ -373,6 +429,32 @@
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="/views/navbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
+<!--find location -->
+<div class="find_container ">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form>
+                    <div class="form-row" style="margin-top: 70px;">
+                        <div class="form-group col-lg-6">
+                            <input type="text" class="form-control" id="inputLocation" name="inputLocation" placeholder="What's your address?">
+                            <span class="location_icon">
+                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                                  </span>
+                        </div>
+                    </div>
+                    <div class="form-row"  style="margin-top: -15px;">
+                        <div class="form-group col-md-4">
+                            <div class="btn-box">
+                                <button type="submit" class="btn ">Use current location</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- slider section -->
 
