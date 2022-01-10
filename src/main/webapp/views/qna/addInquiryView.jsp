@@ -147,11 +147,12 @@
                     return false;
                 }
 
+				//1 file
                 formData.append("uploadFile", fileObj);
                 //multi file
-                // for(let i = 0; i < fileList.length; i++){
-                //     formData.append("uploadFile", fileList[i]);
-                // }
+                for(let i = 0; i < fileList.length; i++){
+                    formData.append("uploadFile", fileList[i]);
+                }
 
                 /*$.ajax({
                     url: '/qna/json/uploadInquiryFile',
@@ -275,8 +276,14 @@
 <!-- client section -->
 <section class="client_section layout_padding">
 	<form class="row justify-content-center" id="addInquiry" >
-		<input type="hidden" id="userId" name="userId" value="${user.userId}">
-<%--		<input type="hidden" id="truckId" name="truckId" value="${truck.truckId}">--%>
+		<c:if test="${user.userId != null && truck.truckId == null}">
+			<input type="hidden" id="inquiryId" name="inquiryId" value="${user.userId}">
+			<input type="hidden" id="role" name="role" value="user">
+		</c:if>
+		<c:if test="${user.userId == null && truck.truckId != null}">
+			<input type="hidden" id="inquiryId" name="inquiryId" value="${truck.truckId}">
+			<input type="hidden" id="role" name="role" value="truck">
+		</c:if>
 
 		<div class="container">
 			<div class="col-md-11 col-lg-10 mx-auto">

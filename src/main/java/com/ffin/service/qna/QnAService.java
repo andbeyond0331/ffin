@@ -25,10 +25,13 @@ public interface QnAService {
     public void addInquiry(Inquiry inquiry) throws Exception;
     //문의조회
     public Inquiry getInquiry(int inquiryNo) throws Exception;
-    //문의목록
-
+    //유저문의목록
+    public Map<String, Object> getUserInquiryList(Search search, String inquiryUserId) throws Exception;
+    //트럭문의목록
+    public Map<String, Object> getTruckInquiryList(Search search, String inquiryTruckId) throws Exception;
     //문의수정
-
+    public void updateInquiry(Inquiry inquiry) throws Exception;
     //답변등록
     //-> 답변 status도 변경!
+    public void updateInquiryAns(Inquiry inquiry) throws Exception;
 }

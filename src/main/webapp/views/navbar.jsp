@@ -37,7 +37,7 @@
         </div>
     </c:if>
     <%-- 로그인 O --%>
-    <c:if test="${ (user.userId != null && sessionScope.role == 'user') || (truck.truckId != null && sessionScope.role == 'truck') }">
+    <c:if test="${ (user.userId != null && (sessionScope.role == 'user' || sessionScope.role == 'admin')) || (truck.truckId != null && sessionScope.role == 'truck') }">
     <div class="container-fluid">
         <nav class="navbar navbar-expand-md fixed-top">
             <!-- navbar-brand의 content 변경 -->
@@ -62,7 +62,7 @@
                     <li class="nav-item">
                         <a class="nav-link" id="goPost" href="#">게시판</a>
                     </li>
-                    <c:if test="${user.userId != null && sessionScope.role == 'user'}">
+                    <c:if test="${user.userId != null && (sessionScope.role == 'user' || sessionScope.role == 'admin')}">
                     <li class="nav-item">
                         <a class="nav-link" id="goChat" href="#">채팅방</a>
                     </li>
@@ -81,27 +81,45 @@
                     <li class="form-inline my-2 my-lg-0" style="position: relative;">
                         <%--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>--%>
-                        <c:if test="${user.userId != null && sessionScope.role == 'user'}">
-                            <button type="button" class="btn btn-default dropdown-toggle" id="user-dropdown" data-toggle="dropdown"  aria-expanded="false">
-                                <i class="fas fa-user-alt"></i>${user.userId}
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="user-dropdown">
-                                <li><a class="dropdown-item user-menu" href="/views/user/userMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
-                                <li><a class="dropdown-item user-menu" href="/views/qna/addInquiryView.jsp"><i class="fas fa-question-circle"></i>문의</a></li>
-                                <li><a class="dropdown-item user-menu" href="/user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
-                            </ul>
-                        </c:if>
-                        <c:if test="${truck.truckId != null && sessionScope.role == 'truck' }">
-                            <button type="button" class="btn btn-default dropdown-toggle" id="truck-dropdown" data-toggle="dropdown"  aria-expanded="false">
-                                <i class="fas fa-user-alt"></i>${truck.truckId}
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="truck-dropdown">
-                                <li><a class="dropdown-item user-menu" href="/views/truck/truckMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
-                                <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-power-off"></i>영업상태변경</a></li>
-                                <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-question-circle"></i>문의</a></li>
-                                <li><a class="dropdown-item user-menu" href="/truck/logoutTruck"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
-                            </ul>
-                        </c:if>
+                        <c:choose>
+
+                            <%-- User --%>
+                            <c:when test="${user.userId != null && sessionScope.role eq 'user' }">
+                                <button type="button" class="btn btn-default dropdown-toggle" id="user-dropdown" data-toggle="dropdown"  aria-expanded="false">
+                                    <i class="fas fa-user-alt"></i>${user.userId}
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="user-dropdown">
+                                    <li><a class="dropdown-item user-menu" href="/views/user/userMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
+                                    <li><a class="dropdown-item user-menu" href="/views/qna/addInquiryView.jsp"><i class="fas fa-question-circle"></i>문의</a></li>
+                                    <li><a class="dropdown-item user-menu" href="/user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+                                </ul>
+                            </c:when>
+
+                            <%-- Admin --%>
+                            <c:when test="${user.userId != null && sessionScope.role eq 'admin'}">
+                                <button type="button" class="btn btn-default dropdown-toggle" id="user-dropdown" data-toggle="dropdown"  aria-expanded="false">
+                                    <i class="fas fa-user-alt"></i>${user.userId}
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="user-dropdown">
+                                    <li><a class="dropdown-item user-menu" href="/views/user/adminMyPage.jsp"><i class="fas fa-user-circle"></i>사이트 관리</a></li>
+                                    <li><a class="dropdown-item user-menu" href=""><i class="fas fa-question-circle"></i>가입승인</a></li>
+                                    <li><a class="dropdown-item user-menu" href="/user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+                                </ul>
+                            </c:when>
+
+                            <%-- Truck --%>
+                            <c:when test="${truck.truckId != null && sessionScope.role eq 'truck' }">
+                                <button type="button" class="btn btn-default dropdown-toggle" id="truck-dropdown" data-toggle="dropdown"  aria-expanded="false">
+                                    <i class="fas fa-user-alt"></i>${truck.truckId}
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="truck-dropdown">
+                                    <li><a class="dropdown-item user-menu" href="/views/truck/truckMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
+                                    <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-power-off"></i>영업상태변경</a></li>
+                                    <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-question-circle"></i>문의</a></li>
+                                    <li><a class="dropdown-item user-menu" href="/truck/logoutTruck"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+                                </ul>
+                            </c:when>
+                        </c:choose>
                     </li>
                 </ul>
             </div>

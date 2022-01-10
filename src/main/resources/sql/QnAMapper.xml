@@ -149,7 +149,72 @@
         WHERE INQUIRY_NO = #{value}
     </select>
 
+    <select id="getUserInquiryList" parameterType="search" resultMap="inquirySelectMap">
+        SELECT inner_table.*
+        FROM ( SELECT i.inquiry_no, u.USER_ID, i.inquiry_type, i.inquiry_title, i.inquiry_date, i.INQUIRY_ANS_STATUS
+                FROM inquiry i, user u
+                WHERE i.inquiry_user_id = u.user_id AND i.inquiry_user_id = #{userId}
+                ORDER BY i.inquiry_no ) inner_table
+        limit #{search.startRowNum}, #{search.pageSize}
+    </select>
 
+    <select id="getTruckInquiryList" parameterType="search" resultMap="inquirySelectMap">
+        select *
+        FROM ( SELECT inner_table.*, @rownum := @rownum + 1 as row_seq
+        FROM( SELECT i.inquiry_no, i.inquiry_truck_id, i.inquiry_type, i.inquiry_title, i.inquiry_date, i.INQUIRY_ANS_STATUS
+        FROM inquiry i, truck t
+        WHERE i.inquiry_truck_id = t.truck_id
+        <if test="searchCondition != null">
+            <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+            <if test="searchCondition == 0 and searchKeyword !='' ">
+                AND i.inquiry_truck_id LIKE #{searchKeyword}
+            </if>
+            <if test="searchCondition == 1 and searchKeyword !='' ">
+                AND i.INQUIRY_ANS_STATUS LIKE #{searchKeyword}
+            </if>
+        </if>
+        order by i.inquiry_no ) inner_table,  (select @rownum := 0) r
+        limit 0, 8 ) l
+        WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+    </select>
+
+    <select id="getInquiryTotalCount" parameterType="search" resultType="int">
+        SELECT COUNT(*)
+        FROM ( SELECT inquiry_no, inquiry_user_id, inquiry_truck_id, inquiry_type, inquiry_date, inquiry_ans_status
+        FROM inquiry
+        <if test="searchCondition != null">
+            <where>
+                <if test="searchCondition == 0 and searchKeyword !='' ">
+                    inquiry_type = #{searchKeyword}
+                </if>
+                <if test="searchCondition == 1 and searchKeyword !='' ">
+                    inquiry_ans_status = #{searchKeyword}
+                </if>
+            </where>
+        </if> ) countTable
+    </select>
+
+    <update id="updateInquiry" parameterType="int">
+        UPDATE ffin.inquiry
+        <set>
+            inquiry_type    = #{inquiryType},
+            inquiry_title   = #{inquiryTitle},
+            inquiry_content = #{inquiryContent},
+            inquiry_file    = #{inquiryFile}
+        </set>
+        WHERE inquiry_no = #{inquiryNo}
+    </update>
+
+    <update id="updateInquiryAns" parameterType="int">
+        UPDATE ffin.inquiry
+        <set>
+            inquiry_ans_status = 1,
+            inquiry_ans_title = #{inquiryAnsTitle},
+            inquiry_ans_content = #{inquiryAnsContent},
+            inquiry_ans_date = SYSDATE()
+        </set>
+        WHERE inquiry_no = #{inquiryNo}
+    </update>
 
 
 </mapper>

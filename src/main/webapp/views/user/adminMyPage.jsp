@@ -7,7 +7,7 @@
 
 <head>
 
-	<title>F.FIN | MyPage</title>
+	<title>F.FIN | 회원관리</title>
 	<jsp:include page="../../common/lib.jsp"/>
 
 	<!-- bootstrap core css -->
@@ -52,39 +52,35 @@
 			font-weight: bold;
 		}
 
+		.box-icon ion-icon{
+			height: 40px;
+			width: 40px;
+			color: #ffba49;
+		}
+
 	</style>
 
 	<script type="text/javascript">
 
 		$(function () {
 
-			$('.user-info').click(function () {
-				self.location = "./getUserInfo.jsp"
+			$('.userList').click(function () {
+				self.location = "/user/getUserList"
 			});
-			$('.user-profile').click(function () {
-				self.location = "./getUserProfile.jsp"
+			$('.truckList').click(function () {
+				self.location = "/truck/getTruckList"
 			});
-			$('.user-purchase').click(function () {
+			$('.postList').click(function () {
 				self.location = ""
 			});
-			$('.user-point').click(function () {
+			$('.blackList').click(function () {
+				self.location = "/user/getBlackList"
+			});
+			$('.truckAddList').click(function () {
 				self.location = ""
 			});
-			$('.user-coupon').click(function () {
-				self.location = ""
-			});
-			$('.user-heart').click(function () {
-				self.location = ""
-			});
-			$('.user-review').click(function () {
-				self.location = ""
-			});
-			$('.user-post').click(function () {
-				self.location = ""
-			});
-			$('.user-qna').click(function () {
-				alert("안녕!");
-				self.location = "/qna/getUserInquiryList"
+			$('.qnaList').click(function () {
+				self.location = "/qna/getInquiryList"
 			});
 
 
@@ -116,69 +112,46 @@
 			</div>
 			<div style="margin-top: 50px;">
 				<div class="row justify-content-center">
-					<div class="card user-info" style="width: 12rem;">
+					<div class="card userList" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
-							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-smile page-icon fa-2x"></i></span>
-							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">내정보</h6>
+							<span class="box-icon"  style="text-align: initial;"><ion-icon name="accessibility-outline"></ion-icon></span>
+							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">일반회원</h6>
 							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
 						</div>
 					</div>
-					<div class="card user-profile" style="width: 12rem;">
+					<div class="card truckList" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
-							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-robot page-icon fa-2x"></i></span>
-							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">프로필</h6>
+							<span class="box-icon"  style="text-align: initial;"><ion-icon name="fast-food-outline"></ion-icon></span>
+							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">사업자회원</h6>
 							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
 						</div>
 					</div>
-					<div class="card user-purchase" style="width: 12rem;">
+					<div class="card postList" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
-							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-shopping-basket fa-2x"></i></span>
-							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">구매</h6>
-							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
-						</div>
-					</div>
-				</div>
-				<div class="row justify-content-center">
-					<div class="card user-point" style="width: 12rem;">
-						<div class="card-body" style="display: inline-grid;">
-							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-donate fa-2x"></i></span>
-							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">적립금</h6>
-							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
-						</div>
-					</div>
-					<div class="card user-coupon" style="width: 12rem;">
-						<div class="card-body" style="display: inline-grid;">
-							<span class="box-icon"  style="text-align: initial;"><i class="far fa-money-bill-alt fa-2x"></i></span>
-							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">쿠폰</h6>
-							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
-						</div>
-					</div>
-					<div class="card user-heart" style="width: 12rem;">
-						<div class="card-body" style="display: inline-grid;">
-							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-heart fa-2x"></i></span>
-							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">좋아요</h6>
+							<span class="box-icon"  style="text-align: initial;"><ion-icon name="desktop-outline"></ion-icon></span>
+							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">게시글 관리</h6>
 							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
 						</div>
 					</div>
 				</div>
 				<div class="row justify-content-center">
-					<div class="card user-review" style="width: 12rem;">
+					<div class="card blackList" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
-							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-star-half-alt fa-2x"></i></span>
-							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">리뷰</h6>
+							<span class="box-icon"  style="text-align: initial;"><ion-icon name="skull-outline"></ion-icon></span>
+							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">블랙리스트</h6>
 							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
 						</div>
 					</div>
-					<div class="card user-post" style="width: 12rem;">
+					<div class="card truckAddList" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
-							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-edit fa-2x"></i></span>
-							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">글•댓글</h6>
+							<span class="box-icon"  style="text-align: initial;"><ion-icon name="receipt-outline"></ion-icon></span>
+							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">가입승인</h6>
 							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
 						</div>
 					</div>
-					<div class="card user-qna" style="width: 12rem;">
+					<div class="card qnaList" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
-							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-question-circle fa-2x"></i></span>
+							<span class="box-icon"  style="text-align: initial;"><ion-icon name="warning-outline"></ion-icon></span>
 							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">문의•신고</h6>
 							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
 						</div>
