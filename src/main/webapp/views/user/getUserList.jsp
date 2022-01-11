@@ -48,10 +48,12 @@
     <script type="text/javascript">
 
         $(function () {
-            $('.userInfo-id').click(function () {
-                alert("유저 : " + $(this).text().trim());
-                /*alert("유저 : " + $('.userInfo.userInfo-id').text().trim());*/
-                self.location ="/user/getUser?userId="+ $(this).text().trim();
+
+            $('.userInfo').click(function () {
+
+                var userId = $(this).find("input[name='userId']").val();
+                alert(userId);
+                self.location ="/user/getUser?userId="+userId;
             });
         });
 
@@ -81,19 +83,19 @@
             </div>
 
             <div class="row search">
-                <div class="col-md-6 text-left">
-                    <p class="text-primary">
+                <div class="col-md-6 text-left" style="display: flex; align-items: center;">
+                    <p style="margin: 0; font-size: 12px;">
                         전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
                     </p>
                 </div>
 
                 <div class="col-md-6 text-right">
-                    <form class="form-inline" name="detailForm">
+                    <form class="form-inline" name="detailForm" style="padding: 0;">
 
                         <div class="form-group">
                             <select class="form-control" name="searchCondition" >
                                 <option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>ID</option>
-                                <option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>성명</option>
+                                <option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>답변여부</option>
                             </select>
                         </div>
 
@@ -134,6 +136,7 @@
                             <c:forEach var="user" items="${list}">
                                 <c:set var="i" value="${ i+1 }" />
                                 <tr class="userInfo">
+                                    <input type="hidden" id="userId" name ="userId" value="${user.userId}">
                                     <td class="userInfo-id">${user.userId}</td>
                                     <input type="hidden" value="${user.userId}">
                                     <td>${user.userName}</td>

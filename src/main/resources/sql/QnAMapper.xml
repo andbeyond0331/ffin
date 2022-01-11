@@ -75,7 +75,7 @@
     <select id="getReportList" parameterType="search" resultMap="reportSelectMap">
         select *
         FROM ( SELECT inner_table.*, @rownum := @rownum + 1 as row_seq
-               FROM( SELECT r.report_no, r.report_user_id, r.report_target_id, r.report_content, r.report_link, report_type
+               FROM( SELECT r.report_no, r.report_user_id, r.report_target_id, r.report_content, r.report_link, r.report_type, r.report_proc_status
                      FROM report r, user u
                      WHERE r.report_user_id = u.user_id
                         <if test="searchCondition != null">
@@ -149,13 +149,21 @@
         WHERE INQUIRY_NO = #{value}
     </select>
 
+    <select id="getInquiryListByAdmin" parameterType="search" resultMap="inquirySelectMap">
+        SELECT inner_table.*
+        FROM ( SELECT inquiry_no, inquiry_user_id, inquiry_truck_id, inquiry_type, inquiry_title, inquiry_date, inquiry_ans_status, inquiry_user_role
+                FROM inquiry i
+                ORDER BY inquiry_no DESC ) inner_table
+        limit #{startRowNum}, #{pageSize}
+    </select>
+
     <select id="getUserInquiryList" parameterType="search" resultMap="inquirySelectMap">
         SELECT inner_table.*
         FROM ( SELECT i.inquiry_no, u.USER_ID, i.inquiry_type, i.inquiry_title, i.inquiry_date, i.INQUIRY_ANS_STATUS
                 FROM inquiry i, user u
                 WHERE i.inquiry_user_id = u.user_id AND i.inquiry_user_id = #{userId}
                 ORDER BY i.inquiry_no ) inner_table
-        limit #{search.startRowNum}, #{search.pageSize}
+        limit #{startRowNum}, #{pageSize}
     </select>
 
     <select id="getTruckInquiryList" parameterType="search" resultMap="inquirySelectMap">

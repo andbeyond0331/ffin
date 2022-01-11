@@ -82,6 +82,20 @@ public class QnAServiceImpl implements QnAService {
     }
 
     @Override
+    public Map<String, Object> getInquiryListByAdmin(Search search) throws Exception {
+
+        System.out.println("QnAServiceImpl.getInquiryListByAdmin");
+        List<Inquiry> list = qnADao.getInquiryListByAdmin(search);
+        int totalCount = qnADao.getInquiryTotalCount(search);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("list", list);
+        map.put("totalCount", new Integer(totalCount));
+
+        return map;
+    }
+
+    @Override
     public Map<String, Object> getUserInquiryList(Search search, String inquiryUserId) throws Exception {
 
         System.out.println("QnAServiceImpl.getUserInquiryList");

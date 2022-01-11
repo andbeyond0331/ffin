@@ -337,7 +337,7 @@
                 <li class="list">
                     <b></b>
                     <b></b>
-                    <a href="#">
+                    <a href="/user/getBlackList">
                         <span class="icon"><ion-icon name="star-half-outline"></ion-icon></span>
                         <span class="title">블랙리스트</span>
                     </a>
@@ -365,8 +365,8 @@
                     </a>
                     <div class="collapse" id="collapseQnAAdmin" style="padding: 10px;">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">문의</a>
-                            <a class="collapse-item" href="">신고</a>
+                            <a class="collapse-item" href="/qna/getInquiryListByAdmin">문의</a>
+                            <a class="collapse-item" href="/qna/getReportList">신고</a>
                         </div>
                     </div>
                 </li>
