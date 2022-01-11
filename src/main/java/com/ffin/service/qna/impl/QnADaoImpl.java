@@ -84,13 +84,13 @@ public class QnADaoImpl implements QnADao {
     }
 
     @Override
-    public List<Inquiry> getUserInquiryList(Map<String, Object> map) throws Exception {
-        System.out.println("QnADaoImpl.getUserInquiryList");
-        return sqlSession.selectList("QnAMapper.getUserInquiryList", map);
+    public List<Inquiry> getInquiryListByUser(Map<String, Object> map) throws Exception {
+        System.out.println("QnADaoImpl.getInquiryListByUser");
+        return sqlSession.selectList("QnAMapper.getInquiryListByUser", map);
     }
 
     @Override
-    public List<Inquiry> getTruckInquiryList(Map<String, Object> map) throws Exception {
+    public List<Inquiry> getInquiryListByTruck(Map<String, Object> map) throws Exception {
         System.out.println("QnADaoImpl.getTruckInquiryList");
         return sqlSession.selectList("QnAMapper.getTruckInquiryList", map);
     }

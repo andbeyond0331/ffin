@@ -31,9 +31,9 @@ public interface QnADao {
     //전체목록
     public List<Inquiry> getInquiryListByAdmin(Search search) throws Exception;
     //유저문의목록
-    public List<Inquiry> getUserInquiryList(Map<String, Object> map) throws Exception;
+    public List<Inquiry> getInquiryListByUser(Map<String, Object> map) throws Exception;
     //트럭문의목록
-    public List<Inquiry> getTruckInquiryList(Map<String, Object> map) throws Exception;
+    public List<Inquiry> getInquiryListByTruck(Map<String, Object> map) throws Exception;
     //totalCount
     public int getInquiryTotalCount(Search search) throws Exception;
     //문의수정

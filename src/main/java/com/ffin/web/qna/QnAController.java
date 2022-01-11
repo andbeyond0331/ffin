@@ -3,7 +3,9 @@ package com.ffin.web.qna;
 import com.ffin.common.Page;
 import com.ffin.common.Search;
 import com.ffin.service.domain.Inquiry;
+import com.ffin.service.domain.User;
 import com.ffin.service.qna.QnAService;
+import com.sun.xml.internal.ws.developer.MemberSubmissionAddressing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,7 +56,7 @@ public class QnAController {
         model.addAttribute("resultPage", resultPage);
         model.addAttribute("search", search);
 
-        return "/views/user/getReportListByAdmin.jsp";
+        return "/views/qna/getReportListByAdmin.jsp";
 
     }
 
@@ -87,6 +89,28 @@ public class QnAController {
         return "/views/user/userMyPage.jsp";
     }
 
+    @RequestMapping(value = "updateInquiry", method = RequestMethod.GET)
+    public String updateInquiry(@RequestParam("inquiryNo") int inquiryNo, Model model) throws Exception {
+
+        System.out.println("QnAController.updateInquiry : GET");
+
+        Inquiry inquiry = qnAService.getInquiry(inquiryNo);
+        model.addAttribute("inquiry", inquiry);
+        return "/views/qna/updateInquiryView.jsp";
+    }
+
+    @RequestMapping(value = "updateInquiry", method = RequestMethod.POST)
+    public String updateInquiry(@ModelAttribute("inquiry") Inquiry inquiry, Model model, HttpSession session) throws Exception {
+
+        System.out.println("QnAController.updateInquiry : POST");
+
+        qnAService.updateInquiry(inquiry);
+
+        return "redirect:/qna/getInquiryListByUser";
+    }
+
+
+    /* admin 문의목록 */
     @RequestMapping(value = "getInquiryListByAdmin")
     public String getInquiryListByAdmin(@ModelAttribute("search")Search search, Model model, HttpSession session) throws Exception {
 
@@ -106,22 +130,22 @@ public class QnAController {
         model.addAttribute("resultPage", resultPage);
         model.addAttribute("search", search);
 
-        return "/views/user/getInquiryListByAdmin.jsp";
+        return "/views/qna/getInquiryListByAdmin.jsp";
     }
 
-    @RequestMapping(value = "getUserInquiryList")
+    /* user 문의목록 */
+    @RequestMapping(value = "getInquiryListByUser")
     public String getUserInquiryList(@ModelAttribute("search")Search search, Model model,
                                      HttpSession session, HttpServletRequest request) throws Exception {
 
-        System.out.println("QnAController.getUserInquiryList : POST");
+        System.out.println("QnAController.getUserInquiryList");
 
         if(search.getCurrentPage() == 0){
             search.setCurrentPage(1);
         }
-
         search.setPageSize(pageSize);
 
-        Map<String, Object> map = qnAService.getUserInquiryList(search, (String) session.getAttribute("inquiry"));
+        Map<String, Object> map = qnAService.getInquiryListByUser(search, ((User)session.getAttribute("user")).getUserId());
 
         Page resultPage = new Page(search.getCurrentPage(), (Integer) map.get("totalCount"), pageUnit, pageSize);
 
@@ -129,11 +153,12 @@ public class QnAController {
         model.addAttribute("resultPage", resultPage);
         model.addAttribute("search", search);
 
-        return "/views/qna/getInquiryList.jsp";
+        return "/views/qna/getInquiryListByUser.jsp";
     }
 
-    @RequestMapping(value = "getTruckInquiryList")
-    public String getTruckInquiryList(@ModelAttribute("search")Search search, Model model,
+    /* truck 문의목록 */
+    @RequestMapping(value = "getInquiryListByTruck")
+    public String getInquiryListByTruck(@ModelAttribute("search")Search search, Model model,
                                      HttpSession session, HttpServletRequest request) throws Exception {
 
         System.out.println("QnAController.getTruckInquiryList : POST");
@@ -144,7 +169,7 @@ public class QnAController {
 
         search.setPageSize(pageSize);
 
-        Map<String, Object> map = qnAService.getTruckInquiryList(search, (String) session.getAttribute("inquiry"));
+        Map<String, Object> map = qnAService.getInquiryListByTruck(search, (String) session.getAttribute("inquiry"));
 
         Page resultPage = new Page(search.getCurrentPage(), (Integer) map.get("totalCount"), pageUnit, pageSize);
 
@@ -152,7 +177,7 @@ public class QnAController {
         model.addAttribute("resultPage", resultPage);
         model.addAttribute("search", search);
 
-        return "/views/qna/getInquiryList.jsp";
+        return "/views/qna/getInquiryListByTruck.jsp";
     }
 
 

@@ -58,6 +58,8 @@
 
 		$(function () {
 
+			var userId = $("#userId").val();
+
 			$('.user-info').click(function () {
 				self.location = "./getUserInfo.jsp"
 			});
@@ -83,8 +85,7 @@
 				self.location = ""
 			});
 			$('.user-qna').click(function () {
-				alert("안녕!");
-				self.location = "/qna/getUserInquiryList"
+				self.location = "/qna/getInquiryListByUser";
 			});
 
 
@@ -116,6 +117,7 @@
 			</div>
 			<div style="margin-top: 50px;">
 				<div class="row justify-content-center">
+					<input type="hidden" id="userId" name ="userId" value="${user.userId}">
 					<div class="card user-info" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
 							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-smile page-icon fa-2x"></i></span>
