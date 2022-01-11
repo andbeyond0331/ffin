@@ -64,25 +64,26 @@
 			// $('.truck-profile').click(function () {
 			// 	self.location = "./gettruckProfile.jsp"
 			// });
-			$('.truck-purchase').click(function () {
-				self.location = ""
+			$('.truck-sales').click(function () {
+				self.location = "/truck/getSalesList"
 			});
-			$('.truck-point').click(function () {
-				self.location = ""
-			});
-			$('.truck-coupon').click(function () {
+			$('.truck-menu').click(function () {
 				self.location = ""
 			});
 			$('.truck-heart').click(function () {
 				self.location = ""
 			});
 			$('.truck-review').click(function () {
-				self.location = ""
+				self.location = "../review/getReviewList.jsp"
 			});
 			$('.truck-post').click(function () {
-				self.location = ""
-			});$('.truck-qna').click(function () {
-				self.location = ""
+				self.location = "getPostList.jsp"
+			});
+			$('.truck-comment').click(function () {
+				self.location = "getCommentList.jsp"
+			});
+			$('.truck-qna').click(function () {
+				self.location = "./getInquiryList.jsp"
 			});
 
 
@@ -116,19 +117,19 @@
 				<div class="row justify-content-center">
 					<div class="card truck-info" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
-							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-smile page-icon fa-2x"></i></span>
-							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">내정보</h6>
+							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-truck page-icon fa-2x"></i></span>
+							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">내 트럭 정보</h6>
 							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
 						</div>
 					</div>
-					<div class="card truck-profile" style="width: 12rem;">
-						<div class="card-body" style="display: inline-grid;">
-							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-robot page-icon fa-2x"></i></span>
-							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">프로필</h6>
-							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
-						</div>
-					</div>
-					<div class="card truck-purchase" style="width: 12rem;">
+<%--					<div class="card truck-profile" style="width: 12rem;">--%>
+<%--						<div class="card-body" style="display: inline-grid;">--%>
+<%--							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-robot page-icon fa-2x"></i></span>--%>
+<%--							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">프로필</h6>--%>
+<%--							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>--%>
+<%--						</div>--%>
+<%--					</div>--%>
+					<div class="card truck-sales" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
 							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-shopping-basket fa-2x"></i></span>
 							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">판매</h6>
@@ -137,20 +138,20 @@
 					</div>
 				</div>
 				<div class="row justify-content-center">
-<%--					<div class="card truck-point" style="width: 12rem;">--%>
-<%--						<div class="card-body" style="display: inline-grid;">--%>
-<%--							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-donate fa-2x"></i></span>--%>
-<%--							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">적립금</h6>--%>
-<%--							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>--%>
-<%--						</div>--%>
-<%--					</div>--%>
-<%--					<div class="card truck-coupon" style="width: 12rem;">--%>
-<%--						<div class="card-body" style="display: inline-grid;">--%>
-<%--							<span class="box-icon"  style="text-align: initial;"><i class="far fa-money-bill-alt fa-2x"></i></span>--%>
-<%--							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">쿠폰</h6>--%>
-<%--							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>--%>
-<%--						</div>--%>
-<%--					</div>--%>
+					<div class="card truck-comment" style="width: 12rem;">
+						<div class="card-body" style="display: inline-grid;">
+							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-comment fa-2x"></i></span>
+							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">댓글</h6>
+							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
+						</div>
+					</div>
+					<div class="card truck-menu" style="width: 12rem;">
+						<div class="card-body" style="display: inline-grid;">
+							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-list fa-2x"></i></span>
+							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">메뉴관리</h6>
+							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
+						</div>
+					</div>
 					<div class="card truck-heart" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
 							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-heart fa-2x"></i></span>
@@ -170,7 +171,7 @@
 					<div class="card truck-post" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
 							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-edit fa-2x"></i></span>
-							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">글•댓글</h6>
+							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">게시글</h6>
 							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
 						</div>
 					</div>

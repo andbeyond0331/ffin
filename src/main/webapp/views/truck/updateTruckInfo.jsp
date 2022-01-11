@@ -51,7 +51,7 @@
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
             $("button.btn.btn-dark").on("click", function () {
                 alert("Password 확인 화면으로 이동합니다.");
-                self.location = "/views/truck/updateTruckPasswordBefore.jsp";
+                self.location = "/truck/updateTruckPasswordB";
             });
         });
 

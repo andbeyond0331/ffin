@@ -79,6 +79,9 @@ public interface TruckService {
     // 게시판 Page 처리를 위한 전체Row(totalCount)  return
     public int getTotalCount(Search search) throws Exception ;
 
+    // 판매목록 Page 처리를 위한 전체Row(totalCount)  return
+    public int getTotalCountSales(Search search) throws Exception ;
+
     // 문자인증
     public void certifiedPhoneNumber(String truckPhoneNumber, int randomNumber);
 
@@ -87,4 +90,9 @@ public interface TruckService {
     void autoLogin(String truckId, String sessionKey, Date sessionLimit) throws Exception;
     //세션키 검증
     Truck SessionKeyAuth(String sessionKey) throws Exception;
+
+
+    // 마이페이지 판매이력
+    public Map<String,Object> getSalesList(Search search,String truckId)throws Exception;
+
 }

@@ -58,7 +58,11 @@ public class TruckController {
         //Business Logic
         System.out.println("truck = " + truck);
 
-        String temDir = "/Users/js/IdeaProjects/ffin/src/main/webapp/resources/image";
+        //String temDir = "/Users/js/IdeaProjects/ffin/src/main/webapp/resources/image";
+        String temDir = request.getSession().getServletContext().getRealPath("/resources/image");
+
+        System.out.println("temDir = " + temDir);
+
 
         if (!file1.getOriginalFilename().isEmpty()) {
             file1.transferTo(new File(temDir, file1.getOriginalFilename()));
@@ -207,11 +211,13 @@ public class TruckController {
         //Business Logic
         truck = (Truck) session.getAttribute("truck");
 
+        System.out.println("truck = " + truck);
+
         truckService.updateTruckPassword(truck);
 
         session.invalidate();
 
-        return "redirect:/views/homeTest.jsp";
+        return "redirect:/views/home.jsp";
     }
 
     // 트럭 로그인 화면 요청 // 이제 안씀
@@ -321,7 +327,7 @@ public class TruckController {
         session.invalidate();
 
         // 홈화면으로 이동
-        return "redirect:/views/homeTest.jsp";
+        return "redirect:/views/home.jsp";
     }
 
     // 사업자 아이디 찾기 화면 요청
@@ -368,4 +374,36 @@ public class TruckController {
 //        return "truck/truckFindPassword";
 //    }
 
+
+    @RequestMapping(value = "getSalesList")
+    public String getSalesList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request, HttpSession session) throws Exception {
+
+        System.out.println("/truck/getSalesList : GET/POST");
+
+        Truck truck = (Truck) session.getAttribute("truck");
+
+        String truckId = truck.getTruckId();
+
+        System.out.println("truckId = " + truckId);
+
+        if (search.getCurrentPage() == 0) {
+            search.setCurrentPage(1);
+        }
+        search.setPageSize(pageSize);
+
+        // Business Logic 수행
+        Map<String, Object> map = truckService.getSalesList(search, truckId);
+
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+        System.out.println(resultPage);
+        //  Model 과 View 연결
+        model.addAttribute("list", map.get("list"));
+        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("search", search);
+
+        System.out.println("map = " + map);
+
+        return "forward:/views/truck/getSalesList.jsp";
+
+    }
 }
