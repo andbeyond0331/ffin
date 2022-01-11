@@ -33,6 +33,7 @@
         body {
             padding-top : 50px;
         }
+
     </style>
 
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -55,51 +56,17 @@
             });
         });
 
-        //================optionNo 받기 위한 logic
-        // function fncApplyOptionNo(){
-        //
-        //
-        //
-        //     var happyOptionNo = [];
-        //
-        //     var optionNoCount = $('input[name="optionNo"]').length;
-        //
-        //     for(var i=0; i<optionNoCount; i++){
-        //
-        //         var applyOptionNo = document.find('input[name="optionNo"]').eq(i).val();
-        //         happyOptionNo.push(applyOptionNo);
-        //
-        //     }
-        //     console.log("happyOptionNo : " +happyOptionNo);
-        //     document.find('input[name="optionNo"]').val(happyOptionNo);
-        //
-        // }
 
-
-
-
-        // function fncUpdateMenu(){
 
         $(function(){
 
 
 
             $(document).on("click", "#updateMenuButton", function(){
-            //     var happyOptionNo = [];
-            //
-            //     var optionNoCount = $('#optionNo').length;
-            //
-            //     for(var i=0; i<optionNoCount; i++){
-            //
-            //         var applyOptionNo = $('#optionNo').eq(i).val();
-            //         happyOptionNo.push(applyOptionNo);
-            //
-            //     }
-            //     console.log("happyOptionNo : " +happyOptionNo);
-            //     $('#optionNo').val(happyOptionNo);
+
 
                 //var truckId = $("input[name='truckId']").val();
-                alert("optionGroup개수 : " +$('input#optionGroupName.form-control').length);
+                // alert("optionGroup개수 : " +$('input#optionGroupName.form-control').length);
 
                 if($('input#optionGroupName.form-control').length===0){
                     $("form").attr("method", "POST").attr("action", "/menu/updateMenu").attr("enctype","multipart/form-data").submit();
@@ -114,6 +81,8 @@
             });
 
         });
+
+
 
     </script>
 
@@ -135,19 +104,13 @@
 
     <!-- form Start /////////////////////////////////////-->
     <form class="form-horizontal">
-<%--        <input type="hidden" id ="menuNo" name="menuNo" value="${menu.menuNo}">--%>
-        <%--        <div class="form-group">--%>
-        <%--            <label for="menuTruckId" class="col-sm-offset-1 col-sm-3 control-label">메뉴 트럭 아이디</label>--%>
-        <%--            <div class="col-sm-4">--%>
-        <%--                <input type="text" class="form-control" id="menuTruckId" name="menuTruckId"  value="${truck.truckId}" placeholder="메뉴 트럭아이디">--%>
-        <%--            </div>--%>
-        <%--        </div>--%>
+
 
         <div class="form-group">
             <label for="menuName" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이름</label>
             <div class="col-sm-4">
                 <input type="text" class="form-control" id="menuName" name="menuName" value="${menu.menuName }" placeholder="메뉴 이름 수정">
-
+                <input type="hidden" name="menuNo" value="${menu.menuNo}">
             </div>
         </div>
 
@@ -175,54 +138,145 @@
         <div class="form-group">
             <label for="menuImg1" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지1</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="menuImg1" name="menuImg1"  value="${menu.menuImg1}" placeholder="메뉴 이미지1 수정">
+                <input type="file" class="form-control" id="menuImg1" name="menuImg1"  value="${menu.menuImg1}" placeholder="메뉴 이미지1 수정">
             </div>
         </div>
 
         <div class="form-group">
             <label for="menuImg2" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지2</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="menuImg2" name="menuImg2"  value="${menu.menuImg2}" placeholder="메뉴 이미지2 수정">
+                <input type="file" class="form-control" id="menuImg2" name="menuImg2"  value="${menu.menuImg2}" placeholder="메뉴 이미지2 수정">
             </div>
         </div>
 
         <div class="form-group">
             <label for="menuImg3" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지3</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="menuImg3" name="menuImg3"  value="${menu.menuImg3}" placeholder="메뉴 이미지3 수정">
+                <input type="file" class="form-control" id="menuImg3" name="menuImg3"  value="${menu.menuImg3}" placeholder="메뉴 이미지3 수정">
             </div>
         </div>
 
-        <c:set var="i" value="0"/>
-        <c:forEach var="optionGroup" items="${list}">
-            <c:set var="i" value="${i+1}"/>
+    <div class="happy">
 
-            <div class="form-group">
-                <label for="optionGroupName" class="col-sm-offset-1 col-sm-3 control-label\">옵션그룹이름</label>
+
+        <c:set var="count1" value="0"></c:set>
+        <c:forEach var="optionGroup1" items="${list}">
+            <c:set var="count1" value="${count1 + 1}"/>
+            <c:if test="${count1 eq 1}">
+                <hr><div class="form-group">
+                <div>
+                    <label for="optionGroupName" class="col-sm-offset-1 col-sm-3 control-label">옵션 그룹 이름 ${count1}</label>
+<%--                <strong>옵션 그룹 이름</strong></div>--%>
                 <div class="col-sm-4">
-                <input type="text" class="form-control" id="optionGroupName" name="optionGroupName"  value="${optionGroup.optionGroupName}" placeholder="${optionGroup.optionGroupName}">
-                <input type="hidden" class="form-control" id="optionNo" name="optionNo" value="${optionGroup.optionNo}"/>
-                <input type="hidden" class="form-control" id="menuNo" name="menuNo" value="${optionGroup.menuNo}"/>
+<%--                    <strong>${optionGroup1.optionGroupName}</strong>--%>
+                    <input type="text" class="form-control" id="optionGroupName" name="optionGroupName" value="${optionGroup1.optionGroupName }" placeholder="옵션 그룹 이름 수정">
+
                 </div>
-                </div>
+                </div><hr>
+            </c:if>
+            <c:if test="${count1 ne 1}">
+                <c:set var="count2" value="0"/>
+                <c:forEach var="optionGroup2" items="${list}">
+                    <c:set var="count2" value="${count2 + 1}"/>
+                    <c:if test="${(count1 - 1) eq count2}">
+                        <c:if test="${optionGroup1.optionGroupName ne optionGroup2.optionGroupName}">
+                            <hr><div class="form-group">
+                            <div>
+                                <label for="menuName" class="col-sm-offset-1 col-sm-3 control-label">옵션 그룹 이름 ${count1}</label>
+<%--                                <strong>옵션 그룹 이름</strong></div>--%>
+                            <div class="col-sm-4">
+<%--                                <strong>${optionGroup1.optionGroupName}</strong>--%>
+                                <input type="text" class="form-control" id="optionGroupName" name="optionGroupName" value="${optionGroup1.optionGroupName }" placeholder="옵션 그룹 이름 수정">
 
-<div class="float-left">
-        <div class="form-group">
-        <label for="optionName" class="col-sm-offset-1 col-sm-3 control-label">옵션이름</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" id="optionName" name="optionName"  value="${optionGroup.optionName}" placeholder="${optionGroup.optionName}">
-            </div>
-        </div>
+                            </div>
+                            </div><hr>
+                        </c:if>
 
-        <div class="form-group">
-        <label for="optionPrice" class="col-sm-offset-1 col-sm-3 control-label">옵션가격</label>
-        <div class="col-sm-4">
-            <input type="text" class="form-control" id="optionPrice" name="optionPrice"  value="${optionGroup.optionPrice}" placeholder="${optionGroup.optionPrice}">
-            </div>
-        </div>
-</div>
+                    </c:if>
+                </c:forEach>
+            </c:if>
 
+                    <div class="form-group">
+                    <div><label for="optionName" class="col-sm-offset-1 col-sm-3 control-label">옵션 이름</label></div>
+                    <div class="col-sm-3">
+<%--                    <input class="form-check-input" type="radio" name="optionName+OGName${optionGroup1.optionGroupName}" id="optionName+OGName${optionGroup1.optionGroupName}" data-op="${optionGroup1.optionName}">${optionGroup1.optionName}--%>
+                        <input type="text" class="form-control" id="optionName" name="optionName" value="${optionGroup1.optionName }" placeholder="옵션 이름 수정">
+                        <input type="hidden" name="odOptionGroupNo" value="${optionGroup1.optionGroupNo}">
+                    <input type="hidden" name="odOptionGroupName" value="${optionGroup1.optionGroupName}">
+                    <input type="hidden" name="odOptionNo" value="${optionGroup1.optionNo}">
+                    <input type="hidden" name="odOptionPrice" value="${optionGroup1.optionPrice}">
+                    </div>
+
+                        <div><label for="optionPrice" class="col-sm-offset-1 col-sm-3 control-label">옵션 가격</label></div>
+<%--                    <span class="col-xs-8 col-md-8" style="right:0px;">${optionGroup1.optionPrice}</span>--%>
+                        <div class="col-sm-3">
+                        <input type="text" class="form-control" id="optionPrice" name="optionPrice" value="${optionGroup1.optionPrice }" placeholder="메뉴 가격 수정">
+                        </div>
+
+                    </div>
         </c:forEach>
+</div>
+<%--        <c:set var="i" value="0"/>--%>
+<%--        <c:forEach var="optionGroup" items="${list}">--%>
+<%--            <c:set var="i" value="${i+1}"/>--%>
+
+<%--            <div class="form-group">--%>
+<%--                <label for="optionGroupName" class="control-label\">옵션그룹이름</label>--%>
+<%--                <div>--%>
+<%--                <input type="text" class="form-control" id="optionGroupName" name="optionGroupName"  value="${optionGroup.optionGroupName}" placeholder="${optionGroup.optionGroupName}">--%>
+<%--                <input type="hidden" class="form-control" id="optionNo" name="optionNo" value="${optionGroup.optionNo}"/>--%>
+<%--                <input type="hidden" class="form-control" id="menuNo" name="menuNo" value="${optionGroup.menuNo}"/>--%>
+<%--                </div>--%>
+<%--                </div>--%>
+
+<%--<div class="float-left">--%>
+<%--        <div class="form-group">--%>
+<%--        <label for="optionName" class="control-label">옵션이름</label>--%>
+<%--        <div>--%>
+<%--            <input type="text" class="form-control" id="optionName" name="optionName"  value="${optionGroup.optionName}" placeholder="${optionGroup.optionName}">--%>
+<%--            </div>--%>
+<%--        </div>--%>
+
+<%--        <div class="form-group">--%>
+<%--        <label for="optionPrice" class="control-label">옵션가격</label>--%>
+<%--        <div>--%>
+<%--            <input type="text" class="form-control" id="optionPrice" name="optionPrice"  value="${optionGroup.optionPrice}" placeholder="${optionGroup.optionPrice}">--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--</div>--%>
+
+<%--        </c:forEach>--%>
+
+    <%--        <c:set var="i" value="0"/>--%>
+<%--        <c:forEach var="optionGroup" items="${list}">--%>
+<%--            <c:set var="i" value="${i+1}"/>--%>
+
+<%--            <div class="form-group">--%>
+<%--                <label for="optionGroupName" class="control-label\">옵션그룹이름</label>--%>
+<%--                <div>--%>
+<%--                <input type="text" class="form-control" id="optionGroupName" name="optionGroupName"  value="${optionGroup.optionGroupName}" placeholder="${optionGroup.optionGroupName}">--%>
+<%--                <input type="hidden" class="form-control" id="optionNo" name="optionNo" value="${optionGroup.optionNo}"/>--%>
+<%--                <input type="hidden" class="form-control" id="menuNo" name="menuNo" value="${optionGroup.menuNo}"/>--%>
+<%--                </div>--%>
+<%--                </div>--%>
+
+<%--<div class="float-left">--%>
+<%--        <div class="form-group">--%>
+<%--        <label for="optionName" class="control-label">옵션이름</label>--%>
+<%--        <div>--%>
+<%--            <input type="text" class="form-control" id="optionName" name="optionName"  value="${optionGroup.optionName}" placeholder="${optionGroup.optionName}">--%>
+<%--            </div>--%>
+<%--        </div>--%>
+
+<%--        <div class="form-group">--%>
+<%--        <label for="optionPrice" class="control-label">옵션가격</label>--%>
+<%--        <div>--%>
+<%--            <input type="text" class="form-control" id="optionPrice" name="optionPrice"  value="${optionGroup.optionPrice}" placeholder="${optionGroup.optionPrice}">--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--</div>--%>
+
+<%--        </c:forEach>--%>
 
         <div id="here"></div>
 
@@ -246,6 +300,11 @@
 <jsp:include page="/views/footer.jsp" />
 </body>
 
+<script>
+
+
+
+</script>
 
 
 </html>

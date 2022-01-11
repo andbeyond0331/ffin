@@ -54,6 +54,7 @@
 
 
 
+
         function applyOptionGroupNamer(){ // 모달에서 옵션그룹이름 적용누르면 돌아가는 function
 
             var modal = $('#exampleModal');
@@ -181,6 +182,30 @@
                         "</div>"+
                         "<input type=\"button\" value=\"삭제\" id=\"removeTarget"+applyOptionGroupName+"\" onclick=\"javascript:removeELOption(\'"+applyOptionGroupName+"\')\"/>";
 
+                    //
+                    // divElemApply1 = "</hr>"+
+                    //     "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\">"+
+                    //     " <label for=\"optionGroupName\" class=\"col-sm-offset-1 col-sm-3 control-label\">옵션그룹이름</label>"+
+                    //     "<div class=\"col-sm-4\">"+
+                    //     "<input type=\"text\" class=\"form-control\" id=\"optionGroupName\" name=\"optionGroupName\"  value=\""+applyOptionGroupName+"\" placeholder=\""+applyOptionGroupName+"\">"+
+                    //     "</div>"+
+                    //     "</div>"+
+                    //     "</hr>";
+                    // divElemApply2 =  "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\">"+
+                    //     " <label for=\"optionName\" class=\"col-sm-offset-1 col-sm-3 control-label\">옵션이름</label>"+
+                    //     "<div class=\"col-sm-4\">"+
+                    //     "<input type=\"text\" class=\"form-control\" id=\"optionName\" name=\"optionName\"  value=\""+finalOptionName+"\" placeholder=\""+finalOptionName+"\">"+
+                    //     "</div>"+
+                    //     "</div>"+
+                    //     "</hr>"+
+                    //     "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\">"+
+                    //     " <label for=\"optionPrice\" class=\"col-sm-offset-1 col-sm-3 control-label\">옵션가격</label>"+
+                    //     "<div class=\"col-sm-4\">"+
+                    //     "<input type=\"text\" class=\"form-control\" id=\"optionPrice\" name=\"optionPrice\"  value=\""+finalOptionPrice+"\" placeholder=\""+finalOptionPrice+"\">"+
+                    //     "</div>"+
+                    //     "</div>"+
+                    //     "<input type=\"button\" value=\"삭제\" id=\"removeTarget"+applyOptionGroupName+"\" onclick=\"javascript:removeELOption(\'"+applyOptionGroupName+"\')\"/>";
+                    //
 
                     alert(i+"번째 optionPrice" + ($('input[name="applyOptionPrice"]').eq(i).val()));
 
@@ -321,13 +346,13 @@
         </div>
 
         <div class="form-group">
-            <label for="isSigMenu" class="col-sm-offset-1 col-sm-3 control-label">대표메뉴여부</label>
+<%--            <label for="isSigMenu" class="col-sm-offset-1 col-sm-3 control-label">대표메뉴여부</label>--%>
             <div class="col-sm-4">
-                <input type="text" class="form-control" id="isSigMenu" name="isSigMenu" value="${menu.isSigMenu}" placeholder="대표메뉴여부">
+<%--                <input type="text" class="form-control" id="isSigMenu" name="isSigMenu" value="${menu.isSigMenu}" placeholder="대표메뉴여부">--%>
 
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">대표메뉴여부</label>
+                <div class="form-check form-switch" id="isThereSigMenu">
+<%--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">--%>
+<%--                    <label class="form-check-label" for="flexSwitchCheckDefault">대표메뉴여부</label>--%>
                 </div>
             </div>
         </div>
@@ -335,32 +360,63 @@
         <div class="form-group">
             <label for="menuImg1" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지1</label>
             <div class="col-sm-4">
-                <input type="file" class="form-control" id="menuImg1" name="menuImg11"  value="${menu.menuImg1}" placeholder="메뉴 이미지1">
+                <input type="file" class="form-control" id="menuImg1" name="menuImg11"  value="${menu.menuImg1}" placeholder="메뉴 이미지1" onchange="setImage1Preview(event);">
             </div>
+            <div id="image1preview"></div>
         </div>
 
         <div class="form-group">
             <label for="menuImg2" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지2</label>
             <div class="col-sm-4">
-                <input type="file" class="form-control" id="menuImg2" name="menuImg22"  value="${menu.menuImg2}" placeholder="메뉴 이미지2">
+                <input type="file" class="form-control" id="menuImg2" name="menuImg22"  value="${menu.menuImg2}" placeholder="메뉴 이미지2" onchange="setImage2Preview(event);">
             </div>
+            <div id="image2preview"></div>
         </div>
 
         <div class="form-group">
             <label for="menuImg3" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지3</label>
             <div class="col-sm-4">
-                <input type="file" class="form-control" id="menuImg3" name="menuImg33"  value="${menu.menuImg3}" placeholder="메뉴 이미지3">
+                <input type="file" class="form-control" id="menuImg3" name="menuImg33"  value="${menu.menuImg3}" placeholder="메뉴 이미지3" onchange="setImage3Preview(event);">
             </div>
+            <div id="image3preview"></div>
         </div>
 
-<%--        <div class="form-group">--%>
-<%--            <label for="multiMenuImg" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지3</label>--%>
-<%--            <div class="col-sm-4">--%>
-<%--                <input multiple="multiple" type="file" class="form-control" id="multiMenuImg" name="multiMenuImg"  value="${menu.multiMenuImg}" placeholder="멀티메뉴이미지"/>--%>
-<%--                <input type="text" name="src"/>--%>
+    <script>
 
-<%--            </div>--%>
-<%--        </div>--%>
+        function setImage1Preview(event){
+            var reader  = new FileReader();
+
+            reader.onload = function(event){
+                var img = document.createElement("img");
+                img.setAttribute("src", event.target.result);
+                document.querySelector("div#image1preview").appendChild(img);
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function setImage2Preview(event){
+            var reader  = new FileReader();
+
+            reader.onload = function(event){
+                var img = document.createElement("img");
+                img.setAttribute("src", event.target.result);
+                document.querySelector("div#image2preview").appendChild(img);
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function setImage3Preview(event){
+            var reader  = new FileReader();
+
+            reader.onload = function(event){
+                var img = document.createElement("img");
+                img.setAttribute("src", event.target.result);
+                document.querySelector("div#image3preview").appendChild(img);
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+    </script>
 
 
 
@@ -440,6 +496,101 @@
 
 <jsp:include page="/views/footer.jsp" />
 </body>
+
+<script>
+    //===============대표메뉴 여부 연결 ================
+    /// todo 2022-01-10 대표메뉴 ajax
+    $(document).onload(function(){
+        //온로드 시 대표메뉴가 있는지 없는지 판단
+        <%--var truckIdForSigMenu = ${truckId};--%>
+
+        var iamSig;
+        var iamIsThereSM;
+
+        $.ajax({
+
+            url:"/menu/json/isThereSigMenu/"+${truck.truckId},
+            method:"get",
+            success:function(data){
+                if (data.menu!=null){
+                    console.log("data.menu : " + data.menu);
+                    iamSig=data.menu;
+                    iamIsThereSM = 'yes';
+                    var isSigMenuButton =
+                        "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴여부</label>"+
+                        " <input class=\"form-check-input\" type=\"checkbox\" id=\"isSigMenu\" name=\"isSigMenu\" data-val=\"abled\">";
+
+                    $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
+                }else{
+                    iamSig=null;
+                    iamIsThereSM = 'no';
+                    var isSigMenuButton =
+                        "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴여부</label>"+
+                        " <input class=\"form-check-input\" type=\"checkbox\" id=\"isSigMenu\" name=\"isSigMenu\" data-val=\"disabled\" checked disabled>";
+
+                    $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton); //todo 대표메뉴가 없어서 나온 버튼이니까 disabled 해놓고 클릭 시 대표메뉴는 최소 1개 있어야 합니다. alert 띄우기
+                }
+
+
+            }
+        });
+
+
+    });
+
+    //==========대표메뉴를 클릭했을 때!===========
+
+    $(function(){
+
+        var divIsSigMenu = $('div#isThereSigMenu.form-check.form-switch');
+
+        $("input[name='isSigMenu']").on("click", function(){
+
+            if(divIsSigMenu.find('input[name="isSigMenu"]').data("val")=='disabled'){
+                alert("대표메뉴는 최소 1개 이상 있어야 합니다.");
+            }else{
+                if(!confirm("대표메뉴가 이미 있습니다. 변경하시겠습니까?")){
+
+                }else{
+                    var isSigMenuButton =
+                        "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴여부</label>"+
+                        " <input class=\"form-check-input\" type=\"checkbox\" id=\"isSigMenu\" name=\"isSigMenu\" data-val=\"abled\">";
+
+                    $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
+                }
+            }
+
+        });
+
+    });
+
+    //
+    // function isThereSigMenu(truckId){
+    //
+    //     var iamSig;
+    //     var iamIsThereSM;
+    //
+    //     $.ajax({
+    //         url:"/menu/json/isThereSigMenu/"+truckId,
+    //         method:"get",
+    //         success:function(data){
+    //             if (data.menu!=null){
+    //                 console.log("data.menu : " + data.menu);
+    //                 iamSig=data.menu;
+    //                 iamIsThereSM = 'yes';
+    //             }else{
+    //                 iamSig=null;
+    //                 iamIsThereSM = 'no';
+    //             }
+    //
+    //
+    //         }
+    //     });
+    //
+    // }
+
+
+</script>
 
 
 

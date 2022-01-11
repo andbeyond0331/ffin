@@ -66,5 +66,8 @@ public interface MenuService {
     //옵션 그룹 존재 여부
     public int isThereOG(Search search, int menuNo) throws Exception;
 
+    //트럭에 대표메뉴 있는지 여부
+    public Map<String, Object> isThereSigMenu(Search search, String truckId) throws Exception;
+
 
 }

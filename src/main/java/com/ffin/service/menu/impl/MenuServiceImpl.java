@@ -139,6 +139,10 @@ public class MenuServiceImpl implements MenuService {
         return menuDao.isThereOG(search, menuNo);
     }
 
+    @Override
+    public Map<String, Object> isThereSigMenu(Search search, String truckId) throws Exception {
+        return menuDao.isThereSigMenu(search, truckId);
+    }
 
 
 }
