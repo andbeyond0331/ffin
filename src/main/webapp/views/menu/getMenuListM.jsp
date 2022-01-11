@@ -8,21 +8,6 @@
     <title>메뉴 관리 페이지</title>
     <jsp:include page="../../common/lib.jsp"/>
 
-<%--    <script>--%>
-<%--        //menu 수정하기 버튼 클릭--%>
-<%--        $(function(){--%>
-
-<%--            var modalApply = $('#exampleModalLong');--%>
-
-<%--            $(document).on("click", "#updateMenu", function(){--%>
-<%--                --%>
-<%--                --%>
-
-<%--            })--%>
-
-<%--        })--%>
-<%--    </script>--%>
-
     <style>
         .div.flex.card.h-100{
             float:left;
@@ -39,185 +24,8 @@
     </style>
 
 
-    <script type="text/javascript">
-
-// todo 메뉴 관리 페이지에 별점이 필요할까?
-
-
-        // 별점 출력
-        function ratingToPercent() {
-            const score = +this.restaurant.averageScore * 20;
-            return score + 1.5;
-        }
-
-        // 메뉴 상세보기
-        function getMenu(menuNo){
-
-            // 메뉴에 해당하는 옵션그룹이 있니?
-            var optionGroupCount = 0;
-            $.ajax({
-                url:"/menu/json/isThereOG/"+menuNo,
-                method:"get",
-                success:function(data){
-                    console.log("data : " + data)
-                    optionGroupCount = data;
-                }
-            });
-
-            // alert("optionGroupCount : " + optionGroupCount);
-
-            $.ajax({
-                url:"/menu/json/getMenu/"+menuNo,
-                method:"get",
-
-                success: function(data){
-                    console.log("data : " + data.menu)
-                    var div="";
-                    var modalFooter = "";
-
-                    div +="<div class=\"page-header\">"+
-                        "<h3 class=\"getMenuTitle custom\">"+data.menu.menuTruckId+"</h3>"+
-                        "</div>"+
-                        "<div class=\"row\">"+
-                        "<div class=\"col-xs-4 col-md-2\"><strong>메뉴번호</strong></div>"+
-                        " <div class=\"col-xs-8 col-md-4\" name=\"odMenuNo\" data-menuNo=\""+data.menu.menuNo+"\">"+data.menu.menuNo+"</div>"+
-                        "</div>"+
-                        "<hr/>"+
-                        "<div class=\"row\">"+
-                        "<div class=\"col-xs-4 col-md-2 \"><strong>메뉴 이름</strong></div>"+
-                        "<div class=\"col-xs-8 col-md-4\" name=\"odMenuName\">"+data.menu.menuName+"</div>"+
-                        "</div>"+
-                        "<hr/>"+
-                        "<div class=\"row\">"+
-                        "<div class=\"col-xs-4 col-md-2 \"><strong>메뉴이미지1</strong></div>"+
-                        "<div class=\"col-xs-8 col-md-4\" name=\"odMenuImg1\" data-menuImg=\""+data.menu.menuImg1+"\">" +
-                        "<img src=\"/resources/image/"+data.menu.menuImg1+"\"" +
-                        "style=\"border-bottom: 1px solid #eee; height: 200px;\" "+
-                        "alt=\""+data.menu.menuName+"의 이미지1\" title=\"메뉴이미지1\"></div> </div>"+
-                        "<hr/>"+
-                        "<div class=\"row\">" +
-                        "<div class=\"col-xs-4 col-md-2 \">" +
-                        "<strong>메뉴상세정보</strong>" +
-                        "</div><div class=\"col-xs-8 col-md-4\" name=\"odMenuDetail\">"+data.menu.menuDetail+"</div>"+
-                        "</div><hr/>"+
-                        "<div class=\"row\">"+
-                        "<div class=\"col-xs-4 col-md-2\"><strong>대표메뉴여부</strong></div>"+
-                        "<div class=\"col-xs-8 col-md-4\">"+data.menu.isSigMenu+"</div>"+
-                        "</div><hr/><div class=\"row\">"+
-                        "<div class=\"col-xs-4 col-md-2 \"><strong>메뉴가격</strong></div>"+
-                        "<div class=\"col-xs-8 col-md-4\" name=\"odMenuPrice\">"+data.menu.menuPrice+"</div></div>" +
-                        // "<input type=\"hidden\" name=\"odMenuQty\" value="+ //todo 보류입니다!(수량을 hidden으로 넣을지가)
-                        "<hr/>";
-
-                    $('.modal-body').html(div);
-
-                    if(optionGroupCount!=0){
-                        getOptionGroupListOnModal(data.menu.menuNo);
-                    }
-
-
-                    $('#exampleModalLong').modal('show');
-
-
-                }
-            })
-        }
-
-        function getOptionGroupListOnModal(menuNo){
-
-            $.ajax({
-                url:"/menu/json/getOptionGroupListOnModal/"+menuNo,
-                method:"get",
-                success:function(data){
-                    console.log("data.optionGroup[0].optionGroupName : " +data.optionGroup[0].optionGroupName)
-                    var divOG ="<table>";
-                    var modalFooterOG ="";
-
-                    var optionGroupPLZ=0;
-
-                    for (var x of data.optionGroup) {
-                        optionGroupPLZ++;
-                        //옵션그룹이름이 최초 호출될 때만 옵션그룹이름 보여주기
-                        if(optionGroupPLZ!=1){
-                            if(!(data.optionGroup[optionGroupPLZ-1].optionGroupName===data.optionGroup[optionGroupPLZ-2].optionGroupName)){
-                                divOG+=""+
-                                    "<hr><div class=\"optionGroup\"> " +
-                                    // "<div class=\"col-xs-4 col-md-2\">" +
-                                    // "<strong>옵션 그룹 이름</strong></div>"+
-                                    "<div ><strong>"+x.optionGroupName+"</strong></div>"+
-                                    "</div><hr>";
-                            }
-                        }else{
-                            divOG+=""+
-                                "<hr><div class=\"optionGroup\"> " +
-                                // "<div class=\"col-xs-4 col-md-2\">" +
-                                // "<strong>옵션 그룹 이름</strong></div>"+
-                                "<div class=\"col-xs-8 col-md-8\"><strong>"+x.optionGroupName+"</strong></div>"+
-                                "</div><hr>";
-                        }
-                        divOG+=""+
-
-                            "<div class=\"optionGroup\"> " +
-                            "<div class=\"col-xs-4 col-md-8\">" +
-                            // "<label class=\"form-check-label\" for=\"optionName+OGName"+x.optionGroupName+"\"><strong>옵션 이름</strong></label></div>"+
-                            "<div class=\"col-xs-8 col-md-8\">" +
-                            "<input class=\"form-check-input\" type=\"radio\" name=\"optionName+OGName"+x.optionGroupName+"\" id=\"optionName+OGName"+x.optionGroupName+"\" data-op=\""+x.optionName+"\">"+x.optionName+"" +
-                            "<input type=\"hidden\" name=\"odOptionGroupNo\" value=\""+x.optionGroupNo+"\">"+
-                            "<input type=\"hidden\" name=\"odOptionGroupName\" value=\""+x.optionGroupName+"\">"+
-                            "<input type=\"hidden\" name=\"odOptionNo\" value=\""+x.optionNo+"\">"+
-                            "<input type=\"hidden\" name=\"odOptionPrice\" value=\""+x.optionPrice+"\">"+
-                            "</div>"+
-                            // "<div class=\"row\">"+
-                            // "<div class=\"col-xs-4 col-md-2\"><strong>옵션 가격</strong></div>"+
-                            "<span class=\"col-xs-8 col-md-8\" style=\"right:0px;\">"+x.optionPrice+"</span>"+
-                            "</div>"+
-                            "</div>"+
-
-                            "";
-                    }
-
-
-                    $('.modal-happy').html(divOG);
-
-
-                }
-            })
-
-        }
-
-
-    </script>
 
     <style>
-
-        <%--        별점 css--%>
-        .star-ratings {
-            color: #aaa9a9;
-            position: relative;
-            unicode-bidi: bidi-override;
-            width: max-content;
-            -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
-            -webkit-text-stroke-width: 1.3px;
-            -webkit-text-stroke-color: #2b2a29;
-            font-size: 30px;
-        }
-
-        .star-ratings-fill {
-            color: #fff58c;
-            padding: 0;
-            position: absolute;
-            z-index: 1;
-            display: flex;
-            top: 0;
-            left: 0;
-            /*overflow: hidden;*/
-            -webkit-text-fill-color: gold;
-        }
-
-        .star-ratings-base {
-            z-index: 0;
-            padding: 0;
-        }
 
         .truckNameForMenu{
             color:black;
@@ -226,121 +34,535 @@
         }
     </style>
 
+    <script>
+
+        //모달에서 메뉴 추가 버튼 클릭 시
+        $(function(){
+
+            $('#add-menu').on("click", function(){
+
+                fncAddMenu();
+
+            });
+
+        });
+
+        function fncAddMenu(){
+
+            alert("optionGroup개수 : " +$('input#optionGroupName.form-control').length);
+
+            if($('input#optionGroupName.form-control').length==0){
+                $("form").attr("method", "POST").attr("action","/menu/addMenu").attr("enctype", "multipart/form-data").submit();
+            }else{
+                $("form").attr("method", "POST").attr("action","/menu/addMenuOptionGroup").attr("enctype", "multipart/form-data").submit();
+
+            }
+
+
+        }
+
+        function applyOptionGroupNamer(){ // 모달에서 옵션그룹이름 적용누르면 돌아가는 function
+
+            var modal = $('#optionGroupModal');
+            realOptionGroupName = modal.find('input#optionGroupName.form-control').val();
+
+            console.log(realOptionGroupName + " : realOptionGroupName");
+            //alert(realOptionGroupName)
+
+            // divElem = "<div class=\"form-group\" id=\""+realOptionGroupName+"-target\" name=\"optionGroupName\">"+
+            //     "<input type=\"text\" id=\"applyOptionGroupName+"+realOptionGroupName+"\" name=\"applyOptionGroupName\" value=\""+realOptionGroupName+"\"/>22222"+
+            //     "</div>";
+
+
+            divElem = "<input type=\"hidden\" id=\"applyOptionGroupName+"+realOptionGroupName+"\" name=\"applyOptionGroupName\" value=\""+realOptionGroupName+"\"/>";
+
+            // alert("applyOptionGroupName을 name으로 가진 태그가 있는가 ??? 있다면 몇 개?"+modal.find('input[name="applyOptionGroupName"]').length);
+
+            //옵션그룹이름이 정해지지 않았다면
+            if(modal.find('input[name="applyOptionGroupName"]').length!==0) {
+                modal.find('input[name="applyOptionGroupName"]').val(realOptionGroupName);
+            }else{
+                modal.find('.modal-body').append($(divElem));
+            }
+
+
+
+
+        }
+
+
+
+
+
+        $(function(){
+
+
+            var modalOp = $('#optionModal');
+
+
+            modalOp.find('button.btn.btn-primary.addOption').on("click", function(){
+                //countOp++;
+
+                var realOptionName = modalOp.find('input#optionName.form-control').val();
+                var realOptionPrice = modalOp.find('input#optionPrice.form-control').val();
+
+                console.log(realOptionName +" : realOptionName");
+                console.log(realOptionPrice +" : realOptionPrice");
+
+                divElemOp ="</hr>"+
+                    "<div class=\"form-group\" id=\""+realOptionName+"\" name=\"optionName\">"+
+                    "<div class=\"col-xs-8 col-md-4\">"+"옵션 이름 : "+realOptionName+"</div>"+
+                    "<input type=\"hidden\" id=\"applyOptionName+"+realOptionName+"\" name=\"applyOptionName\" value=\""+realOptionName+"\"/>"+
+                    "<div class=\"col-xs-8 col-md-4\">"+"옵션 가격 : "+realOptionPrice+"</div>"+
+                    "<input type=\"hidden\" id=\"applyOptionPrice+"+realOptionPrice+"\" name=\"applyOptionPrice\" value=\""+realOptionPrice+"\"/>"+
+                    "<input type=\"button\" value=\"삭제\" onclick=\"javascript:removeEL(\'"+realOptionName+"\')\"/>"+
+                    "</div>";
+
+                console.log("divElemOp : "+divElemOp);
+
+
+                //$('div#'+indexOp+'-target').append($(divElemOp));
+                console.log("append-op-target : " + $('#optionGroupModal').find('.modal-body').html());
+
+                $('#optionGroupModal').find('.modal-body').append($(divElemOp));
+
+                modalOp.find('input#optionName.form-control').val("");
+                modalOp.find('input#optionPrice.form-control').val("");
+
+
+            });
+
+        });
+
+        //modal창 안에서의 적용버튼 눌렀을 때 로직
+        $(function(){
+
+            var modalApply = $('#exampleModal');
+
+            $(document).on("click", "#add-optionGroup", function(){
+                // modalApply.find('#add-optionGroup').on("click", function(){
+                //countOp++;
+                // var happyOptionPrice = [];
+
+                var applyOptionGroupName = modalApply.find('input[name="applyOptionGroupName"]').val();
+                var applyOptionName = modalApply.find('input[name="applyOptionName"]').val();
+                var applyOptionPrice = modalApply.find('input[name="applyOptionPrice"]').val();
+
+                console.log(applyOptionGroupName +" : applyOptionGroupName");
+                console.log(applyOptionName +" : applyOptionName");
+                console.log(applyOptionPrice +" : applyOptionPrice");
+
+
+                ///append를 위한 for문
+                var optionNameCount = $('input[name="applyOptionName"]').length;
+
+
+
+                for(var i=0; i<optionNameCount; i++){
+                    var applyOptionGroupName = modalApply.find('input[name="applyOptionGroupName"]').val();
+                    finalOptionName = ($('input[name="applyOptionName"]').eq(i).val());
+                    finalOptionPrice = ($('input[name="applyOptionPrice"]').eq(i).val());
+
+
+
+                    divElemApply1 = "</hr>"+
+                        "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\">"+
+                        " <label for=\"optionGroupName\" class=\"col-sm-offset-1 col-sm-3 control-label\">옵션그룹이름</label>"+
+                        "<div class=\"col-sm-4\">"+
+                        "<input type=\"text\" class=\"form-control\" id=\"optionGroupName\" name=\"optionGroupName\"  value=\""+applyOptionGroupName+"\" placeholder=\""+applyOptionGroupName+"\">"+
+                        "</div>"+
+                        "</div>"+
+                        "</hr>";
+                    divElemApply2 =  "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\">"+
+                        " <label for=\"optionName\" class=\"col-sm-offset-1 col-sm-3 control-label\">옵션이름</label>"+
+                        "<div class=\"col-sm-4\">"+
+                        "<input type=\"text\" class=\"form-control\" id=\"optionName\" name=\"optionName\"  value=\""+finalOptionName+"\" placeholder=\""+finalOptionName+"\">"+
+                        "</div>"+
+                        "</div>"+
+                        "</hr>"+
+                        "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\">"+
+                        " <label for=\"optionPrice\" class=\"col-sm-offset-1 col-sm-3 control-label\">옵션가격</label>"+
+                        "<div class=\"col-sm-4\">"+
+                        "<input type=\"text\" class=\"form-control\" id=\"optionPrice\" name=\"optionPrice\"  value=\""+finalOptionPrice+"\" placeholder=\""+finalOptionPrice+"\">"+
+                        "</div>"+
+                        "</div>"+
+                        "<input type=\"button\" value=\"삭제\" id=\"removeTarget"+applyOptionGroupName+"\" onclick=\"javascript:removeELOption(\'"+applyOptionGroupName+"\')\"/>";
+
+
+                    alert(i+"번째 optionPrice" + ($('input[name="applyOptionPrice"]').eq(i).val()));
+
+                    $('#here').append(divElemApply1+divElemApply2);
+                }
+
+                forResetModal =
+
+                    "<div class=\"modal-dialog modal-dialog-centered\">"+
+                    "<div class=\"modal-content\">"+
+                    "<div class=\"modal-header\">"+
+                    "<h5 class=\"modal-title\" id=\"exampleModalLabel\">옵션그룹이름</h5>"+
+                    "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>"+
+                    "</div>"+
+                    "<div class=\"modal-body\">"+
+                    "<div class=\"form-group\">"+
+                    "<label for=\"optionGroupName\" class=\"col-from-label\">옵션그룹이름</label>"+
+                    "<input type=\"text\" class=\"form-control\" id=\"optionGroupName\" value=\"\">"+
+                    "</div>"+
+                    // "</div>"+
+                    "<div class=\"modal-footer\">"+
+                    //"<button type=\"button\" class=\"btn btn-primary custom\" onclick='applyOptionGroupNamer();'>옵션그룹이름적용</button>"+
+                    "<button type=\"button\" class=\"btn btn-primary customer\" onclick=\'applyOptionGroupNamer()\' data-bs-toggle=\"modal\" data-bs-target=\"#optionModal\" data-whatever=\"option\">옵션추가</button>"+
+                    "<button type=\"button\" class=\"btn btn-primary\" id=\"add-optionGroup\">적용</button>"+
+                    "</div>"+
+                    "</div>"+
+                    // "</div>"+
+                    "</div>";
+
+
+                console.log("forresetmodal : " + $('#optionGroupModal').html());
+                console.log("forResetModal 대체텍스트 : " + forResetModal);
+
+                $('#optionGroupModal').html(forResetModal);
+
+            });
+
+        });
+
+        function removeEL(idIndex){
+            console.log("removeEL(옵션 삭제)");
+            console.log("삭제 타겟 : " + $('div#'+idIndex+'.form-group').html());
+
+            if(!confirm("옵션을 삭제하시겠습니까?")){
+
+            }else{
+                $('div#'+idIndex+'.form-group').remove();
+
+            }
+
+        }
+
+        function removeELOption(idIndex){
+            console.log("removeELOption(옵션그룹 삭제)");
+            console.log("삭제 타겟 : " + $('div#removeTarget'+idIndex+'.form-group').html());
+
+            // var removeTargetOG=[];
+            // removeTargetOG=idIndex.split();
+            // idIndex1 = idIndex.replace(/(\s*)/g, "\ ");
+
+
+
+
+            if(!confirm("옵션 그룹"+idIndex+"을(를) 삭제하시겠습니까?")){
+
+            }else{
+                $('div#removeTarget'+idIndex+'.form-group').remove();
+                $('input#removeTarget'+idIndex).remove();
+
+            }
+
+        }
+
+
+
+
+    </script>
+
+
 </head>
 <body>
-<jsp:include page="/views/navbar.jsp" />
+<%--<jsp:include page="/views/navbar.jsp" />--%>
 <br>
 <br>
 <br>
 <br>
 <br>
+
+<!--////////////////모달 옵션그룹 추가 시작////////////-->
+
+<!--modal1(메뉴 추가)-->
+<div class="modal fade" id="menuModal" aria-hidden="true" aria-labelledby="menuModalLabel" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="menuModalLabel">메뉴 추가</h5>
+
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!--//////////////////여기에 추가 메뉴 정보///////시이이이작//////////////////////////////////-->
+                <form class="form-horizontal">
+                    <input type="hidden" id = "menuTruckId" name="menuTruckId" value="${truck.truckId}">
+                    <%--        <div class="form-group">--%>
+                    <%--            <label for="menuTruckId" class="col-sm-offset-1 col-sm-3 control-label">메뉴 트럭 아이디</label>--%>
+                    <%--            <div class="col-sm-4">--%>
+                    <%--                <input type="text" class="form-control" id="menuTruckId" name="menuTruckId"  value="${truck.truckId}" placeholder="메뉴 트럭아이디">--%>
+                    <%--            </div>--%>
+                    <%--        </div>--%>
+
+                    <div class="form-group">
+                        <label for="menuName" class="col-sm-offset-1 col-sm-10 control-label">메뉴 이름</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="menuName" name="menuName" value="${menu.menuName }" placeholder="메뉴 이름">
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="menuDetail" class="col-sm-offset-1 col-sm-10 control-label">메뉴상세정보</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="menuDetail" name="menuDetail" value="${menu.menuDetail }" placeholder="메뉴상세정보">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="menuPrice" class="col-sm-offset-1 col-sm-10 control-label">메뉴 가격</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="menuPrice" name="menuPrice" value="${menu.menuPrice }" placeholder="메뉴 가격">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <%--            <label for="isSigMenu" class="col-sm-offset-1 col-sm-3 control-label">대표메뉴여부</label>--%>
+                        <div class="col-sm-10">
+                            <%--                <input type="text" class="form-control" id="isSigMenu" name="isSigMenu" value="${menu.isSigMenu}" placeholder="대표메뉴여부">--%>
+
+                            <div class="form-check form-switch" id="isThereSigMenu">
+                                <%--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">--%>
+                                <%--                    <label class="form-check-label" for="flexSwitchCheckDefault">대표메뉴여부</label>--%>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="menuImg1" class="col-sm-offset-1 col-sm-10 control-label">메뉴 이미지1</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" id="menuImg1" name="menuImg11"  value="${menu.menuImg1}" placeholder="메뉴 이미지1" onchange="setImage1Preview(event);">
+                        </div>
+                        <div id="image1preview" class="col-sm-10"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="menuImg2" class="col-sm-offset-1 col-sm-10 control-label">메뉴 이미지2</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" id="menuImg2" name="menuImg22"  value="${menu.menuImg2}" placeholder="메뉴 이미지2" onchange="setImage2Preview(event);">
+                        </div>
+                        <div id="image2preview" class="col-sm-10"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="menuImg3" class="col-sm-offset-1 col-sm-10 control-label">메뉴 이미지3</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" id="menuImg3" name="menuImg33"  value="${menu.menuImg3}" placeholder="메뉴 이미지3" onchange="setImage3Preview(event);">
+                        </div>
+                        <div id="image3preview" class="col-sm-10"></div>
+                    </div>
+
+                    <script>
+
+
+                        function setImage1Preview(event){
+
+                            var DIVimage1preview = $('#image1preview');
+                            var isTherePreview = DIVimage1preview.find('img').length;
+                            alert("isTherePreview : " + isTherePreview);
+                            //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
+                            var reader  = new FileReader();
+
+                            if(isTherePreview==0){
+
+                            }else{
+
+                                DIVimage1preview.find('img').remove();
+
+                            }
+
+                            reader.onload = function(event){
+                                var img = document.createElement("img");
+
+                                img.setAttribute("src", event.target.result);
+                                img.setAttribute("style", "width:50%");
+                                document.querySelector("div#image1preview").appendChild(img);
+
+                            };
+
+                            reader.readAsDataURL(event.target.files[0]);
+
+
+                        }
+
+                        function setImage2Preview(event){
+                            var reader  = new FileReader();
+                            var isTherePreview = DIVimage1preview.find('img').length;
+                            alert("isTherePreview : " + isTherePreview);
+                            //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
+                            var reader  = new FileReader();
+
+                            if(isTherePreview==0){
+
+                            }else{
+
+                                DIVimage1preview.find('img').remove();
+
+                            }
+
+                            reader.onload = function(event){
+                                var img = document.createElement("img");
+                                img.setAttribute("src", event.target.result);
+                                img.setAttribute("style", "width:50%");
+                                document.querySelector("div#image1preview").appendChild(img);
+
+                            };
+
+                            reader.readAsDataURL(event.target.files[0]);
+
+                        }
+
+                        function setImage3Preview(event){
+                            var reader  = new FileReader();
+                            var isTherePreview = DIVimage1preview.find('img').length;
+                            alert("isTherePreview : " + isTherePreview);
+                            //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
+                            var reader  = new FileReader();
+
+                            if(isTherePreview==0){
+
+                            }else{
+
+                                DIVimage1preview.find('img').remove();
+
+                            }
+
+                            reader.onload = function(event){
+                                var img = document.createElement("img");
+                                img.setAttribute("src", event.target.result)
+                                img.setAttribute("style", "width:50%");
+                                document.querySelector("div#image1preview").appendChild(img);
+
+                            };
+
+                            reader.readAsDataURL(event.target.files[0]);
+
+                        }
+
+                    </script>
+                <!--//////////////////여기에 추가 메뉴 정보///////끄으으으읕//////////////////////////////////-->
+                    <div id="here"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary customer" data-toggle="modal" data-target="#optionGroupModal" data-whatever="optionGroup" data-dismiss="modal" aria-label="Close">옵션그룹추가</button>
+                <button type="button" class="btn btn-primary" id="add-menu" data-dismiss="modal" aria-label="Close">메뉴추가</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--modal1(메뉴 추가 끝)-->
+
+<%--<!--modal2(옵션그룹추가)-->--%>
+<div class="modal fade" id="optionGroupModal" aria-hidden="true" aria-labelledby="optionGroupModalLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="optionGroupModalLabel">옵션 그룹 추가</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!--옵션그룹추가 시이이이작-->
+                <div class="form-group" id="rrrrrr" name="rrrrrr">
+                    <label for="optionGroupName" class="col-from-label">옵션그룹이름</label>
+                    <input type="text" class="form-control" id="optionGroupName" value="">
+                </div>
+                <!--옵션그룹추가 끄으으으읕-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary addOption" data-target="#optionModal" data-dismiss="modal" aria-label="Close" onclick="applyOptionGroupNamer();" data-toggle="modal">옵션 추가</button>
+                <button type="button" class="btn btn-primary addOptionGroup" id="add-optionGroup" data-dismiss="modal" aria-label="Close" data-target="#menuModal" data-toggle="modal">옵션 그룹 적용</button>
+            </div>
+        </div>
+    </div>
+</div>
+<%--<!--modal2(옵션그룹추가 끝)-->--%>
+
+<%--<!--modal3(옵션그룹추가)-->--%>
+<div class="modal fade" id="optionModal" aria-hidden="true" aria-labelledby="optionModalLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="optionModalLabel">옵션 추가</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!--옵션추가 시이이이이작-->
+                <span>옵션 이름
+                                <input type="text" class="form-control" id="optionName" value="${optionGroup.optionName}"></span>
+
+                <%--                            <label for="optionPrice" class="col-form-label">옵션 가격</label>--%>
+                <span>옵션 가격</span>
+                <input type="text" class="form-control" id="optionPrice" value="${optionGroup.optionPrice}" placeholder="옵션 가격 - 숫자를 입력해주세요.">
+                <!--옵션추가 끄으으으으읕-->
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary addOption" data-dismiss="modal" aria-label="Close" data-target="#optionGroupModal" data-toggle="modal">옵션 적용</button>
+            </div>
+        </div>
+    </div>
+</div>
+<%--<!--modal3(옵션그룹추가 끝)-->--%>
+
+<!--모달 옵션그룹 추가 끝-->
+
 
 
 <!--  화면구성 div Start /////////////////////////////////////-->
 <div class="container">
 
     <div class="page-header">
-        <h3 class="truckNameForMenu">${truck.truckName}</h3>
-    </div>
-    <div class="star-ratings">
-        <div
-                class="star-ratings-fill space-x-2 text-lg"
-                :style="{ width: ratingToPercent + '%' }"
-        >
-            <c:if test="${rvTotal ne null}">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>(${rvTotal})
-            </c:if>
-            <c:if test="${rvTotal eq null}">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-            </c:if>
-
-        </div>
-        <div class="star-ratings-base space-x-2 text-lg">
-            <c:if test="${rvTotal ne null}">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>(${rvTotal})
-            </c:if>
-            <c:if test="${rvTotal eq null}">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-            </c:if>
-
-        </div>
-        <%--            <div class="beside-of-star-ratings">(${rvTotal})</div>--%>
-
+        <h3 class="truckNameForMenu">${truck.truckName} 메뉴 관리</h3>
     </div>
 
-    <!--================truck info 시작=============-->
-    <div class="row">
-
-        <div class="col-xs-4 col-md-2"><strong>프 로 필 이 미 지</strong></div>
-        <div class="col-xs-8 col-md-4">${truck.truckProImg}</div>
-        <div class="col-xs-4 col-md-2"><strong>영 업 상 태</strong></div>
-        <c:if test="${truck.truckBusiStatus eq 0}">
-            <div class="col-xs-8 col-md-4">영업 중</div>
-        </c:if>
-        <c:if test="${truck.truckBusiStatus eq 1}">
-            <div class="col-xs-8 col-md-4">영업 종료</div>
-        </c:if>
-        <div class="col-xs-4 col-md-2"><strong>전 화 번 호</strong></div>
-        <div class="col-xs-8 col-md-4">${truck.truckPhone}</div>
-
-        <div class="col-xs-4 col-md-2"><strong>사 장 님 공 지</strong></div>
-        <div class="col-xs-8 col-md-4">${truck.truckNoticeContent}</div>
-
-    </div>
-
-    <!--================truck info 끝=============-->
-
+    <!--메뉴 추가 버튼-->
+    <a class="btn btn-warning" data-toggle="modal" href="#menuModal" role="button" >메뉴 추가</a>
     <hr/>
+
 
 
 
 </div>
 <!--  메뉴 목록 div Start /////////////////////////////////////-->
-<%--<body>--%>
-
 
 
 <div class="container-fluid content-row">
-<div class="row mb-3">
+    <div class="row mb-3">
 
-    <c:set var="i" value="0"/>
-    <c:forEach var="menu" items="${list}">
-        <c:set var="i" value="${i+1}"/>
-<%--        <div class="col-sm-12">--%>
-        <div class="flex card h-100" style="width: 17rem; margin-bottom:15px; margin-left: 10px;">
-            <img class="card-img-top" src="/resources/menu/${menu.menuImg1}" alt="Card image cap"
-                <%--                        <img class="card-img-top" src="/resources/image/menu/${menu.menuImg1}" alt="Card image cap"--%>
-                 style="border-bottom: 1px solid #eee; height: 200px;">
-            <div class="card-body" style="text:center ">
-                <h3 class="align-content-center"> <strong style="text:center;">${menu.menuName}</strong></h3>
-                <h3> ${menu.menuPrice}원</h3>
-                <ul class='card-body-ul'>
-                    <h4>${menu.menuDetail}</h4>
-                </ul>
-                <div class="btn-detail">
-                    <button class="button btn-warning" name="deleteMenu" onclick="deleteMenu(${menu.menuNo});">
-                        메뉴 삭제하기
-                    <input type="hidden" name="menuNo" value="${menu.menuNo}"/></button>
-                    <button class="button is-warning is-light" name="getMenu"
-                            style='margin-left: 100px; margin-bottom: 13px; height: 25px'
-                            onclick="updateMenu(${menu.menuNo});"
-                    >
-                        메뉴 수정하기
-                        <input type="hidden" name="menuNo" value="${menu.menuNo}"/>
-                    </button>
-                        <%--                                <div class="bd-example">--%>
-                        <%--                                    <button type="button" name="getMenu" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLong">--%>
-                        <%--                                        Launch demo modal--%>
+        <c:set var="i" value="0"/>
+        <c:forEach var="menu" items="${list}">
+            <c:set var="i" value="${i+1}"/>
+            <div class="flex card h-100" style="width: 17rem; margin-bottom:15px; margin-left: 10px;">
+                <img class="card-img-top" src="/resources/menu/${menu.menuImg1}" alt="Card image cap"
+                     style="border-bottom: 1px solid #eee; height: 200px;">
+                <div class="card-body" style="text:center ">
+                    <h3 class="align-content-center"> <strong style="text:center;">${menu.menuName}</strong></h3>
+                    <h3> ${menu.menuPrice}원</h3>
+                    <ul class='card-body-ul'>
+                        <h4>${menu.menuDetail}</h4>
+                    </ul>
+                    <div class="btn-detail">
+                        <button class="button btn-warning" name="deleteMenu" onclick="deleteMenu(${menu.menuNo});">
+                            메뉴 삭제하기
+                            <input type="hidden" name="menuNo" value="${menu.menuNo}"/></button>
+                        <button class="button is-warning is-light" name="getMenu"
+                                style='margin-left: 100px; margin-bottom: 13px; height: 25px'
+                                onclick="updateMenu(${menu.menuNo});"
+                        >
+                            메뉴 수정하기
+                            <input type="hidden" name="menuNo" value="${menu.menuNo}"/>
+                        </button>
 
-                        <%--                                    </button>--%>
-                        <%--                                    <input type="hidden" name="menuNo" value="${menu.menuNo}"/>--%>
-                        <%--                                </div>--%>
+                    </div>
                 </div>
             </div>
-        </div>
-<%--</div>--%>
-    </c:forEach>
-</div>
+            <%--</div>--%>
+        </c:forEach>
+    </div>
 
 </div>
 <!--  메뉴 목록 div End /////////////////////////////////////-->
@@ -349,62 +571,11 @@
 </body>
 
 
-<!--////////////////모달 메뉴 상세보기 시작////////////-->
-<!-- Modal -->
-
-<%--<div class="modal fade" id="exampleModalLong" tabindex="-1" aria-labelledby="exampleModalLongTitle" style="display: none;" aria-hidden="true">--%>
-<%--    <div class="modal-dialog">--%>
-<%--        <div class="modal-content">--%>
-<%--            <div class="modal-header">--%>
-<%--                <h5 class="modal-title" id="exampleModalLongTitle">메뉴 정보</h5>--%>
-<%--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">--%>
-<%--                    <span aria-hidden="true"></span>--%>
-<%--                </button>--%>
-<%--            </div>--%>
-<%--            <div class="modal-body" style="min-height: 500px">--%>
-<%--                <p>This is some placeholder content to show the scrolling behavior for modals. Instead of repeating the text the modal, we use an inline style set a minimum height, thereby extending the length of the overall modal and demonstrating the overflow scrolling. When content becomes longer than the height of the viewport, scrolling will move the modal as needed.</p>--%>
-<%--            </div>--%>
-<%--            <div class="modal-happy">--%>
-
-<%--            </div>--%>
-<%--            <div class="modal-footer">--%>
-<%--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>--%>
-<%--                <button type="button" class="btn btn-default" id="updateMenu" name="updateMenu">수정하기</button>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--    </div>--%>
-<%--</div>--%>
-
 <script>
-    $(function(){
-        // var modal = $('#exampleModalLong');
-        //
-        // $("#exampleModalLong").on('hide.bs.modal', function(e){
-        //     window.location.reload();
-        //     e.stopImmediatePropagation();
-        // });
 
-        $("#addCart").on("click", function(){
-            // 카트에 담기!(selected 등..)
-
-        });
-
-        // $("body").on("click", "button[name='updateMenu']", function(){
-        //     var mine = modal.find('div[name="odMenuNo"]');
-        //     var menuNo = mine.data("menuNo");
-        //     console.log("mine : " + mine);
-        //
-        //     alert("menuNo : " + menuNo);
-        //     updateMenu(menuNo);
-        // });
-
-
-
-    });
-
+    //메뉴 수정 클릭 시
     function updateMenu(menuNo){
-      var menuNoo = menuNo;
+        var menuNoo = menuNo;
 
         self.location="/menu/updateMenu?menuNo="+menuNoo;
 

@@ -60,12 +60,12 @@
 
 
                             }
-                            console.log("odOptionName : " + modalApply.find('input:radio:checked').eq(i).data("op"));
-                            console.log("odOptionGroupNo : " + modalApply.find('input:radio:checked').eq(i).parent('div').find('input[name="odOptionGroupNo"]').val());
-                            console.log("odOptionGroupName : " + modalApply.find('input:radio:checked').eq(i).parent('div').find('input[name="odOptionGroupName"]').val());
-                            console.log("odOptionNo : " + modalApply.find('input:radio:checked').eq(i).parent('div').find('input[name="odOptionNo"]').val());
-                            console.log("odOptionPrice : " + modalApply.find('input:radio:checked').eq(i).parent('div').find('input[name="odOptionPrice"]').val());
-                            alert(optionGroupOrderDetail+" : optionGroupOrderDetail")
+                            // console.log("odOptionName : " + modalApply.find('input:radio:checked').eq(i).data("op"));
+                            // console.log("odOptionGroupNo : " + modalApply.find('input:radio:checked').eq(i).parent('div').find('input[name="odOptionGroupNo"]').val());
+                            // console.log("odOptionGroupName : " + modalApply.find('input:radio:checked').eq(i).parent('div').find('input[name="odOptionGroupName"]').val());
+                            // console.log("odOptionNo : " + modalApply.find('input:radio:checked').eq(i).parent('div').find('input[name="odOptionNo"]').val());
+                            // console.log("odOptionPrice : " + modalApply.find('input:radio:checked').eq(i).parent('div').find('input[name="odOptionPrice"]').val());
+                            // alert(optionGroupOrderDetail+" : optionGroupOrderDetail")
                             // console.log(befOptionGroupName +" : befOptionGroupName");
                             menuOdList.push(optionGroupOrderDetail);
                         }
@@ -119,9 +119,21 @@
 
                 sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
 
-                var anyway = JSON.parse(JSON.parse(sessionStorage.getItem("menuOdList")).getItem("optionGropuOrderDetail"));
-                // var optionWay = JSON.parse(sessionStorage.getItem(""));
-                // JSON.parse(sessionStorage.getItem(keyName));
+                    var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
+
+                // var anyway = JSON.parse(beforeAnyway.getItem("optionGroupOrderDetail"));
+                // var optionWay = JSON.parse(sessionStorage.getItem("menuOdList"));
+                alert("자면서 만들었나? : " + beforeAnyway);
+                // for(var i=0; i<beforeAnyway.length; i++){
+                //     console.log("beforeAnyway : " + beforeAnyway.eq(i));
+                // }
+
+                for( var i in beforeAnyway){
+                    // console.log("beforeAnyway : " + beforeAnyway[i]);
+                    for(var j in beforeAnyway[i]){
+                        console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
+                    }
+                }
 
                 // alert("plz anyway : " + anyway);
                 // console.log("anyway : " + anyway);
@@ -255,7 +267,7 @@
                 url:"/menu/json/isThereOG/"+menuNo,
                 method:"get",
                 success:function(data){
-                    console.log("data : " + data)
+                    // console.log("data : " + data)
                     optionGroupCount = data;
                 }
             });
@@ -267,7 +279,7 @@
                 method:"get",
 
                 success: function(data){
-                    console.log("data : " + data.menu)
+                    // console.log("data : " + data.menu)
                     var div="";
                     var modalFooter = "";
 
@@ -325,7 +337,7 @@
                 url:"/menu/json/getOptionGroupListOnModal/"+menuNo,
                 method:"get",
                 success:function(data){
-                    console.log("data.optionGroup[0].optionGroupName : " +data.optionGroup[0].optionGroupName)
+                    // console.log("data.optionGroup[0].optionGroupName : " +data.optionGroup[0].optionGroupName)
                     var divOG ="<table>";
                     var modalFooterOG ="";
 
