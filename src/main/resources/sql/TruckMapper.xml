@@ -72,6 +72,14 @@
 	</select>
 
 
+	<select id="getNotice"   parameterType="String"    resultMap="truckSelectMap" >
+		SELECT
+			TRUCK_NOTICE_TITLE, TRUCK_NOTICE_CONTENT, TRUCK_NOTICE_IMG
+		FROM truck
+		WHERE truck_id = #{value}
+	</select>
+
+
 	<!-- SQL : 아이디 중복 체크 -->
 	<select id="checkDuId" resultType="integer">
 		SELECT count(*)
@@ -91,8 +99,17 @@
 		SELECT
 			TRUCK_ID
 		FROM truck
-		WHERE truck_name = #{truckName} and truck_phone= #{truckPhone}
+		WHERE truck_name = #{truckName} AND  role = '1' AND truck_phone= #{truckPhone}
 	</select>
+
+	<!--PW변경-->
+	<update id="updatePassword" parameterType="truck">
+		UPDATE truck
+		<set>
+			truck_password 	= #{truckPassword}
+		</set>
+		WHERE truck_id = #{truckId}
+	</update>
 
 	<!-- SQL : 신규가입 트럭조회 -->
 	<select id="getNewTruckList"   parameterType="String"    resultMap="truckSelectMap" >
@@ -194,59 +211,16 @@
 		WHERE truck_id = #{truckId}
 	</update>
 
-
-	<update	id="updateTruckP" 	parameterType="truck" >
+	<!-- 공지 작성(수정) -->
+	<update	id="updateNotice" 	parameterType="truck" >
 		UPDATE truck
 		<set>
-			truck_id = #{truckId},
-			truck_password = #{truckPassword},
-			truck_ceo_name= #{truckCEOName},
-			truck_ceo_birth = #{truckCEOBirth},
-			truck_addr = #{truckAddr},
-			truck_addr_detail = #{truckAddrDetail},
-			truck_phone	= #{truckPhone},
-			truck_email	= #{truckEmail},
-			truck_name	= #{truckName},
-			truck_busi_lice	= #{truckBusiLice},
-			truck_busi_no = #{truckBusiNo},
-			truck_cate = #{truckCate},
-			truck_pro_img = #{truckProImg},
-			truck_ceo_intro	= #{truckCEOIntro},
-			truck_avg_star = #{truckAVGStar},
-			truck_map_la = #{truckMapLa},
-			truck_map_lo = #{truckMapLo},
-			truck_join_req_status = #{truckJoinReqStatus},
-			truck_join_req_date = #{truckJoinReqDate},
 			truck_notice_title = #{truckNoticeTitle},
 			truck_notice_content = #{truckNoticeContent},
-			truck_notice_img = #{truckNoticeImg},
-			truck_bye_status = #{truckByeStatus},
-			truck_bye_reason = #{truckByeReason},
-			truck_busi_status = #{truckBusiStatus},
-			truck_reg_date = #{truckRegDate},
-			role = #{role}
+			truck_notice_img = #{truckNoticeImg}
 		</set>
 		WHERE truck_id = #{truckId}
 	</update>
-
-
-	<update	id="updateTruckI" 	parameterType="truck" >
-		UPDATE truck
-		<set>
-			truck_ceo_name= #{truckCEOName},
-			truck_ceo_birth = #{truckCEOBirth},
-			truck_addr = #{truckAddr},
-			truck_addr_detail = #{truckAddrDetail},
-			truck_phone	= #{truckPhone},
-			truck_email	= #{truckEmail},
-			truck_name	= #{truckName},
-			truck_busi_lice	= #{truckBusiLice},
-			truck_busi_no = #{truckBusiNo},
-			truck_cate = #{truckCate}
-		</set>
-		WHERE truck_id = #{truckId}
-	</update>
-
 
 	<!-- 사업자 회원탈퇴 -->
 	<update id="byeTruck" parameterType="truck">

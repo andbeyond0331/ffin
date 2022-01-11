@@ -109,32 +109,72 @@ public class TruckController {
         return "forward:/views/truck/getTruckInfo.jsp";
     }
 
-//    @RequestMapping(value = "updateTruck", method = RequestMethod.GET)
-//    public String updateTruck(@RequestParam("truckId") String truckId, Model model, HttpSession session) throws Exception {
-//
-//        System.out.println("/truck/updateTruck : GET");
-//        //Business Logic
-//        Truck truck = truckService.getTruck(truckId);
-//        //Model 과 View 연결
-//        model.addAttribute("truck", truck);
-//
-//        return "forward:/truck/updateTruck.jsp";
-//    }
-//
-//    @RequestMapping(value = "updateTruck", method = RequestMethod.POST)
-//    public String updateTruck(@ModelAttribute("truck") Truck truck, Model model, HttpSession session) throws Exception {
-//
-//        System.out.println("/truck/updateTruck : POST");
-//        //Business Logic
-//        truckService.updateTruck(truck);
-//
-//        String sessionId = ((Truck) session.getAttribute("truck")).getTruckId();
-//        if (sessionId.equals(truck.getTruckId())) {
-//            session.setAttribute("truck", truck);
-//        }
-//
-//        return "redirect:/truck/getTruck?truckId=" + truck.getTruckId();
-//    }
+    @RequestMapping(value = "getNotice", method = RequestMethod.GET)
+    public String getNotice(@RequestParam("truckId")String truckId, Model model, HttpSession session) throws Exception {
+
+        System.out.println("/truck/getNotice : GET");
+
+        Truck truck = truckService.getTruck("truckId");
+        //Model 과 View 연결
+        model.addAttribute("truck", truck);
+
+        truckService.getNotice(truckId);
+
+        return "forward:/views/truck/getNotice.jsp";
+    }
+
+    @RequestMapping(value = "updateNotice", method = RequestMethod.GET)
+    public String updateNotice(Model model, HttpSession session) throws Exception {
+
+        System.out.println("/truck/updateNotice : GET");
+        //Business Logic
+        Truck truck = (Truck) session.getAttribute("truck");
+
+        System.out.println("truck = " + truck);
+
+        String truckId = (String) truck.getTruckId();
+        String truckProImg = (String) truck.getTruckProImg();
+        String truckNoticeTitle = (String) truck.getTruckNoticeTitle();
+        String truckNoticeContent = (String) truck.getTruckNoticeContent();
+        String truckNoticeImg = (String) truck.getTruckNoticeImg();
+
+        System.out.println("truckId = " + truckId);
+        //Model 과 View 연결
+        model.addAttribute("truckId", truckId);
+        model.addAttribute("truckProImg", truckProImg);
+        model.addAttribute("truckNoticeTitle", truckNoticeTitle);
+        model.addAttribute("truckNoticeContent", truckNoticeContent);
+        model.addAttribute("truckNoticeImg", truckNoticeImg);
+
+        System.out.println("model = " + model);
+
+        return "forward:/views/truck/updateNotice.jsp";
+    }
+
+    @RequestMapping(value = "updateNotice", method = RequestMethod.POST)
+    public String updateNotice(@ModelAttribute("truck") Truck truck,@RequestParam("truckNoticeImg") MultipartFile file1, Model model, HttpSession session, HttpServletRequest request) throws Exception {
+
+        System.out.println("/truck/updateNotice : POST");
+
+        truck = (Truck) session.getAttribute("truck");
+
+        String sessionId = ((Truck) session.getAttribute("truck")).getTruckId();
+        if (sessionId.equals(truck.getTruckId())) {
+            session.setAttribute("truck", truck);
+        }
+
+        String temDir = request.getSession().getServletContext().getRealPath("/resources/image");
+
+        if (!file1.getOriginalFilename().isEmpty()) {
+            file1.transferTo(new File(temDir, file1.getOriginalFilename()));
+        }
+
+        truck.setTruckNoticeImg(file1.getOriginalFilename());
+
+        truckService.updateNotice(truck);
+
+        return "redirect:/truck/getNotice?truckId="+truck.getTruckId();
+    }
 
 
     @RequestMapping(value = "updateTruckInfo", method = RequestMethod.GET)
@@ -152,12 +192,12 @@ public class TruckController {
     }
 
     @RequestMapping(value = "updateTruckInfo", method = RequestMethod.POST)
-    public String updateTruckInfo(@ModelAttribute("truck") Truck truck, @RequestParam("busiLice") MultipartFile file1, @RequestParam("proImg") MultipartFile file2, Model model, HttpSession session) throws Exception {
+    public String updateTruckInfo(@ModelAttribute("truck") Truck truck, @RequestParam("busiLice") MultipartFile file1, @RequestParam("proImg") MultipartFile file2, Model model, HttpSession session, HttpServletRequest request) throws Exception {
 
         System.out.println("/truck/updateTruckInfo : POST");
         //Business Logic
 
-        String temDir = "../../resources/image";
+        String temDir = request.getSession().getServletContext().getRealPath("/resources/image");
 
         if (!file1.getOriginalFilename().isEmpty()) {
             file1.transferTo(new File(temDir, file1.getOriginalFilename()));

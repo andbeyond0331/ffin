@@ -2,6 +2,7 @@ package com.ffin.service.truck.impl;
 
 import com.ffin.common.Search;
 import com.ffin.service.domain.Truck;
+import com.ffin.service.domain.User;
 import com.ffin.service.truck.TruckDao;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ public class TruckDaoImpl implements TruckDao {
     // 공지 보기
     @Override
     public Truck getNotice(String truckId) throws Exception {
-        return sqlSession.selectOne("TruckMapper.getTruck", truckId);
+        return sqlSession.selectOne("TruckMapper.getNotice", truckId);
     }
 
     // 푸드트럭 프로필보기
@@ -128,6 +129,27 @@ public class TruckDaoImpl implements TruckDao {
 
         return sqlSession.selectOne("TruckMapper.findTruckId", map);
     }
+
+    @Override
+    public String getTruckIdForPassword(String truckId, String truckName, String truckPhone) throws Exception {
+
+        System.out.println("TruckDaoImpl.getTruckIdForPassword");
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("truckId", truckId);
+        map.put("truckName", truckName);
+        map.put("truckPhone", truckPhone);
+
+        return sqlSession.selectOne("TruckMapper.getTruckIdForPassword", map);
+    }
+
+
+    @Override
+    public void updatePassword(Truck truck) throws Exception {
+        System.out.println("TruckDaoImpl.updatePassword");
+        sqlSession.update("TruckMapper.updatePassword", truck);
+    }
+
     // 푸드트럭 회원탈퇴
     @Override
     public void byeTruck(Truck truck) throws Exception {

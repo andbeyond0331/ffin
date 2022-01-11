@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.Map;
 
@@ -325,15 +326,20 @@ public class ReviewController {
 
     //truck에 의한 getReview List
     @RequestMapping("getReviewListTruck")
-    public ModelAndView getReviewListTruck(@ModelAttribute("search") Search search, @RequestParam("truckId") String truckId,
-                                    ModelAndView modelAndView) throws Exception{
+    public ModelAndView getReviewListTruck(@ModelAttribute("search") Search search,
+                                           ModelAndView modelAndView, HttpSession session) throws Exception{
 
         search.setPageSize(pageSize);
 
-        Truck truck  = truckService.getTruck(truckId);
+        Truck truck = (Truck) session.getAttribute("truck");
+
+        String truckId = truck.getTruckId();
+
+        System.out.println("truckId = " + truckId);
+
         float rvAvg = reviewService.getReviewAvg(search,truckId);
 
-        Map<String , Object> map= reviewService.getReviewListTruck(search, truck.getTruckId());
+        Map<String , Object> map= reviewService.getReviewListTruck(search, truckId);
 
         Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 

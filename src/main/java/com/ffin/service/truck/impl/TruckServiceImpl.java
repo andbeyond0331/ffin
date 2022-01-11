@@ -115,7 +115,46 @@ public class TruckServiceImpl implements TruckService {
     }
 
     // 푸드트럭 비밀번호 찾기
+    @Override
+    public String getTruckIdForPassword(String truckId, String truckName, String truckPhone) throws Exception {
 
+        System.out.println("TruckServiceImpl.getTruckIdForPassword");
+        return truckDao.getTruckIdForPassword(truckId, truckName, truckPhone);
+    }
+
+    //임시비밀번호 전송&저장
+    @Override
+    public void sendSMSForPassword(String truckId, String truckPhone, int tempPassword) throws Exception {
+
+        String api_key = "NCSIIBP9OZRKRL6J";
+        String api_secret = "WNJOTZFUSTD19LSNH0NOWDIGVJD7OWRC";
+
+        Truck truck = truckDao.getTruck(truckId);
+        String truckName = truck.getTruckName();
+
+        Message coolsms = new Message(api_key, api_secret); // 4 params(to, from, type, text) are mandatory. must be filled
+        HashMap<String, String> params = new HashMap<String, String>();
+
+        params.put("to", truckPhone); // 수신전화번호
+        params.put("from", "01065827117"); // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
+        params.put("type", "SMS");
+        params.put("text", "[TEST]"+truckName+"님의 임시 비밀번호는 " + "["+tempPassword+"]" + " 입니다." +
+                " 로그인 후 비밀번호를 변경해주세요."); // 문자 내용 입력
+        params.put("app_version", "test app 1.2"); // application name and version
+
+        try { JSONObject obj = (JSONObject) coolsms.send(params);
+            System.out.println(obj.toString());
+        } catch (CoolsmsException e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getCode());
+        }
+
+        truck.setTruckPassword(String.valueOf(tempPassword));
+        System.out.println("임시비밀번호 전송 후 DB 업데이트 확인 :: "+truck);
+
+        truckDao.updateTruckPassword(truck);
+
+    }
 
 //    @Override
 //    public void mailSendWithPassword(String truckId, String truckEmail, HttpServletRequest request) throws Exception {
@@ -290,4 +329,9 @@ public class TruckServiceImpl implements TruckService {
         return map;
     }
 
+
+    @Override
+    public Truck getNotice(String truckId) throws Exception {
+        return truckDao.getNotice(truckId);
+    }
 }

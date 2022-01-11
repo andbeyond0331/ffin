@@ -61,9 +61,9 @@
 			$('.truck-info').click(function () {
 				self.location = "./getTruckInfo.jsp"
 			});
-			// $('.truck-profile').click(function () {
-			// 	self.location = "./gettruckProfile.jsp"
-			// });
+			$('.truck-notice').click(function () {
+				self.location = "/views/truck/getNotice.jsp"
+			});
 			$('.truck-sales').click(function () {
 				self.location = "/truck/getSalesList"
 			});
@@ -74,7 +74,8 @@
 				self.location = ""
 			});
 			$('.truck-review').click(function () {
-				self.location = "../review/getReviewList.jsp"
+				//self.location = "../review/getReviewList.jsp";
+				self.location = "/review/getReviewListTruck";
 			});
 			$('.truck-post').click(function () {
 				self.location = "getPostList.jsp"
@@ -122,13 +123,13 @@
 							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
 						</div>
 					</div>
-<%--					<div class="card truck-profile" style="width: 12rem;">--%>
-<%--						<div class="card-body" style="display: inline-grid;">--%>
-<%--							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-robot page-icon fa-2x"></i></span>--%>
-<%--							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">프로필</h6>--%>
-<%--							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>--%>
-<%--						</div>--%>
-<%--					</div>--%>
+					<div class="card truck-notice" style="width: 12rem;">
+						<div class="card-body" style="display: inline-grid;">
+							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-exclamation-triangle page-icon fa-2x"></i></span>
+							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">공지</h6>
+							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
+						</div>
+					</div>
 					<div class="card truck-sales" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
 							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-shopping-basket fa-2x"></i></span>

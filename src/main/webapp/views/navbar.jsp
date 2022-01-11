@@ -76,7 +76,7 @@
                         <a class="nav-link" id="goMsg" href="#" style="margin-top: 3px;"><i class="fas fa-envelope fa-lg" ></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="margin-top: 3px;"><i class="fas fa-shopping-cart fa-lg"></i></a>
+                        <a class="nav-link" href="/purchase/getOrderList?truckId=${truck.truckId}&search=0" style="margin-top: 3px;"><i class="fas fa-shopping-cart fa-lg"></i></a>
                     </li>
                     <li class="form-inline my-2 my-lg-0" style="position: relative;">
                         <%--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
@@ -191,7 +191,7 @@
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="autoLoginTruck">
                                 <label class="form-check-label" for="autoLoginTruck">자동로그인</label>
-                                <a class="findId" href="/views/truck/findTruckId.jsp" style="color: #ffba49; margin-left: 5px; font-size: 14px;">
+                                <a class="findTruckId" style="color: #ffba49; margin-left: 5px; font-size: 14px;" onclick="findTruck()">
                                     <strong style="float: right; stroke: #ffba49; margin-right: 5px; margin-top: 2px;">ID/PW 찾기</strong>
                                 </a>
                             </div>
@@ -286,6 +286,70 @@
     </div>
 </div>
 
+
+<%-- 아이디 / 비밀번호 찾기 Modal Truck!!!!!!!!!!!!1 --%>
+<div class="modal fade" id="findTruckModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="findTruckModalTitle">ID/PW 찾기</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-pills nav-fill" id="id-pw-tab-T">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="findIdBtn-T" data-toggle="tab" href="#findIdT" style="margin-left: 0;">ID 찾기</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="findPwBtn-T" data-toggle="tab" href="#findPwT">PW 찾기</a>
+                    </li>
+                </ul>
+                <form id = "fineTruckmodalForm" name="fineTruckmodalForm">
+                    <div class="tab-content">
+                        <%-- ID modal --%>
+                        <div class="tab-pane fade show active" id="findIdT">
+                            <div class="mb-3">
+                                <label for="truckIdforId" class="form-label" style="margin-top: 12px;">푸드트럭 상호</label>
+                                <input type="text" class="form-control" id="truckIdforId" >
+                            </div>
+                            <div class="mb-3">
+                                <label for="truckPhoneForId" class="form-label">연락처</label>
+                                <input type="text" class="form-control" id="truckPhoneForId">
+                            </div>
+                            <hr/>
+                            <div class="d-grid gap-2 col-6 mx-auto">
+                                <button class="btn findIdBtnT" type="button" onclick="getTruckId()">아이디 찾기</button>
+                            </div>
+                        </div>
+                        <%-- PW modal --%>
+                        <div class="tab-pane fade" id="findPwT">
+                            <div class="mb-3">
+                                <label for="truckNameforPw" class="form-label">푸드트럭 상호</label>
+                                <input type="text" class="form-control" id="truckNameforPw">
+                            </div>
+                            <div class="mb-3">
+                                <label for="truckIdforPw" class="form-label">Id</label>
+                                <input type="text" class="form-control" id="truckIdforPw">
+                            </div>
+                            <div class="mb-3">
+                                <label for="truckPhoneforPw" class="form-label">연락처</label>
+                                <input type="text" class="form-control" id="truckPhoneforPw">
+                            </div>
+                            <hr/>
+                            <div class="d-grid gap-2 col-6 mx-auto">
+                                <button class="btn findPwBtnT" type="button">비밀번호 찾기</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- 아이디 출력 Modal -->
 <div class="modal modal-child" id="background_modal" aria-hidden="true" style="display: none; z-index: 1060;" data-modal-parent="#findUserModal">
     <div class="modal-dialog modal-dialog-centered">
@@ -303,6 +367,30 @@
                 </button>
                 <button type="button" id="findUserPw" class="btn peach-gradient btn-rounded waves-effect" onclick="findUserPw()">
                    비밀번호 찾기
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 아이디 출력 Modal 트럭!!!!-->
+<div class="modal modal-child" id="background_modalT" aria-hidden="true" style="display: none; z-index: 1060;" data-modal-parent="#findTruckModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabelT">아이디 찾기</h5>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body" style="float: left;">
+                <span id="id_valueT"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="longinGoBtnT" class="btn peach-gradient btn-rounded waves-effect" onclick="longinGoBtnT()">
+                    로그인
+                </button>
+                <button type="button" id="findTruckPw" class="btn peach-gradient btn-rounded waves-effect" onclick="findTruckPw()">
+                    비밀번호 찾기
                 </button>
             </div>
         </div>

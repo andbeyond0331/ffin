@@ -175,14 +175,14 @@
         display: none;
     }
 
-    .btn.findIdBtn, .btn.findPwBtn, #longinGoBtn, #findUserPw{
+    .btn.findIdBtn, .btn.findPwBtn, #longinGoBtn, #findUserPw, .btn.findIdBtnT, .btn.findPwBtnT, #findTruckPw{
         color: #fff;
         background-color: #ffe537;
         margin-left: 10px;
         padding: 10px 15px 10px 15px;
     }
 
-    .btn.findIdBtn:hover , .btn.findPwBtn:hover, #longinGoBtn:hover, #findUserPw:hover{
+    .btn.findIdBtn:hover , .btn.findPwBtn:hover, #longinGoBtn:hover, #findUserPw:hover, .btn.findIdBtnT:hover , .btn.findPwBtnT:hover, #longinGoBtnT:hover, #findTruckPw:hover{
         color: #ffe537;
         background-color: #ffffff;
         border-color: #ffe537;
@@ -190,11 +190,11 @@
         padding: 10px 15px 10px 15px;
     }
 
-    .btn.findIdBtn, .btn.findPwBtn{
+    .btn.findIdBtn, .btn.findPwBtn, .btn.findIdBtnT, .btn.findPwBtnT{
         width: inherit;
     }
 
-    #longinGoBtn, #findUserPw{
+    #longinGoBtn, #findUserPw, #longinGoBtnT, #findTruckPw{
         justify-content: center;
     }
 
@@ -408,6 +408,14 @@
         });
     });
 
+    // 진석 추가
+    // ============= 푸드트럭 ===============
+    $( function() {
+        $("#goTruck").on("click" , function() {
+            self.location = "/menu/getTruckList"
+        });
+    });
+
     /* userId 찾기 */
     function findUser(){
         //alert("ID/PW찾기");
@@ -501,6 +509,101 @@
 
 
 
+    /* truckId 찾기 */
+    function findTruck(){
+        //alert("ID/PW찾기");
+        $('#openLoginModal').modal('hide');
+        $('#findTruckModal').modal('show');
+    }
+
+    $(function () {
+        $('.findIdBtnT').click(function () {
+
+            var truckName = $('#truckIdforId').val();
+            var truckPhone = $('#truckPhoneForId').val();
+
+            console.log(truckName);
+            console.log(truckPhone);
+
+            $.ajax({
+                type:"POST",
+                url: "/truck/json/getTruckId",
+                data   : {
+                    truckName : truckName,
+                    truckPhone : truckPhone},
+                success:function (data) {
+                    console.log("아이디 찾기 data : "+data);
+                    if(data === "fail" ){
+                        //alert(data);
+                        $('#id_value').text('회원 정보를 찾을 수 없습니다.');
+                        $('#longinGoBtn').css('display','none');
+                        $('#findTruckPw').css('display', 'none');
+                    } else {
+                        $('#id_valueT').text('회원님의 Id는 '+data+'입니다.');
+                        $('#longinGoBtn').css('display','flex');
+                        $('#findTruckPw').css('display', 'flex');
+                        idV = data;
+                    }
+                }
+            })
+        });
+    });
+
+
+
+    /* PW찾기 트럭!!!*/
+    $(function () {
+        $('.findPwBtnT').click(function () {
+
+            var truckName  = $('#truckNameforPw').val();
+            var truckId  = $('#truckIdforPw').val();
+            var truckPhone  = $('#truckPhoneforPw').val();
+
+            console.log(truckName);
+            console.log(truckId);
+            console.log(truckPhone);
+
+            $.ajax({
+                type:"POST",
+                url: "/truck/json/getTruckIdForPassword",
+                data   : {
+                    truckId : truckId,
+                    truckName : truckName,
+                    truckPhone : truckPhone},
+                success:function (data) {
+                    console.log("비밀번호 찾기 data : "+data);
+                    if(data === ""){
+                        alert('회원정보를 찾을 수 없습니다.');
+                    } else {
+                        console.log("-------------------");
+                        console.log(truckPhone);
+
+                        $.ajax({
+                            type:"GET",
+                            url:"/truck/json/sendSMSForPassword/"+truckPhone,
+                            data: {
+                                truckId : truckId
+                            },
+                            success:function (data) {
+                                console.log(data);
+                                alert("입력하신 연락처로 임시비밀번호가 발송되었습니다.");
+                                $('#background_modal').hide();
+                                $('#findTruckModal').hide();
+                                $('#openLoginModal').modal('show');
+                            },
+                            fail:function (error){
+                                console.log(error);
+                                alert("임시비밀번호 전송이 취소되었습니다.")
+                            }
+                        });
+                    }
+                }
+            });
+        });
+    });
+
+
+
 
     function getUserId(){
         //alert("떠라떠라");
@@ -526,6 +629,33 @@
 
     function findUserPw(){
         $('#background_modal').hide();
+    }
+
+
+    function getTruckId(){
+        //alert("떠라떠라");
+        $('#background_modalT').show();
+    }
+
+    $(function () {
+        $('.close').on('click', function() {
+            $('#background_modalT').hide();
+        });
+    });
+    $(window).on('click', function() {
+        if (event.target == $('#background_modalT').get(0)) {
+            $('#background_modalT').hide();
+        }
+    });
+
+    function longinGoBtnT(){
+        $('#background_modalT').hide();
+        $('#findTruckModal').hide();
+        $('#openLoginModal').modal('show');
+    }
+
+    function findTruckPw(){
+        $('#background_modalT').hide();
     }
 
 
