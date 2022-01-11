@@ -820,6 +820,19 @@
 
 */
 
+/*var session = [];*/
+//  session = sessionStorage.getItem("manuOdList");
+// alert(session)
+
+    sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
+
+    var anyway = JSON.parse(JSON.parse(sessionStorage.getItem("menuOdList")).getItem("optionGropuOrderDetail"));
+    var optionWay = JSON.parse(sessionStorage.getItem(""));
+    JSON.parse(sessionStorage.getItem(keyName));
+
+    alert("plz anyway : " + anyway);
+    console.log("anyway : " + anyway);
+
 
 </script>
 </body>

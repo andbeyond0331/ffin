@@ -147,7 +147,6 @@ public class PurchaseServiceImpl implements PurchaseService {
     } // 결제정보 조회
     @Override
     public Coupon getCoupon(int couponNo)throws Exception{
-        System.out.println("PurchaseServiceImpl.getCoupon");
         return purchaseDao.getCoupon(couponNo);
     }// 쿠폰 할인금
     @Override

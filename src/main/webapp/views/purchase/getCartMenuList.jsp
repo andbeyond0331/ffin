@@ -216,7 +216,7 @@
     </div>--%>
 
 <div class="container">
-    <div class="content">Main content</div>
+    <div class="content"></div>
    <%-- <div class="sidebar">
 
 

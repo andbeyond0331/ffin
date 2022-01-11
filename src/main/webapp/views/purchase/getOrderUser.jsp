@@ -32,6 +32,32 @@
             margin-top: 1000px;
         }
 
+        /*이미지 사이즈*/
+        .img-fluid {
+            height: auto;
+            width: 250px;
+        }
+
+        /*카드 둥글게*/
+        .card {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 1.25rem;
+        }
+        /*이미지접히게*/
+        .rounded-start {
+            border-bottom-left-radius: 1.25rem!important;
+            border-top-left-radius: 1.25rem!important;
+        }
+
     </style>
 </head>
 <body>
@@ -217,7 +243,19 @@
                     </div>
                     <div class="row">
                         <c:if test="${purchase.orderStatus == '1'}">
+                            <p class="text-start">주문정보 : 주문완료되었습니다.</p>
+                        </c:if>
+                        <c:if test="${purchase.orderStatus == '2'}">
                             <p class="text-start">주문정보 : 주문접수되었습니다</p>
+                        </c:if>
+                        <c:if test="${purchase.orderStatus == '3'}">
+                            <p class="text-start">주문정보 : 주문하신 메뉴가 나왔습니다.</p>
+                        </c:if>
+                        <c:if test="${purchase.orderStatus == '4'}">
+                            <p class="text-start">주문정보 : 맛있게 드셨나요.</p>
+                        </c:if>
+                        <c:if test="${purchase.orderStatus == '5'}">
+                            <p class="text-start">주문정보 : 주문취소된 메뉴입니다.</p>
                         </c:if>
                     </div>
                     <div id="order"></div>
@@ -268,10 +306,13 @@
                         <div class="col-3">
                             <button type="submit" class="btn btn-secondary btn-lg">확 인</button>
                         </div>
+                        <c:if test="${purchase.orderStatus == '1'}">
                         <div class="col-3">
-                            <a class="btn btn-secondary btn-lg" data-bs-toggle="modal" href="#exampleModalToggle"
-                               role="button">주문취소</a>
+                                <a class="btn btn-secondary btn-lg" data-bs-toggle="modal" href="#exampleModalToggle"
+                                   role="button">주문취소</a>
+
                         </div>
+                        </c:if>
                     </dev>
                 </div>
             </div>
@@ -408,7 +449,7 @@
             divElemApply1 = "<div class=\"card mb-3\" >" +
                 " <div class=\"row g-0\">" +
                 "<div class=\"col-md-4\">" +
-                "<img src=\"/resources/image/1.jpg\" class=\"img-fluid rounded-start\" alt=\"image\">" +
+                "<img src=\"/resources/image/"+odMenuImageL[i]+"\" class=\"img-fluid rounded-start\" alt=\"image\">" +
                 "</div>" +
                 "<div class=\"col-md-8\">" +
                 "<div class=\"card-body\">" +

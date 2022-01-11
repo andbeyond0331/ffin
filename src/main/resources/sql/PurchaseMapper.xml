@@ -444,12 +444,21 @@
         FROM purchase
         <if test="search.searchCondition ==0">
             <where>
-                order_truck_id = #{truckId} AND ORDER_STATUS BETWEEN 1 AND 3
+                order_truck_id = #{truckId}
+                AND ORDER_STATUS BETWEEN 1 AND 3
+                AND  date(PAY_DATE_TIME) = date(now())
             </where>
         </if>
         <if test="search.searchCondition ==1">
             <where>
                 order_truck_id = #{truckId} AND ORDER_STATUS <![CDATA[=]]> 4
+                AND  date(PAY_DATE_TIME) = date(now())
+            </where>
+        </if>
+        <if test="search.searchCondition ==2">
+            <where>
+                order_truck_id = #{truckId} AND ORDER_STATUS <![CDATA[=]]> 5
+                AND  date(PAY_DATE_TIME) = date(now())
             </where>
         </if>
 
