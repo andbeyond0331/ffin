@@ -55,10 +55,11 @@
         var orderTotalPrice = $("input[name='orderTotalPrice']").val();
         var orderTruckId = $("input[name='orderTruckId.truckId']").val();
         var payOption = $("input[name='payOption']:checked").val();
-        var payPrice = $("input[name='payPrice']").val();
+        var pp = document.getElementById('totalpp').innerHTML;
         var pointAmt = $("input[name='pointAmt']").val();
         var couponNo = $("input[name='couponNo']").val();
         var orderNo = $("input[name='orderNo']").val();
+        var payPrice = pp.split(":");
 
         if (couponNo == "" || couponNo === undefined) {
             couponNo = 0;
@@ -66,7 +67,8 @@
         if (pointAmt == "" || pointAmt === undefined) {
             pointAmt = 0;
         }
-        alert(couponNo)
+        var price = Number(payPrice[1]);
+        //총 합계 급액 처리가 완료가 되면 price로 amount에 넣어서 사용
         var postData = {
             "payOption": payOption,
             "orderTotalPrice": orderTotalPrice,
@@ -80,7 +82,7 @@
                 pay_method: 'phone',
                 merchant_uid: 'merchant_' + new Date().getTime(),
                 name: '주문명:결제테스트',
-                amount: orderTotalPrice,
+                amount: price,
                 buyer_tel: '010-2056-1658',
                 buyer_name: 'receiverName'
 
@@ -107,6 +109,8 @@
                             "pointAmt": pointAmt,
                             "couponNo": couponNo,
                             "imp_uid": rsp.imp_uid,
+                            "payPrice": price,
+
 
 
                         }
@@ -165,6 +169,7 @@
                             "pointAmt": pointAmt,
                             "couponNo": couponNo,
                             "imp_uid": rsp.imp_uid,
+                            "payPrice": price,
 
                         }
                     }).done(function (data) {
@@ -269,6 +274,8 @@
 
         modal.find('button.btn-primary').on("click", function () {
 
+
+
             var couponCheck = $("input[name='couponNo']").val()
             if (couponCheck == undefined) {
                 realCouponDcPrice = modal.find('input[name=options]:checked').val();
@@ -278,13 +285,26 @@
                 var couponDcPrice = data[0];
                 var couponNo = data[1];
                 console.log(couponNo + ": couponNo");
+                var totalPP1 =document.getElementById('totalpp').innerHTML;
+                var totalSS1 = document.getElementById('sale').innerHTML;
+                var totalSS2 = totalSS1.split(":").map(Number);
+                var totalPP2 = totalPP1.split(":").map(Number);
 
-                append = "<input type=\"text\" id=\"couponNo\" name=\"couponNo\" value=\"" + couponNo + "\">";
+                alert(couponDcPrice+Number(totalSS2[1]))
 
+                var payPrice = Number(totalPP2[1]) - Number(couponDcPrice);
+                var sale = Number(totalSS2[1])+Number(couponDcPrice);
+                /*var payPrice = (dd[1] - couponDcPrice);*/
+
+                append = "<input type=\"hidden\" id=\"couponNo\" name=\"couponNo\" value=\"" + couponNo + "\">";
+                totalPayPrice =  "<span id='totalpp'>결제금액 : "+payPrice+"</span>"
+                totalsale =  "<span id='sale'>한일금액 : "+sale+"</span>"
                 /*alert(append + ":append");*/
 
                 $('#couponDcPrice').val(couponDcPrice);
                 $('#test').append(append);
+                $('#pp').html(totalPayPrice);
+                $('#dcp').html(totalsale);
 
                 modal.modal('hide');
             } else {
@@ -302,9 +322,25 @@
                 usePoint = $('input[name="usePoint"]').val();
                 if (usePoint != "") {
                     if (usePoint % 1000 == 0) {
+                        var val =document.getElementById('totalpp').innerHTML;
+                        var dd = val.split(":").map(Number);
+
+
+                        var totalSS1 = document.getElementById('sale').innerHTML;
+                        var totalSS2 = totalSS1.split(":").map(Number);
+                        var payPrice = Number(dd[1]) - usePoint;
+                        var sale = Number(totalSS2[1])+Number(usePoint);
+
+
                         append = "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePoint + "\">";
+                        totalPayPrice =  "<span id='totalpp' name='payPrice' >결제금액 : "+payPrice+"</span>"
+                        totalsale =  "<span id='sale'>한일금액 : "+sale+"</span>"
+
 
                         $('#usePointAmt').append(append);
+                        $('#pp').html(totalPayPrice);
+                        $('#dcp').html(totalsale);
+
                     } else {
                         alert("포인트는 1000단위로 사용가능합니다.")
                     }
@@ -323,8 +359,29 @@
         $('#removeCoupon').click(function () {
             var couponRe = document.getElementById("couponDcPrice");
             var couponde = document.getElementById("couponNo");
+            const couponDcPrice = document.getElementById('couponDcPrice').value;
+
+
+
             couponde.remove();
             couponRe.value = "";
+
+            var totalPP1 =document.getElementById('totalpp').innerHTML;
+            var totalSS1 = document.getElementById('sale').innerHTML;
+            var totalSS2 = totalSS1.split(":").map(Number);
+            var totalPP2 = totalPP1.split(":").map(Number);
+
+
+            var payPrice = Number(totalPP2[1]) + Number(couponDcPrice);
+            var sale = Number(totalSS2[1])-Number(couponDcPrice);
+
+            totalPayPrice =  "<span id='totalpp'>결제금액 : "+payPrice+"</span>"
+            totalsale =  "<span id='sale'>한일금액 : "+sale+"</span>"
+            /*alert(append + ":append");*/
+
+            $('#pp').html(totalPayPrice);
+            $('#dcp').html(totalsale);
+
         });
     });
 
@@ -332,10 +389,31 @@
         $('#removePoint').click(function () {
             var pointde = document.getElementById("pointAmt");
             var pointRe = document.getElementById("usePoint");
+            const pointAmt = document.getElementById('pointAmt').value;
+
+            var val =document.getElementById('totalpp').innerHTML;
+            var dd = val.split(":").map(Number);
+
+
+            var totalSS1 = document.getElementById('sale').innerHTML;
+            var totalSS2 = totalSS1.split(":").map(Number);
+            var payPrice = Number(dd[1]) + Number(usePoint);
+            var sale = Number(totalSS2[1])-Number(usePoint);
+
             pointde.remove();
             pointRe.value = "";
+
+
+            totalPayPrice =  "<span id='totalpp' name='payPrice' >결제금액 : "+payPrice+"</span>"
+            totalsale =  "<span id='sale'>한일금액 : "+sale+"</span>"
+
+
+            $('#pp').html(totalPayPrice);
+            $('#dcp').html(totalsale);
         });
     });
+
+
 
 
 </script>
@@ -440,7 +518,6 @@
                         <br>
                         <div class="col-sm-12">
                             <input type="hidden" name="orderTruckId.truckId" value="${purchase.orderTruckId.truckId}">
-                            <input type="hidden" name="payPrice" value="${purchase.payPrice}">
                             <input type="hidden" name="orderUserId.userId" value="${purchase.orderUserId.userId}">
                             <input type="hidden" name="orderNo" value="${purchase.orderNo}">
                             <input type="hidden" name="orderTotalPrice" value="${purchase.orderTotalPrice}"/>
@@ -555,7 +632,10 @@
 
                     </c:forEach>
                     <hr class="my-lg-12">
-                    <div id="total"></div>
+
+                    <p class="text-end"  id="total" ></p>
+                    <p class="text-end"  id="dcp"  ><span id="sale" name="payPrice">할인금액 :</span></p>
+                    <p class="text-end"  id="pp"></p>
 
 
                     <button type="button" class="btn btn-primary btn-lg">
@@ -579,6 +659,7 @@
 
 <script>
     $(function () {
+
         var odMenuNameCount = $("input[name='odMenuName']").length;
 
 
@@ -591,6 +672,7 @@
         var odMenuImageL;
 
         for (var i = 0; i < odMenuNameCount; i++) {
+
             var odMenuName = $("input[name='odMenuName']").eq(i).val();
             var odOptionGroupName = $("input[name='odOptionGroupName']").eq(i).val();
             var odOptionName = $("input[name='odOptionName']").eq(i).val();
@@ -613,6 +695,8 @@
 
 
             if (odMenuNameCopy != undefined && odMenuQtyFlag == 0) {
+
+
                 odMenuNameCopy = odMenuNameCopy + "," + odMenuName;
                 odMenuImageCopy = odMenuImageCopy + "," + odMenuImage;
                 odMenuQtyCopy = odMenuQtyCopy + "," + odMenuQty;
@@ -639,7 +723,8 @@
                 odOptionGroupNameCopy = odOptionGroupName;
                 odOptionPriceCopy = odOptionPrice;
 
-            } else if (test2 != odMenuName && odOptionNameCopy.substring(odOptionNameCopy.length - 1, odOptionNameCopy.length) != "/") {
+            } else if (test2 != odMenuName ) {
+                //
                 odOptionNameCopy = odOptionNameCopy + "/" + odOptionName;
                 odOptionGroupNameCopy = odOptionGroupNameCopy + "/" + odOptionGroupName;
                 odOptionPriceCopy = odOptionPriceCopy + "/" + odOptionPrice;
@@ -649,16 +734,42 @@
                 odOptionNameCopy = odOptionNameCopy + "," + odOptionName;
                 test2 = odMenuName;
                 odOptionGroupNameCopy = odOptionGroupNameCopy + "," + odOptionGroupName;
-                odOptionPriceCopy = odOptionPriceCopy + odOptionPrice;
+                odOptionPriceCopy = odOptionPriceCopy + "," + odOptionPrice;
             }
 
             odOptionNameL = odOptionNameCopy.split("/");
             odOptionGroupNameL = odOptionGroupNameCopy.split("/");
-            odOptionPriceL = odOptionPriceCopy.split("/").map(Number);
+
 
 
             /* alert("total"+odMenuPriceL)
              alert("price"+odOptionPriceL)*/
+
+
+        }
+        var sum = new Array() ;
+        var test3 = new Array();
+
+        odOptionPriceL = odOptionPriceCopy.split("/");
+
+        /*alert("ordejoijafjs"+odOptionPriceL)*/
+        for(var i = 0; i<odOptionPriceL.length; i++){
+            test3 = odOptionPriceL[i].split(",");
+
+            for(var j = 0; j<test3.length; j++){
+
+                if(sum[i]==undefined){
+                    sum[i] =Number(test3[j]);
+                    /*alert("첫번째값"+Number(test3[j]))*/
+                }else{
+                    sum[i]=(Number(sum[i])+Number(test3[j]));
+                    /*alert("계속 들어가는 값"+Number(sum[i]));*/
+                }
+
+            }
+            /* alert("test3"+test3)
+             alert("test 길이"+test3.length)*/
+
 
 
         }
@@ -670,7 +781,7 @@
    /*         alert(odMenuNameL[i]);
             alert(odOptionNameL[i]);*/
 
-            menuPrice += (odOptionPriceL[i] + odMenuPriceL[i]);
+            menuPrice += (sum[i] + odMenuPriceL[i]);
 
 
             divElemApply1 = "<div class=\"card mb-3\" style=\"max-width: 540px;\">" +
@@ -682,7 +793,7 @@
                 "<div class=\"card-body\">" +
                 "<h5 class=\"card-title\">" + odMenuNameL[i] + "</h5>" +
                 "<p class=\"card-text\"><small class=\"text-muted\">옵션 " + odOptionNameL[i] + " :" + odOptionGroupNameL[i] + "  :</small></p>" +
-                "<p class=\"card-text\"><small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 가격 :" + (odOptionPriceL[i] + odMenuPriceL[i]) + " </small></p>" +
+                "<p class=\"card-text\"><small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 가격 :" + (sum[i] + odMenuPriceL[i]) + " </small></p>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +
@@ -695,10 +806,13 @@
         /*alert(menuPrice)*/
 
         divElemApply2 = "<input type=\"hidden\" name=\"orderPrice\" id=\"orderPrice\" value=\""+menuPrice+"\">"+
-            "<h5 id='price'>합계 : "+menuPrice+"</h5>"
+            "<span id='price'>합계 : "+menuPrice+"</span>"
 
+        divElemApply3 = "<input type=\"hidden\" name=\"orderPrice\" id=\"orderPrice\" value=\""+menuPrice+"\">"+
+            "<span id='totalpp'>결제금액 :"+menuPrice+"</span>"
 
         $('#total').append(divElemApply2);
+        $('#pp').append(divElemApply3);
 
 
     });

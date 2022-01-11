@@ -40,7 +40,7 @@ public class PurchaseRestController {
                                    @RequestParam(value = "orderTotalPrice") int orderTotalPrice,@RequestParam(value = "orderUserId") String orderUserId,
                                    @RequestParam(value = "orderTruckId") String orderTruckId,@RequestParam(value = "orderNo") int orderNo,
                                    @RequestParam(value = "pointAmt") int pointAmt,@RequestParam(value = "couponNo") int couponNo,
-                                   @RequestParam(value = "imp_uid") String imp_uid,
+                                   @RequestParam(value = "imp_uid") String imp_uid,@RequestParam(value = "payPrice")int payPrice,
                                    HttpServletResponse response  )throws Exception{
 
         request.setCharacterEncoding("UTF-8");
@@ -56,19 +56,17 @@ public class PurchaseRestController {
 
         user.setUserId(orderUserId);
         truck.setTruckId(orderTruckId);
-        int appendPoint = (orderTotalPrice*2/100);
+        int appendPoint = (payPrice*2/100);
         //추후 payPrice를 가져오게 되면 orderTotalPrice랑 교체
 
 
-        coupon.setCouponReceivedUserId(user);
-        coupon.setCouponStatus(1);
-        coupon.setCouponNo(couponNo);
+
 
 
         user = purchaseService.getTotalPoint(user.getUserId());
         user.setUserTotalPoint(user.getUserTotalPoint()+appendPoint);
         purchase.setOrderNo(orderNo);
-        purchase.setPayPrice(orderTotalPrice);
+        purchase.setPayPrice(payPrice);
         purchase.setPayOption(payOption);
         purchase.setOrderTotalPrice(orderTotalPrice);
         purchase.setOrderUserId(user);
@@ -76,6 +74,8 @@ public class PurchaseRestController {
         purchase.setPayServiceType(1);
         purchase.setOrderStatus(1);
         purchase.setPayId(imp_uid);
+
+
         purchaseService.updateTotalPoint(user);
         point.setPointUserId(user);
         point.setPointAmt(appendPoint);
@@ -86,6 +86,9 @@ public class PurchaseRestController {
 
 
         if(couponNo != 0) {
+            coupon.setCouponReceivedUserId(user);
+            coupon.setCouponStatus(1);
+            coupon.setCouponNo(couponNo);
             purchaseService.updateCouponStatus(coupon);
             purchase.setPayCouponNo(coupon);
         }
@@ -247,7 +250,8 @@ public class PurchaseRestController {
     @ResponseBody
     public Map payRefund(@RequestParam(value = "payId")String payId,
                          @RequestParam(value = "orderNo")int orderNo,
-                         @RequestParam(value = "orderCancelReason")int orderCancelReason) throws Exception {
+                         @RequestParam(value = "orderCancelReason")int orderCancelReason,
+                         HttpServletRequest request, HttpServletResponse response) throws Exception {
         // 이미 취소된 거래 imp_uid
         System.out.println("testCancelPaymentByImpUid --- Start!---");
         System.out.println("payId = " + payId + ", orderNo = " + orderNo + ", orderCancelReason = " + orderCancelReason);
@@ -256,8 +260,13 @@ public class PurchaseRestController {
         purchase.setPayId(payId);
         purchase.setOrderStatus(5);
         purchase.setOrderNo(orderNo);
-        purchase.setOrderCancelReason(orderCancelReason);
-        purchase.setPayRefundStatus(1);
+        if(orderCancelReason != 0 ) {
+            purchase.setOrderCancelReason(orderCancelReason);
+        }else{
+            int orderNopeReason = Integer.parseInt(request.getParameter("orderNopeReason"));
+            purchase.setOrderNopeReason(orderNopeReason);
+        }
+
 
 
        /* Map<String, Object> map =  orderService.getOrderRefund(order);*/
@@ -274,13 +283,49 @@ public class PurchaseRestController {
         System.out.println(cancelpayment.getMessage());
         System.out.println("testCancelPaymentByImpUid --- End!---");
 
+        purchase.setPayRefundStatus(1);
 
-        purchaseService.updateOrderCancel(purchase);
+        if(orderCancelReason != 0 ) {
+            purchaseService.updateOrderCancel(purchase);
+        }else{
+
+            purchaseService.updateOrderRefusal(purchase);
+        }
         purchase = purchaseService.getPurchase(orderNo);
-        purchase.getOrderUserId();
         User user = purchaseService.getTotalPoint(purchase.getOrderUserId().getUserId());
-        int usePoint = purchaseService.getUsePoint(purchase.getPayPointNo().getPointNo());
 
+        int appendPoint = (purchase.getPayPrice()*2/100);
+        System.out.println("appendPoint///////////////"+appendPoint);
+        Point point = new Point();
+        point.setPointUserId(user);
+        point.setPointAmt(appendPoint);
+        point.setPointPlmnStatus(3);
+        point.setPointStatus(0);
+        point.setPointBirthCode(orderNo);
+        user.setUserTotalPoint(user.getUserTotalPoint()-appendPoint);
+        purchaseService.updatePoint(point);
+        purchaseService.updateTotalPoint(user);
+
+
+        purchase.getOrderUserId();
+
+        //결제시 포인트 사용내역이 있으면
+        if(purchase.getPayPointNo().getPointNo() != 0 || purchase.getPayPointNo().getPointNo() != ' ') {
+            user = purchaseService.getTotalPoint(purchase.getOrderUserId().getUserId());
+            int usePoint = purchaseService.getUsePoint(purchase.getPayPointNo().getPointNo());
+            point.setPointAmt(usePoint);
+            point.setPointPlmnStatus(2);
+            user.setUserTotalPoint(user.getUserTotalPoint()+usePoint);
+            purchaseService.updatePoint(point);
+            purchaseService.updateTotalPoint(user);
+        }
+        //결제시 쿠폰 사용내역이 있으면
+        if(purchase.getPayCouponNo().getCouponNo() !=0 || purchase.getPayCouponNo().getCouponNo() !=' '){
+            Coupon coupon = new Coupon();
+            coupon.setCouponStatus(0);
+            coupon.setCouponNo(purchase.getPayCouponNo().getCouponNo());
+            purchaseService.updateCouponStatus(coupon);
+        }
 
 
         //환불 일시를 controller에서 할지 Mapper에서 할지 수정,,

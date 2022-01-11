@@ -55,7 +55,7 @@
 
                     <div class="container-fluid">
                         <div class="row">
-                            <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio1"
+                            <input type="radio" class="btn-check" name="orderNopeReason" id="btnradio1"
                                    autocomplete="off" value="1" checked>
                             <label class="btn btn-outline-primary" for="btnradio1">구매의사 취소</label>
                         </div>
@@ -63,7 +63,7 @@
 
                     <div class="container-fluid">
                         <div class="row">
-                            <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio2"
+                            <input type="radio" class="btn-check" name="orderNopeReason" id="btnradio2"
                                    autocomplete="off" value="2">
                             <label class="btn btn-outline-primary" for="btnradio2">메뉴 및 수량 변경</label>
                         </div>
@@ -71,14 +71,14 @@
 
                     <div class="container-fluid">
                         <div class="row">
-                            <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio3"
+                            <input type="radio" class="btn-check" name="orderNopeReason" id="btnradio3"
                                    autocomplete="off" value="3">
                             <label class="btn btn-outline-primary" for="btnradio3">주문접수 지연</label>
                         </div>
                     </div>
                     <div class="container-fluid">
                         <div class="row">
-                            <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio4"
+                            <input type="radio" class="btn-check" name="orderNopeReason" id="btnradio4"
                                    autocomplete="off" value="4">
                             <label class="btn btn-outline-primary" for="btnradio4">기 타</label>
                         </div>
@@ -144,7 +144,7 @@
 
     <div class="container py-4">
         <header class="pb-4 mb-5 py-4 border-bottom">
-            <span class="fs-1">주문내역</span>
+            <span class="fs-1">주문내역1111111111</span>
         </header>
 
         <div class="container-fluid">
@@ -159,7 +159,7 @@
 
                             <button class="btn btn-primary" id="end" type="button">픽업완료</button>
 
-
+                            <button class="btn btn-primary" id="cancel" type="button">주문취소</button>
                         </div>
                         <div class="col-10">
                             <div class="row justify-content-between">
@@ -312,6 +312,16 @@
                             <div class="col-5">
 
                                 주문처리가 완료되었습니다
+                            </div>
+                        </c:if>
+                        <c:if test="${purchase.orderStatus == 5}">
+                            <div class="col-2"> 상호 : ${purchase.orderTruckId.truckName}</div>
+                            <div class="col-5">
+
+                            </div>
+                            <div class="col-5">
+
+                                주문취소된 메뉴 입니다
                             </div>
                         </c:if>
 
@@ -599,6 +609,10 @@
         self.location = "/purchase/getOrderList?truckId="+truckId+"&search="+search
 
     });
+    $("#cancel").on("click",function(){
+        var truckId = $("input[name='truck']").val();
+        self.location = "/purchase/getOrderEndList?truckId="+truckId+"&search="+5
+    })
 
     $("#end").on("click",function(){
         var truckId = $("input[name='truck']").val();
@@ -764,8 +778,9 @@
 
         var payId = $("input[name='payId']").val();
         var orderNo = $("input[name='purchaseOrder']").val();
-        var orderCancelReason = $("input[name='orderCancelReason']:checked").val();
-
+        var orderNopeReason = $("input[name='orderNopeReason']:checked").val();
+        alert(orderNopeReason)
+        var orderCancelReason =0;
         $.ajax({
             url: "/purchase/json/payRefund", // 예: http://www.myservice.com/payments/cancel
             type: "POST",
@@ -774,6 +789,7 @@
             data: {
                 "payId": payId,
                 "orderNo": orderNo,
+                "orderNopeReason": orderNopeReason,
                 "orderCancelReason": orderCancelReason,
             },
 
