@@ -19,11 +19,11 @@
         <result property="reportProcStatus"     	column="report_proc_status"			jdbcType="CHAR"/>
 
         <association property="reportUserId"  javaType="user">
-            <id property="userId" column="user_id" jdbcType="VARCHAR"/>
+            <id property="userId" column="report_user_id" jdbcType="VARCHAR"/>
         </association>
 
         <association property="reportTargetId"  javaType="user">
-            <id property="userId" column="user_id" jdbcType="VARCHAR"/>
+            <id property="userId" column="report_target_id" jdbcType="VARCHAR"/>
         </association>
     </resultMap>
 
@@ -87,8 +87,8 @@
                                 AND r.report_type LIKE #{searchKeyword}
                             </if>
                         </if>
-                    order by r.report_no ) inner_table,  (select @rownum := 0) r
-               limit 0, 8 ) l
+                    order by r.report_no DESC ) inner_table,  (select @rownum := 0) r
+               limit #{startRowNum}, #{pageSize} ) l
         WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
     </select>
 
@@ -157,33 +157,22 @@
         limit #{startRowNum}, #{pageSize}
     </select>
 
-    <select id="getUserInquiryList" parameterType="search" resultMap="inquirySelectMap">
+    <select id="getInquiryListByUser" parameterType="map" resultMap="inquirySelectMap">
         SELECT inner_table.*
-        FROM ( SELECT i.inquiry_no, u.USER_ID, i.inquiry_type, i.inquiry_title, i.inquiry_date, i.INQUIRY_ANS_STATUS
-                FROM inquiry i, user u
-                WHERE i.inquiry_user_id = u.user_id AND i.inquiry_user_id = #{userId}
-                ORDER BY i.inquiry_no ) inner_table
-        limit #{startRowNum}, #{pageSize}
+        FROM ( SELECT inquiry_no, inquiry_type, inquiry_title, inquiry_date, INQUIRY_ANS_STATUS, INQUIRY_ANS_CONTENT, INQUIRY_ANS_DATE, INQUIRY_ANS_TITLE
+                FROM inquiry
+                WHERE inquiry_user_id = #{inquiryUserId}
+                ORDER BY inquiry_no ) inner_table
+        limit #{search.startRowNum}, #{search.pageSize}
     </select>
 
-    <select id="getTruckInquiryList" parameterType="search" resultMap="inquirySelectMap">
-        select *
-        FROM ( SELECT inner_table.*, @rownum := @rownum + 1 as row_seq
-        FROM( SELECT i.inquiry_no, i.inquiry_truck_id, i.inquiry_type, i.inquiry_title, i.inquiry_date, i.INQUIRY_ANS_STATUS
-        FROM inquiry i, truck t
-        WHERE i.inquiry_truck_id = t.truck_id
-        <if test="searchCondition != null">
-            <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
-            <if test="searchCondition == 0 and searchKeyword !='' ">
-                AND i.inquiry_truck_id LIKE #{searchKeyword}
-            </if>
-            <if test="searchCondition == 1 and searchKeyword !='' ">
-                AND i.INQUIRY_ANS_STATUS LIKE #{searchKeyword}
-            </if>
-        </if>
-        order by i.inquiry_no ) inner_table,  (select @rownum := 0) r
-        limit 0, 8 ) l
-        WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+    <select id="getInquiryListByTruck" parameterType="search" resultMap="inquirySelectMap">
+        SELECT inner_table.*
+        FROM ( SELECT inquiry_no, inquiry_type, inquiry_title, inquiry_date, INQUIRY_ANS_STATUS, INQUIRY_ANS_CONTENT, INQUIRY_ANS_DATE, INQUIRY_ANS_TITLE
+               FROM inquiry
+               WHERE inquiry_truck_id = #{inquiryTruckId}
+               ORDER BY inquiry_no ) inner_table
+        limit #{search.startRowNum}, #{search.pageSize}
     </select>
 
     <select id="getInquiryTotalCount" parameterType="search" resultType="int">
@@ -203,7 +192,7 @@
     </select>
 
     <update id="updateInquiry" parameterType="int">
-        UPDATE ffin.inquiry
+        UPDATE inquiry
         <set>
             inquiry_type    = #{inquiryType},
             inquiry_title   = #{inquiryTitle},
@@ -214,7 +203,7 @@
     </update>
 
     <update id="updateInquiryAns" parameterType="int">
-        UPDATE ffin.inquiry
+        UPDATE inquiry
         <set>
             inquiry_ans_status = 1,
             inquiry_ans_title = #{inquiryAnsTitle},

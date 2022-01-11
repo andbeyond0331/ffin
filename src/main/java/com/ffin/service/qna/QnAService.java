@@ -28,9 +28,9 @@ public interface QnAService {
     //전체목록
     public Map<String, Object> getInquiryListByAdmin(Search search) throws Exception;
     //유저문의목록
-    public Map<String, Object> getUserInquiryList(Search search, String inquiryUserId) throws Exception;
+    public Map<String, Object> getInquiryListByUser(Search search, String inquiryUserId) throws Exception;
     //트럭문의목록
-    public Map<String, Object> getTruckInquiryList(Search search, String inquiryTruckId) throws Exception;
+    public Map<String, Object> getInquiryListByTruck(Search search, String inquiryTruckId) throws Exception;
     //문의수정
     public void updateInquiry(Inquiry inquiry) throws Exception;
     //답변등록

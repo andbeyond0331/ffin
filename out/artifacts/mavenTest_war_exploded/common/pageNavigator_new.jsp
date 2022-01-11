@@ -13,10 +13,10 @@
 
 <script type="text/javascript">
 
-	function fncGetUserList(currentPage) {
+/*	function fncGetUserList(currentPage) {
 		$("#currentPage").val(currentPage)
 		$("form").attr("method" , "POST").attr("action" , "/user/getUserList").submit();
-	}
+	}*/
 
 </script>
 

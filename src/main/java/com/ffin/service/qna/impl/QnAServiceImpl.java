@@ -96,7 +96,7 @@ public class QnAServiceImpl implements QnAService {
     }
 
     @Override
-    public Map<String, Object> getUserInquiryList(Search search, String inquiryUserId) throws Exception {
+    public Map<String, Object> getInquiryListByUser(Search search, String inquiryUserId) throws Exception {
 
         System.out.println("QnAServiceImpl.getUserInquiryList");
 
@@ -109,14 +109,14 @@ public class QnAServiceImpl implements QnAService {
 
         System.out.println("여기는 QnaServiceImpl!! : "+map);
 
-        List<Inquiry> list = qnADao.getUserInquiryList(map);
+        List<Inquiry> list = qnADao.getInquiryListByUser(map);
 
         map.put("list", list);
         return map;
     }
 
     @Override
-    public Map<String, Object> getTruckInquiryList(Search search, String inquiryTruckId) throws Exception {
+    public Map<String, Object> getInquiryListByTruck(Search search, String inquiryTruckId) throws Exception {
 
         System.out.println("QnAServiceImpl.getTruckInquiryList");
 
@@ -126,7 +126,7 @@ public class QnAServiceImpl implements QnAService {
         map.put("search", search);
         map.put("inquiryTruckId", inquiryTruckId);
         map.put("totalCount", totalCount);
-        List<Inquiry> list = qnADao.getUserInquiryList(map);
+        List<Inquiry> list = qnADao.getInquiryListByTruck(map);
 
         map.put("list", list);
         return map;

@@ -80,7 +80,7 @@
         }
         .d-grid.gap-2.col-6.mx-auto{
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
         }
         #inquiryAnsContent{
             min-height: 150px;
@@ -89,9 +89,9 @@
 
     <script type="text/javascript">
 
-        function fncGetInquiryList(currentPage) {
+        function fncGetUserList(currentPage) {
             $("#currentPage").val(currentPage)
-            $("form").attr("method" , "POST").attr("action" , "/qna/getInquiryListByAdmin").submit();
+            $("form").attr("method" , "POST").attr("action" , "/qna/getInquiryListByUser").submit();
         }
 
 
@@ -100,8 +100,9 @@
 
            $('.mb-10').click(function () {
 
+
                var inquiryNo = $(this).find("input[name='inquiryNo']").val();
-               // alert(inquiryNo);
+               //alert(inquiryNo);
 
                $.ajax({
                    url : "/qna/json/getInquiry/"+inquiryNo,
@@ -119,7 +120,7 @@
                                     + "<div style='margin: 0 55px 0 55px;'>";
 
                        if(Data.inquiry.inquiryFile != null){
-                           display += "<img src='../../resources/image/"+Data.inquiry.inquiryFile+"' class='card-img-top' alt='inquiryFile' style='width: 200px;'>";
+                           display += "<img src="+Data.inquiry.inquiryFile+"'../../resources/image' class='card-img-top' alt='inquiryFile' style='width: 200px;'>";
                        }
 
                        display  += "<p class='card-text'>"+Data.inquiry.inquiryContent+"</p>"
@@ -129,7 +130,8 @@
                        if(Data.inquiry.inquiryAnsStatus === 0 ){
 
                            display += "<div class='d-grid gap-2 col-6 mx-auto' style='margin: 0 55px 0 55px;'>"
-                                    + "<button class='btn btn-default btn-sm' data-bs-toggle='modal' data-bs-target='#addInquiryAns' onclick='addInquiryAns("+Data.inquiry.inquiryNo+")' type='button'>답변등록</button>"
+                                    + "<button class='btn btn-sm ansBtn' type='button' onclick='closeAjax()' style='background: #ecf0fd; color: #000000'>확인</button>"
+                                    + "<button class='btn btn-default btn-sm' data-bs-toggle='modal' data-bs-target='#addInquiryAns' onclick='updateInquiry("+Data.inquiry.inquiryNo+")' type='button' style='color: #000000'>수정</button>"
                                     + "</div>";
                        } else {
                            display += "<div style='margin: 0 55px 0 55px;'>"
@@ -138,6 +140,9 @@
                                + "<p class='card-text'>"+Data.inquiry.inquiryAnsDate+"</p>"
                                + "</div>"
                                + "<p class='card-text'>"+Data.inquiry.inquiryAnsContent+"</p>"
+                               + "<div style='display: flex; justify-content: center;'>"
+                               + "<button class='btn btn-sm ansBtn' type='button' onclick='closeAjax()' style='background: #ecf0fd; color: #000000'>확인</button>"
+                               + "</div>"
                                + "</div>"
                                + "</div>"
                                + "</div>";
@@ -149,55 +154,15 @@
                    }
                });
            }) ;
-
         });
 
-        /* 답변모달 */
-        function addInquiryAns(inquiryNo){
-
-            // var inquiry_No = $('this').data(inquiryNo);
-            $('#hiddenInquiryNo').val(inquiryNo);
-            // alert($('#hiddenInquiryNo').parents().html());
-            var no = $('#hiddenInquiryNo').val();
-            //alert(no);
-            $('#addInquiryAns').modal('show');
+        function closeAjax(){
+            $(".card-ans").remove();
         }
 
-        /* 답변등록 */
-        $(function () {
-
-            $('#updateInquiryAnsBtn').click(function () {
-
-                var inquiryNo = $('#hiddenInquiryNo').val();
-                var inquiryAnsTitle = $('#inquiryAnsTitle').val();
-                var inquiryAnsContent = $('#inquiryAnsContent').val();
-
-                console.log(inquiryNo);
-                console.log(inquiryAnsTitle);
-                console.log(inquiryAnsContent);
-
-                $.ajax({
-
-                    url : "/qna/json/updateInquiryAns",
-                    method : "POST",
-                    dataType: "json",
-                    header : {
-                        "Accept" : "application/json",
-                        "Content-Type" : "application/json"
-                    },
-                    data : {
-                        inquiryNo : inquiryNo,
-                        inquiryAnsTitle : inquiryAnsTitle,
-                        inquiryAnsContent : inquiryAnsContent
-                    },
-                    success : function (data){
-                        console.log(data);
-                        window.location.reload();
-                    }
-                });
-            });
-
-        });
+        function updateInquiry(inquiryNo) {
+            self.location = "/qna/updateInquiry?inquiryNo="+inquiryNo;
+        }
 
     </script>
 
@@ -210,7 +175,6 @@
 </div>
 
 <section class="client_section layout_padding">
-
     <div class="container">
         <div class="col-md-11 col-lg-12 mx-auto">
 
@@ -260,22 +224,17 @@
                             <p class="card-text"><small class="text-muted"><strong>문의유형</strong></small></p>
                         </div>
                     </div>
-                    <div class="col-md-5 inquiry-con">
+                    <div class="col-md-6 inquiry-con">
                         <div class="card-body">
                             <p class="card-text"><small class="text-muted"><strong>문의제목</strong></small></p>
                         </div>
                     </div>
-                    <div class="col-md-1 inquiry-con">
-                        <div class="card-body">
-                            <p class="card-text"><small class="text-muted"><strong>회원ID</strong></small></p>
-                        </div>
-                    </div>
-                    <div class="col-md-1 inquiry-con">
+                    <div class="col-md-2 inquiry-con">
                         <div class="card-body">
                             <p class="card-text"><small class="text-muted"><strong>문의일</strong></small></p>
                         </div>
                     </div>
-                    <div class="col-md-1 inquiry-con">
+                    <div class="col-md-2 inquiry-con">
                         <div class="card-body">
                             <p class="card-text"><small class="text-muted"><strong>답변상태</strong></small></p>
                         </div>
@@ -308,29 +267,19 @@
                             </c:choose>
                         </div>
                     </div>
-                    <div class="col-md-5 inquiry-con">
+                    <div class="col-md-6 inquiry-con">
                         <div class="card-body">
                             <p class="card-text" style="text-align: initial;">
                                 <small class="text-muted">${inquiry.inquiryTitle}</small>
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-1 inquiry-con">
-                        <div class="card-body">
-                            <c:if test="${inquiry.inquiryUserRole eq 1}">
-                                <p class="card-text"><small class="text-muted">${inquiry.inquiryUserId}</small></p>
-                            </c:if>
-                            <c:if test="${inquiry.inquiryUserRole eq 2}">
-                                <p class="card-text"><small class="text-muted">${inquiry.inquiryTruckId}</small></p>
-                            </c:if>
-                        </div>
-                    </div>
-                    <div class="col-md-1 inquiry-con">
+                    <div class="col-md-2 inquiry-con">
                         <div class="card-body">
                             <p class="card-text"><small class="text-muted">${inquiry.inquiryDate}</small></p>
                         </div>
                     </div>
-                    <div class="col-md-1 inquiry-con">
+                    <div class="col-md-2 inquiry-con">
                         <div class="card-body">
                             <c:if test="${inquiry.inquiryAnsStatus eq 0}">
                                 <p class="card-text"><small class="text-muted"><span class="badge" style="background-color: #ffe537; color: #110000">답변대기중</span></small></p>
@@ -409,56 +358,9 @@
             </div>
         </div>
     </div>
-
 </section>
 
-<div class="container">
-
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-
-            <c:if test="${ resultPage.currentPage <= resultPage.pageUnit }">
-            <li class="disabled">
-                </c:if>
-                <c:if test="${ resultPage.currentPage > resultPage.pageUnit }">
-            <li>
-                </c:if>
-                <a href="javascript:fncGetInquiryList('${ resultPage.currentPage-1}')" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-
-            <c:forEach var="i"  begin="${resultPage.beginUnitPage}" end="${resultPage.endUnitPage}" step="1">
-                <c:if test="${ resultPage.currentPage == i }">
-                    <!--  현재 page 가르킬경우 : active -->
-                    <li class="page-item active">
-                        <a class="page-link" href="javascript:fncGetInquiryList('${ i }');">${ i }<span class="sr-only">(current)</span></a>
-                    </li>
-                </c:if>
-
-                <c:if test="${ resultPage.currentPage != i}">
-                    <li  class="page-item">
-                        <a class="page-link" href="javascript:fncGetInquiryList('${ i }');">${ i }</a>
-                    </li>
-                </c:if>
-            </c:forEach>
-
-
-            <c:if test="${ resultPage.endUnitPage >= resultPage.maxPage }">
-            <li class="disabled">
-                </c:if>
-                <c:if test="${ resultPage.endUnitPage < resultPage.maxPage }">
-            <li>
-                </c:if>
-                <a href="javascript:fncGetInquiryList('${resultPage.endUnitPage+1}')" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-
-</div>
-
+    <jsp:include page="/common/pageNavigator_new.jsp" />
     <jsp:include page="/views/footer.jsp" />
 </body>
 </html>

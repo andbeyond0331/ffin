@@ -1,6 +1,7 @@
 package com.ffin.web.qna;
 
 import com.ffin.service.domain.Inquiry;
+import com.ffin.service.domain.Report;
 import com.ffin.service.domain.UploadImage;
 import com.ffin.service.qna.QnAService;
 import net.coobird.thumbnailator.Thumbnails;
@@ -41,6 +42,31 @@ public class QnARestController {
     }
 
 
+    @RequestMapping(value = "json/getReport/{reportNo}", method = RequestMethod.GET)
+    public ModelAndView getReport(@PathVariable int reportNo) throws Exception {
+
+        System.out.println("QnARestController.getReport : GET ");
+
+        ModelAndView modelAndView = new ModelAndView("jsonView");
+        Report report = qnAService.getReport(reportNo);
+        modelAndView.addObject("report", report);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "json/updateReportProcStatus", method = RequestMethod.POST)
+    @ResponseBody
+    public Report updateReportProcStatus(@ModelAttribute Report report, @RequestParam("reportNo") int reportNo,
+                                         @RequestParam("reportProcStatus") int reportProcStatus) throws Exception {
+
+        System.out.println("QnARestController.updateReportProcStatus : POST");
+
+        qnAService.updateReportProcStatus(report);
+        System.out.println("신고처리 : "+report);
+        return qnAService.getReport(reportNo);
+    }
+
+
     @RequestMapping(value = "json/getInquiry/{inquiryNo}", method = RequestMethod.GET)
     public ModelAndView getInquiry(@PathVariable int inquiryNo) throws Exception {
 
@@ -59,11 +85,7 @@ public class QnARestController {
     public Inquiry updateInquiryAns(@ModelAttribute Inquiry inquiry, @RequestParam("inquiryNo") int inquiryNo) throws Exception {
 
         System.out.println("QnARestController.updateInquiryAns : POST");
-
         qnAService.updateInquiryAns(inquiry);
-
-        System.out.println("문의답변 :: "+inquiry);
-
         return qnAService.getInquiry(inquiryNo);
     }
 

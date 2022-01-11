@@ -66,7 +66,6 @@
             padding: 30px;
         }
         .card-body {
-            margin-top: 10px;
             padding: 0;
         }
         .card-text{
@@ -83,12 +82,12 @@
             display: flex;
             justify-content: center;
         }
-        #inquiryAnsContent{
-            min-height: 150px;
-        }
-        .report-con{
-            display: flex;
-            align-items: center;
+        .slickContent{
+            width: 350px;
+            display: block;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
         }
 
     </style>
@@ -100,7 +99,109 @@
             $("form").attr("method" , "POST").attr("action" , "/user/getUserList").submit();
         }
 
+        /* 신고내용 */
+        $(function () {
+           $('.mb-10').click(function () {
+
+               var reportNo = $(this).find("input[name='reportNo']").val();
+               console.log(reportNo);
+
+               $.ajax({
+                   url: "/qna/json/getReport/"+reportNo,
+                   method: "GET",
+                   header : {
+                       "Accept" : "application/json",
+                       "Content-Type" : "application/json"
+                   },
+                   success : function (data) {
+                       console.log(data.report.reportNo);
+                       console.log(data.report.reportLink);
+                       console.log(data.report.reportContent);
+                       var display = "<div class='card-ans mb-10'>"
+                                    + "<div class='row g-0 inquiry-card'>"
+                                    + "<div class='card-body'>"
+                                    + "<div style='margin: 20px 55px 0 55px;'>"
+                                    + "<span>신고링크 : <a class='collapse-item' href='"+data.report.reportLink+"'>"+data.report.reportLink+"</a></span>"
+                                    + "<p class='card-text' style='margin-top: 10px'>"+data.report.reportContent+"</p>"
+                                    +"</div>"
+                                    +"<hr style='border-width:2px; margin-top: 50px;'/>"
+                                    +"<div class='d-grid gap-2 col-6 mx-auto' style='margin: 0 55px 0 55px;'>";
+
+                           if(data.report.reportProcStatus === 1){
+                               display += "<button class='btn btn-default btn-sm' onclick='nopeBtn("+data.report.reportNo+")' type='button' style='color: #110000;'>신고거절</button>";
+                           }
+
+                           display +="<button class='btn btn-default btn-sm' onclick='closeBtn()' type='button' style='color: #110000; background: #ecf0fd'>확인</button>";
+
+                           if(data.report.reportProcStatus === 1){
+                                display += "<button class='btn btn-default btn-sm' onclick='okBtn("+data.report.reportNo+")' type='button' style='color: #110000'>신고처리</button>";
+                           }
+
+                           display += "</div>"
+                                    +"</div>"
+                                    +"</div>"
+                                    +"</div>";
+
+                       //alert(display);
+                       $('.card-ans').remove();
+                       $("#"+data.report.reportNo+"").html(display);
+                   }
+               })
+
+           });
+        });
+
+        /* 신고처리 */
+        function nopeBtn(reportNo){
+
+            $.ajax({
+                url: "/qna/json/updateReportProcStatus",
+                method: "POST",
+                dataType: "json",
+                header : {
+                    "Accept" : "application/json",
+                    "Content-Type" : "application/json"
+                },
+                data: {
+                    reportNo : reportNo,
+                    reportProcStatus : 3
+                },
+                success :function (data) {
+                    console.log(data);
+                    window.location.reload();
+                }
+            })
+        }
+
+        function okBtn(reportNo){
+
+            $.ajax({
+                url: "/qna/json/updateReportProcStatus",
+                method: "POST",
+                dataType: "json",
+                header : {
+                    "Accept" : "application/json",
+                    "Content-Type" : "application/json"
+                },
+                data: {
+                    reportNo : reportNo,
+                    reportProcStatus : 2
+                },
+                success :function (data) {
+                    console.log(data);
+                    window.location.reload();
+                }
+            })
+        }
+
+        function closeBtn() {
+            $('.card-ans').remove();
+        }
+
+
+
     </script>
+
 
 </head>
 
@@ -225,7 +326,7 @@
                     <div class="col-md-4 report-con">
                         <div class="card-body">
                             <p class="card-text" style="text-align: initial;">
-                                <small class="text-muted">${report.reportContent}</small>
+                                <small class="text-muted slickContent">${report.reportContent}</small>
                             </p>
                         </div>
                     </div>
@@ -237,10 +338,13 @@
                     <div class="col-md-2 report-con">
                         <div class="card-body">
                             <c:if test="${report.reportProcStatus eq 1}">
-                                <p class="card-text"><small class="text-muted"><h5><span class="badge" style="background-color: #ffe537; color: #110000">처리중</span></h5></small></p>
+                                <p class="card-text"><small class="text-muted"><span class="badge" style="background-color: #ffe537; color: #110000">처리중</span></small></p>
                             </c:if>
                             <c:if test="${report.reportProcStatus eq 2}">
-                                <p class="card-text"><small class="text-muted"><span class="badge" style="background-color: #ffba49; color: #110000">처리완료</span></small></p>
+                                <p class="card-text"><small class="text-muted"><span class="badge" style="background-color: #ffba49; color: #110000">신고처리</span></small></p>
+                            </c:if>
+                            <c:if test="${report.reportProcStatus eq 3}">
+                                <p class="card-text"><small class="text-muted"><span class="badge" style="background-color: #f17228; color: #110000">신고거절</span></small></p>
                             </c:if>
                         </div>
                     </div>
@@ -248,29 +352,29 @@
             </div>
 
                 <div id="${report.reportNo}"></div>
-
             </c:forEach>
 
-            <div class="show"></div>
-
             <%-- ajax ex --%>
-
-            <div class="card-ans mb-10">
+            <%--<div class="card-ans mb-10">
                 <div class="row g-0 inquiry-card">
                     <div class="card-body">
-                        <div style="margin: 0 55px 0 55px;">
+                        <div style="margin: 20px 55px 0 55px;">
                             <span>신고링크 : <a class="collapse-item" href="reportLink">reportLink</a></span>
                             <p class="card-text">문의내용입니당~asdgaejsdhasfkjsahfskkhahadkhsdafkhl</p>
                         </div>
-                        <hr style="border-width:2px;"/>
+                        <hr style="border-width:2px; margin-top: 50px;"/>
                         <div class="d-grid gap-2 col-6 mx-auto" style="margin: 0 55px 0 55px;">
-                            <button class="btn btn-default btn-sm nopeBtn" type="button" style="color: #110000; background: #ecf0fd">신고거절</button>
+                            <c:if test="${report.reportProcStatus eq 1}">
+                            <button class="btn btn-default btn-sm nopeBtn" type="button" style="color: #110000;">신고거절</button>
+                            </c:if>
+                            <button class="btn btn-default btn-sm nopeBtn" type="button" style="color: #110000; background: #ecf0fd">확인</button>
+                            <c:if test="${report.reportProcStatus eq 1}">
                             <button class="btn btn-default btn-sm okBtn" type="button" style="color: #110000">신고처리</button>
+                            </c:if>
                         </div>
                     </div>
                 </div>
-            </div>
-
+            </div>--%>
         </div>
     </div>
 </section>
