@@ -94,7 +94,40 @@ public class MenuRestController {
 
         return mv;
     }
-    
+
+    @RequestMapping(value="json/isThereSigMenu/{truckId}", method=RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView isThereSigMenu(@PathVariable("truckId")String truckId, HttpServletRequest request, HttpServletResponse response) throws Exception{
+        /*
+            트럭에 대표메뉴가 있는지 알아보기!
+         */
+        request.setCharacterEncoding("utf-8");
+
+        System.out.println("MenuController.REST - isThereSigMenu");
+        System.out.println("truckId = " + truckId);
+
+        Search search = new Search();
+        search.setCurrentPage(1);
+        search.setPageSize(100);
+        String id="";
+        Map<String, Object> map = new HashMap<String, Object>();
+
+//        int currentPage = Integer.parseInt(request.getP)
+
+        map = menuService.isThereSigMenu(search,truckId);
+        System.out.println("대표메뉴 : " + map.get("list"));
+
+        List menu = new ArrayList();
+        menu = (List) map.get("list");
+        ModelAndView mv = new ModelAndView("jsonView");
+        mv.addObject("menu", menu);
+
+
+
+
+        return mv;
+    }
+
     @RequestMapping(value="json/isThereOG/{menuNo}", method=RequestMethod.GET)
     @ResponseBody
     public int isThereOG(@PathVariable("menuNo")int menuNo, HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -116,6 +149,26 @@ public class MenuRestController {
         System.out.println("count : " + count);
 
         return count;
+    }
+
+    @RequestMapping(value="json/deleteMenu/{menuNo}", method=RequestMethod.GET)
+    @ResponseBody
+    public void deleteMenu(@PathVariable("menuNo")int menuNo, HttpServletRequest request, HttpServletResponse response) throws Exception{
+        /*
+            메뉴 삭제 ㅠㅠㅠ 삭제하지마
+         */
+        // TODO: 2022-01-10 반드시 옵션그룹까지 깔꼼하게 처리할 것!
+        request.setCharacterEncoding("utf-8");
+
+        System.out.println("MenuController.REST - deleteMenu");
+        System.out.println("menuNo = " + menuNo);
+
+       Menu menu = menuService.getMenu(menuNo);
+        menuService.deleteMenu(menu);
+
+//        System.out.println("count : " + count);
+
+//        return count;
     }
 
 

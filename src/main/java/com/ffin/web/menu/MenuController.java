@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,8 +71,8 @@ public class MenuController {
 
 
     //FILE UPLOAD를 위한 FIELD 설정
-    private static final String FILE_UPLOAD_PATH = "C:/CRUD/ffin/src/main/webapp/resources/image/";
-//    private static final String FILE_UPLOAD_PATH = "/resources/image/";
+//    private static final String FILE_UPLOAD_PATH = "/resources/menu/";
+    private static final String FILE_UPLOAD_PATH = "/resources/image/";
 //    private static final String FILE_UPLOAD_PATH = "C:/CRUD/ffin/src/main/webapp/resources/image/";
 
 
@@ -172,7 +173,7 @@ public class MenuController {
 
 
     @RequestMapping(value = "addMenu", method= RequestMethod.GET)
-    public ModelAndView addMenu(@RequestParam("truckId") String truckId) throws Exception{
+    public ModelAndView addMenu(@RequestParam("truckId") String truckId,HttpServletRequest request) throws Exception{
 
         /*
             사업자가 메뉴를 등록하기 위해 사용하는 화면
@@ -183,6 +184,15 @@ public class MenuController {
 
         Truck truck = truckService.getTruck(truckId);
         System.out.println("truck : " + truck);
+
+        ////
+        String root_path = request.getSession().getServletContext().getRealPath("/");
+//        String attach_path = "menu/";
+
+
+
+//        String realPath = request.getSession().getServletContext().getRealPath(FILE_UPLOAD_PATH);
+        System.out.println("//////////////////////////////////////attach_path : " + root_path);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("truck", truck); //화면단에서 truck.truckId를 menuTruckId에 넣기
@@ -219,8 +229,11 @@ public class MenuController {
         String menuImg2  = file2.getOriginalFilename();
         String menuImg3  = file3.getOriginalFilename();
 
+//        String realPath = request.getSession().getServletContext().getRealPath(FILE_UPLOAD_PATH);
+        String root_path = request.getSession().getServletContext().getRealPath("/");
+
         if(!file1.getOriginalFilename().isEmpty()){
-            file1.transferTo(new File(FILE_UPLOAD_PATH, menuImg1));
+            file1.transferTo(new File(root_path, menuImg1));
 //            model.addAttribute("msg", "File uploaded successfully.");
 //            model.addAttribute("menuImg1", menuImg1);
 //        }else {
@@ -230,7 +243,7 @@ public class MenuController {
 //
 
         if(!file2.getOriginalFilename().isEmpty()){
-            file2.transferTo(new File(FILE_UPLOAD_PATH, menuImg2));
+            file2.transferTo(new File(root_path, menuImg2));
 //            model.addAttribute("msg", "File uploaded successfully.");
 //            model.addAttribute("menuImg2", menuImg2);
 //        }else {
@@ -239,7 +252,7 @@ public class MenuController {
         menu.setMenuImg2(file2.getOriginalFilename());
 //
         if(!file3.getOriginalFilename().isEmpty()){
-            file3.transferTo(new File(FILE_UPLOAD_PATH, menuImg3));
+            file3.transferTo(new File(root_path, menuImg3));
 //            model.addAttribute("msg", "File uploaded successfully.");
 //            model.addAttribute("menuImg3", menuImg3);
 //        }else {
@@ -357,21 +370,35 @@ public class MenuController {
 
     @RequestMapping(value="addMenu", method=RequestMethod.POST)
 //    public String addMenu(@RequestParam(value="menuImg11", required = false) MultipartFile file1,HttpServletRequest request,@ModelAttribute("menu") Menu menu, Model model) throws Exception{
-    public String addMenu(@RequestParam("menuImg11")MultipartFile file1,@RequestParam(value="menuImg22", required = false)MultipartFile file2,@RequestParam(value="menuImg33", required = false)MultipartFile file3,HttpServletRequest request,@ModelAttribute("menu") Menu menu, Model model) throws Exception{
+    public String addMenu(@RequestParam("menuImg11")MultipartFile file1,
+                          @RequestParam(value="menuImg22", required = false)MultipartFile file2,
+                          @RequestParam(value="menuImg33", required = false)MultipartFile file3,
+                          HttpServletRequest request,
+                          @ModelAttribute("menu") Menu menu,
+                          Model model
+    ) throws Exception{
+        // TODO: 2022-01-11 오늘 안에 파일 업로드 & optionGroup도 같이  add 넘기는 애 까먹지 말기!!!
 
         System.out.println("/menu/addMenu:POST");
 
         System.out.println("request = " + request + ", menu = " + menu + ", model = " + model);
 
 //        MultipartFile file1 = (MultipartFile) request.getAttribute("menuImg1");
+//        String realPath = application.getRealPath("/src/main/resources/menu");
+
+        String realPath = request.getSession().getServletContext().getRealPath("/resources/menu");
+//        String realPath = "/resources/menu";
 
         String menuImg1  = file1.getOriginalFilename();
 
         String menuImg2  = file2.getOriginalFilename();
         String menuImg3  = file3.getOriginalFilename();
 
+//        String root_path = request.getSession().getServletContext().getRealPath("/");
+        System.out.println("/////////realPath : " + realPath);
+
         if(!file1.getOriginalFilename().isEmpty()){
-            file1.transferTo(new File(FILE_UPLOAD_PATH, menuImg1));
+            file1.transferTo(new File(realPath, menuImg1));
 //            model.addAttribute("msg", "File uploaded successfully.");
 //            model.addAttribute("menuImg1", menuImg1);
         }
@@ -380,7 +407,7 @@ public class MenuController {
 
 
         if(!file2.getOriginalFilename().isEmpty()){
-            file2.transferTo(new File(FILE_UPLOAD_PATH, menuImg2));
+            file2.transferTo(new File(realPath, menuImg2));
 //            model.addAttribute("msg", "File uploaded successfully.");
 //            model.addAttribute("menuImg2", menuImg2);
 //        }else {
@@ -389,7 +416,7 @@ public class MenuController {
         menu.setMenuImg2(file2.getOriginalFilename());
 //
         if(!file3.getOriginalFilename().isEmpty()){
-            file3.transferTo(new File(FILE_UPLOAD_PATH, menuImg3));
+            file3.transferTo(new File(realPath, menuImg3));
 //            model.addAttribute("msg", "File uploaded successfully.");
 //            model.addAttribute("menuImg3", menuImg3);
 //        }else {
@@ -511,6 +538,8 @@ public class MenuController {
         model.addAttribute("menu", menu);
         model.addAttribute("menuNo", menuNo);
         model.addAttribute("list", optionGroup.get("list"));
+        // for문을 돌리기 위한 list하나 더! 제발 돌아라
+//        model.addAttribute("list2", optionGroup.get("list"));
 //
 //        String menuNoo = request.getParameter("menuNo");
 //
@@ -646,6 +675,35 @@ public class MenuController {
         }
 
         modelAndView.setViewName("/views/menu/getTruck.jsp");
+
+        return modelAndView;
+    }
+
+    //getMenuList는 list인데 truck mypage에서 관리하는 용도!
+    @RequestMapping("getMenuListM")
+    public ModelAndView getMenuListM(@ModelAttribute("search") Search search,
+                                    @RequestParam("truckId") String truckId,
+                                  HttpServletResponse response,
+                                    ModelAndView modelAndView) throws Exception{
+
+
+        search.setPageSize(pageSize);
+        Truck truck  = truckService.getTruck(truckId);
+        float rvAvg = reviewService.getReviewAvg(search,truckId);
+        int rvTotal = reviewService.getReviewTotalCount(search,truckId);
+        truck.setTruckAVGStar(rvAvg);
+
+        Map<String , Object> map= menuService.getMenuList(search, truck.getTruckId());
+
+        modelAndView.addObject("list", map.get("list"));
+        modelAndView.addObject("path", FILE_UPLOAD_PATH);
+        modelAndView.addObject("truck", truck);
+        if (rvTotal!=0){
+
+            modelAndView.addObject("rvTotal", rvTotal);
+        }
+
+        modelAndView.setViewName("/views/menu/getMenuListM.jsp");
 
         return modelAndView;
     }

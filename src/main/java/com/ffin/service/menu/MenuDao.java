@@ -67,5 +67,6 @@ public interface MenuDao {
     // 옵션그룹 존재 여부
     public int isThereOG(Search search, int menuNo) throws Exception;
 
-
+    // 트럭에 대표메뉴 존재 여부
+    public Map<String, Object> isThereSigMenu(Search search, String truckId) throws Exception;
 }

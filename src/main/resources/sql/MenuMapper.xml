@@ -151,6 +151,26 @@ select * from optiongroup order by OPTION_GROUP_NO desc limit 1
 
 	</select>
 
+	<select  id="isThereSigMenu" 	parameterType="map"		resultMap="MenuSelectMap">
+
+		SELECT
+			m.MENU_NO,
+			m.MENU_TRUCK_ID,
+			m.MENU_NAME,
+			m.MENU_PRICE,
+			m.MENU_DETAIL,
+			m.IS_SIG_MENU,
+			m.MENU_IMG1,
+			m.MENU_IMG2,
+			m.MENU_IMG3,
+			t.TRUCK_ID
+		FROM menu m, truck t
+
+		WHERE MENU_TRUCK_ID = #{menuTruckId} AND m.MENU_TRUCK_ID=t.TRUCK_ID AND m.IS_SIG_MENU=1;
+
+
+	</select>
+
 <!--	<select id="getLargestOptionGroupNo" parameterType="int" resultMap="OptionGroupSelectMap">-->
 <!--		SELECT MAX(option_group_no) FROM optiongroup;-->
 <!--	</select>-->
