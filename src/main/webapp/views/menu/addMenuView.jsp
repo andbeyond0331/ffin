@@ -383,37 +383,85 @@
 
     <script>
 
+
         function setImage1Preview(event){
+
+            var DIVimage1preview = $('#image1preview');
+            var isTherePreview = DIVimage1preview.find('img').length;
+            alert("isTherePreview : " + isTherePreview);
+            //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
             var reader  = new FileReader();
+
+            if(isTherePreview==0){
+
+            }else{
+
+                DIVimage1preview.find('img').remove();
+
+            }
 
             reader.onload = function(event){
                 var img = document.createElement("img");
                 img.setAttribute("src", event.target.result);
                 document.querySelector("div#image1preview").appendChild(img);
+
             };
+
             reader.readAsDataURL(event.target.files[0]);
+
+
         }
 
         function setImage2Preview(event){
             var reader  = new FileReader();
+            var isTherePreview = DIVimage1preview.find('img').length;
+            alert("isTherePreview : " + isTherePreview);
+            //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
+            var reader  = new FileReader();
+
+            if(isTherePreview==0){
+
+            }else{
+
+                DIVimage1preview.find('img').remove();
+
+            }
 
             reader.onload = function(event){
                 var img = document.createElement("img");
                 img.setAttribute("src", event.target.result);
-                document.querySelector("div#image2preview").appendChild(img);
+                document.querySelector("div#image1preview").appendChild(img);
+
             };
+
             reader.readAsDataURL(event.target.files[0]);
+
         }
 
         function setImage3Preview(event){
             var reader  = new FileReader();
+            var isTherePreview = DIVimage1preview.find('img').length;
+            alert("isTherePreview : " + isTherePreview);
+            //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
+            var reader  = new FileReader();
+
+            if(isTherePreview==0){
+
+            }else{
+
+                DIVimage1preview.find('img').remove();
+
+            }
 
             reader.onload = function(event){
                 var img = document.createElement("img");
                 img.setAttribute("src", event.target.result);
-                document.querySelector("div#image3preview").appendChild(img);
+                document.querySelector("div#image1preview").appendChild(img);
+
             };
+
             reader.readAsDataURL(event.target.files[0]);
+
         }
 
     </script>

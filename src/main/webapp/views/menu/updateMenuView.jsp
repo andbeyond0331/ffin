@@ -138,23 +138,125 @@
         <div class="form-group">
             <label for="menuImg1" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지1</label>
             <div class="col-sm-4">
-                <input type="file" class="form-control" id="menuImg1" name="menuImg1"  value="${menu.menuImg1}" placeholder="메뉴 이미지1 수정">
+                <input type="file" class="form-control" id="menuImg1" name="menuImg1"  value="${menu.menuImg1}" placeholder="메뉴 이미지1 수정" onchange="setImage1Preview(event);">
+            </div>
+            <div id="image1preview" class="col-sm-4">
+                <c:if test="${menu.menuImg1 ne null}">
+                    <img src="/resources/menu/${menu.menuImg1}" alt="메뉴 이미지" style="width:100%;">
+                </c:if>
             </div>
         </div>
 
         <div class="form-group">
             <label for="menuImg2" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지2</label>
             <div class="col-sm-4">
-                <input type="file" class="form-control" id="menuImg2" name="menuImg2"  value="${menu.menuImg2}" placeholder="메뉴 이미지2 수정">
+                <input type="file" class="form-control" id="menuImg2" name="menuImg2"  value="${menu.menuImg2}" placeholder="메뉴 이미지2 수정" onchange="setImage2Preview(event);">
+            </div>
+            <div id="image2preview" class="col-sm-4">
+                <c:if test="${menu.menuImg2 ne null && menu.menuImg2 ne ''}">
+                    <img src="/resources/menu/${menu.menuImg2}" alt="메뉴 이미지" style="width:100%;">
+                </c:if>
             </div>
         </div>
 
         <div class="form-group">
             <label for="menuImg3" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지3</label>
             <div class="col-sm-4">
-                <input type="file" class="form-control" id="menuImg3" name="menuImg3"  value="${menu.menuImg3}" placeholder="메뉴 이미지3 수정">
+                <input type="file" class="form-control" id="menuImg3" name="menuImg3"  value="${menu.menuImg3}" placeholder="메뉴 이미지3 수정"  onchange="setImage3Preview(event);">
+            </div>
+            <div id="image3preview" class="col-sm-4">
+                <c:if test="${menu.menuImg3 ne null && menu.menuImg3 ne ''}">
+                    <img src="/resources/menu/${menu.menuImg3}" alt="메뉴 이미지" style="width:100%;">
+                </c:if>
             </div>
         </div>
+
+        <script>
+
+            function setImage1Preview(event){
+
+                var DIVimage1preview = $('#image1preview');
+                var isTherePreview = DIVimage1preview.find('img').length;
+                alert("isTherePreview : " + isTherePreview);
+                //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
+                var reader  = new FileReader();
+
+                if(isTherePreview==0){
+
+                }else{
+
+                    DIVimage1preview.find('img').remove();
+
+                }
+
+                reader.onload = function(event){
+                    var img = document.createElement("img");
+                    img.setAttribute("src", event.target.result);
+                    img.setAttribute("style",  "width:100%;");
+                    document.querySelector("div#image1preview").appendChild(img);
+
+                };
+
+                reader.readAsDataURL(event.target.files[0]);
+
+
+            }
+
+            function setImage2Preview(event){
+                var reader  = new FileReader();
+                var isTherePreview = DIVimage1preview.find('img').length;
+                alert("isTherePreview : " + isTherePreview);
+                //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
+                var reader  = new FileReader();
+
+                if(isTherePreview==0){
+
+                }else{
+
+                    DIVimage1preview.find('img').remove();
+
+                }
+
+                reader.onload = function(event){
+                    var img = document.createElement("img");
+                    img.setAttribute("src", event.target.result);
+                    img.setAttribute("style",  "width:100%;");
+                    document.querySelector("div#image1preview").appendChild(img);
+
+                };
+
+                reader.readAsDataURL(event.target.files[0]);
+
+            }
+
+            function setImage3Preview(event){
+                var reader  = new FileReader();
+                var isTherePreview = DIVimage1preview.find('img').length;
+                alert("isTherePreview : " + isTherePreview);
+                //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
+                var reader  = new FileReader();
+
+                if(isTherePreview==0){
+
+                }else{
+
+                    DIVimage1preview.find('img').remove();
+
+                }
+
+                reader.onload = function(event){
+                    var img = document.createElement("img");
+                    img.setAttribute("src", event.target.result);
+                    img.setAttribute("style",  "width:100%;");
+                    document.querySelector("div#image1preview").appendChild(img);
+
+                };
+
+                reader.readAsDataURL(event.target.files[0]);
+
+            }
+
+        </script>
 
     <div class="happy">
 
