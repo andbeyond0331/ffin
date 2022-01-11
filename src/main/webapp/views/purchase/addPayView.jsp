@@ -38,7 +38,40 @@
     #priceT{
         margin: 1px;
     }
+    /*이미지접히게*/
+    .rounded-start {
+        border-bottom-left-radius: 1.25rem!important;
+        border-top-left-radius: 1.25rem!important;
+    }
+    /*이미지 사이즈*/
+    .img-fluid {
+        max-width: 100%;
+        height: 113px;
+    }
+    /*카드 둥글게*/
+    .card {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 1.25rem;
+    }
+    .card-body{
+        width: 100%;
+        table-layout: fixed;
+    }
 
+    .card-title{
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
 
 </style>
 <script type="text/javascript">
@@ -273,40 +306,47 @@
 
 
         modal.find('button.btn-primary').on("click", function () {
+            var totalPP1 =document.getElementById('totalpp').innerHTML;
+            var totalSS1 = document.getElementById('sale').innerHTML;
+            var totalSS2 = totalSS1.split(":").map(Number);
+            var totalPP2 = totalPP1.split(":").map(Number);
 
-
-
+            var realCouponDcPrice = modal.find('input[name=options]:checked').val();
             var couponCheck = $("input[name='couponNo']").val()
+            data = realCouponDcPrice.split(",");
+            var couponDcPrice = data[0];
+
             if (couponCheck == undefined) {
-                realCouponDcPrice = modal.find('input[name=options]:checked').val();
-                /*  var couponNo =modal.find('input[name=couponNumber]').val();*/
-                console.log(realCouponDcPrice + " : realOptionGroupName");
-                data = realCouponDcPrice.split(",");
-                var couponDcPrice = data[0];
-                var couponNo = data[1];
-                console.log(couponNo + ": couponNo");
-                var totalPP1 =document.getElementById('totalpp').innerHTML;
-                var totalSS1 = document.getElementById('sale').innerHTML;
-                var totalSS2 = totalSS1.split(":").map(Number);
-                var totalPP2 = totalPP1.split(":").map(Number);
+                if(couponDcPrice < Number(totalPP2[1])) {
 
-                alert(couponDcPrice+Number(totalSS2[1]))
+                    /*  var couponNo =modal.find('input[name=couponNumber]').val();*/
+                    console.log(realCouponDcPrice + " : realOptionGroupName");
 
-                var payPrice = Number(totalPP2[1]) - Number(couponDcPrice);
-                var sale = Number(totalSS2[1])+Number(couponDcPrice);
-                /*var payPrice = (dd[1] - couponDcPrice);*/
+                    var couponNo = data[1];
+                    console.log(couponNo + ": couponNo");
 
-                append = "<input type=\"hidden\" id=\"couponNo\" name=\"couponNo\" value=\"" + couponNo + "\">";
-                totalPayPrice =  "<span id='totalpp'>결제금액 : "+payPrice+"</span>"
-                totalsale =  "<span id='sale'>한일금액 : "+sale+"</span>"
-                /*alert(append + ":append");*/
 
-                $('#couponDcPrice').val(couponDcPrice);
-                $('#test').append(append);
-                $('#pp').html(totalPayPrice);
-                $('#dcp').html(totalsale);
 
-                modal.modal('hide');
+                    alert(couponDcPrice + Number(totalSS2[1]))
+
+                    var payPrice = Number(totalPP2[1]) - Number(couponDcPrice);
+                    var sale = Number(totalSS2[1]) + Number(couponDcPrice);
+                    /*var payPrice = (dd[1] - couponDcPrice);*/
+
+                    append = "<input type=\"hidden\" id=\"couponNo\" name=\"couponNo\" value=\"" + couponNo + "\">";
+                    totalPayPrice = "<span id='totalpp'>결제금액 : " + payPrice + "</span>"
+                    totalsale = "<span id='sale'>한일금액 : " + sale + "</span>"
+                    /*alert(append + ":append");*/
+
+                    $('#couponDcPrice').val(couponDcPrice);
+                    $('#test').append(append);
+                    $('#pp').html(totalPayPrice);
+                    $('#dcp').html(totalsale);
+
+                    modal.modal('hide');
+                }else {
+                    alert("사용가능 할인금액을 초과 하였습니다.")
+                }
             } else {
                 alert("사용중인 쿠폰이 있습니다.")
             }
@@ -317,35 +357,52 @@
 
     $(function () {
         $("#button-addon2").click(function () {
-            pointCheck = $("input[name='pointAmt']").val();
+
+            var pointCheck = $("input[name='pointAmt']").val();
+
+            var totalPoint = Number(document.getElementById('totalPoint').innerHTML);
+            var val = document.getElementById('totalpp').innerHTML;
+            var totalSS1 = document.getElementById('sale').innerHTML;
+            var totalSS2 = totalSS1.split(":").map(Number);
+            var dd = val.split(":").map(Number);
+
+
             if (pointCheck == undefined) {
-                usePoint = $('input[name="usePoint"]').val();
-                if (usePoint != "") {
-                    if (usePoint % 1000 == 0) {
-                        var val =document.getElementById('totalpp').innerHTML;
-                        var dd = val.split(":").map(Number);
+                var usePoint = $('input[name="usePoint"]').val();
+                if(usePoint < totalPoint) {
+                    if(usePoint <= Number(dd[1])){
+                    if (usePoint != "") {
+                        if (usePoint % 1000 == 0) {
 
 
-                        var totalSS1 = document.getElementById('sale').innerHTML;
-                        var totalSS2 = totalSS1.split(":").map(Number);
-                        var payPrice = Number(dd[1]) - usePoint;
-                        var sale = Number(totalSS2[1])+Number(usePoint);
 
 
-                        append = "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePoint + "\">";
-                        totalPayPrice =  "<span id='totalpp' name='payPrice' >결제금액 : "+payPrice+"</span>"
-                        totalsale =  "<span id='sale'>한일금액 : "+sale+"</span>"
 
 
-                        $('#usePointAmt').append(append);
-                        $('#pp').html(totalPayPrice);
-                        $('#dcp').html(totalsale);
+                            var payPrice = Number(dd[1]) - usePoint;
+                            var sale = Number(totalSS2[1]) + Number(usePoint);
 
+
+                            append = "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePoint + "\">";
+                            totalPayPrice = "<span id='totalpp' name='payPrice' >결제금액 : " + payPrice + "</span>"
+                            totalsale = "<span id='sale'>한일금액 : " + sale + "</span>"
+
+
+                            $('#usePointAmt').append(append);
+                            $('#pp').html(totalPayPrice);
+                            $('#dcp').html(totalsale);
+
+                        } else {
+                            alert("포인트는 1000단위로 사용가능합니다.")
+                        }
                     } else {
-                        alert("포인트는 1000단위로 사용가능합니다.")
+                        alert("사용할 포인트를 입력해주세요")
                     }
-                } else {
-                    alert("사용할 포인트를 입력해주세요")
+                    }else{
+                        alert("사용가능 할인금액을 초과 하였습니다.")
+                    }
+                }else{
+                    alert("사용포인트가 보유포인트를 초과하였습니다.")
                 }
             } else {
                 alert("사용중인 포인트가 있습니다.")
@@ -397,8 +454,8 @@
 
             var totalSS1 = document.getElementById('sale').innerHTML;
             var totalSS2 = totalSS1.split(":").map(Number);
-            var payPrice = Number(dd[1]) + Number(usePoint);
-            var sale = Number(totalSS2[1])-Number(usePoint);
+            var payPrice = Number(dd[1]) + Number(pointAmt);
+            var sale = Number(totalSS2[1])-Number(pointAmt);
 
             pointde.remove();
             pointRe.value = "";
@@ -524,10 +581,10 @@
                             <h3>할인 및 적립금</h3>
                         </div>
                     </div>
-                    <br>
+                    <br><br>
                     <div class="row" id="test">
                         <label for="couponDcPrice" class="col-sm-offset-1 col-sm-3 control-label">할인쿠폰</label>
-                        <br>
+                        <br><br>
                         <div class="input-group">
                             <input type="text" class="form-control" id="couponDcPrice" name="couponDcPrice"
                                    placeholder="쿠폰을 적용하세요" value="${coupon.couponDcPrice}" disabled>
@@ -539,11 +596,12 @@
                                     data-bs-target="#couponCancel"></button>
                         </div>
                     </div>
-                    <br>
+                    <br><br>
                     <div class="row">
                         <label for="usePoint" class="col-sm-offset-1 col-sm-3 control-label">적립금</label>
+
                         <div class="input-group mb-3" id="usePointAmt">
-                            <span class="input-group-text">${totalPoint.userTotalPoint}</span>
+                            <span class="input-group-text" id="totalPoint">${totalPoint.userTotalPoint}</span>
                             <input type="text" class="form-control" id="usePoint" name="usePoint" placeholder="입력"
                                    value="${point.pointAmt}">
                             <input class="btn btn-outline-secondary" type="button" id="button-addon2"
@@ -552,6 +610,7 @@
                                     data-bs-target="#pointCancel"></button>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="container">
@@ -561,13 +620,15 @@
                     </div>
                     <br>
                     <hr class="my-lg-12">
+                    <br><br>
                     <div class="row">
                         <div class="col-sm-12">
+
                             <h3>결제방법</h3>
                         </div>
                     </div>
 
-
+                    <br><br>
                     <div class="container">
                         <div class="row row-cols-2">
                             <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio1"
@@ -581,6 +642,7 @@
 
                         </div>
                     </div>
+                    <br>
                     <div class="container">
                         <div class="row row-cols-2">
                             <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio3"
@@ -610,10 +672,12 @@
                     <hr class="my-lg-12">
                     <div class="row">
                     <div class="col-sm-12">
-                        <h3>${purchase.orderTruckId.truckId}</h3>
+                        <h5>상호 : ${purchase.orderTruckId.truckName}</h5>
                     </div>
                 </div>
+
                     <div id="order"></div>
+
                     <c:set var="i" value="0"/>
                     <c:forEach var="cart" items="${map.get('list')}">
                         <c:set var="i" value="${i+1}"/>
@@ -631,20 +695,30 @@
 
 
                     </c:forEach>
+
                     <hr class="my-lg-12">
+                    <div class="row">
+                        <div class="col-3">
+                    <p class="text"  id="total" ></p>
+                        </div>
+                        <div class="col-3">
+                    <p class="text"  id="dcp"  ><span id="sale" name="payPrice">할인금액 :</span></p>
+                        </div><div class="col-3">
+                            <p class="text"  id="pp"></p>
+                    </div></div>
 
-                    <p class="text-end"  id="total" ></p>
-                    <p class="text-end"  id="dcp"  ><span id="sale" name="payPrice">할인금액 :</span></p>
-                    <p class="text-end"  id="pp"></p>
-
-
+                    <div class="row">
+                        <div class="col-6">
                     <button type="button" class="btn btn-primary btn-lg">
                         뒤로가기
                     </button>
-
+                        </div>
+                        <div class="col-6">
                     <button type="button" class="btn btn-primary btn-lg">
                         진짜결제
                     </button>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -654,7 +728,7 @@
 
 </form>
 
-<jsp:include page="/views/footer.jsp"/>
+
 
 
 <script>
@@ -784,16 +858,15 @@
             menuPrice += (sum[i] + odMenuPriceL[i]);
 
 
-            divElemApply1 = "<div class=\"card mb-3\" style=\"max-width: 540px;\">" +
+            divElemApply1 = "<div class=\"card mb-3\">" +
                 " <div class=\"row g-0\">" +
                 "<div class=\"col-md-4\">" +
-                "<img src=\"/resources/image/1.jpg\" class=\"img-fluid rounded-start\" alt=\"image\">" +
+                "<img src=\"/resources/image/"+odMenuImageL[i]+"\" class=\"img-fluid rounded-start\" alt=\"image\">" +
                 "</div>" +
                 "<div class=\"col-md-8\">" +
                 "<div class=\"card-body\">" +
                 "<h5 class=\"card-title\">" + odMenuNameL[i] + "</h5>" +
-                "<p class=\"card-text\"><small class=\"text-muted\">옵션 " + odOptionNameL[i] + " :" + odOptionGroupNameL[i] + "  :</small></p>" +
-                "<p class=\"card-text\"><small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 가격 :" + (sum[i] + odMenuPriceL[i]) + " </small></p>" +
+                "<p class=\"card-text\"><small class=\"text-muted\">옵션 " + odOptionGroupNameL[i] + " :" + odOptionNameL[i] + "  :</small><br><small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 가격 :" + (sum[i] + odMenuPriceL[i]) + " </small></p>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +

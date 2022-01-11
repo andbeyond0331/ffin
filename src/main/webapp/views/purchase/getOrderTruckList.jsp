@@ -144,7 +144,7 @@
 
     <div class="container py-4">
         <header class="pb-4 mb-5 py-4 border-bottom">
-            <span class="fs-1">주문내역1111111111</span>
+            <span class="fs-1">주문내역</span>
         </header>
 
         <div class="container-fluid">
@@ -374,7 +374,7 @@
 
                                 </c:forEach>
 
-                                <div id="total"></div>
+                                <div id="total"><p class="text-end">결제금액 : ${purchase.payPrice}</p> </div>
                             </div>
 
                         </div>
@@ -400,23 +400,41 @@
                                      alt="주문상품 이미지">
 
                             </div>
+                            <br>
                             <div class="row" id="usId">
                                 ${purchase.orderUserId.userId}
                             </div>
+                            <br>
                             <div class="row" id="orNo">
                                 주문번호 :${purchase.orderNo}
                             </div>
+                            <br>
                             <div class="row" id="paDa">
                                 주문일시 :${purchase.payDateTime}
                             </div>
+                            <br>
                             <div class="row" id="usUN">
                                 이름 : ${purchase.orderUserId.userName}
                             </div>
+                            <br>
                             <div class="row" id="usUP">
                                 연락처 : ${purchase.orderUserId.userPhone}
                             </div>
+                            <br>
+
                             <div class="row" id="paOp">
-                                결제방법 :${purchase.payOption}
+                                <c:if test="${purchase.payOption == 0}">
+                                    결제방법 : 휴대폰결제
+                                </c:if>
+                                <c:if test="${purchase.payOption == 1}">
+                                    결제방법 : 카카오페이
+                                </c:if>
+                                <c:if test="${purchase.payOption == 2}">
+                                    결제방법 : 신용카드
+                                </c:if>
+                                <c:if test="${purchase.payOption == 3}">
+                                    결제방법 : 무통장입금
+                                </c:if>
                             </div>
 
                         </div>
@@ -494,7 +512,7 @@
                 odOptionGroupNameCopy = odOptionGroupName;
                 odOptionPriceCopy = odOptionPrice;
 
-            } else if (test2 != odMenuName && odOptionNameCopy.substring(odOptionNameCopy.length - 1, odOptionNameCopy.length) != "/") {
+            } else if (test2 != odMenuName ) {
                 odOptionNameCopy = odOptionNameCopy + "/" + odOptionName;
                 odOptionGroupNameCopy = odOptionGroupNameCopy + "/" + odOptionGroupName;
                 odOptionPriceCopy = odOptionPriceCopy + "/" + odOptionPrice;
@@ -504,24 +522,49 @@
                 odOptionNameCopy = odOptionNameCopy + "," + odOptionName;
                 test2 = odMenuName;
                 odOptionGroupNameCopy = odOptionGroupNameCopy + "," + odOptionGroupName;
-                odOptionPriceCopy = odOptionPriceCopy + odOptionPrice;
+                odOptionPriceCopy = odOptionPriceCopy + "," + odOptionPrice;
             }
 
             odOptionNameL = odOptionNameCopy.split("/");
             odOptionGroupNameL = odOptionGroupNameCopy.split("/");
-            odOptionPriceL = odOptionPriceCopy.split("/").map(Number);
+
 
 
         }
 
+        var sum = new Array() ;
+        var test3 = new Array();
 
+        odOptionPriceL = odOptionPriceCopy.split("/");
+
+        /*alert("ordejoijafjs"+odOptionPriceL)*/
+        for(var i = 0; i<odOptionPriceL.length; i++){
+            test3 = odOptionPriceL[i].split(",");
+
+            for(var j = 0; j<test3.length; j++){
+
+                if(sum[i]==undefined){
+                    sum[i] =Number(test3[j]);
+                    /*alert("첫번째값"+Number(test3[j]))*/
+                }else{
+                    sum[i]=(Number(sum[i])+Number(test3[j]));
+                    /*alert("계속 들어가는 값"+Number(sum[i]));*/
+                }
+
+            }
+            /* alert("test3"+test3)
+             alert("test 길이"+test3.length)*/
+
+
+
+        }
 
 
         var menuPrice = 0;
         for (var i = 0; i < odMenuNameL.length; i++) {
 
 
-            menuPrice += (odOptionPriceL[i] + odMenuPriceL[i]);
+            menuPrice += (sum[i] + odMenuPriceL[i]);
 
 
             divElemApply1 = "<div class=\"card mb-3\" >" +
@@ -529,7 +572,7 @@
                 "<div class=\"col-md-12\">" +
                 "<div class=\"card-body\">" +
                 "<h6 class=\"card-title\">" + odMenuNameL[i] + "</h6>" +
-                "<p class=\"card-text\"><small class=\"text-muted font-size 12px\">옵션 " + odOptionNameL[i] + " :" + odOptionGroupNameL[i] + "  :</small><br><small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 가격 :" + (odOptionPriceL[i] + odMenuPriceL[i]) + " </small></p>" +
+                "<p class=\"card-text\"><small class=\"text-muted font-size 12px\">옵션 " + odOptionNameL[i] + " :" + odOptionGroupNameL[i] + "  :</small><br><small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 가격 :" + (sum[i] + odMenuPriceL[i]) + " </small></p>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +
@@ -539,11 +582,11 @@
             $('#order').append(divElemApply1);
 
         }
-        divElemApply2 = "<input type=\"hidden\" name=\"orderPrice\" id=\"orderPrice\" value=\"" + menuPrice + "\">" +
+/*        divElemApply2 = "<input type=\"hidden\" name=\"orderPrice\" id=\"orderPrice\" value=\"" + menuPrice + "\">" +
             "<h5 id='price'>합계 : " + menuPrice + "</h5>"
 
 
-        $('#total').append(divElemApply2);
+        $('#total').append(divElemApply2);*/
 
     });
 
@@ -611,12 +654,12 @@
     });
     $("#cancel").on("click",function(){
         var truckId = $("input[name='truck']").val();
-        self.location = "/purchase/getOrderEndList?truckId="+truckId+"&search="+5
+        self.location = "/purchase/getOrderList?truckId="+truckId+"&search="+2
     })
 
     $("#end").on("click",function(){
         var truckId = $("input[name='truck']").val();
-        self.location = "/purchase/getOrderEndList?truckId="+truckId
+        self.location = "/purchase/getOrderList?truckId="+truckId+"&search="+1
     })
 
     $("#swCh").on("click",function(){

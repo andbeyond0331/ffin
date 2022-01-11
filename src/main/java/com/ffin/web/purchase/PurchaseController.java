@@ -4,6 +4,7 @@ import com.ffin.common.Search;
 import com.ffin.service.domain.*;
 import com.ffin.service.menu.MenuService;
 import com.ffin.service.purchase.PurchaseService;
+import com.ffin.service.review.ReviewService;
 import com.ffin.service.truck.TruckService;
 import com.sun.javafx.collections.MappingChange;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,13 +59,16 @@ public class PurchaseController {
     //@Value("#{commonProperties['pageSize'] ?: 2}")
         int pageSize;
 
+    @Autowired
+    @Qualifier("reviewServiceImpl")
+    private ReviewService reviewService;
 
+    private static final String FILE_UPLOAD_PATH = "/resources/image/";
 
     @RequestMapping("getMenuList")
     public ModelAndView getMenuList(@ModelAttribute("search") Search search,
                                     @RequestParam("truckId") String truckId,
                                     HttpServletResponse response,
-                                    HttpSession session,
                                     ModelAndView modelAndView) throws Exception{
 
 //        File file = new File(FILE_UPLOAD_PATH, fileName);
@@ -73,32 +77,41 @@ public class PurchaseController {
 //        response.setHeader("Content-Disposition", "attachment;filename=\""+fn+"\"");
 //        response.setContentLength(bytes.length);
 
-        Map sessionMenu = new HashMap();
-        sessionMenu = purchaseService.getOrderDetail(1);
-        session.setAttribute("map",sessionMenu);
-        session.setAttribute("name","박성원");
-
         search.setPageSize(pageSize);
         Truck truck  = truckService.getTruck(truckId);
+        float rvAvg = reviewService.getReviewAvg(search,truckId);
+        int rvTotal = reviewService.getReviewTotalCount(search,truckId);
+        truck.setTruckAVGStar(rvAvg);
 
         Map<String , Object> map= menuService.getMenuList(search, truck.getTruckId());
 
         modelAndView.addObject("list", map.get("list"));
+        modelAndView.addObject("path", FILE_UPLOAD_PATH);
+        modelAndView.addObject("truck", truck);
+        if (rvTotal!=0){
 
-        modelAndView.setViewName("/views/purchase/getTruck.jsp");
+            modelAndView.addObject("rvTotal", rvTotal);
+        }
+
+        modelAndView.setViewName("/views/menu/getTruck.jsp");
 
         return modelAndView;
     }
+
     //장바구니에 출력할 데이터이다 현재는 UI가 없어서 저장된 데이터를 불러오고 있다
     //Session에 저장할때 어떻게 할지 생각해보자
     @RequestMapping(value = "getCartMenuList", method= RequestMethod.GET)
-    public ModelAndView getCartMenuList(@RequestParam("orderNo")int orderNo , ModelAndView model ) throws Exception{
+    public ModelAndView getCartMenuList(@RequestParam("orderNo")int orderNo , ModelAndView model,HttpSession session ) throws Exception{
         System.out.println("/purchase/getCartMenuList : GET");
         //Session에 저장되어 있는 메뉴정보를 map에 담아서 List 로 확인
         Purchase purchase = new Purchase();
         OrderDetail orderDetail = new OrderDetail();
         Map map = new HashMap();
         map = purchaseService.getOrderDetail(orderNo);
+
+        session.getAttribute("menuOdList");
+        System.out.println("session에 저장된 정보"+session);
+
        // session.setAttribute("cart",orderDetail);
         purchase = purchaseService.getPurchase(orderNo);
         model.addObject("purchase",purchase);
@@ -267,9 +280,10 @@ public class PurchaseController {
 
         if(request.getParameter("search").equals("1") ) {
             search.setSearchCondition(request.getParameter("search"));
-        }else{
-
-            search.setSearchCondition("0");
+        }else if(request.getParameter("search").equals("2")){
+            search.setSearchCondition(request.getParameter("search"));
+        } else if (request.getParameter("search").equals("0")) {
+            search.setSearchCondition(request.getParameter("search"));
         }
 
         Map map = purchaseService.getOrderList(search,truckId);
