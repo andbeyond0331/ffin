@@ -39,7 +39,7 @@
         //============= "메인화면으로"  Event 처리 및  연결 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $("button.btn.btn-warning").on("click", function () {
+            $("#goMain").on("click", function () {
                 self.location = "/views/home.jsp"
             });
         });
@@ -118,8 +118,8 @@
             <div class="panel-body">
                 <ul class="chat_list_box" style="font-size:20px ">
                     <strong class="primary-font pull-left" style="padding-top:10px ">작성자</strong>
-<%--                    <strong class="pull-right text-dark" style="padding-top:10px; padding-right:10px "><fmt:formatDate--%>
-<%--                            value="${post.postRegDate}" pattern="yyyy-MM-dd"/></strong>--%>
+                        <%--                    <strong class="pull-right text-dark" style="padding-top:10px; padding-right:10px "><fmt:formatDate--%>
+                        <%--                            value="${post.postRegDate}" pattern="yyyy-MM-dd"/></strong>--%>
                     <img style="border-radius:70px; margin-left:20px; padding-top:10px"
                          src="../resources/image/${truck.truckProImg}" width="100"
                          height="100" class="pull-left"/>
@@ -155,43 +155,39 @@
                              height="300"/>
                     </td>
                 </ul>
-            </div>
 
-        </div>
 
-        <!-- 공지 수정 Modal -->
-        <div class="modal fade" id="updateNModal" tabindex="-1" role="dialog"
-             aria-labelledby="updateNModalLabel" aria-hidden="true"
-        >
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="updateNModalLabel">공지 수정</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">공지를 수정하시겠습니까?</div>
-                    <div class="modal-footer">
-                        <a type="button" class="btn btn-primary"
-                           href="/truck/updateNotice">수정하러가기</a>
-                        <a type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</a>
+                <!-- 공지 수정 Modal -->
+                <div class="modal fade" id="updateNModal" tabindex="-1" role="dialog"
+                     aria-labelledby="updateNModalLabel" aria-hidden="true"
+                >
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="updateNModalLabel">공지 수정</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">공지를 수정하시겠습니까?</div>
+                            <div class="modal-footer">
+                                <a type="button" class="btn btn-primary"
+                                   href="/truck/updateNotice">수정하러가기</a>
+                                <a type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <c:if test="${sessionScope.truck.truckId.equals(truck.truckId)}">
+                    <button id="noticeU" type="button" class="btn-secondary pull-right" data-toggle="modal"
+                            data-target="#updateNModal">수정하기
+                    </button>
+                </c:if>
+                <button type="button" id="goMain" class="btn-secondary pull-right">메인화면으로</button>
             </div>
         </div>
-
-            <br/>
-
-        <c:if test="${sessionScope.truck.truckId.equals(truck.truckId)}">
-            <button id="noticeU" type="button" class="btn-secondary pull-right" data-toggle="modal"
-                    data-target="#updateNModal">수정하기
-            </button>
-        </c:if>
-        <button type="button" id="goMain" class="btn-secondary pull-right">메인화면으로</button>
-        </c:if>
-
-    </div>
+        <br/><br/><br/><br/>
 
 
         <c:if test="${sessionScope.user == null && sessionScope.truck == null}">
@@ -203,6 +199,9 @@
                 <a href="/views/home.jsp" class="btn-warning">메인화면으로</a>
             </div>
         </c:if>
+
+        </c:if>
+    </div>
 </div>
 
 <jsp:include page="/views/footer.jsp"/>

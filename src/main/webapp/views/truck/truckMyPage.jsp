@@ -62,7 +62,7 @@
 				self.location = "./getTruckInfo.jsp"
 			});
 			$('.truck-notice').click(function () {
-				self.location = "/views/truck/getNotice.jsp"
+				self.location = "/truck/getNotice"
 			});
 			$('.truck-sales').click(function () {
 				self.location = "/truck/getSalesList"
@@ -74,8 +74,7 @@
 				self.location = ""
 			});
 			$('.truck-review').click(function () {
-				//self.location = "../review/getReviewList.jsp";
-				self.location = "/review/getReviewListTruck";
+				self.location = "/review/getReviewListTruck"
 			});
 			$('.truck-post').click(function () {
 				self.location = "getPostList.jsp"
