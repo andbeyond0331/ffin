@@ -614,6 +614,7 @@
 </form>
 <script>
     $(function () {
+        //odMenuName으로 담겨져 있는 length 찾음
         var odMenuNameCount = $("input[name='odMenuName']").length;
 
 
@@ -628,6 +629,7 @@
         var menuList = [];
 
         for (var i = 0; i < odMenuNameCount; i++) {
+            //담겨져 있는데 데이터 모두 받아 온다
             var odMenuName = $("input[name='odMenuName']").eq(i).val();
             var odOptionGroupName = $("input[name='odOptionGroupName']").eq(i).val();
             var odOptionName = $("input[name='odOptionName']").eq(i).val();
@@ -652,18 +654,22 @@
 
 
             if (odMenuNameCopy != undefined && odMenuQtyFlag == 0) {
+                //odMenuQtyFlag로 하나의 주문에 여러가지의 메뉴의 정보를 분류 한다.
                 odMenuNameCopy = odMenuNameCopy + "," + odMenuName;
                 odMenuImageCopy = odMenuImageCopy + "," + odMenuImage;
                 odMenuQtyCopy = odMenuQtyCopy + "," + odMenuQty;
                 odMenuPriceCopy = odMenuPriceCopy + "," + parseInt(odMenuPrice);
                 totalPrice = totalPrice + parseInt(odMenuPrice);
-            } else if (odMenuNameCopy == undefined) {
 
+
+            } else if (odMenuNameCopy == undefined) {
+                //odMenNameCopy의 값이 처음에는 undefined이기 때문에
                 odMenuNameCopy = odMenuName;
                 odMenuImageCopy = odMenuImage;
                 odMenuQtyCopy = odMenuQty;
                 odMenuPriceCopy = odMenuPrice;
                 totalPrice = parseInt(odMenuPrice);
+
 
             }
 
@@ -675,6 +681,7 @@
 
             /*            let last_cart = test.substring(test.length-1,test.length);*/
 
+
             if (odOptionNameCopy == undefined) {
                 odOptionNameCopy = odOptionName;
                 test2 = odMenuName;
@@ -682,114 +689,60 @@
 
                 odOptionPriceCopy = odOptionPrice;
 
-
-            } else if (test2 != odMenuName && odOptionNameCopy.substring(odOptionNameCopy.length - 1, odOptionNameCopy.length) != "/") {
+                //alert("111111111   ::: " +odOptionPriceCopy)
+            } else if (test2 != odMenuName) {
+                //메뉴당 /로 구분
                 odOptionNameCopy = odOptionNameCopy + "/" + odOptionName;
                 odOptionGroupNameCopy = odOptionGroupNameCopy + "/" + odOptionGroupName;
-                odOptionPriceCopy = odOptionPriceCopy + "/" + odOptionPrice;
-
+                odOptionPriceCopy = odOptionPriceCopy + ",/" + odOptionPrice;
+                // alert("22222222   ::: " +odOptionPriceCopy)
             } else if (odOptionNameCopy != undefined) {
-
+                //하나의 메뉴당 여러개의 옵션이 있어서 ,분류
                 odOptionNameCopy = odOptionNameCopy + "," + odOptionName;
                 test2 = odMenuName;
                 odOptionGroupNameCopy = odOptionGroupNameCopy + "," + odOptionGroupName;
-                odOptionPriceCopy = odOptionPriceCopy +  odOptionPrice;
+                /*
+                                odOptionPriceCopy = Number(odOptionPriceCopy) +  Number(odOptionPrice);
+                */
+                odOptionPriceCopy = odOptionPriceCopy + "," + odOptionPrice;
+
             }
-
-
-
-
-            /*            alert("total"+odMenuPriceL)
-                        alert("price"+odOptionPriceL)*/
-
-            /*  if (odOptionGroupNameCopy == undefined || odOptionGroupNameCopy != odOptionGroupName) {
-                  odOptionGroupNameCopy = odOptionGroupNameCopy+","+odOptionGroupName;
-              }else{
-                  odOptionGroupNameCopy = odOptionGroupName;
-              }
-
-              if (odOptionNameCopy == undefined || odOptionNameCopy != odOptionName) {
-                  odOptionNameCopy = odOptionNameCopy+","+odOptionName;
-              }else{
-                  odOptionNameCopy = odOptionName;
-              }
-
-              if (odMenuQtyCopy == undefined || odMenuQtyCopy != odMenuQty) {
-                  odMenuQtyCopy = odMenuQtyCopy+","+odMenuQty;
-              }else{
-                  odMenuQtyCopy = odMenuQty;
-              }
-
-              if (odMenuPriceCopy == undefined || odMenuPriceCopy != odMenuPrice) {
-                  odMenuPriceCopy = odMenuPriceCopy+","+odMenuPrice;
-              }else{
-                  odMenuNameCopy = odMenuName;
-              }
-
-              if (odOptionPriceCopy == undefined || odOptionPriceCopy != odOptionPrice) {
-                  odOptionPriceCopy = odOptionPriceCopy+","+odOptionPrice;
-              }else{
-                  odOptionPriceCopy = odOptionPrice;
-              }
-
-              if (odMenuImageCopy != undefined && odMenuImageCopy != odMenuImage) {
-                      odMenuImageCopy = odMenuImageCopy+","+odMenuImage;
-              } else{
-                  odMenuImageCopy = odMenuImage;
-              }
-
-              if (odMenuQtyFlagCopy == undefined && odMenuQtyFlagCopy != odMenuQtyFlag) {
-                  odMenuQtyFlagCopy = odMenuQtyFlagCopy+","+odMenuQtyFlag;
-              }else{
-                  odMenuQtyFlagCopy = odMenuQtyFlag;
-              }*/
-
-
+            //odOptionPriceCopy 에서 문제가 있음 ㅠㅠㅠㅠㅠㅠㅠ
+            //상상으로는 0,1000,400/500,0/이런식으로 받아와서
+            //split으로 1400/500/0으로 만들고  odMenuPriceCopy와 더하기 하여 메뉴당 가격을 표시
+            //그런데 01000400/5000/0 이런식으로 더해진다.
+            //이걸 Number로 숫자로 만들어주니 / 에서 특수문자로 NaN이 발생한다
+            /* alert("1111133331111   ::: " +odOptionPriceCopy)*/
         }
 
 
-        /*    var arr = new Array(10);
-            for(var i=0; i<odMenuNameCount; i++){
-                var odMenuName = $("input[name='odMenuName']").eq(i).val();
-                var odOptionGroupName = $("input[name='odOptionGroupName']").eq(i).val();
-                var odOptionName = $("input[name='odOptionName']").eq(i).val();
-                var odMenuQty = $("input[name='odMenuQty']").eq(i).val();
-                var odMenuPrice = $("input[name='odMenuPrice']").eq(i).val();
-                var odOptionPrice = $("input[name='odOptionPrice']").eq(i).val();
-                var odMenuImage = $("input[name='odMenuImage']").eq(i).val();
-                var odMenuQtyFlag = $("input[name='odMenuQtyFlag']").eq(i).val();
+        var sum = new Array() ;
+        var test3 = new Array();
 
+        odOptionPriceL = odOptionPriceCopy.split("/");
 
-            for(var j=0; j<odMenuNameL.length; j++){
-              if(odMenuNameL[j] == odMenuName){
-                     arr[j] = new Array();
-                     arr[j][i]=(odMenuName);
+        /*alert("ordejoijafjs"+odOptionPriceL)*/
+        for(var i = 0; i<odOptionPriceL.length; i++){
+             test3 = odOptionPriceL[i].split(",");
 
+            for(var j = 0; j<test3.length; j++){
 
-                 /!* menuList[j] = push(odMenuName);*!/
-              /!*    menuList[j].push(odOptionGroupName);*!/
-
-
-              }
+                if(sum[i]==undefined){
+                    sum[i] =Number(test3[j]);
+                    /*alert("첫번째값"+Number(test3[j]))*/
+                }else{
+                    sum[i]=(Number(sum[i])+Number(test3[j]));
+                    /*alert("계속 들어가는 값"+Number(sum[i]));*/
+                }
 
             }
+           /* alert("test3"+test3)
+            alert("test 길이"+test3.length)*/
 
-            }
-            for(var j=0; j<odMenuNameL.length; j++) {
-                alert("12414" + arr[j])
-            }*/
-        /* odOptionGrouNameL = odOptionGroupNameCopy.split(",");
-         odOptionNameL = odOptionNameCopy.split(",");
-         odMenuQtyL = odMenuQtyCopy.split(",");
-         odMenuPriceL = odMenuPriceCopy.split(",");
-         odOptionPriceL = odOptionPriceCopy.split(",");
-         odMenuImageL = odMenuImageCopy.split(",");
-         odMenuQtyFlagL = odMenuQtyFlagCopy.split(",");
 
-         alert("ddd"+odMenuNameL)
-         for(var i=0; i<odMenuNameL.length; i++){
 
-         }*/
+        }
+        /*alert("test완료"+sum)*/
         var menuPrice = 0;
         for (var i = 0; i < odMenuNameL.length; i++) {
             /*
@@ -797,10 +750,11 @@
                         alert(odOptionNameL[i]);*/
             odOptionNameL = odOptionNameCopy.split("/");
             odOptionGroupNameL = odOptionGroupNameCopy.split("/");
-            odOptionPriceL = odOptionPriceCopy.split("/").map(Number);
+
+            /*alert("논리야 놀자!!!"+sum)*/
 
             /*alert(odOptionPriceL)*/
-            menuPrice += (odOptionPriceL[i] + odMenuPriceL[i]);
+            menuPrice += (sum[i] + odMenuPriceL[i]);
 
 
             divElemApply1 =
@@ -816,7 +770,7 @@
                 "<div class=\"card-body\">" +
                 "<h5 class=\"card-title\">" + odMenuNameL[i] + "</h5>" +
                 "<p class=\"card-text\"><small class=\"text-muted\">옵션 " + odOptionGroupNameL[i] + " :" + odOptionNameL[i] + "  </small></p>" +
-                "<p class=\"card-text\"><small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 가격 :" + (odOptionPriceL[i] + odMenuPriceL[i]) + " </small></p>" +
+                "<p class=\"card-text\"><small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 가격 : " + (sum[i] + odMenuPriceL[i]) + "</small></p>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +

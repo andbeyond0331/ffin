@@ -91,6 +91,7 @@
         var orderNo = $("input[name='orderNo']").val();
         var orderCancelReason = $("input[name='orderCancelReason']:checked").val();
 
+
         $.ajax({
             url: "/purchase/json/payRefund", // 예: http://www.myservice.com/payments/cancel
             type: "POST",
@@ -355,7 +356,7 @@
                 odOptionGroupNameCopy = odOptionGroupName;
                 odOptionPriceCopy = odOptionPrice;
 
-            } else if (test2 != odMenuName && odOptionNameCopy.substring(odOptionNameCopy.length - 1, odOptionNameCopy.length) != "/") {
+            } else if (test2 != odMenuName ) {
                 odOptionNameCopy = odOptionNameCopy + "/" + odOptionName;
                 odOptionGroupNameCopy = odOptionGroupNameCopy + "/" + odOptionGroupName;
                 odOptionPriceCopy = odOptionPriceCopy + "/" + odOptionPrice;
@@ -365,22 +366,43 @@
                 odOptionNameCopy = odOptionNameCopy + "," + odOptionName;
                 test2 = odMenuName;
                 odOptionGroupNameCopy = odOptionGroupNameCopy + "," + odOptionGroupName;
-                odOptionPriceCopy = odOptionPriceCopy + odOptionPrice;
+                odOptionPriceCopy = odOptionPriceCopy + "," +  odOptionPrice;
             }
 
             odOptionNameL = odOptionNameCopy.split("/");
             odOptionGroupNameL = odOptionGroupNameCopy.split("/");
-            odOptionPriceL = odOptionPriceCopy.split("/").map(Number);
+
 
 
         }
+        var sum = new Array() ;
+        var test3 = new Array();
 
+        odOptionPriceL = odOptionPriceCopy.split("/");
+
+        /*alert("ordejoijafjs"+odOptionPriceL)*/
+        for(var i = 0; i<odOptionPriceL.length; i++){
+            test3 = odOptionPriceL[i].split(",");
+
+            for(var j = 0; j<test3.length; j++){
+
+                if(sum[i]==undefined){
+                    sum[i] =Number(test3[j]);
+                    /*alert("첫번째값"+Number(test3[j]))*/
+                }else{
+                    sum[i]=(Number(sum[i])+Number(test3[j]));
+                    /*alert("계속 들어가는 값"+Number(sum[i]));*/
+                }
+
+            }
+
+        }
 
         var menuPrice = 0;
         for (var i = 0; i < odMenuNameL.length; i++) {
 
 
-            menuPrice += (odOptionPriceL[i] + odMenuPriceL[i]);
+            menuPrice += (sum[i] + odMenuPriceL[i]);
 
 
             divElemApply1 = "<div class=\"card mb-3\" >" +
@@ -391,7 +413,7 @@
                 "<div class=\"col-md-8\">" +
                 "<div class=\"card-body\">" +
                 "<h5 class=\"card-title\">" + odMenuNameL[i] + "</h5>" +
-                "<p class=\"card-text\"><small class=\"text-muted font-size 12px\">옵션 " + odOptionNameL[i] + " :" + odOptionGroupNameL[i] + "  :</small><br><small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 가격 :" + (odOptionPriceL[i] + odMenuPriceL[i]) + " </small></p>" +
+                "<p class=\"card-text\"><small class=\"text-muted font-size 12px\">옵션 " + odOptionGroupNameL[i] + " :" + odOptionNameL[i] + "  :</small><br><small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 가격 :" + (sum[i] + odMenuPriceL[i]) + " </small></p>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +

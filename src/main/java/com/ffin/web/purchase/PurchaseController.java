@@ -147,7 +147,7 @@ public class PurchaseController {
     @RequestMapping(value = "addCart", method= RequestMethod.POST)
     public String addCart(@ModelAttribute("orderDetail") OrderDetail orderDetail, @ModelAttribute("purchase") Purchase purchase, Model model) throws Exception{
 
-        System.out.println("/purchase/addCart : GET");
+        System.out.println("/purchase/addCart : POST");
         System.out.println("orderDetail11111 = " + orderDetail + ", purchase2222 = " + purchase);
         Point point = new Point();
         Purchase pur = new Purchase();

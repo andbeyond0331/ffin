@@ -392,6 +392,22 @@
 
 
 -->
+  <select id="getSalesList"    parameterType="map"      resultMap="purchaseSelectMap">
+        SELECT inner_table.*
+        FROM( SELECT p.ORDER_NO, p.ORDER_USER_ID, u.USER_PRO_IMG ,p.PAY_DATE_TIME ,p.ORDER_REQUEST
+        FROM purchase p, user u
+        <where>
+            <if test="searchCondition != null">
+                <bind name="searchKeyword" value="'%' + searchKeyword + '%'"/>
+                AND p.ORDER_USER_ID LIKE #{search.searchKeyword}
+            </if>
+            AND p.ORDER_TRUCK_ID = #{truckId}
+            AND p.ORDER_USER_ID = u.USER_ID
+        </where>
+        order by order_no ) inner_table
+        limit #{search.startRowNum}, #{search.pageSize}
+    </select>
+
 
 
     <select id="getCouponList" parameterType="coupon" resultMap="couponSelectMap">
@@ -464,7 +480,12 @@
         limit 0,8;
     </select>
 
-    <select id="getSalesList" parameterType="map" resultMap="purchaseSelectMap">
+
+
+
+
+
+    <!--<select id="getSalesList" parameterType="map" resultMap="purchaseSelectMap">
         SELECT inner_table.*
         FROM (SELECT *
         FROM purchase
@@ -483,7 +504,17 @@
         </where>
         order by order_no) inner_table
         limit 0,8;
-    </select>
+    </select>-->
+
+
+
+
+
+
+
+
+
+
     <select id="getPointList" parameterType="map" resultMap="pointSelectMap">
 
         SELECT inner_table.*
@@ -506,7 +537,6 @@
         order by point_no) inner_table
         limit 0,8;
     </select>
-
     <select id="getPurchase" parameterType="purchase" resultMap="purchaseSelectMap">
         SELECT p.order_no,
                p.order_user_id,
@@ -515,6 +545,7 @@
                p.pay_coupon_no,
                p.pay_res_no,
                p.order_qty,
+               p.pay_price,
                p.order_request,
                p.order_status,
                p.order_pick_up_time,
@@ -541,67 +572,76 @@
           AND p.order_truck_id = t.truck_id
 
     </select>
+            <select id="getOrderDetail" parameterType="map" resultMap="orderDetailSelectMap">
+                SELECT *
+                FROM purchase p,
+                     user u,
+                     orderDetail o
+                where u.user_id = p.order_user_id
+                  and p.ORDER_NO = o.OD_ORDER_NO
+                  and order_no = #{orderNo};
 
-    <select id="getOrderDetail" parameterType="map" resultMap="orderDetailSelectMap">
-        SELECT *
-        FROM purchase p,
-             user u,
-             orderDetail o
-        where u.user_id = p.order_user_id
-          and p.ORDER_NO = o.OD_ORDER_NO
-          and order_no = #{orderNo};
+            </select>
 
-    </select>
+            <select id="getCoupon" parameterType="int" resultMap="couponSelectMap">
+                SELECT COUPON_DC_PRICE,
+                       COUPON_NO,
+                       COUPON_STATUS,
+                       COUPON_RECEIVED_USER_ID
+                FROM ffin.coupon
+                WHERE COUPON_NO = #{value}
 
-    <select id="getCoupon" parameterType="int" resultMap="couponSelectMap">
-        SELECT COUPON_DC_PRICE,
-               COUPON_NO,
-               COUPON_STATUS,
-               COUPON_RECEIVED_USER_ID
-        FROM ffin.coupon
-        WHERE COUPON_NO = #{value}
-
-    </select>
+            </select>
 
 
-    <select id="getTotalPoint" parameterType="String" resultMap="userSelectMap">
-        SELECT user_total_point,user_id
-        FROM ffin.user
-        WHERE user_id = #{value}
+            <select id="getTotalPoint" parameterType="String" resultMap="userSelectMap">
+                SELECT user_total_point,user_id
+                FROM ffin.user
+                WHERE user_id = #{value}
 
-    </select>
+            </select>
 
-    <select id="getLastOrderNo" parameterType="String" resultMap="purchaseSelectMap">
-    SELECT
-    order_no
-    FROM purchase
-    where ORDER_TRUCK_ID = #{value}
-    order by order_No desc
-    limit 1;
-    </select>
+            <select id="getLastOrderNo" parameterType="String" resultMap="purchaseSelectMap">
+            SELECT
+            order_no
+            FROM purchase
+            where ORDER_TRUCK_ID = #{value}
+             AND ORDER_STATUS != 0
+            order by order_No desc
+            limit 1;
+            </select>
 
-    <select id="getTruckBusiStatus" parameterType="String" resultMap="truckSelectMap">
-        SELECT
-            truck_busi_status
-        FROM truck
-        where TRUCK_ID = #{value}
+            <select id="getTruckBusiStatus" parameterType="String" resultMap="truckSelectMap">
+                SELECT
+                    truck_busi_status
+                FROM truck
+                where TRUCK_ID = #{value}
 
-    </select>
+            </select>
 
-    <select id="getUsePoint" parameterType="int" resultMap="pointSelectMap">
-        SELECT
-            POINT_AMT
-        FROM point
-        where POINT_NO = #{value}
+            <select id="getUsePoint" parameterType="int" resultMap="pointSelectMap">
+                SELECT
+                    POINT_AMT
+                FROM point
+                where POINT_NO = #{value}
 
-    </select>
+            </select>
 
-    <select id="getUseCoupon" parameterType="int" resultMap="pointSelectMap">
-        SELECT
-            POINT_AMT
-        FROM point
-        where POINT_NO = #{value}
-
+     <!--SQL : SELECT ROW Count -->
+    <select  id="getTotalCount"  parameterType="map"    resultType="int">
+        SELECT COUNT(*)
+        FROM(   SELECT ORDER_NO, ORDER_USER_ID, PAY_DATE_TIME ,ORDER_REQUEST
+        FROM purchase
+        <where>
+            <if test="searchCondition != null">
+                <bind name="searchKeyword" value="'%' + searchKeyword + '%'"/>
+                <if test="searchCondition == 0 and searchKeyword !='' ">
+                    AND ORDER_USER_ID LIKE #{search.searchKeyword}
+                </if>
+            </if>
+            AND ORDER_TRUCK_ID = #{truckId}
+        </where>
+        ) countTable
     </select>
 
 
