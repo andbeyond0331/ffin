@@ -95,4 +95,13 @@ public interface TruckService {
     // 마이페이지 판매이력
     public Map<String,Object> getSalesList(Search search,String truckId)throws Exception;
 
+
+    //pw변경을 위한 findTruck
+    public String getTruckIdForPassword(String truckId, String truckName, String truckPhone) throws Exception;
+    //임시비밀번호 발송&저장
+    public void sendSMSForPassword(String truckId, String truckName, int tempPassword) throws Exception;
+
+
+    // 공지 보기
+    public Truck getNotice(String truckId) throws Exception ;
 }

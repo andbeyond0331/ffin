@@ -86,19 +86,19 @@
         <div class="col-md-8 text-right">
             <form class="form-inline" name="detailForm">
 
-                <%--                <div class="form-group">--%>
-                <%--                    <select class="form-control" name="searchCondition" >--%>
-                <%--                        <option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>작성자ID</option>--%>
-                <%--                        <option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>게시물제목</option>--%>
-                <%--                    </select>--%>
-                <%--                </div>--%>
+<%--                                <div class="form-group">--%>
+<%--                                    <select class="form-control" name="searchCondition" >--%>
+<%--                                        <option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>주문자ID</option>--%>
+<%--&lt;%&ndash;                                        <option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>게시물제목</option>&ndash;%&gt;--%>
+<%--                                    </select>--%>
+<%--                                </div>--%>
 
-                <%--                <div class="form-group">--%>
-                <%--                    <label class="sr-only" for="searchKeyword">검색어</label>--%>
-                <%--                    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"--%>
-                <%--                           value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >--%>
-                <%--                    <button type="button" class="btn btn-default">검색</button>--%>
-                <%--                </div>--%>
+<%--                                <div class="form-group">--%>
+<%--                                    <label class="sr-only" for="searchKeyword">검색어</label>--%>
+<%--                                    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"--%>
+<%--                                           value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >--%>
+<%--                                    <button type="button" class="btn btn-default">검색</button>--%>
+<%--                                </div>--%>
 
 
                 <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
@@ -116,11 +116,12 @@
 
         <thead>
         <tr>
-            <th text-align="center" style="margin-left: auto">No</th>
+            <th style="text-align: center">No</th>
             <%--            <th align="left" >제목</th>--%>
-            <th text-align="center" >주문자</th>
-            <th text-align="left">주문일</th>
-            <th text-align="left">요청사항</th>
+            <th style=" width : 150px; text-align: right">주문자</th>
+            <th style="width: 180px"></th>
+            <th style="text-align: center">주문일</th>
+            <th>요청사항</th>
         </tr>
         </thead>
 
@@ -130,13 +131,13 @@
         <c:forEach var="order" items="${list}">
             <c:set var="i" value="${ i+1 }" />
             <tr>
-                <td align="center" style="vertical-align: middle">${order.orderNo}</td>
-                <td align="left" style="vertical-align: middle">${order.orderUserId.userId}
-                    <img style="border-radius:70px; margin-left:5px"
-                         src="../resources/image/${order.orderUserId.userProImg}" width="60"
-                         height="60" class="pull-left"/></td>
-                <td align="left" style="vertical-align: middle"><fmt:formatDate value="${order.payDateTime}" pattern="yyyy-MM-dd"/></td>
-                <td align="left" style="vertical-align: middle">${order.orderRequest}</td>
+                <td style="vertical-align: middle; text-align: center">${order.orderNo}</td>
+                <td style="vertical-align: middle; text-align: center"><img style="border-radius:70px; margin-left:5px"
+                                                        src="../resources/image/${order.orderUserId.userProImg}" width="60"
+                                                        height="60" class="pull-right"/></td>
+                <td style="vertical-align: middle">${order.orderUserId.userId}</td>
+                <td style="vertical-align: middle; text-align: center"><fmt:formatDate value="${order.payDateTime}" pattern="yyyy-MM-dd"/></td>
+                <td style="vertical-align: middle">${order.orderRequest}</td>
             </tr>
         </c:forEach>
 

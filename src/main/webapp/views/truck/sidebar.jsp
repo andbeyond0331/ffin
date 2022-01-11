@@ -161,7 +161,8 @@
     #collapseInfo div a, #collapsePurchase div a, #collapseHeart div a,
     #collapsePost div a, #collapseQnAUser div a, #collapseUser div a,
     #collapseTruck div a, #collapseApp div a, #collapseQnAAdmin div a,
-    #collapseInfoT div a ,#collapseSale div a, #collapsePostT div a{
+    #collapseInfoT div a ,#collapseSale div a, #collapsePostT div a,
+    #collapseComment div a{
         color: #110000;
         padding: 0 0 0 20px;
         margin: 5px 0 5px 0;
@@ -169,7 +170,8 @@
     #collapseInfo div a:hover, #collapsePurchase div a:hover, #collapseHeart div a:hover,
     #collapsePost div a:hover, #collapseQnAUser div a:hover, #collapseUser div a:hover,
     #collapseTruck div a:hover, #collapseApp div a:hover, #collapseQnAAdmin div a:hover,
-    #collapseInfoT div a:hover ,#collapseSale div a:hover, #collapsePostT div a:hover{
+    #collapseInfoT div a:hover ,#collapseSale div a:hover, #collapsePostT div a:hover,
+    #collapseComment div a:hover{
         color: #ffba49;
     }
 
@@ -202,7 +204,7 @@
                     </a>
                     <div class="collapse" id="collapseInfo" style="padding: 10px;">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="./getTruckInfo.jsp">내정보</a>
+                            <a class="collapse-item" href="./getTruckInfo.jsp">내 정보 보기</a>
                             <a class="collapse-item" href="./updateTruckPasswordBefore.jsp">비밀번호변경</a>
                         </div>
                     </div>
@@ -230,8 +232,8 @@
                     </a>
                     <div class="collapse" id="collapseComment" style="padding: 10px;">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">내가 작성한 댓글</a>
-                            <a class="collapse-item" href="">내게 달린 댓글</a>
+                            <a class="collapse-item" href="">작성 댓글</a>
+                            <a class="collapse-item" href="">달린 댓글</a>
                         </div>
                     </div>
                 </li>

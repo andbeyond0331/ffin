@@ -2,6 +2,7 @@ package com.ffin.service.truck;
 
 import com.ffin.common.Search;
 import com.ffin.service.domain.Truck;
+import com.ffin.service.domain.User;
 
 import java.util.Date;
 import java.util.List;
@@ -55,6 +56,11 @@ public interface TruckDao {
     public void logout(Truck truck) throws Exception ;
     // 푸드트럭 아이디 찾기
     public String findTruckId(String truckName, String truckPhone) throws Exception ;
+
+    //truck찾기
+    public String getTruckIdForPassword(String truckId, String truckName, String truckPhone) throws Exception;
+    //PW변경
+    public void updatePassword(Truck truck) throws Exception;
 
     // 푸드트럭 회원탈퇴
     public void byeTruck(Truck truck) throws Exception ;

@@ -191,6 +191,68 @@ public class TruckRestController {
         return Integer.toString(randomNumber);
     }
 
+    //아이디 찾기
+    @RequestMapping(value = "json/getTruckId", method = RequestMethod.POST)
+    @ResponseBody
+    public String getUserId(@RequestParam("truckName") String truckName, @RequestParam("truckPhone") String truckPhone,
+                            HttpServletRequest request) throws Exception{
+
+        System.out.println("TruckRestController.findTruckId : POST ");
+
+        System.out.println("!!!!!!!!!!!!!! : truckName = " + truckName + ", truckPhone = " + truckPhone);
+
+        Truck truck = new Truck();
+
+        truck.setTruckName(truckName);
+        truck.setTruckPhone(truckPhone);
+
+        String result = truckService.findTruckId(truckName, truckPhone);
+
+        if(result == null ){
+            return "fail";
+        }
+
+        return result;
+    }
+
+
+    //임시비밀번호 전송을 위한 user check
+    @RequestMapping(value = "json/getTruckIdForPassword", method = RequestMethod.POST)
+    @ResponseBody
+    public String getTruckIdForPassword(@RequestParam("truckId") String truckId, @RequestParam("truckName") String truckName,
+                                       @RequestParam("truckPhone") String truckPhone, HttpServletRequest request) throws Exception {
+        System.out.println("TruckRestController.getTruckPassword : POST");
+
+        Truck truck = new Truck();
+
+        truck.setTruckId(truckId);
+        truck.setTruckName(truckName);
+        truck.setTruckPhone(truckPhone);
+
+        String result = truckService.getTruckIdForPassword(truckId, truckName, truckPhone);
+        System.out.println("임시비밀번호 전송을 위한 truck get!!"+result);
+        return result;
+    }
+
+
+    //임시비밀번호전송
+    @RequestMapping(value = "json/sendSMSForPassword/{truckPhone}", method = RequestMethod.GET)
+    @ResponseBody
+    public String sendSMSForPassword(@RequestParam("truckId") String truckId, @PathVariable("truckPhone") String truckPhone,
+                                     HttpServletRequest request) throws Exception {
+
+        System.out.println("TruckRestController.sendSMSForPassword");// 휴대폰 문자보내기
+        System.out.println("truckPhone = " + truckPhone);
+
+        Random random = new Random();
+        int tempPassword = random.nextInt(888888)+111111;
+
+        truckService.sendSMSForPassword(truckId, truckPhone, tempPassword);
+
+        return Integer.toString(tempPassword);
+
+    }
+
 }
 
 
