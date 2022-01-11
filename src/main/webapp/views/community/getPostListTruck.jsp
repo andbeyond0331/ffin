@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <style>
@@ -27,13 +28,38 @@
     .container{
         margin-top: 132px
     }
+    .reply_list_profileImage{
+        width: 40px;
+        height: 40px;
+        border: 0px;
+        border-radius: 50%;
+    }
+    #write_reply_profileImage{
+        width: 40px;
+        height: 40px;
+        border: 0px;
+        border-radius: 50%;
+    }
 </style>
 <script type="text/javascript">
+
+    var role =  '${sessionScope.role}';
+    var proImg;
+    var uId;
+    if (role == 'user'){
+        proImg = '${sessionScope.user.userProImg}';
+        uId = '${sessionScope.user.userId}';
+    }else if(role=='truck'){
+        proImg = '${sessionScope.truck.truckProImg}';
+        uId = '${sessionScope.truck.truckId}';
+    }
+
+
 
     // 사진 클릭했을 때, modal 호출
 
     function getCardDetail(postNo) {
-        var role = '${sessionScope.role}';
+        //var role = '${sessionScope.role}';
 
         $.ajax({
             url:"/community/json/getCardDetail/"+postNo,
@@ -42,10 +68,41 @@
             success: function (data) {
                 var div="";
                 var modalFooter = "";
+                let hit = data.post.postHit;
+                $('#hit'+postNo).text(hit);
 
-                div += "<div class='row'>"+
-                    "<div><strong>제목</strong> : "+data.post.postTitle+"</div></div>"
-                      +"<div class='row'>"
+                    div += "<div class='row'>"+
+                        "<div><strong>제목</strong> : "+data.post.postTitle+"</div></div>"
+
+                    +"<div id='demo' class='carousel slide' data-ride='carousel'>"
+                    +"<div class='carousel-inner'>"
+                    +"<div class='carousel-item active'>"
+                    +"<img class='d-block w-100' src='../../../resources/image/"+data.post.postFile1+"' alt='First slide'>"
+                    +"<div class='carousel-caption d-none d-md-block'>"
+                    +"</div></div>"
+                +"<div class='carousel-item'>"
+                    +"<img class='d-block w-100' src='../../../resources/image/"+data.post.postFile2+"' alt='Second slide'>"
+                    +"</div>"
+               +" <div class='carousel-item'>"
+                  + " <img class='d-block w-100' src='../../../resources/image/"+data.post.postFile3+"' alt='Third slide'>"
+                   +" </div>"
+              + " <a class='carousel-control-prev' href='#demo' data-slide='prev'>"
+                   + "<span class='carousel-control-prev-icon' aria-hidden='true'></span>"
+                   + "</a>"
+              + " <a class='carousel-control-next' href='#demo' data-slide='next'>"
+                    +"<span class='carousel-control-next-icon' aria-hidden='true'></span>"
+                  + " </a>"
+              +  "<ul class='carousel-indicators'>"
+                   + "<li data-target='#demo' data-slide-to='0' class='active'></li>"
+                    + "<li data-target='#demo' data-slide-to='1'></li>"
+                   + "<li data-target='#demo' data-slide-to='2'></li>"
+               + "</ul>"
+                +" </div>";
+
+/* 슬라이드 해볼랫는데 안먹는당 */
+
+
+              /*        +"<div class='row'>"
                     +"<div ><strong></strong> <img src='../../../resources/image/"+data.post.postFile1+"'></div></div>";
 
                 if (data.post.postFile2 != null){
@@ -56,6 +113,9 @@
                     div += "<div class='row'>"
                         +"<div ><strong></strong> <img src='../../../resources/image/"+data.post.postFile3+"'></div></div>";
                 }
+*/
+                div += "<div class='row'>"+
+                    "<div>"+data.post.postContent+"</div></div>";
 
                 if (data.post.heartNo == '0'){
 
@@ -79,7 +139,12 @@
                             +"</svg>"
                             +"</a>"
                        +" </span>"
-+" <span id='m_reply"+data.post.postNo+"'>"+data.post.replyCount+"</span>"
+                    +" <span id='m_reply"+data.post.postNo+"'>"+data.post.replyCount+"</span>"
+                   +"<span> <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-eye' viewBox='0 0 16 16'>"
+											+"<path d='M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z' />"
+											+"<path d='M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z' />"
+										+"</svg>"
+						+"</span> <span id='hit"+data.post.postNo+"'>"+data.post.postHit+"</span>"
                  +"<div class='collapse' id='reply_card"+data.post.postNo+"'>"
                    +"<section class='modal-section'>"
                         +"<div class='card card-body'>"
@@ -88,7 +153,7 @@
                                 +"<div class='row reply_write'>"
                                     +"<div class='col-1'>"
                                         +"<a href='other_profile.do?other_nick='>"
-                                           +"<img id='write_reply_profileImage' src='/resources/image/1.jpg' />"
+                                           +"<img id='write_reply_profileImage' src='/resources/image/"+proImg+"' />"
                                        +" </a>"
                                     +"</div>"
                                     +"<div class='col-8' class='input_reply_div'>"
@@ -100,9 +165,7 @@
                                +" </div>"
                        +" </div>"
                    +" </section>"
-                +"</div>"
-                +"<div class='row'>"+
-                    "<div>"+data.post.postContent+"</div></div>";
+                +"</div>";
 
 
                 if (role == "user"){
@@ -140,8 +203,12 @@
                 $('.modal-content').append(modalFooter);
                 $('.modal-body').html(div);
 
+                console.log("data.post.postHit: "+data.post.postHit);
 
                 $('#staticBackdrop').modal('show');
+
+
+
 
 
             },
@@ -158,11 +225,12 @@
 
 
 
+
 </script>
 
 
 <head>
-    <title>트럭 게시판</title>
+    <title>사진 게시판</title>
     <jsp:include page="../../common/lib.jsp"/>
 
 
@@ -170,6 +238,95 @@
 
 <body id="page-top">
 <jsp:include page="/views/navbar.jsp" />
+
+
+<!-- 등록/ 수정 모달 -->
+<div class="modal fade"  id="modaladdPostPic" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modaladdPostPic" aria-hidden="true" style=" display: none; ">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                <div class="form-group">
+                    <span> 아이디 </span>
+                    <span id="postUser">${sessionScope.user.userId}${sessionScope.truck.truckId}</span>
+                </div>
+                <div class="form-group">
+                    <label for="menuImg1" class="col-sm-offset-1 col-sm-8 control-label">이미지1</label>
+                    <div class="col-sm-8">
+                        <input type="file" class="form-control" id="menuImg1" name="menuImg11"  value="${menu.menuImg1}" placeholder="메뉴 이미지1" onchange="setImage1Preview(event);">
+                    </div>
+                    <div id="image1preview"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="menuImg2" class="col-sm-offset-1 col-sm-8 control-label">이미지2</label>
+                    <div class="col-sm-8">
+                        <input type="file" class="form-control" id="menuImg2" name="menuImg22"  value="${menu.menuImg2}" placeholder="메뉴 이미지2" onchange="setImage2Preview(event);">
+                    </div>
+                    <div id="image2preview"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="menuImg3" class="col-sm-offset-1 col-sm-8 control-label">이미지3</label>
+                    <div class="col-sm-8">
+                        <input type="file" class="form-control" id="menuImg3" name="menuImg33"  value="${menu.menuImg3}" placeholder="메뉴 이미지3" onchange="setImage3Preview(event);">
+                    </div>
+                    <div id="image3preview"></div>
+                </div>
+                <script>
+
+                    function setImage1Preview(event){
+                        var reader  = new FileReader();
+
+                        reader.onload = function(event){
+                            var img = document.createElement("img");
+                            img.setAttribute("src", event.target.result);
+                            document.querySelector("div#image1preview").appendChild(img);
+                        };
+                        reader.readAsDataURL(event.target.files[0]);
+                    }
+
+                    function setImage2Preview(event){
+                        var reader  = new FileReader();
+
+                        reader.onload = function(event){
+                            var img = document.createElement("img");
+                            img.setAttribute("src", event.target.result);
+                            document.querySelector("div#image2preview").appendChild(img);
+                        };
+                        reader.readAsDataURL(event.target.files[0]);
+                    }
+
+                    function setImage3Preview(event){
+                        var reader  = new FileReader();
+
+                        reader.onload = function(event){
+                            var img = document.createElement("img");
+                            img.setAttribute("src", event.target.result);
+                            document.querySelector("div#image3preview").appendChild(img);
+                        };
+                        reader.readAsDataURL(event.target.files[0]);
+                    }
+
+                </script>
+                <div id="here"></div>
+
+                <div class="form-group">
+                    <textarea id="contentArea" style="resize:none;" rows="5" cols="55" title="내용을 입력해 주세요."></textarea>
+                </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -191,7 +348,11 @@
 
 <div class="card-colums" id="all_posting">
     <div class="container">
+        <div>
+            <a class='btn btn-warning' id ='modaladdPostPicbt' role='button' data-toggle='collapse' href='#modaladdPostPic' aria-expanded='false' aria-controls='modaladdPostPic'>등록</a>
+        </div>
         <div id="card-box" class="cards-box">
+
             <c:forEach var="post" items="${list}">
                 <div class="card" name ="card" id="card${post.postNo}" style="width: 23rem; margin-bottom:15px; margin-left: 10px;" >
                     <img class="card-img-top" src="../../resources/image/${post.postFile1}" alt="Card image cap"
@@ -242,7 +403,15 @@
                                    <i class="fas fa-beer"></i>
                                 </a>
                         </span>
-                        <span id="reply${post.postNo }">${post.heartCount }</span>
+                        <span id="reply${post.postNo }">${post.replyCount }</span>
+
+                        <span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+											<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+											<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+										</svg>
+						</span> <span id="hit${post.postNo }">${post.postHit }</span>
+
+
                     </div>
                 </div>
             </c:forEach>
@@ -252,6 +421,34 @@
     </div>
 </div>
 <script>
+    $(function(){
+// 이미지 슬라이드 컨트롤를 사용하기 위해서는 carousel를 실행해야한다.
+        $('.carousel').carousel({
+// 슬리아딩 자동 순환 지연 시간
+// false면 자동 순환하지 않는다.
+            interval: 1000,
+// hover를 설정하면 마우스를 가져대면 자동 순환이 멈춘다.
+            pause: "hover",
+// 순환 설정, true면 1 -> 2가면 다시 1로 돌아가서 반복
+            wrap: true,
+// 키보드 이벤트 설정 여부(?)
+            keyboard : true
+        });
+
+
+
+
+        $("#modaladdPostPic").on('hide.bs.modal', function (e) {
+            // self.location = "/catering/listCatering"
+            window.location.reload();
+            e.stopImmediatePropagation();
+        });
+
+
+
+    });
+
+
 
     $("body").on("click", ".open_reply_list", function() {
         let postNo = $(this).attr('idx');
@@ -284,15 +481,29 @@
                     let grp = data.replyList[i].grp;
                     let grps = data.replyList[i].grps;
                     let grpl = data.replyList[i].grpl;
-                    let commentUserId = data.replyList[i].commentUserId;
-                    let commentTruckId = data.replyList[i].commentTruckId;
+                    let commentUser = data.replyList[i].commentUserId;
+                    let commentTruck = data.replyList[i].commentTruckId;
                     let commentContent =data.replyList[i].commentContent;
                     let commentDate = data.replyList[i].commentDate;
                     let wgap = data.replyList[i].wgap;
-                    let userProImg = data.replyList[i].userProImg;
+                    let userPro = data.replyList[i].userProImg;
+                    let truckPro = data.replyList[i].truckProImg;
+                    let commentUserId="";
+                    let userProImg="";
+
+                    console.log("userPro:: "+userPro)
+                    if (commentUser=="" || !commentUser){
+                        commentUserId = commentTruck;
+                        userProImg = truckPro;
+                    }else{
+                        commentUserId = commentUser;
+                        userProImg = userPro;
+                    }
 
                     console.log(grpl);	// 모댓글일땐 0, 답글일땐 1
-                    console.log("commentNo : "+commentNo)
+                    console.log("commentUserId: "+commentUserId)
+                    console.log("userProImg: "+userProImg)
+
                     listHtml += "<div class='row replyrow reply" + commentNo + "'>";
 
                     if(commentContent == ""){		// 삭제된 댓글일때
@@ -303,7 +514,7 @@
                         if(grpl == 0){	// 모댓글일때
                             listHtml += "	<div class='col-1'>";
                             listHtml += "		<a href='other_profile.do?other_nick="+commentUserId+"'> ";
-                            listHtml += "			<img class='reply_list_profileImage' src='/resources/image/1.jpg'/>";
+                            listHtml += "			<img class='reply_list_profileImage' src='/resources/image/"+userProImg+"'/>";
                             listHtml += "		</a> ";
                             listHtml += "	</div>";
                             listHtml += "	<div class='rereply-content col-8'>";
@@ -316,7 +527,7 @@
                             listHtml += "			</span>";
                             listHtml += "		</div>";
                             // 현재 로그인 상태일때 답글작성 버튼이 나온다.
-                            if("${sessionScope.user.userId}" != ""){
+
                                 listHtml += "		<div>";
                                 // 함수에 게시글번호(bno), 모댓글번호(no), 모댓글 작성자(writer)를 인자로 담아서 넘긴다.
                                 // 이때 모댓글 작성자 writer는 string인데 string을 인자에 넣기 위해선''나""로 감싸줘야한다.
@@ -325,14 +536,14 @@
                                 //listHtml += "			<button type='button' class='write_reply_start' no='" + commentNo + "' bno='" + commentPostNo + "' data-bs-toggle='collapse' data-bs-target='#re_reply"+ commentNo +"' aria-expanded='false' aria-controls='re_reply"+ commentNo +"'>답글&nbsp;달기</button>";
                                 listHtml +="        <a class='btn btn-primary' role='button' data-toggle='collapse' href='#re_reply"+ commentNo +"' aria-expanded='false' aria-controls='collapseExample'>답글달기</a>"
                                 listHtml += "		</div>";
-                            }
+
                             listHtml += "	</div>";
 
                         }else{	// 답글일때
                             listHtml += "	<div class='col-1'>"
                             listHtml += "	</div>"
                             listHtml += "	<div class='col-1'>";
-                            listHtml += "		<img class='reply_list_profileImage' src='/resources/image/1.jpg'/>";
+                            listHtml += "		<img class='reply_list_profileImage' src='/resources/image/"+userProImg+"'/>";
                             listHtml += "	</div>";
                             listHtml += "	<div class='rereply-content"+ commentNo +" col-7'>";
                             listHtml += "		<div>";
@@ -353,23 +564,23 @@
                         listHtml += "		</div>";
                         // 책갈피
                         // 현재 로그인 상태이고..
-                        if("${sessionScope.user.userId}" != ""){
+
 
                             //현재 사용자가 이 댓글의 작성자일때 삭제 버튼이 나온다.
-                            if("${sessionScope.user.userId}" == commentUserId){
+                            if(uId == commentUserId){
                                 listHtml += "		<div>";
                                 // 수정할 댓글의 no를 grpl과 함께 넘긴다.
                                 // 모댓글 수정칸과 답글 수정칸을 화면에 다르게 나타내야하기 때문에 모댓글과 답글을 구분하는 grpl을 함께 넘겨주어야한다.
                                 //listHtml += "			<a href='javascript:' no='"+ no +"' grpl='"+ grpl +"' class='reply_modify'>수정</a>";
                                 //listHtml += "			&nbsp;|&nbsp;";
                                 // 삭제는 no만 넘겨주면 된다.
-                                listHtml += "			<a href='javascript:' no='"+ commentNo +"' grpl='"+ grpl + "' bno='"+ commentPostNo +"' grp='"+ grp +"' class='reply_delete'>삭1제</a>";
+                                listHtml += "			<a href='javascript:' no='"+ commentNo +"' grpl='"+ grpl + "' bno='"+ commentPostNo +"' grp='"+ grp +"' class='reply_delete'>삭제</a>";
 /*
                                 listHtml += '			<a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">삭제</a>'
 */
                                 listHtml += "		</div>";
                             }
-                        }
+
 
                         listHtml += "	</div>";
                         // 댓글에 답글달기를 누르면 답글입력란이 나온다.
@@ -379,8 +590,8 @@
                         listHtml += "		<div class='col-1'>"
                         listHtml += "		</div>"
                         listHtml += "		<div class='col-1'>"
-                        listHtml += "			<a href='other_profile.do?other_nick="+commentUserId+"'> ";
-                        listHtml += "				<img id='write_reply_profileImage' src='/resources/image/1.jpg'/>"
+                        listHtml += "			<a href='other_profile.do?other_nick="+uId+"'> ";
+                        listHtml += "				<img id='write_reply_profileImage' src='/resources/image/"+proImg+"'/>"
                         listHtml += "			</a> ";
                         listHtml += "		</div>"
                         listHtml += "		<div class='col-7'>"
@@ -484,11 +695,15 @@
                     commentContent: content
                 },
                 success : function(pto) {
-                    alert("여기!!!!!!")
+
                     let reply = pto.replyCount;
                     // 페이지, 모달창에 댓글수 갱신
+                    var modal = $('#staticBackdrop');
 
-                    $('#m_reply'+bno).text(reply);//
+                    // 페이지에 하트수 갱신
+
+                    // 페이지, 모달창에 댓글수 갱신
+                    modal.find('#m_reply'+bno).text(reply);//
                     $('#reply'+bno).text(reply);
 
                     console.log("답글 작성 성공");
@@ -517,9 +732,12 @@
             success : function(pto) {
 
                 let reply = pto.replyCount;
+                var modal = $('#staticBackdrop');
+
+                // 페이지에 하트수 갱신
 
                 // 페이지, 모달창에 댓글수 갱신
-                $('#m_reply'+bno).text(reply);
+                modal.find('#m_reply'+bno).text(reply);
                 $('#reply'+bno).text(reply);
 
                 console.log("모댓글 삭제 성공");
@@ -551,8 +769,12 @@
                 alert("!!!!!!!!!!!!!!!!!")
                 let reply = pto.replyCount;
 
+                var modal = $('#staticBackdrop');
+
+                // 페이지에 하트수 갱신
+
                 // 페이지, 모달창에 댓글수 갱신
-                $('#m_reply'+bno).text(reply);
+                modal.find('#m_reply'+bno).text(reply);
                 $('#reply'+bno).text(reply);
 
                 console.log("답글 삭제 성공");
@@ -680,7 +902,9 @@
 
                     let reply = pto.replyCount;
                     // 페이지, 모달창에 댓글수 갱신
-                    $('#m_reply'+postNo).text(reply);
+                    var modal = $('#staticBackdrop');
+
+                    modal.find('#m_reply'+postNo).text(reply);
                     $('#reply'+postNo).text(reply);
 
                     console.log("댓글 작성 성공");
@@ -696,7 +920,9 @@
         }
 
     });
-
+    $("body").on("click", "a[id='modaladdPostPicbt']", function() {
+        $('#modaladdPostPic').modal('show');
+    });
 
 </script>
 

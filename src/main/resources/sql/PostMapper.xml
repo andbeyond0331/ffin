@@ -21,6 +21,7 @@
         <result property="heartUserId"          column="HEART_USER_ID"           jdbcType="VARCHAR"/>
         <result property="heartTruckId"          column="HEART_TRUCK_ID"           jdbcType="VARCHAR"/>
         <result property="replyCount"          column="REPLY_COUNT"           jdbcType="NUMERIC"/>
+        <result property="postCategory"          column="POST_CATEGORY"           jdbcType="VARCHAR"/>
 
         <association property="postUser"    javaType="user">
             <id property="userId"           column="POST_USER_ID"       jdbcType="VARCHAR"/>
@@ -35,8 +36,8 @@
     <!-- SQL : INSERT -->
     <insert id="addPost"    parameterType="post">
         INSERT INTO POST (POST_USER_ID, POST_TRUCK_ID, POST_TITLE, POST_CONTENT, POST_REG_DATE, SECRET_KEY, POST_FILE1,
-                          POST_FILE2, POST_FILE3)
-        VALUES (#{postUser.userId}, #{postTruck.truckId}, #{postTitle}, #{postContent}, DATE_FORMAT(now(), '%Y-%m-%d'), DEFAULT, #{postFile1}, #{postFile2}, #{postFile3})
+                          POST_FILE2, POST_FILE3, POST_CATEGORY)
+        VALUES (#{postUser.userId}, #{postTruck.truckId}, #{postTitle}, #{postContent}, DATE_FORMAT(now(), '%Y-%m-%d'), DEFAULT, #{postFile1}, #{postFile2}, #{postFile3}, 'g')
     </insert>
 
     <!-- SQL :SELECT ONE-->
@@ -74,10 +75,10 @@
                 <bind name="searchKeyword" value="'%' + searchKeyword + '%'"/>
                 <if test="searchCondition == 0 and searchKeyword !='' ">
                     post_user_id LIKE #{searchKeyword}
-                    OR post_truck_id LIKE #{searchKeyword}
+                    OR post_truck_id LIKE #{searchKeyword}  AND POST_CATEGORY='g'
                 </if>
                 <if test="searchCondition == 1 and searchKeyword !='' ">
-                    post_title LIKE #{searchKeyword}
+                    post_title LIKE #{searchKeyword}  AND POST_CATEGORY='g'
                 </if>
             </where>
         </if>
@@ -112,10 +113,10 @@
                 <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
                 <if test="searchCondition == 0 and searchKeyword !='' ">
                     AND post_user_id LIKE #{searchKeyword}
-                    OR post_truck_id LIKE #{searchKeyword}
+                    OR post_truck_id LIKE #{searchKeyword} AND POST_CATEGORY='g'
                 </if>
                 <if test="searchCondition == 1 and searchKeyword !='' ">
-                    AND post_title LIKE #{searchKeyword}
+                    AND post_title LIKE #{searchKeyword} AND POST_CATEGORY='g'
                 </if>
             </where>
         </if> ) countTable
@@ -129,10 +130,10 @@
             <where>
                 <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
                 <if test="searchCondition == 0 and searchKeyword !='' ">
-                    AND post_user_id LIKE #{searchKeyword}
+                    AND post_user_id LIKE #{searchKeyword} AND POST_CATEGORY='g'
                 </if>
                 <if test="searchCondition == 1 and searchKeyword !='' ">
-                    AND post_title LIKE #{searchKeyword}
+                    AND post_title LIKE #{searchKeyword} AND POST_CATEGORY='g'
                 </if>
             </where>
         </if> ) countTable
@@ -147,10 +148,10 @@
             <where>
                 <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
                 <if test="searchCondition == 0 and searchKeyword !='' ">
-                    AND post_truck_id LIKE #{searchKeyword}
+                    AND post_truck_id LIKE #{searchKeyword} AND POST_CATEGORY='g'
                 </if>
                 <if test="searchCondition == 1 and searchKeyword !='' ">
-                    AND post_title LIKE #{searchKeyword}
+                    AND post_title LIKE #{searchKeyword} AND POST_CATEGORY='g'
                 </if>
             </where>
         </if> ) countTable
@@ -205,14 +206,15 @@
 
 
         <!-- 리스트 + user/truck 구분하여 heart를 눌렀는지 여부도 체크해야 했기 때문에 outer join  -->
-        SELECT p.*, h.heart_no FROM post p LEFT OUTER JOIN heart AS h ON p.POST_NO = h.HEART_TARGET_P
+        select * from
+        (SELECT p.*, h.heart_no FROM post p LEFT OUTER JOIN heart AS h ON p.POST_NO = h.HEART_TARGET_P
         <if test="role == 'user'">
-        AND h.HEART_USER_ID=#{id}
+            AND h.HEART_USER_ID=#{id}
         </if>
         <if test="role == 'truck'">
-        AND h.HEART_TRUCK_ID=#{id}
+            AND h.HEART_TRUCK_ID=#{id}
         </if>
-
+        ) p1 where p1.POST_CATEGORY='p'
     </select>
 
 
@@ -235,6 +237,10 @@
     </select>
 
 
-
+    <!-- 조회수 증가 -->
+    <update id="post_hit_up" parameterType="int">
+        update post set post_hit=post.post_hit+1
+        where POST_NO=#{int}
+    </update>
 
 </mapper>

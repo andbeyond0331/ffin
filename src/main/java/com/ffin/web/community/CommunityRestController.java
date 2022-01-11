@@ -246,8 +246,9 @@ public class CommunityRestController {
 
         }
 
+        communityService.updatePostHitUp(postNo);
         Post post = communityService.getCardDetail(id, role, postNo);
-        System.out.println("post = " + post);
+
 
         ModelAndView mv = new ModelAndView("jsonView");
         mv.addObject("post", post);
@@ -268,6 +269,8 @@ public class CommunityRestController {
         String role = (String) session.getAttribute("role");
         ArrayList<Comment> replyList = new ArrayList();
         replyList = communityService.getreplyList(role, postNo);
+
+
         ModelAndView mv = new ModelAndView("jsonView");
         mv.addObject("replyList", replyList);
         return mv;
@@ -278,7 +281,7 @@ public class CommunityRestController {
     @ResponseBody
     @RequestMapping(value = "json/write_rereply")
     public ModelAndView write_rereply(@RequestParam int commentNo, @RequestParam int commentPostNo , @RequestParam String commentContent,
-                                   HttpSession session) throws Exception {
+                                   HttpSession session,  HttpServletRequest request) throws Exception {
 
         Comment to = new Comment();
 
@@ -291,7 +294,7 @@ public class CommunityRestController {
 
         // 답글은 깊이가 1이되어야 하므로 grpl을 1로 세팅한다.
         to.setGrpl(1);
-
+        commentContent = new String(request.getParameter("commentContent").getBytes("8859_1"),"UTF-8");
         // 답글 내용 세팅
         to.setCommentContent(commentContent);
 
@@ -299,7 +302,7 @@ public class CommunityRestController {
         if (role =="user"){
             to.setCommentUserId(((User)session.getAttribute("user")).getUserId());
         }else if (role =="truck"){
-            to.setCommentUserId(((Truck)session.getAttribute("truck")).getTruckId());
+            to.setCommentTruckId(((Truck)session.getAttribute("truck")).getTruckId());
         }
         // 답글작성자 nick을 writer로 세팅
 
@@ -376,14 +379,14 @@ public class CommunityRestController {
 
     @ResponseBody
     @RequestMapping(value = "json/write_reply")
-    public ModelAndView write_reply(@RequestParam int postNo, @RequestParam String commentContent, HttpSession session) throws Exception {
+    public ModelAndView write_reply(@RequestParam int postNo, @RequestParam String commentContent, HttpSession session, HttpServletRequest request) throws Exception {
 
         System.out.println("PostNo = " + postNo + ", commentContent = " + commentContent);
         Comment to = new Comment();
 
         // 게시물 번호 세팅
         to.setCommentPostNo(postNo);
-
+       commentContent = new String(request.getParameter("commentContent").getBytes("8859_1"),"UTF-8");
         // 댓글 내용 세팅
         to.setCommentContent(commentContent);
 
@@ -392,7 +395,7 @@ public class CommunityRestController {
         if (role =="user"){
             to.setCommentUserId(((User)session.getAttribute("user")).getUserId());
         }else if (role =="truck"){
-            to.setCommentUserId(((Truck)session.getAttribute("truck")).getTruckId());
+            to.setCommentTruckId(((Truck)session.getAttribute("truck")).getTruckId());
         }
 
         // +1된 댓글 갯수를 담아오기 위함

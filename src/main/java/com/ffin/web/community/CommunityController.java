@@ -386,6 +386,8 @@ public class CommunityController {
 
         }
 
+        String cate = "p"; //게시판 구분
+
         // Business Logic 수행
         Map<String, Object> map = communityService.getPostList2(search, id, role);
 

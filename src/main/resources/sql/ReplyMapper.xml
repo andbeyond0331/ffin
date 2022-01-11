@@ -19,6 +19,8 @@
         <result property="grpl"        column="grpl"        jdbcType="NUMERIC"/>
 
         <result property="replyCount"        column="REPLY_COUNT"        jdbcType="NUMERIC"/>
+        <result property="truckProImg"       column="TRUCK_PRO_IMG"        jdbcType="VARCHAR"/>
+        <result property="userProImg"       column="USER_PRO_IMG"        jdbcType="VARCHAR"/>
     </resultMap>
 
 
@@ -32,7 +34,7 @@
     </insert>
 
     <!-- 댓글 쓰기 /truck-->
-    <insert id="reply_write_tser" parameterType="comment">
+    <insert id="reply_write_truck" parameterType="comment">
         INSERT INTO COMMENT (COMMENT_POST_NO, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY, grp, grps, grpl)
         VALUES (#{commentPostNo},  #{commentTruckId}, #{commentContent}, DATE_FORMAT(now(), '%Y-%m-%d'), DEFAULT, #{grp}, 0, 0);
     </insert>
@@ -68,7 +70,7 @@
     </update>
 
     <!-- 댓글 리스트 가져오기 //user-->
-    <select id="replyListUser" parameterType="int" resultMap="replySelectMap">
+    <select id="getreplyList" parameterType="int" resultMap="replySelectMap">
         select c.COMMENT_NO, c.COMMENT_POST_NO, c.grp, c.grpl, c.COMMENT_USER_ID, c.COMMENT_TRUCK_ID, c.COMMENT_CONTENT, date_format(c.COMMENT_DATE,'%Y-%m-%d') comment_date, datediff(now(), comment_date) wgap , u.USER_PRO_IMG
         from comment c left outer join user u on c.COMMENT_USER_ID = u.USER_ID
         where c.COMMENT_POST_NO = #{int}
@@ -76,12 +78,25 @@
     </select>
 
     <!-- 댓글 리스트 가져오기 //truck-->
-    <select id="replyListTruck" parameterType="int" resultMap="replySelectMap">
+  <!--  <select id="replyListTruck" parameterType="int" resultMap="replySelectMap">
         select c.COMMENT_NO, c.COMMENT_POST_NO, c.grp, c.grpl, c.COMMENT_USER_ID, c.COMMENT_TRUCK_ID, c.COMMENT_CONTENT, date_format(c.COMMENT_DATE,'%Y-%m-%d') comment_date, datediff(now(), comment_date) wgap , t.TRUCK_PRO_IMG
         from comment c left outer join truck t on c.COMMENT_TRUCK_ID = t.TRUCK_ID
         where c.COMMENT_POST_NO = #{int}
         order by grp asc, grps desc
+    </select>-->
+
+    <!-- 사진 갖고오깅 ㅜ user-->
+    <select id="get_pro_img_user" parameterType="String" resultType="String">
+        select USER_PRO_IMG from user
+        where USER_ID = #{id}
     </select>
+    <!-- 사진 갖고오깅 ㅜ truck-->
+    <select id="get_pro_img_truck" parameterType="String" resultType="String">
+        select TRUCK_PRO_IMG from truck
+        where TRUCK_ID = #{id}
+    </select>
+
+
 
 
 

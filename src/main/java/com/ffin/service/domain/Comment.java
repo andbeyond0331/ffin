@@ -14,7 +14,7 @@ public class Comment {
 	private String commentContent;
 	private String commentUserId;
 	private String commentTruckId;
-	private Timestamp commentDate;
+	private String commentDate;
 	private int secretKey;
 
 	//HHJ
@@ -28,7 +28,8 @@ public class Comment {
 	private String wgap;
 
 	//프로필사진을 가져온다.
-	private String profile;
+	private String userProImg;
+	private String truckProImg;
 
 
 

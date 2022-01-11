@@ -30,4 +30,5 @@ public class Post {
 	private String heartUserId;
 	private String heartTruckId;
 	private int replyCount;
+	private String postCategory;
 }

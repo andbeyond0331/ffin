@@ -24,7 +24,7 @@ public class CommunityServiceImpl implements CommunityService {
     @Qualifier("communityDaoImpl")
     private CommunityDao communityDao;
 
-    public void setCommunityDao(CommunityDao communityDao){
+    public void setCommunityDao(CommunityDao communityDao) {
         this.communityDao = communityDao;
     }
 
@@ -167,13 +167,15 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
 
-    public int addHeart(String role, Heart heart) throws Exception{
+    public int addHeart(String role, Heart heart) throws Exception {
         return communityDao.addHeart(role, heart);
     }
-    public int removeHeart(String role, Heart heart) throws Exception{
+
+    public int removeHeart(String role, Heart heart) throws Exception {
         return communityDao.removeHeart(role, heart);
     }
-    public Post getCardDetail(String id, String role, int postNo) throws Exception{
+
+    public Post getCardDetail(String id, String role, int postNo) throws Exception {
         return communityDao.getCardDetail(id, role, postNo);
     }
 
@@ -205,5 +207,9 @@ public class CommunityServiceImpl implements CommunityService {
     @Override
     public int profile_pictureWriteReply(Comment comment) throws Exception {
         return communityDao.profile_pictureWriteReply(comment);
+    }
+
+    public void updatePostHitUp(int postNo) throws Exception {
+        communityDao.updatePostHitUp(postNo);
     }
 }

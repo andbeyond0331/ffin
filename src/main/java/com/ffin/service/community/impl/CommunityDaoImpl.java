@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -197,16 +198,21 @@ public class CommunityDaoImpl implements CommunityDao {
         }
         return heartCount;
     }
+
+
     public Post getCardDetail(String id, String role, int postNo) throws Exception{
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("id", id);
         map.put("role", role);
         map.put("postNo", postNo);
+
         return sqlSession.selectOne("PostMapper.getCardDetail", map);
     }
 
 
-
+public void updatePostHitUp (int postNo) throws Exception{
+    sqlSession.update("PostMapper.post_hit_up", postNo);
+}
 
 
 
@@ -281,13 +287,24 @@ public class CommunityDaoImpl implements CommunityDao {
     // 댓글 리스트
     public ArrayList<Comment> getreplyList(String role, int postNo){
 
-        ArrayList<Comment> replyList = new ArrayList();
+        ArrayList<Comment> replyList = (ArrayList) sqlSession.selectList("ReplyMapper.getreplyList", postNo);
 
-        if (role == "user") {
+        for (int i=0; i<replyList.size(); i++){
+
+            if (replyList.get(i).getCommentUserId() == null){
+                replyList.get(i).setTruckProImg(sqlSession.selectOne("ReplyMapper.get_pro_img_truck", replyList.get(i).getCommentTruckId()));
+
+            }else {
+                replyList.get(i).setUserProImg(sqlSession.selectOne("ReplyMapper.get_pro_img_user", replyList.get(i).getCommentUserId()));
+            }
+
+
+        }
+      /*  if (role == "user") {
             replyList = (ArrayList) sqlSession.selectList("ReplyMapper.replyListUser", postNo);
         }else if(role=="truck"){
             replyList = (ArrayList) sqlSession.selectList("ReplyMapper.replyListTruck", postNo);
-        }
+        }*/
         return replyList;
     }
 

@@ -13,6 +13,14 @@
         <result property="commentContent"       column="COMMENT_CONTENT"        jdbcType="VARCHAR"/>
         <result property="commentDate"          column="COMMENT_DATE"           jdbcType="DATE"/>
         <result property="secretKey"            column="SECRET_KEY"             jdbcType="CHAR"/>
+
+
+        <result property="grp"        column="grp"        jdbcType="NUMERIC"/>
+        <result property="grps"        column="grps"        jdbcType="NUMERIC"/>
+        <result property="grpl"        column="grpl"        jdbcType="NUMERIC"/>
+
+        <result property="replyCount"        column="REPLY_COUNT"        jdbcType="NUMERIC"/>
+
     </resultMap>
 
     <!-- SQL : INSERT -->
@@ -69,4 +77,6 @@
         FROM comment
         where comment_no = #{commentNo}
     </delete>
+
+
 </mapper>

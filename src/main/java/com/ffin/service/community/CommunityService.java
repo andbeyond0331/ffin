@@ -64,4 +64,6 @@ public interface CommunityService {
     public int deleteReReply(Comment comment) throws Exception;
     public int profile_pictureWriteReply(Comment comment) throws Exception;
 
+    public void updatePostHitUp (int postNo) throws Exception;
+
 }
