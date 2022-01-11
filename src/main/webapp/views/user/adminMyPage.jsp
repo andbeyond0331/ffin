@@ -77,10 +77,10 @@
 				self.location = "/user/getBlackList"
 			});
 			$('.truckAddList').click(function () {
-				self.location = ""
+				self.location = "/qna/getReportList"
 			});
 			$('.qnaList').click(function () {
-				self.location = "/qna/getInquiryList"
+				self.location = "/qna/getInquiryListByAdmin"
 			});
 
 

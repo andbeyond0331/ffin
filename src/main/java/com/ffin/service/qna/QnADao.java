@@ -28,6 +28,8 @@ public interface QnADao {
     public void addInquiry(Inquiry inquiry) throws Exception;
     //문의조회
     public Inquiry getInquiry(int inquiryNo) throws Exception;
+    //전체목록
+    public List<Inquiry> getInquiryListByAdmin(Search search) throws Exception;
     //유저문의목록
     public List<Inquiry> getUserInquiryList(Map<String, Object> map) throws Exception;
     //트럭문의목록

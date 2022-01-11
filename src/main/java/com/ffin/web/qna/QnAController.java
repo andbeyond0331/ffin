@@ -12,10 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -35,6 +33,30 @@ public class QnAController {
 
     @Value("#{commonProperties['pageSize']}")
     int pageSize;
+
+
+    @RequestMapping(value = "getReportList")
+    public String getReportList(@ModelAttribute("search")Search search, Model model, HttpSession session) throws Exception {
+
+        System.out.println("QnAController.getReportList");
+
+        if(search.getCurrentPage() == 0){
+            search.setCurrentPage(1);
+        }
+        search.setPageSize(pageSize);
+
+        Map<String, Object> map = qnAService.getReportList(search);
+
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+        System.out.println("search = " + search + "resultPage = "+resultPage);
+
+        model.addAttribute("list", map.get("list"));
+        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("search", search);
+
+        return "/views/user/getReportListByAdmin.jsp";
+
+    }
 
 
 
@@ -63,6 +85,28 @@ public class QnAController {
         System.out.println("addInquiry :: "+inquiry);
 
         return "/views/user/userMyPage.jsp";
+    }
+
+    @RequestMapping(value = "getInquiryListByAdmin")
+    public String getInquiryListByAdmin(@ModelAttribute("search")Search search, Model model, HttpSession session) throws Exception {
+
+        System.out.println("QnAController.getInquiryListByAdmin");
+
+        if(search.getCurrentPage() == 0){
+            search.setCurrentPage(1);
+        }
+        search.setPageSize(pageSize);
+
+        Map<String, Object> map = qnAService.getInquiryListByAdmin(search);
+
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+        System.out.println("search = " + search + "resultPage = "+resultPage);
+
+        model.addAttribute("list", map.get("list"));
+        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("search", search);
+
+        return "/views/user/getInquiryListByAdmin.jsp";
     }
 
     @RequestMapping(value = "getUserInquiryList")

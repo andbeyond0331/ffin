@@ -114,26 +114,28 @@
 					</where>
 				</if>
 			  order by user_id ) inner_table
-		limit 0,8;
+		limit #{startRowNum}, #{pageSize}
 	</select>
 
 	<select id="getBlackList" parameterType="search" resultMap="userSelectMap">
 		SELECT inner_table.*
-		FROM( SELECT USER_ID, USER_PASSWORD, USER_NAME, USER_PHONE, REPORT_COUNT, USER_EMAIL, USER_EMAIL_STATUS, ROLE, BLACK_REG_DATE, BLACK_END_DATE
-		FROM user
-		<if test="searchCondition != null">
-			<where>
-				<bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
-				<if test="searchCondition == 0 and searchKeyword !='' ">
-					AND user_id LIKE #{searchKeyword}
-				</if>
-				<if test="searchCondition == 1 and searchKeyword !='' ">
-					AND user_name LIKE #{searchKeyword}
-				</if>
-			</where>
-		</if>
-		order by user_id ) inner_table
-		limit 0,8;
+		FROM( SELECT u.USER_ID, u.USER_PASSWORD, u.USER_NAME, u.USER_PHONE, u.REPORT_COUNT, u.USER_EMAIL, u.BLACK_REG_DATE, u.BLACK_END_DATE,
+		             r.REPORT_CONTENT, r.REPORT_DATE, r.REPORT_LINK, r.REPORT_NO, r.REPORT_PROC_STATUS, r.REPORT_TARGET_ID, r.REPORT_USER_ID
+					FROM report r, user u
+					<if test="searchCondition != null">
+						<where>
+							<bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+							<if test="searchCondition == 0 and searchKeyword !='' ">
+								AND user_id LIKE #{searchKeyword}
+							</if>
+							<if test="searchCondition == 1 and searchKeyword !='' ">
+								AND user_name LIKE #{searchKeyword}
+							</if>
+						</where>
+					</if>
+					WHERE u.user_id = r.report_target_id AND u.REPORT_COUNT%3 = 0 AND u.REPORT_COUNT != 0
+					GROUP BY u.user_id ) inner_table
+		limit #{startRowNum}, #{pageSize}
 	</select>
 
 

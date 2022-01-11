@@ -1,5 +1,6 @@
 package com.ffin.web.qna;
 
+import com.ffin.service.domain.Inquiry;
 import com.ffin.service.domain.UploadImage;
 import com.ffin.service.qna.QnAService;
 import net.coobird.thumbnailator.Thumbnails;
@@ -11,11 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -40,6 +39,34 @@ public class QnARestController {
     public QnARestController() {
         System.out.println("QnARestController.QnARestController");
     }
+
+
+    @RequestMapping(value = "json/getInquiry/{inquiryNo}", method = RequestMethod.GET)
+    public ModelAndView getInquiry(@PathVariable int inquiryNo) throws Exception {
+
+        System.out.println("QnARestController.getInquiry : GET");
+
+        ModelAndView modelAndView = new ModelAndView("jsonView");
+        Inquiry inquiry = qnAService.getInquiry(inquiryNo);
+        modelAndView.addObject("inquiry", inquiry);
+
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value = "json/updateInquiryAns", method = RequestMethod.POST)
+    @ResponseBody
+    public Inquiry updateInquiryAns(@ModelAttribute Inquiry inquiry, @RequestParam("inquiryNo") int inquiryNo) throws Exception {
+
+        System.out.println("QnARestController.updateInquiryAns : POST");
+
+        qnAService.updateInquiryAns(inquiry);
+
+        System.out.println("문의답변 :: "+inquiry);
+
+        return qnAService.getInquiry(inquiryNo);
+    }
+
 
     /* 첨부파일 업로드 & 썸네일 */
     @RequestMapping(value = "json/uploadInquiryFile", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
