@@ -41,15 +41,9 @@
                 return;
             }
 
-            $("form").attr("method", "GET").attr("action", "/views/truck/updateTruckPassword.jsp").submit();
+            $("form").attr("method", "GET").attr("action", "/truck/updateTruckPassword").submit();
             alert("Password 변경화면으로 이동합니다.");
         }
-
-
-
-
-
-
 
 
 

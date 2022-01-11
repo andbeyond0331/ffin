@@ -1,8 +1,12 @@
 package com.ffin.service.truck.impl;
 
 import com.ffin.common.Search;
+import com.ffin.service.domain.Post;
+import com.ffin.service.domain.Purchase;
 import com.ffin.service.domain.Truck;
 import com.ffin.service.domain.User;
+import com.ffin.service.purchase.PurchaseDao;
+import com.ffin.service.purchase.impl.PurchaseServiceImpl;
 import com.ffin.service.truck.TruckDao;
 import com.ffin.service.truck.TruckService;
 import net.nurigo.java_sdk.api.Message;
@@ -32,6 +36,7 @@ public class TruckServiceImpl implements TruckService {
     @Autowired
     @Qualifier("truckDaoImpl")
     private TruckDao truckDao;
+    private PurchaseDao purchaseDao;
 
     public void setTruckDao(TruckDao truckDao) {
         this.truckDao = truckDao;
@@ -83,6 +88,11 @@ public class TruckServiceImpl implements TruckService {
     // 게시판 Page 처리를 위한 전체Row(totalCount)
     @Override
     public int getTotalCount(Search search) throws Exception {
+        return 0;
+    }
+
+    @Override
+    public int getTotalCountSales(Search search) throws Exception {
         return 0;
     }
 
@@ -236,10 +246,12 @@ public class TruckServiceImpl implements TruckService {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("to", truckPhoneNumber); // 수신전화번호
         params.put("from", "01065827117"); // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
-        params.put("type", "SMS"); params.put("text", "[TEST] 인증번호는" + "["+randomNumber+"]" + "입니다."); // 문자 내용 입력
+        params.put("type", "SMS");
+        params.put("text", "[TEST] 인증번호는" + "[" + randomNumber + "]" + "입니다."); // 문자 내용 입력
         params.put("app_version", "test app 1.2"); // application name and version
 
-        try { JSONObject obj = (JSONObject) coolsms.send(params);
+        try {
+            JSONObject obj = (JSONObject) coolsms.send(params);
             System.out.println(obj.toString());
         } catch (CoolsmsException e) {
             System.out.println(e.getMessage());
@@ -254,6 +266,7 @@ public class TruckServiceImpl implements TruckService {
         System.out.println("truckServiceImpl.autoLogin");
         truckDao.autoLogin(truckId, sessionKey, sessionLimit);
     }
+
     // 세션키 인증
     @Override
     public Truck SessionKeyAuth(String sessionKey) throws Exception {
@@ -261,4 +274,20 @@ public class TruckServiceImpl implements TruckService {
         return truckDao.SessionKeyAuth(sessionKey);
     }
 
+
+    // 마이페이지 판매목록
+    @Override
+    public Map<String, Object> getSalesList(Search search, String truckId) throws Exception {
+
+        List<Object> list = (List<Object>) truckDao.getSalesList(search,truckId);
+
+        int totalCount = truckDao.getTotalCountSales(search, truckId);
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("list", list);
+        map.put("totalCount", new Integer(totalCount));
+
+        return map;
     }
+
+}

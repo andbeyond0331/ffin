@@ -2,7 +2,6 @@ package com.ffin.service.truck;
 
 import com.ffin.common.Search;
 import com.ffin.service.domain.Truck;
-import com.ffin.service.domain.User;
 
 import java.util.Date;
 import java.util.List;
@@ -80,6 +79,8 @@ public interface TruckDao {
     // 게시판 Page 처리를 위한 전체Row(totalCount)  return
     public int getTotalCount(Search search) throws Exception ;
 
+    public int getTotalCountSales(Search search, String truckId) throws Exception ;
+
 
     //로그인 유지
     void autoLogin(String truckId, String sessionKey, Date sessionLimit) throws Exception;
@@ -93,6 +94,10 @@ public interface TruckDao {
     //int alter_truckKey(String truckId, String key) throws Exception;
 
     // 임시비밀번호 변경 메소드
-    //int findPassword(String truckId, String truckEmail, String key);
+    //int findPassword(String truckId, String truckEmail, String key);록
+
+
+    // 마이페이지 판매목록
+    public List<Object> getSalesList(Search search, String truckId)throws Exception;
 
 }

@@ -2,7 +2,6 @@ package com.ffin.service.truck.impl;
 
 import com.ffin.common.Search;
 import com.ffin.service.domain.Truck;
-import com.ffin.service.domain.User;
 import com.ffin.service.truck.TruckDao;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -180,6 +179,18 @@ public class TruckDaoImpl implements TruckDao {
         return sqlSession.selectOne("TruckMapper.getTotalCount", search);
     }
 
+    // 판매목록 Page 처리를 위한 전체Row(totalCount)  return
+    @Override
+    public int getTotalCountSales(Search search, String truckId) throws Exception {
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("search", search);
+        map.put("truckId", truckId);
+
+        return sqlSession.selectOne("PurchaseMapper.getTotalCount", map);
+    }
+
 
     @Override
     public void autoLogin(String truckId, String sessionKey, Date sessionLimit) throws Exception {
@@ -195,5 +206,16 @@ public class TruckDaoImpl implements TruckDao {
     public Truck SessionKeyAuth(String sessionKey) throws Exception {
         System.out.println("TruckDaoImpl.SessionKeyAuth");
         return sqlSession.selectOne("TruckMapper.SessionKeyAuth", sessionKey);
+    }
+
+    // 마이페이지 판매목록
+    @Override
+    public List<Object> getSalesList(Search search, String truckId)throws Exception{
+        System.out.println("truckId = " + truckId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("search", search);
+        map.put("truckId", truckId);
+
+        return sqlSession.selectList("PurchaseMapper.getSalesList", map);
     }
 }

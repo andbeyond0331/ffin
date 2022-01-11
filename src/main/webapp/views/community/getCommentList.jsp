@@ -109,52 +109,54 @@
 <jsp:include page="/views/navbar.jsp"/>
 <br/><br/><br/><br/><br/>
 
-<div class="container">
-                <div id="listReply">
-                    <p>${comment.commentContent}</p>
-                    읭?
-                </div>
-                <!-- 댓글 -->
-                <div id="reply">
-                    <ol class="replyList">
-                        <c:forEach items="${commentList}" var="commentList">
-                            <li>
-                                <p>
-                                    작성자 : ${comment.commentUserId}<br />
-                                    작성자 : ${comment.commentTruckId}<br />
-                                    작성 날짜 :  <fmt:formatDate value="${comment.commentDate}" pattern="yyyy-MM-dd" />
-                                </p>
+<table class="table table-hover table-striped" id="list">
+    <br/>
+    <hr>
 
-                                <p>${comment.commentContent}</p>
-                            </li>
-                        </c:forEach>
-                    </ol>
-                </div>
+    <c:forEach var="comment" items="${list}">
+
+        <c:set var="i" value="${ i+1 }"/>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <ul class="chat">
+
+                <!-- start reply -->
+                <li class="left clearfix" data-rno='12'>
+                    <div>
+                        <div class="header">
+                            <img style="border-radius:70px; margin-left:5px"
+                                 src="../resources/image/${user.userProImg}${truck.truckProImg}" width="60"
+                                 height="55" class="pull-left"/>
+                            <strong style="padding-top:10px"
+                                    class="primary-font">${comment.commentUserId}${comment.commentTruckId}</strong>
+                            <small class="pull-right text-muted"><fmt:formatDate
+                                    value="${comment.commentDate}" pattern="yyyy-MM-dd"/></small>
+                            <br>
+                            <c:if test="${sessionScope.user.userId.equals(comment.commentUserId) || sessionScope.truck.truckId.equals(comment.commentTruckId)}">
+                                <a class="btn-outline-dark pull-right"
+                                   href="/community/deleteComment?commentNo=${comment.commentNo}">삭제</a>
+                                <input type="hidden" value="${comment.commentNo}">
+                                <input type="hidden" value="${comment.commentPostNo}">
+                                <a name="updateC" class="btn-outline-dark pull-right" data-toggle="modal"
+                                   data-target="#updateCModal">수정</a>
+                                <input type="hidden" value="${comment.commentNo}">
+                                <input type="hidden" value="${comment.commentPostNo}">
+                            </c:if>
+                        </div>
+                        <p>${comment.commentContent}</p>
+                        <hr/>
+                    </div>
+
+                </li>
+                <!-- end reply -->
+            </ul>
+            <!-- ./ end ul -->
         </div>
-        <!-- 댓글 목록 -->
-        <!-- 댓글이 등록이 되면 listReply에 댓글이 쌓이게 된다 -->
-        <%--        <div id="listReply">--%>
-        <%--            ${comment.commentContent}--%>
-        <%--        </div>--%>
-        <%--        <!-- 댓글 -->--%>
-        <%--        <div id="reply">--%>
-        <%--            <ol class="replyList">--%>
-        <%--                <c:forEach items="${commentList}" var="commentList">--%>
-        <%--                    <li>--%>
-        <%--                        <p>--%>
-        <%--                            작성자 : ${comment.commentUserId}<br />--%>
-        <%--                            작성자 : ${comment.commentTruckId}<br />--%>
-        <%--                            작성 날짜 :  <fmt:formatDate value="${comment.commentDate}" pattern="yyyy-MM-dd" />--%>
-        <%--                        </p>--%>
+        <!-- /.panel .chat-panel -->
+    </c:forEach>
+</table>
 
-        <%--                        <p>${comment.commentContent}</p>--%>
-        <%--                    </li>--%>
-        <%--                </c:forEach>--%>
-        <%--            </ol>--%>
-        <%--        </div>--%>
-
-</div>
-<%--<jsp:include page="/views/footer.jsp"/>--%>
+<jsp:include page="/views/footer.jsp"/>
 
 </body>
 
