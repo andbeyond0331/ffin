@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,7 +102,7 @@ public class CommunityServiceImpl implements CommunityService {
     }
 
     // 좋아요 누르기
-    @Override
+   /* @Override
     public void addHeart(Heart heart) throws Exception {
         communityDao.addHeart(heart);
     }
@@ -126,7 +127,7 @@ public class CommunityServiceImpl implements CommunityService {
     @Override
     public void updateHeart(Heart heart) throws Exception {
         communityDao.updateHeart(heart);
-    }
+    }*/
 
     // 게시글 삭제
     @Override
@@ -144,5 +145,65 @@ public class CommunityServiceImpl implements CommunityService {
     @Override
     public int getTotalCount(Search search) throws Exception {
         return 0;
+    }
+
+    //HHJ
+    // 게시물 목록 조회
+    @Override
+    public Map<String, Object> getPostList2(Search search, String id, String role) throws Exception {
+
+
+        int totalCount = communityDao.getTotalCountPost(search); //이건 구현 패스, 구현해야함
+//        int totalCountU = communityDao.getTotalCountPostU(search);
+//        int totalCountT = communityDao.getTotalCountPostT(search);
+
+        Map<String, Object> map = communityDao.getPostList2(search, id, role);
+
+        map.put("totalCount", new Integer(totalCount));
+//        map.put("totalCountU", new Integer(totalCountU));
+//        map.put("totalCountT", new Integer(totalCountT));
+
+        return map;
+    }
+
+
+    public int addHeart(String role, Heart heart) throws Exception{
+        return communityDao.addHeart(role, heart);
+    }
+    public int removeHeart(String role, Heart heart) throws Exception{
+        return communityDao.removeHeart(role, heart);
+    }
+    public Post getCardDetail(String id, String role, int postNo) throws Exception{
+        return communityDao.getCardDetail(id, role, postNo);
+    }
+
+    @Override
+    public int writeReply(String role, Comment comment) throws Exception {
+        return communityDao.writeReply(role, comment);
+    }
+
+    @Override
+    public int writeReReply(String role, Comment comment) throws Exception {
+        return communityDao.writeReReply(role, comment);
+    }
+
+    @Override
+    public ArrayList<Comment> getreplyList(String role, int postNo) throws Exception {
+        return communityDao.getreplyList(role, postNo);
+    }
+
+    @Override
+    public int deleteReply(Comment comment) throws Exception {
+        return communityDao.deleteReply(comment);
+    }
+
+    @Override
+    public int deleteReReply(Comment comment) throws Exception {
+        return communityDao.deleteReReply(comment);
+    }
+
+    @Override
+    public int profile_pictureWriteReply(Comment comment) throws Exception {
+        return communityDao.profile_pictureWriteReply(comment);
     }
 }

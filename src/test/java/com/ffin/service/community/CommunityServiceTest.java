@@ -61,7 +61,7 @@ public class CommunityServiceTest {
     }
 
     //@Test
-    public void testAddHeart() throws Exception {
+    /*public void testAddHeart() throws Exception {
 
         Heart heart = new Heart();
         heart.setHeartTargetP(4);
@@ -70,7 +70,7 @@ public class CommunityServiceTest {
         //heart.setHeartUserId("use04");
 
         communityService.addHeart(heart);
-    }
+    }*/
 
     //@Test
     public void testGetPost() throws Exception {
@@ -94,14 +94,14 @@ public class CommunityServiceTest {
     }
 
     //@Test
-    public void testGetHeart() throws Exception {
+    /*public void testGetHeart() throws Exception {
 
         Heart heart = new Heart();
 
         heart = communityService.getHeart(1);
 
         Assert.assertEquals(1, heart.getHeartType());
-    }
+    }*/
 
     //@Test
     public void testUpdatePost() throws Exception {
@@ -129,7 +129,7 @@ public class CommunityServiceTest {
     }
 
     //@Test
-    public void testUpdateHeart() throws Exception {
+    /*public void testUpdateHeart() throws Exception {
 
         Heart heart = communityService.getHeart(1);
 
@@ -137,7 +137,7 @@ public class CommunityServiceTest {
 
         communityService.updateHeart(heart);
 
-    }
+    }*/
 
     //@Test
     public void testGetPostListAll() throws Exception {
@@ -210,7 +210,7 @@ public class CommunityServiceTest {
 //    }
 
     //@Test
-    public void testGetHeartList() throws Exception {
+   /* public void testGetHeartList() throws Exception {
         Search search = new Search();
         search.setCurrentPage(1);
         search.setPageSize(3);
@@ -242,5 +242,5 @@ public class CommunityServiceTest {
 
         //totalCount = (Integer)map.get("totalCount");
         //System.out.println(totalCount);
-    }
+    }*/
 }

@@ -51,7 +51,7 @@ public class CommunityController {
     }
 
     @RequestMapping(value = "addPost", method = RequestMethod.POST)
-    public String addPost(@ModelAttribute("post") Post post, @RequestParam("file1") MultipartFile file1,@RequestParam("file2") MultipartFile file2,@RequestParam("file3") MultipartFile file3, HttpSession session) throws Exception {
+    public String addPost(@ModelAttribute("post") Post post, @RequestParam("file1") MultipartFile file1,@RequestParam("file2") MultipartFile file2,@RequestParam("file3") MultipartFile file3, HttpSession session, HttpServletRequest request) throws Exception {
 
         System.out.println("/community/addPost : POST");
 
@@ -72,7 +72,9 @@ public class CommunityController {
             post.setPostTruck(postTruck);
         }
 
-        String temDir = "../../resources/image";
+        //String temDir = "../../resources/image";
+        String temDir = request.getSession().getServletContext().getRealPath("/resources/image");
+        System.out.println("temDir = " + temDir);
 
         if (!file1.getOriginalFilename().isEmpty()) {
             file1.transferTo(new File(temDir, file1.getOriginalFilename()));
@@ -223,7 +225,7 @@ public class CommunityController {
 
 
     ////////////////////// 좋아요 관련 메소드 ////////////////////////////
-    @RequestMapping(value = "addHeart", method = RequestMethod.GET)
+   /* @RequestMapping(value = "addHeart", method = RequestMethod.GET)
     public String addHeart() throws Exception {
         System.out.println("/community/addHeart : GET");
 
@@ -347,4 +349,64 @@ public class CommunityController {
 
         return "redirect:/community/getPost?postNo="+postNo;
     }
+*/
+
+
+    /* HHJ */
+
+    @RequestMapping(value = "getPostList2")
+    public String getPostList2(@ModelAttribute("search") Search search, Model model, HttpServletRequest request, HttpSession session) throws Exception {
+
+
+
+        /*
+            if (role == user)  일 때와 아닐 때를 구분하여야 하므로
+            getPostList에 role을 추가해서 구현하는게 좋을 것 같음.
+            그러면 user / truck별 리스트가 따로 출력되므로.
+
+            그리고 return값을 다르게 주는 것으로~~
+
+         */
+        System.out.println("/community/getPostList2 : GET/POST");
+
+        if (search.getCurrentPage() == 0) {
+            search.setCurrentPage(1);
+        }
+        search.setPageSize(pageSize);
+
+        String role = (String)session.getAttribute("role");
+        String id= "";
+        if (role == "user" || role.equals("user")){
+
+            id =((User) session.getAttribute("user")).getUserId();
+
+        }else if(role == "truck" || role.equals("truck")){
+
+            id = ((Truck)session.getAttribute("truck")).getTruckId();
+
+        }
+
+        // Business Logic 수행
+        Map<String, Object> map = communityService.getPostList2(search, id, role);
+
+
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+        System.out.println("list::::::::::::::::::::::::::::::" + map.get("list"));
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+        System.out.println(resultPage);
+        //  Model 과 View 연결
+        model.addAttribute("list", map.get("list"));
+        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("search", search);
+
+        return "forward:/views/community/getPostListTruck.jsp";
+
+    }
+
+
+
+
+
+
 }

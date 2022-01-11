@@ -14,6 +14,14 @@
         <result property="postFile1"        column="POST_FILE1"         jdbcType="VARCHAR"/>
         <result property="postFile2"        column="POST_FILE2"         jdbcType="VARCHAR"/>
         <result property="postFile3"        column="POST_FILE3"         jdbcType="VARCHAR"/>
+
+        <result property="heartCount"        column="HEART_COUNT"         jdbcType="NUMERIC"/>
+        <result property="postHit"        column="POST_HIT"         jdbcType="NUMERIC"/>
+        <result property="heartNo"          column="HEART_NO"           jdbcType="NUMERIC"/>
+        <result property="heartUserId"          column="HEART_USER_ID"           jdbcType="VARCHAR"/>
+        <result property="heartTruckId"          column="HEART_TRUCK_ID"           jdbcType="VARCHAR"/>
+        <result property="replyCount"          column="REPLY_COUNT"           jdbcType="NUMERIC"/>
+
         <association property="postUser"    javaType="user">
             <id property="userId"           column="POST_USER_ID"       jdbcType="VARCHAR"/>
             <result property="userName"     column="USER_NAME"          jdbcType="VARCHAR"/>
@@ -155,5 +163,78 @@
         FROM post
         where post_no = #{postNo}
     </delete>
+
+
+    <!-- HHJ -->
+    <!-- SQL : SELECT LIST //  -->
+    <select id="getPostList2"    parameterType="map"      resultMap="postSelectMap">
+
+
+        <!--
+
+        게시물만 보일 땐 이렇게 하려고 했는데.......
+
+
+        SELECT inner_table.*
+        FROM( SELECT *
+        FROM post
+        <if test="role == 'user'">
+            <where>
+                post_user_id= #{id}
+            </where>
+        </if>
+        <if test="role == 'truck'">
+            <where>
+                post_truck_id= #{id}
+            </where>
+        </if>
+        <if test="searchCondition != null">
+
+                <bind name="searchKeyword" value="'%' + searchKeyword + '%'"/>
+                <if test="searchCondition == 0 and searchKeyword !='' ">
+                    AND post_user_id LIKE #{search.searchKeyword}
+                    OR post_truck_id LIKE #{search.searchKeyword}
+                </if>
+                <if test="searchCondition == 1 and searchKeyword !='' ">
+                    AND post_title LIKE #{search.searchKeyword}
+                </if>
+
+        </if>
+        order by post_no ) inner_table
+        limit #{search.startRowNum}, #{search.pageSize}-->
+
+
+        <!-- 리스트 + user/truck 구분하여 heart를 눌렀는지 여부도 체크해야 했기 때문에 outer join  -->
+        SELECT p.*, h.heart_no FROM post p LEFT OUTER JOIN heart AS h ON p.POST_NO = h.HEART_TARGET_P
+        <if test="role == 'user'">
+        AND h.HEART_USER_ID=#{id}
+        </if>
+        <if test="role == 'truck'">
+        AND h.HEART_TRUCK_ID=#{id}
+        </if>
+
+    </select>
+
+
+    <!-- SQL :SELECT ONE // 사진 모달창 켰을 때 getDetail
+    클릭했을 때 해당하는 사람이 하트를 눌럿는지 여부도 알아야 하고 어쩌고 저쩌고 땜에
+    group으로 묶고 암튼 이랫당..ㅠ
+    -->
+    <select id="getCardDetail"    parameterType="map"      resultMap="postSelectMap">
+        SELECT p.*, h.heart_no
+        FROM post p LEFT OUTER JOIN heart AS h ON  p.POST_NO = h.HEART_TARGET_P
+            AND p.POST_NO=#{postNo}
+        <if test="role == 'user'">
+            AND h.HEART_USER_ID=#{id}
+        </if>
+        <if test="role == 'truck'">
+            AND h.HEART_TRUCK_ID=#{id}
+        </if>
+        GROUP BY p.POST_NO
+        HAVING p.POST_NO=#{postNo}
+    </select>
+
+
+
 
 </mapper>

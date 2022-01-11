@@ -20,4 +20,14 @@ public class Post {
 	private String postFile2;
 	private String postFile3;
 
+	// HHJ
+	// 조회수
+	private int postHit;
+	// 좋아요 수 카운트
+	private int heartCount;
+	private int heartNo;
+
+	private String heartUserId;
+	private String heartTruckId;
+	private int replyCount;
 }

@@ -14,6 +14,7 @@ public class Heart {
 	private Date heartRegDate;
 	private int heartFlag;
 	private String heartUserId;
+	private String heartTruckId;
 	
 
 	
