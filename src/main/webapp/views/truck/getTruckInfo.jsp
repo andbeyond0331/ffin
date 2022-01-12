@@ -5,14 +5,27 @@
 <html lang="ko">
 
 <head>
+    <style>
+         form {
+            margin-left:auto;
+            margin-right:auto;
+        }
+         strong{
+             font-size: 21px;
+         }
+         .col-sm-6{
+             font-size: 20px;
+         }
 
-    <title>푸드트럭(사업자) 내정보보기</title>
+    </style>
+
+    <title>F.FIN | 푸드트럭(사업자) 내정보보기</title>
     <jsp:include page="../../common/lib.jsp"/>
 
     <!-- 참조 : http://getbootstrap.com/css/   참조 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <title>푸드트럭(사업자) 정보조회</title>
+    <title>F.FIN | 푸드트럭(사업자) 정보조회</title>
 
     <!-- datepicker -->
     <!-- jQuery UI CSS 파일 -->
@@ -23,6 +36,10 @@
     <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
     <!-- 구글 리캡차 -->
     <script src='https://www.google.com/recaptcha/api.js'></script>
+    <!-- 이미지 확대 -->
+    <link rel="stylesheet" href="/styles/vendor/jquery.fancybox.min.css">
+
+    <script src="/scripts/vendor/jquery.fancybox.min.js"></script>
 
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">
@@ -35,12 +52,12 @@
             });
         });
 
-        //============= "메인화면으로"  Event 처리 및  연결 =============
+        //============= "마이페이지로"  Event 처리 및  연결 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
             $("button.btn.btn-warning").on("click", function () {
                 //alert("수정을 취소하시겠습니까? 확인을 누르시면 홈화면으로 이동합니다.")
-                self.location = "/views/home.jsp"
+                self.location = "/views/truck/truckMyPage.jsp"
             });
         });
 
@@ -54,17 +71,17 @@
 <br/><br/><br/><br/>
 <div class="container">
 
-    <div class="page-header">
+    <div class="page-header" align="center">
         <label for="page-top" class="col-sm-offset-4 control-label"/>
         <h3 class="text-info">푸드트럭(사업자) 정보조회</h3>
     </div>
 
-    <form class="form-horizontal">
+    <form class="form-horizontal" style="border-radius:10px ; border: 2px solid orange; ">
 
         <!-- 아이디 중복검사 -->
-        <div class="form-group">
-            <label for="tId" class="col-sm-offset-1 col-sm-3 control-label">ID</label>
-            <div class="col-sm-4">
+        <div class="form-group" align="center">
+            <strong class="col-sm-offset-1 col-sm-3 control-label" style="margin-top:5px ">ID</strong>
+            <div class="col-sm-6">
                 ${truck.truckId}
                 <span class="point successIdChk"></span><br/>
                 <%--                <span class="point">※ 아이디는 수정불가</span>--%>
@@ -72,12 +89,12 @@
             </div>
         </div>
 
-        <hr/>
+        <hr style="border:1px dashed orange "/>
 
         <!-- 비밀번호 확인 -->
-        <div class="form-group">
-            <label for="tPassword" class="col-sm-offset-1 col-sm-3 control-label">Password</label>
-            <div class="col-sm-4">
+        <div class="form-group" align="center">
+            <strong for="tPassword" class="col-sm-offset-1 col-sm-3 control-label">Password</strong>
+            <div class="col-sm-6">
                 <input type="password" class="form-control" id="tPassword" name="truckPassword"
                        value="${truck.truckPassword}"
                        required maxlength="8"
@@ -87,38 +104,34 @@
             </div>
         </div>
 
-        <hr/>
+        <hr style="border:1px dashed orange "/>
 
         <!-- 트럭 대표자 이름 입력란 -->
-        <br/>
-        <div class="form-group">
-            <label for="truckCEOName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
-            <div class="col-sm-4">
+        <div class="form-group" align="center">
+            <strong for="truckCEOName" class="col-sm-offset-1 col-sm-3 control-label">이름</strong>
+            <div class="col-sm-6">
                 <input id="truckCEOName" class="form-control" name="truckCEOName" value="${truck.truckCEOName}"
                        placeholder="대표자이름" readonly/>
                 <span id="result_id_msg" class="help-block"></span>
             </div>
         </div>
 
-        <hr/>
-
+        <hr style="border:1px dashed orange "/>
         <!-- 트럭 대표자 생년월일 입력란 -->
-        <br/>
-        <div class="form-group">
-            <label for="truckCEOBirth" class="col-sm-offset-1 col-sm-3 control-label">생년월일</label>
-            <div class="col-sm-4">
+        <div class="form-group" align="center">
+            <strong for="truckCEOBirth" class="col-sm-offset-1 col-sm-3 control-label">생년월일</strong>
+            <div class="col-sm-6">
                 <input id="truckCEOBirth" class="form-control" name="truckCEOBirth" value="${truck.truckCEOBirth}"
                        placeholder="대표자 생년월일" readonly/>
             </div>
         </div>
 
-        <hr/>
+        <hr style="border:1px dashed orange "/>
 
-        <br/>
         <!-- 주소 -->
-        <div class="form-group">
-            <label for="truckAddr" class="col-sm-offset-1 col-sm-3 control-label">주소</label>
-            <div class="col-sm-4">
+        <div class="form-group" align="center">
+            <strong for="truckAddr" class="col-sm-offset-1 col-sm-3 control-label">주소</strong>
+            <div class="col-sm-6">
                 <input type="text" class="form-control" id="truckAddr" name="truckAddr" value="${truck.truckAddr}"
                        placeholder="사업자등록증에 등록된 주소" readonly/>
             </div>
@@ -127,21 +140,20 @@
                 <br/>
             </div>
             <br/>
-            <label for="truckAddrDetail" class="col-sm-offset-1 col-sm-3 control-label">주소 상세</label>
-            <div class="col-sm-4">
+            <strong for="truckAddrDetail" class="col-sm-offset-1 col-sm-3 control-label">주소 상세</strong>
+            <div class="col-sm-6">
                 <input type="text" class="form-control" id="truckAddrDetail" name="truckAddrDetail"
                        value="${truck.truckAddrDetail}" placeholder="주소 상세" readonly/>
                 <div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
             </div>
         </div>
 
-        <hr/>
-
+        <hr style="border:1px dashed orange "/>
         <!-- 핸드폰 문자 인증 -->
         <br/>
-        <div class="form-group">
-            <label for="truckPhone" class="col-sm-offset-1 col-sm-3 control-label">연락처</label>
-            <div class="col-sm-4">
+        <div class="form-group" align="center">
+            <strong for="truckPhone" class="col-sm-offset-1 col-sm-3 control-label">연락처</strong>
+            <div class="col-sm-6">
                 <input type="text" class="form-control" id="truckPhone" name="truckPhone" value="${truck.truckPhone}"
                        placeholder=" - 를 제외한 전화번호 입력" readonly/>
             </div>
@@ -161,18 +173,16 @@
             <%--            </div>--%>
         </div>
 
-        <hr/>
-
+        <hr style="border:1px dashed orange "/>
         <!-- 이메일 입력란 -->
-        <div class="form-group">
-            <label for="truckEmail" class="col-sm-offset-1 col-sm-3 control-label">Email</label>
-            <div class="col-sm-4">
+        <div class="form-group" align="center">
+            <strong for="truckEmail" class="col-sm-offset-1 col-sm-3 control-label">Email</strong>
+            <div class="col-sm-6">
                 <input type="text" class="form-control" id="truckEmail" name="truckEmail"
                        value="${truck.truckEmail}" placeholder="인증번호 확인이 가능한 Email" readonly>
             </div>
             <div class="col-sm-3">
                 <%--                <button type="button" id="emailChk" class="btn btn-warning email-auth">인증번호 요청</button>--%>
-                <br/>
             </div>
         </div>
         <%--        <div class="form-group mail-check-wrap">--%>
@@ -186,13 +196,13 @@
         <%--            </div>--%>
         <%--        </div>--%>
 
-        <hr/>
+        <hr style="border:1px dashed orange "/>
 
         <!-- 푸드트럭상호 중복검사 -->
         <br/>
-        <div class="form-group">
-            <label for="truckName" class="col-sm-offset-1 col-sm-3 control-label">푸드트럭 상호</label>
-            <div class="col-sm-4">
+        <div class="form-group" align="center">
+            <strong for="truckName" class="col-sm-offset-1 col-sm-3 control-label">푸드트럭 상호</strong>
+            <div class="col-sm-6">
                 <input id="truckName" type="text" name="truckName" value="${truck.truckName}" placeholder="푸드트럭 상호 입력"
                        readonly/>
                 <%--                <span class="point successNameChk"></span><br/>--%>
@@ -201,26 +211,26 @@
             </div>
         </div>
 
-        <hr/>
-
+        <hr style="border:1px dashed orange "/>
         <!-- 푸드트럭 사업자등록증 파일업로드란 -->
         <br/>
-        <div class="form-group">
-            <label for="busiLice" class="col-sm-offset-1 col-sm-3 control-label">사업자등록증</label>
-            <div class="col-sm-4">
+        <div class="form-group" align="center">
+            <strong class="col-sm-offset-1 col-sm-3 control-label">사업자등록증</strong>
+            <div class="col-sm-6">
                 <%--                <input id="busiLice" type="file" name="busiLice" class="form-control" value="${truck.truckBusiLice}" readonly/>--%>
-                ${truck.truckBusiLice}
+<%--                ${truck.truckBusiLice}--%>
             </div>
-            <div class="col-xs-8 col-md-4"><img src="../../resources/image/${truck.truckBusiLice}" style="border-bottom: 1px solid #eee; height: 200px;" alt="${truck.truckName}의 사업자등록증 이미지" title="트럭사업자등록증"></div>
+            <div class="col-xs-8 col-md-4"><a href="../../resources/image/${truck.truckBusiLice}" data-fancybox data-caption="캡션"><img src="../../resources/image/${truck.truckBusiLice}" style="border-bottom: 1px solid #eee; height: 200px;" alt="${truck.truckName}의 사업자등록증 이미지" title="트럭사업자등록증"></a></div>
         </div>
         <input type="hidden" id="checkL"/>
 
         <br/>
-        <hr/>
+
+        <hr style="border:1px dashed orange "/>
+
         <!-- 푸드트럭 카테고리 -->
-        <div class="form-group">
-            <label for="truckCate" class="col-sm-offset-1 col-sm-3 control-label">푸드트럭 카테고리</label>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="form-group" align="center">
+            <strong for="truckCate" class="col-sm-offset-1 col-sm-3 control-label">푸드트럭 카테고리</strong>
             <%--            <select name="truckCate" class="col-sm-offset-4 col-sm-4 ct_input_g"--%>
             <%--                    style="width: 120px; height: 24px" maxLength="30">--%>
             <%--                <option value="0" selected="selected">카테고리 선택</option>--%>
@@ -263,31 +273,29 @@
             </c:if>
         </div>
 
-        <br/>
-        <hr/>
+        <hr style="border:1px dashed orange "/>
 
         <!-- 푸드트럭 프로필이미지 파일업로드란 -->
-        <br/>
-        <div class="form-group">
-            <label for="proImg" class="col-sm-offset-1 col-sm-3 control-label">프로필 이미지</label>
+        <div class="form-group" align="center">
+            <strong class="col-sm-offset-1 col-sm-3 control-label">프로필 이미지</strong>
 
-            <div class="col-xs-8 col-md-4"><img src="../../resources/image/${truck.truckProImg}" style="border-bottom: 1px solid #eee; height: 200px;" alt="${truck.truckName}의 프로필 이미지" title="트럭프로필"></div>
+            <div class="col-xs-8 col-md-4"><a href="../../resources/image/${truck.truckProImg}" data-fancybox data-caption="캡션"><img src="../../resources/image/${truck.truckProImg}" style="border-bottom: 1px solid #eee; height: 200px;" alt="${truck.truckName}의 프로필 이미지" title="트럭프로필"></a></div>
         </div>
         <input type="hidden" id="checkP"/>
 
         <br/>
-        <hr/>
-
+        <hr style="border:1px dashed orange "/>
         <!-- 푸드트럭 사장님 한마디 -->
-        <div class="form-group">
-            <label for="truckCEOIntro" class="col-sm-offset-1 col-sm-3 control-label">사장님 한마디</label>
-            <div class="col-sm-4">
+        <div class="form-group" align="center">
+            <strong for="truckCEOIntro" class="col-sm-offset-1 col-sm-3 control-label">사장님 한마디</strong>
+            <div class="col-sm-6">
                 <input type="text" class="form-control" id="truckCEOIntro" name="truckCEOIntro"
                        value="${truck.truckCEOIntro}" placeholder="사장님 한마디" readonly>
             </div>
         </div>
 
-        <hr/>
+        <hr style="border:1px dashed orange "/>
+        <a href="byeTruck.jsp" class="text-dark pull-right">회원탈퇴하기</a>
 
         <br/>
         <%--        <div class="form-group">--%>
@@ -300,10 +308,10 @@
         <%--        <hr/>--%>
 
         <br/>
-        <div class="form-group">
-            <div class="col-sm-offset-1  col-sm-4 text-center">
+        <div class="form-group" align="center">
+            <div class="col-sm-offset-1  col-sm-6 text-center">
                 <button type="button" class="btn btn-primary">수정하러가기</button>
-                <button type="button" class="btn btn-warning">메인화면으로</button>
+                <button type="button" class="btn btn-warning">마이페이지로</button>
             </div>
         </div>
     </form>

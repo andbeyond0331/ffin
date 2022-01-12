@@ -74,7 +74,7 @@
 
 	<select id="getNotice"   parameterType="String"    resultMap="truckSelectMap" >
 		SELECT
-			TRUCK_NOTICE_TITLE, TRUCK_NOTICE_CONTENT, TRUCK_NOTICE_IMG
+			TRUCK_ID,TRUCK_PRO_IMG, TRUCK_NOTICE_TITLE, TRUCK_NOTICE_CONTENT, TRUCK_NOTICE_IMG
 		FROM truck
 		WHERE truck_id = #{value}
 	</select>
@@ -215,9 +215,9 @@
 	<update	id="updateNotice" 	parameterType="truck" >
 		UPDATE truck
 		<set>
-			truck_notice_title = #{truckNoticeTitle},
-			truck_notice_content = #{truckNoticeContent},
-			truck_notice_img = #{truckNoticeImg}
+			TRUCK_NOTICE_TITLE = #{truckNoticeTitle},
+			TRUCK_NOTICE_CONTENT = #{truckNoticeContent},
+			TRUCK_NOTICE_IMG = #{truckNoticeImg}
 		</set>
 		WHERE truck_id = #{truckId}
 	</update>

@@ -298,7 +298,7 @@
                     </a>
                     <div class="collapse" id="collapseQnAUser" style="padding: 10px;">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">문의</a>
+                            <a class="collapse-item" href="/qna/getInquiryListByTruck">문의</a>
                         </div>
                     </div>
                 </li>

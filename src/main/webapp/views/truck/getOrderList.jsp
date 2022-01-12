@@ -7,7 +7,7 @@
 
 <head>
 
-    <title>판매 목록</title>
+    <title>F.FIN | 판매 목록</title>
     <jsp:include page="../../common/lib.jsp"/>
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">

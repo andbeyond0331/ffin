@@ -6,7 +6,7 @@
 
 <head>
 
-    <title>공지 작성</title>
+    <title>F.FIN | 공지 작성</title>
     <jsp:include page="../../common/lib.jsp"/>
     <!-- 참조 : http://getbootstrap.com/css/   참조 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -44,6 +44,9 @@
                 return;
             }
             $("form").attr("method", "POST").attr("action", "/truck/updateNotice").attr("enctype", "multipart/form-data").submit();
+            console.log(title);
+            console.log(content);
+            console.log(11111);
             alert("공지 작성(수정)이 완료되었습니다.");
         }
 
@@ -66,8 +69,8 @@
 
         </div>
 
-        <form class="form-horizontal">
-            <!-- 게시판 글쓰기 양식 영역 시작 -->
+        <form name="updateN" class="form-horizontal">
+            <!-- 공지수정 양식 영역 시작 -->
             <div class="form-group">
                 <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
                     <tbody>
@@ -77,12 +80,12 @@
                     </tr>
                     <tr>
                         <td><textarea id="truckNoticeContent" class="form-control" placeholder="공지 내용" name="truckNoticeContent" maxlength="3000"
-                                      style="height: 350px;" >${truck.truckNoticeContent}${truck.truckNoticeImg}</textarea></td>
+                                      style="height: 350px;" wrap="hard">${truck.truckNoticeContent}</textarea></td>
                     </tr>
                     <!-- 푸드트럭 공지 파일업로드란 -->
                     <td>
-                        <label for="inputFile" class="col-sm-2 col-form-label"><strong>첨부 파일</strong></label>
-                        <input id="truckNoticeImg" type="file" name="truckNoticeImg" class="form-control-file"/>
+                        <label for="truckNoticeImg1" class="col-sm-2 col-form-label"><strong>첨부 파일</strong></label>
+                        <input id="truckNoticeImg1" type="file" name="truckNoticeImg1" class="form-control-file" value="${truck.truckNoticeImg}"/>
                         </td>
 
 

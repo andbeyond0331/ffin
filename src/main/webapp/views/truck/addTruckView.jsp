@@ -6,7 +6,7 @@
 
 <head>
 
-    <title>푸드트럭(사업자) 회원가입</title>
+    <title>F.FIN | 푸드트럭(사업자) 회원가입</title>
     <jsp:include page="../../common/lib.jsp"/>
 
     <!-- 참조 : http://getbootstrap.com/css/   참조 -->

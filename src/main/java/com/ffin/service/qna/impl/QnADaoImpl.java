@@ -98,7 +98,7 @@ public class QnADaoImpl implements QnADao {
     @Override
     public List<Inquiry> getInquiryListByTruck(Map<String, Object> map) throws Exception {
         System.out.println("QnADaoImpl.getTruckInquiryList");
-        return sqlSession.selectList("QnAMapper.getTruckInquiryList", map);
+        return sqlSession.selectList("QnAMapper.getInquiryListByTruck", map);
     }
 
     @Override
