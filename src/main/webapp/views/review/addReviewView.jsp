@@ -94,6 +94,12 @@
         .star-rating label:hover ~ label {
             -webkit-text-fill-color: #fff58c;
         }
+        .col {
+            position: relative;
+            width: 100%;
+            padding-right: 235px;
+            padding-left: 235px;
+        }
     </style>
 
 
@@ -188,7 +194,7 @@
 <%--            <input type="text" value="${purchase.orderNo}" name="rvOrderNo"/>--%>
             <input type="hidden" value="${purchase.orderNo}" name="rvOrderNo"/>
 
-            <div class="col-sm-4">
+            <div class="col">
 <%--                <input type="text" class="form-control" id="rvStar" name="rvStar" value="${review.rvStar }" placeholder="리뷰 별점을 입력하세요.">--%>
                 <div class="star-rating space-x-4 mx-auto">
                     <input type="radio" id="5-stars" name="rvStar" value="5"/>
@@ -206,36 +212,36 @@
         </div>
 
         <div class="form-group">
-            <label for="rvContent" class="col-sm-offset-1 col-sm-3 control-label">리뷰내용</label>
-            <div class="col-sm-4">
+            <label for="rvContent" class="col-sm-offset-1 col control-label">리뷰내용</label>
+            <div class="col">
                 <input type="text" class="form-control" id="rvContent" name="rvContent" placeholder="리뷰 내용을 입력하세요.">
             </div>
         </div>
 
         <div class="form-group">
-            <label for="rvImg1" class="col-sm-offset-1 col-sm-3 control-label">리뷰 이미지1</label>
-            <div class="col-sm-4">
+            <label for="rvImg1" class="col-sm-offset-1 col control-label">리뷰 이미지1</label>
+            <div class="col">
                 <input type="file" class="form-control" id="rvImg1" name="rvImg11"  value="${review.rvImg1}" placeholder="리뷰 이미지1">
             </div>
         </div>
 
         <div class="form-group">
-            <label for="rvImg2" class="col-sm-offset-1 col-sm-3 control-label">리뷰 이미지2</label>
-            <div class="col-sm-4">
+            <label for="rvImg2" class="col-sm-offset-1 col control-label">리뷰 이미지2</label>
+            <div class="col">
                 <input type="file" class="form-control" id="rvImg2" name="rvImg22"  value="${review.rvImg2}" placeholder="리뷰 이미지2">
             </div>
         </div>
 
         <div class="form-group">
-            <label for="rvImg3" class="col-sm-offset-1 col-sm-3 control-label">리뷰 이미지3</label>
-            <div class="col-sm-4">
+            <label for="rvImg3" class="col-sm-offset-1 col control-label">리뷰 이미지3</label>
+            <div class="col">
                 <input type="file" class="form-control" id="rvImg3" name="rvImg33"  value="${review.rvImg3}" placeholder="리뷰 이미지3">
             </div>
         </div>
     </form>
 
     <div class="form-group">
-    <div class="col-sm-offset-4  col-sm-4 text-center">
+    <div class="col-sm-offset-4  col text-center">
     <button type="submit" class="btn btn-primary"  id="addReviewButton">추 &nbsp;가</button>
     <a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
 </div>

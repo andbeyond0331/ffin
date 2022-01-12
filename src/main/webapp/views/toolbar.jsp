@@ -172,7 +172,9 @@
         */
         $(function () {
             $("button.btn.btn-primary:Contains('확인')").click(function () {
+                alert("ss")
                 var order = to_ajax()
+
 
                 append = "<input type=\"hidden\" id=\"orderNo\" name=\"orderNo\" value=\"" + order + "\">";
                 $('#app').append(append);
@@ -281,6 +283,8 @@
             });
             return reOrderNo;
         }
+
+
 
 
     </script>
@@ -613,6 +617,32 @@
     </div>
 </form>
 <script>
+    alert("dd")
+    $(function(){
+
+
+    var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
+    alert("자면서 만들었나? : " + beforeAnyway);
+    var llist = [];
+    let txt = "";
+    for( var i in beforeAnyway){
+        // console.log("beforeAnyway : " + beforeAnyway[i]);
+        for(var j in beforeAnyway[i]){
+            console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
+            txt += j + ":" + beforeAnyway[i][j];
+            llist[i] = beforeAnyway[i][j];
+            odMenuNo = txt.indexOf("odMenuName");
+            var result = txt.substring(odMenuNo,(txt.substring(odMenuNo).indexOf("odMenuDetail")+txt));
+
+            document.getElementById('order').innerHTML = result;
+        }
+
+    }
+
+
+
+        alert(llist)
+    });
     $(function () {
         //odMenuName으로 담겨져 있는 length 찾음
         var odMenuNameCount = $("input[name='odMenuName']").length;

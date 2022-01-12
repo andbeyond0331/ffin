@@ -93,7 +93,7 @@ public class PurchaseController {
             modelAndView.addObject("rvTotal", rvTotal);
         }
 
-        modelAndView.setViewName("/views/menu/getTruck.jsp");
+        modelAndView.setViewName("/views/purchase/getTruck.jsp");
 
         return modelAndView;
     }

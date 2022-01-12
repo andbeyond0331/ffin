@@ -112,10 +112,20 @@
 
     /* Iamport 환불시스템*/
     function cancelPay() {
-
+        var pointNo = $("input[name='pointNo']").val();
+        var couponNo = $("input[name='couponNo']").val();
         var payId = $("input[name='payId']").val();
         var orderNo = $("input[name='orderNo']").val();
         var orderCancelReason = $("input[name='orderCancelReason']:checked").val();
+
+        if(pointNo == undefined || pointNo ==''){
+            pointNo = 0;
+        }
+
+        if(couponNo == undefined || couponNo == ''){
+            couponNo = 0;
+        }
+
 
 
         $.ajax({
@@ -127,6 +137,8 @@
                 "payId": payId,
                 "orderNo": orderNo,
                 "orderCancelReason": orderCancelReason,
+                "couponNo": couponNo,
+                "pointNo": pointNo,
             },
 
             success: function (map) {
@@ -242,6 +254,7 @@
                         <p class="text-start">사장님연락처 : ${purchase.orderTruckId.truckPhone}</p>
                     </div>
                     <div class="row">
+
                         <c:if test="${purchase.orderStatus == '1'}">
                             <p class="text-start">주문정보 : 주문완료되었습니다.</p>
                         </c:if>
@@ -318,6 +331,8 @@
             </div>
             <input type="hidden" name="payId" value="${purchase.payId}">
             <input type="hidden" name="orderNo" value="${purchase.orderNo}">
+            <input type="hidden" name="couponNo" value="${purchase.payCouponNo.couponNo}">
+            <input type="hidden" name="pointNo" value="${purchase.payPointNo.pointNo}">
             <div class="col-md-6">
                 <div class="h-100 p-5 bg-light border rounded-3">
                     <br><br>

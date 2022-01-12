@@ -102,12 +102,7 @@
         }
         var price = Number(payPrice[1]);
         //총 합계 급액 처리가 완료가 되면 price로 amount에 넣어서 사용
-        var postData = {
-            "payOption": payOption,
-            "orderTotalPrice": orderTotalPrice,
-            "orderTruckId": orderTruckId,
-            "orderNo": orderNo
-        }
+
 
         if (payOption == '1') {
             IMP.request_pay({

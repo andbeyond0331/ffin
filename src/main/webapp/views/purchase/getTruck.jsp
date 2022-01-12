@@ -13,14 +13,28 @@
 
         $(function(){
 
-
-
             var modalApply = $('#exampleModalLong');
 
 
             //수량 제공 역할 메뉴 담기
             $(document).on("click", "#addCart", function(){
                 var menuOdList = [];
+
+                //원래 세션에 있는가?
+                var originalSession = [];
+                var getItem = sessionStorage.getItem("menuOdList");
+                //alert("원래 세션 : " + getItem);
+                if(getItem!=null && getItem!=""){
+
+                    originalSession = JSON.parse(sessionStorage.getItem("menuOdList"));
+
+                    for(var i=0; i<originalSession.length; i++){
+                        menuOdList.push(originalSession[i]);
+                        alert("원래꺼 담는 중 담을거: " + originalSession[i]);
+                        alert("원래꺼 담는 중 담긴 menuOdList: " + menuOdList);
+                    }
+                }
+
                 var orderDetail = {
                     odMenuNo : modalApply.find('div[name="odMenuNo"]').text(),
                     odMenuName : modalApply.find('div[name="odMenuName"]').text(),
@@ -35,7 +49,7 @@
                     odOptionPrice : null
                 };
                 menuOdList.push(orderDetail);
-                alert("orderDetail : " + orderDetail);
+                //alert("orderDetail : " + orderDetail);
 
                 //수량 제외 옵션그룹 정보 담기
 
@@ -60,144 +74,38 @@
 
 
                         }
-                        console.log("odOptionName : " + modalApply.find('input:radio:checked').eq(i).data("op"));
-                        console.log("odOptionGroupNo : " + modalApply.find('input:radio:checked').eq(i).parent('div').find('input[name="odOptionGroupNo"]').val());
-                        console.log("odOptionGroupName : " + modalApply.find('input:radio:checked').eq(i).parent('div').find('input[name="odOptionGroupName"]').val());
-                        console.log("odOptionNo : " + modalApply.find('input:radio:checked').eq(i).parent('div').find('input[name="odOptionNo"]').val());
-                        console.log("odOptionPrice : " + modalApply.find('input:radio:checked').eq(i).parent('div').find('input[name="odOptionPrice"]').val());
-                        alert(optionGroupOrderDetail+" : optionGroupOrderDetail")
-                        // console.log(befOptionGroupName +" : befOptionGroupName");
+
                         menuOdList.push(optionGroupOrderDetail);
                     }
                 }
 
 
-                // }
-                //     //todo 순서 보고 읽어오세요!
-                //     var befOdMenuNo = modalApply.find('div[name="odMenuNo"]').text();
-                //     var befOdMenuName = modalApply.find('div[name="odMenuName"]').text();
-                //     var befOdMenuImg1 = modalApply.find('div[name="odMenuImg1"]').data('menuImg');
-                //     var befOdMenuDetail = modalApply.find('div[name="odMenuDetail"]').text();
-                //     var befOdMenuPrice = modalApply.find('div[name="odMenuPrice"]').text();
-                //
-                //     console.log(befOdMenuNo +" : befOdMenuNo");
-                //     console.log(befOdMenuName +" : befOdMenuName");
-                //     console.log(befOdMenuImg1 +" : befOdMenuImg1");
-                //     console.log(befOdMenuDetail +" : befOdMenuDetail");
-                //     console.log(befOdMenuPrice +" : befOdMenuPrice");
-                //
-                //
-                //     var menuOdList=[];
-                //     menuOdList.push(befOdMenuNo);
-                //     menuOdList.push(befOdMenuName);
-                //     menuOdList.push(befOdMenuImg1);
-                //     menuOdList.push(befOdMenuDetail);
-                //     menuOdList.push(befOdMenuPrice)
-                //
-                //     //optionGroup
-                //
-                //     var isThereOptionGroup = modalApply.find('input:radio:checked').length;
-                //
-                //     if(isThereOptionGroup!=0){
-                //         for (let i = 0; i < isThereOptionGroup; i++) {
-                //
-                //             var befOptionGroupName = modalApply.find('input:radio:checked').eq(i).data("op");
-                //             alert(befOptionGroupName+" : befOptionGroupName")
-                //             console.log(befOptionGroupName +" : befOptionGroupName");
-                //             menuOdList.push(befOptionGroupName);
-                //         }
-                //     }
-
-
-                // var befOptionGroupName = modalApply.find('input:checked').text();
-                // var befOptionGroupName = $('input:radio:checked').textContent;
-                // document.querySelector('input[name="rate"]:checked').value;
 
 
 
 
-                var anyway = [];
-                /*sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));*/
-                 anyway = JSON.parse(`${sessionStorage.getItem("menuOdList")}`)
-               /* = JSON.parse(JSON.parse(sessionStorage.getItem("menuOdList")).getItem(JSON.stringify(menuOdList)));*/
-                 /*var optionWay = JSON.parse(sessionStorage.getItem(""));*/
-                 /*JSON.parse(sessionStorage.getItem(keyName));*/
-
-                 alert("plz anyway : " + anyway[0]);
-                 for(var i=0; i<100; i++){
-                     console.log("anyway : " + anyway[i]);
-                 }
 
 
-                ///append를 위한 for문
-                // var optionNameCount = $('input[name="applyOptionName"]').length;
-                //
-                //
-                //
-                // for(var i=0; i<optionNameCount; i++){
-                //     var applyOptionGroupName = modalApply.find('input[name="applyOptionGroupName"]').val();
-                //     finalOptionName = ($('input[name="applyOptionName"]').eq(i).val());
-                //     finalOptionPrice = ($('input[name="applyOptionPrice"]').eq(i).val());
-                //
-                //
-                //
-                //     divElemApply1 = "</hr>"+
-                //         "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\">"+
-                //         " <label for=\"optionGroupName\" class=\"col-sm-offset-1 col-sm-3 control-label\">옵션그룹이름</label>"+
-                //         "<div class=\"col-sm-4\">"+
-                //         "<input type=\"text\" class=\"form-control\" id=\"optionGroupName\" name=\"optionGroupName\"  value=\""+applyOptionGroupName+"\" placeholder=\""+applyOptionGroupName+"\">"+
-                //         "</div>"+
-                //         "</div>"+
-                //         "</hr>";
-                //     divElemApply2 =  "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\">"+
-                //         " <label for=\"optionName\" class=\"col-sm-offset-1 col-sm-3 control-label\">옵션이름</label>"+
-                //         "<div class=\"col-sm-4\">"+
-                //         "<input type=\"text\" class=\"form-control\" id=\"optionName\" name=\"optionName\"  value=\""+finalOptionName+"\" placeholder=\""+finalOptionName+"\">"+
-                //         "</div>"+
-                //         "</div>"+
-                //         "</hr>"+
-                //         "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\">"+
-                //         " <label for=\"optionPrice\" class=\"col-sm-offset-1 col-sm-3 control-label\">옵션가격</label>"+
-                //         "<div class=\"col-sm-4\">"+
-                //         "<input type=\"text\" class=\"form-control\" id=\"optionPrice\" name=\"optionPrice\"  value=\""+finalOptionPrice+"\" placeholder=\""+finalOptionPrice+"\">"+
-                //         "</div>"+
-                //         "</div>"+
-                //         "<input type=\"button\" value=\"삭제\" id=\"removeTarget"+applyOptionGroupName+"\" onclick=\"javascript:removeELOption(\'"+applyOptionGroupName+"\')\"/>";
-                //
-                //
-                //     alert(i+"번째 optionPrice" + ($('input[name="applyOptionPrice"]').eq(i).val()));
-                //
-                //     $('#here').append(divElemApply1+divElemApply2);
-                // }
-                //
-                // forResetModal =
-                //
-                //     "<div class=\"modal-dialog modal-dialog-centered\">"+
-                //     "<div class=\"modal-content\">"+
-                //     "<div class=\"modal-header\">"+
-                //     "<h5 class=\"modal-title\" id=\"exampleModalLabel\">옵션그룹이름</h5>"+
-                //     "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>"+
-                //     "</div>"+
-                //     "<div class=\"modal-body\">"+
-                //     "<div class=\"form-group\">"+
-                //     "<label for=\"optionGroupName\" class=\"col-from-label\">옵션그룹이름</label>"+
-                //     "<input type=\"text\" class=\"form-control\" id=\"optionGroupName\" value=\"\">"+
-                //     "</div>"+
-                //     // "</div>"+
-                //     "<div class=\"modal-footer\">"+
-                //     //"<button type=\"button\" class=\"btn btn-primary custom\" onclick='applyOptionGroupNamer();'>옵션그룹이름적용</button>"+
-                //     "<button type=\"button\" class=\"btn btn-primary customer\" onclick=\'applyOptionGroupNamer()\' data-bs-toggle=\"modal\" data-bs-target=\"#optionModal\" data-whatever=\"option\">옵션추가</button>"+
-                //     "<button type=\"button\" class=\"btn btn-primary\" id=\"add-optionGroup\">적용</button>"+
-                //     "</div>"+
-                //     "</div>"+
-                //     // "</div>"+
-                //     "</div>";
+                sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
 
 
-                // console.log("forresetmodal : " + $('#exampleModalLong').html());
-                // console.log("forResetModal 대체텍스트 : " + forResetModal);
 
-                // $('#exampleModal').html(forResetModal);
+                var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
+                var beforeAnywayList = sessionStorage.getItem("menuOdList");
+
+
+                // alert("자면서 만들었나? getItem JSONparsing한거: " + beforeAnyway);
+                // alert("자면서 만들었나? getItem 한거: " + beforeAnywayList);
+
+
+                for( var i in beforeAnyway){
+                    // console.log("beforeAnyway : " + beforeAnyway[i]);
+                    for(var j in beforeAnyway[i]){
+                        console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
+                    }
+                }
+
+
 
             });
 
@@ -258,7 +166,7 @@
                 url:"/menu/json/isThereOG/"+menuNo,
                 method:"get",
                 success:function(data){
-                    console.log("data : " + data)
+                    // console.log("data : " + data)
                     optionGroupCount = data;
                 }
             });
@@ -270,7 +178,7 @@
                 method:"get",
 
                 success: function(data){
-                    console.log("data : " + data.menu)
+                    // console.log("data : " + data.menu)
                     var div="";
                     var modalFooter = "";
 
@@ -328,7 +236,7 @@
                 url:"/menu/json/getOptionGroupListOnModal/"+menuNo,
                 method:"get",
                 success:function(data){
-                    console.log("data.optionGroup[0].optionGroupName : " +data.optionGroup[0].optionGroupName)
+                    // console.log("data.optionGroup[0].optionGroupName : " +data.optionGroup[0].optionGroupName)
                     var divOG ="<table>";
                     var modalFooterOG ="";
 

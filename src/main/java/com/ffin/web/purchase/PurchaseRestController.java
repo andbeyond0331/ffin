@@ -251,6 +251,8 @@ public class PurchaseRestController {
     public Map payRefund(@RequestParam(value = "payId")String payId,
                          @RequestParam(value = "orderNo")int orderNo,
                          @RequestParam(value = "orderCancelReason")int orderCancelReason,
+                         @RequestParam(value = "couponNo")int couponNo,
+                         @RequestParam(value = "pointNo")int pointNo,
                          HttpServletRequest request, HttpServletResponse response) throws Exception {
         // 이미 취소된 거래 imp_uid
         System.out.println("testCancelPaymentByImpUid --- Start!---");
@@ -305,12 +307,14 @@ public class PurchaseRestController {
         user.setUserTotalPoint(user.getUserTotalPoint()-appendPoint);
         purchaseService.updatePoint(point);
         purchaseService.updateTotalPoint(user);
+        System.out.println("결제 시 포인트 적립 환불");
 
 
-        purchase.getOrderUserId();
+        System.out.println("pointNo 조회"+pointNo);
 
         //결제시 포인트 사용내역이 있으면
-        if(purchase.getPayPointNo().getPointNo() != 0 || purchase.getPayPointNo().getPointNo() != ' ') {
+        if(pointNo != 0 ) {
+            System.out.println("결제 시 사용한 포인트 환불 START");
             user = purchaseService.getTotalPoint(purchase.getOrderUserId().getUserId());
             int usePoint = purchaseService.getUsePoint(purchase.getPayPointNo().getPointNo());
             point.setPointAmt(usePoint);
@@ -318,13 +322,20 @@ public class PurchaseRestController {
             user.setUserTotalPoint(user.getUserTotalPoint()+usePoint);
             purchaseService.updatePoint(point);
             purchaseService.updateTotalPoint(user);
+            System.out.println("결제 시 사용한 포인트 환불 END");
         }
+        System.out.println("couponNo 조회"+couponNo);
         //결제시 쿠폰 사용내역이 있으면
-        if(purchase.getPayCouponNo().getCouponNo() !=0 || purchase.getPayCouponNo().getCouponNo() !=' '){
+        if(couponNo !=0 ){
+
+            System.out.println("결제시 사용한 쿠폰 환불 START");
+
             Coupon coupon = new Coupon();
             coupon.setCouponStatus(0);
             coupon.setCouponNo(purchase.getPayCouponNo().getCouponNo());
             purchaseService.updateCouponStatus(coupon);
+            System.out.println("결제시 사용한 쿠폰 환불 END");
+
         }
 
 
@@ -337,7 +348,7 @@ public class PurchaseRestController {
         System.out.println("order : "+order);
         map.put("orderId", orderId);
         map.put("order", order);*/
-
+        System.out.println("END");
         return map;
     }
 

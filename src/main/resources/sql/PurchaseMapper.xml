@@ -486,7 +486,7 @@
             AND ORDER_USER_ID = #{orderUserId.userId}
         </where>
         order by order_no) inner_table
-        limit 0,8;
+        limit #{startRowNum}, #{pageSize};
     </select>
 
 
@@ -544,7 +544,7 @@
             AND point_user_id = #{userId}
         </where>
         order by point_no) inner_table
-        limit 0,8;
+        limit #{startRowNum}, #{pageSize}
     </select>
     <select id="getPurchase" parameterType="purchase" resultMap="purchaseSelectMap">
         SELECT p.order_no,

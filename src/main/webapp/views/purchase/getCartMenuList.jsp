@@ -216,7 +216,14 @@
     </div>--%>
 
 <div class="container">
-    <div class="content"></div>
+    <div class="content">
+dd
+        <c:forEach var="a1" items="${JSON.parse(sessionStorage.getItem('menuOdList'))}" begin="0" end="1">
+            <c:forEach var="a2" items="${a1}" begin="0" end="1"/>
+            ${a2}<br>
+        </c:forEach>
+
+    </div>
    <%-- <div class="sidebar">
 
 
