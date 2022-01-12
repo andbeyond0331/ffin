@@ -394,7 +394,7 @@
         $("#roleTab a[href='#CEO']").click(function (){
             /*alert("나와라 CEO");*/
 
-            $("#modalLoginBtn").click(function () {
+            $("#modalLoginTBtn").click(function () {
 
                 console.log("truck")
 

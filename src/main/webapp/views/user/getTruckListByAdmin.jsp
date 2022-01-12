@@ -29,22 +29,120 @@
         .search{
             margin-top: 100px;
         }
-        .truck-card{
-            box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1);
-            transition: 0.2s;
-            border: 0;
-            margin-top: 20px;
-
+        .item {
+            position: relative;
+            float: left;
+            width: 33%;
+            background-color: #fae100;
+            overflow: hidden;
+            border-radius: 10px;
         }
-        .card-img-top{
-
+        .item:after {
+             content: '';
+             display: block;
+             background-color: inherit;
+             opacity: 0.5;
+             width: 100%;
+             height: 100%;
+             position: absolute;
+             top: 0;
+             left: 0;
+             transform: scale(2) translateX(-75%) translateY(-75%) translateZ(0) rotate(-28deg);
+             transition: transform 2s cubic-bezier(0.23, 1, 0.32, 1);
+             border-radius: 10px;
         }
-
-
+        .item:hover:after {
+             transform: scale(2) translateX(0%) translateY(0%) translateZ(0) rotate(-28deg);
+            border-radius: 5px;
+         }
+        .item:hover .item-image{
+            transform: scale(1.2) translateZ(0);
+            border-radius: 10px;
+        }
+        .item:hover .item-text{
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .item-image {
+            height: auto;
+            backface-visibility: hidden;
+            transform: translateZ(0);
+            transition: transform 750ms cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .item-image:before {
+             content: "";
+             display: block;
+             padding-top: 75%;
+             overflow: hidden;
+        }
+        .item-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            line-height: 0;
+            border-radius: 10px;
+            background-color: white;
+        }
+        .item-text {
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            opacity: 0;
+            text-align: center;
+            z-index: 1;
+            color: #110000;
+            transition: opacity 500ms cubic-bezier(0.23, 1, 0.32, 1), transform 500ms cubic-bezier(0.23, 1, 0.32, 1);
+            transition-delay: 300ms;
+            transform: translateY(-20%);
+        }
+        .item-text-wrapper {
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .item-text-title {
+            font-weight: normal;
+            /*font-style: 16px;*/
+            padding: 0 15px;
+            margin: 5px 0 0 0;
+        }
+        .item-text-dek {
+            text-transform: uppercase;
+           /* font-style: 14px;*/
+            opacity: 0.7;
+            margin: 0;
+        }
+        .item-link {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 2;
+            line-height: 0;
+            overflow: hidden;
+            text-indent: -9999px;
+        }
+        .item-truck{
+            width: 33%;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            padding: 5px;
+        }
 
     </style>
 
     <script type="text/javascript">
+
+        function getTruckInfo(){
+            alert(1234);
+        }
 
     </script>
 
@@ -68,7 +166,7 @@
             <div class="row search">
                 <div class="col-md-6 text-left">
                     <p class="text-primary">
-                        전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+                        전체  ${resultPage.totalCount } 건, 현재 ${resultPage.currentPage}  페이지
                     </p>
                 </div>
 
@@ -97,70 +195,40 @@
                 </div>
             </div>
 
-            <div class="card mb-10">
-                <div class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="card mb-12" style="border: 0;">
 
                     <c:set var="i" value="0" />
                     <c:forEach var="truck" items="${list}">
                     <c:set var="i" value="${ i+1 }" />
 
-                    <%--<div class="col col-md-4">
-                        <div class="card truck-card">
-                            <img src="../../resources/image/truckPro.png" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h6 class="card-title"><strong>${truck.truckName}</strong></h6>
-                                <p class="card-text">content</p>
+                <div class="card mb-4" style="border: 0;">
+                        <input type="hidden" id="truckId" name ="truckId" value="${truck.truckId}">
+                        <div style="display: flex; flex-direction: column;">
+                            <div class="item">
+                                <div class="item-image">
+                                    <c:if test="${truck.truckProImg != null }">
+                                        <img src="../../resources/image/${truck.truckProImg}" alt="" />
+                                    </c:if>
+                                    <c:if test="${truck.truckProImg == null }">
+                                        <img src="/resources/image/truckPro.png" alt="" />
+                                    </c:if>
+                                </div>
+                                <div class="item-text">
+                                    <div class="item-text-wrapper">
+                                        <p class="item-text-dek">${truck.truckSigMenuName}</p>
+                                        <h6 class="item-text-title">${truck.truckCEOIntro}</h6>
+                                    </div>
+                                </div>
+                                <a class="item-link" href="#" onclick="getTruckInfo()"></a>
+                            </div>
+                            <div class="item-truck">
+                                <span>${truck.truckName}</span>
+                                <span><i class="fas fa-star"></i>${truck.truckAVGStar}4.4</span>
                             </div>
                         </div>
-                    </div>--%>
-                        <li>
-                            <div>
-                                <figure class="figure">
-                                    <img src="../../resources/image/user_img.jpg" class="figure-img img-fluid rounded" alt="...">
-                                </figure>
-                                <a class="shot-thumbnail-link" href="">
-                                    <span class="accessibility-text">View Title!</span>
-                                </a>
-                                <div class="shot-thumbnail-overlay">
-                                    <div class="shot-thumbnail-overlay-content">
-                                        <div class="shot-title">turck!</div>
-                                    </div>
-                                    <ul class="js-dribbble-shot-actions shot-actions-container">
-                                        <li data-bucket-container="true" class="shot-action">
-                                            <a class="bucket-shot form-btn" data-bucket-add="true" data-screenshot-id="17251219" data-screenshot-user-id="108671" data-is-from-modal="false" title="Save shot" href=""></a>
-                                        </li>
-                                        <div class="like-action shot-action">
-                                            <a class="bucket-shot form-btn" data-bucket-add="true" data-screenshot-id="17251219" data-screenshot-user-id="108671" data-is-from-modal="false" title="Save shot" href=""></a>
-                                        </div>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="shot-details-container js-shot-details-container" style="visibility: visible;">
-                                <div class="user-information">
-                                    <a class="hoverable url" rel="contact" href="/andrewcolinbeck">
-                                        <img class="photo lazyloaded" alt="Andrew Colin Beck" width="24" height="24" data-src="">
-                                        <span class="display-name">truckName</span>
-                                    </a>
-                                </div>
-                                <div class="shot-statistics-container js-shot-statistics">
-                                    <div class="shot-statistic js-shot-likes-container">
-                                        <div class="like">
-                                            <span class="">좋아요수? 별점?</span>
-                                        </div>
-                                    </div>
-                                    <div class="shot-statistic js-shot-views-container">
-                                        <div class="like">
-                                            <span class="">좋아요수? 별점?</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
-
+                    </div>
                     </c:forEach>
-                </div>
+
             </div>
         </div>
     </div>
