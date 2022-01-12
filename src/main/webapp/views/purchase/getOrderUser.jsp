@@ -160,7 +160,7 @@
     .img-fluid {
 
         height: auto;
-        width: 100px;
+        width: 180px
     }
 
 </style>

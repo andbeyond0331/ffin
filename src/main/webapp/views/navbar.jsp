@@ -2,6 +2,10 @@
 <%@ page pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<jsp:include page="../common/cart.jsp"/>
+
+
+
 
 <header class="header">
     <%-- 로그인 X --%>
@@ -38,104 +42,114 @@
     </c:if>
     <%-- 로그인 O --%>
     <c:if test="${ (user.userId != null && (sessionScope.role == 'user' || sessionScope.role == 'admin')) || (truck.truckId != null && sessionScope.role == 'truck') }">
-    <div class="container-fluid">
-        <nav class="navbar navbar-expand-md fixed-top">
-            <!-- navbar-brand의 content 변경 -->
-            <%--<a class="navbar-brand" href="#">F.Fin</a>--%>
-            <div class="logo">
-                <a class="navbar-brand" href="/">
-                    <img class="d-inline-block" src="/resources/bootstrap/assets/logo.svg" alt="logo" />
-                    <span style="color: #ffba49; ">F.FIN</span>
-                </a>
-            </div>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 20px">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" id="goTruck" href="#">푸드트럭</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="goCatering" href="#">케이터링</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="goPost" href="#">게시판</a>
-                    </li>
-                    <c:if test="${user.userId != null && (sessionScope.role == 'user' || sessionScope.role == 'admin')}">
-                    <li class="nav-item">
-                        <a class="nav-link" id="goChat" href="#">채팅방</a>
-                    </li>
-                    </c:if>
-                </ul>
-            </div>
-            <div class="collapse navbar-collapse justify-content-end nav-user" id="navbarSupportedContent" >
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-md fixed-top">
+                <!-- navbar-brand의 content 변경 -->
+                    <%--<a class="navbar-brand" href="#">F.Fin</a>--%>
+                <div class="logo">
+                    <a class="navbar-brand" href="/">
+                        <img class="d-inline-block" src="/resources/bootstrap/assets/logo.svg" alt="logo" />
+                        <span style="color: #ffba49; ">F.FIN</span>
+                    </a>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 20px">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" id="goTruck" href="#">푸드트럭</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="goCatering" href="#">케이터링</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="goPost" href="#">게시판</a>
+                        </li>
+                        <c:if test="${user.userId != null && (sessionScope.role == 'user' || sessionScope.role == 'admin')}">
+                            <li class="nav-item">
+                                <a class="nav-link" id="goChat" href="#">채팅방</a>
+                            </li>
+                        </c:if>
+                    </ul>
+                </div>
+                <div class="collapse navbar-collapse justify-content-end nav-user" id="navbarSupportedContent" >
 
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" id="goMsg" href="#" style="margin-top: 3px;"><i class="fas fa-envelope fa-lg" ></i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/purchase/getOrderList?truckId=${truck.truckId}&search=0" style="margin-top: 3px;"><i class="fas fa-shopping-cart fa-lg"></i></a>
-                    </li>
-                    <li class="form-inline my-2 my-lg-0" style="position: relative;">
-                        <%--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>--%>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" id="goMsg" href="#" style="margin-top: 3px;"><i class="fas fa-envelope fa-lg" ></i></a>
+                        </li>
                         <c:choose>
-
-                            <%-- User --%>
                             <c:when test="${user.userId != null && sessionScope.role eq 'user' }">
-                                <button type="button" class="btn btn-default dropdown-toggle" id="user-dropdown" data-toggle="dropdown"  aria-expanded="false">
-                                    <i class="fas fa-user-alt"></i>${user.userId}
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="user-dropdown">
-                                    <li><a class="dropdown-item user-menu" href="/views/user/userMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
-                                    <li><a class="dropdown-item user-menu" href="/views/qna/addInquiryView.jsp"><i class="fas fa-question-circle"></i>문의</a></li>
-                                    <c:if test="${sessionScope.sns eq 'kakao'}">
-                                        <li><a class="dropdown-item user-menu" href="https://kauth.kakao.com/oauth/logout?client_id=c5cd6068fce64f5187211674e3872ec7&logout_redirect_uri=http://localhost:8080/user/kakaoLogout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
-                                    </c:if>
-                                    <c:if test="${sessionScope.sns == null }">
-                                        <li><a class="dropdown-item user-menu" href="/user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
-                                    </c:if>
-                                </ul>
+                                <li class="nav-item">
+                                    <a class="pull-bs-canvas-right d-block text-primary text-decoration-none" href="#" style="margin-top: 10px;"><i class="fas fa-shopping-cart fa-lg"></i></a>
+                                </li>
                             </c:when>
-
-                            <%-- Admin --%>
-                            <c:when test="${user.userId != null && sessionScope.role eq 'admin'}">
-                                <button type="button" class="btn btn-default dropdown-toggle" id="user-dropdown" data-toggle="dropdown"  aria-expanded="false">
-                                    <i class="fas fa-user-alt"></i>${user.userId}
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="user-dropdown">
-                                    <li><a class="dropdown-item user-menu" href="/views/user/adminMyPage.jsp"><i class="fas fa-user-circle"></i>사이트 관리</a></li>
-                                    <li><a class="dropdown-item user-menu" href="/user/kakaoLogout"><i class="fas fa-question-circle"></i>가입승인</a></li>
-                                    <li><a class="dropdown-item user-menu" href="/user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
-                                </ul>
-                            </c:when>
-
-                            <%-- Truck --%>
                             <c:when test="${truck.truckId != null && sessionScope.role eq 'truck' }">
-                                <button type="button" class="btn btn-default dropdown-toggle" id="truck-dropdown" data-toggle="dropdown"  aria-expanded="false">
-                                    <i class="fas fa-user-alt"></i>${truck.truckId}
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="truck-dropdown">
-                                    <li><a class="dropdown-item user-menu" href="/views/truck/truckMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
-                                    <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-power-off"></i>영업상태변경</a></li>
-                                    <li><a class="dropdown-item user-menu" href="/views/qna/addInquiryView.jsp"><i class="fas fa-question-circle"></i>문의</a></li>
-                                    <li><a class="dropdown-item user-menu" href="/truck/logoutTruck"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
-                                </ul>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/purchase/getOrderList?truckId=${truck.truckId}&search=0" style="margin-top: 3px;"><i class="fas fa-shopping-cart fa-lg"></i></a>
+                                </li>
                             </c:when>
                         </c:choose>
-                    </li>
-                </ul>
-            </div>
+                        <li class="form-inline my-2 my-lg-0" style="position: relative;">
+                                <%--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>--%>
+                            <c:choose>
 
-        </nav>
-        <!-- socket alert -->
-        <div id="socketAlert" class="alert alert-warning" role="alert" style="display:none; margin-top:75px; z-index:999999"></div>
+                                <%-- User --%>
+                                <c:when test="${user.userId != null && sessionScope.role eq 'user' }">
+                                    <button type="button" class="btn btn-default dropdown-toggle" id="user-dropdown" data-toggle="dropdown"  aria-expanded="false">
+                                        <i class="fas fa-user-alt"></i>${user.userId}
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="user-dropdown">
+                                        <li><a class="dropdown-item user-menu" href="/views/user/userMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
+                                        <li><a class="dropdown-item user-menu" href="/views/qna/addInquiryView.jsp"><i class="fas fa-question-circle"></i>문의</a></li>
+                                        <c:if test="${sessionScope.sns eq 'kakao'}">
+                                            <li><a class="dropdown-item user-menu" href="https://kauth.kakao.com/oauth/logout?client_id=c5cd6068fce64f5187211674e3872ec7&logout_redirect_uri=http://localhost:8080/user/kakaoLogout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+                                        </c:if>
+                                        <c:if test="${sessionScope.sns == null }">
+                                            <li><a class="dropdown-item user-menu" href="/user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+                                        </c:if>
+                                    </ul>
+                                </c:when>
 
-    </div>
+                                <%-- Admin --%>
+                                <c:when test="${user.userId != null && sessionScope.role eq 'admin'}">
+                                    <button type="button" class="btn btn-default dropdown-toggle" id="user-dropdown" data-toggle="dropdown"  aria-expanded="false">
+                                        <i class="fas fa-user-alt"></i>${user.userId}
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="user-dropdown">
+                                        <li><a class="dropdown-item user-menu" href="/views/user/adminMyPage.jsp"><i class="fas fa-user-circle"></i>사이트 관리</a></li>
+                                        <li><a class="dropdown-item user-menu" href="/user/kakaoLogout"><i class="fas fa-question-circle"></i>가입승인</a></li>
+                                        <li><a class="dropdown-item user-menu" href="/user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+                                    </ul>
+                                </c:when>
+
+                                <%-- Truck --%>
+                                <c:when test="${truck.truckId != null && sessionScope.role eq 'truck' }">
+                                    <button type="button" class="btn btn-default dropdown-toggle" id="truck-dropdown" data-toggle="dropdown"  aria-expanded="false">
+                                        <i class="fas fa-user-alt"></i>${truck.truckId}
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="truck-dropdown">
+                                        <li><a class="dropdown-item user-menu" href="/views/truck/truckMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
+                                        <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-power-off"></i>영업상태변경</a></li>
+                                        <li><a class="dropdown-item user-menu" href="/views/qna/addInquiryView.jsp"><i class="fas fa-question-circle"></i>문의</a></li>
+                                        <li><a class="dropdown-item user-menu" href="/truck/logoutTruck"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+                                    </ul>
+                                </c:when>
+                            </c:choose>
+                        </li>
+                    </ul>
+                </div>
+
+            </nav>
+            <!-- socket alert -->
+            <div id="socketAlert" class="alert alert-warning" role="alert" style="display:none; margin-top:75px; z-index:999999"></div>
+
+        </div>
 
     </c:if>
+
 </header>
 <!-- end header section -->
 
@@ -181,7 +195,7 @@
                                 <span style="color: #0b1727; margin-left: 5px; font-size: 14px">아직 회원이 아니신가요?</span>
                                 <a class="addChk" href="/views/user/addUserInfo.jsp" style="color: #ffba49; margin-left: 0; font-size: 14px;"> <strong style="float: right; stroke: #ffba49; margin-right: 5px;">회원가입</strong></a>
                             </div>
-<%--                            <hr style="margin-top: 30px; margin-bottom: 20px; border-width: 2px;"/>--%>
+                            <%--                            <hr style="margin-top: 30px; margin-bottom: 20px; border-width: 2px;"/>--%>
                             <div class="mb-3 d-grid gap-2 mx-auto">
                                 <button type="button" class="btn btn-default login" id="modalLoginBtn" style="margin-bottom: 10px; margin-top: 40px; color: #110000">login</button>
                             </div>
@@ -375,7 +389,7 @@
                     로그인
                 </button>
                 <button type="button" id="findUserPw" class="btn peach-gradient btn-rounded waves-effect" onclick="findUserPw()">
-                   비밀번호 찾기
+                    비밀번호 찾기
                 </button>
             </div>
         </div>
@@ -411,9 +425,9 @@
     var socket = null; //전역변수.다른 페이지 어디서든 접근
 
 
-     $(document).ready(function(){
-         connectWS();
-     });
+    $(document).ready(function(){
+        connectWS();
+    });
 
     function connectWS(){
         var ws = new WebSocket("ws://localhost:8080/push");
@@ -439,11 +453,12 @@
         ws.onclose = function(event){
             console.log('info: connection closed.');
             // 원래 이거 해야하는데 계속 끊기는데 연결을 시도해서.. 일단 주석처리
-           // setTimeout( function(){connectWS();}, 1000);
+            // setTimeout( function(){connectWS();}, 1000);
         };
         ws.onerror = function(err){console.log('error: connection error.', err);};
 
     }
+
 
 
 </script>
