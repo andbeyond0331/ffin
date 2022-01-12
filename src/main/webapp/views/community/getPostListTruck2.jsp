@@ -7,36 +7,26 @@
 <!DOCTYPE html>
 <html>
 <style>
+    .cards-box {
+        display: flex;
+        justify-content: flex-start;
+        margin: 0 70px;
+        margin-top: 65px;
+        flex-wrap: wrap;
 
-    img{ max-width:100%;
-        display: block;}
-
-
-    *,
-    *::before,
-    *::after {
-        box-sizing: border-box;
     }
-
+    img{ max-width:100%;}
     body{
         background-size: cover;
-
-        font-family: "Open Sans", Arial, sans-serif;
-        min-height: 100vh;
-        background-color: #fafafa;
-        color: #262626;
-        padding-bottom: 3rem;
-
-
     }
-
+    html, body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        font-size: 14px;
+    }
     .container{
-        margin-top: 132px;
-
-        max-width: 93.5rem;
-        margin: 0 auto;
-        padding: 0 2rem;
-
+        margin-top: 132px
     }
     .reply_list_profileImage{
         width: 40px;
@@ -51,90 +41,6 @@
         border-radius: 50%;
     }
     .format{display: none}
-
-    .btn {
-        display: inline-block;
-        font: inherit;
-        background: none;
-        border: none;
-        color: inherit;
-        padding: 0;
-        cursor: pointer;
-    }
-
-    .btn:focus {
-        outline: 0.5rem auto #4d90fe;
-    }
-
-    .visually-hidden {
-        position: absolute !important;
-        height: 1px;
-        width: 1px;
-        overflow: hidden;
-        clip: rect(1px, 1px, 1px, 1px);
-    }
-
-
-    /* Gallery Section */
-
-    .gallery {
-        display: flex;
-        flex-wrap: wrap;
-        margin: -1rem -1rem;
-        padding-bottom: 3rem;
-        padding-top: 60px;
-    }
-
-    .gallery-item {
-        position: relative;
-
-        margin: 1rem;
-        color: #fff;
-        cursor: pointer;
-    }
-
-    .gallery-item:hover .gallery-item-info,
-    .gallery-item:focus .gallery-item-info {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.3);
-    }
-
-    .gallery-item-info {
-        display: none;
-    }
-
-    .gallery-item-info li {
-        display: inline-block;
-        font-size: 1.7rem;
-        font-weight: 600;
-    }
-
-    .gallery-item-likes {
-        margin-right: 2.2rem;
-    }
-
-    .fa-comment {
-        transform: rotateY(180deg);
-    }
-
-    .gallery-image {
-        width: 350px;
-        height: 350px;
-        object-fit: cover;
-    }
-    .addbutton{
-        margin-top: 101px;
-        /* margin-right: 0px; */
-        padding-left: 626px;
-    }
-
-
 </style>
 <script type="text/javascript">
 
@@ -160,11 +66,9 @@
 
     // 사진 클릭했을 때, modal 호출
 
-    /*function getCardDetail() {
+    function getCardDetail(postNo) {
         //var role = '${sessionScope.role}';
-        alert("얍")
-        var postNo = $(this).next();
-        alert("postNo: "+postNo)
+
         $.ajax({
             url:"/community/json/getCardDetail/"+postNo,
             method:"get",
@@ -178,7 +82,7 @@
                     div += "<div class='row' >"+
                         "</div>"
 
-                  /!*  +"<div id='carouselExampleInterval' class='carousel slide' data-ride='carousel'>"
+                  /*  +"<div id='carouselExampleInterval' class='carousel slide' data-ride='carousel'>"
                      +"<div class='carousel-inner'>"
                       +"<div class='carousel-item active'>"
                           +"<img class='d-block w-100' src='../../../resources/image/"+data.post.postFile1+"' alt='First slide'>"
@@ -195,14 +99,14 @@
               + " <a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'>"
                     +"<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span>"
                   + " </a>"
-                +" </div>";*!/
+                +" </div>";*/
 
 
 
 
 
 
-/!* 슬라이드 해볼랫는데 안먹는당 *!/
+/* 슬라이드 해볼랫는데 안먹는당 */
 
 
                       +"<div class='row'>"
@@ -345,7 +249,7 @@
 
 
     }
-*/
+
 // html을 복사하고.
     // 모달이 피료없다
 
@@ -578,67 +482,26 @@
 
 <form class="form-inline" id="getPostListPic">
 <input type="hidden" id="currentPage" name="currentPage" value=""/>
-
-
-
-
-
+<div class="card-colums" id="all_posting">
     <div class="container">
-        <div class="addbutton" >
+        <div>
             <a class='btn btn-warning' id ='modaladdPostPicbt' role='button' data-toggle='collapse' href='#modaladdPostPic' aria-expanded='false' aria-controls='modaladdPostPic'>등록</a>
         </div>
-        <div class="gallery">
-
-
-            <c:forEach var="post" items="${list}">
-            <div class="gallery-item" tabindex="0">
-
-                <img src="../../resources/image/${post.postFile1}" class="gallery-image" alt="" onclick="getCardDetail()"><!--onclick="getCardDetail(${post.postNo})"-->
-                <input type="hidden" id="postNoNo" name="postNoNo" value="${post.postNo}"/>
-                <div class="gallery-item-info">
-
-                    <ul>
-                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> ${post.heartCount }</li>
-                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> ${post.replyCount }</li>
-                    </ul>
-
-                </div>
-
-            </div>
-            </c:forEach>
-
-        </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<%--
         <div id="card-box" class="cards-box">
 
-
+            <c:forEach var="post" items="${list}">
                 <div class="card" name ="card" id="card${post.postNo}" style="width: 23rem; margin-bottom:15px; margin-left: 10px;" >
                     <img class="card-img-top" src="../../resources/image/${post.postFile1}" alt="Card image cap"
                          style="border-bottom: 1px solid #eee; height: 300px;" onclick="getCardDetail(${post.postNo})">
                     <div class="card-body">
                         <ul class='card-body-ul'>
 
-                            &lt;%&ndash;<c:if test="${sessionScope.role eq 'user'}">&ndash;%&gt;
+                            <%--<c:if test="${sessionScope.role eq 'user'}">--%>
                                 <li> ${post.postUser.userId} ${post.postTruck.truckId}</li>
-                            &lt;%&ndash;</c:if>
-                            <c:if test="${sessionScope.role eq 'truck'}">&ndash;%&gt;
-                               &lt;%&ndash; <li> ${post.postTruck.truckId}</li>&ndash;%&gt;
-                            &lt;%&ndash;</c:if>&ndash;%&gt;
+                            <%--</c:if>
+                            <c:if test="${sessionScope.role eq 'truck'}">--%>
+                               <%-- <li> ${post.postTruck.truckId}</li>--%>
+                            <%--</c:if>--%>
                             <li>${post.postTitle}</li>
                             <li>${post.postContent}</li>
                             <li>${post.postRegDate}</li>
@@ -647,7 +510,7 @@
 
                                 <c:choose>
                                     <c:when test="${ post.heartNo eq 0}">
-                                        &lt;%&ndash; 빈 하트일때 &ndash;%&gt;
+                                        <%-- 빈 하트일때 --%>
                                         <span>
                                             <a idx="${post.postNo }" href="javascript:" class="heart-click heart_icon${post.postNo }">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
@@ -657,7 +520,7 @@
                                         </span>
                                     </c:when>
                                     <c:otherwise>
-                                        &lt;%&ndash; 꽉찬 하트일때 &ndash;%&gt;
+                                        <%-- 꽉찬 하트일때 --%>
                                         <span>
                                             <a idx="${post.postNo}" href="javascript:" class="heart-click heart_icon${post.postNo}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
@@ -692,7 +555,7 @@
 
 
     </div>
-</div>--%>
+</div>
 </form>
 <div class="format">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -740,12 +603,6 @@
 
     });
 
-    $("body").on("click", ".gallery-item.gallery-image", function() {
-        alert(123);
-        /*let postNo = $(this).next();
-        console.log("postNo: " + postNo);
-        getCardDetail(postNo)*/
-    });
 
 
     $("body").on("click", ".open_reply_list", function() {

@@ -179,7 +179,7 @@ public class CommunityController {
     public String getPostList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request, HttpSession session) throws Exception {
 
         System.out.println("/community/getPostList : GET/POST");
-
+        pageSize = 9;
         if (search.getCurrentPage() == 0) {
             search.setCurrentPage(1);
         }
@@ -302,7 +302,7 @@ public class CommunityController {
         if (search.getCurrentPage() == 0) {
             search.setCurrentPage(1);
         }
-        search.setPageSize(9);
+        search.setPageSize(pageSize);
 
         String role = (String)session.getAttribute("role");
         String id= "";
@@ -325,7 +325,7 @@ public class CommunityController {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
         System.out.println("list::::::::::::::::::::::::::::::" + map.get("list"));
-        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, 9);
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
         System.out.println(resultPage);
         //  Model 과 View 연결
         model.addAttribute("list", map.get("list"));
@@ -396,7 +396,7 @@ public class CommunityController {
 //        }else {
 //            model.addAttribute("msg", "Please select a valid mediaFile..");
         }
-        post.setPostFile2(file3.getOriginalFilename());
+        post.setPostFile3(file3.getOriginalFilename());
 
         communityService.addPostPic(post);
 
@@ -429,6 +429,7 @@ public class CommunityController {
         String postFile2  = file2.getOriginalFilename();
         String postFile3  = file3.getOriginalFilename();
 
+
 //        String root_path = request.getSession().getServletContext().getRealPath("/");
         System.out.println("/////////realPath : " + realPath);
 
@@ -457,7 +458,7 @@ public class CommunityController {
 //        }else {
 //            model.addAttribute("msg", "Please select a valid mediaFile..");
         }
-        post.setPostFile2(file3.getOriginalFilename());
+        post.setPostFile3(file3.getOriginalFilename());
 
         communityService.updatePostPic(post);
 
