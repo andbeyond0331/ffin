@@ -136,9 +136,9 @@
         </div>
 
         <div class="form-group">
-            <label for="menuImg1" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지1</label>
+            <label for="menuImg11" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지1</label>
             <div class="col-sm-4">
-                <input type="file" class="form-control" id="menuImg1" name="menuImg1"  value="${menu.menuImg1}" placeholder="메뉴 이미지1 수정" onchange="setImage1Preview(event);">
+                <input type="file" class="form-control" id="menuImg11" name="menuImg11"  value="${menu.menuImg1}" placeholder="메뉴 이미지1 수정" onchange="setImage1Preview(event);">
             </div>
             <div id="image1preview" class="col-sm-4">
                 <c:if test="${menu.menuImg1 ne null}">
@@ -148,9 +148,9 @@
         </div>
 
         <div class="form-group">
-            <label for="menuImg2" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지2</label>
+            <label for="menuImg22" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지2</label>
             <div class="col-sm-4">
-                <input type="file" class="form-control" id="menuImg2" name="menuImg2"  value="${menu.menuImg2}" placeholder="메뉴 이미지2 수정" onchange="setImage2Preview(event);">
+                <input type="file" class="form-control" id="menuImg22" name="menuImg22"  value="${menu.menuImg2}" placeholder="메뉴 이미지2 수정" onchange="setImage2Preview(event);">
             </div>
             <div id="image2preview" class="col-sm-4">
                 <c:if test="${menu.menuImg2 ne null && menu.menuImg2 ne ''}">
@@ -160,9 +160,9 @@
         </div>
 
         <div class="form-group">
-            <label for="menuImg3" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지3</label>
+            <label for="menuImg33" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지3</label>
             <div class="col-sm-4">
-                <input type="file" class="form-control" id="menuImg3" name="menuImg3"  value="${menu.menuImg3}" placeholder="메뉴 이미지3 수정"  onchange="setImage3Preview(event);">
+                <input type="file" class="form-control" id="menuImg33" name="menuImg33"  value="${menu.menuImg3}" placeholder="메뉴 이미지3 수정"  onchange="setImage3Preview(event);">
             </div>
             <div id="image3preview" class="col-sm-4">
                 <c:if test="${menu.menuImg3 ne null && menu.menuImg3 ne ''}">
@@ -203,8 +203,8 @@
             }
 
             function setImage2Preview(event){
-                var reader  = new FileReader();
-                var isTherePreview = DIVimage1preview.find('img').length;
+                var DIVimage2preview = $('#image2preview');
+                var isTherePreview = DIVimage2preview.find('img').length;
                 alert("isTherePreview : " + isTherePreview);
                 //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
                 var reader  = new FileReader();
@@ -213,7 +213,7 @@
 
                 }else{
 
-                    DIVimage1preview.find('img').remove();
+                    DIVimage2preview.find('img').remove();
 
                 }
 
@@ -221,17 +221,18 @@
                     var img = document.createElement("img");
                     img.setAttribute("src", event.target.result);
                     img.setAttribute("style",  "width:100%;");
-                    document.querySelector("div#image1preview").appendChild(img);
+                    document.querySelector("div#image2preview").appendChild(img);
 
                 };
 
                 reader.readAsDataURL(event.target.files[0]);
+
 
             }
 
             function setImage3Preview(event){
-                var reader  = new FileReader();
-                var isTherePreview = DIVimage1preview.find('img').length;
+                var DIVimage3preview = $('#image3preview');
+                var isTherePreview = DIVimage3preview.find('img').length;
                 alert("isTherePreview : " + isTherePreview);
                 //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
                 var reader  = new FileReader();
@@ -240,7 +241,7 @@
 
                 }else{
 
-                    DIVimage1preview.find('img').remove();
+                    DIVimage3preview.find('img').remove();
 
                 }
 
@@ -248,11 +249,12 @@
                     var img = document.createElement("img");
                     img.setAttribute("src", event.target.result);
                     img.setAttribute("style",  "width:100%;");
-                    document.querySelector("div#image1preview").appendChild(img);
+                    document.querySelector("div#image3preview").appendChild(img);
 
                 };
 
                 reader.readAsDataURL(event.target.files[0]);
+
 
             }
 
