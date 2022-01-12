@@ -3,6 +3,7 @@ package com.ffin.web.qna;
 import com.ffin.common.Page;
 import com.ffin.common.Search;
 import com.ffin.service.domain.Inquiry;
+import com.ffin.service.domain.Truck;
 import com.ffin.service.domain.User;
 import com.ffin.service.qna.QnAService;
 import com.sun.xml.internal.ws.developer.MemberSubmissionAddressing;
@@ -86,6 +87,10 @@ public class QnAController {
         qnAService.addInquiry(inquiry);
         System.out.println("addInquiry :: "+inquiry);
 
+        if(role.equals("truck")){
+            return "/views/truck/truckMyPage.jsp";
+        }
+
         return "/views/user/userMyPage.jsp";
     }
 
@@ -161,7 +166,7 @@ public class QnAController {
     public String getInquiryListByTruck(@ModelAttribute("search")Search search, Model model,
                                      HttpSession session, HttpServletRequest request) throws Exception {
 
-        System.out.println("QnAController.getTruckInquiryList : POST");
+        System.out.println("QnAController.getTruckInquiryList");
 
         if(search.getCurrentPage() == 0){
             search.setCurrentPage(1);
@@ -169,7 +174,7 @@ public class QnAController {
 
         search.setPageSize(pageSize);
 
-        Map<String, Object> map = qnAService.getInquiryListByTruck(search, (String) session.getAttribute("inquiry"));
+        Map<String, Object> map = qnAService.getInquiryListByTruck(search, ((Truck) session.getAttribute("truck")).getTruckId());
 
         Page resultPage = new Page(search.getCurrentPage(), (Integer) map.get("totalCount"), pageUnit, pageSize);
 

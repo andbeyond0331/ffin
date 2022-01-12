@@ -6,7 +6,7 @@
 
 <head>
 
-    <title>공지 작성</title>
+    <title>F.FIN | 공지 작성</title>
     <jsp:include page="../../common/lib.jsp"/>
     <!-- 참조 : http://getbootstrap.com/css/   참조 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -84,7 +84,7 @@
                     </tr>
                     <!-- 푸드트럭 공지 파일업로드란 -->
                     <td>
-                        <label for="inputFile" class="col-sm-2 col-form-label"><strong>첨부 파일</strong></label>
+                        <label for="truckNoticeImg1" class="col-sm-2 col-form-label"><strong>첨부 파일</strong></label>
                         <input id="truckNoticeImg1" type="file" name="truckNoticeImg1" class="form-control-file" value="${truck.truckNoticeImg}"/>
                         </td>
 

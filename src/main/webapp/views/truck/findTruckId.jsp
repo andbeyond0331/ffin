@@ -6,7 +6,7 @@
 
 <head>
 
-    <title>푸드트럭(사업자) 아이디찾기</title>
+    <title>F.FIN | 푸드트럭(사업자) 아이디찾기</title>
     <jsp:include page="../../common/lib.jsp"/>
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">

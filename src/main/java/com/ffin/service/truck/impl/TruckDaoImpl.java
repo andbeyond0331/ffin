@@ -89,7 +89,7 @@ public class TruckDaoImpl implements TruckDao {
     // 푸드트럭 공지등록(수정)
     @Override
     public void updateNotice(Truck truck) throws Exception {
-        sqlSession.update("TruckMapper.updateTruck", truck);
+        sqlSession.update("TruckMapper.updateNotice", truck);
     }
     // 푸드트럭 패스워드 변경
     @Override

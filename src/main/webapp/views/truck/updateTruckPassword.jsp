@@ -7,7 +7,7 @@
 
 <head>
 
-    <title>푸드트럭(사업자) Password 수정</title>
+    <title>F.FIN | 푸드트럭(사업자) Password 수정</title>
     <jsp:include page="../../common/lib.jsp"/>
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">
@@ -77,7 +77,7 @@
 
 <jsp:include page="/views/navbar.jsp" />
 <br/><br/><br/><br/>
-
+<form name="updatePasswored" class="form-horizontal">
 <div class="container">
     <div class="area_inputs wow fadeIn">
         <div class="sub_title font-weight-bold">
@@ -113,8 +113,7 @@
         </div>
     </div>
 </div>
-
-
+</form>
 
 <jsp:include page="/views/footer.jsp" />
 

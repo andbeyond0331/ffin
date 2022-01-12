@@ -166,7 +166,7 @@
         limit #{search.startRowNum}, #{search.pageSize}
     </select>
 
-    <select id="getInquiryListByTruck" parameterType="search" resultMap="inquirySelectMap">
+    <select id="getInquiryListByTruck" parameterType="map" resultMap="inquirySelectMap">
         SELECT inner_table.*
         FROM ( SELECT inquiry_no, inquiry_type, inquiry_title, inquiry_date, INQUIRY_ANS_STATUS, INQUIRY_ANS_CONTENT, INQUIRY_ANS_DATE, INQUIRY_ANS_TITLE
                FROM inquiry

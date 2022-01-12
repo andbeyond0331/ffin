@@ -83,7 +83,7 @@
 				self.location = "getCommentList.jsp"
 			});
 			$('.truck-qna').click(function () {
-				self.location = "./getInquiryList.jsp"
+				self.location = "/qna/getInquiryListByTruck"
 			});
 
 

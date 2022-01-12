@@ -7,7 +7,7 @@
 
 <head>
 
-    <title>나의 게시글 목록(푸드트럭)</title>
+    <title>F.FIN | 나의 게시글 목록(푸드트럭)</title>
     <jsp:include page="../../common/lib.jsp"/>
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">

@@ -110,58 +110,53 @@ public class TruckController {
     }
 
     @RequestMapping(value = "getNotice", method = RequestMethod.GET)
-    public String getNotice(@RequestParam("truckId")String truckId, Model model, HttpSession session) throws Exception {
+    public String getNotice(Model model, HttpSession session) throws Exception {
 
         System.out.println("/truck/getNotice : GET");
 
-        Truck truck = truckService.getTruck("truckId");
-        //Model 과 View 연결
+        Truck truck = (Truck) session.getAttribute("truck");
+
+        String truckId = (String) truck.getTruckId();
+
+        System.out.println("truckId = " + truckId);
+
         model.addAttribute("truck", truck);
 
         truckService.getNotice(truckId);
+
+        session.setAttribute("truckId", truckId);
 
         return "forward:/views/truck/getNotice.jsp";
     }
 
     @RequestMapping(value = "updateNotice", method = RequestMethod.GET)
-    public String updateNotice(Model model, HttpSession session) throws Exception {
+    public String updateNotice(@ModelAttribute("truck")Truck truck, Model model, HttpSession session) throws Exception {
 
         System.out.println("/truck/updateNotice : GET");
         //Business Logic
-        Truck truck = (Truck) session.getAttribute("truck");
-
-        System.out.println("truck = " + truck);
+        truck = (Truck) session.getAttribute("truck");
 
         String truckId = (String) truck.getTruckId();
-        String truckProImg = (String) truck.getTruckProImg();
-        String truckNoticeTitle = (String) truck.getTruckNoticeTitle();
-        String truckNoticeContent = (String) truck.getTruckNoticeContent();
-        String truckNoticeImg = (String) truck.getTruckNoticeImg();
 
         System.out.println("truckId = " + truckId);
-        //Model 과 View 연결
-        model.addAttribute("truckId", truckId);
-        model.addAttribute("truckProImg", truckProImg);
-        model.addAttribute("truckNoticeTitle", truckNoticeTitle);
-        model.addAttribute("truckNoticeContent", truckNoticeContent);
-        model.addAttribute("truckNoticeImg", truckNoticeImg);
 
-        System.out.println("model = " + model);
+        Truck notice = truckService.getNotice(truckId);
+        //Model 과 View 연결
+        model.addAttribute("truck", notice);
 
         return "forward:/views/truck/updateNotice.jsp";
     }
 
     @RequestMapping(value = "updateNotice", method = RequestMethod.POST)
-    public String updateNotice(@ModelAttribute("truck") Truck truck,@RequestParam("truckNoticeImg") MultipartFile file1, Model model, HttpSession session, HttpServletRequest request) throws Exception {
+    public String updateNotice(@ModelAttribute("truck") Truck truck, @RequestParam("truckNoticeTitle") String truckNoticeTitle, @RequestParam("truckNoticeContent")String truckNoticeContent, @RequestParam("truckNoticeImg1") MultipartFile file1, Model model, HttpSession session, HttpServletRequest request) throws Exception {
 
         System.out.println("/truck/updateNotice : POST");
 
         truck = (Truck) session.getAttribute("truck");
 
-        String sessionId = ((Truck) session.getAttribute("truck")).getTruckId();
-        if (sessionId.equals(truck.getTruckId())) {
-            session.setAttribute("truck", truck);
-        }
+        String truckId = (String) truck.getTruckId();
+
+        System.out.println("truckId = " + truckId);
 
         String temDir = request.getSession().getServletContext().getRealPath("/resources/image");
 
@@ -170,10 +165,15 @@ public class TruckController {
         }
 
         truck.setTruckNoticeImg(file1.getOriginalFilename());
+        truck.setTruckId(truckId);
+        truck.setTruckNoticeTitle(truckNoticeTitle);
+        truck.setTruckNoticeContent(truckNoticeContent);
+
+        model.addAttribute("truck", truck);
 
         truckService.updateNotice(truck);
 
-        return "redirect:/truck/getNotice?truckId="+truck.getTruckId();
+        return "redirect:/truck/getNotice?truckId="+truckId;
     }
 
 
@@ -218,40 +218,68 @@ public class TruckController {
 
 
     @RequestMapping(value = "updateTruckPassword", method = RequestMethod.GET)
-    public String updateTruckPassword() throws Exception {
+    public String updateTruckPassword(Model model, HttpSession session, HttpServletRequest request) throws Exception {
 
         System.out.println("/truck/updateTruckPassword : GET");
+
+        String truckPassword = request.getParameter("passwordC");
+
+        System.out.println("truckPassword = " + truckPassword);
+
+        model.addAttribute("passwordC", truckPassword);
 
         return "/views/truck/updateTruckPasswordBefore.jsp";
     }
 
 
     // 트럭 Password 변경
-    @RequestMapping(value = "updateTruckPasswordB", method = RequestMethod.GET)
-    public String updateTruckPasswordB(@ModelAttribute("truck") Truck truck , Model model, HttpSession session) throws Exception {
+    @RequestMapping(value = "updateTruckPasswordB", method = RequestMethod.POST)
+    public String updateTruckPasswordB(@ModelAttribute("truck") Truck truck ,Model model, HttpSession session, HttpServletRequest request) throws Exception {
 
-        System.out.println("/truck/updateTruckPasswordB : GET");
-        //Business Logic
+        System.out.println("/truck/updateTruckPasswordB : POST");
+
+        String truckPassword = request.getParameter("passwordC");
+
+        System.out.println("truckPassword = " + truckPassword);
+
+        truck = (Truck) session.getAttribute("truck");
+
+        //System.out.println("truck = " + truck);
+
         Truck dbTruck = truckService.getTruck(truck.getTruckId());
 
-        if(truck.getTruckPassword().equals(dbTruck.getTruckPassword())){
+        //System.out.println("dbTruck = " + dbTruck);
 
+        System.out.println("dbTruckPassword : "+dbTruck.getTruckPassword());
+
+        if(truckPassword.equals(dbTruck.getTruckPassword())){
+            System.out.println("11111");
             model.addAttribute(truck);
+            System.out.println("model = " + model);
+        }else{
+            System.out.println("password가 일치하지않습니다");
         }
 
-        return "forward:/views/truck/updateTruckPassword.jsp" ;
+        return "redirect:/views/truck/updateTruckPassword.jsp" ;
     }
 
 
     // 트럭 Password 변경
     @RequestMapping(value = "updateTruckPassword", method = RequestMethod.POST)
-    public String updateTruckPassword(@ModelAttribute("truck") Truck truck,  Model model, HttpSession session) throws Exception {
+    public String updateTruckPassword(@ModelAttribute("truck") Truck truck,  Model model, HttpSession session, HttpServletRequest request) throws Exception {
 
         System.out.println("/truck/updateTruckPassword : POST");
         //Business Logic
+
+        String newPassword = request.getParameter("truckPasswordChk");
+
+        System.out.println("newPassword = " + newPassword);
+
         truck = (Truck) session.getAttribute("truck");
 
         System.out.println("truck = " + truck);
+
+        truck.setTruckPassword(newPassword);
 
         truckService.updateTruckPassword(truck);
 
@@ -268,28 +296,28 @@ public class TruckController {
 
         return "/truck/loginTruck.jsp";
     }
-
-    // 트럭 로그인 // 이제 안씀
-    @RequestMapping(value = "loginTruck", method = RequestMethod.POST)
-    public String login(@ModelAttribute("truck") Truck truck, HttpSession session) throws Exception {
-
-        System.out.println("/truck/loginTruck : POST");
-        //Business Logic
-        Truck dbTruck = truckService.getTruck(truck.getTruckId());
-
-        if (truck.getTruckPassword().equals(dbTruck.getTruckPassword())) {
-            session.setAttribute("truck", dbTruck);
-            session.setAttribute("truckId", dbTruck.getTruckId());
-            session.setAttribute("role", "truck");
-        }
-
-        System.out.println("로그인성공");
-        System.out.println("truck = " + truck + ", session = " + session);
-        System.out.println("truckId = " + session.getAttribute("truckId"));
-        System.out.println("role = " + session.getAttribute("role"));
-
-        return "redirect:/views/home.jsp";
-    }
+//
+//    // 트럭 로그인 // 이제 안씀
+//    @RequestMapping(value = "loginTruck", method = RequestMethod.POST)
+//    public String login(@ModelAttribute("truck") Truck truck, HttpSession session) throws Exception {
+//
+//        System.out.println("/truck/loginTruck : POST");
+//        //Business Logic
+//        Truck dbTruck = truckService.getTruck(truck.getTruckId());
+//
+//        if (truck.getTruckPassword().equals(dbTruck.getTruckPassword())) {
+//            session.setAttribute("truck", dbTruck);
+//            session.setAttribute("truckId", dbTruck.getTruckId());
+//            session.setAttribute("role", "truck");
+//        }
+//
+//        System.out.println("로그인성공");
+//        System.out.println("truck = " + truck + ", session = " + session);
+//        System.out.println("truckId = " + session.getAttribute("truckId"));
+//        System.out.println("role = " + session.getAttribute("role"));
+//
+//        return "redirect:/views/home.jsp";
+//    }
 
     // 로그아웃
     @RequestMapping(value = "logoutTruck", method = RequestMethod.GET)
@@ -326,7 +354,7 @@ public class TruckController {
         model.addAttribute("resultPage", resultPage);
         model.addAttribute("search", search);
 
-        return "forward:/truck/getTruckList.jsp";
+        return "forward:/views/user/getTruckListByAdmin.jsp";
     }
 
     // 회원탈퇴화면 요청

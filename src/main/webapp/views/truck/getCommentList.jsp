@@ -10,7 +10,7 @@
 
 <head>
 
-    <title>내 댓글 목록(푸드트럭)</title>
+    <title>F.FIN | 내 댓글 목록(푸드트럭)</title>
     <jsp:include page="../../common/lib.jsp"/>
 
     <!-- 참조 : http://getbootstrap.com/css/   참조 -->

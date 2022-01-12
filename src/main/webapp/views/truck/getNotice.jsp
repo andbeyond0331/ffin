@@ -9,9 +9,15 @@
         .btn-secondary {
             border-radius: 5px;
         }
+
+        img {
+            display: block;
+            margin: 0px auto;
+        }
+
     </style>
 
-    <title>공지 작성</title>
+    <title>F.FIN | 공지 작성</title>
     <jsp:include page="../../common/lib.jsp"/>
     <!-- 참조 : http://getbootstrap.com/css/   참조 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -99,8 +105,8 @@
 <br/><br/><br/><br/>
 <c:if test="${sessionScope.truck != null || sessionScope.user != null}">
 <div class="container">
-    <div class="page-header text-info">
-        <h3> 공지 조회 </h3>
+    <div class="page-header text-info" align="center">
+        <h3 class="text-info"> 공지 조회 </h3>
     </div>
 
     <br/>
@@ -113,7 +119,7 @@
         <%--    </div>--%>
     <!-- 게시글 조회 -->
     <div class="panel panel-default">
-        <div class="panel-heading" style="text-align: center; border: 3px solid #dddddd; border-radius:10px ">
+        <div class="panel-heading" style="border-radius:10px ; border: 2px solid orange; ">
 
             <div class="panel-body">
                 <ul class="chat_list_box" style="font-size:20px ">
@@ -134,24 +140,25 @@
                     <%--                    <small class="pull-right text-dark" colspan="2"><fmt:formatDate value="${post.postRegDate}" pattern="yyyy-MM-dd"/></small>--%>
                     <%--                </ul>--%>
                 <br/>
-                <hr>
+                <hr style="border:1px dashed orange "/>
 
                 <ul class="chat_list" style="font-size:30px ">
                     <strong class="primary-font pull-left" style="font-size: 20px">제목</strong>
-                    <strong class="primary-font" style="width: 20%;">${truck.truckNoticeTitle}</strong>
+                    <midium class="col-sm-4 align-content-center">${truck.truckNoticeTitle}</midium>
                         <%--                <td class="center" colspan="2">${post.postTitle}</td>--%>
                 </ul>
-                <hr>
+                <hr style="border:1px dashed orange "/>
 
                 <ul>
                     <strong class="pull-left" style="font-size:20px ">내용</strong>
-                    <midium colspan="2" style="font-size: 28px">${truck.truckNoticeContent}</midium>
+                    <midium class="primary-font"
+                            style="margin-left: 200px; font-size:20px ">${truck.truckNoticeContent}</midium>
                 </ul>
 
                 <ul>
-                    <td colspan="1">
+                    <td style="text-align: center;">
                         <br/>
-                        <img src="../resources/image/${truck.truckNoticeImg}" width="300"
+                        <img class="notiImg" src="../resources/image/${truck.truckNoticeImg}" width="300"
                              height="300"/>
                     </td>
                 </ul>

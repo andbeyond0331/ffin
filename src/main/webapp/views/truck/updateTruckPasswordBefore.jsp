@@ -6,7 +6,7 @@
 
 <head>
 
-    <title>푸드트럭(사업자) Password 수정 전 확인</title>
+    <title>F.FIN | 푸드트럭(사업자) Password 수정 전 확인</title>
     <jsp:include page="../../common/lib.jsp"/>
 
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -34,15 +34,19 @@
         function fncAddTruck() {
             // 유효성체크
             var passwordC = $("input[name='passwordC']").val();
-
+            var originPassword = ${sessionScope.truck.truckPassword};
 
             if (passwordC == null || passwordC.length < 1) {
                 alert("기존 Password를 반드시 입력하셔야 합니다.");
                 return;
             }
-
-            $("form").attr("method", "GET").attr("action", "/truck/updateTruckPassword").submit();
-            alert("Password 변경화면으로 이동합니다.");
+            if(passwordC == originPassword) {
+                $("form").attr("method", "POST").attr("action", "/truck/updateTruckPasswordB").submit();
+                alert("Password 변경화면으로 이동합니다.");
+            }else{
+                alert("Password가 일치하지 않습니다");
+                return;
+            }
         }
 
 
@@ -57,7 +61,7 @@
 
 <jsp:include page="/views/navbar.jsp" />
 <br/><br/><br/><br/>
-
+<form name="updateP" class="form-horizontal">
 <div class="container">
     <div class="area_inputs wow fadeIn">
         <div class="sub_title font-weight-bold">
@@ -77,6 +81,7 @@
             </div>
         </div>
     </div>
+</form>
 
 
 

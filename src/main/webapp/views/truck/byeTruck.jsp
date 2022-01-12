@@ -6,7 +6,7 @@
 
 <head>
 
-    <title>푸드트럭(사업자) 회원탈퇴</title>
+    <title>F.FIN | 푸드트럭(사업자) 회원탈퇴</title>
     <jsp:include page="../../common/lib.jsp"/>
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">
@@ -83,9 +83,13 @@
 <jsp:include page="/views/navbar.jsp"/>
 <br/><br/><br/><br/>
 
-<b><font size="6" color="gray">사업자 회원탈퇴</font></b>
-<br><br><br>
+
 <div class="container">
+
+    <div class="page-header">
+        <label for="page-top" class="col-sm-offset-4 control-label"/>
+        <h3 class="text-info" color="gray">사업자 회원탈퇴</h3>
+    </div>
     <!-- 회원탈퇴 전 Password 체크 -->
     <form class="form-horizontal">
         <div class="form-group">
@@ -139,7 +143,7 @@
             탈퇴하기
         </button>
         <input type="button" class="btn btn-dark" value="취소"
-               onclick="javascript:window.location='../views/home.jsp'">
+               onclick="javascript:window.location='/views/home.jsp'">
     </form>
 
 
