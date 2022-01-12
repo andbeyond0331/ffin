@@ -88,28 +88,6 @@ public class CommunityDaoImpl implements CommunityDao {
         sqlSession.update("CommentMapper.updateComment", comment);
     }
 
-    /*// 좋아요 누르기
-    @Override
-    public void addHeart(Heart heart) throws Exception {
-        sqlSession.insert("HeartMapper.addHeart", heart);
-    }
-    // 좋아요 조회
-    @Override
-    public Heart getHeart(int heartNo) throws Exception {
-        return sqlSession.selectOne("HeartMapper.getHeart", heartNo);
-    }
-    // 좋아요 목록조회
-    @Override
-    public List<Heart> getHeartList(Search search) throws Exception {
-        return sqlSession.selectList("HeartMapper.getHeartList", search);
-    }
-    // 좋아요 갱신
-    @Override
-    public void updateHeart(Heart heart) throws Exception {
-        sqlSession.update("HeartMapper.updateHeart", heart);
-    }*/
-
-
     // 게시글 삭제
     @Override
     public void deletePost(Post post) throws Exception {
@@ -125,7 +103,11 @@ public class CommunityDaoImpl implements CommunityDao {
     // 게시판 Page 처리를 위한 전체Row(totalCount)  return
     @Override
     public int getTotalCountPost(Search search) throws Exception {
-        return sqlSession.selectOne("PostMapper.getTotalCount", search);
+
+        int count = sqlSession.selectOne("PostMapper.getTotalCount", search);
+        System.out.println("count = " + count);
+
+        return count;
     }
 
 //    @Override
@@ -139,15 +121,24 @@ public class CommunityDaoImpl implements CommunityDao {
 //    }
 
 
+
+
+
+
     // HHJ
+    /*
+        사진게시판 구현작업
+     */
     @Override
     public Map<String, Object>  getPostList2(Search search, String id, String role) throws Exception {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("search", search);
         map.put("id", id);
         map.put("role", role);
-        List<Post> list = sqlSession.selectList("PostMapper.getPostList2", map);
 
+        List<Post> list = sqlSession.selectList("PostMapper.getPostList2", map);
+        int totalCount = sqlSession.selectOne("PostMapper.getTotalCount2", map);
+        map.put("totalCount", new Integer(totalCount));
         System.out.println("list::: "+list);
 
 
@@ -222,19 +213,19 @@ public void updatePostHitUp (int postNo) throws Exception{
 
         int postNo = comment.getCommentPostNo();
         // 해당 게시물의 reply를 +1 한다.
-        sqlSession.update("ReplyMapper.reply_up", postNo);
+        sqlSession.update("CommentMapper.reply_up", postNo);
 
         // 현재 p_reply 테이블의 가장 큰 no값을 가져온다.
-        int grp = sqlSession.selectOne("ReplyMapper.reply_max_no");
+        int grp = sqlSession.selectOne("CommentMapper.reply_max_no");
         System.out.println(">>>>>>>><><><><><><><><><><><><><><><>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println("grp = " + grp);
         // grp 세팅
         comment.setGrp(grp+1);
         int result=0;
         if (role == "user") {
-            result = sqlSession.insert("ReplyMapper.reply_write_user", comment);
+            result = sqlSession.insert("CommentMapper.reply_write_user", comment);
         }else if(role=="truck"){
-            result = sqlSession.insert("ReplyMapper.reply_write_truck", comment);
+            result = sqlSession.insert("CommentMapper.reply_write_truck", comment);
         }
 
 
@@ -246,7 +237,7 @@ public void updatePostHitUp (int postNo) throws Exception{
         int replyCount=0;
         if (result == 1) {	// p_reply 테이블에 새로운 댓글 추가가 성공한다면..
             // 갱신된 댓글 갯수를 가져옴
-            replyCount = sqlSession.selectOne("ReplyMapper.reply_count", postNo);
+            replyCount = sqlSession.selectOne("CommentMapper.reply_count", postNo);
         }
         return replyCount;
     }
@@ -259,13 +250,13 @@ public void updatePostHitUp (int postNo) throws Exception{
         int postNo = comment.getCommentPostNo();
         System.out.println("postNo = " + postNo);
         // 해당 게시물의 reply를 +1 한다.
-        sqlSession.update("ReplyMapper.reply_up", postNo);
+        sqlSession.update("CommentMapper.reply_up", postNo);
 
         int result=0;
         if (role == "user") {
-            result = sqlSession.insert("ReplyMapper.rereply_write_user", comment);
+            result = sqlSession.insert("CommentMapper.rereply_write_user", comment);
         }else if(role=="truck"){
-            result = sqlSession.insert("ReplyMapper.rereply_write_truck", comment);
+            result = sqlSession.insert("CommentMapper.rereply_write_truck", comment);
         }
 
 
@@ -276,7 +267,7 @@ public void updatePostHitUp (int postNo) throws Exception{
         int replyCount=0;
         if (result == 1) {	// p_reply 테이블에 새로운 댓글 추가가 성공한다면..
             // 갱신된 댓글 갯수를 가져옴
-            replyCount = sqlSession.selectOne("ReplyMapper.reply_count", postNo);
+            replyCount = sqlSession.selectOne("CommentMapper.reply_count", postNo);
         }
         return replyCount;
 
@@ -287,15 +278,15 @@ public void updatePostHitUp (int postNo) throws Exception{
     // 댓글 리스트
     public ArrayList<Comment> getreplyList(String role, int postNo){
 
-        ArrayList<Comment> replyList = (ArrayList) sqlSession.selectList("ReplyMapper.getreplyList", postNo);
+        ArrayList<Comment> replyList = (ArrayList) sqlSession.selectList("CommentMapper.getreplyList", postNo);
 
         for (int i=0; i<replyList.size(); i++){
 
             if (replyList.get(i).getCommentUserId() == null){
-                replyList.get(i).setTruckProImg(sqlSession.selectOne("ReplyMapper.get_pro_img_truck", replyList.get(i).getCommentTruckId()));
+                replyList.get(i).setTruckProImg(sqlSession.selectOne("CommentMapper.get_pro_img_truck", replyList.get(i).getCommentTruckId()));
 
             }else {
-                replyList.get(i).setUserProImg(sqlSession.selectOne("ReplyMapper.get_pro_img_user", replyList.get(i).getCommentUserId()));
+                replyList.get(i).setUserProImg(sqlSession.selectOne("CommentMapper.get_pro_img_user", replyList.get(i).getCommentUserId()));
             }
 
 
@@ -314,24 +305,24 @@ public void updatePostHitUp (int postNo) throws Exception{
         int postNo = comment.getCommentPostNo();
 
         // grp가 reply의 no와 일치하는 댓글이 몇갠지 카운트한다. 모댓글에 딸린 답글이 몇갠지 카운트하기 위함
-        int count_rereply = sqlSession.selectOne("ReplyMapper.count_rereply", comment);
+        int count_rereply = sqlSession.selectOne("CommentMapper.count_rereply", comment);
 
         int result = 0;
 
         // 해당 게시물의 reply를 -1 한다.
-        sqlSession.update("ReplyMapper.reply_down", postNo);
+        sqlSession.update("CommentMapper.reply_down", postNo);
 
         if(count_rereply==0) {	// 답글이 없을 때 - 그냥 삭제
             // p_reply 테이블에서 삭제
-            result = sqlSession.delete("ReplyMapper.reply_delete", comment.getCommentNo());
+            result = sqlSession.delete("CommentMapper.reply_delete", comment.getCommentNo());
         }else {					// 답글이 있을 때 - content에 공백을 넣음 ("삭제된 게시물입니다" 라고 표기하기 위함)
             // p_reply 테이블에서 삭제하지 않고 content에 공백을 넣음
-            result = sqlSession.update("ReplyMapper.reply_not_delete", comment.getCommentNo());
+            result = sqlSession.update("CommentMapper.reply_not_delete", comment.getCommentNo());
         }
         int replyCount=0;
         if (result == 1) {	// p_reply 테이블에서 댓글삭제가 성공한다면..
             // 갱신된 댓글 갯수를 가져옴
-            replyCount = sqlSession.selectOne("ReplyMapper.reply_count", postNo);
+            replyCount = sqlSession.selectOne("CommentMapper.reply_count", postNo);
         }
         return replyCount;
     }
@@ -342,23 +333,23 @@ public void updatePostHitUp (int postNo) throws Exception{
         int postNo = comment.getCommentPostNo();
 
         // 해당 게시물의 reply를 -1 한다.
-        sqlSession.update("ReplyMapper.reply_down", postNo);
+        sqlSession.update("CommentMapper.reply_down", postNo);
 
         // p_reply 테이블에서 삭제
-        int result = sqlSession.delete("ReplyMapper.reply_delete", comment.getCommentNo());
+        int result = sqlSession.delete("CommentMapper.reply_delete", comment.getCommentNo());
 
         // grp가  일치하는 답글이 몇갠지 카운트 한다. 없고 모댓글의 content가 ""이면 모댓글을 삭제하기 위함.
-        int count_rereply = sqlSession.selectOne("ReplyMapper.count_rereply_fromrereply", comment);
+        int count_rereply = sqlSession.selectOne("CommentMapper.count_rereply_fromrereply", comment);
 
 
         System.out.println("count_rereply = " + count_rereply);
         if(count_rereply == 0) {
-            sqlSession.delete("ReplyMapper.reply_delete_after_rereply_delete", comment.getGrp());
+            sqlSession.delete("CommentMapper.reply_delete_after_rereply_delete", comment.getGrp());
         }
         int replyCount=0;
         if (result == 1) {	// p_reply 테이블에서 댓글삭제가 성공한다면..
             // 갱신된 댓글 갯수를 가져옴
-            replyCount = sqlSession.selectOne("ReplyMapper.reply_count", postNo);
+            replyCount = sqlSession.selectOne("CommentMapper.reply_count", postNo);
         }
         return replyCount;
     }
@@ -370,18 +361,18 @@ public void updatePostHitUp (int postNo) throws Exception{
         int postNo = comment.getCommentPostNo();
 
         // 해당 게시물의 reply를 +1 한다.
-        sqlSession.update("ReplyMapper.reply_up", postNo);
+        sqlSession.update("CommentMapper.reply_up", postNo);
 
         // 현재 p_reply 테이블의 가장 큰 no값을 가져온다.
-        int grp = sqlSession.selectOne("ReplyMapper.reply_max_no");
+        int grp = sqlSession.selectOne("CommentMapper.reply_max_no");
 
         // grp 세팅
         comment.setGrp(grp+1);
 
 
-        int result = sqlSession.insert("ReplyMapper.reply_write", comment);
+        int result = sqlSession.insert("CommentMapper.reply_write", comment);
 
-        int check = sqlSession.selectOne("ReplyMapper.reply_max_no");
+        int check = sqlSession.selectOne("CommentMapper.reply_max_no");
         // grp를 현재 가장 큰 no 즉 방금 넣은 데이터의 no값로 세팅함
         comment.setGrp(check);
 
@@ -391,14 +382,20 @@ public void updatePostHitUp (int postNo) throws Exception{
         if (result == 1) {	// p_reply 테이블에 새로운 댓글 추가가 성공한다면..
             // 갱신된 댓글 갯수를 가져옴
            // pto = sqlSession.selectOne("picture_reply_count", pto);
-            replyCount = sqlSession.selectOne("ReplyMapper.reply_count", postNo);
+            replyCount = sqlSession.selectOne("CommentMapper.reply_count", postNo);
         }
         return replyCount;
     }
 
+    @Override
+    public void addPostPic(Post post) throws Exception {
+        sqlSession.insert("PostMapper.addPostPic", post);
+    }
 
-
-
+    @Override
+    public void updatePostPic(Post post) throws Exception {
+        sqlSession.update("PostMapper.updatePostPic", post);
+    }
 
 
 

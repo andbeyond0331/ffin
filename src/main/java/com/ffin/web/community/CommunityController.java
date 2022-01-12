@@ -105,7 +105,20 @@ public class CommunityController {
         postNo = Integer.parseInt(request.getParameter("postNo"));
         System.out.println("postNo = " + postNo);
 
-        Post post = communityService.getPost(postNo);
+        communityService.updatePostHitUp(postNo); // 조회수 증가 추가
+
+        /* HHJ 추가 */
+        String role = (String)session.getAttribute("role");
+        String id="";
+        if (role == "user" || role.equals("user")){
+            id = ((User) session.getAttribute("user")).getUserId();
+        }else if(role == "truck" || role.equals("truck")){
+            id = ((Truck) session.getAttribute("truck")).getTruckId();
+        }
+
+      //  Post post = communityService.getPost(postNo);
+       Post post = communityService.getCardDetail(id, role, postNo);
+
         System.out.println("post = " + post);
 
         session.setAttribute("postNo", postNo);
@@ -224,92 +237,8 @@ public class CommunityController {
     }
 
 
-    ////////////////////// 좋아요 관련 메소드 ////////////////////////////
-   /* @RequestMapping(value = "addHeart", method = RequestMethod.GET)
-    public String addHeart() throws Exception {
-        System.out.println("/community/addHeart : GET");
-
-        return "/community/getHeart.jsp";
-    }
-
-    @RequestMapping(value = "addHeart", method = RequestMethod.POST)
-    public String addHeart(@ModelAttribute("heart") Heart heart, @ModelAttribute("truck") Truck truck, @ModelAttribute("user") User user, Model model, HttpSession session) throws Exception {
-        System.out.println("/community/addHeart : POST");
-
-        if (session.getAttribute("role").equals("user")) {
-            String heartUser = ((User) session.getAttribute("user")).getUserId();
-            System.out.println("좋아요 누른사람(user) : " + session.getAttribute("userId"));
-            heart.setHeartUserId(heartUser);
-        }
-        communityService.addHeart(heart);
-
-        return "/views/community/getHeart.jsp";
-    }
-
-    @RequestMapping(value = "getHeart", method = RequestMethod.GET)
-    public ModelAndView getHeart(HttpServletRequest request, ModelAndView m) throws Exception {
-
-        System.out.println("CommunityContoller.getHeart : GET");
-        int heartNo = Integer.parseInt(request.getParameter("heartNo"));
-
-        System.out.println("commentNo = " + heartNo);
-        Heart heart = communityService.getHeart(heartNo);
-        System.out.println("heart = " + heart);
-        m.addObject("heart", heart);
-        m.setViewName("/community/getHeart.jsp");
-
-        return m;
-    }
 
 
-    @RequestMapping(value = "updateHeart", method = RequestMethod.GET)
-    public String updateHeart(@ModelAttribute("heartNo") int heartNo, Model model, HttpSession httpSession) throws Exception {
-        System.out.println("/community/updateHeart : GET");
-        //Business Logic
-        Heart heart = communityService.getHeart(heartNo);
-        //Model 과 View 연결
-        model.addAttribute("heart", heart);
-
-        return "forward:/community/updateHeart.jsp";
-    }
-
-    @RequestMapping(value = "updateHeart", method = RequestMethod.POST)
-    public String updateHeart(@ModelAttribute("heart") Heart heart, Model model, HttpSession session) throws Exception {
-
-        System.out.println("/community/updateHeart : POST");
-        //Business Logic
-        communityService.updateHeart(heart);
-
-        int sessionNo = ((Heart) session.getAttribute("heart")).getHeartNo();
-        if (sessionNo == heart.getHeartNo()) {
-            session.setAttribute("heart", heart);
-        }
-        return "redirect:/community/getHeart?heartNo=" + heart.getHeartNo();
-    }
-
-    @RequestMapping(value = "getHeartList")
-    public String getHeartList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
-
-        System.out.println("/community/getHeartList : GET/POST");
-
-        if (search.getCurrentPage() == 0) {
-            search.setCurrentPage(1);
-        }
-        search.setPageSize(pageSize);
-
-        // Business Logic 수행
-        Map<String, Object> map = communityService.getHeartList(search);
-
-        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
-        System.out.println(resultPage);
-
-        //  Model 과 View 연결
-        model.addAttribute("list", map.get("list"));
-        model.addAttribute("resultPage", resultPage);
-        model.addAttribute("search", search);
-
-        return "forward:/community/getHeartList.jsp";
-    }
 
     @RequestMapping(value = "deletePost", method = RequestMethod.GET)
     public String deletePost(@ModelAttribute("post") Post post, @RequestParam("postNo") int postNo, Model model, HttpServletRequest request, HttpSession session)
@@ -349,7 +278,12 @@ public class CommunityController {
 
         return "redirect:/community/getPost?postNo="+postNo;
     }
-*/
+
+
+
+
+
+
 
 
     /* HHJ */
@@ -358,21 +292,17 @@ public class CommunityController {
     public String getPostList2(@ModelAttribute("search") Search search, Model model, HttpServletRequest request, HttpSession session) throws Exception {
 
 
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.");
+        //t currentPage = (int) session.getAttribute("currentPage");
+        //search.setCurrentPage(currentPage);
 
-        /*
-            if (role == user)  일 때와 아닐 때를 구분하여야 하므로
-            getPostList에 role을 추가해서 구현하는게 좋을 것 같음.
-            그러면 user / truck별 리스트가 따로 출력되므로.
-
-            그리고 return값을 다르게 주는 것으로~~
-
-         */
+        //System.out.println("::::::::::::::::::::::::::::::::currentPage = " + currentPage);
         System.out.println("/community/getPostList2 : GET/POST");
 
         if (search.getCurrentPage() == 0) {
             search.setCurrentPage(1);
         }
-        search.setPageSize(pageSize);
+        search.setPageSize(9);
 
         String role = (String)session.getAttribute("role");
         String id= "";
@@ -395,7 +325,7 @@ public class CommunityController {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
         System.out.println("list::::::::::::::::::::::::::::::" + map.get("list"));
-        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, 9);
         System.out.println(resultPage);
         //  Model 과 View 연결
         model.addAttribute("list", map.get("list"));
@@ -407,6 +337,135 @@ public class CommunityController {
     }
 
 
+    @RequestMapping(value="addPostPic", method=RequestMethod.POST)
+    public String addPostPic(@RequestParam("postFile11")MultipartFile file1,
+                          @RequestParam(value="postFile22", required = false)MultipartFile file2,
+                          @RequestParam(value="postFile33", required = false)MultipartFile file3,
+                          HttpServletRequest request,
+                          @ModelAttribute("post") Post post,
+                          @RequestParam("postContent") String postContent, HttpSession session
+    ) throws Exception{
+
+
+        System.out.println("/community/addPostPic:POST");
+
+        System.out.println("request = " + request + ", post = " + post + ", postContent = " + postContent);
+
+        String role = (String) session.getAttribute("role");
+        if (role == "user"){
+            User user = new User();
+            user.setUserId( ((User)(session.getAttribute("user"))).getUserId());
+            post.setPostUser(user);
+        }else if (role == "truck"){
+            Truck truck = new Truck();
+            truck.setTruckId( ((Truck)(session.getAttribute("truck"))).getTruckId());
+            post.setPostTruck(truck);
+        }
+        String realPath = request.getSession().getServletContext().getRealPath("/resources/image");
+//        String realPath = "/resources/menu";
+
+        String postFile1  = file1.getOriginalFilename();
+        String postFile2  = file2.getOriginalFilename();
+        String postFile3  = file3.getOriginalFilename();
+
+//        String root_path = request.getSession().getServletContext().getRealPath("/");
+        System.out.println("/////////realPath : " + realPath);
+
+        if(!file1.getOriginalFilename().isEmpty()){
+            file1.transferTo(new File(realPath, postFile1));
+//            model.addAttribute("msg", "File uploaded successfully.");
+//            model.addAttribute("menuImg1", menuImg1);
+        }
+
+        post.setPostFile1(file1.getOriginalFilename());
+
+
+        if(!file2.getOriginalFilename().isEmpty()){
+            file2.transferTo(new File(realPath, postFile2));
+//            model.addAttribute("msg", "File uploaded successfully.");
+//            model.addAttribute("menuImg2", menuImg2);
+//        }else {
+//            model.addAttribute("msg", "Please select a valid mediaFile..");
+        }
+        post.setPostFile2(file2.getOriginalFilename());
+//
+        if(!file3.getOriginalFilename().isEmpty()){
+            file3.transferTo(new File(realPath, postFile3));
+//            model.addAttribute("msg", "File uploaded successfully.");
+//            model.addAttribute("menuImg3", menuImg3);
+//        }else {
+//            model.addAttribute("msg", "Please select a valid mediaFile..");
+        }
+        post.setPostFile2(file3.getOriginalFilename());
+
+        communityService.addPostPic(post);
+
+
+
+        return "redirect:/community/getPostList2";
+
+    }
+
+
+    @RequestMapping(value="updatePostPic", method=RequestMethod.POST)
+    public String updatePostPic(@RequestParam("postFile11")MultipartFile file1,
+                             @RequestParam(value="postFile22", required = false)MultipartFile file2,
+                             @RequestParam(value="postFile33", required = false)MultipartFile file3,
+                             HttpServletRequest request,
+                             @ModelAttribute("post") Post post,
+                             @RequestParam("postContent") String postContent, HttpSession session
+    ) throws Exception{
+
+
+        System.out.println("/community/updatePostPic:POST");
+
+        System.out.println("request = " + request + ", post = " + post + ", postContent = " + postContent);
+
+
+        String realPath = request.getSession().getServletContext().getRealPath("/resources/image");
+//        String realPath = "/resources/menu";
+
+        String postFile1  = file1.getOriginalFilename();
+        String postFile2  = file2.getOriginalFilename();
+        String postFile3  = file3.getOriginalFilename();
+
+//        String root_path = request.getSession().getServletContext().getRealPath("/");
+        System.out.println("/////////realPath : " + realPath);
+
+        if(!file1.getOriginalFilename().isEmpty()){
+            file1.transferTo(new File(realPath, postFile1));
+//            model.addAttribute("msg", "File uploaded successfully.");
+//            model.addAttribute("menuImg1", menuImg1);
+        }
+
+        post.setPostFile1(file1.getOriginalFilename());
+
+
+        if(!file2.getOriginalFilename().isEmpty()){
+            file2.transferTo(new File(realPath, postFile2));
+//            model.addAttribute("msg", "File uploaded successfully.");
+//            model.addAttribute("menuImg2", menuImg2);
+//        }else {
+//            model.addAttribute("msg", "Please select a valid mediaFile..");
+        }
+        post.setPostFile2(file2.getOriginalFilename());
+//
+        if(!file3.getOriginalFilename().isEmpty()){
+            file3.transferTo(new File(realPath, postFile3));
+//            model.addAttribute("msg", "File uploaded successfully.");
+//            model.addAttribute("menuImg3", menuImg3);
+//        }else {
+//            model.addAttribute("msg", "Please select a valid mediaFile..");
+        }
+        post.setPostFile2(file3.getOriginalFilename());
+
+        communityService.updatePostPic(post);
+
+
+
+        return "redirect:/community/getPostList2";
+
+    }
 
 
 

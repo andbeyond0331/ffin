@@ -43,6 +43,13 @@
 </style>
 <script type="text/javascript">
 
+
+    //=============    검색 / page 두가지 경우 모두  Event  처리 =============
+    function fncGetUserList(currentPage) {
+        $("#currentPage").val(currentPage)
+        $("form").attr("method" , "POST").attr("action" , "/community/getPostList2").submit();
+    }
+
     var role =  '${sessionScope.role}';
     var proImg;
     var uId;
@@ -72,32 +79,50 @@
                 $('#hit'+postNo).text(hit);
 
                     div += "<div class='row'>"+
-                        "<div><strong>제목</strong> : "+data.post.postTitle+"</div></div>"
-
-                    +"<div id='demo' class='carousel slide' data-ride='carousel'>"
-                    +"<div class='carousel-inner'>"
-                    +"<div class='carousel-item active'>"
-                    +"<img class='d-block w-100' src='../../../resources/image/"+data.post.postFile1+"' alt='First slide'>"
-                    +"<div class='carousel-caption d-none d-md-block'>"
-                    +"</div></div>"
-                +"<div class='carousel-item'>"
-                    +"<img class='d-block w-100' src='../../../resources/image/"+data.post.postFile2+"' alt='Second slide'>"
-                    +"</div>"
-               +" <div class='carousel-item'>"
-                  + " <img class='d-block w-100' src='../../../resources/image/"+data.post.postFile3+"' alt='Third slide'>"
-                   +" </div>"
-              + " <a class='carousel-control-prev' href='#demo' data-slide='prev'>"
-                   + "<span class='carousel-control-prev-icon' aria-hidden='true'></span>"
-                   + "</a>"
-              + " <a class='carousel-control-next' href='#demo' data-slide='next'>"
-                    +"<span class='carousel-control-next-icon' aria-hidden='true'></span>"
+                        "</div>";
+                  /*  +"<div id='carouselExampleInterval' class='carousel slide' data-ride='carousel'>"
+                     +"<div class='carousel-inner'>"
+                      +"<div class='carousel-item active'>"
+                          +"<img class='d-block w-100' src='../../../resources/image/"+data.post.postFile1+"' alt='First slide'>"
+                         +"</div>"
+                      +"<div class='carousel-item' >"
+                         +"<img class='d-block w-100' src='../../../resources/image/"+data.post.postFile2+"' alt='Second slide'>"
+                     +"</div>"
+                      +" <div class='carousel-item'>"
+                      + " <img class='d-block w-100' src='../../../resources/image/"+data.post.postFile3+"' alt='Third slide'>"
+                     +" </div></div>"
+                      + " <a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'>"
+                    + "<span class='carousel-control-prev-icon' aria-hidden='true'></span> <span class='sr-only'>Previous</span>"
+                     + "</a>"
+              + " <a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'>"
+                    +"<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span>"
                   + " </a>"
-              +  "<ul class='carousel-indicators'>"
-                   + "<li data-target='#demo' data-slide-to='0' class='active'></li>"
-                    + "<li data-target='#demo' data-slide-to='1'></li>"
-                   + "<li data-target='#demo' data-slide-to='2'></li>"
-               + "</ul>"
-                +" </div>";
+                +" </div>";*/
+
+                div+="<div id='carouselExampleInterval' class='carousel slide' data-ride='carousel'>"
+                    +"<div class='carousel-inner'>"
+                        +"<div class='carousel-item active' data-interval='10000'>"
+                            +"<img src='...' class='d-block w-100' alt='...'>"
+                       +" </div>"
+                        +"<div class='carousel-item' data-interval='2000'>"
+                            +"<img src='...' class='d-block w-100' alt='...'>"
+                       + "</div>"
+                      + " <div class='carousel-item'>"
+                           + "<img src='...' class='d-block w-100' alt='...'>"
+                        +"</div>"
+                  +  "</div>"
+                  + " <a class='carousel-control-prev' href='#carouselExampleInterval' role='button' data-slide='prev'>"
+                       + "<span class='carousel-control-prev-icon' aria-hidden='true'></span>"
+                       + "<span class='sr-only'>Previous</span>"
+                 + "  </a>"
+                  + " <a class='carousel-control-next' href='#carouselExampleInterval' role='button' data-slide='next'>"
+                   +     "<span class='carousel-control-next-icon' aria-hidden='true'></span>"
+                  +      "<span class='sr-only'>Next</span>"
+                  +  "</a>"
+               + "</div>";
+
+
+
 
 /* 슬라이드 해볼랫는데 안먹는당 */
 
@@ -175,8 +200,12 @@
                     if (data.post.postTruck == null && data.post.postUser.userId == userId){
 
                         modalFooter = "<div class='modal-footer'>"
-                            +"<button type='button' class='btn btn-outline-info' id='updateCtServ' name='updateCtServ' onclick='updateCtServ();'>수정</button>"
-                            +"<button type='button' class='btn btn-outline-danger' id='deleteCtServ' name='deleteCtServ' onclick='deleteCtServ();'>삭제</button>"
+                            +"<button class='button btn-warning' name='deletePostPic' onclick='deletePostPic("+data.post.postNo+");'>글 삭제"
+                          +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/></button>"
+                        +"<button class='button is-warning is-light' name='updatePostPicView'"
+                                +"onclick='updatePostPicView("+data.post.postNo+");'>글 수정"
+                            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/>"
+                       + "</button>"
                             +"</div>";
                     }else {
                         modalFooter = "<div class='modal-footer'>"
@@ -190,9 +219,14 @@
                     if (data.post.postUser == null && data.post.postTruck.truckId == truckId){
 
                         modalFooter = "<div class='modal-footer'>"
-                            +"<button type='button' class='btn btn-outline-info' id='updateCtServ' name='updateCtServ' onclick='updateCtServ();'>수정</button>"
-                            +"<button type='button' class='btn btn-outline-danger' id='deleteCtServ' name='deleteCtServ' onclick='deleteCtServ();'>삭제</button>"
+                            +"<button class='button btn-warning' name='deletePostPic' onclick='deletePostPic("+data.post.postNo+");'>글 삭제"
+                            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/></button>"
+                            +"<button class='button is-warning is-light' name='updatePostPicView'"
+                            +"onclick='updatePostPicView("+data.post.postNo+");'>글 수정"
+                            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/>"
+                            + "</button>"
                             +"</div>";
+
                     }else {
                         modalFooter = "<div class='modal-footer'>"
                             + " <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></div>";
@@ -206,6 +240,8 @@
                 console.log("data.post.postHit: "+data.post.postHit);
 
                 $('#staticBackdrop').modal('show');
+
+
 
 
 
@@ -237,8 +273,11 @@
 </head>
 
 <body id="page-top">
-<jsp:include page="/views/navbar.jsp" />
 
+<jsp:include page="/views/navbar.jsp" />
+<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+
+<input type="hidden" id="currentPage" name="currentPage" value=""/>
 
 <!-- 등록/ 수정 모달 -->
 <div class="modal fade"  id="modaladdPostPic" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modaladdPostPic" aria-hidden="true" style=" display: none; ">
@@ -253,76 +292,149 @@
                 <form class="form-horizontal">
                 <div class="form-group">
                     <span> 아이디 </span>
-                    <span id="postUser">${sessionScope.user.userId}${sessionScope.truck.truckId}</span>
+                    <c:if test="${sessionScope.role eq 'user'}">
+                    <span id="postUser.userId">${sessionScope.user.userId}</span>
+                    </c:if>
+                    <c:if test="${sessionScope.role eq 'truck'}">
+                        <span id="postTruck.truckId">${sessionScope.truck.truckId}</span>
+                    </c:if>
                 </div>
-                <div class="form-group">
-                    <label for="menuImg1" class="col-sm-offset-1 col-sm-8 control-label">이미지1</label>
-                    <div class="col-sm-8">
-                        <input type="file" class="form-control" id="menuImg1" name="menuImg11"  value="${menu.menuImg1}" placeholder="메뉴 이미지1" onchange="setImage1Preview(event);">
+                    <div class="form-group">
+                        <label for="postFile1" class="col-sm-offset-1 col-sm-10 control-label">파일 이미지1</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" id="postFile1" name="postFile11"  value="${post.postFile1}" placeholder="파일 이미지1" onchange="setImage1Preview(event, '#image1preview');">
+                        </div>
+                        <div id="image1preview" class="col-sm-10"></div>
                     </div>
-                    <div id="image1preview"></div>
-                </div>
 
-                <div class="form-group">
-                    <label for="menuImg2" class="col-sm-offset-1 col-sm-8 control-label">이미지2</label>
-                    <div class="col-sm-8">
-                        <input type="file" class="form-control" id="menuImg2" name="menuImg22"  value="${menu.menuImg2}" placeholder="메뉴 이미지2" onchange="setImage2Preview(event);">
+                    <div class="form-group">
+                        <label for="postFile2" class="col-sm-offset-1 col-sm-10 control-label">파일 이미지2</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" id="postFile2" name="postFile22"  value="${post.postFile2}" placeholder="파일 이미지1" onchange="setImage2Preview(event);">
+                        </div>
+                        <div id="image2preview" class="col-sm-10"></div>
                     </div>
-                    <div id="image2preview"></div>
-                </div>
 
-                <div class="form-group">
-                    <label for="menuImg3" class="col-sm-offset-1 col-sm-8 control-label">이미지3</label>
-                    <div class="col-sm-8">
-                        <input type="file" class="form-control" id="menuImg3" name="menuImg33"  value="${menu.menuImg3}" placeholder="메뉴 이미지3" onchange="setImage3Preview(event);">
+                    <div class="form-group">
+                        <label for="postFile3" class="col-sm-offset-1 col-sm-10 control-label">파일 이미지3</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" id="postFile3" name="postFile33"  value="${post.postFile3}" placeholder="파일 이미지3" onchange="setImage3Preview(event);">
+                        </div>
+                        <div id="image3preview" class="col-sm-10"></div>
                     </div>
-                    <div id="image3preview"></div>
-                </div>
-                <script>
 
-                    function setImage1Preview(event){
-                        var reader  = new FileReader();
+                    <script>
 
-                        reader.onload = function(event){
-                            var img = document.createElement("img");
-                            img.setAttribute("src", event.target.result);
-                            document.querySelector("div#image1preview").appendChild(img);
-                        };
-                        reader.readAsDataURL(event.target.files[0]);
-                    }
 
-                    function setImage2Preview(event){
-                        var reader  = new FileReader();
+                        function setImage1Preview(event, tag){
+                            var DIVimage1preview = $(tag);
 
-                        reader.onload = function(event){
-                            var img = document.createElement("img");
-                            img.setAttribute("src", event.target.result);
-                            document.querySelector("div#image2preview").appendChild(img);
-                        };
-                        reader.readAsDataURL(event.target.files[0]);
-                    }
+                            if (tag == "0"){
+                                DIVimage1preview = $("#m_image1preview");
+                            }
 
-                    function setImage3Preview(event){
-                        var reader  = new FileReader();
+                            var isTherePreview = DIVimage1preview.find('img').length;
+                            alert("isTherePreview : " + isTherePreview);
+                            //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
+                            var reader  = new FileReader();
 
-                        reader.onload = function(event){
-                            var img = document.createElement("img");
-                            img.setAttribute("src", event.target.result);
-                            document.querySelector("div#image3preview").appendChild(img);
-                        };
-                        reader.readAsDataURL(event.target.files[0]);
-                    }
+                            if(isTherePreview==0){
 
-                </script>
+                            }else{
+
+                                DIVimage1preview.find('img').remove();
+
+                            }
+
+                            reader.onload = function(event){
+
+                                var div = "<img src='"+event.target.result+"' style='width:50%;'>";
+                                var img = document.createElement("img");
+
+                                img.setAttribute("src", event.target.result);
+                                img.setAttribute("style", "width:50%");
+                                if (tag == "0"){
+                                    //$("#modaladdPostPic").find("#m_image1preview").append(div);
+                                    document.querySelector("#m_image1preview").appendChild(div);
+                                }else{
+
+                                    document.querySelector("div#image1preview").appendChild(img);
+                                }
+
+                            };
+
+                            reader.readAsDataURL(event.target.files[0]);
+
+
+                        }
+
+                        function setImage2Preview(event){
+                            var DIVimage2preview = $('#image2preview');
+                            var reader  = new FileReader();
+                            var isTherePreview = DIVimage2preview.find('img').length;
+                            alert("isTherePreview : " + isTherePreview);
+
+                            var reader  = new FileReader();
+
+                            if(isTherePreview==0){
+
+                            }else{
+
+                                DIVimage2preview.find('img').remove();
+
+                            }
+
+                            reader.onload = function(event){
+                                var img = document.createElement("img");
+                                img.setAttribute("src", event.target.result);
+                                img.setAttribute("style", "width:50%");
+                                document.querySelector("div#image2preview").appendChild(img);
+
+                            };
+
+                            reader.readAsDataURL(event.target.files[0]);
+
+                        }
+
+                        function setImage3Preview(event){
+                            var DIVimage3preview = $('#image3preview');
+                            var reader  = new FileReader();
+                            var isTherePreview = DIVimage3preview.find('img').length;
+                            alert("isTherePreview : " + isTherePreview);
+                            //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
+                            var reader  = new FileReader();
+
+                            if(isTherePreview==0){
+
+                            }else{
+
+                                DIVimage3preview.find('img').remove();
+
+                            }
+
+                            reader.onload = function(event){
+                                var img = document.createElement("img");
+                                img.setAttribute("src", event.target.result)
+                                img.setAttribute("style", "width:50%");
+                                document.querySelector("div#image3preview").appendChild(img);
+
+                            };
+
+                            reader.readAsDataURL(event.target.files[0]);
+
+                        }
+
+                    </script>
                 <div id="here"></div>
 
                 <div class="form-group">
-                    <textarea id="contentArea" style="resize:none;" rows="5" cols="55" title="내용을 입력해 주세요."></textarea>
+                    <textarea id="postContent" name = "postContent" style="resize:none;" rows="5" cols="55" title="내용을 입력해 주세요.">${post.postContent}</textarea>
                 </div>
                 </form>
             </div>
 
             <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="add-post-p" >글쓰기</button>
             </div>
         </div>
     </div>
@@ -345,7 +457,7 @@
     </div>
 </div>
 
-
+<form class="form-inline" name="detailForm">
 <div class="card-colums" id="all_posting">
     <div class="container">
         <div>
@@ -420,23 +532,12 @@
 
     </div>
 </div>
+</form>
+<!-- PageNavigation Start... -->
+<jsp:include page="../../common/pageNavigator.jsp"/>
+<!-- PageNavigation End... -->
 <script>
     $(function(){
-// 이미지 슬라이드 컨트롤를 사용하기 위해서는 carousel를 실행해야한다.
-        $('.carousel').carousel({
-// 슬리아딩 자동 순환 지연 시간
-// false면 자동 순환하지 않는다.
-            interval: 1000,
-// hover를 설정하면 마우스를 가져대면 자동 순환이 멈춘다.
-            pause: "hover",
-// 순환 설정, true면 1 -> 2가면 다시 1로 돌아가서 반복
-            wrap: true,
-// 키보드 이벤트 설정 여부(?)
-            keyboard : true
-        });
-
-
-
 
         $("#modaladdPostPic").on('hide.bs.modal', function (e) {
             // self.location = "/catering/listCatering"
@@ -718,7 +819,102 @@
 
         };
     };
+    // 글 수정
+    const updatePostPicView = function(postNo){
 
+        $.ajax({
+            url : '/community/json/getPostPic',
+            type : 'get',
+            data : {
+                postNo : postNo
+            },
+            success : function(pto) {
+                //$('#modaladdPostPic').modal('hide');
+                var modalPic = $("#modaladdPostPic");
+                var div ="";
+
+
+               div += " <form class='form-horizontal'>"
+                +"<div class='form-group'>"
+                    +"<span> 아이디 </span>"
+                    +"<span id='postId'>"+uId+"</span>"
+                  + "  </div>"
+                    +"<div class='form-group'>"
+                      +" <label for='postFile1' class='col-sm-offset-1 col-sm-10 control-label'>파일 이미지1</label>"
+                       + "<div class='col-sm-10'>"
+                           + "<input type='file' class='form-control' id='postFile1' name='postFile11'  value='"+pto.post.postFile1+"' placeholder='파일 이미지1' onchange='setImage1Preview(event, 0);'>"
+                       + "</div>"
+                       + "<div id='m_image1preview' class='col-sm-10'><img src='../../../resources/image/"+pto.post.postFile1+"'></div>"
+                   + "</div>"
+                    +"<div class='form-group'>"
+                       +" <label for='postFile2' class='col-sm-offset-1 col-sm-10 control-label'>파일 이미지2</label>"
+                      + " <div class='col-sm-10'>"
+                          +  "<input type='file' class='form-control' id='postFile2' name='postFile22'  value='"+pto.post.postFile2+"' placeholder='파일 이미지2' onchange='setImage2Preview(event, 0);'>"
+                       + "</div>"
+                       + "<div id='m_image2preview' class='col-sm-10'></div>"
+                   + "</div>"
+                   + "<div class='form-group'>"
+                       + "<label for='postFile3' class='col-sm-offset-1 col-sm-10 control-label'>파일 이미지3</label>"
+                       +" <div class='col-sm-10'>"
+                          + " <input type='file' class='form-control' id='postFile3' name='postFile33'  value='"+pto.post.postFile3+"' placeholder='파일 이미지3' onchange='setImage3Preview(event);'>"
+                        +"</div>"
+                        +"<div id='m_image3preview' class='col-sm-10'><img src='../../../resources/image/"+pto.post.postFile3+" '></div>"
+                   +" </div>"
+                +"<div id='here'></div>"
+                +"<div class='form-group'>"
+                    +"<textarea id='postContent' name = 'postContent' style='resize:none;' rows='5' cols='55' title='내용을 입력해 주세요.'>"+pto.post.postContent+"</textarea>"
+                   +"<input name='postNo' type='hidden' value='"+postNo+"'>"
+              + " </div>"
+                +"</form>";
+               div2="";
+               div2+=
+                   "<button class='button btn-warning' name='updatePostPic' onclick='fncUpdatePostPic();'>수정"
+                   +"</button>"
+                   +"<button class='btn btn-secondary' data-dismiss='modal'>취소"
+                   + "</button>" ;
+                $('.modal-body').html(div);
+                $('.modal-footer').html(div2);
+                //$('#modaladdPostPic').modal('show');
+
+
+            },
+            error : function() {
+                alert('서버 에러');
+            }
+        });
+    }
+
+    function fncUpdatePostPic(){
+
+        $("form").attr("method", "POST").attr("action","/community/updatePostPic").attr("enctype", "multipart/form-data").submit();
+
+    }
+    const updatePostPic = function(postNo){
+        var modalPic = $("#modaladdPostPic");
+
+
+
+
+    }
+    // 글 삭제
+    const deletePostPic = function(postNo){
+        $.ajax({
+            url : '/community/json/deletePostPic',
+            type : 'get',
+            data : {
+                postNo : postNo
+            },
+            success : function(pto) {
+
+                alert("게시물이 삭제되었습니다.")
+                // 삭제 완료 후 reload
+                window.location.reload();
+            },
+            error : function() {
+                alert('서버 에러');
+            }
+        });
+    }
     // 모댓글 삭제일때
     const DeleteReply = function(no, bno){
         // grp이 no인 댓글이 있는 경우 content에 null을 넣고 없으면 삭제한다.
@@ -920,10 +1116,28 @@
         }
 
     });
+
+    ////// 등록할 모달창 show
     $("body").on("click", "a[id='modaladdPostPicbt']", function() {
         $('#modaladdPostPic').modal('show');
     });
 
+    /////////// 글등록
+    $(function(){
+
+        $('#add-post-p').on("click", function(){
+
+            fncAddPostPic();
+
+        });
+
+    });
+
+    function fncAddPostPic(){
+
+        $("form").attr("method", "POST").attr("action","/community/addPostPic").attr("enctype", "multipart/form-data").submit();
+
+    }
 </script>
 
 
