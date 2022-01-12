@@ -9,11 +9,27 @@
         .btn-secondary {
             border-radius: 5px;
         }
-
-        img {
-            display: block;
-            margin: 0px auto;
+        div {
+            margin-left: auto;
+            margin-right: auto;
         }
+
+        strong {
+            font-size: 18px;
+        }
+
+        .col-sm-6 {
+            font-size: 20px;
+        }
+
+        .notiImg {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            padding-right: 16px;
+        }
+
+
 
     </style>
 
@@ -119,10 +135,11 @@
         <%--    </div>--%>
     <!-- 게시글 조회 -->
     <div class="panel panel-default">
-        <div class="panel-heading" style="border-radius:10px ; border: 2px solid orange; ">
+        <div class="panel-heading" style="border-radius:10px ; border: 0; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2); max-width: 550px;;
+			transition: 0.3s;">
 
             <div class="panel-body">
-                <ul class="chat_list_box" style="font-size:20px ">
+                <ul class="chat_list_box" style="font-size:20px ; padding-top: 15px">
                     <strong class="primary-font pull-left" style="padding-top:10px ">작성자</strong>
                         <%--                    <strong class="pull-right text-dark" style="padding-top:10px; padding-right:10px "><fmt:formatDate--%>
                         <%--                            value="${post.postRegDate}" pattern="yyyy-MM-dd"/></strong>--%>
@@ -140,23 +157,23 @@
                     <%--                    <small class="pull-right text-dark" colspan="2"><fmt:formatDate value="${post.postRegDate}" pattern="yyyy-MM-dd"/></small>--%>
                     <%--                </ul>--%>
                 <br/>
-                <hr style="border:1px dashed orange "/>
+                <hr/>
 
                 <ul class="chat_list" style="font-size:30px ">
                     <strong class="primary-font pull-left" style="font-size: 20px">제목</strong>
                     <midium class="col-sm-4 align-content-center">${truck.truckNoticeTitle}</midium>
                         <%--                <td class="center" colspan="2">${post.postTitle}</td>--%>
                 </ul>
-                <hr style="border:1px dashed orange "/>
+                <hr/>
 
-                <ul>
-                    <strong class="pull-left" style="font-size:20px ">내용</strong>
-                    <midium class="primary-font"
-                            style="margin-left: 200px; font-size:20px ">${truck.truckNoticeContent}</midium>
+                <ul class="chat_list" style="font-size:30px ">
+                    <strong class="primary-font pull-left" style="font-size:20px ">내용</strong>
+                    <midium class="col-sm-4 align-content-center"
+                            >${truck.truckNoticeContent}</midium>
                 </ul>
 
                 <ul>
-                    <td style="text-align: center;">
+                    <td>
                         <br/>
                         <img class="notiImg" src="../resources/image/${truck.truckNoticeImg}" width="300"
                              height="300"/>
