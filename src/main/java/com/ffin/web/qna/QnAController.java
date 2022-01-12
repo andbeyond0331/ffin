@@ -6,7 +6,6 @@ import com.ffin.service.domain.Inquiry;
 import com.ffin.service.domain.Truck;
 import com.ffin.service.domain.User;
 import com.ffin.service.qna.QnAService;
-import com.sun.xml.internal.ws.developer.MemberSubmissionAddressing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +35,28 @@ public class QnAController {
 
     @Value("#{commonProperties['pageSize']}")
     int pageSize;
+
+
+
+    @RequestMapping(value = "getReportListByUser")
+    public String getReportListByUser(@ModelAttribute("search")Search search, Model model, HttpSession session) throws Exception{
+
+        System.out.println("QnAController.getReportListByUser");
+
+        if(search.getCurrentPage() == 0) {
+            search.setCurrentPage(1);
+        }
+        search.setPageSize(pageSize);
+
+        Map<String, Object> map = qnAService.getReportListByUser(search, ((User)session.getAttribute("user")).getUserId() );
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+
+        model.addAttribute("list", map.get("list"));
+        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("search", search);
+
+        return "/views/qna/getReportListByUser.jsp";
+    }
 
 
     @RequestMapping(value = "getReportList")
