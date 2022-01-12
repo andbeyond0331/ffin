@@ -277,8 +277,8 @@
                     </a>
                     <div class="collapse" id="collapseQnAUser" style="padding: 10px;">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">문의</a>
-                            <a class="collapse-item" href="">신고</a>
+                            <a class="collapse-item" href="/qna/getInquiryListByUser">문의</a>
+                            <a class="collapse-item" href="/qna/getReportListByUser">신고</a>
                         </div>
                     </div>
                 </li>
@@ -319,7 +319,7 @@
                     </a>
                     <div class="collapse" id="collapseTruck" style="padding: 10px;">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">전체</a>
+                            <a class="collapse-item" href="/truck/getTruckList">전체</a>
                             <a class="collapse-item" href="">가입승인</a>
                             <a class="collapse-item" href="">가입승인대기</a>
                             <a class="collapse-item" href="">가입승인거절</a>

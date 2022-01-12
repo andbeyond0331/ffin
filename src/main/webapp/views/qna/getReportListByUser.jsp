@@ -96,7 +96,7 @@
 
         function fncGetUserList(currentPage) {
             $("#currentPage").val(currentPage)
-            $("form").attr("method" , "POST").attr("action" , "/user/getUserList").submit();
+            $("form").attr("method" , "POST").attr("action" , "/qna/getUserList").submit();
         }
 
         /* 신고내용 */
@@ -151,48 +151,6 @@
            });
         });
 
-        /* 신고처리 */
-        function nopeBtn(reportNo){
-
-            $.ajax({
-                url: "/qna/json/updateReportProcStatus",
-                method: "POST",
-                dataType: "json",
-                header : {
-                    "Accept" : "application/json",
-                    "Content-Type" : "application/json"
-                },
-                data: {
-                    reportNo : reportNo,
-                    reportProcStatus : 3
-                },
-                success :function (data) {
-                    console.log(data);
-                    window.location.reload();
-                }
-            })
-        }
-
-        function okBtn(reportNo){
-
-            $.ajax({
-                url: "/qna/json/updateReportProcStatus",
-                method: "POST",
-                dataType: "json",
-                header : {
-                    "Accept" : "application/json",
-                    "Content-Type" : "application/json"
-                },
-                data: {
-                    reportNo : reportNo,
-                    reportProcStatus : 2
-                },
-                success :function (data) {
-                    console.log(data);
-                    window.location.reload();
-                }
-            })
-        }
 
         function closeBtn() {
             $('.card-ans').remove();
@@ -264,7 +222,7 @@
                     </div>
                     <div class="col-md-2 report-con">
                         <div class="card-body">
-                            <p class="card-text"><small class="text-muted"><strong>신고자</strong></small></p>
+                            <p class="card-text"><small class="text-muted"><strong>신고대상</strong></small></p>
                         </div>
                     </div>
                     <div class="col-md-4 report-con">
@@ -274,7 +232,7 @@
                     </div>
                     <div class="col-md-2 report-con">
                         <div class="card-body">
-                            <p class="card-text"><small class="text-muted"><strong>신고대상</strong></small></p>
+                            <p class="card-text"><small class="text-muted"><strong>신고일</strong></small></p>
                         </div>
                     </div>
                     <div class="col-md-2 report-con">
@@ -290,10 +248,10 @@
             <c:set var="i" value="${ i+1 }" />
 
             <div class="card mb-10">
+                <input type="hidden" id="reportNo" name ="reportNo" value="${report.reportNo}">
                 <div class="row g-0 report-card">
                     <div class="col-md-2 report-con">
                         <div class="card-body">
-                            <input type="hidden" id="reportNo" name ="reportNo" value="${report.reportNo}">
                             <c:choose>
                                 <c:when test="${report.reportType eq 1}">
                                     <p class="card-text"><small class="text-muted">광고/도배</small></p>
@@ -319,7 +277,7 @@
                     <div class="col-md-2 report-con">
                         <div class="card-body">
                             <p class="card-text">
-                                <small class="text-muted">${report.reportUserId}</small>
+                                <small class="text-muted">${report.reportTargetId}</small>
                             </p>
                         </div>
                     </div>
@@ -332,7 +290,7 @@
                     </div>
                     <div class="col-md-2 report-con">
                         <div class="card-body">
-                            <p class="card-text"><small class="text-muted">${report.reportTargetId}</small></p>
+                            <p class="card-text"><small class="text-muted">${report.reportDate}</small></p>
                         </div>
                     </div>
                     <div class="col-md-2 report-con">

@@ -97,28 +97,53 @@
         background-color: #ffe537;
         margin-left: 10px;
         padding: 10px 15px 10px 15px;
+        border-radius: 10rem;
+        padding: 0.75rem 1rem;
     }
     .btn.btn-default:hover{
         color: #ffe537;
         background-color: #ffffff;
         border-color: #ffe537;
+        border-radius: 10rem;
+        padding: 0.75rem 1rem;
     }
 
     .btn.btn-default.login{
-        width:500px;
+        width: -webkit-fill-available;
         margin-left: 0;
         color: #fff;
         background-color: #ffe537;
     }
 
     .btn.btn-default.login:hover{
-        width:500px;
+        max-width: -webkit-fill-available;
         margin-left: 0;
         background-color: #ffffff;
         color: #ffe537;
         border-color: #ffe537;
     }
-
+    .btn-user{
+        font-size: .8rem;
+        border-radius: 10rem;
+        padding: 0.75rem 1rem;
+    }
+    .btn-kakao{
+        color: #fff;
+        background-color: #fae100;
+        border-color: #fff;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-height: 40px;
+    }
+    .btn-google{
+        color: #fff;
+        background-color: #ea4335;
+        border-color: #fff;
+        margin-bottom: 10px;
+        max-height: 40px;
+    }
     .navbar-toggler{
         color: #fff;
         background-color: #ffe537;
@@ -244,7 +269,7 @@
                                         console.log("카카오로그인 id :: "+id);
 
                                         $.ajax({
-                                            url : "/user/json/addUser",
+                                            url : "/user/json/addUserSNS",
                                             method : "POST",
                                             headers : {
                                                 "Accept" : "application/json",
@@ -253,18 +278,18 @@
                                             data : JSON.stringify({
                                                 userId : id,
                                                 userName : response.properties.nickname,
-                                                userPassword : "1234kakao",
-                                                userRegDate : "2021-02-02",
-                                                userPhone : "010-0000-0000"
+                                                userBirth : response.properties.birth,
                                             }),
                                             success: function (JSONData){
-                                                alert("가입 완료");
-                                                $("form").attr("method","POST").attr("action","/user/kakaoLogin/"+id).attr("target","_parent").submit();
+                                                //alert("가입창으로 가자");
+                                                location.href = "/views/user/addUserSNSView.jsp";
+                                                // $("form").attr("method","POST").attr("action","/user/kakaoLogin/"+id).attr("target","_parent").submit();
                                             }
                                         });
                                     }
                                     if( data !== id ){
                                         console.log("로그인ing...");
+                                        console.log("카카오 token :: "+Kakao.Auth.getAccessToken());
                                         $("form").attr("method","post").attr("action","/user/kakaoLogin/"+id).attr("target","_parent").submit();
                                     }
                                 },
@@ -284,6 +309,28 @@
             });
         });
     });
+
+    /* 카카오 로그아웃 */
+/*    function kakaoLogout(){
+
+        alert(1234);
+        console.log("카카오 token :: "+Kakao.Auth.getAccessToken());
+
+        /!*Kakao.init('b729adcc43707d7099ee5f895c968b62');*!/
+        Kakao.isInitialized();
+
+        Kakao.API.request({
+            url:'/v1/user/unlink',
+            success:function(response){
+                callbackFunction();
+            },
+            fail:function(error){
+                //alert("?");
+            }
+        });
+    }*/
+
+
 
     /* 구글 로그인 */
     /*        $(function () {
@@ -426,39 +473,39 @@
     $(function () {
         $('.findIdBtn').click(function () {
 
-           var userName = $('#userIdforId').val();
-           var userPhone = $('#userPhoneForId').val();
+            var userName = $('#userIdforId').val();
+            var userPhone = $('#userPhoneForId').val();
 
-           console.log(userName);
-           console.log(userPhone);
+            console.log(userName);
+            console.log(userPhone);
 
-           $.ajax({
-               type:"POST",
-               url: "/user/json/getUserId",
-               data   : {
-                   userName : userName,
-                   userPhone : userPhone},
-               success:function (data) {
-                   console.log("아이디 찾기 data : "+data);
-                   if(data === "fail" ){
-                       //alert(data);
-                       $('#id_value').text('회원 정보를 찾을 수 없습니다.');
-                       $('#longinGoBtn').css('display','none');
-                       $('#findUserPw').css('display', 'none');
-                   } else {
-                       $('#id_value').text('회원님의 Id는 '+data+'입니다.');
-                       $('#longinGoBtn').css('display','flex');
-                       $('#findUserPw').css('display', 'flex');
-                       idV = data;
-                   }
-               }
-           })
+            $.ajax({
+                type:"POST",
+                url: "/user/json/getUserId",
+                data   : {
+                    userName : userName,
+                    userPhone : userPhone},
+                success:function (data) {
+                    console.log("아이디 찾기 data : "+data);
+                    if(data === "fail" ){
+                        //alert(data);
+                        $('#id_value').text('회원 정보를 찾을 수 없습니다.');
+                        $('#longinGoBtn').css('display','none');
+                        $('#findUserPw').css('display', 'none');
+                    } else {
+                        $('#id_value').text('회원님의 Id는 '+data+'입니다.');
+                        $('#longinGoBtn').css('display','flex');
+                        $('#findUserPw').css('display', 'flex');
+                        idV = data;
+                    }
+                }
+            })
         });
     });
 
     /* PW찾기 */
     $(function () {
-       $('.findPwBtn').click(function () {
+        $('.findPwBtn').click(function () {
 
             var userName  = $('#userNameforPw').val();
             var userId  = $('#userIdforPw').val();
@@ -468,43 +515,43 @@
             console.log(userId);
             console.log(userPhone);
 
-           $.ajax({
-               type:"POST",
-               url: "/user/json/getUserIdForPassword",
-               data   : {
-                   userId : userId,
-                   userName : userName,
-                   userPhone : userPhone},
-               success:function (data) {
-                   console.log("비밀번호 찾기 data : "+data);
-                   if(data === ""){
-                       alert('회원정보를 찾을 수 없습니다.');
-                   } else {
-                       console.log("-------------------");
-                       console.log(userPhone);
+            $.ajax({
+                type:"POST",
+                url: "/user/json/getUserIdForPassword",
+                data   : {
+                    userId : userId,
+                    userName : userName,
+                    userPhone : userPhone},
+                success:function (data) {
+                    console.log("비밀번호 찾기 data : "+data);
+                    if(data === ""){
+                        alert('회원정보를 찾을 수 없습니다.');
+                    } else {
+                        console.log("-------------------");
+                        console.log(userPhone);
 
-                       $.ajax({
-                           type:"GET",
-                           url:"/user/json/sendSMSForPassword/"+userPhone,
-                           data: {
-                               userId : userId
-                           },
-                           success:function (data) {
-                               console.log(data);
-                               alert("입력하신 연락처로 임시비밀번호가 발송되었습니다.");
-                               $('#background_modal').hide();
-                               $('#findUserModal').hide();
-                               $('#openLoginModal').modal('show');
-                           },
-                           fail:function (error){
-                               console.log(error);
-                               alert("임시비밀번호 전송이 취소되었습니다.")
-                           }
-                       });
-                   }
-               }
-           });
-       });
+                        $.ajax({
+                            type:"GET",
+                            url:"/user/json/sendSMSForPassword/"+userPhone,
+                            data: {
+                                userId : userId
+                            },
+                            success:function (data) {
+                                console.log(data);
+                                alert("입력하신 연락처로 임시비밀번호가 발송되었습니다.");
+                                $('#background_modal').hide();
+                                $('#findUserModal').hide();
+                                $('#openLoginModal').modal('show');
+                            },
+                            fail:function (error){
+                                console.log(error);
+                                alert("임시비밀번호 전송이 취소되었습니다.")
+                            }
+                        });
+                    }
+                }
+            });
+        });
     });
 
 

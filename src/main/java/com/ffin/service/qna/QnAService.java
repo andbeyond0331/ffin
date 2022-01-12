@@ -13,7 +13,9 @@ public interface QnAService {
     public void addReport(Report report) throws Exception;
     //신고조회
     public Report getReport(int reportNo) throws Exception;
-    //신고목록
+    //신고목록-user
+    public Map<String, Object> getReportListByUser(Search search, String reportUserId) throws Exception;
+    //신고목록-admin
     public Map<String, Object> getReportList(Search search) throws Exception;
     //신고수정
     public void updateReport(Report report) throws Exception;
