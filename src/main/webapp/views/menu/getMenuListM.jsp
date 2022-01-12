@@ -291,12 +291,6 @@
                 <!--//////////////////여기에 추가 메뉴 정보///////시이이이작//////////////////////////////////-->
                 <form class="form-horizontal">
                     <input type="hidden" id = "menuTruckId" name="menuTruckId" value="${truck.truckId}">
-                    <%--        <div class="form-group">--%>
-                    <%--            <label for="menuTruckId" class="col-sm-offset-1 col-sm-3 control-label">메뉴 트럭 아이디</label>--%>
-                    <%--            <div class="col-sm-4">--%>
-                    <%--                <input type="text" class="form-control" id="menuTruckId" name="menuTruckId"  value="${truck.truckId}" placeholder="메뉴 트럭아이디">--%>
-                    <%--            </div>--%>
-                    <%--        </div>--%>
 
                     <div class="form-group">
                         <label for="menuName" class="col-sm-offset-1 col-sm-10 control-label">메뉴 이름</label>
@@ -321,13 +315,9 @@
                     </div>
 
                     <div class="form-group">
-                        <%--            <label for="isSigMenu" class="col-sm-offset-1 col-sm-3 control-label">대표메뉴여부</label>--%>
                         <div class="col-sm-10">
-                            <%--                <input type="text" class="form-control" id="isSigMenu" name="isSigMenu" value="${menu.isSigMenu}" placeholder="대표메뉴여부">--%>
 
                             <div class="form-check form-switch" id="isThereSigMenu">
-                                <%--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">--%>
-                                <%--                    <label class="form-check-label" for="flexSwitchCheckDefault">대표메뉴여부</label>--%>
                             </div>
                         </div>
                     </div>
@@ -390,8 +380,8 @@
                         }
 
                         function setImage2Preview(event){
-                            var reader  = new FileReader();
-                            var isTherePreview = DIVimage1preview.find('img').length;
+                            var DIVimage2preview = $('#image2preview');
+                            var isTherePreview = DIVimage2preview.find('img').length;
                             alert("isTherePreview : " + isTherePreview);
                             //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
                             var reader  = new FileReader();
@@ -400,25 +390,27 @@
 
                             }else{
 
-                                DIVimage1preview.find('img').remove();
+                                DIVimage2preview.find('img').remove();
 
                             }
 
                             reader.onload = function(event){
                                 var img = document.createElement("img");
+
                                 img.setAttribute("src", event.target.result);
                                 img.setAttribute("style", "width:50%");
-                                document.querySelector("div#image1preview").appendChild(img);
+                                document.querySelector("div#image2preview").appendChild(img);
 
                             };
 
                             reader.readAsDataURL(event.target.files[0]);
+
 
                         }
 
                         function setImage3Preview(event){
-                            var reader  = new FileReader();
-                            var isTherePreview = DIVimage1preview.find('img').length;
+                            var DIVimage3preview = $('#image3preview');
+                            var isTherePreview = DIVimage3preview.find('img').length;
                             alert("isTherePreview : " + isTherePreview);
                             //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
                             var reader  = new FileReader();
@@ -427,25 +419,28 @@
 
                             }else{
 
-                                DIVimage1preview.find('img').remove();
+                                DIVimage3preview.find('img').remove();
 
                             }
 
                             reader.onload = function(event){
                                 var img = document.createElement("img");
-                                img.setAttribute("src", event.target.result)
+
+                                img.setAttribute("src", event.target.result);
                                 img.setAttribute("style", "width:50%");
-                                document.querySelector("div#image1preview").appendChild(img);
+                                document.querySelector("div#image3preview").appendChild(img);
 
                             };
 
                             reader.readAsDataURL(event.target.files[0]);
+
 
                         }
 
                     </script>
                 <!--//////////////////여기에 추가 메뉴 정보///////끄으으으읕//////////////////////////////////-->
                     <div id="here"></div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary customer" data-toggle="modal" data-target="#optionGroupModal" data-whatever="optionGroup" data-dismiss="modal" aria-label="Close">옵션그룹추가</button>
@@ -494,7 +489,6 @@
                 <span>옵션 이름
                                 <input type="text" class="form-control" id="optionName" value="${optionGroup.optionName}"></span>
 
-                <%--                            <label for="optionPrice" class="col-form-label">옵션 가격</label>--%>
                 <span>옵션 가격</span>
                 <input type="text" class="form-control" id="optionPrice" value="${optionGroup.optionPrice}" placeholder="옵션 가격 - 숫자를 입력해주세요.">
                 <!--옵션추가 끄으으으으읕-->

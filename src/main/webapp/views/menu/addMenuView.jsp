@@ -414,7 +414,7 @@
 
         function setImage2Preview(event){
             var reader  = new FileReader();
-            var isTherePreview = DIVimage1preview.find('img').length;
+            var isTherePreview = DIVimage2preview.find('img').length;
             alert("isTherePreview : " + isTherePreview);
             //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
             var reader  = new FileReader();
@@ -423,14 +423,14 @@
 
             }else{
 
-                DIVimage1preview.find('img').remove();
+                DIVimage2preview.find('img').remove();
 
             }
 
             reader.onload = function(event){
                 var img = document.createElement("img");
                 img.setAttribute("src", event.target.result);
-                document.querySelector("div#image1preview").appendChild(img);
+                document.querySelector("div#image2preview").appendChild(img);
 
             };
 
@@ -440,7 +440,7 @@
 
         function setImage3Preview(event){
             var reader  = new FileReader();
-            var isTherePreview = DIVimage1preview.find('img').length;
+            var isTherePreview = DIVimage3preview.find('img').length;
             alert("isTherePreview : " + isTherePreview);
             //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
             var reader  = new FileReader();
@@ -449,14 +449,14 @@
 
             }else{
 
-                DIVimage1preview.find('img').remove();
+                DIVimage3preview.find('img').remove();
 
             }
 
             reader.onload = function(event){
                 var img = document.createElement("img");
                 img.setAttribute("src", event.target.result);
-                document.querySelector("div#image1preview").appendChild(img);
+                document.querySelector("div#image3preview").appendChild(img);
 
             };
 
