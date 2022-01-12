@@ -2,8 +2,10 @@ package com.ffin.web.user;
 
 import com.ffin.service.domain.User;
 import com.ffin.service.user.UserService;
+import com.sun.istack.internal.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,6 +24,7 @@ public class UserRestController {
     @Autowired
     @Qualifier("userServiceImpl")
     private UserService userService;
+
 
     // 파일 저장경로 지정
     //private static final String FILE_SERVER_PATH = "C:\\ffinPJT\\src\\main\\webapp\\resources\\image";
@@ -78,8 +81,9 @@ public class UserRestController {
         User dbUser = userService.getUser(userId);
         session.setAttribute("user", dbUser);
         session.setAttribute("role","user");
+        session.setAttribute("sns", "kakao");
 
-        return userId;
+        return "/views/home.jsp";
     }
 
 
@@ -142,6 +146,17 @@ public class UserRestController {
         session.setAttribute("user", user);
 
         return userService.getUser(user.getUserId());
+    }
+
+    @RequestMapping(value = "json/addUserSNS", method = RequestMethod.POST)
+    public User addUserSNS(@RequestBody User user, Model model, HttpSession session) throws Exception {
+
+        System.out.println("UserRestController.addUserSNS : POST");
+        System.out.println("user = " + user);
+
+        session.setAttribute("user", user);
+
+        return user;
     }
 
     @RequestMapping(value = "json/updateUserInfo/{userId}", method = RequestMethod.POST)

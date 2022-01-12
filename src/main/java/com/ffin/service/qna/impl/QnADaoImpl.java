@@ -42,6 +42,12 @@ public class QnADaoImpl implements QnADao {
     }
 
     @Override
+    public List<Report> getReportListByUser(Map<String, Object> map) throws Exception {
+        System.out.println("QnADaoImpl.getReportListByUser");
+        return sqlSession.selectList("QnAMapper.getReportListByUser", map);
+    }
+
+    @Override
     public List<Report> getReportList(Search search) throws Exception {
         System.out.println("QnADaoImpl.getReportList");
         return sqlSession.selectList("QnAMapper.getReportList", search);

@@ -215,11 +215,37 @@ public class UserController {
         System.out.println("/user/snsLogin : POST");
 
         User dbUser = userService.getUser(userId);
+
         session.setAttribute("user", dbUser);
         session.setAttribute("role","user");
 
+        return "redirect:/views/home.jsp";
+    }
+
+    @RequestMapping(value = "kakaoLogout", method = RequestMethod.GET)
+    public String kakaoLogout(HttpSession session, HttpServletResponse response, HttpServletRequest request) throws Exception {
+        System.out.println("UserController.kakaoLogout : GET");
+
+        User user = (User) session.getAttribute("user");
+        if(user != null) {
+
+            session.removeAttribute("user");
+            session.invalidate();
+
+            Cookie loginCookie = WebUtils.getCookie(request, "loginCookie"  );
+            if(loginCookie != null){
+                loginCookie.setPath("/");
+                loginCookie.setMaxAge(0);
+                response.addCookie(loginCookie);
+
+                Date date = new Date(System.currentTimeMillis());
+                userService.autoLogin(user.getUserId(), session.getId(), date);
+            }
+        }
         return "redirect:/";
     }
+
+
 
     @RequestMapping(value = "getUserList")
     public String getUserList(@ModelAttribute("search")Search search, Model model, HttpServletRequest request) throws Exception{
@@ -262,7 +288,7 @@ public class UserController {
         model.addAttribute("resultPage", resultPage);
         model.addAttribute("search", search);
 
-        return "/views/user/getBlackList.jsp";
+        return "/views/user/getBlackListByAdmin.jsp";
     }
 
 

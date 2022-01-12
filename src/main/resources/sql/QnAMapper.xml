@@ -19,11 +19,11 @@
         <result property="reportProcStatus"     	column="report_proc_status"			jdbcType="CHAR"/>
 
         <association property="reportUserId"  javaType="user">
-            <id property="userId" column="report_user_id" jdbcType="VARCHAR"/>
+            <id property="userId" column="user_id" jdbcType="VARCHAR"/>
         </association>
 
         <association property="reportTargetId"  javaType="user">
-            <id property="userId" column="report_target_id" jdbcType="VARCHAR"/>
+            <id property="userId" column="target_id" jdbcType="VARCHAR"/>
         </association>
     </resultMap>
 
@@ -71,6 +71,17 @@
         FROM report
         WHERE report_no = #{value};
     </select>
+
+
+    <select id="getReportListByUser" parameterType="map" resultMap="reportSelectMap">
+        SELECT inner_table.*
+        FROM ( SELECT REPORT_USER_ID, REPORT_TARGET_ID, REPORT_PROC_STATUS, REPORT_LINK, REPORT_DATE, REPORT_CONTENT, REPORT_TYPE, REPORT_NO
+               FROM report
+               WHERE REPORT_USER_ID = #{reportUserId}
+               ORDER BY report_no ) inner_table
+        limit #{search.startRowNum}, #{search.pageSize}
+    </select>
+
 
     <select id="getReportList" parameterType="search" resultMap="reportSelectMap">
         select *

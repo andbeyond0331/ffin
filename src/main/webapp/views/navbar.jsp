@@ -91,7 +91,12 @@
                                 <ul class="dropdown-menu" aria-labelledby="user-dropdown">
                                     <li><a class="dropdown-item user-menu" href="/views/user/userMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
                                     <li><a class="dropdown-item user-menu" href="/views/qna/addInquiryView.jsp"><i class="fas fa-question-circle"></i>문의</a></li>
-                                    <li><a class="dropdown-item user-menu" href="/user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+                                    <c:if test="${sessionScope.sns eq 'kakao'}">
+                                        <li><a class="dropdown-item user-menu" href="https://kauth.kakao.com/oauth/logout?client_id=c5cd6068fce64f5187211674e3872ec7&logout_redirect_uri=http://localhost:8080/user/kakaoLogout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+                                    </c:if>
+                                    <c:if test="${sessionScope.sns == null }">
+                                        <li><a class="dropdown-item user-menu" href="/user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
+                                    </c:if>
                                 </ul>
                             </c:when>
 
@@ -102,7 +107,7 @@
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="user-dropdown">
                                     <li><a class="dropdown-item user-menu" href="/views/user/adminMyPage.jsp"><i class="fas fa-user-circle"></i>사이트 관리</a></li>
-                                    <li><a class="dropdown-item user-menu" href=""><i class="fas fa-question-circle"></i>가입승인</a></li>
+                                    <li><a class="dropdown-item user-menu" href="/user/kakaoLogout"><i class="fas fa-question-circle"></i>가입승인</a></li>
                                     <li><a class="dropdown-item user-menu" href="/user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
                                 </ul>
                             </c:when>
@@ -115,7 +120,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="truck-dropdown">
                                     <li><a class="dropdown-item user-menu" href="/views/truck/truckMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
                                     <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-power-off"></i>영업상태변경</a></li>
-                                    <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-question-circle"></i>문의</a></li>
+                                    <li><a class="dropdown-item user-menu" href="/views/qna/addInquiryView.jsp"><i class="fas fa-question-circle"></i>문의</a></li>
                                     <li><a class="dropdown-item user-menu" href="/truck/logoutTruck"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
                                 </ul>
                             </c:when>
@@ -176,6 +181,23 @@
                                 <span style="color: #0b1727; margin-left: 5px; font-size: 14px">아직 회원이 아니신가요?</span>
                                 <a class="addChk" href="/views/user/addUserInfo.jsp" style="color: #ffba49; margin-left: 0; font-size: 14px;"> <strong style="float: right; stroke: #ffba49; margin-right: 5px;">회원가입</strong></a>
                             </div>
+<%--                            <hr style="margin-top: 30px; margin-bottom: 20px; border-width: 2px;"/>--%>
+                            <div class="mb-3 d-grid gap-2 mx-auto">
+                                <button type="button" class="btn btn-default login" id="modalLoginBtn" style="margin-bottom: 10px; margin-top: 40px; color: #110000">login</button>
+                            </div>
+                            <hr style="margin-bottom: 20px; border-width: 2px;"/>
+                            <div class="d-grid gap-10 mx-auto">
+                                <input type="hidden" name="kakaoEmail" id="kakaoEmail">
+                                <input type="hidden" name="kakaoName" id="kakaoName">
+                                <a href="#" id="kakaoLogin" class="btn btn-kakao btn-user btn-block">
+                                    <i class="xi-2x xi-kakaotalk"></i> Login with kakao
+                                </a>
+                            </div>
+                            <div class="mb-3 d-grid gap-2 mx-auto">
+                                <a href="#" class="btn btn-google btn-user btn-block">
+                                    <i class="fab fa-google fa-fw"></i> Login with Google
+                                </a>
+                            </div>
                         </div>
                         <%-- CEO modal --%>
                         <div class="tab-pane fade" id="CEO">
@@ -199,23 +221,10 @@
                                 <span style="color: #0b1727; margin-left: 5px; font-size: 14px">아직 회원이 아니신가요?</span>
                                 <a class="addChk" href="./truck/addTruckView.jsp" style="color: #ffba49; margin-left: 0; font-size: 14px;"> <strong style="float: right; stroke: #ffba49; margin-right: 5px;">사업자 회원가입</strong></a>
                             </div>
+                            <div class="mb-3 d-grid gap-2 mx-auto">
+                                <button type="button" class="btn btn-default login" id="modalLoginTBtn" style="margin-bottom: 10px; margin-top: 40px; color: #110000">login</button>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="d-grid gap-2 mx-auto modal-footer" style="padding-bottom: 5px;">
-                        <button type="button" class="btn btn-default login" id="modalLoginBtn" style="margin-bottom: 10px;">login</button>
-                    </div>
-                    <div class="d-grid gap-10 mx-auto" style="margin-bottom: 5px; padding: 0 15px; text-align: center;">
-                        <input type="hidden" name="kakaoEmail" id="kakaoEmail">
-                        <input type="hidden" name="kakaoName" id="kakaoName">
-                        <a id="kakaoLogin">
-                            <img src="/resources/image/kakao_login_medium_wide.png">
-                        </a>
-<%--
-                        <button class='btn-social-login google' style='background:#D93025'><i class="xi-3x xi-google"></i></button>
-                        <button class='btn-social-login kakao' style='background:#FFEB00'><i class="xi-3x xi-kakaotalk text-dark"></i></button>
---%>
-                        <%--<a class="g-signin2" >Google Login</a>--%>
                     </div>
                 </form>
             </div>

@@ -279,7 +279,7 @@
                             <p class="card-text"><small class="text-muted">${inquiry.inquiryDate}</small></p>
                         </div>
                     </div>
-                    <div class="col-md-2 inquiry-con">
+                    <div class="col-md-2 inquiry-con" style="display: flex; align-items: center;">
                         <div class="card-body">
                             <c:if test="${inquiry.inquiryAnsStatus eq 0}">
                                 <p class="card-text"><small class="text-muted"><span class="badge" style="background-color: #ffe537; color: #110000">답변대기중</span></small></p>

@@ -14,7 +14,9 @@ public interface QnADao {
     public void addReport(Report report) throws Exception;
     //신고조회
     public Report getReport(int reportNo) throws Exception;
-    //신고목록
+    //신고목록-user
+    public List<Report> getReportListByUser(Map<String, Object> map) throws Exception;
+    //신고목록-admin
     public List<Report> getReportList(Search search) throws Exception;
     //totalCount
     public int getTotalCount(Search search) throws Exception;
