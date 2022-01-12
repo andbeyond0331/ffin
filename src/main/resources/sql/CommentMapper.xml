@@ -20,6 +20,8 @@
         <result property="grpl"        column="grpl"        jdbcType="NUMERIC"/>
 
         <result property="replyCount"        column="REPLY_COUNT"        jdbcType="NUMERIC"/>
+        <result property="truckProImg"       column="TRUCK_PRO_IMG"        jdbcType="VARCHAR"/>
+        <result property="userProImg"       column="USER_PRO_IMG"        jdbcType="VARCHAR"/>
 
     </resultMap>
 
@@ -77,6 +79,118 @@
         FROM comment
         where comment_no = #{commentNo}
     </delete>
+
+
+    <!-- HHJ -->
+    <!-- 댓글 쓰기 /user-->
+    <insert id="reply_write_user" parameterType="comment">
+        INSERT INTO COMMENT (COMMENT_POST_NO, COMMENT_USER_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY, grp, grps, grpl)
+        VALUES (#{commentPostNo}, #{commentUserId}, #{commentContent}, DATE_FORMAT(now(), '%Y-%m-%d'), DEFAULT, #{grp}, 0, 0);
+    </insert>
+
+    <!-- 댓글 쓰기 /truck-->
+    <insert id="reply_write_truck" parameterType="comment">
+        INSERT INTO COMMENT (COMMENT_POST_NO, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY, grp, grps, grpl)
+        VALUES (#{commentPostNo},  #{commentTruckId}, #{commentContent}, DATE_FORMAT(now(), '%Y-%m-%d'), DEFAULT, #{grp}, 0, 0);
+    </insert>
+
+    <!-- 모댓글일경우 no, grp 일치하게 함 -->
+    <update id="reply_check" parameterType="int">
+        update COMMENT set grp=#{grp}
+        where COMMENT_NO != grp
+    </update>
+
+    <!-- 모댓글이 삭제된 댓글일때 그에 딸린 답글들이 모두삭제되면 테이블에서 완전히 삭제한다 -->
+    <delete id="reply_delete_after_rereply_delete" parameterType="int">
+        delete from COMMENT
+        where COMMENT_CONTENT is null AND grp=#{grp}
+    </delete>
+
+    <!-- 답글 쓰기 //user-->
+    <insert id="rereply_write_user" parameterType="comment">
+        INSERT INTO COMMENT (COMMENT_POST_NO, COMMENT_USER_ID,  COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY, grp, grps, grpl)
+        VALUES (#{commentPostNo}, #{commentUserId},  #{commentContent}, DATE_FORMAT(now(), '%Y-%m-%d'), DEFAULT, #{grp}, 0, #{grpl});
+    </insert>
+
+    <!-- 답글 쓰기 //truck-->
+    <insert id="rereply_write_truck" parameterType="comment">
+        INSERT INTO COMMENT (COMMENT_POST_NO,  COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY, grp, grps, grpl)
+        VALUES (#{commentPostNo},  #{commentTruckId}, #{commentContent}, DATE_FORMAT(now(), '%Y-%m-%d'), DEFAULT, #{grp}, 0, #{grpl});
+    </insert>
+
+    <!-- post 댓글수 증가 -->
+    <update id="reply_up" parameterType="int">
+        update post set reply_count=post.reply_count+1
+        where POST_NO=#{int}
+    </update>
+
+    <!-- 댓글 리스트 가져오기 -->
+    <select id="getreplyList" parameterType="int" resultMap="commentSelectMap">
+        select c.COMMENT_NO, c.COMMENT_POST_NO, c.grp, c.grpl, c.COMMENT_USER_ID, c.COMMENT_TRUCK_ID, c.COMMENT_CONTENT, date_format(c.COMMENT_DATE,'%Y-%m-%d') comment_date, datediff(now(), comment_date) wgap , u.USER_PRO_IMG
+        from comment c left outer join user u on c.COMMENT_USER_ID = u.USER_ID
+        where c.COMMENT_POST_NO = #{int}
+        order by grp asc, grps desc
+    </select>
+
+
+    <!-- 사진 갖고오깅 ㅜ user-->
+    <select id="get_pro_img_user" parameterType="String" resultType="String">
+        select USER_PRO_IMG from user
+        where USER_ID = #{id}
+    </select>
+    <!-- 사진 갖고오깅 ㅜ truck-->
+    <select id="get_pro_img_truck" parameterType="String" resultType="String">
+        select TRUCK_PRO_IMG from truck
+        where TRUCK_ID = #{id}
+    </select>
+
+
+
+    <!-- 댓글 추가/삭제시 댓글 갯수 가져오기 -->
+    <select id="reply_count" parameterType="int" resultType="int">
+        select reply_count
+        from POST
+        where POST_NO=#{int}
+    </select>
+
+    <!-- 모댓글의 답글수를 카운트 -->
+    <select id="count_rereply" parameterType="comment" resultType="int">
+        select count(COMMENT_NO)
+        from comment
+        where comment_no != #{commentNo} and grp = #{commentNo}
+    </select>
+
+    <!-- 답글수를 카운트 -->
+    <select id="count_rereply_fromrereply" parameterType="comment" resultType="int">
+        select count(COMMENT_NO)
+        from comment
+        where comment_no != #{grp} and grp = #{grp}
+    </select>
+
+    <!-- 모댓글 삭제 - 답글 없음 -->
+    <delete id="reply_delete" parameterType="int">
+        delete from comment
+        where comment_no=#{no}
+    </delete>
+
+    <!-- 모댓글 삭제 - 답글 있음 -->
+    <update id="reply_not_delete" parameterType="int">
+        update comment set COMMENT_CONTENT =''
+        where comment_no=#{no}
+    </update>
+
+    <!-- post 댓글수 감소 -->
+    <update id="reply_down" parameterType="int">
+        update post set reply_count=post.reply_count-1
+        where POST_NO=#{no}
+    </update>
+
+    <select id="reply_max_no" resultType="int">
+        SELECT ifnull(max(comment_no),0) from comment;
+    </select>
+
+
+
 
 
 </mapper>

@@ -50,7 +50,7 @@
 		<mapper resource="sql/PostMapper.xml"/>
 		<mapper resource="sql/CommentMapper.xml"/>
 		<mapper resource="sql/HeartMapper.xml"/>
-		<mapper resource="sql/ReplyMapper.xml"/>
+
 	</mappers>
 
 

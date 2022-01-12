@@ -154,6 +154,11 @@ public class CommunityRestController {
 
 
 
+
+
+
+
+
     /*
         HHJ
         좋아요 구현
@@ -170,8 +175,7 @@ public class CommunityRestController {
         // 게시물 번호 세팅
         heart.setHeartTargetP(postNo);
 
-        // 좋아요 누른 사람  userid로 세팅
-        // 우선은 truck이나 user나 모두 다 담는다.
+
         String role = (String)session.getAttribute("role");
         if (role == "user" || role.equals("user")){
 
@@ -407,6 +411,38 @@ public class CommunityRestController {
         return mv;
 
     }
+
+    @ResponseBody
+    @RequestMapping(value = "json/deletePostPic", method = RequestMethod.GET)
+    public String deletePostPic(@RequestParam("postNo") int postNo, HttpServletRequest request, HttpSession session)
+            throws Exception {
+
+        System.out.println("json/community/deletePostPic : GET");
+
+        System.out.println("postNo = " + postNo);
+        Post post = new Post();
+        post.setPostNo(postNo);
+        communityService.deletePost(post);
+
+        return "y";
+    }
+
+
+    @RequestMapping(value = "json/getPostPic", method = RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView getPostPic(@RequestParam("postNo") int postNo, HttpServletRequest request, HttpSession session) throws Exception {
+
+        System.out.println("/community/json/getPostPic : GET");
+
+        Post post = communityService.getPost(postNo);
+        ModelAndView mv = new ModelAndView("jsonView");
+        mv.addObject("post", post);
+
+
+
+        return mv;
+    }
+
 
 
 }

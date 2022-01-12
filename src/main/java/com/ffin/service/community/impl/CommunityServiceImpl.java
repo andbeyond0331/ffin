@@ -53,6 +53,7 @@ public class CommunityServiceImpl implements CommunityService {
         List<Post> list = communityDao.getPostList(search);
 
         int totalCount = communityDao.getTotalCountPost(search);
+        System.out.println("totalCount = " + totalCount);
 //        int totalCountU = communityDao.getTotalCountPostU(search);
 //        int totalCountT = communityDao.getTotalCountPostT(search);
 
@@ -153,13 +154,13 @@ public class CommunityServiceImpl implements CommunityService {
     public Map<String, Object> getPostList2(Search search, String id, String role) throws Exception {
 
 
-        int totalCount = communityDao.getTotalCountPost(search); //이건 구현 패스, 구현해야함
+       // int totalCount = communityDao.getTotalCountPost(search); //이건 구현 패스, 구현해야함
 //        int totalCountU = communityDao.getTotalCountPostU(search);
 //        int totalCountT = communityDao.getTotalCountPostT(search);
 
         Map<String, Object> map = communityDao.getPostList2(search, id, role);
 
-        map.put("totalCount", new Integer(totalCount));
+
 //        map.put("totalCountU", new Integer(totalCountU));
 //        map.put("totalCountT", new Integer(totalCountT));
 
@@ -211,5 +212,14 @@ public class CommunityServiceImpl implements CommunityService {
 
     public void updatePostHitUp(int postNo) throws Exception {
         communityDao.updatePostHitUp(postNo);
+    }
+
+    @Override
+    public void addPostPic(Post post) throws Exception {
+        communityDao.addPostPic(post);
+    }
+    @Override
+    public void updatePostPic(Post post) throws Exception {
+        communityDao.updatePostPic(post);
     }
 }

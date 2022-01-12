@@ -69,18 +69,22 @@
     <select id="getPostList"    parameterType="search"      resultMap="postSelectMap">
         SELECT inner_table.*
         FROM( SELECT post_no, post_title, post_user_id, post_truck_id, post_reg_date
-            FROM post
+        FROM post
+        WHERE
         <if test="searchCondition != null">
-            <where>
+
                 <bind name="searchKeyword" value="'%' + searchKeyword + '%'"/>
-                <if test="searchCondition == 0 and searchKeyword !='' ">
-                    post_user_id LIKE #{searchKeyword}
-                    OR post_truck_id LIKE #{searchKeyword}  AND POST_CATEGORY='g'
-                </if>
+                <if test="searchCondition == 0 and searchKeyword !='' " >
+                ( post_user_id LIKE #{searchKeyword} OR post_truck_id LIKE #{searchKeyword} )
+                 </if>
                 <if test="searchCondition == 1 and searchKeyword !='' ">
-                    post_title LIKE #{searchKeyword}  AND POST_CATEGORY='g'
+                    post_title LIKE #{searchKeyword}
                 </if>
-            </where>
+                 AND POST_CATEGORY="g"
+
+        </if>
+        <if test="searchCondition == null">
+            POST_CATEGORY="g"
         </if>
         order by post_no ) inner_table
         limit #{startRowNum}, #{pageSize}
@@ -108,35 +112,46 @@
         SELECT COUNT(*)
         FROM(	SELECT post_no, post_title, post_user_id, post_truck_id, post_reg_date
         FROM post
+            WHERE
         <if test="searchCondition != null">
-            <where>
-                <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+
+                <bind name="searchKeyword" value="'%' + searchKeyword + '%'"/>
                 <if test="searchCondition == 0 and searchKeyword !='' ">
-                    AND post_user_id LIKE #{searchKeyword}
-                    OR post_truck_id LIKE #{searchKeyword} AND POST_CATEGORY='g'
+                   ( post_user_id LIKE #{searchKeyword}
+                    OR post_truck_id LIKE #{searchKeyword} )
                 </if>
                 <if test="searchCondition == 1 and searchKeyword !='' ">
-                    AND post_title LIKE #{searchKeyword} AND POST_CATEGORY='g'
+                    post_title LIKE #{searchKeyword}
                 </if>
-            </where>
-        </if> ) countTable
+                AND POST_CATEGORY="g"
+        </if>
+        <if test="searchCondition == null">
+           POST_CATEGORY="g"
+        </if>
+         ) countTable
     </select>
 
     <select  id="getTotalCountUser"  parameterType="search"	 resultType="int">
         SELECT COUNT(*)
         FROM(	SELECT post_no, post_title, post_user_id, post_reg_date
-        FROM post
+            FROM post
+                where
         <if test="searchCondition != null">
-            <where>
+
                 <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
                 <if test="searchCondition == 0 and searchKeyword !='' ">
-                    AND post_user_id LIKE #{searchKeyword} AND POST_CATEGORY='g'
+                     post_user_id LIKE #{searchKeyword}
                 </if>
                 <if test="searchCondition == 1 and searchKeyword !='' ">
-                    AND post_title LIKE #{searchKeyword} AND POST_CATEGORY='g'
+                     post_title LIKE #{searchKeyword}
                 </if>
-            </where>
-        </if> ) countTable
+                AND POST_CATEGORY="g"
+
+        </if>
+        <if test="searchCondition == null">
+             POST_CATEGORY="g"
+        </if>
+         ) countTable
         WHERE post_user_id IS NOT NULL
     </select>
 
@@ -148,13 +163,18 @@
             <where>
                 <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
                 <if test="searchCondition == 0 and searchKeyword !='' ">
-                    AND post_truck_id LIKE #{searchKeyword} AND POST_CATEGORY='g'
+                     post_truck_id LIKE #{searchKeyword}
                 </if>
                 <if test="searchCondition == 1 and searchKeyword !='' ">
-                    AND post_title LIKE #{searchKeyword} AND POST_CATEGORY='g'
+                     post_title LIKE #{searchKeyword}
                 </if>
+                AND POST_CATEGORY="g"
             </where>
-        </if> ) countTable
+        </if>
+        <if test="searchCondition == null">
+            where POST_CATEGORY="g"
+        </if>
+            ) countTable
         WHERE post_truck_id IS NOT NULL
     </select>
 
@@ -164,6 +184,10 @@
         FROM post
         where post_no = #{postNo}
     </delete>
+
+
+
+
 
 
     <!-- HHJ -->
@@ -206,17 +230,32 @@
 
 
         <!-- 리스트 + user/truck 구분하여 heart를 눌렀는지 여부도 체크해야 했기 때문에 outer join  -->
-        select * from
+        SELECT inner_table.*
+        FROM ( select * from
+                (SELECT p.*, h.heart_no FROM post p LEFT OUTER JOIN heart AS h ON p.POST_NO = h.HEART_TARGET_P
+                    <if test="role == 'user'">
+                        AND h.HEART_USER_ID=#{id}
+                    </if>
+                    <if test="role == 'truck'">
+                        AND h.HEART_TRUCK_ID=#{id}
+                    </if>
+                    ) p1 where p1.POST_CATEGORY='p' order by p1.post_no ) inner_table
+        limit #{search.startRowNum}, #{search.pageSize}
+    </select>
+    <!-- SQL : SELECT ROW Count -->
+    <select  id="getTotalCount2"  parameterType="map"	 resultType="int">
+        SELECT COUNT(*)
+        FROM(	select * from
         (SELECT p.*, h.heart_no FROM post p LEFT OUTER JOIN heart AS h ON p.POST_NO = h.HEART_TARGET_P
         <if test="role == 'user'">
-            AND h.HEART_USER_ID=#{id}
+           AND h.HEART_USER_ID=#{id}
         </if>
         <if test="role == 'truck'">
-            AND h.HEART_TRUCK_ID=#{id}
+           AND h.HEART_TRUCK_ID=#{id}
         </if>
-        ) p1 where p1.POST_CATEGORY='p'
+        ) p1 where p1.POST_CATEGORY='p' order by p1.post_no
+        ) countTable
     </select>
-
 
     <!-- SQL :SELECT ONE // 사진 모달창 켰을 때 getDetail
     클릭했을 때 해당하는 사람이 하트를 눌럿는지 여부도 알아야 하고 어쩌고 저쩌고 땜에
@@ -242,5 +281,26 @@
         update post set post_hit=post.post_hit+1
         where POST_NO=#{int}
     </update>
+
+    <!-- SQL : INSERT -->
+    <insert id="addPostPic"    parameterType="post">
+        INSERT INTO POST (POST_USER_ID, POST_TRUCK_ID, POST_TITLE, POST_CONTENT, POST_REG_DATE, SECRET_KEY, POST_FILE1,
+                          POST_FILE2, POST_FILE3, POST_CATEGORY)
+        VALUES (#{postUser.userId}, #{postTruck.truckId}, 'title', #{postContent}, DATE_FORMAT(now(), '%Y-%m-%d'), DEFAULT, #{postFile1}, #{postFile2}, #{postFile3}, 'p')
+    </insert>
+
+    <!-- SQL : UPDATE -->
+    <update id="updatePostPic"     parameterType="post">
+        UPDATE post
+        <set>
+            post_content = #{postContent},
+            post_reg_date = SYSDATE(),
+            post_file1 = #{postFile1},
+            post_file2 = #{postFile2},
+            post_file2 = #{postFile3}
+        </set>
+        WHERE post_no = #{postNo}
+    </update>
+
 
 </mapper>

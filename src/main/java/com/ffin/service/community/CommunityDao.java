@@ -78,4 +78,9 @@ public interface CommunityDao {
     public int profile_pictureWriteReply(Comment comment) throws Exception;
 
     public void updatePostHitUp(int postNo) throws Exception;
+
+    public void addPostPic(Post post) throws Exception;
+
+    public void updatePostPic(Post post) throws Exception;
+
 }
