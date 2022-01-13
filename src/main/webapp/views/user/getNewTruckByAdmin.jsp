@@ -161,9 +161,16 @@
     <script type="text/javascript">
 
         $(function () {
-           $(".gallery ul li img").click(function () {
 
-           }) ;
+           $(".bakcBtn").click(function () {
+                history.go(-1);
+           });
+
+           $(".nopeBtn").click(function () {
+                alert(1);
+
+           })
+
         });
 
     </script>

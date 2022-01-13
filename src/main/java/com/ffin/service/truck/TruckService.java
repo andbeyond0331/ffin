@@ -48,6 +48,8 @@ public interface TruckService {
     public Map<String, Object> truckNearBy(Search search, float la, float lo) throws Exception;
     // 새로 가입한 푸드트럭 목록보기(관리자)
     public Map<String, Object> getNewTruckListByAdmin(Search search) throws Exception ;
+    // 트럭 가입승인 & 거절
+    public void updateTruckJoin(Truck truck) throws Exception;
 
     // 푸드트럭 로그인
     public void login(Truck truck) throws Exception ;

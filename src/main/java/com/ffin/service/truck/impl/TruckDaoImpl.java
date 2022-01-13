@@ -71,6 +71,13 @@ public class TruckDaoImpl implements TruckDao {
     public List<Truck> getNewTruckListByAdmin(Search search) throws Exception {
         return sqlSession.selectList("TruckMapper.getNewTruckListByAdmin", search);
     }
+
+    @Override
+    public void updateTruckJoin(Truck truck) throws Exception {
+        System.out.println("TruckDaoImpl.updateTruckJoin");
+        sqlSession.update("TruckMapper.updateTruckJoin", truck);
+    }
+
     // 푸드트럭 수정...
     @Override
     public void updateTruck(Truck truck) throws Exception {
