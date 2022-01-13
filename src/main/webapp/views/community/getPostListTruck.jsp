@@ -7,7 +7,50 @@
 <!DOCTYPE html>
 <html>
 <style>
-
+    *::-moz-selection {
+        color: #03A9F4;
+        box-sizing: border-box
+    }
+    *::selection {
+        color: #03A9F4;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box
+    }
+    ::-webkit-scrollbar {
+        width: 10px;
+        background-color: transparent!important;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #03A9F4!important;
+    }
+    body {
+        padding: 0;
+        margin: 0;
+        font-family: 'Roboto Condensed', 'droid arabic kufi', sans-serif;
+    }
+    .wallpaper-overlay {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+        right: 0;
+        -webkit-filter: blur(3px);
+        filter: blur(3px);
+        background: url(https://3.bp.blogspot.com/-dw0kPdIqpr8/Wi6rYQoc5jI/AAAAAAAAC4U/PtaX2GO4-FcnejiFy5BRrulxafoP7vx7gCLcBGAs/s1600/6.jpg)fixed;
+        background-position: center;
+        background-size: cover;
+        z-index: -1;
+    }
+    .wrapper {
+        margin: 20px auto 10px;
+        overflow: hidden;
+    }
+    h2,
+    h3 {
+        font-weight: normal;
+        margin: 0;
+    }
     img{ max-width:100%;
         display: block;}
 
@@ -111,13 +154,10 @@
 
     .gallery-item-info li {
         display: inline-block;
-        font-size: 1.7rem;
+        font-size: 1.4rem;
         font-weight: 600;
     }
 
-    .gallery-item-likes {
-        margin-right: 2.2rem;
-    }
 
     .fa-comment {
         transform: rotateY(180deg);
@@ -133,7 +173,347 @@
         /* margin-right: 0px; */
         padding-left: 626px;
     }
+    .main-insta {
+        max-width: 380px;
+        min-width: 300px;
+        margin: auto;
+        background-color: rgba(250, 250, 250, 0.85);
+        -webkit-box-shadow: 0 2px 26px rgba(0, 0, 0, .3), 0 0 0 1px rgba(0, 0, 0, .1);
+        box-shadow: 0 2px 26px rgba(0, 0, 0, .3), 0 0 0 1px rgba(0, 0, 0, .1);
+        border-radius: 5px;
+    }
+    .insta-header h2:after,
+    .insta-header .dots,
+    .insta-reaction span, .insta-reaction label {
+        background-image: url(https://2.bp.blogspot.com/-dvvriE9ZKTA/Wi6rZx7U7kI/AAAAAAAAC4g/U2OrjuO9lvIHxdsYTFv_0TFqPpHeGR4NgCLcBGAs/s1600/f2eee39b755e.png);
+    }
+    .insta-header {
+        padding: 10px;
+        position: relative;
+        overflow: hidden;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    .insta-header span:nth-child(1) {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-image: url(https://3.bp.blogspot.com/-w6wn_9WJANI/Wi6rYtB-kTI/AAAAAAAAC4c/w8azX7AZVmgsRhzHPpwzGTeei_opUlXiQCLcBGAs/s1600/ff4a5109f997020065090205f56c2c8b.jpg);
+        background-size: cover;
+        background-position: 100% 25%;
+        overflow: hidden;
+        float: left;
+        margin-right: 8px
+    }
+    .insta-header .header-title {
+        float: left
+    }
+    .insta-header h2 {
+        position: relative;
+        color: #444;
+        margin: 5px 0;
+        font-size: 18px;
+    }
+    .insta-header h3 {
+        color: #03A9F4;
+        font-size: 12px
+    }
+    .insta-header h2:after {
+        content: '';
+        width: 19px;
+        height: 19px;
+        display: inline-block;
+        position: absolute;
+        background-position: -434px -226px;
+        -webkit-transform: scale(.9);
+        -ms-transform: scale(.9);
+        transform: scale(.9);
+        top: 50%;
+        margin: -9.5px 0 0 4px;
+    }
+    .tooltip {
+        top: 10px;
+        font-size: 10px;
+        width: 100px;
+        text-align: center;
+        background: rgba(0,0,0,0.3);
+        position: absolute;
+        padding: 4px;
+        border-radius: 3px;
+        color: #fff;
+        right: 10px;
+        display: none;
+        text-transform: capitalize;
+        z-index: 1;
+    }
+    .tooltip:after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 7px;
+        position: absolute;
+        left: -14px;
+        top: 7px;
+        border-color: transparent rgba(0,0,0,0.3) transparent transparent;
+    }
+    .insta-header .header-title:hover .tooltip{
+        display: block
+    }
+    .insta-header .dots{
+        cursor: pointer;
+        background-repeat: no-repeat;
+        background-position: -434px -345px;
+        height: 16px;
+        width: 16px;
+        display: inline-block;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        margin-top: -8px;
+    }
+    .insta-post {
+        position: relative;
+        height: 350px;
+        width: 100%;
+        overflow: hidden;
+    }
+    .css-slider-wrapper {
+        overflow: hidden;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+    .slider {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 1;
+        z-index: 0;
+        display: -webkit-box;
+        display: flex;
+        display: -ms-flexbox;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-flex-align: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -ms-flex-line-pack: center;
+        align-content: center;
+        -webkit-transition: all 1s cubic-bezier(0.01, 0.97, 0.35, 0.99);
+        -o-transition: all 1s cubic-bezier(0.01, 0.97, 0.35, 0.99);
+        transition: all 1s cubic-bezier(0.01, 0.97, 0.35, 0.99);
+    }
+    .slide1,
+    .page1 {
+        background: url(https://3.bp.blogspot.com/-ULPTYqjxQ0E/Wi6rVjtdVdI/AAAAAAAAC4I/6TBeGdPw49s1SSxQpKjHQrUtLxCxStvygCLcBGAs/s1600/1.jpg);
+        background-size: cover;
+        left: 0;
+    }
+    .slide2,
+    .page2 {
+        background: url(https://2.bp.blogspot.com/-n1mRXW_QGfY/Wi6rVevyenI/AAAAAAAAC4E/Ui5_NefPmwwLbzNpUCjTAGHVBuapwWyqACLcBGAs/s1600/2.jpg);
+        background-size: cover;
+        left: 100%
+    }
+    .slide3,
+    .page3 {
+        background: url(https://4.bp.blogspot.com/-FGxjMI1_0EI/Wi6rWNOePOI/AAAAAAAAC4M/XtU8ktClrZ0xjfo0Nf3VJ8nR1mI8eAMuwCLcBGAs/s1600/3.jpg);
+        background-size: cover;
+        left: 200%
+    }
+    .slide4,
+    .page4 {
+        background: url(https://2.bp.blogspot.com/-RRw8jWo6vrg/Wi6rYkY2CvI/AAAAAAAAC4Y/3_ItIrb99AEgGegExl_Ro0VM3-jIYNF0gCLcBGAs/s1600/4.jpg);
+        background-size: cover;
+        left: 300%;
+    }
+    .slide5,
+    .page5 {
+        background: url(https://2.bp.blogspot.com/-cBCRFKl8-oM/Wi6rWnhESyI/AAAAAAAAC4Q/YY8iEpHUurcsKBqegiusBwEeXUeGIZriwCLcBGAs/s1600/5.jpg);
+        background-size: cover;
+        background-position: center;
+        left: 400%;
+    }
+    .slider > div {
+        text-align: center;
+    }
+    .slider h2 {
+        color: rgba(250, 250, 250, 0.85);
+        font-weight: 900;
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+        text-transform: uppercase;
+        font-size: 40px;
+        opacity: 0;
+        -webkit-transform: translateX(500px);
+        -ms-transform: translateX(500px);
+        transform: translateX(500px);
+        -webkit-transition: opacity 800ms, -webkit-transform 800ms;
+        transition: opacity 800ms, -webkit-transform 800ms;
+        -o-transition: transform 800ms, opacity 800ms;
+        transition: transform 800ms, opacity 800ms;
+        transition: transform 800ms, opacity 800ms, -webkit-transform 800ms;
+        -webkit-transition-delay: 1s;
+        -o-transition-delay: 1s;
+        transition-delay: 1s;
+    }
+    .pagi-main {
+        position: absolute;
+        bottom: 0%;
+        z-index: 1000;
+        overflow: hidden;
+        height: 54px;
+        line-height: 54px;
+        width: 35px;
+        color: #444;
+        font-size: 20px;
+        background-color: rgba(250, 250, 250, 0.85);
+    }
+    .pagi-main > label {
+        z-index: 0;
+        position: absolute;
+        cursor: pointer;
+        width: 100%;
+        height: 100%;
+    }
+    .previous {
+        left: 0;
+        border-top-right-radius: 25.5px;
+        border-bottom-right-radius: 25.5px;
+    }
+    .next {
+        right: 0;
+        border-top-left-radius: 25.5px;
+        border-bottom-left-radius: 25.5px;
+    }
+    .previous > label {
 
+    }
+    .previous > label:before {
+        content: '\f053';
+        font-family: fontAwesome;
+        display: inline-block;
+        -webkit-transform: translateX(50%);
+        -ms-transform: translateX(50%);
+        transform: translateX(50%);
+    }
+    .next > label {
+
+    }
+    .next > label:before {
+        content: '\f054';
+        font-family: fontAwesome;
+        -webkit-transform: translateX(100%);
+        -ms-transform: translateX(100%);
+        transform: translateX(100%);
+        display: inline-block;
+    }
+    .slider-pagination {
+        height: 54.1px;
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+        left: 0;
+        text-align: center;
+        overflow: hidden;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+    .slider-pagination label {
+        height: 47px;
+        width: 47px;
+        border-radius: 50%;
+        display: inline-block;
+        -webkit-filter: grayscale(1);
+        filter: grayscale(1);
+        margin: 0 -6px 0 0;
+        cursor: pointer;
+        -webkit-box-shadow: 0px 0px 0px 3px rgba(0, 0, 0, 0.4);
+        box-shadow: 0px 0px 0px 3px rgba(0, 0, 0, 0.4);
+    }
+    .slide-radio1:checked ~ .next .numb2,
+    .slide-radio2:checked ~ .next .numb3,
+    .slide-radio3:checked ~ .next .numb4,
+    .slide-radio4:checked ~ .next .numb5,
+    .slide-radio5:checked ~ .next .numb1,
+    .slide-radio2:checked ~ .previous .numb1,
+    .slide-radio3:checked ~ .previous .numb2,
+    .slide-radio4:checked ~ .previous .numb3,
+    .slide-radio5:checked ~ .previous .numb4 {
+
+        z-index: 1
+    }
+    /* Slider Pagger event */
+
+    .slide-radio1:checked ~ .slider-pagination .page1,
+    .slide-radio2:checked ~ .slider-pagination .page2,
+    .slide-radio3:checked ~ .slider-pagination .page3,
+    .slide-radio4:checked ~ .slider-pagination .page4,
+    .slide-radio5:checked ~ .slider-pagination .page5 {
+        -webkit-filter: grayscale(0);
+        filter: grayscale(0);
+        -webkit-box-shadow: 0px 0px 0px 3px #03A9F4;
+        box-shadow: 0px 0px 0px 3px #03A9F4;
+    }
+    .slide-radio1:checked ~ .slider {
+        -webkit-transform: translateX(0%);
+        -ms-transform: translateX(0%);
+        transform: translateX(0%);
+    }
+    .slide-radio2:checked ~ .slider {
+        -webkit-transform: translateX(-100%);
+        -ms-transform: translateX(-100%);
+        transform: translateX(-100%);
+    }
+    .slide-radio3:checked ~ .slider {
+        -webkit-transform: translateX(-200%);
+        -ms-transform: translateX(-200%);
+        transform: translateX(-200%);
+    }
+    .slide-radio4:checked ~ .slider {
+        -webkit-transform: translateX(-300%);
+        -ms-transform: translateX(-300%);
+        transform: translateX(-300%);
+    }
+    .slide-radio5:checked ~ .slider {
+        -webkit-transform: translateX(-400%);
+        -ms-transform: translateX(-400%);
+        transform: translateX(-400%);
+    }
+    .slide-radio1:checked ~ .slide1 h2,
+    .slide-radio2:checked ~ .slide2 h2,
+    .slide-radio3:checked ~ .slide3 h2,
+    .slide-radio4:checked ~ .slide4 h2,
+    .slide-radio5:checked ~ .slide5 h2 {
+        -webkit-transform: translateX(0);
+        -ms-transform: translateX(0);
+        transform: translateX(0);
+        opacity: 1
+    }
 
 </style>
 <script type="text/javascript">
@@ -160,10 +540,10 @@
 
     // 사진 클릭했을 때, modal 호출
 
-    /*function getCardDetail() {
-        //var role = '${sessionScope.role}';
+    function getCardDetail(postNo) {
+
         alert("얍")
-        var postNo = $(this).next();
+
         alert("postNo: "+postNo)
         $.ajax({
             url:"/community/json/getCardDetail/"+postNo,
@@ -175,10 +555,14 @@
                 let hit = data.post.postHit;
                 $('#hit'+postNo).text(hit);
 
-                    div += "<div class='row' >"+
-                        "</div>"
+                    div += "<div class='cloneFail' >"+
+                        "</div>";
 
-                  /!*  +"<div id='carouselExampleInterval' class='carousel slide' data-ride='carousel'>"
+
+
+/*
+
+                    +"<div id='carouselExampleInterval' class='carousel slide' data-ride='carousel'>"
                      +"<div class='carousel-inner'>"
                       +"<div class='carousel-item active'>"
                           +"<img class='d-block w-100' src='../../../resources/image/"+data.post.postFile1+"' alt='First slide'>"
@@ -195,7 +579,7 @@
               + " <a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'>"
                     +"<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span>"
                   + " </a>"
-                +" </div>";*!/
+                +" </div>";
 
 
 
@@ -204,8 +588,11 @@
 
 /!* 슬라이드 해볼랫는데 안먹는당 *!/
 
+*/
 
-                      +"<div class='row'>"
+
+
+       /*               +"<div class='row'>"
                     +"<div ><strong></strong> <img src='../../../resources/image/"+data.post.postFile1+"'></div></div>";
 
                 if (data.post.postFile2 != null){
@@ -215,7 +602,7 @@
                 if (data.post.postFile3 != null){
                     div += "<div class='row'>"
                         +"<div ><strong></strong> <img src='../../../resources/image/"+data.post.postFile3+"'></div></div>";
-                }
+                }*/
                 div += "<div class='row'>"+
                     "<div>"+data.post.postContent+"</div></div>";
 
@@ -315,9 +702,9 @@
 
 
 
-                 //   $('.format').css("display", "block");
 
-               // $('#carouselFail').clone().appendTo('.format').css("display", "block");
+
+
                 //$('body').find( '.format' ).clone().appendTo( '#carouselFail' ).css("display", "block");
 
                 $('.modal-footer').remove();
@@ -345,7 +732,7 @@
 
 
     }
-*/
+
 // html을 복사하고.
     // 모달이 피료없다
 
@@ -558,7 +945,55 @@
         </div>
     </div>
 </div>
+<!-- slide -->
+<div class="format">
+<div class="wrapper">
+    <div class='main-insta'>
 
+        <div class="insta-post">
+            <div class="css-slider-wrapper">
+                <input type="radio" name="slider" class="slide-radio1" checked id="slider_1">
+                <input type="radio" name="slider" class="slide-radio2" id="slider_2">
+                <input type="radio" name="slider" class="slide-radio3" id="slider_3">
+
+                <div class="slider-pagination">
+                    <label for="slider_1" class="page1"></label>
+                    <label for="slider_2" class="page2"></label>
+                    <label for="slider_3" class="page3"></label>
+
+                </div>
+                <div class="next pagi-main">
+                    <label for="slider_1" class="numb1"></label>
+                    <label for="slider_2" class="numb2"></label>
+                    <label for="slider_3" class="numb3"></label>
+
+                </div>
+                <div class="previous pagi-main">
+                    <label for="slider_1" class="numb1"></label>
+                    <label for="slider_2" class="numb2"></label>
+                    <label for="slider_3" class="numb3"></label>
+
+                </div>
+                <div class="slider slide1">
+                    <div>
+                        <h2>Jerusalem shall be ours</h2>
+                    </div>
+                </div>
+                <div class="slider slide2">
+                    <div>
+                        <h2>Jerusalem shall be free </h2>
+                    </div>
+                </div>
+                <div class="slider slide3">
+                    <div>
+                        <h2>Together we shall walk it's scented air</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -593,13 +1028,16 @@
             <c:forEach var="post" items="${list}">
             <div class="gallery-item" tabindex="0">
 
-                <img src="../../resources/image/${post.postFile1}" class="gallery-image" alt="" onclick="getCardDetail()"><!--onclick="getCardDetail(${post.postNo})"-->
+                <img src="../../resources/image/${post.postFile1}" class="gallery-image" alt="" >
+
                 <input type="hidden" id="postNoNo" name="postNoNo" value="${post.postNo}"/>
                 <div class="gallery-item-info">
 
                     <ul>
-                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> ${post.heartCount }</li>
-                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> ${post.replyCount }</li>
+                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> <span id="heart${post.postNo }">${post.heartCount }</span></li>
+                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> <span id="reply${post.postNo }">${post.replyCount }</span></li>
+                        <li class="gallery-item-Hits"><span class="visually-hidden">Hits:</span><i class="fas fa-eye" aria-hidden="true"></i> <span id="hit${post.postNo }">${post.postHit }</span></li>
+
                     </ul>
 
                 </div>
@@ -694,7 +1132,7 @@
     </div>
 </div>--%>
 </form>
-<div class="format">
+<%--<div class="format">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -721,7 +1159,7 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-</div>
+</div>--%>
 
 
 <!-- PageNavigation Start... -->
@@ -740,8 +1178,11 @@
 
     });
 
-    $("body").on("click", ".gallery-item.gallery-image", function() {
-        alert(123);
+    $("body").on("click", ".gallery-item", function() {
+
+        let postNo = $(this).find("input[name='postNoNo']").val()
+        console.log("postNo: " + postNo);
+        getCardDetail(postNo)
         /*let postNo = $(this).next();
         console.log("postNo: " + postNo);
         getCardDetail(postNo)*/
