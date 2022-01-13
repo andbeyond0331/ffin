@@ -218,46 +218,20 @@
         top: 50%;
         margin: -9.5px 0 0 4px;
     }
-    .tooltip {
-        top: 10px;
-        font-size: 10px;
-        width: 100px;
-        text-align: center;
-        background: rgba(0,0,0,0.3);
-        position: absolute;
-        padding: 4px;
-        border-radius: 3px;
-        color: #fff;
-        right: 10px;
-        display: none;
-        text-transform: capitalize;
-        z-index: 1;
-    }
-    .tooltip:after {
-        content: '';
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 7px;
-        position: absolute;
-        left: -14px;
-        top: 7px;
-        border-color: transparent rgba(0,0,0,0.3) transparent transparent;
-    }
     .insta-header .header-title:hover .tooltip{
         display: block
     }
-    .insta-header .dots{
-        cursor: pointer;
-        background-repeat: no-repeat;
-        background-position: -434px -345px;
-        height: 16px;
-        width: 16px;
+    .insta-header span:nth-child(1) {
         display: inline-block;
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        margin-top: -8px;
+        width: 60px;
+        height: 50px;
+        border-radius: 50%;
+
+        background-size: cover;
+        background-position: 100% 25%;
+        overflow: hidden;
+        float: left;
+        margin-right: 8px
     }
     .insta-post {
         position: relative;
@@ -491,6 +465,7 @@
 .postContent{
     padding-left:30px;
 }
+
 </style>
 
 
@@ -701,10 +676,19 @@
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
             <div class="wrapper">
                 <div class='main-insta'>
-                    <div class='insta-header'></div>
+                    <div class='insta-header'>
+                        <span class="header-title">
+
+                         </span>
+                        <h2></h2>
+                    </div>
                     <div class="insta-post">
                         <div class="css-slider-wrapper">
                             <input type="radio" name="slider" class="slide-radio1" checked id="slider_1" style="display: none">
@@ -746,6 +730,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="modal-body">
@@ -774,7 +759,7 @@
             <c:forEach var="post" items="${list}">
             <div class="gallery-item" tabindex="0">
 
-                <img src="/resources/image/${post.postFile1}" class="gallery-image" alt="" >
+                <img src="../../../resources/image/${post.postFile1}" class="gallery-image" alt="" >
 
                 <input type="hidden" id="postNoNo" name="postNoNo" value="${post.postNo}"/>
                 <div class="gallery-item-info">
@@ -891,7 +876,7 @@
                         if(grpl == 0){	// 모댓글일때
                             listHtml += "	<div class='col-1'>";
                             listHtml += "		<a href='other_profile.do?other_nick="+commentUserId+"'> ";
-                            listHtml += "			<img class='reply_list_profileImage' src='/resources/image/"+userProImg+"'/>";
+                            listHtml += "			<img class='reply_list_profileImage' src='../../../resources/image/"+userProImg+"'/>";
                             listHtml += "		</a> ";
                             listHtml += "	</div>";
                             listHtml += "	<div class='rereply-content col-8'>";
@@ -920,7 +905,7 @@
                             listHtml += "	<div class='col-1'>"
                             listHtml += "	</div>"
                             listHtml += "	<div class='col-1'>";
-                            listHtml += "		<img class='reply_list_profileImage' src='/resources/image/"+userProImg+"'/>";
+                            listHtml += "		<img class='reply_list_profileImage' src='../../../resources/image/"+userProImg+"'/>";
                             listHtml += "	</div>";
                             listHtml += "	<div class='rereply-content"+ commentNo +" col-7'>";
                             listHtml += "		<div>";
@@ -968,7 +953,7 @@
                         listHtml += "		</div>"
                         listHtml += "		<div class='col-1'>"
                         listHtml += "			<a href='other_profile.do?other_nick="+uId+"'> ";
-                        listHtml += "				<img id='write_reply_profileImage' src='/resources/image/"+proImg+"'/>"
+                        listHtml += "				<img id='write_reply_profileImage' src='../../../resources/image/"+proImg+"'/>"
                         listHtml += "			</a> ";
                         listHtml += "		</div>"
                         listHtml += "		<div class='col-7'>"
@@ -1125,7 +1110,7 @@
                        + "</div>"
                        + "<div id='m_image1preview' class='col-sm-10'>";
                 if (pto.post.postFile1 != null){
-                    div += "<img src='/resources/image/"+pto.post.postFile1+" '>";
+                    div += "<img src='../../../resources/image/"+pto.post.postFile1+" '>";
                 }
 
                    div += "</div>"
@@ -1138,7 +1123,7 @@
                        + "<div id='m_image2preview' class='col-sm-10'>";
 
                if (pto.post.postFile2 != null){
-                   div += "<img src='/resources/image/"+pto.post.postFile2+" '>";
+                   div += "<img src='../../../resources/image/"+pto.post.postFile2+" '>";
                }
 
                    div += "</div>"
@@ -1151,7 +1136,7 @@
                         +"<div id='m_image3preview' class='col-sm-10'>";
 
                 if (pto.post.postFile3 != null){
-                    div += "<img src='/resources/image/"+pto.post.postFile3+" '>";
+                    div += "<img src='../../../resources/image/"+pto.post.postFile3+" '>";
                 }
 
                    div += "</div>"
@@ -1522,7 +1507,7 @@
                     +"<div class='row reply_write'>"
                     +"<div class='col-1'>"
                     +"<a href='other_profile.do?other_nick='>"
-                    +"<img id='write_reply_profileImage' src='/resources/image/"+proImg+"' />"
+                    +"<img id='write_reply_profileImage' src='../../../resources/image/"+proImg+"' />"
                     +" </a>"
                     +"</div>"
                     +"<div class='col-8' class='input_reply_div'>"
@@ -1580,7 +1565,7 @@
 
                 var postPicUserId;
                 var postPicProImg;
-                if (data.post.postUser.userId == null){
+                if (data.post.truckProImg != null){
                     postPicUserId = data.post.postTruck.truckId;
                     postPicProImg = data.post.truckProImg;
                 }else {
@@ -1593,6 +1578,10 @@
 
 
 
+                $(".header-title").css({"background-image":"url(../../../resources/image/"+postPicProImg+")"});
+                $(".insta-header").find('h2').text(postPicUserId)
+
+                //$('.insta-header').html(sap);
                 //$('.page1').css("background", "../../../resources/image/"+data.post.postFile1+"")
                // $("#page1").style.background = "url('../../../resources/image/"+data.post.postFile1+"') no-repeat 0 0";
                 $(".page1").css({"background":"url(../../../resources/image/"+data.post.postFile1+")"});
@@ -1647,7 +1636,6 @@
 
     // html을 복사하고.
     // 모달이 피료없다
-
 
 
 
