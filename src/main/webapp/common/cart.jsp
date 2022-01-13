@@ -47,6 +47,46 @@
     <div class="bs-canvas-content px-3 py-5">
         <div class="content">
 
+
+
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="..." style="margin-left: -0.5em;">
+                        </div>
+                        <img src="/resources/image/1.jpg"  class="btn img-fluid rounded-start" alt="image" referrerpolicy="no-referrer" style="width: 100px;">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col6">
+                                    <h6 class="card-title">메뉴이름</h6>
+                                </div>
+                                <div class="col-6">
+
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <p class="card-text"><small class="text-muted" style="font-size: .600em;">Last updated 3 mins ago</small><br><small class="text-muted" style="font-size: .600em;">Last updated 3 mins ago</small></p>
+                        </div>
+                            <tr style="text-align:center;">
+                                <td>수량</td>
+                                <td class="bseq_ea">7</td>
+                                <td>
+                                    <button type ="button" onclick="fnCalCount('p',this);">+</button>
+                                    <input type="text" name="pop_out" value="0" readonly="readonly" style="text-align:center;"/>
+                                    <button type="button" onclick="fnCalCount('m', this);">-</button>
+                                </td>
+                            </tr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
             <%--<div id="order"></div>--%>
            <%-- <c:set var="i" value="0"/>
             <c:forEach var="cart" items="${map.get('list')}">
@@ -151,6 +191,26 @@
 
 
 <script>
+
+
+
+    /*메뉴수량*/
+    function fnCalCount(type, ths){
+        var $input = $(ths).parents("td").find("input[name='pop_out']");
+        var tCount = Number($input.val());
+        var tEqCount = Number($(ths).parents("tr").find("td.bseq_ea").html());
+
+        if(type=='p'){
+            if(tCount < tEqCount) $input.val(Number(tCount)+1);
+
+        }else{
+            if(tCount >0) $input.val(Number(tCount)-1);
+        }
+    }
+
+
+
+
     /*장바구니 화면에 보여주는 기능*/
     jQuery(document).ready(function ($) {
         $(document).on('click', '.pull-bs-canvas-right, .pull-bs-canvas-left', function () {
@@ -182,9 +242,12 @@
         $("#orderGo").click(function () {
             alert("ss")
 
+            // 1. menu 없으면 메뉴를 장바구니에 저장된 메뉴가 없습니다.
+            // 2. menu 정보가 있으면 장바구니 주문하기 활성화 없으면 비활성화
+            //var menucheck = document.getElementById().val;
+
+
             var order = to_ajax()
-
-
             append = "<input type=\"hidden\" id=\"orderNo\" name=\"orderNo\" value=\"" + order + "\">";
             $('#app').append(append);
             /*alert(append)*/

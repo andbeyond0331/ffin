@@ -307,7 +307,7 @@ public class PurchaseController {
         model.addAttribute("map",map);
         model.addAttribute("purchase",purchase);
         model.addAttribute("search",search);
-        model.addAttribute("truck",truck);
+        model.addAttribute("truckId",truck);
 
         return "forward:/views/purchase/getOrderTruckList.jsp";
     }
