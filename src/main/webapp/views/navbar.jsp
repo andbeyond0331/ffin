@@ -63,8 +63,12 @@
                         <li class="nav-item">
                             <a class="nav-link" id="goCatering" href="#">케이터링</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="goPost" href="#">게시판</a>
+                        <li class="dropdown" style="margin-top:8px ">
+                            <a class="dropbtn" id="goPost">게시판</a>
+                            <div class="dropdown-content">
+                                <a href="/community/getPostList2">썸네일게시판</a>
+                                <a href="/community/getPostList">일반게시판</a>
+                            </div>
                         </li>
                         <c:if test="${user.userId != null && (sessionScope.role == 'user' || sessionScope.role == 'admin')}">
                             <li class="nav-item">
