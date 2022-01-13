@@ -176,8 +176,9 @@
                 var order = to_ajax()
 
 
-                append = "<input type=\"hidden\" id=\"orderNo\" name=\"orderNo\" value=\"" + order + "\">";
+                var append = "<input type=\"hidden\" id=\"orderNo\" name=\"orderNo\" value=\"" + order + "\">";
                 $('#app').append(append);
+
                 /*alert(append)*/
                 self.location = "/purchase/addCart?orderNo=" + order
                 /* $("form").attr("method" , "POST").attr("action" , "/purchase/addCart").submit();*/
@@ -193,6 +194,7 @@
         });
 
         function to_ajax() {
+
             var reOrderNo;
             var odMenuName = [];
             var odOptionGroupName = [];
@@ -240,13 +242,13 @@
             $('input[name="odMenuQtyFlag"]').each(function (i) {
                 odMenuQtyFlag.push($(this).val());
             });
-   /*         alert(orderPickUpTime)
+            alert(orderPickUpTime)
             alert(orderTotalPrice)
             alert(orderUserId)
             alert(orderTruckId)
             alert(orderRequest)
             alert(orderQty)
-            alert(odMenuQtyFlag)*/
+            alert(odMenuQtyFlag)
 
             var data = {
                 "odMenuName": odMenuName,
