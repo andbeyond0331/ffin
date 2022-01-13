@@ -47,7 +47,7 @@ public interface TruckService {
     // 트럭 sorting - 위치 기반
     public Map<String, Object> truckNearBy(Search search, float la, float lo) throws Exception;
     // 새로 가입한 푸드트럭 목록보기(관리자)
-    public Map<String, Object> getNewTruckListByAdmin(Search search, int role) throws Exception ;
+    public Map<String, Object> getNewTruckListByAdmin(Search search) throws Exception ;
 
     // 푸드트럭 로그인
     public void login(Truck truck) throws Exception ;

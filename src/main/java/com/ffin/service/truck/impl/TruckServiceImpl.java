@@ -1,10 +1,7 @@
 package com.ffin.service.truck.impl;
 
 import com.ffin.common.Search;
-import com.ffin.service.domain.Post;
-import com.ffin.service.domain.Purchase;
-import com.ffin.service.domain.Truck;
-import com.ffin.service.domain.User;
+import com.ffin.service.domain.*;
 import com.ffin.service.purchase.PurchaseDao;
 import com.ffin.service.purchase.impl.PurchaseServiceImpl;
 import com.ffin.service.truck.TruckDao;
@@ -85,17 +82,15 @@ public class TruckServiceImpl implements TruckService {
     }
 
     @Override
-    public Map<String, Object> getNewTruckListByAdmin(Search search, int role) throws Exception {
+    public Map<String, Object> getNewTruckListByAdmin(Search search) throws Exception {
         System.out.println("TruckServiceImpl.getNewTruckListByAdmin");
 
+        List<Truck> list = truckDao.getNewTruckListByAdmin(search);
         int totalCount = truckDao.getTotalCount(search);
 
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("search", search);
-        map.put("role", role);
-        map.put("totalCount", totalCount);
-
-        List<Truck> list = truckDao.getNewTruckListByAdmin(map);
+        Map<String, Object>map = new HashMap<String, Object>();
+        map.put("list", list);
+        map.put("totalCount", new Integer(totalCount));
 
         map.put("list", list);
         return map;

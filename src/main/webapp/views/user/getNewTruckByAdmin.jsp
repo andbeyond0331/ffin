@@ -7,7 +7,7 @@
 
 <head>
 
-    <title>F.FIN | 푸드트럭 정보</title>
+    <title>F.FIN | 푸드트럭 가입 승인</title>
     <jsp:include page="../../common/lib.jsp"/>
 
     <!-- bootstrap core css -->
@@ -182,7 +182,7 @@
             <div class="detail-box">
                 <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
                 <h4 style="margin-top: 10px;">
-                    푸드트럭 정보
+                    푸드트럭 가입승인
                 </h4>
             </div>
 
@@ -229,20 +229,19 @@
                                                 </c:when>
                                             </c:choose>
 
-                                            <c:if test="${truck.truckByeStatus eq 0}">
-                                                <h5><span class="badge" style="background-color: #ffe537; color: #110000">활동중</span></h5>
+                                            <c:if test="${truck.role eq 0 }">
+                                                <h5><span class="badge" style="background-color: #ffba49; color: #110000">가입대기</span></h5>
                                             </c:if>
-                                            <c:if test="${truck.truckByeStatus eq 1}">
-                                                <h5><span class="badge" style="background-color: #f17228; color: #ffffff">탈퇴</span></h5>
-                                            </c:if>
-
 
                                             <c:choose>
-                                                <c:when test="${truck.role eq 0 }">
-                                                    <h5><span class="badge" style="background-color: #f17228; color: white">승인대기</span></h5>
+                                                <c:when test="${truck.truckJoinReqStatus eq 0 }">
+                                                    <h5><span class="badge" style="background-color: #ffba49; color: #110000">승인요청</span></h5>
                                                 </c:when>
-                                                <c:when test="${truck.role eq 1}">
-                                                    <h5><span class="badge" style="background-color: #ffe537; color: #110000">가입승인완료</span></h5>
+                                                <c:when test="${truck.truckJoinReqStatus eq 1}">
+                                                    <h5><span class="badge" style="background-color: #ffe537; color: #110000">승인완료</span></h5>
+                                                </c:when>
+                                                <c:when test="${truck.truckJoinReqStatus eq 2}">
+                                                    <h5><span class="badge" style="background-color: #f17228; color: #110000">승인거절</span></h5>
                                                 </c:when>
                                             </c:choose>
 
@@ -359,10 +358,11 @@
                 </div>
         </form>
 
+
             <div class="btn-box" style=" margin-top: 20px;">
-                <a onClick="history.go(-1);" style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
-                    확인
-                </a>
+                <button class="btn btn-default btn-sm nopeBtn" type="button" style="color: #110000;">가입거절</button>
+                <button class="btn btn-default btn-sm bakcBtn" type="button" style="background-color: #ecf0fd; color: #110000;">확인</button>
+                <button class="btn btn-default btn-sm okBtn" type="button" style="color: #110000;">가입승인</button>
             </div>
         </div>
 

@@ -145,7 +145,7 @@
 
         function fncGetUserList(currentPage) {
             $("#currentPage").val(currentPage)
-            $("form").attr("method", "POST").attr("action", "/truck/getTruckList").submit();
+            $("form").attr("method", "POST").attr("action", "/truck/getNewTruckListByAdmin").submit();
         }
 
     </script>
@@ -247,36 +247,9 @@
                                             <p class="item-text-dek"><strong>${truck.truckSigMenuName}</strong></p>
                                             <h6 class="item-text-title">${truck.truckCEOIntro}</h6>
 
-                                            <fmt:parseNumber var="percent" value="${truck.truckAVGStar}" integerOnly="true" />
-                                            <c:if test="${percent eq 1}">
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                            </c:if>
-                                            <c:if test="${percent eq 2}">
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                            </c:if>
-                                            <c:if test="${percent eq 3}">
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                            </c:if>
-                                            <c:if test="${percent eq 4}">
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                            </c:if>
-                                            <c:if test="${percent eq 5}">
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                            </c:if>
-
                                         </div>
                                     </div>
-                                    <a class="item-link" href="/truck/getTruck?truckId=${truck.truckId}"></a>
+                                    <a class="item-link" href="/truck/getNewTruck?truckId=${truck.truckId}"></a>
                                 </div>
                                 <div class="item-truck">
                                     <span>${truck.truckName}</span>
