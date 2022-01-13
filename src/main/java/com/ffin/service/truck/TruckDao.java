@@ -6,6 +6,7 @@ import com.ffin.service.domain.User;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 //==> 회원관리에서 CRUD 추상화/캡슐화한 DAO Interface Definition
 public interface TruckDao {
@@ -48,7 +49,7 @@ public interface TruckDao {
     public List<Truck> getTruckList(Search search) throws Exception ;
 
     // 새로 가입한 푸드트럭 목록보기(관리자)
-    public List<Truck> getNewTruckList(Truck role) throws Exception ;
+    public List<Truck> getNewTruckListByAdmin(Map<String, Object> map) throws Exception ;
 
     // 푸드트럭 로그인
     public void login(Truck truck) throws Exception ;
@@ -106,4 +107,5 @@ public interface TruckDao {
     // 마이페이지 판매목록
     public List<Object> getSalesList(Search search, String truckId)throws Exception;
 
+    public Map<String, Object> truckNearBy(Search search, float la, float lo) throws Exception;
 }

@@ -182,6 +182,45 @@
 		limit 0,20;
 	</select>
 
+		<select id="truckNearBy"   parameterType="map"     resultMap="truckSelectMap">
+		SELECT inner_table.*
+		FROM( SELECT  t.truck_id , t.truck_name , t.truck_phone, t.truck_map_la, t.truck_map_lo, t.truck_cate, t.truck_avg_star, t.truck_pro_img, t.truck_busi_status, t.truck_sig_menu_no, t.truck_sig_menu_name, t.truck_sig_menu_img1, m.menu_truck_id, m.menu_name,
+		             (6371*acos(cos(radians(#{la}))*cos(radians(t.truck_map_la))*cos(radians(t.truck_map_lo)
+			-radians(#{lo}))+sin(radians(#{la}))*sin(radians(t.truck_map_la)))) as distance
+			FROM truck t
+			left join menu m
+			on m.menu_truck_id=t.truck_id
+				<trim prefix="WHERE" prefixOverrides="AND">
+
+
+					<if test="searchKeyword !='' and searchKeyword!=null">
+						<bind name="searchKeyword" value="'%'+searchKeyword+'%'"></bind>
+						AND ((t.truck_name LIKE #{search.searchKeyword} or t.truck_sig_menu_name like #{search.searchKeyword}) or m.menu_name like #{searchKeyword})
+					</if>
+
+					<if test="cateCondition!=null and cateCondition != ''">
+						AND t.truck_cate = #{search.cateCondition}
+					</if>
+				</trim>
+
+					group by truck_id
+			<![CDATA[
+					having distance <= 500
+		]]>
+
+				order by truck_id ) inner_table
+		limit 0,20;
+	</select>
+
+	<select id="getNewTruckListByAdmin" parameterType="map" resultMap="truckSelectMap">
+		SELECT inner_table.*
+		FROM ( SELECT *
+			   FROM truck
+			   WHERE ROLE = 0
+			   order by TRUCK_JOIN_REQ_DATE DESC ) inner_table
+			limit#{search.startRowNum}, #{search.pageSize}
+	</select>
+
 
 
 
