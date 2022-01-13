@@ -69,7 +69,7 @@
             <%--<div id="total"></div>--%>
             <div class="row">
                 <div class="col-6">
-                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                    <button type="button" class="btn btn btn-primary" data-toggle="modal"
                             data-target="#exampleModalCenter">
                         주문하기
                     </button>
@@ -101,28 +101,28 @@
                         <label for="orderPickUpTime" class="col-form-label">픽업희망시간:</label>
                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                             <input type="radio" class="btn-check" id="orderPickUpTime" name="orderPickUpTime" value="5"
-                                   id="btnradio1" autocomplete="off" checked>
-                            <label class="btn btn-outline-primary" for="btnradio1">5분</label>
+                                   id="cancelTime1" autocomplete="off" checked>
+                            <label class="btn btn-outline-primary" for="cancelTime1">5분</label>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="10" id="btnradio2"
+                            <input type="radio" class="btn-check" name="orderPickUpTime" value="10" id="cancelTime2"
                                    autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio2">10분</label>
+                            <label class="btn btn-outline-primary" for="cancelTime1">10분</label>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="15" id="btnradio3"
+                            <input type="radio" class="btn-check" name="orderPickUpTime" value="15" id="cancelTime3"
                                    autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio3">15분</label>
+                            <label class="btn btn-outline-primary" for="cancelTime1">15분</label>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="20" id="btnradio4"
+                            <input type="radio" class="btn-check" name="orderPickUpTime" value="20" id="cancelTime4"
                                    autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio4">20분</label>
+                            <label class="btn btn-outline-primary" for="cancelTime1">20분</label>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="30" id="btnradio5"
+                            <input type="radio" class="btn-check" name="orderPickUpTime" value="30" id="cancelTime5"
                                    autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio5">30분</label>
+                            <label class="btn btn-outline-primary" for="cancelTime1">30분</label>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="40" id="btnradio6"
+                            <input type="radio" class="btn-check" name="orderPickUpTime" value="40" id="cancelTime6"
                                    autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio6">40분</label>
+                            <label class="btn btn-outline-primary" for="cancelTime1">40분</label>
 
                         </div>
                     </div>
@@ -162,7 +162,7 @@
             return false;
         });
 
-        $(document).on('click', '.bs-canvas-close, .bs-canvas-overlay', function () {
+        $(document).on('click', '.bs-canvas-close, .bs-canvas-overlay, .btn.btn.btn-primary', function () {
             var elm = $(this).hasClass('bs-canvas-close') ? $(this).closest('.bs-canvas') : $('.bs-canvas');
             elm.removeClass('mr-0 ml-0');
             $('.bs-canvas-overlay').remove();
