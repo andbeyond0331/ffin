@@ -61,10 +61,15 @@ public class TruckDaoImpl implements TruckDao {
     public Truck getTruckInfo(String truckId) throws Exception {
         return sqlSession.selectOne("TruckMapper.getTruck", truckId);
     }
-    // 새로 가입한 푸드트럭 보기(관리자)
-    @Override
-    public void getNewTruck(Truck role) throws Exception {
 
+    @Override
+    public void getNewTruck(Truck truck) throws Exception {
+
+    }
+
+    @Override
+    public List<Truck> getNewTruckListByAdmin(Map<String, Object> map) throws Exception {
+        return sqlSession.selectList("TruckMapper.getNewTruckListByAdmin", map);
     }
     // 푸드트럭 수정...
     @Override
@@ -101,11 +106,7 @@ public class TruckDaoImpl implements TruckDao {
     public List<Truck> getTruckList(Search search) throws Exception {
         return sqlSession.selectList("TruckMapper.getTruckList", search);
     }
-    // 새로 가입한 푸드트럭 목록보기(관리자)
-    @Override
-    public List<Truck> getNewTruckList(Truck role) throws Exception {
-        return sqlSession.selectList("TruckMapper.getNewTruckList", role);
-    }
+
     // 푸드트럭 로그인
     @Override
     public void login(Truck truck) throws Exception {
@@ -239,5 +240,19 @@ public class TruckDaoImpl implements TruckDao {
         map.put("truckId", truckId);
 
         return sqlSession.selectList("PurchaseMapper.getSalesList", map);
+    }
+
+    @Override
+    public Map<String, Object> truckNearBy(Search search, float la, float lo) throws Exception {
+        System.out.println("search = " + search + ", la = " + la + ", lo = " + lo);
+        Map<String, Object> map = new HashMap<>();
+        map.put("search", search);
+        map.put("la", la);
+        map.put("lo", lo);
+        List<Truck> list = sqlSession.selectList("TruckMapper.truckNearBy", map);
+        System.out.println("list : " + list);
+        map.clear();
+        map.put("list", list);
+        return map;
     }
 }

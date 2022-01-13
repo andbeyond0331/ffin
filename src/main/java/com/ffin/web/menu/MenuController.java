@@ -75,11 +75,9 @@ public class MenuController {
     private static final String FILE_UPLOAD_PATH = "/resources/image/";
 //    private static final String FILE_UPLOAD_PATH = "C:/CRUD/ffin/src/main/webapp/resources/image/";
 
-
-
     // 트럭 리스트 - 전체
     @RequestMapping(value = "getTruckList")
-    public String getTruckList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+    public String getTruckList (@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
 //    public String getTruckList(@RequestParam(value="cateCondition", required = false) String cateCondition, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
 
         System.out.println("/truck/getTruckList : GET / POST");
@@ -113,6 +111,78 @@ public class MenuController {
 
         return "forward:/views/menu/getTruckMenuList.jsp";
     }
+
+    // TODO: 2022-01-13 다시 와서 위치기반 잡자
+    // 트럭 리스트 - 전체 위치기반
+    @RequestMapping(value = "getTruckListLo")
+    public String getTruckListLo (@RequestParam("la") float la, @RequestParam("lo") float lo, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+//    public String getTruckList(@RequestParam(value="cateCondition", required = false) String cateCondition, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+
+        System.out.println("/truck/getTruckListLo : GET / POST");
+
+        if (search.getCurrentPage() == 0) {
+            search.setCurrentPage(1);
+        }
+
+
+        System.out.println("////searchKeyword : " + search.getSearchKeyword());
+
+        search.setPageSize(pageSize);
+
+
+        // Business logic 수행
+        Map<String, Object> map = truckService.truckNearBy(search, la, lo);
+
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+        System.out.println(resultPage);
+
+        // Model 과 View 연결
+        model.addAttribute("list", map.get("list"));
+//        model.addAttribute("list2", list2);
+        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("search", search);
+
+        return "forward:/views/menu/getTruckMenuList.jsp";
+    }
+
+
+
+//    // 트럭 리스트 - 전체
+//    @RequestMapping(value = "getTruckList")
+//    public String getTruckList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+////    public String getTruckList(@RequestParam(value="cateCondition", required = false) String cateCondition, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+//
+//        System.out.println("/truck/getTruckList : GET / POST");
+//
+//        if (search.getCurrentPage() == 0) {
+//            search.setCurrentPage(1);
+//        }
+//
+//
+////        String searchKeyword = search.getSearchKeyword();
+////        System.out.println("////searchKeyword : " +searchKeyword);
+////        if(searchKeyword != null) {
+////            search.setSearchKeyword(new String(searchKeyword.getBytes("8859_1"), "euc-kr"));
+////        }
+//        System.out.println("////searchKeyword : " + search.getSearchKeyword());
+//
+//        search.setPageSize(pageSize);
+//
+//
+//        // Business logic 수행
+//        Map<String, Object> map = truckService.getTruckList(search);
+//
+//        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+//        System.out.println(resultPage);
+//
+//        // Model 과 View 연결
+//        model.addAttribute("list", map.get("list"));
+////        model.addAttribute("list2", list2);
+//        model.addAttribute("resultPage", resultPage);
+//        model.addAttribute("search", search);
+//
+//        return "forward:/views/menu/getTruckMenuList.jsp";
+//    }
 
     // TODO: 2022-01-08 !!! 별점순, 거리순, 구매순 나열하기 
 

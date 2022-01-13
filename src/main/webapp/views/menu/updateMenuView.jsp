@@ -64,6 +64,8 @@
 
             $(document).on("click", "#updateMenuButton", function(){
 
+                //todo 2022-01-13 업데이트 미루기 - 우회해서 기존 파일은 그대로 두도록 만들기
+
 
                 //var truckId = $("input[name='truckId']").val();
                 // alert("optionGroup개수 : " +$('input#optionGroupName.form-control').length);

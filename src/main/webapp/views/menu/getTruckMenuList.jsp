@@ -397,6 +397,17 @@
                 getAddr(lat,lon);
 
                 //todo 이 안에 에이작스 써서 lo, la 받아온 후 페이지 리로드하도록?
+                // $.ajax({
+                //     url:"/menu/json/truckNearBy"/+crd.latitude+","+crd.longitude,
+                //     method:"get",
+                //     success:function(data){ //data : truckList
+                //
+                //     }
+                // })
+
+                self.location="/menu/truckNearBy?la="+crd.latitude+"&&lo="+crd.longitude;
+
+
 
 
             };

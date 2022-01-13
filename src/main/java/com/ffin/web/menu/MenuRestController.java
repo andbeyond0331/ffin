@@ -3,6 +3,7 @@ package com.ffin.web.menu;
 import com.ffin.common.Search;
 import com.ffin.service.domain.Menu;
 import com.ffin.service.menu.MenuService;
+import com.ffin.service.truck.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,10 @@ public class MenuRestController {
     @Autowired
     @Qualifier("menuServiceImpl")
     private MenuService menuService;
+
+    @Autowired
+    @Qualifier("truckServiceImpl")
+    private TruckService truckService;
 
     public MenuRestController(){
         System.out.println(this.getClass());
@@ -172,39 +177,38 @@ public class MenuRestController {
 //        return count;
     }
 
-//    @RequestMapping(value="json/truckSorting/{la},{lo}", method=RequestMethod.GET)
-//    @ResponseBody
-//    public ModelAndView truckSorting(@PathVariable("la")float la, @PathVariable("lo")float lo, HttpServletRequest request, HttpServletResponse response) throws Exception{
-//        /*
-//            위치 기반 트럭 소팅을 위한 !
-//         */
-//        request.setCharacterEncoding("utf-8");
-//
-//        System.out.println("MenuController.REST - isThereSigMenu");
-//        System.out.println("la = " + la + ", lo = " + lo + ", request = " + request + ", response = " + response);
-//
-//
-//        Search search = new Search();
-//        search.setCurrentPage(1);
-//        search.setPageSize(100);
-//        String id="";
-//        Map<String, Object> map = new HashMap<String, Object>();
-//
-////        int currentPage = Integer.parseInt(request.getP)
-//
-//        map = menuService.isThereSigMenu(search,truckId);
-//        System.out.println("대표메뉴 : " + map.get("list"));
-//
-//        List menu = new ArrayList();
-//        menu = (List) map.get("list");
-//        ModelAndView mv = new ModelAndView("jsonView");
-//        mv.addObject("menu", menu);
-//
-//
-//
-//
-//        return mv;
-//    }
+    @RequestMapping(value="json/truckNearBy/{la},{lo}", method=RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView truckNearBy(@PathVariable("la")float la, @PathVariable("lo")float lo, HttpServletRequest request, HttpServletResponse response) throws Exception{
+        /*
+            위치 기반 트럭 소팅을 위한 !
+         */
+        request.setCharacterEncoding("utf-8");
+
+        System.out.println("MenuController.REST - isThereSigMenu");
+        System.out.println("la = " + la + ", lo = " + lo + ", request = " + request + ", response = " + response);
+
+
+        Search search = new Search();
+        search.setCurrentPage(1);
+        search.setPageSize(100);
+        Map<String, Object> map = new HashMap<String, Object>();
+
+//        int currentPage = Integer.parseInt(request.getP)
+
+        map = truckService.truckNearBy(search,la, lo);
+        System.out.println("위치기반 결과 : " + map.get("list"));
+
+        List truckList = new ArrayList();
+        truckList = (List) map.get("list");
+        ModelAndView mv = new ModelAndView("jsonView");
+        mv.addObject("truckList", truckList);
+
+
+
+
+        return mv;
+    }
 
 
 }

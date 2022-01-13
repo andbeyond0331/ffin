@@ -79,6 +79,28 @@ public class TruckServiceImpl implements TruckService {
         return map;
     }
 
+    @Override
+    public Map<String, Object> truckNearBy(Search search, float la, float lo) throws Exception {
+        return truckDao.truckNearBy(search, la, lo);
+    }
+
+    @Override
+    public Map<String, Object> getNewTruckListByAdmin(Search search, int role) throws Exception {
+        System.out.println("TruckServiceImpl.getNewTruckListByAdmin");
+
+        int totalCount = truckDao.getTotalCount(search);
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("search", search);
+        map.put("role", role);
+        map.put("totalCount", totalCount);
+
+        List<Truck> list = truckDao.getNewTruckListByAdmin(map);
+
+        map.put("list", list);
+        return map;
+    }
+
     // 푸드트럭 수정
     @Override
     public void updateTruck(Truck truck) throws Exception {
@@ -268,13 +290,6 @@ public class TruckServiceImpl implements TruckService {
     @Override
     public int checkDuTruckName(String truckName) throws Exception {
         return truckDao.checkDuTruckName(truckName);
-    }
-
-
-    // 새로 가입한 푸드트럭 목록보기(관리자)
-    @Override
-    public List<Truck> getNewTruckList(Search search) throws Exception {
-        return null;
     }
 
     // 문자인증
