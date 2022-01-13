@@ -8,6 +8,14 @@
 <head>
 
     <style>
+        .btn.btn-dark{
+            color: #fff;
+            background-color: #ffe537;
+            margin-left: 10px;
+            padding: 10px 15px 10px 15px;
+            border-radius: 10rem;
+            padding: 0.75rem 1rem;
+        }
         .cards-box {
             display: flex;
             justify-content: flex-start;
@@ -77,17 +85,17 @@
     <script type="text/javascript">
 
         //=============    검색 / page 두가지 경우 모두  Event  처리 =============
-        function fncGetUserList(currentPage) {
+        function fncGetUserList1(currentPage) {
             $("#currentPage").val(currentPage)
-            $("form").attr("method", "POST").attr("action", "/community/getPostList").submit();
+            $("#searchPostFrom").attr("method", "POST").attr("action", "/community/getPostList").submit();
         }
 
 
         //============= "검색"  Event  처리 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $("button.btn.btn-default").on("click", function () {
-                fncGetUserList(1);
+            $("button.btn.btn-dark").on("click", function () {
+                fncGetUserList1(1);
             });
         });
 
@@ -379,7 +387,7 @@
             </div>
 
             <div class="col-md-8 text-right">
-                <form class="form-inline" name="detailForm">
+                <form class="form-inline" name="detailForm" id="searchPostFrom">
 
                     <div class="form-group">
                         <select class="form-control" name="searchCondition">
@@ -397,7 +405,7 @@
                         <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"
                                placeholder="검색어"
                                value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
-                        <button type="button" class="btn btn-default">검색</button>
+                        <button type="button" class="btn btn-dark" style="">검색</button>
                     </div>
 
 
@@ -466,7 +474,6 @@
         <h3>썸네일게시판</h3>
     </div>
 
-    <input type="hidden" id="currentPage" name="currentPage" value=""/>
 
     <!-- 등록/ 수정 모달 -->
     <div class="modal fade" id="modaladdPostPic" data-backdrop="static" tabindex="-1" role="dialog"

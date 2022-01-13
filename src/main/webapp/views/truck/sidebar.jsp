@@ -162,7 +162,7 @@
     #collapsePost div a, #collapseQnAUser div a, #collapseUser div a,
     #collapseTruck div a, #collapseApp div a, #collapseQnAAdmin div a,
     #collapseInfoT div a ,#collapseSale div a, #collapsePostT div a,
-    #collapseComment div a{
+    #collapseComment div a, #collapseNotice div a{
         color: #110000;
         padding: 0 0 0 20px;
         margin: 5px 0 5px 0;
@@ -171,7 +171,7 @@
     #collapsePost div a:hover, #collapseQnAUser div a:hover, #collapseUser div a:hover,
     #collapseTruck div a:hover, #collapseApp div a:hover, #collapseQnAAdmin div a:hover,
     #collapseInfoT div a:hover ,#collapseSale div a:hover, #collapsePostT div a:hover,
-    #collapseComment div a:hover{
+    #collapseComment div a:hover,#collapseNotice div a:hover{
         color: #ffba49;
     }
 
@@ -212,6 +212,19 @@
                 <li class="list">
                     <b></b>
                     <b></b>
+                    <a class="btn toggle-btn" role="button" data-target="#collapseNotice" data-toggle="collapse" href="#collapseNotice" aria-expanded="false" aria-controls="collapseExample">
+                        <span class="icon"><ion-icon name="calendar-outline"></ion-icon></span>
+                        <span class="title">공지</span>
+                    </a>
+                    <div class="collapse" id="collapseNotice" style="padding: 10px;">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="/truck/updateNotice">공지수정</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="list">
+                    <b></b>
+                    <b></b>
                     <a class="btn toggle-btn" role="button" data-target="#collapsePurchase" data-toggle="collapse" href="#collapsePurchase" aria-expanded="false" aria-controls="collapseExample">
                         <span class="icon"><ion-icon name="analytics-outline"></ion-icon></span>
                         <span class="title">판매</span>
@@ -232,8 +245,7 @@
                     </a>
                     <div class="collapse" id="collapseComment" style="padding: 10px;">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">작성 댓글</a>
-                            <a class="collapse-item" href="">달린 댓글</a>
+                            <a class="collapse-item" href="">작성한 댓글</a>
                         </div>
                     </div>
                 </li>

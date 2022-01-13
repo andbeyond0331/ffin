@@ -225,12 +225,12 @@
                         </c:when>
                         <c:otherwise>
                             <%-- 꽉찬 하트일때 --%>
-                            <span>
-                                            <a idx="${post.postNo}" href="javascript:" class="heart-click heart_icon${post.postNo} style="color:palevioletred">
+                            <>
+                                <a idx="${post.postNo}" href="javascript:" class="heart-click heart_icon${post.postNo}" style="color: palevioletred"></a>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
                                                  <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />
                                              </svg>
-                                        </a>
+                                        </>
                                         </span>
                         </c:otherwise>
                     </c:choose>
@@ -347,8 +347,8 @@
         <div class="panel panel-default" role="group" aria-label="..." style="margin-top: 10px; width: 100%;">
 
             <br/><br/>
-            <div class='row'>
-                <div class="col-lg-12">
+            <div class='row' style="max-width:770px ">
+                <div class="col-md-2">
                     <!-- /.panel -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -364,22 +364,25 @@
                         <!-- /.panel .chat-panel -->
                     </div>
                 </div>
+                <div class="col-md-8">
+                    <textarea class="form-control" rows="3" id="commentContent" placeholder="reply.."
+                              style="width: 100%; max-width:770px "></textarea>
+                </div>
+                <div class="text-right col-md-2 pr-0">
+                    <div class="btn-group btn-group-sm text-right" role="group" aria-label="...">
+                        <c:if test="${sessionScope.user.userId == null && sessionScope.truck.truckId == null}">
+                            <input type="button" class="btn btn-default" value="댓글 쓰기" disabled="disabled">
+                        </c:if>
+                        <c:if test="${sessionScope.user.userId != null || sessionScope.truck.truckId != null}">
+                            <input type="button" class="btn btn-secondary" value="댓글 쓰기" id="btnReply">
+                        </c:if>
+                    </div>
+                </div>
                 <!-- ./end row -->
             </div>
 
-            <table class="table table-hover table-striped" id="writeComment" style="max-width:770px ">
 
-                <textarea class="form-control" rows="3" id="commentContent" placeholder="reply.."
-                          style="width: 100%; max-width:770px "></textarea>
-                <div class="btn-group btn-group-sm" role="group" aria-label="...">
-                    <c:if test="${sessionScope.user.userId == null && sessionScope.truck.truckId == null}">
-                        <input type="button" class="btn btn-default" value="댓글 쓰기" disabled="disabled">
-                    </c:if>
-                    <c:if test="${sessionScope.user.userId != null || sessionScope.truck.truckId != null}">
-                        <input type="button" class="btn btn-secondary" value="댓글 쓰기" id="btnReply">
-                    </c:if>
-                </div>
-            </table>
+
 
             <table class="table table-hover table-striped" id="list">
                 <br/>
