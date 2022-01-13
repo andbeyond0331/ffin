@@ -4,6 +4,9 @@ import com.ffin.common.Page;
 import com.ffin.common.Search;
 import com.ffin.service.community.CommunityService;
 import com.ffin.service.domain.*;
+import com.ffin.service.truck.TruckService;
+import com.ffin.service.user.UserDao;
+import com.ffin.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +31,8 @@ public class CommunityController {
     @Autowired
     @Qualifier("communityServiceImpl")
     private CommunityService communityService;
+    private UserService userService;
+    private TruckService truckService;
     //setter Method 구현않음
 
     public CommunityController() {
@@ -116,11 +121,21 @@ public class CommunityController {
             id = ((Truck) session.getAttribute("truck")).getTruckId();
         }
 
-      //  Post post = communityService.getPost(postNo);
-       Post post = communityService.getCardDetail(id, role, postNo);
+        Post post = communityService.getPost(postNo);
+       //Post post = communityService.getCardDetail(id, role, postNo);
 
         System.out.println("post = " + post);
-
+        if(post.getPostUser() != null) {
+            User user =(User) session.getAttribute("user");
+            String postUserProImg = user.getUserProImg();
+            System.out.println("postUserProImg = " + postUserProImg);
+            session.setAttribute("userProImg", postUserProImg);
+        } else if(post.getPostTruck() != null) {
+            Truck truck = (Truck) session.getAttribute("truck");
+            String postTruckProImg = truck.getTruckProImg();
+            session.setAttribute("truckProImg", postTruckProImg);
+            System.out.println("postTruckProImg = " + postTruckProImg);
+        }
         session.setAttribute("postNo", postNo);
 
         System.out.println("session에 담긴 postNo = " +session.getAttribute("postNo"));
@@ -198,46 +213,6 @@ public class CommunityController {
             return "forward:/views/community/getPostList.jsp";
 
     }
-
-//    @RequestMapping(value = "getComment", method = RequestMethod.GET)
-//    public ModelAndView getComment(HttpServletRequest request, ModelAndView m) throws Exception {
-//
-//        System.out.println("/community/getComment : GET");
-//        int commentNo = Integer.parseInt(request.getParameter("commentNo"));
-//        System.out.println("commentNo = " + commentNo);
-//
-//        Comment comment = communityService.getComment(commentNo);
-//        System.out.println("comment = " + comment);
-//
-//        m.addObject("comment", comment);
-//        m.setViewName("/community/getComment");
-//
-//        return m;
-//    }
-
-    @RequestMapping(value = "updateComment", method = RequestMethod.GET)
-    public String updateComment(@ModelAttribute("commentNo") int commentNo, Model model, HttpSession httpSession) throws Exception {
-        System.out.println("/community/updateComment : GET");
-        //Business Logic
-        Comment comment = communityService.getComment(commentNo);
-        //Model 과 View 연결
-        model.addAttribute("comment", comment);
-
-        return "forward:/community/updateComment.jsp";
-    }
-
-    @RequestMapping(value = "updateComment", method = RequestMethod.POST)
-    public String updateComment(@ModelAttribute("comment") Comment comment, Model model, HttpSession session) throws Exception {
-
-        System.out.println("/community/updateComment : POST");
-        //Business Logic
-        communityService.updateComment(comment);
-
-        return "redirect:/community/getPost?postNo=" + comment.getCommentPostNo();
-    }
-
-
-
 
 
     @RequestMapping(value = "deletePost", method = RequestMethod.GET)
