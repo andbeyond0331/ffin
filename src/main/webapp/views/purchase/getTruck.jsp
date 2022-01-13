@@ -501,7 +501,7 @@
                 //sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
 
 
-                // 화면에 담기
+         /*       // 화면에 담기
 
                 var targetCart = $('div.sticky').find('ul');
 
@@ -560,95 +560,8 @@
 
                     }
                 }
+*/
 
-
-                // 화면에 담기
-
-                var targetCart = $('div.sticky').find('ul');
-
-                var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
-
-                for( var i in beforeAnyway){
-                    // console.log("beforeAnyway : " + beforeAnyway[i]);
-                    for(var j in beforeAnyway[i]){
-                        console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
-
-                    }
-                }
-                //담을 li
-
-                var finalCart = "";
-                var forOne = 0 ;
-                alert("start"+beforeAnyway)
-                //담긴 데이터가 있으면!!
-                if(beforeAnyway){
-                    alert("들어왔다!!1111")
-                    //담겨져 있는 만큼 for문을 돌린다
-                    for(var i in beforeAnyway){
-                        //json객체안에 odMenuQtyFlag가 0인값을 몇번째 인지 forOne에 넣는다.
-
-                        odMenuQtyFlag = beforeAnyway[i]['odMenuQtyFlag'];
-
-                        var odMenuQtyFlag = "<input type='text' name='odMenuQtyFlag' id='odMenuQtyFlag' value='"+odMenuQtyFlag+"'>"+
-                       "<input type='text' name='odMenuQty' id='odMenuQty' value='\"+beforeAnyway[i][\'odMenuQty\']+\"'>"+
-                        "<input type='text' name='odMenuName' id='odMenuName' value='\"+beforeAnyway[i][\'odMenuName\']+\"'>"+
-                         "<input type='text' name='odMenuPrice' id='odMenuPrice' value='\"+beforeAnyway[i][\'odMenuPrice\']+\"'>"+
-                         "<input type='text' name='odOptionGroupName' id='odOptionGroupName' value='\"+beforeAnyway[i][\'odOptionGroupName\']+\"'>"+
-                        "<input type='text' name='odOptionName' id='odOptionName' value='\"+beforeAnyway[i][\'odOptionName\']+\"'>"+
-                         "<input type='text' name='odOptionPrice' id='odOptionPrice' value='\"+beforeAnyway[i][\'odOptionPrice\']+\"'>";
-
-
-
-
-
-                        if(beforeAnyway[i]['odMenuQtyFlag']==0){
-                            forOne=i;
-
-                        }
-                        //odMenuQtyFlag가 0이 아니면
-                        if(beforeAnyway[i]['odMenuQtyFlag']!=0){
-
-                            //odOptionGrouName이 null이 아니면
-                            if(beforeAnyway[i]['odOptionGroupName']!=null){
-                                //
-                                if(i==forOne+1){
-                                    var cart1 = "<li class=\"list-group-item d-flex justify-content-between lh-sm\">"+
-                                        "<div>"+
-                                        "<h6 class=\"my-0\">"+beforeAnyway[i]['odMenuName']+"</h6>";
-
-                                    var cart2 = "";
-
-                                    for(var j=i; j<beforeAnyway.length;j++){
-                                        if(j!=i && beforeAnyway[j]['odMenuName']!=beforeAnyway[j-1]['odMenuName']){
-
-                                        }
-                                        cart2+="<p></p>"+
-                                            "<small class=\"text-muted\">"+beforeAnyway[j]['odOptionGroupName']+" : "+beforeAnyway[j]['odOptionName']+"</small>";
-
-                                    }
-
-
-                                    var cart3=""+
-                                        "</div>"+
-                                        "<span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"</span>"+
-                                        "<p></p>"+
-                                        "<span class=\"text-muted\">"+beforeAnyway[i]['odOptionPrice']+"</span>"+
-                                        "</li>"+
-                                        ""+
-                                        "";
-                                    console.log("////target ; " + targetCart.html());
-                                    finalCart+=cart1+cart2+cart3;
-                                    alert(finalCart)
-                                }
-                            }
-
-                        }
-
-
-
-                        targetCart.append(odMenuQtyFlag);
-                    }
-                }
 
 
 
@@ -749,7 +662,221 @@
 
             });
 
+
+
+
+            // 화면에 담기
+
+            var targetCart = $('div.sticky').find('ul');
+
+            var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
+
+            for( var i in beforeAnyway){
+                // console.log("beforeAnyway : " + beforeAnyway[i]);
+                for(var j in beforeAnyway[i]){
+                    console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
+
+                }
+            }
+            //담을 li
+
+            var finalCart = "";
+            var forOne = 0 ;
+            alert("start"+beforeAnyway)
+            //담긴 데이터가 있으면!!
+            if(beforeAnyway){
+                alert("들어왔다!!1111")
+                //담겨져 있는 만큼 for문을 돌린다
+                for(var i in beforeAnyway){
+                    //json객체안에 odMenuQtyFlag가 0인값을 몇번째 인지 forOne에 넣는다.
+
+                    odMenuQtyFlag = beforeAnyway[i]['odMenuQtyFlag'];
+
+                    var odMenuQtyFlag = "<input type='text' name='odMenuQtyFlag' id='odMenuQtyFlag' value='"+odMenuQtyFlag+"'>"+
+                        "<input type='text' name='odMenuQty' id='odMenuQty' value='"+beforeAnyway[i]['odMenuQty']+"'>"+
+                        "<input type='text' name='odMenuName' id='odMenuName' value='"+beforeAnyway[i]['odMenuName']+"'>"+
+                        "<input type='text' name='odMenuPrice' id='odMenuPrice' value='"+beforeAnyway[i]['odMenuPrice']+"'>"+
+                        "<input type='text' name='odOptionGroupName' id='odOptionGroupName' value='"+beforeAnyway[i]['odOptionGroupName']+"'>"+
+                        "<input type='text' name='odOptionName' id='odOptionName' value='"+beforeAnyway[i]['odOptionName']+"'>"+
+                        "<input type='text' name='odOptionPrice' id='odOptionPrice' value='"+beforeAnyway[i]['odOptionPrice']+"'>";
+
+
+
+
+
+                    if(beforeAnyway[i]['odMenuQtyFlag']==0){
+                        forOne=i;
+
+                    }
+                    //odMenuQtyFlag가 0이 아니면
+                    if(beforeAnyway[i]['odMenuQtyFlag']!=0){
+
+                        //odOptionGrouName이 null이 아니면
+                        if(beforeAnyway[i]['odOptionGroupName']!=null){
+                            //
+                            if(i==forOne+1){
+                                var cart1 = "<li class=\"list-group-item d-flex justify-content-between lh-sm\">"+
+                                    "<div>"+
+                                    "<h6 class=\"my-0\">"+beforeAnyway[i]['odMenuName']+"</h6>";
+
+                                var cart2 = "";
+
+                                for(var j=i; j<beforeAnyway.length;j++){
+                                    if(j!=i && beforeAnyway[j]['odMenuName']!=beforeAnyway[j-1]['odMenuName']){
+
+                                    }
+                                    cart2+="<p></p>"+
+                                        "<small class=\"text-muted\">"+beforeAnyway[j]['odOptionGroupName']+" : "+beforeAnyway[j]['odOptionName']+"</small>";
+
+                                }
+
+
+                                var cart3=""+
+                                    "</div>"+
+                                    "<span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"</span>"+
+                                    "<p></p>"+
+                                    "<span class=\"text-muted\">"+beforeAnyway[i]['odOptionPrice']+"</span>"+
+                                    "</li>"+
+                                    ""+
+                                    "";
+                                console.log("////target ; " + targetCart.html());
+                                finalCart+=cart1+cart2+cart3;
+                                alert(finalCart)
+                            }
+                        }
+
+                    }
+
+
+
+                    targetCart.append(odMenuQtyFlag);
+                }
+            }
+
+
+
+
+
+
         });
+
+
+
+
+        $(function () {
+            $("button.btn.btn-primary:Contains('확인')").click(function () {
+                alert("ss")
+                var order = to_ajax()
+
+
+                append = "<input type=\"hidden\" id=\"orderNo\" name=\"orderNo\" value=\"" + order + "\">";
+                $('#app').append(append);
+                /*alert(append)*/
+                self.location = "/purchase/addCart?orderNo=" + order
+                /* $("form").attr("method" , "POST").attr("action" , "/purchase/addCart").submit();*/
+
+            });
+        });
+        $(function () {
+            $("button.btn.btn-primary:Contains('json')").click(function () {
+                alert("ddk");
+                to_ajax();
+                $("form").attr("method", "POST").attr("action", "/purchase/addCart").submit();
+            });
+        });
+
+        function to_ajax() {
+            var reOrderNo;
+            var odMenuName = [];
+            var odOptionGroupName = [];
+            var odOptionName = [];
+            var odMenuQty = [];
+            var odMenuPrice = [];
+            var odOptionPrice = [];
+            var odMenuImage = [];
+            var odMenuQtyFlag = [];
+            var orderPickUpTime = $('input[name="orderPickUpTime"]:checked').val();
+            var orderTotalPrice = $('#orderTotalPrice').val();
+            var orderUserId = $('#orderUserId').val();
+            var orderTruckId = $('#orderTruckId').val();
+            var orderRequest = $('#orderRequest').val();
+            var orderQty = $('#orderQty').val();
+
+            $('input[name="odMenuName"]').each(function (i) {
+                odMenuName.push($(this).val());
+            });
+
+            $('input[name="odOptionGroupName"]').each(function (i) {
+                odOptionGroupName.push($(this).val());
+            });
+
+            $('input[name="odOptionName"]').each(function (i) {
+                odOptionName.push($(this).val());
+            });
+
+            $('input[name="odMenuQty"]').each(function (i) {
+                odMenuQty.push($(this).val());
+            });
+
+            $('input[name="odMenuPrice"]').each(function (i) {
+                odMenuPrice.push($(this).val());
+            });
+
+            $('input[name="odOptionPrice"]').each(function (i) {
+                odOptionPrice.push($(this).val());
+            });
+
+            $('input[name="odMenuImage"]').each(function (i) {
+                odMenuImage.push($(this).val());
+            });
+
+            $('input[name="odMenuQtyFlag"]').each(function (i) {
+                odMenuQtyFlag.push($(this).val());
+            });
+                     alert(orderPickUpTime)
+                     alert(orderTotalPrice)
+                     alert(orderUserId)
+                     alert(orderTruckId)
+                     alert(orderRequest)
+                     alert(orderQty)
+                     alert(odMenuQtyFlag)
+
+            var data = {
+                "odMenuName": odMenuName,
+                "odOptionGroupName": odOptionGroupName,
+                "odOptionName": odOptionName,
+                "odMenuQty": odMenuQty,
+                "odMenuPrice": odMenuPrice,
+                "odOptionPrice": odOptionPrice,
+                "odMenuImage": odMenuImage,
+                "orderPickUpTime": orderPickUpTime,
+                "orderTotalPrice": orderTotalPrice,
+                "orderUserId": orderUserId,
+                "orderTruckId": orderTruckId,
+                "orderRequest": orderRequest,
+                "orderQty": orderQty,
+                "odMenuQtyFlag": odMenuQtyFlag,
+            }
+            $.ajax({
+                type: "post",
+                url: '/purchase/json/addCartList',
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data: data,
+                async: false,
+                dataType: 'json',
+                success: function (retVal) {
+                    reOrderNo = retVal.orderNo;
+                },
+                error: function (xhr, status, error) {
+                    alert("[Error]" + error);
+                    return;
+                }
+
+
+            });
+            return reOrderNo;
+        }
+
 
     </script>
 
@@ -984,6 +1111,7 @@
 
 
 <!--  화면구성 div Start /////////////////////////////////////-->
+
 <div class="container">
 
     <div class="page-header">
@@ -1089,7 +1217,7 @@
             <div class="appendCart"></div>
         </ul>
 
-        <button type="button" class="btn btn-warning">주문하기</button>
+        <button type="button"  class="btn btn-warning" data-toggle="modal" data-target="#exampleModal" >주문하기</button>
     </div>
     <%--</form></div>--%>
 </div>
@@ -1166,6 +1294,70 @@
         </div>
     </div>
 </div>
+<form>
+
+
+
+
+<%--cart Modal--%>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="orderPickUpTime" class="col-form-label">픽업희망시간:</label>
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" id="orderPickUpTime" name="orderPickUpTime" value="5"
+                               id="btnradio1" autocomplete="off" checked>
+                        <label class="btn btn-outline-primary" for="btnradio1">5분</label>
+
+                        <input type="radio" class="btn-check" name="orderPickUpTime" value="10" id="btnradio2"
+                               autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio2">10분</label>
+
+                        <input type="radio" class="btn-check" name="orderPickUpTime" value="15" id="btnradio3"
+                               autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio3">15분</label>
+
+                        <input type="radio" class="btn-check" name="orderPickUpTime" value="20" id="btnradio4"
+                               autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio4">20분</label>
+
+                        <input type="radio" class="btn-check" name="orderPickUpTime" value="30" id="btnradio5"
+                               autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio5">30분</label>
+
+                        <input type="radio" class="btn-check" name="orderPickUpTime" value="40" id="btnradio6"
+                               autocomplete="off">
+                        <label class="btn btn-outline-primary" for="btnradio6">40분</label>
+
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="orderRequest" class="col-form-label">주문요청사항:</label>
+                    <textarea class="form-control" id="orderRequest" name="orderRequest"
+                              value="${purchase.orderRequest}"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary">확인</button>
+
+
+
+                <input type="hidden" id="orderUserId" name="orderUserId.userId" value="${user.userId}"/>
+                <input type="hidden" id="orderTruckId" name="orderTruckId.truckId" value="${truck.truckId}"/>
+                <%--<input type="hidden" id="orderQty" name="orderQty" value="3"/>--%>
+                <%--<input type="hidden" id="orderTotalPrice" name="orderTotalPrice" value="3000"/>--%>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
 
 <script>
     $(function(){
