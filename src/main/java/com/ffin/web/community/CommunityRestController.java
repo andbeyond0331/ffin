@@ -2,6 +2,9 @@ package com.ffin.web.community;
 
 import com.ffin.service.community.CommunityService;
 import com.ffin.service.domain.*;
+import com.ffin.service.truck.TruckService;
+import com.ffin.service.user.UserDao;
+import com.ffin.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.awt.color.CMMException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 // @ResponseBody를 붙이지 않아도 뷰가 아닌 데이터 리턴 가능
 @RestController // spring 4.0부터 사용 가능
@@ -24,6 +29,8 @@ public class CommunityRestController {
     @Autowired
     @Qualifier("communityServiceImpl")
     private CommunityService communityService;
+    private UserService userService;
+    private TruckService truckService;
     // setter Method 구현않음
 
     public CommunityRestController() {
@@ -53,6 +60,14 @@ public class CommunityRestController {
         List<Comment> list = communityService.getCommentList(commentPostNo); //댓글 목록
 
         System.out.println("list = " + list);
+
+        Map<String, Object> map = new HashMap<>();
+
+        String commentUserProImg = (String) userService.getUser("userId").getUserProImg();
+        String commentTruckProImg = (String) truckService.getTruck("truckId").getTruckProImg();
+
+        m.addObject("commentUserProImg", commentUserProImg);
+        m.addObject("commentTruckProImg", commentTruckProImg);
 
         //m.setViewName("/community/getPost?postNo="+postNo); //뷰의 이름
         m.setViewName("/community/json/getCommentList?commentPostNo="+commentPostNo); //뷰의 이름

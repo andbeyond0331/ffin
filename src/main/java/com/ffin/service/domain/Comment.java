@@ -13,7 +13,9 @@ public class Comment {
 	private int commentPostNo;
 	private String commentContent;
 	private String commentUserId;
+	private String commentUserProImg;	// 코멘트유저프로필이미지 추가
 	private String commentTruckId;
+	private String commentTruckProImg;	// 코멘트트럭 프로필이미지 추가
 	private String commentDate;
 	private int secretKey;
 
