@@ -115,7 +115,7 @@ public class MenuController {
     // TODO: 2022-01-13 다시 와서 위치기반 잡자
     // 트럭 리스트 - 전체 위치기반
     @RequestMapping(value = "getTruckListLo")
-    public String getTruckListLo (@RequestParam("la") float la, @RequestParam("lo") float lo, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+    public String getTruckListLo (@RequestParam(value="la", required = false) String la, @RequestParam(value="lo", required = false) String lo, @ModelAttribute("search") Search search, Model model) throws Exception {
 //    public String getTruckList(@RequestParam(value="cateCondition", required = false) String cateCondition, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
 
         System.out.println("/truck/getTruckListLo : GET / POST");
@@ -124,6 +124,8 @@ public class MenuController {
             search.setCurrentPage(1);
         }
 
+        float laa = Float.parseFloat(la);
+        float loo = Float.parseFloat(lo);
 
         System.out.println("////searchKeyword : " + search.getSearchKeyword());
 
@@ -131,7 +133,7 @@ public class MenuController {
 
 
         // Business logic 수행
-        Map<String, Object> map = truckService.truckNearBy(search, la, lo);
+        Map<String, Object> map = truckService.truckNearBy(search, laa, loo);
 
         Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
         System.out.println(resultPage);
