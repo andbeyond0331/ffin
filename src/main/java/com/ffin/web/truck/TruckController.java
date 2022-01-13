@@ -82,7 +82,7 @@ public class TruckController {
 
     // 트럭조회
     @RequestMapping(value = "getTruck", method = RequestMethod.GET)
-    public ModelAndView getTruck(HttpServletRequest request, ModelAndView m) throws Exception {
+    public ModelAndView getTruck(HttpServletRequest request, ModelAndView m, HttpSession session) throws Exception {
 
         System.out.println("TruckController.getTruck : GET");
         String truckId = request.getParameter("truckId");
@@ -91,6 +91,12 @@ public class TruckController {
         Truck truck = truckService.getTruck(truckId);
         System.out.println("truck = " + truck);
         m.addObject("truck", truck);
+
+        if(session.getAttribute("role").equals("admin")){
+            m.setViewName("/views/user/getTruckByAdmin.jsp");
+            return m;
+        }
+
         m.setViewName("/views/truck/getTruck.jsp");
 
         return m;

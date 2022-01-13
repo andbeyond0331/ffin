@@ -7,7 +7,7 @@
 
 <head>
 
-    <title>F.FIN | 회원정보</title>
+    <title>F.FIN | 푸드트럭 정보</title>
     <jsp:include page="../../common/lib.jsp"/>
 
     <!-- bootstrap core css -->
@@ -85,49 +85,71 @@
             <div class="detail-box">
                 <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
                 <h4 style="margin-top: 10px;">
-                    회원정보
+                    푸드트럭 정보
                 </h4>
             </div>
 
             <form class="row justify-content-center" id="user_update_info">
 
                 <div class="col-md-12 data-input-box adminbox">
+
+                    <div style="display: flex; justify-content: center;">
+                        <div class="col-md-6 data-input-box" style="display: flex; justify-content: center;">
+                            <div class="data-input-box user-info">
+                                <div>
+                                    <div style="margin-bottom: 30px;">
+                                        <h5>${truck.truckName}</h5>
+                                    </div>
+                                    <div style="margin-bottom: 30px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <hr style="margin-top: 35px;"/>
+
                     <div class="data-input-box info" style="display: flex;">
                         <div>
-                            <c:if test="${user.userProImg == null}">
+                            <c:if test="${truck.truckProImg == null}">
                                 <img src="../../resources/image/user_img.jpg" class="rounded float-start" alt="userProImg">
                             </c:if>
-                            <c:if test="${user.userProImg != null}">
-                                <img src="../../resources/image/${user.userProImg}" class="rounded float-start" alt="userProImg">
+                            <c:if test="${truck.truckProImg != null}">
+                                <img src="../../resources/image/${truck.truckProImg}" class="rounded float-start" alt="userProImg">
                             </c:if>
                         </div>
                         <div>
                             <div style="margin-left: 40px; margin-top: 20px; float: left;">
-                                <label for="userId" class="form-label label-name">ID</label>
-                                <input type="text" class="form-control" value="${user.userId}" id="userId" name="userId" readonly style="width: 400px;">
+                                <label for="userId" class="form-label label-name">푸드트럭명</label>
+                                <input type="text" class="form-control" value="${truck.truckId}" id="userId" name="userId" readonly style="width: 400px;">
                             </div>
                             <div style="margin-left: 40px; margin-top: 20px; float: left;">
-                                <label for="userName" class="form-label label-name">성명</label>
-                                <input type="text" class="form-control" value="${user.userName}" id="userName" name="userName" readonly style="width: 400px;">
+                                <label for="userName" class="form-label label-name"><i class="fas fa-star"></i></label>
+                                <input type="text" class="form-control" value="${truck.truckAVGStar}" id="userName" name="userName" readonly style="width: 400px;">
                             </div>
                             <div style="margin-left: 40px; margin-top: 20px; float: left;">
-                                <label for="userPhone" class="form-label label-name">회원유형</label>
 
                                 <div style="display: flex;">
-                                <c:if test="${user.userByeStatus eq 0}">
+                                <c:if test="${truck.truckByeStatus eq 0}">
                                     <h5><span class="badge" style="background-color: #ffe537; color: #110000">활동중</span></h5>
                                 </c:if>
-                                <c:if test="${user.userByeStatus eq 1}">
+                                <c:if test="${truck.truckByeStatus eq 1}">
                                     <h5><span class="badge" style="background-color: #f17228; color: #ffffff">탈퇴</span></h5>
                                 </c:if>
 
-                                <c:if test="${user.reportCount % 3 == 0 && user.reportCount != 0 }">
-                                    <h5><span class="badge" style="background-color: #f17228; color: white">블랙리스트</span></h5>
-                                </c:if>
-                                <c:if test="${user.reportCount % 3 != 0 || user.reportCount == 0}">
-                                    <h5><span class="badge" style="background-color: #ffe537; color: #110000">일반회원</span></h5>
-                                </c:if>
+                                <c:choose>
+                                    <c:when test="${truck.truckJoinReqStatus eq 0}">
+                                        <h5><span class="badge" style="background-color: #ffe537; color: #110000">가입승인대기</span></h5>
+                                    </c:when>
+                                    <c:when test="${truck.truckJoinReqStatus eq 1}">
+                                        <h5><span class="badge" style="background-color: #ffe537; color: #110000">가입승인완료</span></h5>
+                                    </c:when>
+                                    <c:when test="${truck.truckJoinReqStatus eq 2}">
+                                        <h5><span class="badge" style="background-color: #ffe537; color: #110000">가입승인거절</span></h5>
+                                    </c:when>
+                                </c:choose>
+
+
                                 </div>
                             </div>
                         </div>
@@ -140,49 +162,53 @@
                             <div class="data-input-box user-info">
                                 <div>
                                     <div style="margin-bottom: 30px;">
-                                        <label for="userPhone" class="form-label label-name">연락처</label>
-                                        <input type="text" class="form-control" value="${user.userPhone}" id="userPhone" name="userPhone" readonly style="width: 340px;">
+                                        <label for="truckCEOName" class="form-label label-name">대표자 성명</label>
+                                        <input type="text" class="form-control" value="${truck.truckCEOName}" id="truckCEOName" name="truckCEOName" readonly style="width: 340px;">
                                     </div>
                                     <div style="margin-bottom: 30px;">
-                                        <label for="userBirth" class="form-label label-name">생년월일</label>
-                                        <input type="text" class="form-control" value="${user.userBirth}" id="userBirth" name="userId" readonly style="width: 340px;">
+                                        <label for="truckCEOBirth" class="form-label label-name">대표자 생년월일</label>
+                                        <input type="text" class="form-control" value="${truck.truckCEOBirth}" id="truckCEOBirth" name="truckCEOBirth" readonly style="width: 340px;">
                                     </div>
                                     <div style="margin-bottom: 30px;">
-                                        <label for="userAddr" class="form-label label-name">주소</label>
-                                        <input type="text" class="form-control" value="${user.userAddr}" id="userAddr" name="userAddr" readonly style="width: 340px; margin-bottom: 5px;">
-                                        <input type="text" class="form-control" value="${user.userAddrDetail}" id="userAddrDetail" name="userAddrDetail" readonly style="width: 340px;">
+                                        <label for="truckPhone" class="form-label label-name">대표자 연락처</label>
+                                        <input type="text" class="form-control" value="${truck.truckPhone}" id="truckPhone" name="truckPhone" readonly style="width: 340px;">
                                     </div>
                                     <div style="margin-bottom: 30px;">
-                                        <label for="userEmail" class="form-label label-name">Email</label>
-                                        <input type="text" class="form-control" value="${user.userEmail}" id="userEmail" name="userEmail" readonly style="width: 340px;">
+                                        <label for="truckAddr" class="form-label label-name">대표자 주소</label>
+                                        <input type="text" class="form-control" value="${truck.truckAddr}" id="truckAddr" name="truckAddr" readonly style="width: 340px; margin-bottom: 5px;">
+                                        <input type="text" class="form-control" value="${truck.truckAddrDetail}" id="truckAddrDetail" name="truckAddrDetail" readonly style="width: 340px;">
+                                    </div>
+                                    <div style="margin-bottom: 30px;">
+                                        <label for="truckEmail" class="form-label label-name">Email</label>
+                                        <input type="text" class="form-control" value="${truck.truckEmail}" id="truckEmail" name="truckEmail" readonly style="width: 340px;">
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-6 data-input-box" style="display: flex; justify-content: center;">
+                       <%-- <div class="col-md-6 data-input-box" style="display: flex; justify-content: center;">
                             <div class="data-input-box user-profile">
                                 <div>
                                     <div style="margin-bottom: 30px;">
                                         <label for="userTotalPoint" class="form-label label-name">적립금</label>
-                                        <input type="text" class="form-control" value="${user.userTotalPoint}&nbsp;P" id="userTotalPoint" name="userTotalPoint" readonly style="width: 340px;">
+                                        <input type="text" class="form-control" value="${truck.userTotalPoint}&nbsp;P" id="userTotalPoint" name="userTotalPoint" readonly style="width: 340px;">
                                     </div>
                                     <div style="margin-bottom: 30px;">
                                         <label for="userFavMenu" class="form-label label-name">좋아하는 메뉴</label>
-                                        <input type="text" class="form-control" value="${user.userFavMenu}" id="userFavMenu" name="userFavMenu" readonly style="width: 340px;">
+                                        <input type="text" class="form-control" value="${truck.userFavMenu}" id="userFavMenu" name="userFavMenu" readonly style="width: 340px;">
                                     </div>
                                     <div style="margin-bottom: 30px;">
                                         <label for="userFavPlace" class="form-label label-name">자주 찾는 장소</label>
-                                        <input type="text" class="form-control" value="${user.userFavPlace}" id="userFavPlace" name="userFavPlace" readonly style="width: 340px; margin-bottom: 5px;">
-                                        <input type="text" class="form-control" value="${user.userFavPlaceDetail}" id="userFavPlaceDetail" name="userFavPlaceDetail" readonly style="width: 340px;">
+                                        <input type="text" class="form-control" value="${truck.userFavPlace}" id="userFavPlace" name="userFavPlace" readonly style="width: 340px; margin-bottom: 5px;">
+                                        <input type="text" class="form-control" value="${truck.userFavPlaceDetail}" id="userFavPlaceDetail" name="userFavPlaceDetail" readonly style="width: 340px;">
                                     </div>
                                     <div style="margin-bottom: 30px;">
                                         <label for="userIntro" class="form-label label-name">한줄소개</label>
-                                        <input type="text" class="form-control" value="${user.userIntro}" id="userIntro" name="userIntro" readonly style="width: 340px;">
+                                        <input type="text" class="form-control" value="${truck.userIntro}" id="userIntro" name="userIntro" readonly style="width: 340px;">
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>--%>
                     </div>
 
                     <hr style="margin-bottom: 35px;"/>
