@@ -22,7 +22,6 @@
     <!-- 아임포트 -->
     <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javascript"></script>
 
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
     <%
         List<Catering> list = (List<Catering>) request.getAttribute("list");
     %>
@@ -42,7 +41,7 @@
         html, body {
             margin: 0;
             padding: 0;
-            font-family: 'Nanum Gothic', sans-serif;
+            font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
             font-size: 14px;
         }
 
@@ -76,132 +75,6 @@
             z-index:1151 !important;
         }
         .ui-datepicker-div { z-index: 999999; }
-
-        :root{
-            --background-dark: #fdbf5d;
-            --text-light: rgba(255,255,255,0.6);
-            --text-lighter: rgba(255,255,255,0.9);
-            --spacing-s: 8px;
-            --spacing-m: 16px;
-            --spacing-l: 24px;
-            --spacing-xl: 32px;
-            --spacing-xxl: 64px;
-            --width-container: 1200px;
-        }
-
-        *{
-            border: 0;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html{
-            height: 100%;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 14px;
-        }
-
-        body{
-            height: 100%;
-        }
-
-        .hero-section{
-            align-items: flex-start;
-
-            display: flex;
-            min-height: 100%;
-            justify-content: center;
-            padding: var(--spacing-xxl) var(--spacing-l);
-        }
-
-        .card-grid{
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            grid-column-gap: var(--spacing-l);
-            grid-row-gap: var(--spacing-l);
-            max-width: var(--width-container);
-            width: 100%;
-        }
-
-        @media(min-width: 540px){
-            .card-grid{
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media(min-width: 960px){
-            .card-grid{
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        .card{
-            list-style: none;
-            position: relative;
-            BORDER: 0;
-            box-shadow: 0 2px 4px 2px rgb(0 0 0 / 25%);
-            border-radius: 2rem
-        }
-
-        .card:before{
-            content: '';
-            display: block;
-            padding-bottom: 150%;
-            width: 100%;
-        }
-
-        .card__background{
-            background-size: cover;
-            background-position: center;
-            border-radius: var(--spacing-l);
-            bottom: 0;
-            filter: brightness(0.75) saturate(1.2) contrast(0.85);
-            left: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-            border: 0;
-            transform-origin: center;
-            transform: scale(1) translateZ(0);
-            transition:
-                    filter 200ms linear,
-                    transform 200ms linear;
-        }
-
-        .card:hover .card__background{
-            transform: scale(1.05) translateZ(0);
-            border: 0;
-        }
-
-        .card-grid:hover > .card:not(:hover) .card__background{
-            filter: brightness(0.5) saturate(50%) contrast(1.0) blur(5px);
-            border: 0;
-
-        }
-
-        .card__content{
-            left: 0;
-            padding: var(--spacing-l);
-            position: absolute;
-            top: 0;
-        }
-
-        .card__category{
-            color: var(--text-light);
-            font-size: 1.1rem;
-            margin-bottom: var(--spacing-s);
-            text-transform: uppercase;
-        }
-
-        .card__heading{
-            color: var(--text-lighter);
-            font-size: 25px;
-            text-shadow: 2px 2px 20px rgba(0,0,0,0.2);
-            line-height: 1.4;
-            word-spacing: 100vw;
-        }
-
     </style>
 
 </head>
@@ -251,7 +124,7 @@
 
         <div class="col-md-6 text-left">
             <div id="calStatus">
-                <input type="button" value="나의예약목록"/>
+                <input type="button" value="전체"/>
                 <input type="button" value="예약가능"/>
                 <input type="button" value="수락대기"/>
                 <input type="button" value="수락완료(결제대기)"/>
@@ -268,31 +141,8 @@
         </div>
 
     </div>
-        <section class="hero-section">
-            <div class="card-grid">
+    <div id="card-box" class="cards-box">
         <c:forEach var="catering" items="${list}">
-
-
-
-            <a class="card" href="#">
-                <div class="card__background" style="background-image: url(../../resources/menu/${catering.ctMenu.menuImg1})"></div>
-                <div class="card__content">
-                    <p class="card__category"> ${catering.ctDate}</p>
-
-                    <c:if test="${sessionScope.role eq 'user'}">
-                        <h3 class="card__heading">${catering.ctTruck.truckName}</h3>
-                    </c:if>
-                    <c:if test="${sessionScope.role eq 'truck'}">
-                        <h3 class="card__heading">${catering.ctUser.userName}</h3>
-                    </c:if>
-
-
-                </div>
-            </a>
-
-
-
-           <%--
             <div class="card" style="width: 23rem; margin-bottom:15px; margin-left: 10px;">
                 <img class="card-img-top" src="../../resources/menu/${catering.ctMenu.menuImg1}" alt="Card image cap"
                      style="border-bottom: 1px solid #eee; height: 300px;">
@@ -323,24 +173,24 @@
 
                             <button  name="getCateringDetail" class="button is-warning is-light" style='margin-left: 100px; margin-bottom: 13px; height: 25px'>자세히
                             </button>
-                            &lt;%&ndash;onclick="getCateringDetail(${catering.ctNo})&ndash;%&gt;
+                            <%--onclick="getCateringDetail(${catering.ctNo})--%>
                         </c:if>
                         <c:if test="${catering.ctStatusCode ne '0'}">
 
 
                             <button  name="getResDetail" class="button is-warning is-light" style='margin-left: 100px; margin-bottom: 13px; height: 25px' >자세히
                             </button>
-                            &lt;%&ndash;onclick="getResDetail(${catering.ctNo},${catering.ctStatusCode})"&ndash;%&gt;
+                            <%--onclick="getResDetail(${catering.ctNo},${catering.ctStatusCode})"--%>
                         </c:if>
                     </div>
                 </div>
-            </div>--%>
-        </c:forEach>
             </div>
-        </section>
+        </c:forEach>
+    </div>
 
-</div> <%--container close --%>
-</div> <%--card colurm close--%>
+
+</div>
+</div>
 <script>
     var role = '${sessionScope.role}';
 
