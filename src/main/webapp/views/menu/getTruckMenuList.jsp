@@ -396,6 +396,8 @@
 
                 getAddr(lat,lon);
 
+                //todo 이 안에 에이작스 써서 lo, la 받아온 후 페이지 리로드하도록?
+
 
             };
 
@@ -624,37 +626,6 @@
 
 </div>
 
-<%--<!-- Tab 영역 태그는 ul이고 클래스는 nav와 nav-tabs를 설정한다. -->--%>
-<%--<ul class="nav nav-tabs">--%>
-<%--    <!-- Tab 아이템이다. 태그는 li과 li > a이다. li태그에 active는 현재 선택되어 있는 탭 메뉴이다. -->--%>
-<%--    <li class="active"><a href="0" data-toggle="tab" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckList" style="color:orange">전체보기</a></li>--%>
-<%--    <!-- a 태그의 href는 아래의 tab-content 영역의 id를 설정하고 data-toggle 속성을 tab으로 설정한다. -->--%>
-<%--    <li><a href="1" data-toggle="tab" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a></li>--%>
-<%--    <li><a href="2" data-toggle="tab" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a></li>--%>
-<%--    <li><a href="3" data-toggle="tab" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a></li>--%>
-<%--    <li><a href="4" data-toggle="tab" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a></li>--%>
-<%--    <li><a href="5" data-toggle="tab" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a></li>--%>
-<%--    <li><a href="6" data-toggle="tab" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a></li>--%>
-<%--    <li><a href="7" data-toggle="tab" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a></li>--%>
-<%--    <li><a href="8" data-toggle="tab" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a></li>--%>
-<%--</ul>--%>
-<%--<!-- Tab이 선택되면 내용이 보여지는 영역이다. -->--%>
-<%--<!-- 태그는 div이고 class는 tab-content로 설정한다. -->--%>
-<%--<div class="tab-content">--%>
-<%--    <!-- 각 탭이 선택되면 보여지는 내용이다. 태그는 div이고 클래스는 tab-pane이다. -->--%>
-<%--    <!-- active 클래스는 현재 선택되어 있는 탭 영역이다. -->--%>
-<%--    <div class="tab-pane fade in active" id="전체 보기">전체 보기</div>--%>
-<%--    <div class="tab-pane fade" id="고기">고기 메뉴</div>--%>
-<%--    <!-- id는 고유한 이름으로 설정하고 tab의 href와 연결되어야 한다. -->--%>
-<%--    <div class="tab-pane fade" id="분식">분식 메뉴</div>--%>
-<%--    <!-- fade 클래스는 선택적인 사항으로 트랜지션(transition)효과가 있다.-->--%>
-<%--    <!-- in 클래스는 fade 클래스를 선언하여 트랜지션효과를 사용할 때 in은 active와 선택되어 있는 탭 영역의 설정이다. -->--%>
-<%--    <div class="tab-pane fade" id="음료">음료 메뉴</div>--%>
-<%--    <div class="tab-pane fade" id="양식">양식 메뉴</div>--%>
-<%--    <div class="tab-pane fade" id="디저트">디저트 메뉴</div>--%>
-<%--    <div class="tab-pane fade" id="한식">한식 메뉴</div>--%>
-<%--    <div class="tab-pane fade" id="기타">기타 메뉴</div>--%>
-<%--</div>--%>
 
 
 <section class="main-content">
