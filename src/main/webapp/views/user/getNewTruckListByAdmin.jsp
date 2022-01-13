@@ -244,7 +244,15 @@
                                                     <h5><span class="badge" style="background-color: #ffffff; color: #110000">기타</span></h5>
                                                 </c:when>
                                             </c:choose>
-                                            <p class="item-text-dek"><strong>${truck.truckSigMenuName}</strong></p>
+                                            <c:choose>
+                                                <c:when test="${truck.truckJoinReqStatus eq 0 }">
+                                                    <h5><span class="badge" style="background-color: #ffffff; color: #110000">승인요청</span></h5>
+                                                </c:when>
+                                                <c:when test="${truck.truckJoinReqStatus eq 2}">
+                                                    <h5><span class="badge" style="background-color: #ffffff; color: #110000">승인거절</span></h5>
+                                                </c:when>
+                                            </c:choose>
+                                            <p class="item-text-dek"><strong>${truck.truckRegDate}</strong></p>
                                             <h6 class="item-text-title">${truck.truckCEOIntro}</h6>
 
                                         </div>

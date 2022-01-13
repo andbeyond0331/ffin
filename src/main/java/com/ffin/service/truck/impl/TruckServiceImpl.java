@@ -96,6 +96,12 @@ public class TruckServiceImpl implements TruckService {
         return map;
     }
 
+    @Override
+    public void updateTruckJoin(Truck truck) throws Exception {
+        System.out.println("TruckServiceImpl.updateTruckJoin");
+        truckDao.updateTruckJoin(truck);
+    }
+
     // 푸드트럭 수정
     @Override
     public void updateTruck(Truck truck) throws Exception {

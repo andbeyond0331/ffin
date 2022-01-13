@@ -50,6 +50,8 @@ public interface TruckDao {
 
     // 새로 가입한 푸드트럭 목록보기(관리자)
     public List<Truck> getNewTruckListByAdmin(Search search) throws Exception ;
+    // 트럭 가입승인 & 거절
+    public void updateTruckJoin(Truck truck) throws Exception;
 
     // 푸드트럭 로그인
     public void login(Truck truck) throws Exception ;

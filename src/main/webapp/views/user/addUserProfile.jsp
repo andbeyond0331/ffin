@@ -52,7 +52,7 @@
 
 		/* 입력완료 버튼 클릭 */
 		$(function () {
-			$("a[href='#' ]").click(function () {
+			$("a[href='/' ]").click(function () {
 				$("#user_pro_form").attr("method", "POST").attr("action","/user/updateUserProfile").attr("enctype", "multipart/form-data").submit();
 				alert("가입을 축하합니다. 로그인 후 이용해주세요.");
 			});
@@ -183,7 +183,7 @@
 			</form>
 
 			<div class="btn-box" style="margin-top: -30px;">
-				<a href="#">
+				<a href="/">
 					입력완료
 				</a>
 			</div>
