@@ -31,17 +31,19 @@
         }
         .item {
             position: relative;
-            float: left;
-            width: 33%;
+            /*float: left;*/
+            /*width: 33%;*/
             background-color: #fae100;
             overflow: hidden;
             border-radius: 10px;
+            box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1);
+            transition: 0.1s;
         }
         .item:after {
              content: '';
              display: block;
              background-color: inherit;
-             opacity: 0.5;
+             opacity: 0.7;
              width: 100%;
              height: 100%;
              position: absolute;
@@ -129,7 +131,7 @@
             text-indent: -9999px;
         }
         .item-truck{
-            width: 33%;
+            /*width: 33%;*/
             display: flex;
             justify-content: space-between;
             margin-top: 5px;
@@ -199,38 +201,38 @@
                 </div>
             </div>
 
-            <div class="card mb-12" style="border: 0;">
+            <div class="row mb-12" style="border: 0;">
 
                     <c:set var="i" value="0" />
                     <c:forEach var="truck" items="${list}">
                     <c:set var="i" value="${ i+1 }" />
 
-                        <div class="card mb-4" style="border: 0;">
+                        <div class="card col-md-4 mb-4" style="border: 0;">
                             <div style="display: flex; flex-direction: column;">
                                 <input type="hidden" id="truckIdId" name="truckIdId" value="${truck.truckId}">
-                            <div class="item">
-                                <div class="item-image">
-                                    <c:if test="${truck.truckProImg != null }">
-                                        <img src="../../resources/image/${truck.truckProImg}" alt="" />
-                                    </c:if>
-                                    <c:if test="${truck.truckProImg == null }">
-                                        <img src="/resources/image/truckPro.png" alt="" />
-                                    </c:if>
-                                </div>
-                                <div class="item-text">
-                                    <div class="item-text-wrapper">
-                                        <p class="item-text-dek">${truck.truckSigMenuName}</p>
-                                        <h6 class="item-text-title">${truck.truckCEOIntro}</h6>
+                                <div class="item">
+                                    <div class="item-image">
+                                        <c:if test="${truck.truckProImg != null }">
+                                            <img src="../../resources/image/${truck.truckProImg}" alt="" />
+                                        </c:if>
+                                        <c:if test="${truck.truckProImg == null }">
+                                            <img src="/resources/image/truckPro.png" alt="" />
+                                        </c:if>
                                     </div>
+                                    <div class="item-text">
+                                        <div class="item-text-wrapper">
+                                            <p class="item-text-dek">${truck.truckSigMenuName}</p>
+                                            <h6 class="item-text-title">${truck.truckCEOIntro}</h6>
+                                        </div>
+                                    </div>
+                                    <a class="item-link" href="#" onclick="getTruckInfo()"></a>
                                 </div>
-                                <a class="item-link" href="#" onclick="getTruckInfo()"></a>
-                            </div>
-                            <div class="item-truck">
-                                <span>${truck.truckName}</span>
-                                <span><i class="fas fa-star"></i>${truck.truckAVGStar}4.4</span>
+                                <div class="item-truck">
+                                    <span>${truck.truckName}</span>
+                                    <span><i class="fas fa-star"></i>${truck.truckAVGStar}4.4</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </c:forEach>
 
             </div>

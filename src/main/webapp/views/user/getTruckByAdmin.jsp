@@ -62,7 +62,97 @@
             margin-top: 20px;
         }
 
+        .wrapper {
+            width: 40%;
+            margin: 40px auto;
+        }
 
+        div.gallery {
+            margin-top: 30px;
+            border: 0;
+        }
+
+        div.gallery ul {
+            list-style-type: none;
+            margin-left: 35px;
+            border: 0;
+        }
+
+        /* animation */
+        div.gallery ul li, div.gallery li img {
+            -webkit-transition: all 0.1s ease-in-out;
+            -moz-transition: all 0.1s ease-in-out;
+            -o-transition: all 0.1s ease-in-out;
+            transition: all 0.1s ease-in-out;
+        }
+
+        div.gallery ul li {
+            position: relative;
+            float: left;
+            width: 180px;
+            height: 180px;
+            margin: 5px;
+            padding: 5px;
+            z-index: 0;
+        }
+
+        div.gallery ul li:hover {
+            z-index: 5;
+        }
+
+        div.gallery ul li img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            border: 1px solid #dddddd;
+            padding: 5px;
+            width: 180px;
+            height: 180px;
+            background: #f0f0f0;
+        }
+
+        div.gallery ul li img:hover {
+            width: 300px;
+            height: 300px;
+            margin-top: -130px;
+            margin-left: -130px;
+            top: 65%;
+            left: 65%;
+        }
+
+        p.attribution {
+            font-family: 'Consolas';
+            color: #000;
+            clear: both;
+            text-align: center;
+            line-height: 25px;
+            padding-top: 30px;
+        }
+
+        p.attribution a {
+            color: #4c8d7c;
+        }
+
+        @media only screen and (min-width: 499px) and (max-width: 1212px) {
+            .wrapper {
+                width: 500px;
+            }
+        }
+
+        @media only screen and (max-width: 498px) {
+            .wrapper {
+                width: 300px;
+            }
+
+            div.gallery ul {
+                list-style-type: none;
+                margin: 0;
+            }
+        }
+
+        h5 span {
+            margin: 0;
+        }
 
     </style>
 
@@ -95,67 +185,77 @@
 
                     <div style="display: flex; justify-content: center;">
                         <div class="col-md-6 data-input-box" style="display: flex; justify-content: center;">
-                            <div class="data-input-box user-info">
+                            <div>
+
+                                <div style="margin-top: 15px;">
+                                    <h4>${truck.truckName}</h4>
+                                </div>
+
                                 <div>
-                                    <div style="margin-bottom: 30px;">
-                                        <h5>${truck.truckName}</h5>
-                                    </div>
-                                    <div style="margin-bottom: 30px;">
+                                    <div style="margin-top: 5px;">
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <c:if test="${truck.truckByeStatus eq 0}">
+                                                <h5><span class="badge" style="background-color: #ffe537; color: #110000">활동중</span></h5>
+                                            </c:if>
+                                            <c:if test="${truck.truckByeStatus eq 1}">
+                                                <h5><span class="badge" style="background-color: #f17228; color: #ffffff">탈퇴</span></h5>
+                                            </c:if>
+
+                                            <c:choose>
+                                                <c:when test="${truck.truckJoinReqStatus eq 0 }">
+                                                    <h5><span class="badge" style="background-color: #f17228; color: white">가입승인대기</span></h5>
+                                                </c:when>
+                                                <c:when test="${truck.truckJoinReqStatus eq 1}">
+                                                    <h5><span class="badge" style="background-color: #ffe537; color: #110000">가입승인완료</span></h5>
+                                                </c:when>
+                                                <c:when test="${truck.truckJoinReqStatus eq 2}">
+                                                    <h5><span class="badge" style="background-color: #ffe537; color: #110000">가입승인거절</span></h5>
+                                                </c:when>
+                                            </c:choose>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <hr style="margin-top: 35px;"/>
+                    <hr style="margin-top: 15px;"/>
 
-                    <div class="data-input-box info" style="display: flex;">
-                        <div>
-                            <c:if test="${truck.truckProImg == null}">
-                                <img src="../../resources/image/user_img.jpg" class="rounded float-start" alt="userProImg">
-                            </c:if>
-                            <c:if test="${truck.truckProImg != null}">
-                                <img src="../../resources/image/${truck.truckProImg}" class="rounded float-start" alt="userProImg">
-                            </c:if>
-                        </div>
-                        <div>
-                            <div style="margin-left: 40px; margin-top: 20px; float: left;">
-                                <label for="userId" class="form-label label-name">푸드트럭명</label>
-                                <input type="text" class="form-control" value="${truck.truckId}" id="userId" name="userId" readonly style="width: 400px;">
-                            </div>
-                            <div style="margin-left: 40px; margin-top: 20px; float: left;">
-                                <label for="userName" class="form-label label-name"><i class="fas fa-star"></i></label>
-                                <input type="text" class="form-control" value="${truck.truckAVGStar}" id="userName" name="userName" readonly style="width: 400px;">
-                            </div>
-                            <div style="margin-left: 40px; margin-top: 20px; float: left;">
-
-                                <div style="display: flex;">
-                                <c:if test="${truck.truckByeStatus eq 0}">
-                                    <h5><span class="badge" style="background-color: #ffe537; color: #110000">활동중</span></h5>
+                    <div class="data-input-box info" style="display: flex; justify-content: center;">
+                        <div class="gallery">
+                            <ul>
+                                <c:if test="${truck.truckProImg == null}">
+                                    <li><img src="/resources/image/nothing.jpg"></li>
                                 </c:if>
-                                <c:if test="${truck.truckByeStatus eq 1}">
-                                    <h5><span class="badge" style="background-color: #f17228; color: #ffffff">탈퇴</span></h5>
+                                <c:if test="${truck.truckProImg != null}">
+                                    <li><img src="/resources/image/${truck.truckProImg}"></li>
                                 </c:if>
 
-                                <c:choose>
-                                    <c:when test="${truck.truckJoinReqStatus eq 0}">
-                                        <h5><span class="badge" style="background-color: #ffe537; color: #110000">가입승인대기</span></h5>
-                                    </c:when>
-                                    <c:when test="${truck.truckJoinReqStatus eq 1}">
-                                        <h5><span class="badge" style="background-color: #ffe537; color: #110000">가입승인완료</span></h5>
-                                    </c:when>
-                                    <c:when test="${truck.truckJoinReqStatus eq 2}">
-                                        <h5><span class="badge" style="background-color: #ffe537; color: #110000">가입승인거절</span></h5>
-                                    </c:when>
-                                </c:choose>
+                                <c:if test="${truck.truckBusiLice == null}">
+                                    <li><img src="/resources/image/nothing.jpg"></li>
+                                </c:if>
+                                <c:if test="${truck.truckBusiLice != null}">
+                                    <li><img src="/resources/image/${truck.truckBusiLice}"></li>
+                                </c:if>
 
+                                <c:if test="${truck.truckSigMenuImg1 == null}">
+                                <li><img src="/resources/image/nothing.jpg"></li>
+                                </c:if>
+                                <c:if test="${truck.truckSigMenuImg1 != null}">
+                                    <li><img src="/resources/image/${truck.truckSigMenuImg1}"></li>
+                                </c:if>
 
-                                </div>
-                            </div>
+                                <c:if test="${truck.truckNoticeImg == null}">
+                                <li><img src="/resources/image/nothing.jpg"></li>
+                                </c:if>
+                                <c:if test="${truck.truckNoticeImg != null}">
+                                    <li><img src="/resources/image/${truck.truckNoticeImg}"></li>
+                                </c:if>
+                            </ul>
                         </div>
                     </div>
 
-                    <hr style="margin-top: 60px;"/>
+                    <hr style="margin-top: 15px;"/>
 
                     <div style="display: flex; justify-content: center;">
                         <div class="col-md-6 data-input-box" style="display: flex; justify-content: center;">
@@ -170,51 +270,60 @@
                                         <input type="text" class="form-control" value="${truck.truckCEOBirth}" id="truckCEOBirth" name="truckCEOBirth" readonly style="width: 340px;">
                                     </div>
                                     <div style="margin-bottom: 30px;">
-                                        <label for="truckPhone" class="form-label label-name">대표자 연락처</label>
-                                        <input type="text" class="form-control" value="${truck.truckPhone}" id="truckPhone" name="truckPhone" readonly style="width: 340px;">
-                                    </div>
-                                    <div style="margin-bottom: 30px;">
                                         <label for="truckAddr" class="form-label label-name">대표자 주소</label>
                                         <input type="text" class="form-control" value="${truck.truckAddr}" id="truckAddr" name="truckAddr" readonly style="width: 340px; margin-bottom: 5px;">
                                         <input type="text" class="form-control" value="${truck.truckAddrDetail}" id="truckAddrDetail" name="truckAddrDetail" readonly style="width: 340px;">
                                     </div>
                                     <div style="margin-bottom: 30px;">
-                                        <label for="truckEmail" class="form-label label-name">Email</label>
+                                        <label for="truckPhone" class="form-label label-name">대표자 연락처</label>
+                                        <input type="text" class="form-control" value="${truck.truckPhone}" id="truckPhone" name="truckPhone" readonly style="width: 340px;">
+                                    </div>
+                                    <div style="margin-bottom: 30px;">
+                                        <label for="truckEmail" class="form-label label-name">대표자 Email</label>
                                         <input type="text" class="form-control" value="${truck.truckEmail}" id="truckEmail" name="truckEmail" readonly style="width: 340px;">
+                                    </div>
+                                    <div style="margin-bottom: 30px;">
+                                        <label for="truckCEOIntro" class="form-label label-name">한줄소개</label>
+                                        <input type="text" class="form-control" value="${truck.truckCEOIntro}" id="truckCEOIntro" name="truckCEOIntro" readonly style="width: 340px;">
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                       <%-- <div class="col-md-6 data-input-box" style="display: flex; justify-content: center;">
+                        <div class="col-md-6 data-input-box" style="display: flex; justify-content: center;">
                             <div class="data-input-box user-profile">
                                 <div>
                                     <div style="margin-bottom: 30px;">
-                                        <label for="userTotalPoint" class="form-label label-name">적립금</label>
-                                        <input type="text" class="form-control" value="${truck.userTotalPoint}&nbsp;P" id="userTotalPoint" name="userTotalPoint" readonly style="width: 340px;">
+                                        <label for="truckBusiNo" class="form-label label-name">사업자등록번호</label>
+                                        <input type="text" class="form-control" value="${truck.truckBusiNo}" id="truckBusiNo" name="truckBusiNo" readonly style="width: 340px;">
                                     </div>
                                     <div style="margin-bottom: 30px;">
-                                        <label for="userFavMenu" class="form-label label-name">좋아하는 메뉴</label>
-                                        <input type="text" class="form-control" value="${truck.userFavMenu}" id="userFavMenu" name="userFavMenu" readonly style="width: 340px;">
+                                        <label for="truckRegDate" class="form-label label-name">푸드트럭 등록일</label>
+                                        <input type="text" class="form-control" value="${truck.truckRegDate}" id="truckRegDate" name="truckRegDate" readonly style="width: 340px;">
                                     </div>
                                     <div style="margin-bottom: 30px;">
-                                        <label for="userFavPlace" class="form-label label-name">자주 찾는 장소</label>
-                                        <input type="text" class="form-control" value="${truck.userFavPlace}" id="userFavPlace" name="userFavPlace" readonly style="width: 340px; margin-bottom: 5px;">
-                                        <input type="text" class="form-control" value="${truck.userFavPlaceDetail}" id="userFavPlaceDetail" name="userFavPlaceDetail" readonly style="width: 340px;">
+                                        <label for="truckSigMenuName" class="form-label label-name">푸드트럭 대표메뉴</label>
+                                        <input type="text" class="form-control" value="${truck.truckSigMenuName}" id="truckSigMenuName" name="truckSigMenuName" readonly style="width: 340px;">
                                     </div>
                                     <div style="margin-bottom: 30px;">
-                                        <label for="userIntro" class="form-label label-name">한줄소개</label>
-                                        <input type="text" class="form-control" value="${truck.userIntro}" id="userIntro" name="userIntro" readonly style="width: 340px;">
+                                        <label for="userFavPlace" class="form-label label-name">푸드트럭 위치</label>
+                                        <input type="text" class="form-control" value="${truck.truckMapLa}" id="userFavPlace" name="userFavPlace" readonly style="width: 340px; margin-bottom: 5px;">
+                                        <input type="text" class="form-control" value="${truck.truckMapLo}" id="userFavPlaceDetail" name="userFavPlaceDetail" readonly style="width: 340px;">
+                                    </div>
+                                    <div style="margin-bottom: 30px;">
+                                        <label for="truckNoticeTitle" class="form-label label-name">푸드트럭 공지</label>
+                                        <input type="text" class="form-control" value="${truck.truckNoticeTitle}" id="truckNoticeTitle" name="truckNoticeTitle" readonly style="width: 340px; margin-bottom: 5px;">
+                                        <input type="text" class="form-control" value="${truck.truckNoticeContent}" id="truckNoticeContent" name="truckNoticeContent" readonly style="width: 340px; height: 100px;}">
                                     </div>
                                 </div>
                             </div>
-                        </div>--%>
+                        </div>
                     </div>
 
                     <hr style="margin-bottom: 35px;"/>
-                </div>
 
-            </form>
+                </div>
+        </form>
 
             <div class="btn-box" style=" margin-top: 20px;">
                 <a onClick="history.go(-1);" style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
@@ -222,7 +331,7 @@
                 </a>
             </div>
         </div>
-    </div>
+
 </section>
 
 <jsp:include page="/views/footer.jsp" />
