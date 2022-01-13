@@ -159,6 +159,12 @@
 
     <script type="text/javascript">
 
+        $(function () {
+           $(".gallery ul li img").click(function () {
+
+           }) ;
+        });
+
     </script>
 </head>
 
@@ -185,21 +191,62 @@
 
                     <div style="display: flex; justify-content: center;">
                         <div class="col-md-6 data-input-box" style="display: flex; justify-content: center;">
-                            <div>
+                            <div class="col-md-7">
 
                                 <div style="margin-top: 15px;">
-                                    <h4>${truck.truckName}</h4>
+                                    <h4 style="text-align: center;">${truck.truckName}</h4>
                                 </div>
 
                                 <div>
                                     <div style="margin-top: 5px;">
                                         <div style="display: flex; justify-content: space-between;">
+
+                                            <c:choose>
+                                                <c:when test="${truck.truckCate eq 1}">
+                                                    <h5><span class="badge" style="background-color: #65bf96; color: #110000">고기</span></h5>
+                                                </c:when>
+                                                <c:when test="${truck.truckCate eq 2}">
+                                                    <h5><span class="badge" style="background-color: #65bf96; color: #110000">분식</span></h5>
+                                                </c:when>
+                                                <c:when test="${truck.truckCate eq 3}">
+                                                    <h5><span class="badge" style="background-color: #65bf96; color: #110000">음료</span></h5>
+                                                </c:when>
+                                                <c:when test="${truck.truckCate eq 4}">
+                                                    <h5><span class="badge" style="background-color: #65bf96; color: #110000">양식</span></h5>
+                                                </c:when>
+                                                <c:when test="${truck.truckCate eq 5}">
+                                                    <h5><span class="badge" style="background-color: #65bf96; color: #110000">디저트</span></h5>
+                                                </c:when>
+                                                <c:when test="${truck.truckCate eq 6}">
+                                                    <h5><span class="badge" style="background-color: #65bf96; color: #110000">한식</span></h5>
+                                                </c:when>
+                                                <c:when test="${truck.truckCate eq 7}">
+                                                    <h5><span class="badge" style="background-color: #65bf96; color: #110000">일식</span></h5>
+                                                </c:when>
+                                                <c:when test="${truck.truckCate eq 8}">
+                                                    <h5><span class="badge" style="background-color: #65bf96; color: #110000">기타</span></h5>
+                                                </c:when>
+                                            </c:choose>
+
                                             <c:if test="${truck.truckByeStatus eq 0}">
                                                 <h5><span class="badge" style="background-color: #ffe537; color: #110000">활동중</span></h5>
                                             </c:if>
                                             <c:if test="${truck.truckByeStatus eq 1}">
                                                 <h5><span class="badge" style="background-color: #f17228; color: #ffffff">탈퇴</span></h5>
                                             </c:if>
+
+
+                                            <c:choose>
+                                                <c:when test="${truck.truckJoinReqStatus eq 0 }">
+                                                    <h5><span class="badge" style="background-color: #f17228; color: white">가입승인대기</span></h5>
+                                                </c:when>
+                                                <c:when test="${truck.truckJoinReqStatus eq 1}">
+                                                    <h5><span class="badge" style="background-color: #ffe537; color: #110000">가입승인완료</span></h5>
+                                                </c:when>
+                                                <c:when test="${truck.truckJoinReqStatus eq 2}">
+                                                    <h5><span class="badge" style="background-color: #ffe537; color: #110000">가입승인거절</span></h5>
+                                                </c:when>
+                                            </c:choose>
 
                                             <c:choose>
                                                 <c:when test="${truck.truckJoinReqStatus eq 0 }">

@@ -96,12 +96,11 @@
     }
 
     .btn.btn-default{
-        color: #fff;
+        color: #110000;
         background-color: #ffe537;
         margin-left: 10px;
         padding: 10px 15px 10px 15px;
         border-radius: 10rem;
-        padding: 0.75rem 1rem;
     }
     .btn.btn-default:hover{
         color: #ffe537;

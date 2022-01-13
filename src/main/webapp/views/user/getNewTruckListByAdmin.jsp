@@ -8,7 +8,7 @@
 
 <head>
 
-    <title>F.FIN | 푸드트럭목록 </title>
+    <title>F.FIN | 푸드트럭 가입요청 목록 </title>
     <jsp:include page="../../common/lib.jsp"/>
 
     <!-- bootstrap core css -->
@@ -163,7 +163,7 @@
             <div class="detail-box">
                 <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
                 <h4 style="margin-top: 10px;">
-                    푸드트럭 목록
+                    푸드트럭 가입요청목록
                 </h4>
             </div>
 
