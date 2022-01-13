@@ -5,6 +5,7 @@ import com.ffin.service.community.CommunityDao;
 import com.ffin.service.domain.Comment;
 import com.ffin.service.domain.Heart;
 import com.ffin.service.domain.Post;
+import com.ffin.service.domain.Truck;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -196,13 +197,31 @@ public class CommunityDaoImpl implements CommunityDao {
         map.put("id", id);
         map.put("role", role);
         map.put("postNo", postNo);
+        System.out.println("555555555555555555555555555555555");
+        Post post = sqlSession.selectOne("PostMapper.getCardDetail", map);
+        System.out.println("66666666666666666666666666666post"+post);
+        if (post.getPostUser() != null){
+            System.out.println("77777777777777777777777777777777777777777");
+            post.setUserProImg(sqlSession.selectOne("CommentMapper.get_pro_img_user", post.getPostUser().getUserId()));
+            System.out.println("888888888888888888888888888888888888888");
 
-        return sqlSession.selectOne("PostMapper.getCardDetail", map);
+
+        }else {
+            System.out.println("1000000000000000000000000000000000000000000000101010010");
+            post.setTruckProImg(sqlSession.selectOne("CommentMapper.get_pro_img_truck", post.getPostTruck().getTruckId()));
+            System.out.println("11111111111111111111111111110111111111111111111111111111111112121212");
+        }
+        System.out.println("121212121212121212121212121212121212121");
+
+
+        return post;
     }
 
 
 public void updatePostHitUp (int postNo) throws Exception{
+    System.out.println("#333333333333333333333333333333333333333");
     sqlSession.update("PostMapper.post_hit_up", postNo);
+    System.out.println("444444444444444444444444444444444");
 }
 
 

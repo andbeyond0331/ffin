@@ -104,7 +104,7 @@
             post_reg_date = SYSDATE(),
             post_file1 = #{postFile1},
             post_file2 = #{postFile2},
-            post_file2 = #{postFile3}
+            post_file3 = #{postFile3}
         </set>
         WHERE post_no = #{postNo}
     </update>
@@ -300,7 +300,7 @@
             post_reg_date = SYSDATE(),
             post_file1 = #{postFile1},
             post_file2 = #{postFile2},
-            post_file2 = #{postFile3}
+            post_file3 = #{postFile3}
         </set>
         WHERE post_no = #{postNo}
     </update>

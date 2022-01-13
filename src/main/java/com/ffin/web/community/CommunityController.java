@@ -390,9 +390,9 @@ public class CommunityController {
 
 
     @RequestMapping(value="updatePostPic", method=RequestMethod.POST)
-    public String updatePostPic(@RequestParam("postFile11")MultipartFile file1,
-                             @RequestParam(value="postFile22", required = false)MultipartFile file2,
-                             @RequestParam(value="postFile33", required = false)MultipartFile file3,
+    public String updatePostPic(@RequestParam("postFile111")MultipartFile file1,
+                             @RequestParam(value="postFile222", required = false)MultipartFile file2,
+                             @RequestParam(value="postFile333", required = false)MultipartFile file3,
                              HttpServletRequest request,
                              @ModelAttribute("post") Post post,
                              @RequestParam("postContent") String postContent, HttpSession session

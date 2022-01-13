@@ -264,10 +264,11 @@ public class CommunityRestController {
             id = ((Truck) session.getAttribute("truck")).getTruckId();
 
         }
-
+        System.out.println("11111111111111111111111111111111111111111111111111");
         communityService.updatePostHitUp(postNo);
+        System.out.println("2222222222222222222222222222222222222222222222222");
         Post post = communityService.getCardDetail(id, role, postNo);
-
+        System.out.println("!31313131313131313131313131313131313");
 
         ModelAndView mv = new ModelAndView("jsonView");
         mv.addObject("post", post);

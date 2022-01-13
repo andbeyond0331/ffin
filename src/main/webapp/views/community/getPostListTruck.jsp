@@ -166,13 +166,16 @@
         margin: auto;
         background-color: rgba(250, 250, 250, 0.85);
         -webkit-box-shadow: 0 2px 26px rgba(0, 0, 0, .3), 0 0 0 1px rgba(0, 0, 0, .1);
-        box-shadow: 0 2px 26px rgba(0, 0, 0, .3), 0 0 0 1px rgba(0, 0, 0, .1);
+        /*box-shadow: 0 2px 26px rgba(0, 0, 0, .3), 0 0 0 1px rgba(0, 0, 0, .1);
+            padding: 1rem;
+            flex: 1 1 auto;
+        */
         border-radius: 5px;
 
         position: relative;
         -ms-flex: 1 1 auto;
-        flex: 1 1 auto;
-        padding: 1rem;
+
+
     }
     .insta-header h2:after,
     .insta-header .dots,
@@ -485,7 +488,9 @@
         transform: translateX(0);
         opacity: 1
     }
-
+.postContent{
+    padding-left:30px;
+}
 </style>
 
 
@@ -696,14 +701,10 @@
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"></span>
-                </button>
-            </div>
+
             <div class="wrapper">
                 <div class='main-insta'>
-
+                    <div class='insta-header'></div>
                     <div class="insta-post">
                         <div class="css-slider-wrapper">
                             <input type="radio" name="slider" class="slide-radio1" checked id="slider_1" style="display: none">
@@ -730,17 +731,17 @@
                             </div>
                             <div class="slider slide1">
                                 <div>
-                                    <h2>Jerusalem shall be ours</h2>
+
                                 </div>
                             </div>
                             <div class="slider slide2">
                                 <div>
-                                    <h2>Jerusalem shall be free </h2>
+
                                 </div>
                             </div>
                             <div class="slider slide3">
                                 <div>
-                                    <h2>Together we shall walk it's scented air</h2>
+
                                 </div>
                             </div>
                         </div>
@@ -773,7 +774,7 @@
             <c:forEach var="post" items="${list}">
             <div class="gallery-item" tabindex="0">
 
-                <img src="../../resources/image/${post.postFile1}" class="gallery-image" alt="" >
+                <img src="/resources/image/${post.postFile1}" class="gallery-image" alt="" >
 
                 <input type="hidden" id="postNoNo" name="postNoNo" value="${post.postNo}"/>
                 <div class="gallery-item-info">
@@ -793,119 +794,7 @@
         </div>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<%--
-        <div id="card-box" class="cards-box">
-
-
-                <div class="card" name ="card" id="card${post.postNo}" style="width: 23rem; margin-bottom:15px; margin-left: 10px;" >
-                    <img class="card-img-top" src="../../resources/image/${post.postFile1}" alt="Card image cap"
-                         style="border-bottom: 1px solid #eee; height: 300px;" onclick="getCardDetail(${post.postNo})">
-                    <div class="card-body">
-                        <ul class='card-body-ul'>
-
-                            &lt;%&ndash;<c:if test="${sessionScope.role eq 'user'}">&ndash;%&gt;
-                                <li> ${post.postUser.userId} ${post.postTruck.truckId}</li>
-                            &lt;%&ndash;</c:if>
-                            <c:if test="${sessionScope.role eq 'truck'}">&ndash;%&gt;
-                               &lt;%&ndash; <li> ${post.postTruck.truckId}</li>&ndash;%&gt;
-                            &lt;%&ndash;</c:if>&ndash;%&gt;
-                            <li>${post.postTitle}</li>
-                            <li>${post.postContent}</li>
-                            <li>${post.postRegDate}</li>
-                        </ul>
-
-
-                                <c:choose>
-                                    <c:when test="${ post.heartNo eq 0}">
-                                        &lt;%&ndash; 빈 하트일때 &ndash;%&gt;
-                                        <span>
-                                            <a idx="${post.postNo }" href="javascript:" class="heart-click heart_icon${post.postNo }">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
-                                                     <path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" />
-                                                </svg>
-                                            </a>
-                                        </span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        &lt;%&ndash; 꽉찬 하트일때 &ndash;%&gt;
-                                        <span>
-                                            <a idx="${post.postNo}" href="javascript:" class="heart-click heart_icon${post.postNo}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
-                                                 <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />
-                                             </svg>
-                                        </a>
-                                        </span>
-                                    </c:otherwise>
-                                </c:choose>
-
-
-
-                        <span id="heart${post.postNo }">${post.heartCount }</span>
-                        <span>
-                                <a idx="${post.postNo }" href="javascript:" class="reply-click reply-icon${post.postNo }">
-                                   <i class="fas fa-beer"></i>
-                                </a>
-                        </span>
-                        <span id="reply${post.postNo }">${post.replyCount }</span>
-
-                        <span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-											<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
-											<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
-										</svg>
-						</span> <span id="hit${post.postNo }">${post.postHit }</span>
-
-
-                    </div>
-                </div>
-            </c:forEach>
-        </div>
-
-
-    </div>
-</div>--%>
 </form>
-<%--<div class="format">
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="..." class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="..." class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="..." class="d-block w-100" alt="...">
-            </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-</div>--%>
-
 
 <!-- PageNavigation Start... -->
 <jsp:include page="../../common/pageNavigator.jsp"/>
@@ -1220,6 +1109,9 @@
                 var modalPic = $("#staticBackdrop");
                 var div ="";
 
+                console.log("1 : "+pto.post.postFile1);
+                console.log("2 : "+pto.post.postFile2);
+                console.log("3 : "+pto.post.postFile3);
 
                div += " <form class='form-horizontal' id='updatePostPicViewForm'>"
                 +"<div class='form-group'>"
@@ -1229,30 +1121,48 @@
                     +"<div class='form-group'>"
                       +" <label for='postFile1' class='col-sm-offset-1 col-sm-10 control-label'>파일 이미지1</label>"
                        + "<div class='col-sm-10'>"
-                           + "<input type='file' class='form-control' id='postFile1' name='postFile11'  value='"+pto.post.postFile1+"' placeholder='파일 이미지1' onchange='setImage1Preview(event, 0);'>"
+                           + "<input type='file' class='form-control' id='postFile11' name='postFile111'  value='"+pto.post.postFile1+"' placeholder='파일 이미지1' onchange='setImage1Preview(event, 0);'>"
                        + "</div>"
-                       + "<div id='m_image1preview' class='col-sm-10'><img src='../../../resources/image/"+pto.post.postFile1+" '></div>"
+                       + "<div id='m_image1preview' class='col-sm-10'>";
+                if (pto.post.postFile1 != null){
+                    div += "<img src='/resources/image/"+pto.post.postFile1+" '>";
+                }
+
+                   div += "</div>"
                    + "</div>"
                     +"<div class='form-group'>"
                        +" <label for='postFile2' class='col-sm-offset-1 col-sm-10 control-label'>파일 이미지2</label>"
                       + " <div class='col-sm-10'>"
-                          +  "<input type='file' class='form-control' id='postFile2' name='postFile22'  value='"+pto.post.postFile2+"' placeholder='파일 이미지2' onchange='setImage2Preview(event, 0);'>"
+                          +  "<input type='file' class='form-control' id='postFile22' name='postFile222'  value='"+pto.post.postFile2+"' placeholder='파일 이미지2' onchange='setImage2Preview(event, 0);'>"
                        + "</div>"
-                       + "<div id='m_image2preview' class='col-sm-10'><img src='../../../resources/image/"+pto.post.postFile2+" '></div>"
+                       + "<div id='m_image2preview' class='col-sm-10'>";
+
+               if (pto.post.postFile2 != null){
+                   div += "<img src='/resources/image/"+pto.post.postFile2+" '>";
+               }
+
+                   div += "</div>"
                    + "</div>"
                    + "<div class='form-group'>"
                        + "<label for='postFile3' class='col-sm-offset-1 col-sm-10 control-label'>파일 이미지3</label>"
                        +" <div class='col-sm-10'>"
-                          + " <input type='file' class='form-control' id='postFile3' name='postFile33'  value='"+pto.post.postFile3+"' placeholder='파일 이미지3' onchange='setImage3Preview(event, 0);'>"
+                          + " <input type='file' class='form-control' id='postFile33' name='postFile333'  value='"+pto.post.postFile3+"' placeholder='파일 이미지3' onchange='setImage3Preview(event, 0);'>"
                         +"</div>"
-                        +"<div id='m_image3preview' class='col-sm-10'><img src='../../../resources/image/"+pto.post.postFile3+" '></div>"
+                        +"<div id='m_image3preview' class='col-sm-10'>";
+
+                if (pto.post.postFile3 != null){
+                    div += "<img src='/resources/image/"+pto.post.postFile3+" '>";
+                }
+
+                   div += "</div>"
                    +" </div>"
                 +"<div id='here'></div>"
                 +"<div class='form-group'>"
-                    +"<textarea id='postContent' name = 'postContent' style='resize:none;' rows='5' cols='55' title='내용을 입력해 주세요.'>"+pto.post.postContent+"</textarea>"
+                    +"<textarea id='postContent1' name = 'postContent' style='resize:none;' rows='5' cols='55' title='내용을 입력해 주세요.'>"+pto.post.postContent+"</textarea>"
                    +"<input name='postNo' type='hidden' value='"+postNo+"'>"
               + " </div>"
                 +"</form>";
+
                div2="";
                div2+=
                    "<button class='button btn-warning' name='updatePostPic' onclick='fncUpdatePostPic();'>수정"
@@ -1566,59 +1476,15 @@
             success: function (data) {
                 var div="";
                 var modalFooter = "";
-                let hit = data.post.postHit;
+                var hit = data.post.postHit;
                 $('#hit'+postNo).text(hit);
 
                 div += "<div class='cloneFail' >"+
                     "</div>";
 
-
-
-                /*
-
-                                    +"<div id='carouselExampleInterval' class='carousel slide' data-ride='carousel'>"
-                                     +"<div class='carousel-inner'>"
-                                      +"<div class='carousel-item active'>"
-                                          +"<img class='d-block w-100' src='../../../resources/image/"+data.post.postFile1+"' alt='First slide'>"
-                                         +"</div>"
-                                      +"<div class='carousel-item' >"
-                                         +"<img class='d-block w-100' src='../../../resources/image/"+data.post.postFile2+"' alt='Second slide'>"
-                                     +"</div>"
-                                      +" <div class='carousel-item'>"
-                                      + " <img class='d-block w-100' src='../../../resources/image/"+data.post.postFile3+"' alt='Third slide'>"
-                                     +" </div></div>"
-                                      + " <a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'>"
-                                    + "<span class='carousel-control-prev-icon' aria-hidden='true'></span> <span class='sr-only'>Previous</span>"
-                                     + "</a>"
-                              + " <a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'>"
-                                    +"<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span>"
-                                  + " </a>"
-                                +" </div>";
-
-
-
-
-
-
-                /!* 슬라이드 해볼랫는데 안먹는당 *!/
-
-                */
-
-
-
-                /*               +"<div class='row'>"
-                             +"<div ><strong></strong> <img src='../../../resources/image/"+data.post.postFile1+"'></div></div>";
-
-                         if (data.post.postFile2 != null){
-                             div += "<div class='row'>"
-                                 +"<div ><strong></strong> <img src='../../../resources/image/"+data.post.postFile2+"'></div></div>";
-                         }
-                         if (data.post.postFile3 != null){
-                             div += "<div class='row'>"
-                                 +"<div ><strong></strong> <img src='../../../resources/image/"+data.post.postFile3+"'></div></div>";
-                         }*/
-                div += "<div class='row'>"+
-                    "<div>"+data.post.postContent+"</div></div>";
+                div += "<div class='row postContent' >"
+                    +"<div>"+data.post.postContent+"</div>"
+                    + "</div>";
 
                 if (data.post.heartNo == '0'){
 
@@ -1711,6 +1577,19 @@
                     }
                 }
                 //$('body').find( '.format' ).clone().appendTo( '#carouselFail' ).css("display", "block");
+
+                var postPicUserId;
+                var postPicProImg;
+                if (data.post.postUser.userId == null){
+                    postPicUserId = data.post.postTruck.truckId;
+                    postPicProImg = data.post.truckProImg;
+                }else {
+                    postPicUserId = data.post.postUser.userId;
+                    postPicProImg = data.post.userProImg;
+                }
+
+                console.log("id : "+postPicUserId);
+                console.log("img : "+postPicProImg);
 
 
 
