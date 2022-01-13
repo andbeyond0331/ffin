@@ -68,8 +68,8 @@ public class TruckDaoImpl implements TruckDao {
     }
 
     @Override
-    public List<Truck> getNewTruckListByAdmin(Map<String, Object> map) throws Exception {
-        return sqlSession.selectList("TruckMapper.getNewTruckListByAdmin", map);
+    public List<Truck> getNewTruckListByAdmin(Search search) throws Exception {
+        return sqlSession.selectList("TruckMapper.getNewTruckListByAdmin", search);
     }
     // 푸드트럭 수정...
     @Override

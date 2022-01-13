@@ -112,16 +112,16 @@
 	</update>
 
 	<!-- SQL : 신규가입 트럭조회 -->
-	<select id="getNewTruckList"   parameterType="String"    resultMap="truckSelectMap" >
-		SELECT
-			TRUCK_ID, TRUCK_PASSWORD, TRUCK_CEO_NAME, TRUCK_CEO_BIRTH, TRUCK_ADDR, TRUCK_ADDR_DETAIL,
-			TRUCK_PHONE, TRUCK_EMAIL, TRUCK_NAME, TRUCK_BUSI_LICE, TRUCK_BUSI_NO, TRUCK_CATE, TRUCK_PRO_IMG,
-			TRUCK_CEO_INTRO, TRUCK_AVG_STAR, TRUCK_MAP_LA, TRUCK_MAP_LO, TRUCK_JOIN_REQ_STATUS,
-			TRUCK_JOIN_REQ_DATE, TRUCK_NOTICE_TITLE, TRUCK_NOTICE_CONTENT, TRUCK_NOTICE_IMG,
-			TRUCK_BYE_STATUS, TRUCK_BYE_REASON, TRUCK_BUSI_STATUS, TRUCK_REG_DATE, ROLE
-		FROM truck
-		WHERE role = 0
+	<select id="getNewTruckListByAdmin" parameterType="map" resultMap="truckSelectMap">
+		SELECT inner_table.*
+		FROM ( SELECT *
+			   FROM truck
+			   WHERE ROLE = 0
+			   order by TRUCK_JOIN_REQ_DATE DESC ) inner_table
+		limit #{startRowNum}, 21
 	</select>
+
+
 
 
 
@@ -212,14 +212,7 @@
 		limit 0,20;
 	</select>
 
-	<select id="getNewTruckListByAdmin" parameterType="map" resultMap="truckSelectMap">
-		SELECT inner_table.*
-		FROM ( SELECT *
-			   FROM truck
-			   WHERE ROLE = 0
-			   order by TRUCK_JOIN_REQ_DATE DESC ) inner_table
-			limit#{search.startRowNum}, #{search.pageSize}
-	</select>
+
 
 
 

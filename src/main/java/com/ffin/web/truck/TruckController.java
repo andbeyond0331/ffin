@@ -3,7 +3,9 @@ package com.ffin.web.truck;
 import com.ffin.common.Page;
 import com.ffin.common.Search;
 import com.ffin.service.domain.Truck;
+import com.ffin.service.domain.User;
 import com.ffin.service.truck.TruckService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -99,6 +101,21 @@ public class TruckController {
 
         m.setViewName("/views/truck/getTruck.jsp");
 
+        return m;
+    }
+
+    @RequestMapping(value = "getNewTruck", method = RequestMethod.GET)
+    public ModelAndView getNewTruck(HttpServletRequest request, ModelAndView m, HttpSession session) throws Exception {
+
+        System.out.println("TruckController.getNewTruck : GET");
+        String truckId = request.getParameter("truckId");
+
+        System.out.println("truckId = " + truckId);
+        Truck truck = truckService.getTruck(truckId);
+        System.out.println("truck = " + truck);
+        m.addObject("truck", truck);
+
+        m.setViewName("/views/user/getNewTruckByAdmin.jsp");
         return m;
     }
 
@@ -362,6 +379,29 @@ public class TruckController {
 
         return "forward:/views/user/getTruckListByAdmin.jsp";
     }
+
+    @RequestMapping(value = "getNewTruckListByAdmin")
+    public String getNewTruckListByAdmin(@ModelAttribute("search")Search search, Model model, HttpSession session) throws Exception {
+
+        System.out.println("TruckController.getNewTruckListByAdmin");
+
+        if(search.getCurrentPage() == 0) {
+            search.setCurrentPage(1);
+        }
+        search.setPageSize(pageSize);
+
+
+        Map<String, Object> map = truckService.getNewTruckListByAdmin(search );
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+
+        model.addAttribute("list", map.get("list"));
+        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("search", search);
+
+        return "/views/user/getNewTruckListByAdmin.jsp";
+    }
+
+
 
     // 회원탈퇴화면 요청
     @RequestMapping(value = "byeTruck", method = RequestMethod.GET)
