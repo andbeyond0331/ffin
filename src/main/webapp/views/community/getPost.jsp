@@ -172,7 +172,7 @@
                     <strong class="pull-right text-dark" style="padding-top:10px; padding-right:10px "><fmt:formatDate
                             value="${post.postRegDate}" pattern="yyyy-MM-dd"/></strong>
                     <img style="border-radius:70px; margin-left:20px; padding-top:10px"
-                         src="../resources/image/${user.userProImg}${truck.truckProImg}" width="100"
+                         src="../resources/image/${userProImg}${truckProImg}" width="100"
                          height="100" class="pull-left"/>
 
                     <br/>

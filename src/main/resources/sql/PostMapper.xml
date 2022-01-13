@@ -26,10 +26,12 @@
         <association property="postUser"    javaType="user">
             <id property="userId"           column="POST_USER_ID"       jdbcType="VARCHAR"/>
             <result property="userName"     column="USER_NAME"          jdbcType="VARCHAR"/>
+            <result property="userProImg"     column="USER_PRO_IMG"          jdbcType="VARCHAR"/>
         </association>
         <association property="postTruck"   javaType="truck">
             <id property="truckId"          column="POST_TRUCK_ID"      jdbcType="VARCHAR"/>
             <result property="truckName"    column="TRUCK_NAME"         jdbcType="VARCHAR"/>
+            <result property="truckProImg"    column="TRUCK_PRO_IMG"         jdbcType="VARCHAR"/>
         </association>
     </resultMap>
 
@@ -44,8 +46,9 @@
     <select id="getPost"    parameterType="int"      resultMap="postSelectMap">
         SELECT
             POST_USER_ID, POST_TRUCK_ID, POST_TITLE, POST_CONTENT, POST_REG_DATE, SECRET_KEY, POST_FILE1,
-            POST_FILE2, POST_FILE3
-        FROM post
+            POST_FILE2, POST_FILE3, TRUCK_PRO_IMG, USER_PRO_IMG
+        FROM post LEFT JOIN TRUCK ON post.POST_TRUCK_ID = truck.TRUCK_ID
+                    LEFT OUTER JOIN USER ON post.POST_USER_ID = user.USER_ID
         WHERE post_no = #{value}
     </select>
 
