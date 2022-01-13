@@ -47,8 +47,9 @@
     <div class="bs-canvas-content px-3 py-5">
         <div class="content">
 
+            <div id="cartOrderMenu"></div>
 
-
+<%--
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row no-gutters">
                     <div class="col-md-4">
@@ -83,7 +84,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>--%>
 
 
 
@@ -138,49 +139,49 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="orderPickUpTime" class="col-form-label">픽업희망시간:</label>
+                        <label for="mainOrderPickUpTime" class="col-form-label">픽업희망시간:</label>
                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                            <input type="radio" class="btn-check" id="orderPickUpTime" name="orderPickUpTime" value="5"
+                            <input type="radio" class="btn-check" id="mainOrderPickUpTime" name="mainOrderPickUpTime" value="5"
                                    id="cancelTime1" autocomplete="off" checked>
                             <label class="btn btn-outline-primary" for="cancelTime1">5분</label>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="10" id="cancelTime2"
+                            <input type="radio" class="btn-check" name="mainOrderPickUpTime" value="10" id="cancelTime2"
                                    autocomplete="off">
                             <label class="btn btn-outline-primary" for="cancelTime1">10분</label>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="15" id="cancelTime3"
+                            <input type="radio" class="btn-check" name="mainOrderPickUpTime" value="15" id="cancelTime3"
                                    autocomplete="off">
                             <label class="btn btn-outline-primary" for="cancelTime1">15분</label>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="20" id="cancelTime4"
+                            <input type="radio" class="btn-check" name="mainOrderPickUpTime" value="20" id="cancelTime4"
                                    autocomplete="off">
                             <label class="btn btn-outline-primary" for="cancelTime1">20분</label>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="30" id="cancelTime5"
+                            <input type="radio" class="btn-check" name="mainOrderPickUpTime" value="30" id="cancelTime5"
                                    autocomplete="off">
                             <label class="btn btn-outline-primary" for="cancelTime1">30분</label>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="40" id="cancelTime6"
+                            <input type="radio" class="btn-check" name="mainOrderPickUpTime" value="40" id="cancelTime6"
                                    autocomplete="off">
                             <label class="btn btn-outline-primary" for="cancelTime1">40분</label>
 
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="orderRequest" class="col-form-label">주문요청사항:</label>
-                        <textarea class="form-control" id="orderRequest" name="orderRequest"
+                        <label for="mainOrderRequest" class="col-form-label">주문요청사항:</label>
+                        <textarea class="form-control" id="mainOrderRequest" name="mainOrderRequest"
                                   value="${purchase.orderRequest}"></textarea>
+
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                     <button type="button" class="btn btn-primary" id="orderGo">확인</button>
 
-
-                   <%-- <input type="hidden" id="orderUserId" name="orderUserId.userId" value="hhj_01"/>
-                    <input type="hidden" id="orderTruckId" name="orderTruckId.truckId" value="truck01"/>
-                    <input type="hidden" id="orderQty" name="orderQty" value="3"/>
-                    <input type="hidden" id="orderTotalPrice" name="orderTotalPrice" value="3000"/>--%>
+                    <input type="hidden" id="mainOrderUserId" name="mainOrderUserId" value="${user.userId}"/>
+                    <input type="hidden" id="mainOrderTruckId" name="mainOrderTruckId" value="truck01"/>
+                    <input type="hidden" id="mainOrderQty" name="mainOrderQty" value="3"/>
+                    <input type="hidden" id="mainOrderTotalPrice" name="mainOrderTotalPrice" value="3000"/>
                 </div>
             </div>
         </div>
@@ -191,8 +192,106 @@
 
 
 <script>
+    $(function(){
 
 
+    var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
+
+    for( var i in beforeAnyway){
+        // console.log("beforeAnyway : " + beforeAnyway[i]);
+        for(var j in beforeAnyway[i]){
+            console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
+
+        }
+    }
+    //담을 li
+
+    var finalCart = "";
+    var forOne=0;
+    var mainOrderList = "";
+
+    ////////////시작///////////////////
+    if(beforeAnyway) { // sessionStorage에 뭔가 있다?
+        console.log("sessionStorage에 있다! 시작!");
+        for (var i = 0; i < beforeAnyway.length; i++) {//sessionStorage만큼 for문 돌리기
+
+
+
+/*            mainOrderList += "<input type='hidden' name='mainOdMQFlag' id='mainOdMQFlag' value='" + beforeAnyway[i]['odMenuQtyFlag'] + "'>" +
+                "<input type='hidden' name='mainOdMQty' id='mainOdMQty' value='" + beforeAnyway[i]['odMenuQty'] + "'>" +
+                "<input type='hidden' name='mainOdMName' id='mainOdMName' value='" + beforeAnyway[i]['odMenuName'] + "'>" +
+                "<input type='hidden' name='mainOdMPrice' id='mainOdMPrice' value='" + beforeAnyway[i]['odMenuPrice'] + "'>" +
+                "<input type='hidden' name='mainOdOGName' id='mainOdOGName' value='" + beforeAnyway[i]['odOptionGroupName'] + "'>" +
+                "<input type='hidden' name='mainOdOpName' id='mainOdOpName' value='" + beforeAnyway[i]['odOptionName'] + "'>" +
+                "<input type='hidden' name='mainOdOpPrice' id='mainOdOpPrice' value='" + beforeAnyway[i]['odOptionPrice'] + "'>" +
+                "<input type='hidden' name='mainOdMImg1' id='mainOdMImg1' value='" + beforeAnyway[i]['odMenuImg1'] + "'>";
+
+            $("#cartOrderMenu").append(mainOrderList);*/
+
+
+
+            console.log("for문 안에 있다!");
+            console.log("beforeAnyway[" + i + "] : " + JSON.stringify(beforeAnyway[i]));
+
+            if(beforeAnyway[i]['odMenuQtyFlag']==0){//플래그0일 때 메뉴 수량, 이름 출력
+                finalCart+=""+
+                    "<li class=\"list-group-item d-flex justify-content-between lh-sm\">"+
+                    "<div><h6 class=\"my-0\">"+beforeAnyway[i]['odMenuName']+"</h6>"+
+                    "<h6 class=\"my-0\">수량 : "+beforeAnyway[i]['odMenuQty']+"</h6>"+
+                    "";
+                forOne+=1;
+                // }else{
+                for(var j=i+1; j<beforeAnyway.length; j++){
+                    if(beforeAnyway[j]['odMenuQtyFlag']==1){
+                        finalCart+=""+
+                            "<p></p>"+
+                            "<small class=\"text-muted\">"+beforeAnyway[j]['odOptionGroupName']+"</small> : "+
+                            "<small class=\"text-muted\">"+beforeAnyway[j]['odOptionName']+"</small> +"+
+                            "<small class=\"text-muted\">"+beforeAnyway[j]['odOptionPrice']+"원</small>";
+                        forOne+=1;
+                    }else{
+                        // i=j-1;
+                        break;
+                    }
+                }
+            }else{
+                if(forOne!=0){
+                    i=forOne;
+                }else{
+                    break;
+                }
+
+            }
+            finalCart+="</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"원</span></li>";
+            i=forOne;
+
+        }//sessionStorage만큼 for문 돌리기
+    }
+    $("#cartOrderMenu").html(finalCart);
+
+
+        var beforeAny = JSON.parse(sessionStorage.getItem("menuOdList"));
+        var orderDetailList = "";
+
+        for (var i = 0; i < beforeAny.length; i++) {
+
+
+
+            mainOrderList += "<input type='hidden' name='mainOdMQFlag' id='mainOdMQFlag' value='" + beforeAnyway[i]['odMenuQtyFlag'] + "'>" +
+                "<input type='hidden' name='mainOdMQty' id='mainOdMQty' value='" + beforeAny[i]['odMenuQty'] + "'>" +
+                "<input type='hidden' name='mainOdMName' id='mainOdMName' value='" + beforeAny[i]['odMenuName'] + "'>" +
+                "<input type='hidden' name='mainOdMPrice' id='mainOdMPrice' value='" + beforeAny[i]['odMenuPrice'] + "'>" +
+                "<input type='hidden' name='mainOdOGName' id='mainOdOGName' value='" + beforeAny[i]['odOptionGroupName'] + "'>" +
+                "<input type='hidden' name='mainOdOpName' id='mainOdOpName' value='" + beforeAny[i]['odOptionName'] + "'>" +
+                "<input type='hidden' name='mainOdOpPrice' id='mainOdOpPrice' value='" + beforeAny[i]['odOptionPrice'] + "'>" +
+                "<input type='hidden' name='mainOdMImg1' id='mainOdMImg1' value='" + beforeAny[i]['odMenuImg1'] + "'>";
+
+            $("#cartOrderMenu").append(mainOrderList);
+        }
+
+
+
+    });
 
     /*메뉴수량*/
     function fnCalCount(type, ths){
@@ -247,7 +346,7 @@
             //var menucheck = document.getElementById().val;
 
 
-            var order = to_ajax()
+            var order = main_cart()
             append = "<input type=\"hidden\" id=\"orderNo\" name=\"orderNo\" value=\"" + order + "\">";
             $('#app').append(append);
             /*alert(append)*/
@@ -264,7 +363,7 @@
         });
     });
 
-    function to_ajax() {
+    function main_cart() {
         var reOrderNo;
         var odMenuName = [];
         var odOptionGroupName = [];
@@ -274,51 +373,55 @@
         var odOptionPrice = [];
         var odMenuImage = [];
         var odMenuQtyFlag = [];
-        var orderPickUpTime = $('input[name="orderPickUpTime"]:checked').val();
-        var orderTotalPrice = $('#orderTotalPrice').val();
-        var orderUserId = $('#orderUserId').val();
-        var orderTruckId = $('#orderTruckId').val();
-        var orderRequest = $('#orderRequest').val();
-        var orderQty = $('#orderQty').val();
+        var orderPickUpTime = $('input[name="mainOrderPickUpTime"]:checked').val();
+        var orderTotalPrice = $('#mainOrderTotalPrice').val();
+        var orderUserId = $('#mainOrderUserId').val();
+        var orderTruckId = $('#mainOrderTruckId').val();
+        var orderRequest = $('#mainOrderRequest').val();
+        var orderQty = $('#mainOrderQty').val();
 
-        $('input[name="odMenuName"]').each(function (i) {
+
+        $('input[name="mainOdMName"]').each(function (i) {
             odMenuName.push($(this).val());
+            alert(odMenuName)
         });
 
-        $('input[name="odOptionGroupName"]').each(function (i) {
+        $('input[name="mainOdOGName"]').each(function (i) {
             odOptionGroupName.push($(this).val());
         });
 
-        $('input[name="odOptionName"]').each(function (i) {
+        $('input[name="mainOdOpName"]').each(function (i) {
             odOptionName.push($(this).val());
         });
 
-        $('input[name="odMenuQty"]').each(function (i) {
+        $('input[name="mainOdMQty"]').each(function (i) {
             odMenuQty.push($(this).val());
         });
 
-        $('input[name="odMenuPrice"]').each(function (i) {
+        $('input[name="mainOdMPrice"]').each(function (i) {
             odMenuPrice.push($(this).val());
         });
 
-        $('input[name="odOptionPrice"]').each(function (i) {
+        $('input[name="mainOdOpPrice"]').each(function (i) {
             odOptionPrice.push($(this).val());
         });
 
-        $('input[name="odMenuImage"]').each(function (i) {
+        $('input[name="mainOdMImg1"]').each(function (i) {
             odMenuImage.push($(this).val());
         });
 
-        $('input[name="odMenuQtyFlag"]').each(function (i) {
+        $('input[name="mainOdMQFlag"]').each(function (i) {
             odMenuQtyFlag.push($(this).val());
         });
-        /*         alert(orderPickUpTime)
+/*
+                 alert(orderPickUpTime)
                  alert(orderTotalPrice)
                  alert(orderUserId)
                  alert(orderTruckId)
                  alert(orderRequest)
                  alert(orderQty)
-                 alert(odMenuQtyFlag)*/
+                 alert(odMenuQtyFlag)
+*/
 
         var data = {
             "odMenuName": odMenuName,

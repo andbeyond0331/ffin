@@ -163,11 +163,12 @@ public class PurchaseRestController {
         Purchase pur = new Purchase();
 
 
+
         List <OrderDetail> orderList = new ArrayList<OrderDetail>();
+
 
         for (int i = 0; i< odMenuName.size(); i++){
             OrderDetail order = new OrderDetail();
-
             order.setOdMenuName(odMenuName.get(i));
             if(i>=odOptionGroupName.size()){
                 order.setOdOptionGroupName(null);
@@ -185,17 +186,19 @@ public class PurchaseRestController {
                 order.setOdOptionName(odOptionName.get(i));
             }
             if(i>=odMenuQty.size()){
-                order.setOdMenuQty(0);
+                order.setOdMenuQty(' ');
             }else{
                 order.setOdMenuQty(parseInt(odMenuQty.get(i)));
             }
             if(i>=odMenuPrice.size()){
-                order.setOdMenuPrice(0);
+                order.setOdMenuPrice(' ');
+
             }else{
                 order.setOdMenuPrice(parseInt(odMenuPrice.get(i)));
             }
+            //odOptionPrice 값을 공백으로 주니까 에러가 났다!!!! ㅠㅠ 이유는??
             if(i>=odOptionPrice.size()){
-                order.setOdOptionPrice(0);
+                order.setOdOptionPrice(' ');
             }else{
                 order.setOdOptionPrice(parseInt(odOptionPrice.get(i)));
             }
@@ -205,7 +208,7 @@ public class PurchaseRestController {
                 order.setOdMenuImage(odMenuImage.get(i));
             }
             if(i>=odMenuQtyFlag.size()){
-                order.setOdMenuQtyFlag(0);
+                order.setOdMenuQtyFlag(' ');
             }else{
                 order.setOdMenuQtyFlag(parseInt(odMenuQtyFlag.get(i)));
             }
@@ -213,16 +216,19 @@ public class PurchaseRestController {
             pur.setOrderNo(orderNo);
             order.setOdOrderNo(pur);
 
-
             orderList.add(order);
+
         }
 
+        System.out.println("/////////////////////////////////"+orderList);
         purchaseService.addCart(orderList);
         System.out.println(orderNo);
 
         Map<String,Object> retVal = new HashMap<String,Object>();
         retVal.put("code","OK");
         retVal.put("orderNo",orderNo);
+
+
 
 
         return retVal;
