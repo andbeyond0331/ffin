@@ -18,6 +18,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -95,6 +96,13 @@ public class TruckRestController {
         System.out.println("/truck/jon/login : POST");
         //Business Logic
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
+
+        if(session.getAttribute("user") != null || session.getAttribute("truck") != null || session.getAttribute("admin") != null){
+            session.removeAttribute("user");
+            session.removeAttribute("truck");
+            session.removeAttribute("admin");
+        }
+
         Truck dbTruck = truckService.getTruck(truck.getTruckId());
 
         if (truck.getTruckPassword().equals(dbTruck.getTruckPassword())) {
@@ -119,10 +127,11 @@ public class TruckRestController {
                 truckService.autoLogin(truck.getTruckId(), session.getId(), sessionLimit);
             }
             System.out.println("로그인 OK");
+            return String.valueOf(0);
         } else {
             System.out.println("로그인 Nope");
+            return String.valueOf(9);
         }
-        return truckId;
     }
 
     @RequestMapping(value = "json/updateTruck/{truckId}", method = RequestMethod.GET)
