@@ -686,7 +686,7 @@ public class MenuController {
 
     }
 
-    // TODO: 2022-01-08 !!! session에 선택한 정보 담기도록 변경하기!!!
+    // TODO: 2022-01-08 !!! session에 선택한 정보 담기도록 변경하기!!! -해결!
 
     @RequestMapping("getMenuList")
     public ModelAndView getMenuList(@ModelAttribute("search") Search search,
