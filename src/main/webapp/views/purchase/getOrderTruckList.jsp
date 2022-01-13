@@ -123,10 +123,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <c:if test="${truck.truckBusiStatus.equals('1')}">
+                    <c:if test="${truckId.truckBusiStatus.equals('1')}">
                         영업종료하시겠습니까??
                     </c:if>
-                    <c:if test="${truck.truckBusiStatus.equals('0')}">
+                    <c:if test="${truckId.truckBusiStatus.equals('0')}">
                         영업시작하시겠습니까??
                     </c:if>
                 </div>
@@ -163,12 +163,12 @@
                                 <div class="col-6 text-center"> 전체 :</div>
                                 <div class="col-6">
                                     <div class="form-check form-switch">
-                                        <c:if test="${truck.truckBusiStatus.equals('1')}">
+                                        <c:if test="${truckId.truckBusiStatus.equals('1')}">
                                         <input class="form-check-input" type="checkbox" role="switch"
                                                id="swCh" name="swCh"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" checked>
                                         <label class="form-check-label" for="swCh">영업중</label>
                                         </c:if>
-                                        <c:if test="${truck.truckBusiStatus.equals('0')}">
+                                        <c:if test="${truckId.truckBusiStatus.equals('0')}">
                                             <input class="form-check-input" type="checkbox" role="switch"
                                                    id="swCh" name="swCh"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                             <label class="form-check-label" for="swCh">영업종료</label>
