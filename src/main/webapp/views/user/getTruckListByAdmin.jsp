@@ -141,7 +141,11 @@
     <script type="text/javascript">
 
         function getTruckInfo(){
-            alert(1234);
+
+            var truckId =  document.getElementById("truckIdId").value
+            alert(truckId);
+
+            self.location ="/truck/getTruck?truckId="+truckId;
         }
 
     </script>
@@ -201,9 +205,9 @@
                     <c:forEach var="truck" items="${list}">
                     <c:set var="i" value="${ i+1 }" />
 
-                <div class="card mb-4" style="border: 0;">
-                        <input type="hidden" id="truckId" name ="truckId" value="${truck.truckId}">
-                        <div style="display: flex; flex-direction: column;">
+                        <div class="card mb-4" style="border: 0;">
+                            <div style="display: flex; flex-direction: column;">
+                                <input type="hidden" id="truckIdId" name="truckIdId" value="${truck.truckId}">
                             <div class="item">
                                 <div class="item-image">
                                     <c:if test="${truck.truckProImg != null }">
