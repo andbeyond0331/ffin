@@ -156,8 +156,9 @@
                             for(var i=0; i<originalSession.length;i++){//qtyFlag가 0인 애가 있으면서 추가 메뉴와 같을 때 이 안에서 session 저장 끝남
                                 if(i==originalSession.length){// 마지막 요소
                                     if(originalSession[i]['odMenuQtyFlag']==0){ //2.마지막 요소가 수량 제공 메뉴일 때
-
-                                        if(originalSession[i]['odMenuNo']==orderDetail['odMenuNo']){ //2-1.마지막 요소가 추가할 수량 제공 메뉴와 같을 때
+                                        console.log("!!!!!!!!!!!!1originalSession["+i+"]['odMenuNo'] : " + JSON.stringify(originalSession)[i]['odMenuNo']);
+                                        console.log("!!!!!!!!!!!!orderDetail["+i+"]['odMenuNo'] : " + JSON.stringify(orderDetail)[i]['odMenuNo']);
+                                        if(originalSession[i]['odMenuNo']===orderDetail['odMenuNo']){ //2-1.마지막 요소가 추가할 수량 제공 메뉴와 같을 때
                                             // 수량 추가
                                             console.log("2-1 : 수량 추가 이전 ="+originalSession[i]['odMenuQty']);
                                             orderDetail['odMenuQty']=originalSession[i]['odMenuQty']+1;
@@ -178,7 +179,7 @@
                                     }//2.마지막 요소가 수량 제공 메뉴일 때 끝
                                 }else if(originalSession[i]['odMenuQtyFlag']==0){ //3. 마지막 요소가 아니면서 수량제공메뉴일 때
 
-                                    if(originalSession[i]['odMenuNo']!=originalSession[i+1]['odMenuNo']){//3-1. 옵션그룹이 없는 메뉴이면,
+                                    if(originalSession[i+1]!=null && originalSession[i]['odMenuNo']!=originalSession[i+1]['odMenuNo']){//3-1. 옵션그룹이 없는 메뉴이면,
                                         if(originalSession[i]['odMenuNo']==orderDetail['odMenuNo']){//3-1-1.추가할 메뉴랑 같을 때
                                             // 수량 추가
                                             console.log("3-1-1 : 수량 추가 이전 ="+originalSession[i]['odMenuQty']);
@@ -290,24 +291,29 @@
                         console.log("가가가가");
                             //qtyFlag가 0인 애 찾기
                             for(var i=0; i<originalSession.length;i++){//qtyFlag가 0인 애가 있으면서 추가 메뉴와 같을 때 이 안에서 session 저장 끝남
-                                if(originalSession[i]['odMenuQtyFlag']==0){//마지막 요소가 아니면서 수량제공메뉴일 때
-                                    console.log("//마지막 요소가 아니면서 수량제공메뉴일 때 i : " +i);
+                                if(originalSession[i]['odMenuQtyFlag']==0){//세션에 담긴 애 중 수량제공메뉴일 때
+                                    console.log("//세션에 담긴 애 중 수량제공메뉴일 때 i : " +i);
 
 
 
-                                    if(originalSession[i]['odMenuNo']==originalSession[i+1]['odMenuNo']){//bbb. 옵션그룹이 있는 메뉴
+                                    if(originalSession[i+1]!=null && originalSession[i]['odMenuNo']==originalSession[i+1]['odMenuNo']){//bbb. 세션에 옵션그룹이 있는 메뉴
                                         console.log("cccccccccccccccc");
                                         console.log("////bbb. 옵션그룹이 있는 메뉴 i : " +i);
-                                        console.log("추가할 메뉴랑 no 같을 때");
-                                        console.log("메뉴 no 같은지 확인 : " +originalSession[i]['odMenuNo']+"=="+orderDetail['odMenuNo']);
+                                        console.log("추가할 메뉴랑 no 같은가");
+                                        console.log("메뉴 no 같은지 확인 : " +originalSession[i]['odMenuNo']+"==="+orderDetail['odMenuNo']);
                                         if(originalSession[i]['odMenuNo']===orderDetail['odMenuNo']){//추가할 메뉴랑 같을 때
                                             console.log("추가할 메뉴랑 no 같을 때");
-                                            console.log("메뉴 no 같은지 확인 : " +originalSession[i]['odMenuNo']+"=="+orderDetail['odMenuNo']);
+                                            console.log("메뉴 no 같은지 확인 : " +originalSession[i]['odMenuNo']+"==="+orderDetail['odMenuNo']);
                                             console.log("i="+i);
                                             var isItSame = 0;
-                                            if(isThereOptionGroup!=1){
-                                                for(var f=i; f<i+originalSession.length; f++) {
-                                                    if(originalSession[f-1]!=null && originalSession[f-1]['odMenuQtyFlag']!=1) {
+                                            for(var k=i+1; k<i+originalSession.length; k++){
+                                                console.log("///////////originalSession json parse"+k+" : "+JSON.stringify(originalSession[k]));
+                                            }
+
+                                            if(isThereOptionGroup!=1){//추가할 옵션그룹 수가 1이 아닐 때
+                                                for(var f=i+1; f<i+originalSession.length; f++) {
+
+                                                    if(originalSession[f]!=null && originalSession[f]['odMenuQtyFlag']!=0) {
                                                         isItSame++;
                                                         console.log(isItSame + " : isItSame");
                                                         console.log(isThereOptionGroup + " : isThereOptionGroup");
@@ -318,7 +324,7 @@
 
                                                     }
                                                 }
-                                            }else{
+                                            }else{//추가할 옵션그룹 수가 1일 때
                                                 if(originalSession[i+2]!=null){
                                                     if(originalSession[i+2]['odMenuQtyFlag']===1){
                                                         isItSame++;
@@ -332,20 +338,38 @@
                                             console.log("111111111111111111111isThereOptionGroup : " + isThereOptionGroup);
                                             if(isItSame===isThereOptionGroup) { //옵션그룹의 수 같은가?
                                                 var isItReallySame =0;
-                                                if(isThereOptionGroup!=1){
-                                                    for(var a = i; a<i+isThereOptionGroup; a++) {
-                                                        if(originalSession[a]['odOptionNo']===optionGroupOrderDetail['odOptionNo'] &&originalSession[a]['odOptionNo']!=null) {
+                                                if(isThereOptionGroup!=1){ //추가하려는 옵션그룹&비교대상 옵션그룹 수가 1이 아닐 때
+                                                    for(var a = i+1; a<i+isItSame+1; a++) {
+                                                        console.log("제발 111111111111");
+
+                                                        if(originalSession[a]['odOptionNo']===odOptionGroupList[a-i-1]['odOptionNo']) {
+                                                            console.log("제발 222222222222222222");
+                                                            console.log("///////////originalSession json parse"+a+" : "+JSON.stringify(originalSession[a]));
+                                                            console.log("///////////odOptionGroupList json parse"+(a-i-1)+" : "+JSON.stringify(odOptionGroupList[a-i-1]));
+
                                                             isItReallySame++;
                                                         }//옵션그룹의 옵션 넘버가 다 같은가?
                                                     }
-                                                }else{
-                                                    if(originalSession[i]!=null){
-                                                        if(originalSession[i]['odOptionNo']===optionGroupOrderDetail['odOptionNo'] &&originalSession[i]['odOptionNo']!=null) {
+                                                }else{//추가하려는 옵션그룹&비교대상 옵션그룹 수가 1일 때
+                                                    console.log("제발 3333333333333");
+                                                    if(originalSession[i]!=null){//널체크
+                                                        console.log("제발 444444444444444");
+                                                        console.log("JSON.stringify(originalSession["+i+"])['odOptionNo']"+JSON.stringify(originalSession[i])['odOptionNo']);
+                                                        console.log("JSON.stringify(odOptionGroupList[0])['odOptionNo']"+JSON.stringify(odOptionGroupList[0])['odOptionNo']);
+                                                        if(originalSession[i]['odOptionNo']===odOptionGroupList[0]['odOptionNo']) {
                                                                 isItReallySame++;
+                                                            console.log("제발 55555555555555");
                                                         }//옵션그룹의 옵션 넘버가 다 같은가?
 
                                                     }else{
-                                                        isItReallySame++;
+                                                        console.log("제발 66666666666");
+                                                        for(var a = i+1; a<i+isItSame; a++) {
+                                                            console.log("제발 777777777777777");
+                                                            if(originalSession[a]['odOptionNo']===optionGroupOrderDetail['odOptionNo']) {
+                                                                console.log("제발 88888888888888");
+                                                                isItReallySame++;
+                                                            }//옵션그룹의 옵션 넘버가 다 같은가?
+                                                        }
                                                     }
                                                 }
 
@@ -364,8 +388,9 @@
                                                     //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.(겉으로는 수량이 추가된 것
                                                         if(odOptionGroupList.length!=1){
                                                             for(var c=0; c<odOptionGroupList.length; c++){
-                                                                menuOdList.splice(i+c,0,odOptionGroupList[c]);
-                                                                console.log("1개 아닐 때 ");
+                                                                menuOdList[i+c+1]=odOptionGroupList[c];
+                                                                console.log("1개 아닐 때 "+c);
+                                                                console.log("odOptionGroupList ["+c+"] : " + odOptionGroupList[c]);
                                                             }
                                                         }else{
                                                             menuOdList.splice(i,0,odOptionGroupList[0]);
@@ -385,7 +410,7 @@
                                         }//추가할 메뉴랑 같을 때 끝
 
                                     }//bbb. 마지막 요소 아니면서 옵션 그룹 있는 애 끝
-                                }//마지막 요소가 아니면서 수량제공메뉴일 때 끝
+                                }//세션에 담긴 애 중 수량제공메뉴일 때 끝
 
                             }//qtyFlag가 0인 애가 있으면서 추가 메뉴와 같을 때 이 안에서 session 저장 끝남
 
