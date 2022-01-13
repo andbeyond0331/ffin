@@ -28,20 +28,7 @@
         margin: 0;
         font-family: 'Roboto Condensed', 'droid arabic kufi', sans-serif;
     }
-    .wallpaper-overlay {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        width: 100%;
-        left: 0;
-        right: 0;
-        -webkit-filter: blur(3px);
-        filter: blur(3px);
-        background: url(https://3.bp.blogspot.com/-dw0kPdIqpr8/Wi6rYQoc5jI/AAAAAAAAC4U/PtaX2GO4-FcnejiFy5BRrulxafoP7vx7gCLcBGAs/s1600/6.jpg)fixed;
-        background-position: center;
-        background-size: cover;
-        z-index: -1;
-    }
+
     .wrapper {
         margin: 20px auto 10px;
         overflow: hidden;
@@ -62,7 +49,7 @@
     }
 
     body{
-        background-size: cover;
+
 
         font-family: "Open Sans", Arial, sans-serif;
         min-height: 100vh;
@@ -93,7 +80,7 @@
         border: 0px;
         border-radius: 50%;
     }
-    .format{display: none}
+    .format{display: block}
 
     .btn {
         display: inline-block;
@@ -174,13 +161,18 @@
         padding-left: 626px;
     }
     .main-insta {
-        max-width: 380px;
-        min-width: 300px;
+        max-width:450px;
+        min-width: 450px;
         margin: auto;
         background-color: rgba(250, 250, 250, 0.85);
         -webkit-box-shadow: 0 2px 26px rgba(0, 0, 0, .3), 0 0 0 1px rgba(0, 0, 0, .1);
         box-shadow: 0 2px 26px rgba(0, 0, 0, .3), 0 0 0 1px rgba(0, 0, 0, .1);
         border-radius: 5px;
+
+        position: relative;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 1rem;
     }
     .insta-header h2:after,
     .insta-header .dots,
@@ -196,18 +188,7 @@
         -ms-user-select: none;
         user-select: none;
     }
-    .insta-header span:nth-child(1) {
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-image: url(https://3.bp.blogspot.com/-w6wn_9WJANI/Wi6rYtB-kTI/AAAAAAAAC4c/w8azX7AZVmgsRhzHPpwzGTeei_opUlXiQCLcBGAs/s1600/ff4a5109f997020065090205f56c2c8b.jpg);
-        background-size: cover;
-        background-position: 100% 25%;
-        overflow: hidden;
-        float: left;
-        margin-right: 8px
-    }
+
     .insta-header .header-title {
         float: left
     }
@@ -321,35 +302,23 @@
     }
     .slide1,
     .page1 {
-        background: url(https://3.bp.blogspot.com/-ULPTYqjxQ0E/Wi6rVjtdVdI/AAAAAAAAC4I/6TBeGdPw49s1SSxQpKjHQrUtLxCxStvygCLcBGAs/s1600/1.jpg);
-        background-size: cover;
+
+
         left: 0;
     }
     .slide2,
     .page2 {
-        background: url(https://2.bp.blogspot.com/-n1mRXW_QGfY/Wi6rVevyenI/AAAAAAAAC4E/Ui5_NefPmwwLbzNpUCjTAGHVBuapwWyqACLcBGAs/s1600/2.jpg);
-        background-size: cover;
+
+
         left: 100%
     }
     .slide3,
     .page3 {
-        background: url(https://4.bp.blogspot.com/-FGxjMI1_0EI/Wi6rWNOePOI/AAAAAAAAC4M/XtU8ktClrZ0xjfo0Nf3VJ8nR1mI8eAMuwCLcBGAs/s1600/3.jpg);
-        background-size: cover;
+
+
         left: 200%
     }
-    .slide4,
-    .page4 {
-        background: url(https://2.bp.blogspot.com/-RRw8jWo6vrg/Wi6rYkY2CvI/AAAAAAAAC4Y/3_ItIrb99AEgGegExl_Ro0VM3-jIYNF0gCLcBGAs/s1600/4.jpg);
-        background-size: cover;
-        left: 300%;
-    }
-    .slide5,
-    .page5 {
-        background: url(https://2.bp.blogspot.com/-cBCRFKl8-oM/Wi6rWnhESyI/AAAAAAAAC4Q/YY8iEpHUurcsKBqegiusBwEeXUeGIZriwCLcBGAs/s1600/5.jpg);
-        background-size: cover;
-        background-position: center;
-        left: 400%;
-    }
+
     .slider > div {
         text-align: center;
     }
@@ -455,18 +424,20 @@
         -webkit-box-shadow: 0px 0px 0px 3px rgba(0, 0, 0, 0.4);
         box-shadow: 0px 0px 0px 3px rgba(0, 0, 0, 0.4);
     }
+
+
     .slide-radio1:checked ~ .next .numb2,
     .slide-radio2:checked ~ .next .numb3,
-    .slide-radio3:checked ~ .next .numb4,
-    .slide-radio4:checked ~ .next .numb5,
     .slide-radio5:checked ~ .next .numb1,
     .slide-radio2:checked ~ .previous .numb1,
     .slide-radio3:checked ~ .previous .numb2,
     .slide-radio4:checked ~ .previous .numb3,
-    .slide-radio5:checked ~ .previous .numb4 {
+    .slide-radio5:checked ~ .previous  {
 
         z-index: 1
     }
+
+
     /* Slider Pagger event */
 
     .slide-radio1:checked ~ .slider-pagination .page1,
@@ -516,231 +487,6 @@
     }
 
 </style>
-<script type="text/javascript">
-
-
-    //=============    검색 / page 두가지 경우 모두  Event  처리 =============
-    function fncGetUserList(currentPage) {
-        $("#currentPage").val(currentPage)
-        $("#getPostListPic").attr("method" , "POST").attr("action" , "/community/getPostList2").submit();
-    }
-
-    var role =  '${sessionScope.role}';
-    var proImg;
-    var uId;
-    if (role == 'user'){
-        proImg = '${sessionScope.user.userProImg}';
-        uId = '${sessionScope.user.userId}';
-    }else if(role=='truck'){
-        proImg = '${sessionScope.truck.truckProImg}';
-        uId = '${sessionScope.truck.truckId}';
-    }
-
-
-
-    // 사진 클릭했을 때, modal 호출
-
-    function getCardDetail(postNo) {
-
-        alert("얍")
-
-        alert("postNo: "+postNo)
-        $.ajax({
-            url:"/community/json/getCardDetail/"+postNo,
-            method:"get",
-
-            success: function (data) {
-                var div="";
-                var modalFooter = "";
-                let hit = data.post.postHit;
-                $('#hit'+postNo).text(hit);
-
-                    div += "<div class='cloneFail' >"+
-                        "</div>";
-
-
-
-/*
-
-                    +"<div id='carouselExampleInterval' class='carousel slide' data-ride='carousel'>"
-                     +"<div class='carousel-inner'>"
-                      +"<div class='carousel-item active'>"
-                          +"<img class='d-block w-100' src='../../../resources/image/"+data.post.postFile1+"' alt='First slide'>"
-                         +"</div>"
-                      +"<div class='carousel-item' >"
-                         +"<img class='d-block w-100' src='../../../resources/image/"+data.post.postFile2+"' alt='Second slide'>"
-                     +"</div>"
-                      +" <div class='carousel-item'>"
-                      + " <img class='d-block w-100' src='../../../resources/image/"+data.post.postFile3+"' alt='Third slide'>"
-                     +" </div></div>"
-                      + " <a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'>"
-                    + "<span class='carousel-control-prev-icon' aria-hidden='true'></span> <span class='sr-only'>Previous</span>"
-                     + "</a>"
-              + " <a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'>"
-                    +"<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span>"
-                  + " </a>"
-                +" </div>";
-
-
-
-
-
-
-/!* 슬라이드 해볼랫는데 안먹는당 *!/
-
-*/
-
-
-
-       /*               +"<div class='row'>"
-                    +"<div ><strong></strong> <img src='../../../resources/image/"+data.post.postFile1+"'></div></div>";
-
-                if (data.post.postFile2 != null){
-                    div += "<div class='row'>"
-                        +"<div ><strong></strong> <img src='../../../resources/image/"+data.post.postFile2+"'></div></div>";
-                }
-                if (data.post.postFile3 != null){
-                    div += "<div class='row'>"
-                        +"<div ><strong></strong> <img src='../../../resources/image/"+data.post.postFile3+"'></div></div>";
-                }*/
-                div += "<div class='row'>"+
-                    "<div>"+data.post.postContent+"</div></div>";
-
-                if (data.post.heartNo == '0'){
-
-                    div +=" <a idx="+data.post.postNo+" href='javascript:' class='heart-click heart_icon"+data.post.postNo+"'>"
-                                                +"<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-suit-heart' viewBox='0 0 16 16'>"
-                                                    + "<path d='M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z' />"
-                                                +"</svg> </a> ";
-                }else{
-
-                    div +=  "<a idx="+data.post.postNo+" href='javascript:' class='heart-click heart_icon"+data.post.postNo+"'>"
-                        +"<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-suit-heart-fill' viewBox='0 0 16 16'>"
-                        +"<path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' />"
-                  + " </svg></a>";
-                }
-                div += " <span id='m_heart"+data.post.postNo+"'>"+data.post.heartCount+"</span>"
-                    +"<span>"
-                        +"<a idx='"+data.post.postNo+"' href='#reply_card"+data.post.postNo+"' role='button' class='open_reply_list' data-toggle='collapse'  aria-expanded='false' aria-controls='collapseExample'> "
-                          +"<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-chat-dots' viewBox='0 0 16 16'>"
-													+"<path d='M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z' />"
-													+"<path d='M2.165 15.803l.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z' />"
-                            +"</svg>"
-                            +"</a>"
-                       +" </span>"
-                    +" <span id='m_reply"+data.post.postNo+"'>"+data.post.replyCount+"</span>"
-                   +"<span> <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-eye' viewBox='0 0 16 16'>"
-											+"<path d='M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z' />"
-											+"<path d='M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z' />"
-										+"</svg>"
-						+"</span> <span id='hit"+data.post.postNo+"'>"+data.post.postHit+"</span>"
-                 +"<div class='collapse' id='reply_card"+data.post.postNo+"'>"
-                   +"<section class='modal-section'>"
-                        +"<div class='card card-body'>"
-                            +"<div class='reply-list reply-list"+data.post.postNo+"'>"
-                            +"</div>"
-                                +"<div class='row reply_write'>"
-                                    +"<div class='col-1'>"
-                                        +"<a href='other_profile.do?other_nick='>"
-                                           +"<img id='write_reply_profileImage' src='/resources/image/"+proImg+"' />"
-                                       +" </a>"
-                                    +"</div>"
-                                    +"<div class='col-8' class='input_reply_div'>"
-                                        +"<input class='w-100 form-control' id='input_reply"+data.post.postNo+"' type='text' placeholder='댓글입력...'>"
-                                    +"</div>"
-                                    +"<div class='col-3 '>"
-                                        +"<button type='button' idx='"+data.post.postNo+"' class='btn btn-success mb-1 write_reply'>댓글&nbsp;달기</button>"
-                                   +"</div>"
-                               +" </div>"
-                       +" </div>"
-                   +" </section>"
-                +"</div>";
-
-
-                if (role == "user"){
-
-                    var userId = '${sessionScope.user.userId}'
-
-                    if (data.post.postTruck == null && data.post.postUser.userId == userId){
-
-                        modalFooter = "<div class='modal-footer'>"
-                            +"<button class='button btn-warning' name='deletePostPic' onclick='deletePostPic("+data.post.postNo+");'>글 삭제"
-                          +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/></button>"
-                        +"<button class='button is-warning is-light' name='updatePostPicView'"
-                                +"onclick='updatePostPicView("+data.post.postNo+");'>글 수정"
-                            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/>"
-                       + "</button>"
-                            +"</div>";
-                    }else {
-                        modalFooter = "<div class='modal-footer'>"
-                            + " <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></div>";
-                    }
-
-                }else if(role == "truck"){
-
-                    var truckId = '${sessionScope.truck.truckId}'
-
-                    if (data.post.postUser == null && data.post.postTruck.truckId == truckId){
-
-                        modalFooter = "<div class='modal-footer'>"
-                            +"<button class='button btn-warning' name='deletePostPic' onclick='deletePostPic("+data.post.postNo+");'>글 삭제"
-                            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/></button>"
-                            +"<button class='button is-warning is-light' name='updatePostPicView'"
-                            +"onclick='updatePostPicView("+data.post.postNo+");'>글 수정"
-                            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/>"
-                            + "</button>"
-                            +"</div>";
-
-                    }else {
-                        modalFooter = "<div class='modal-footer'>"
-                            + " <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></div>";
-                    }
-                }
-
-
-
-
-
-
-
-
-
-                //$('body').find( '.format' ).clone().appendTo( '#carouselFail' ).css("display", "block");
-
-                $('.modal-footer').remove();
-
-
-                $('.modal-content').append(modalFooter);
-                $('.modal-body').html(div);
-
-                console.log("data.post.postHit: "+data.post.postHit);
-
-                $('#staticBackdrop').modal('show');
-
-
-
-
-
-
-
-            },
-            error : function(err){
-                console.log('에러')
-            }
-        });
-
-
-
-    }
-
-// html을 복사하고.
-    // 모달이 피료없다
-
-
-
-
-
-</script>
 
 
 <head>
@@ -788,7 +534,7 @@
                     <div class="form-group">
                         <label for="postFile2" class="col-sm-offset-1 col-sm-10 control-label">파일 이미지2</label>
                         <div class="col-sm-10">
-                            <input type="file" class="form-control" id="postFile2" name="postFile22"  value="${post.postFile2}" placeholder="파일 이미지1" onchange="setImage2Preview(event);">
+                            <input type="file" class="form-control" id="postFile2" name="postFile22"  value="${post.postFile2}" placeholder="파일 이미지1" onchange="setImage2Preview(event, '#image2preview');">
                         </div>
                         <div id="image2preview" class="col-sm-10"></div>
                     </div>
@@ -796,7 +542,7 @@
                     <div class="form-group">
                         <label for="postFile3" class="col-sm-offset-1 col-sm-10 control-label">파일 이미지3</label>
                         <div class="col-sm-10">
-                            <input type="file" class="form-control" id="postFile3" name="postFile33"  value="${post.postFile3}" placeholder="파일 이미지3" onchange="setImage3Preview(event);">
+                            <input type="file" class="form-control" id="postFile3" name="postFile33"  value="${post.postFile3}" placeholder="파일 이미지3" onchange="setImage3Preview(event, '#image3preview');">
                         </div>
                         <div id="image3preview" class="col-sm-10"></div>
                     </div>
@@ -812,7 +558,7 @@
                             }
 
                             var isTherePreview = DIVimage1preview.find('img').length;
-                            alert("isTherePreview : " + isTherePreview);
+                            //alert("isTherePreview : " + isTherePreview);
                             //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
                             var reader  = new FileReader();
 
@@ -854,7 +600,7 @@
                             }
 
                             var isTherePreview = DIVimage2preview.find('img').length;
-                            alert("isTherePreview : " + isTherePreview);
+                            //alert("isTherePreview : " + isTherePreview);
                             //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
                             var reader  = new FileReader();
 
@@ -895,7 +641,7 @@
                             }
 
                             var isTherePreview = DIVimage3preview.find('img').length;
-                            alert("isTherePreview : " + isTherePreview);
+                            //alert("isTherePreview : " + isTherePreview);
                             //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
                             var reader  = new FileReader();
 
@@ -945,55 +691,7 @@
         </div>
     </div>
 </div>
-<!-- slide -->
-<div class="format">
-<div class="wrapper">
-    <div class='main-insta'>
 
-        <div class="insta-post">
-            <div class="css-slider-wrapper">
-                <input type="radio" name="slider" class="slide-radio1" checked id="slider_1">
-                <input type="radio" name="slider" class="slide-radio2" id="slider_2">
-                <input type="radio" name="slider" class="slide-radio3" id="slider_3">
-
-                <div class="slider-pagination">
-                    <label for="slider_1" class="page1"></label>
-                    <label for="slider_2" class="page2"></label>
-                    <label for="slider_3" class="page3"></label>
-
-                </div>
-                <div class="next pagi-main">
-                    <label for="slider_1" class="numb1"></label>
-                    <label for="slider_2" class="numb2"></label>
-                    <label for="slider_3" class="numb3"></label>
-
-                </div>
-                <div class="previous pagi-main">
-                    <label for="slider_1" class="numb1"></label>
-                    <label for="slider_2" class="numb2"></label>
-                    <label for="slider_3" class="numb3"></label>
-
-                </div>
-                <div class="slider slide1">
-                    <div>
-                        <h2>Jerusalem shall be ours</h2>
-                    </div>
-                </div>
-                <div class="slider slide2">
-                    <div>
-                        <h2>Jerusalem shall be free </h2>
-                    </div>
-                </div>
-                <div class="slider slide3">
-                    <div>
-                        <h2>Together we shall walk it's scented air</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -1003,7 +701,54 @@
                     <span aria-hidden="true"></span>
                 </button>
             </div>
-            <div class="modal-body"></div>
+            <div class="wrapper">
+                <div class='main-insta'>
+
+                    <div class="insta-post">
+                        <div class="css-slider-wrapper">
+                            <input type="radio" name="slider" class="slide-radio1" checked id="slider_1" style="display: none">
+                            <input type="radio" name="slider" class="slide-radio2" id="slider_2" style="display: none">
+                            <input type="radio" name="slider" class="slide-radio3" id="slider_3" style="display: none">
+
+                            <div class="slider-pagination">
+                                <label for="slider_1" class="page1" id="page1"></label>
+                                <label for="slider_2" class="page2" style="display: none"></label>
+                                <label for="slider_3" class="page3" style="display: none"></label>
+
+                            </div>
+                            <div class="next pagi-main">
+                                <label for="slider_1" class="numb1"></label>
+                                <label for="slider_2" class="numb2" style="display: none"></label>
+                                <label for="slider_3" class="numb3" style="display: none"></label>
+
+                            </div>
+                            <div class="previous pagi-main">
+                                <label for="slider_1" class="numb1"></label>
+                                <label for="slider_2" class="numb2" style="display: none"></label>
+                                <label for="slider_3" class="numb3" style="display: none"></label>
+
+                            </div>
+                            <div class="slider slide1">
+                                <div>
+                                    <h2>Jerusalem shall be ours</h2>
+                                </div>
+                            </div>
+                            <div class="slider slide2">
+                                <div>
+                                    <h2>Jerusalem shall be free </h2>
+                                </div>
+                            </div>
+                            <div class="slider slide3">
+                                <div>
+                                    <h2>Together we shall walk it's scented air</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+            </div>
 
             <div class="modal-footer">
             </div>
@@ -1173,7 +918,11 @@
             window.location.reload();
             e.stopImmediatePropagation();
         });
-
+        $("#staticBackdrop").on('hide.bs.modal', function (e) {
+            // self.location = "/catering/listCatering"
+            window.location.reload();
+            e.stopImmediatePropagation();
+        });
 
 
     });
@@ -1489,7 +1238,7 @@
                       + " <div class='col-sm-10'>"
                           +  "<input type='file' class='form-control' id='postFile2' name='postFile22'  value='"+pto.post.postFile2+"' placeholder='파일 이미지2' onchange='setImage2Preview(event, 0);'>"
                        + "</div>"
-                       + "<div id='m_image2preview' class='col-sm-10'></div>"
+                       + "<div id='m_image2preview' class='col-sm-10'><img src='../../../resources/image/"+pto.post.postFile2+" '></div>"
                    + "</div>"
                    + "<div class='form-group'>"
                        + "<label for='postFile3' class='col-sm-offset-1 col-sm-10 control-label'>파일 이미지3</label>"
@@ -1510,6 +1259,8 @@
                    +"</button>"
                    +"<button class='btn btn-secondary' data-dismiss='modal'>취소"
                    + "</button>" ;
+
+               modalPic.find('.wrapper').remove();
                 modalPic.find('.modal-body').html(div);
                 modalPic.find('.modal-footer').html(div2);
                 //$('#modaladdPostPic').modal('show');
@@ -1600,7 +1351,7 @@
                 grp : grp
             },
             success : function(pto) {
-                alert("!!!!!!!!!!!!!!!!!")
+                //alert("!!!!!!!!!!!!!!!!!")
                 let reply = pto.replyCount;
 
                 var modal = $('#staticBackdrop');
@@ -1779,6 +1530,251 @@
 
 
 </script>
+<script type="text/javascript">
+
+
+    //=============    검색 / page 두가지 경우 모두  Event  처리 =============
+    function fncGetUserList(currentPage) {
+        $("#currentPage").val(currentPage)
+        $("#getPostListPic").attr("method" , "POST").attr("action" , "/community/getPostList2").submit();
+    }
+
+    var role =  '${sessionScope.role}';
+    var proImg;
+    var uId;
+    if (role == 'user'){
+        proImg = '${sessionScope.user.userProImg}';
+        uId = '${sessionScope.user.userId}';
+    }else if(role=='truck'){
+        proImg = '${sessionScope.truck.truckProImg}';
+        uId = '${sessionScope.truck.truckId}';
+    }
+
+
+
+    // 사진 클릭했을 때, modal 호출
+
+    function getCardDetail(postNo) {
+
+        //alert("얍")
+
+        //alert("postNo: "+postNo)
+        $.ajax({
+            url:"/community/json/getCardDetail/"+postNo,
+            method:"get",
+
+            success: function (data) {
+                var div="";
+                var modalFooter = "";
+                let hit = data.post.postHit;
+                $('#hit'+postNo).text(hit);
+
+                div += "<div class='cloneFail' >"+
+                    "</div>";
+
+
+
+                /*
+
+                                    +"<div id='carouselExampleInterval' class='carousel slide' data-ride='carousel'>"
+                                     +"<div class='carousel-inner'>"
+                                      +"<div class='carousel-item active'>"
+                                          +"<img class='d-block w-100' src='../../../resources/image/"+data.post.postFile1+"' alt='First slide'>"
+                                         +"</div>"
+                                      +"<div class='carousel-item' >"
+                                         +"<img class='d-block w-100' src='../../../resources/image/"+data.post.postFile2+"' alt='Second slide'>"
+                                     +"</div>"
+                                      +" <div class='carousel-item'>"
+                                      + " <img class='d-block w-100' src='../../../resources/image/"+data.post.postFile3+"' alt='Third slide'>"
+                                     +" </div></div>"
+                                      + " <a class='carousel-control-prev' href='#carouselExampleIndicators' role='button' data-slide='prev'>"
+                                    + "<span class='carousel-control-prev-icon' aria-hidden='true'></span> <span class='sr-only'>Previous</span>"
+                                     + "</a>"
+                              + " <a class='carousel-control-next' href='#carouselExampleIndicators' role='button' data-slide='next'>"
+                                    +"<span class='carousel-control-next-icon' aria-hidden='true'></span> <span class='sr-only'>Next</span>"
+                                  + " </a>"
+                                +" </div>";
+
+
+
+
+
+
+                /!* 슬라이드 해볼랫는데 안먹는당 *!/
+
+                */
+
+
+
+                /*               +"<div class='row'>"
+                             +"<div ><strong></strong> <img src='../../../resources/image/"+data.post.postFile1+"'></div></div>";
+
+                         if (data.post.postFile2 != null){
+                             div += "<div class='row'>"
+                                 +"<div ><strong></strong> <img src='../../../resources/image/"+data.post.postFile2+"'></div></div>";
+                         }
+                         if (data.post.postFile3 != null){
+                             div += "<div class='row'>"
+                                 +"<div ><strong></strong> <img src='../../../resources/image/"+data.post.postFile3+"'></div></div>";
+                         }*/
+                div += "<div class='row'>"+
+                    "<div>"+data.post.postContent+"</div></div>";
+
+                if (data.post.heartNo == '0'){
+
+                    div +=" <a idx="+data.post.postNo+" href='javascript:' class='heart-click heart_icon"+data.post.postNo+"'>"
+                        +"<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-suit-heart' viewBox='0 0 16 16'>"
+                        + "<path d='M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z' />"
+                        +"</svg> </a> ";
+                }else{
+
+                    div +=  "<a idx="+data.post.postNo+" href='javascript:' class='heart-click heart_icon"+data.post.postNo+"'>"
+                        +"<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-suit-heart-fill' viewBox='0 0 16 16'>"
+                        +"<path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' />"
+                        + " </svg></a>";
+                }
+                div += " <span id='m_heart"+data.post.postNo+"'>"+data.post.heartCount+"</span>"
+                    +"<span>"
+                    +"<a idx='"+data.post.postNo+"' href='#reply_card"+data.post.postNo+"' role='button' class='open_reply_list' data-toggle='collapse'  aria-expanded='false' aria-controls='collapseExample'> "
+                    +"<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-chat-dots' viewBox='0 0 16 16'>"
+                    +"<path d='M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z' />"
+                    +"<path d='M2.165 15.803l.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z' />"
+                    +"</svg>"
+                    +"</a>"
+                    +" </span>"
+                    +" <span id='m_reply"+data.post.postNo+"'>"+data.post.replyCount+"</span>"
+                    +"<span> <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-eye' viewBox='0 0 16 16'>"
+                    +"<path d='M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z' />"
+                    +"<path d='M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z' />"
+                    +"</svg>"
+                    +"</span> <span id='hit"+data.post.postNo+"'>"+data.post.postHit+"</span>"
+                    +"<div class='collapse' id='reply_card"+data.post.postNo+"'>"
+                    +"<section class='modal-section'>"
+                    +"<div class='card card-body'>"
+                    +"<div class='reply-list reply-list"+data.post.postNo+"'>"
+                    +"</div>"
+                    +"<div class='row reply_write'>"
+                    +"<div class='col-1'>"
+                    +"<a href='other_profile.do?other_nick='>"
+                    +"<img id='write_reply_profileImage' src='/resources/image/"+proImg+"' />"
+                    +" </a>"
+                    +"</div>"
+                    +"<div class='col-8' class='input_reply_div'>"
+                    +"<input class='w-100 form-control' id='input_reply"+data.post.postNo+"' type='text' placeholder='댓글입력...'>"
+                    +"</div>"
+                    +"<div class='col-3 '>"
+                    +"<button type='button' idx='"+data.post.postNo+"' class='btn btn-success mb-1 write_reply'>댓글&nbsp;달기</button>"
+                    +"</div>"
+                    +" </div>"
+                    +" </div>"
+                    +" </section>"
+                    +"</div>";
+
+
+                if (role == "user"){
+
+                    var userId = '${sessionScope.user.userId}'
+
+                    if (data.post.postTruck == null && data.post.postUser.userId == userId){
+
+                        modalFooter = "<div class='modal-footer'>"
+                            +"<button class='button btn-warning' name='deletePostPic' onclick='deletePostPic("+data.post.postNo+");'>글 삭제"
+                            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/></button>"
+                            +"<button class='button is-warning is-light' name='updatePostPicView'"
+                            +"onclick='updatePostPicView("+data.post.postNo+");'>글 수정"
+                            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/>"
+                            + "</button>"
+                            +"</div>";
+                    }else {
+                        modalFooter = "<div class='modal-footer'>"
+                            + " <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></div>";
+                    }
+
+                }else if(role == "truck"){
+
+                    var truckId = '${sessionScope.truck.truckId}'
+
+                    if (data.post.postUser == null && data.post.postTruck.truckId == truckId){
+
+                        modalFooter = "<div class='modal-footer'>"
+                            +"<button class='button btn-warning' name='deletePostPic' onclick='deletePostPic("+data.post.postNo+");'>글 삭제"
+                            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/></button>"
+                            +"<button class='button is-warning is-light' name='updatePostPicView'"
+                            +"onclick='updatePostPicView("+data.post.postNo+");'>글 수정"
+                            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/>"
+                            + "</button>"
+                            +"</div>";
+
+                    }else {
+                        modalFooter = "<div class='modal-footer'>"
+                            + " <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></div>";
+                    }
+                }
+                //$('body').find( '.format' ).clone().appendTo( '#carouselFail' ).css("display", "block");
+
+
+
+                //$('.page1').css("background", "../../../resources/image/"+data.post.postFile1+"")
+               // $("#page1").style.background = "url('../../../resources/image/"+data.post.postFile1+"') no-repeat 0 0";
+                $(".page1").css({"background":"url(../../../resources/image/"+data.post.postFile1+")"});
+                $(".slide1").css({"background":"url(../../../resources/image/"+data.post.postFile1+")"});
+                $(".page1").css({"background-size":"450px 450px"});
+                $(".slide1").css({"background-size":"450px 450px"});
+
+                if ( data.post.postFile2 != null ) {
+                    $(".page2").css({"background": "url(../../../resources/image/" + data.post.postFile2 + ")"});
+                    $(".slide2").css({"background": "url(../../../resources/image/" + data.post.postFile2 + ")"});
+                    $(".page2").css({"background-size": "450px 450px"});
+                    $(".slide2").css({"background-size": "450px 450px"});
+                    $(".page2").css({"display": "block"});
+                    $(".numb2").css({"display": "block"});
+                }
+                if ( data.post.postFile3 != null ) {
+                    //alert("333")
+                    $(".page3").css({"background": "url(../../../resources/image/" + data.post.postFile3 + ")"});
+                    $(".slide3").css({"background": "url(../../../resources/image/" + data.post.postFile3 + ")"});
+                    $(".page3").css({"background-size": "450px 450px"});
+                    $(".slide3").css({"background-size": "450px 450px"});
+                    $(".page3").css({"display": "block"});
+                    $(".numb3").css({"display": "block"});
+                }
+
+                $('.modal-footer').remove();
+
+
+                $('.modal-content').append(modalFooter);
+                $('.modal-body').html(div);
+                //$( '.format .wrapper' ).clone().appendTo( '.cloneFail' );
+
+                console.log("data.post.postHit: "+data.post.postHit);
+
+                $('#staticBackdrop').modal('show');
+
+
+
+
+
+
+
+            },
+            error : function(err){
+                console.log('에러')
+            }
+        });
+
+
+
+    }
+
+    // html을 복사하고.
+    // 모달이 피료없다
+
+
+
+
+
+</script>
+
 
 
 
