@@ -34,8 +34,9 @@
     <!-- SQL :SELECT ONE-->
     <select id="getComment"     parameterType="int"         resultMap="commentSelectMap">
         SELECT
-            COMMENT_POST_NO, COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
-        FROM comment
+            COMMENT_POST_NO, COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY, TRUCK_PRO_IMG, USER_PRO_IMG
+            FROM comment LEFT JOIN TRUCK ON comment.COMMENT_TRUCK_ID = truck.TRUCK_ID
+            LEFT OUTER JOIN USER ON comment.COMMENT_USER_ID = user.USER_ID
         WHERE comment_no = #{commentNo}
     </select>
 
@@ -56,8 +57,9 @@
 
     <!-- SQL : SELECT LIST -->
     <select id="getCommentList"   parameterType="int"   resultMap="commentSelectMap">
-        SELECT COMMENT_NO, COMMENT_POST_NO ,COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY
-        FROM comment
+        SELECT COMMENT_NO, COMMENT_POST_NO ,COMMENT_USER_ID, COMMENT_TRUCK_ID, COMMENT_CONTENT, COMMENT_DATE, SECRET_KEY, TRUCK_PRO_IMG, USER_PRO_IMG
+        FROM comment LEFT JOIN TRUCK ON comment.COMMENT_TRUCK_ID = truck.TRUCK_ID
+                     LEFT OUTER JOIN USER ON comment.COMMENT_USER_ID = user.USER_ID
         WHERE comment_post_no = ${value}
         order by COMMENT_NO DESC
 --         limit 0,8;

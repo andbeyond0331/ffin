@@ -80,7 +80,6 @@
                     //alert(JSON.stringify(result));
                     //$("#listReply").text(JSON.stringify(result));
                     //alert("댓글 출력");
-                    location.reload();
                 }
             });
         }
@@ -107,6 +106,7 @@
                     success: function () { //데이터를 보내는것이 성공했을시 출력되는 메시지
                         //alert("댓글이 등록되었습니다.");
                         listReply(); //댓글 목록 출력
+                        location.reload();
                     }
                 });
             });
@@ -149,9 +149,9 @@
 <jsp:include page="/views/navbar.jsp"/>
 <br/><br/><br/><br/><br/>
 
-<div class="container">
+<div class="container" align="center">
     <div class="page-header text-info">
-        <h3> 게시글조회 </h3>
+        <h3 class="text-info"> 게시글조회 </h3>
     </div>
 
     <br/>
@@ -164,7 +164,8 @@
     <%--    </div>--%>
     <!-- 게시글 조회 -->
     <div class="panel panel-default">
-        <div class="panel-heading" style="text-align: center; border: 3px solid #dddddd; border-radius:10px ">
+        <div class="panel-heading" style="border-radius:10px ; border: 0; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2); max-width: 550px;
+			transition: 0.3s;">
 
             <div class="panel-body">
                 <ul class="chat_list_box" style="font-size:20px ">
@@ -172,7 +173,7 @@
                     <strong class="pull-right text-dark" style="padding-top:10px; padding-right:10px "><fmt:formatDate
                             value="${post.postRegDate}" pattern="yyyy-MM-dd"/></strong>
                     <img style="border-radius:70px; margin-left:20px; padding-top:10px"
-                         src="../resources/image/${userProImg}${truckProImg}" width="100"
+                         src="../resources/image/${post.postUser.userProImg}${post.postTruck.truckProImg}" width="100"
                          height="100" class="pull-left"/>
 
                     <br/>
@@ -215,7 +216,7 @@
                         <c:when test="${ post.heartNo eq 0}">
                             <%-- 빈 하트일때 --%>
                             <span>
-                                            <a idx="${post.postNo }" href="javascript:" class="heart-click heart_icon${post.postNo }">
+                                            <a idx="${post.postNo }" href="javascript:" class="heart-click heart_icon${post.postNo }" style="color:palevioletred">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
                                                      <path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" />
                                                 </svg>
@@ -225,7 +226,7 @@
                         <c:otherwise>
                             <%-- 꽉찬 하트일때 --%>
                             <span>
-                                            <a idx="${post.postNo}" href="javascript:" class="heart-click heart_icon${post.postNo}">
+                                            <a idx="${post.postNo}" href="javascript:" class="heart-click heart_icon${post.postNo} style="color:palevioletred">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
                                                  <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />
                                              </svg>
@@ -299,41 +300,40 @@
                 </div>
             </div>
         </div>
-
+        <button type="button" id="goPostList" class="btn-secondary">게시글 목록으로</button>
         <c:if test="${sessionScope.user.userId.equals(post.postUser.userId) || sessionScope.truck.truckId.equals(post.postTruck.truckId)}">
-            <button id="postD" type="button" class="btn-secondary pull-right" data-toggle="modal"
-                    data-target="#deleteModal">삭제
-            </button>
-            <button id="postU" type="button" class="btn-secondary pull-right" data-toggle="modal"
+            <button id="postU" type="button" class="btn-secondary" data-toggle="modal"
                     data-target="#updateModal">수정
             </button>
+            <button id="postD" type="button" class="btn-secondary" data-toggle="modal"
+                    data-target="#deleteModal">삭제
+            </button>
         </c:if>
-        <button type="button" id="goPostList" class="btn-secondary pull-right">게시글 목록으로</button>
     </div>
     <!-- 게시판 글쓰기 양식 영역 끝 -->
 
 
     <!-- 댓글 수정 Modal -->
-    <div class="modal fade" id="updateCModal" tabindex="-1" role="dialog"
-         aria-labelledby="updateCModalLabel" aria-hidden="true"
-    >
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="updateCModalLabel">댓글수정</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body"><textarea class="form-control" rows="3" id="commentContentU"
-                                                  style="width: 100%;" value=""></textarea></div>
-                <div class="modal-footer">
-                    <a type="button" class="btn btn-primary" href="/community/updateComment?commentNo=${comment.commentNo}">수정완료</a>
-                    <a type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</a>
-                </div>
-            </div>
-        </div>
-    </div>
+<%--    <div class="modal fade" id="updateCModal" tabindex="-1" role="dialog"--%>
+<%--         aria-labelledby="updateCModalLabel" aria-hidden="true"--%>
+<%--    >--%>
+<%--        <div class="modal-dialog" role="document">--%>
+<%--            <div class="modal-content">--%>
+<%--                <div class="modal-header">--%>
+<%--                    <h5 class="modal-title" id="updateCModalLabel">댓글수정</h5>--%>
+<%--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
+<%--                        <span aria-hidden="true">&times;</span>--%>
+<%--                    </button>--%>
+<%--                </div>--%>
+<%--                <div class="modal-body"><textarea class="form-control" rows="3" id="commentContentU"--%>
+<%--                                                  style="width: 100%;" value=""></textarea></div>--%>
+<%--                <div class="modal-footer">--%>
+<%--                    <a type="button" class="btn btn-primary" href="/community/updateComment?commentNo=${comment.commentNo}">수정완료</a>--%>
+<%--                    <a type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</a>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
     <br/>
 
@@ -367,40 +367,40 @@
                 <!-- ./end row -->
             </div>
 
-            <table class="table table-hover table-striped" id="writeComment">
+            <table class="table table-hover table-striped" id="writeComment" style="max-width:770px ">
 
                 <textarea class="form-control" rows="3" id="commentContent" placeholder="reply.."
-                          style="width: 100%;"></textarea>
-                <div class="btn-group btn-group-sm pull-right" role="group" aria-label="...">
+                          style="width: 100%; max-width:770px "></textarea>
+                <div class="btn-group btn-group-sm" role="group" aria-label="...">
                     <c:if test="${sessionScope.user.userId == null && sessionScope.truck.truckId == null}">
-                        <input type="button" class="btn btn-default pull-right" value="댓글 쓰기" disabled="disabled">
+                        <input type="button" class="btn btn-default" value="댓글 쓰기" disabled="disabled">
                     </c:if>
                     <c:if test="${sessionScope.user.userId != null || sessionScope.truck.truckId != null}">
-                        <input type="button" class="btn btn-secondary pull-right" value="댓글 쓰기" id="btnReply">
+                        <input type="button" class="btn btn-secondary" value="댓글 쓰기" id="btnReply">
                     </c:if>
                 </div>
             </table>
 
             <table class="table table-hover table-striped" id="list">
                 <br/>
-                <hr>
+                <hr style="max-width: 770px">
 
                 <c:forEach var="comment" items="${list}">
 
                     <c:set var="i" value="${ i+1 }"/>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <ul class="chat">
+                        <ul class="chat" style="padding: 0px">
 
                             <!-- start reply -->
-                            <li class="left clearfix" data-rno='12'>
+                            <li class="left clearfix" data-rno='12' style="max-width: 770px">
                                 <div>
                                     <div class="header">
                                         <img style="border-radius:70px; margin-left:5px"
-                                             src="../resources/image/${user.userProImg}${truck.truckProImg}" width="60"
+                                             src="../resources/image/${comment.userProImg}${comment.truckProImg}" width="60"
                                              height="55" class="pull-left"/>
                                         <strong style="padding-top:10px"
-                                                class="primary-font">${comment.commentUserId}${comment.commentTruckId}</strong>
+                                                class="primary-font pull-left">${comment.commentUserId}${comment.commentTruckId}</strong>
                                         <small class="pull-right text-muted">${comment.commentDate}</small>
                                         <br>
                                         <c:if test="${sessionScope.user.userId.equals(comment.commentUserId) || sessionScope.truck.truckId.equals(comment.commentTruckId)}">
@@ -408,14 +408,14 @@
                                                href="/community/deleteComment?commentNo=${comment.commentNo}">삭제</a>
                                             <input type="hidden" value="${comment.commentNo}">
                                             <input type="hidden" value="${comment.commentPostNo}">
-                                            <a name="updateC" class="btn-outline-dark pull-right" data-toggle="modal"
-                                               data-target="#updateCModal">수정</a>
-                                            <input type="hidden" value="${comment.commentNo}">
-                                            <input type="hidden" value="${comment.commentPostNo}">
+<%--                                            <a name="updateC" class="btn-outline-dark pull-right" data-toggle="modal"--%>
+<%--                                               data-target="#updateCModal">수정</a>--%>
+<%--                                            <input type="hidden" value="${comment.commentNo}">--%>
+<%--                                            <input type="hidden" value="${comment.commentPostNo}">--%>
                                         </c:if>
                                     </div>
-                                    <p>${comment.commentContent}</p>
-                                    <hr/>
+                                    <p class="col-sm-8">${comment.commentContent}</p>
+                                    <hr style="margin:0 "/>
                                 </div>
 
                             </li>

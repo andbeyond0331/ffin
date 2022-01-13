@@ -125,16 +125,23 @@ public class CommunityController {
        //Post post = communityService.getCardDetail(id, role, postNo);
 
         System.out.println("post = " + post);
-        if(post.getPostUser() != null) {
-            User user =(User) session.getAttribute("user");
-            String postUserProImg = user.getUserProImg();
-            System.out.println("postUserProImg = " + postUserProImg);
-            session.setAttribute("userProImg", postUserProImg);
-        } else if(post.getPostTruck() != null) {
-            Truck truck = (Truck) session.getAttribute("truck");
-            String postTruckProImg = truck.getTruckProImg();
-            session.setAttribute("truckProImg", postTruckProImg);
-            System.out.println("postTruckProImg = " + postTruckProImg);
+        try {
+            if (post.getPostUser() != null) {
+                User user = (User) userService.getUser(post.getPostUser().getUserId());
+                String postUserProImg = user.getUserProImg();
+                System.out.println("postUserProImg = " + postUserProImg);
+                session.setAttribute("userProImg", postUserProImg);
+                System.out.println("session에 담긴 postUserProImg = " + postUserProImg);
+            } else if (post.getPostTruck() != null) {
+                Truck truck = (Truck) truckService.getTruck(post.getPostTruck().getTruckId());
+                String postTruckProImg = truck.getTruckProImg();
+                session.setAttribute("truckProImg", postTruckProImg);
+                System.out.println("postTruckProImg = " + postTruckProImg);
+                System.out.println("session에 담긴 postTruckProImg = " + postTruckProImg);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println("예외처리");
         }
         session.setAttribute("postNo", postNo);
 

@@ -416,11 +416,11 @@
 
             <thead>
             <tr>
-                <th align="center">No</th>
+                <th align="center" class="text-center">No</th>
                 <th align="left">제목</th>
                 <th align="left">작성자 ID</th>
                 <th align="left">작성일</th>
-                <th align="left">좋아요</th>
+                <th align="center">좋아요</th>
             </tr>
             </thead>
 
@@ -434,9 +434,8 @@
                     <td align="left">${post.postTitle}</td>
                     <td align="left">${post.postUser.userId}${post.postTruck.truckId}</td>
                     <td align="left"><fmt:formatDate value="${post.postRegDate}" pattern="yyyy-MM-dd"/></td>
-                    <td align="left">
-                        <i class="glyphicon glyphicon-ok" id="${post.postNo}"></i>
-                        <input type="hidden" value="${post.postUser}">
+                    <td align="left" id="heart${post.postNo }" style="padding-left: 25px">
+                            ${post.heartCount }
                     </td>
                 </tr>
             </c:forEach>
