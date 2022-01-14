@@ -585,7 +585,7 @@
 <jsp:include page="/views/navbar.jsp" />
 <!-- ToolBar End /////////////////////////////////////-->
 <!--find location -->
-<div class="find_container ">
+<%--<div class="find_container ">
     <div class="container">
         <div class="row">
             <div class="col">
@@ -593,9 +593,9 @@
                     <div class="form-row" style="margin-top: 70px;">
                         <div class="form-group col-lg-6">
                             <input type="text" class="form-control" id="inputLocation" name="inputLocation" placeholder="What's your address?">
-<%--                            <span class="location_icon">--%>
-<%--                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>--%>
-<%--                                                  </span>--%>
+&lt;%&ndash;                            <span class="location_icon">&ndash;%&gt;
+&lt;%&ndash;                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>&ndash;%&gt;
+&lt;%&ndash;                                                  </span>&ndash;%&gt;
                         </div>
                     </div>
                     <div class="form-row"  style="margin-top: -15px;">
@@ -609,7 +609,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>--%>
 
 <!-- slider section -->
 
@@ -791,7 +791,7 @@
             <c:forEach var="truck" items="${list}" varStatus="status">
                 <c:set var="i" value="${i+1}"/>
 
-                <a class="card" href="#">
+                <a class="card" href="getMenuList?truckId=${truck.truckId}">
 
                     <div class="card__background" style="background-image: url(../../resources/menu/${truck.truckSigMenuImg1})"></div>
 

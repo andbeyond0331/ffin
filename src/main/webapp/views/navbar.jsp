@@ -215,11 +215,11 @@
                                     <i class="xi-2x xi-kakaotalk"></i> Login with kakao
                                 </a>
                             </div>
-                            <div class="mb-3 d-grid gap-2 mx-auto">
+                            <%--<div class="mb-3 d-grid gap-2 mx-auto">
                                 <a href="#" class="btn btn-google btn-user btn-block">
                                     <i class="fab fa-google fa-fw"></i> Login with Google
                                 </a>
-                            </div>
+                            </div>--%>
                         </div>
                         <%-- CEO modal --%>
                         <div class="tab-pane fade" id="CEO">

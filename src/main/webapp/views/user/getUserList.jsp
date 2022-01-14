@@ -69,6 +69,9 @@
 
 <body>
     <jsp:include page="/views/navbar.jsp" />
+    <div style="height: auto">
+        <jsp:include page="/views/user/sidebar.jsp" />
+    </div>
 
 <section class="client_section layout_padding">
 
