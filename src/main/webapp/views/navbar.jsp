@@ -57,13 +57,17 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 20px">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" id="goTruck" href="#">푸드트럭</a>
+                        <li class="dropdown" style="color: black">
+                            <a class="dropbtn" id="goTruck">푸드트럭</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="goCatering" href="#">케이터링</a>
+                        <li class="dropdown">
+                            <a class="dropbtn" id="goCatering">케이터링</a>
+                            <div class="dropdown-content">
+                                <a href="/catering/mainCalendar">캘린더</a>
+                                <a href="/catering/listCatering">리스트</a>
+                            </div>
                         </li>
-                        <li class="dropdown" style="margin-top:8px ">
+                        <li class="dropdown">
                             <a class="dropbtn" id="goPost">게시판</a>
                             <div class="dropdown-content">
                                 <a href="/community/getPostList2">썸네일게시판</a>
@@ -71,8 +75,8 @@
                             </div>
                         </li>
                         <c:if test="${user.userId != null && (sessionScope.role == 'user' || sessionScope.role == 'admin')}">
-                            <li class="nav-item">
-                                <a class="nav-link" id="goChat" href="#">채팅방</a>
+                            <li class="dropdown" style="color: black">
+                                <a class="dropbtn" id="goChat">채팅방</a>
                             </li>
                         </c:if>
                     </ul>
@@ -124,7 +128,7 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="user-dropdown">
                                         <li><a class="dropdown-item user-menu" href="/views/user/adminMyPage.jsp"><i class="fas fa-user-circle"></i>사이트 관리</a></li>
-                                        <li><a class="dropdown-item user-menu" href="/user/kakaoLogout"><i class="fas fa-question-circle"></i>가입승인</a></li>
+                                        <li><a class="dropdown-item user-menu" href="/truck/getNewTruckListByAdmin"><i class="fas fa-question-circle"></i>가입승인</a></li>
                                         <li><a class="dropdown-item user-menu" href="/user/logout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
                                     </ul>
                                 </c:when>

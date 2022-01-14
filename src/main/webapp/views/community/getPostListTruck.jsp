@@ -466,6 +466,38 @@
     padding-left:30px;
 }
 
+    .btn.btn-primary{
+        width: -webkit-fill-available;
+        margin-left: 0;
+        color: #fff;
+        background-color: #ffe537;
+        border-radius: 10px;
+    }
+
+    .btn.btn-primary:hover{
+        max-width: -webkit-fill-available;
+        margin-left: 0;
+        background-color: #ffffff;
+        color: #ffe537;
+        border-color: #ffe537;
+    }
+
+    .btn.btn-warning{
+        width : 100px;
+        margin-left: 0;
+        color: #060000;
+        background-color: #ffe537;
+        border-radius: 10px;
+    }
+
+    .btn.btn-warning:hover{
+        width : 100px;
+        margin-left: 0;
+        background-color: #ffffff;
+        color: #ffe537;
+        border-color: #ffe537;
+    }
+
 </style>
 
 
@@ -488,14 +520,15 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Posting</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="modaladdPostPicForm">
                 <div class="form-group">
-                    <span> 아이디 </span>
+                    <strong> 작성자 아이디 </strong>
                     <c:if test="${sessionScope.role eq 'user'}">
                     <span id="postUser.userId">${sessionScope.user.userId}</span>
                     </c:if>
@@ -504,7 +537,7 @@
                     </c:if>
                 </div>
                     <div class="form-group">
-                        <label for="postFile1" class="col-sm-offset-1 col-sm-10 control-label">파일 이미지1</label>
+                        <label for="postFile1" class="col-sm-offset-1 col-sm-10 control-label">업로드할 사진1</label>
                         <div class="col-sm-10">
                             <input type="file" class="form-control" id="postFile1" name="postFile11"  value="${post.postFile1}" placeholder="파일 이미지1" onchange="setImage1Preview(event, '#image1preview');">
                         </div>
@@ -512,7 +545,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="postFile2" class="col-sm-offset-1 col-sm-10 control-label">파일 이미지2</label>
+                        <label for="postFile2" class="col-sm-offset-1 col-sm-10 control-label">업로드할 사진2</label>
                         <div class="col-sm-10">
                             <input type="file" class="form-control" id="postFile2" name="postFile22"  value="${post.postFile2}" placeholder="파일 이미지1" onchange="setImage2Preview(event, '#image2preview');">
                         </div>
@@ -520,7 +553,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="postFile3" class="col-sm-offset-1 col-sm-10 control-label">파일 이미지3</label>
+                        <label for="postFile3" class="col-sm-offset-1 col-sm-10 control-label">업로드할 사진3</label>
                         <div class="col-sm-10">
                             <input type="file" class="form-control" id="postFile3" name="postFile33"  value="${post.postFile3}" placeholder="파일 이미지3" onchange="setImage3Preview(event, '#image3preview');">
                         </div>
@@ -660,13 +693,13 @@
                 <div id="here"></div>
 
                 <div class="form-group">
-                    <textarea id="postContent" name = "postContent" style="resize:none;" rows="5" cols="55" title="내용을 입력해 주세요.">${post.postContent}</textarea>
+                    <textarea id="postContent" name = "postContent" style="resize:none; border-radius:2px " rows="5" cols="55" placeholder="내용을 입력해 주세요.">${post.postContent}</textarea>
                 </div>
                 </form>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="add-post-p" >글쓰기</button>
+                <button type="button" class="btn btn-primary" id="add-post-p" style="color: black" >작성완료</button>
             </div>
         </div>
     </div>
@@ -750,8 +783,10 @@
 
 
     <div class="container">
-        <div class="addbutton" >
-            <a class='btn btn-warning' id ='modaladdPostPicbt' role='button' data-toggle='collapse' href='#modaladdPostPic' aria-expanded='false' aria-controls='modaladdPostPic'>등록</a>
+        <div class="addbutton" style="padding: 0;">
+            <a class='btn btn-warning' id ='modaladdPostPicbt' role='button' data-toggle='collapse' href='#modaladdPostPic' aria-expanded='false' aria-controls='modaladdPostPic'><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle-dotted" viewBox="0 0 16 16">
+                <path d="M8 0c-.176 0-.35.006-.523.017l.064.998a7.117 7.117 0 0 1 .918 0l.064-.998A8.113 8.113 0 0 0 8 0zM6.44.152c-.346.069-.684.16-1.012.27l.321.948c.287-.098.582-.177.884-.237L6.44.153zm4.132.271a7.946 7.946 0 0 0-1.011-.27l-.194.98c.302.06.597.14.884.237l.321-.947zm1.873.925a8 8 0 0 0-.906-.524l-.443.896c.275.136.54.29.793.459l.556-.831zM4.46.824c-.314.155-.616.33-.905.524l.556.83a7.07 7.07 0 0 1 .793-.458L4.46.824zM2.725 1.985c-.262.23-.51.478-.74.74l.752.66c.202-.23.418-.446.648-.648l-.66-.752zm11.29.74a8.058 8.058 0 0 0-.74-.74l-.66.752c.23.202.447.418.648.648l.752-.66zm1.161 1.735a7.98 7.98 0 0 0-.524-.905l-.83.556c.169.253.322.518.458.793l.896-.443zM1.348 3.555c-.194.289-.37.591-.524.906l.896.443c.136-.275.29-.54.459-.793l-.831-.556zM.423 5.428a7.945 7.945 0 0 0-.27 1.011l.98.194c.06-.302.14-.597.237-.884l-.947-.321zM15.848 6.44a7.943 7.943 0 0 0-.27-1.012l-.948.321c.098.287.177.582.237.884l.98-.194zM.017 7.477a8.113 8.113 0 0 0 0 1.046l.998-.064a7.117 7.117 0 0 1 0-.918l-.998-.064zM16 8a8.1 8.1 0 0 0-.017-.523l-.998.064a7.11 7.11 0 0 1 0 .918l.998.064A8.1 8.1 0 0 0 16 8zM.152 9.56c.069.346.16.684.27 1.012l.948-.321a6.944 6.944 0 0 1-.237-.884l-.98.194zm15.425 1.012c.112-.328.202-.666.27-1.011l-.98-.194c-.06.302-.14.597-.237.884l.947.321zM.824 11.54a8 8 0 0 0 .524.905l.83-.556a6.999 6.999 0 0 1-.458-.793l-.896.443zm13.828.905c.194-.289.37-.591.524-.906l-.896-.443c-.136.275-.29.54-.459.793l.831.556zm-12.667.83c.23.262.478.51.74.74l.66-.752a7.047 7.047 0 0 1-.648-.648l-.752.66zm11.29.74c.262-.23.51-.478.74-.74l-.752-.66c-.201.23-.418.447-.648.648l.66.752zm-1.735 1.161c.314-.155.616-.33.905-.524l-.556-.83a7.07 7.07 0 0 1-.793.458l.443.896zm-7.985-.524c.289.194.591.37.906.524l.443-.896a6.998 6.998 0 0 1-.793-.459l-.556.831zm1.873.925c.328.112.666.202 1.011.27l.194-.98a6.953 6.953 0 0 1-.884-.237l-.321.947zm4.132.271a7.944 7.944 0 0 0 1.012-.27l-.321-.948a6.954 6.954 0 0 1-.884.237l.194.98zm-2.083.135a8.1 8.1 0 0 0 1.046 0l-.064-.998a7.11 7.11 0 0 1-.918 0l-.064.998zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+            </svg></a>
         </div>
         <div class="gallery">
 
@@ -896,7 +931,7 @@
                                 // 여기선 ''와 ""가 이미 둘다 쓰이고 있는데  href를 감싸고 있는 ''와 겹치지 않는 ""를 \" 처리해서 넣어줬다.
                                 //listHtml += "			<a href='#re_reply"+ commentNo +"' class='write_reply_start' role='button' data-bs-toggle='collapse' aria-expanded='false' aria-controls='re_reply"+ commentNo +"'>답글1&nbsp;달기</a>";
                                 //listHtml += "			<button type='button' class='write_reply_start' no='" + commentNo + "' bno='" + commentPostNo + "' data-bs-toggle='collapse' data-bs-target='#re_reply"+ commentNo +"' aria-expanded='false' aria-controls='re_reply"+ commentNo +"'>답글&nbsp;달기</button>";
-                                listHtml +="        <a class='btn btn-primary' role='button' data-toggle='collapse' href='#re_reply"+ commentNo +"' aria-expanded='false' aria-controls='collapseExample'>답글달기</a>"
+                                listHtml +="        <a class='btn btn-warning' role='button' data-toggle='collapse' href='#re_reply"+ commentNo +"' aria-expanded='false' aria-controls='collapseExample' style='width:85px'>답글달기</a>"
                                 listHtml += "		</div>";
 
                             listHtml += "	</div>";
@@ -968,7 +1003,7 @@
                         // listHtml += "			<button onclick='javascript:WriteReReply("+ no +","+ bno +")' type='button' class='btn btn-success mb-1 write_rereply' >답글&nbsp;달기</button>"
                         // 위 코드는 클릭되어도 값이 넘겨지지 않는다. 값이 undefined가 된다.
                         // 아래코드처럼 짜야한다. click이벤트를 처리하지 않고 데이터(no, bno)만 속성으로 넘겨주도록 작성한다.<button type='button' class='btn btn-success mb-1 write_rereply' no='" + commentNo + "' bno='" + commentPostNo + "'>답글&nbsp;달기</button>"
-                        listHtml += "<a href='javascript:' no='"+ commentNo + "' bno='"+ commentPostNo +"' class='write_rereply'>답글&nbsp;달기</a>";
+                        listHtml += "<a href='javascript:' no='"+ commentNo + "' bno='"+ commentPostNo +"' class='write_rereply'>입력&nbsp;완료</a>";
                         listHtml += "		</div>";
                         listHtml += "	</div>";
                         // ---- 답글입력란 끝
@@ -1514,7 +1549,7 @@
                     +"<input class='w-100 form-control' id='input_reply"+data.post.postNo+"' type='text' placeholder='댓글입력...'>"
                     +"</div>"
                     +"<div class='col-3 '>"
-                    +"<button type='button' idx='"+data.post.postNo+"' class='btn btn-success mb-1 write_reply'>댓글&nbsp;달기</button>"
+                    +"<button type='button' idx='"+data.post.postNo+"' class='btn btn-success mb-1 write_reply' style='background-color: #ffe537; border-radius:12px; border-color: #ffba49; color: black; width:85px  '>댓글달기</button>"
                     +"</div>"
                     +" </div>"
                     +" </div>"
