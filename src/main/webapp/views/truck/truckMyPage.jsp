@@ -68,7 +68,7 @@
 				self.location = "/truck/getSalesList"
 			});
 			$('.truck-menu').click(function () {
-				self.location = ""
+				self.location = "/menu/getMenuListM?truckId=${truck.truckId}";
 			});
 			$('.truck-heart').click(function () {
 				self.location = ""
@@ -137,7 +137,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="row justify-content-center">
+				<%--<div class="row justify-content-center">
 					<div class="card truck-comment" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
 							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-comment fa-2x"></i></span>
@@ -159,8 +159,15 @@
 							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
 						</div>
 					</div>
-				</div>
+				</div>--%>
 				<div class="row justify-content-center">
+					<div class="card truck-menu" style="width: 12rem;">
+						<div class="card-body" style="display: inline-grid;">
+							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-list fa-2x"></i></span>
+							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">메뉴관리</h6>
+							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
+						</div>
+					</div>
 					<div class="card truck-review" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
 							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-star-half-alt fa-2x"></i></span>
@@ -168,13 +175,13 @@
 							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
 						</div>
 					</div>
-					<div class="card truck-post" style="width: 12rem;">
+					<%--<div class="card truck-post" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
 							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-edit fa-2x"></i></span>
 							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">게시글</h6>
 							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
 						</div>
-					</div>
+					</div>--%>
 					<div class="card truck-qna" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
 							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-question-circle fa-2x"></i></span>

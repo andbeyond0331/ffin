@@ -178,6 +178,11 @@
 
 </style>
 
+<script>
+
+
+</script>
+
 
 <!-- sidebar -->
 <div class="navigation sidebar-div">
@@ -232,11 +237,11 @@
                     <div class="collapse" id="collapsePurchase" style="padding: 10px;">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="/truck/getSalesList">판매내역</a>
-                            <a class="collapse-item" href="">환불내역</a>
+<%--                            <a class="collapse-item" href="">환불내역</a>--%>
                         </div>
                     </div>
                 </li>
-                <li class="list">
+                <%--<li class="list">
                     <b></b>
                     <b></b>
                     <a class="btn toggle-btn" role="button" data-target="#collapseComment" data-toggle="collapse" href="#collapseComment" aria-expanded="false" aria-controls="collapseExample">
@@ -248,33 +253,28 @@
                             <a class="collapse-item" href="">작성한 댓글</a>
                         </div>
                     </div>
-                </li>
-                <li class="list">
+                </li>--%>
+                <%--<li class="list">
                     <b></b>
                     <b></b>
-                    <a href="#">
+                    <a class="truck-menu" href="#">
                         <span class="icon"><ion-icon name="fast-food-outline"></ion-icon></span>
                         <span class="title">메뉴관리</span>
                     </a>
-                    <div class="collapse" id="collapseMenu" style="padding: 10px;">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">내 게시글</a>
+                </li>--%>
+                    <%--<li class="list">
+                        <b></b>
+                        <b></b>
+                        <a class="btn toggle-btn" role="button" data-target="#collapseHeart" data-toggle="collapse" href="#collapseHeart" aria-expanded="false" aria-controls="collapseExample">
+                            <span class="icon"><ion-icon name="heart-outline"></ion-icon></span>
+                            <span class="title">좋아요</span>
+                        </a>
+                        <div class="collapse" id="collapseHeart" style="padding: 10px;">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <a class="collapse-item" href="">게시글</a>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li class="list">
-                    <b></b>
-                    <b></b>
-                    <a class="btn toggle-btn" role="button" data-target="#collapseHeart" data-toggle="collapse" href="#collapseHeart" aria-expanded="false" aria-controls="collapseExample">
-                        <span class="icon"><ion-icon name="heart-outline"></ion-icon></span>
-                        <span class="title">좋아요</span>
-                    </a>
-                    <div class="collapse" id="collapseHeart" style="padding: 10px;">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">게시글</a>
-                        </div>
-                    </div>
-                </li>
+                    </li>--%>
                 <li class="list">
                     <b></b>
                     <b></b>
@@ -288,7 +288,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="list">
+                <%--<li class="list">
                     <b></b>
                     <b></b>
                     <a class="btn toggle-btn" role="button" data-target="#collapsePost" data-toggle="collapse" href="#collapsePost" aria-expanded="false" aria-controls="collapseExample">
@@ -300,7 +300,7 @@
                             <a class="collapse-item" href="">내 게시글</a>
                         </div>
                     </div>
-                </li>
+                </li>--%>
                 <li class="list">
                     <b></b>
                     <b></b>
@@ -316,176 +316,6 @@
                 </li>
             </ul>
         </c:when>
-
-        <%-- Admin --%>
-        <c:when test="${sessionScope.role eq 'admin'}">
-            <ul class="sidebar-user">
-                <li class="list active">
-                    <b></b>
-                    <b></b>
-                    <a href="#">
-                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
-                        <span class="title">사이트관리</span>
-                    </a>
-                </li>
-                <li class="list">
-                    <b></b>
-                    <b></b>
-                    <a class="btn toggle-btn" role="button" data-target="#collapseUser" data-toggle="collapse" href="#collapseUser" aria-expanded="false" aria-controls="collapseExample">
-                        <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
-                        <span class="title">일반회원</span>
-                    </a>
-                    <div class="collapse" id="collapseUser" style="padding: 10px;">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">활동회원</a>
-                            <a class="collapse-item" href="">탈퇴회원</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="list">
-                    <b></b>
-                    <b></b>
-                    <a class="btn toggle-btn" role="button" data-target="#collapseTruck" data-toggle="collapse" href="#collapseTruck" aria-expanded="false" aria-controls="collapseExample">
-                        <span class="icon"><ion-icon name="cart-outline"></ion-icon></span>
-                        <span class="title">사업자회원</span>
-                    </a>
-                    <div class="collapse" id="collapseTruck" style="padding: 10px;">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">전체</a>
-                            <a class="collapse-item" href="">가입승인</a>
-                            <a class="collapse-item" href="">가입승인대기</a>
-                            <a class="collapse-item" href="">가입승인거절</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="list">
-                    <b></b>
-                    <b></b>
-                    <a class="btn toggle-btn" role="button" data-target="#collapseLcok" data-toggle="collapse" href="#collapseLcok" aria-expanded="false" aria-controls="collapseExample">
-                        <span class="icon"><ion-icon name="heart-outline"></ion-icon></span>
-                        <span class="title">게시글 관리</span>
-                    </a>
-                </li>
-                <li class="list">
-                    <b></b>
-                    <b></b>
-                    <a href="#">
-                        <span class="icon"><ion-icon name="star-half-outline"></ion-icon></span>
-                        <span class="title">블랙리스트</span>
-                    </a>
-                </li>
-                <li class="list">
-                    <b></b>
-                    <b></b>
-                    <a class="btn toggle-btn" role="button" data-target="#collapseApp" data-toggle="collapse" href="#collapseApp" aria-expanded="false" aria-controls="collapseExample">
-                        <span class="icon"><ion-icon name="reader-outline"></ion-icon></span>
-                        <span class="title">가입승인</span>
-                    </a>
-                    <div class="collapse" id="collapseApp" style="padding: 10px;">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">승인처리대기</a>
-                            <a class="collapse-item" href="">승인처리완료</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="list">
-                    <b></b>
-                    <b></b>
-                    <a class="btn toggle-btn" role="button" data-target="#collapseQnAAdmin" data-toggle="collapse" href="#collapseQnAAdmin" aria-expanded="false" aria-controls="collapseExample">
-                        <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
-                        <span class="title">문의•신고</span>
-                    </a>
-                    <div class="collapse" id="collapseQnAAdmin" style="padding: 10px;">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">문의</a>
-                            <a class="collapse-item" href="">신고</a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </c:when>
-
-        <%-- Truck --%>
-        <c:when test="${sessionScope.role eq 'truck'}">
-            <ul class="sidebar-user">
-                <li class="list active">
-                    <b></b>
-                    <b></b>
-                    <a href="#">
-                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
-                        <span class="title">MyPage</span>
-                    </a>
-                </li>
-                <li class="list">
-                    <b></b>
-                    <b></b>
-                    <a class="btn toggle-btn" role="button" data-target="#collapseInfoT" data-toggle="collapse" href="#collapseInfoT" aria-expanded="false" aria-controls="collapseExample">
-                        <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
-                        <span class="title">내정보</span>
-                    </a>
-                    <div class="collapse" id="collapseInfoT" style="padding: 10px;">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">내정보</a>
-                            <a class="collapse-item" href="">프로필</a>
-                            <a class="collapse-item" href="">비밀번호</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="list">
-                    <b></b>
-                    <b></b>
-                    <a class="btn toggle-btn" role="button" data-target="#collapseSale" data-toggle="collapse" href="#collapseSale" aria-expanded="false" aria-controls="collapseExample">
-                        <span class="icon"><ion-icon name="cart-outline"></ion-icon></span>
-                        <span class="title">판매</span>
-                    </a>
-                    <div class="collapse" id="collapseSale" style="padding: 10px;">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">판매내역</a>
-                            <a class="collapse-item" href="">환불내역</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="list">
-                    <b></b>
-                    <b></b>
-                    <a href="#">
-                        <span class="icon"><ion-icon name="heart-outline"></ion-icon></span>
-                        <span class="title">좋아요</span>
-                    </a>
-                </li>
-                <li class="list">
-                    <b></b>
-                    <b></b>
-                    <a href="#">
-                        <span class="icon"><ion-icon name="star-half-outline"></ion-icon></span>
-                        <span class="title">리뷰</span>
-                    </a>
-                </li>
-                <li class="list">
-                    <b></b>
-                    <b></b>
-                    <a class="btn toggle-btn" role="button" data-target="#collapsePostT" data-toggle="collapse" href="#collapsePostT" aria-expanded="false" aria-controls="collapseExample">
-                        <span class="icon"><ion-icon name="reader-outline"></ion-icon></span>
-                        <span class="title">글•댓글</span>
-                    </a>
-                    <div class="collapse" id="collapsePostT" style="padding: 10px;">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">글</a>
-                            <a class="collapse-item" href="">댓글</a>
-                        </div>
-                    </div>
-                </li>
-                <li class="list">
-                    <b></b>
-                    <b></b>
-                    <a href="#">
-                        <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
-                        <span class="title">문의</span>
-                    </a>
-                </li>
-            </ul>
-        </c:when>
-
     </c:choose>
 </div>
 <div class="toggle sidebar-toggle">

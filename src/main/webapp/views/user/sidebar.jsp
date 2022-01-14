@@ -176,6 +176,22 @@
 
 </style>
 
+<script>
+
+    function goTruckList() {
+        self.location="/truck/getTruckList";
+    }
+
+    function goUserList(){
+        self.location = "/user/getUserList";
+    }
+    function goJoinTruck() {
+        self.location = "/truck/getNewTruckListByAdmin";
+    }
+
+
+</script>
+
 
 <!-- sidebar -->
 <div class="navigation sidebar-div">
@@ -204,7 +220,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="/views/user/getUserInfo.jsp">내정보</a>
                             <a class="collapse-item" href="/user/getUserProfile/${user.userId}">프로필</a>
-                            <a class="collapse-item" href="">비밀번호</a>
+<%--                            <a class="collapse-item" href="">비밀번호</a>--%>
                         </div>
                     </div>
                 </li>
@@ -216,7 +232,7 @@
                         <span class="title">채팅</span>
                     </a>
                 </li>
-                <li class="list">
+                <%--<li class="list">
                     <b></b>
                     <b></b>
                     <a class="btn toggle-btn" role="button" data-target="#collapsePurchase" data-toggle="collapse" href="#collapsePurchase" aria-expanded="false" aria-controls="collapseExample">
@@ -267,7 +283,7 @@
                             <a class="collapse-item" href="">댓글</a>
                         </div>
                     </div>
-                </li>
+                </li>--%>
                 <li class="list">
                     <b></b>
                     <b></b>
@@ -299,41 +315,41 @@
                 <li class="list">
                     <b></b>
                     <b></b>
-                    <a class="btn toggle-btn" role="button" data-target="#collapseUser" data-toggle="collapse" href="#collapseUser" aria-expanded="false" aria-controls="collapseExample">
+                    <a class="btn toggle-btn" onclick="goUserList()" role="button" data-target="#collapseUser" data-toggle="collapse" href="#collapseUser" aria-expanded="false" aria-controls="collapseExample">
                         <span class="icon"><ion-icon name="person-circle-outline"></ion-icon></span>
                         <span class="title">일반회원</span>
                     </a>
-                    <div class="collapse" id="collapseUser" style="padding: 10px;">
+                    <%--<div class="collapse" id="collapseUser" style="padding: 10px;">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="">활동회원</a>
                             <a class="collapse-item" href="">탈퇴회원</a>
                         </div>
-                    </div>
+                    </div>--%>
                 </li>
                 <li class="list">
                     <b></b>
                     <b></b>
-                    <a class="btn toggle-btn" role="button" data-target="#collapseTruck" data-toggle="collapse" href="#collapseTruck" aria-expanded="false" aria-controls="collapseExample">
+                    <a class="btn toggle-btn goTruckCEO" onclick="goTruckList()" role="button" data-target="#collapseTruck" data-toggle="collapse" href="#collapseTruck" aria-expanded="false" aria-controls="collapseExample">
                         <span class="icon"><ion-icon name="cart-outline"></ion-icon></span>
                         <span class="title">사업자회원</span>
                     </a>
-                    <div class="collapse" id="collapseTruck" style="padding: 10px;">
+                    <%--<div class="collapse" id="collapseTruck" style="padding: 10px;">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="/truck/getTruckList">전체</a>
                             <a class="collapse-item" href="">가입승인</a>
                             <a class="collapse-item" href="">가입승인대기</a>
                             <a class="collapse-item" href="">가입승인거절</a>
                         </div>
-                    </div>
+                    </div>--%>
                 </li>
-                <li class="list">
+                <%--<li class="list">
                     <b></b>
                     <b></b>
                     <a class="btn toggle-btn" role="button" data-target="#collapseLcok" data-toggle="collapse" href="#collapseLcok" aria-expanded="false" aria-controls="collapseExample">
                         <span class="icon"><ion-icon name="heart-outline"></ion-icon></span>
                         <span class="title">게시글 관리</span>
                     </a>
-                </li>
+                </li>--%>
                 <li class="list">
                     <b></b>
                     <b></b>
@@ -345,16 +361,16 @@
                 <li class="list">
                     <b></b>
                     <b></b>
-                    <a class="btn toggle-btn" role="button" data-target="#collapseApp" data-toggle="collapse" href="#collapseApp" aria-expanded="false" aria-controls="collapseExample">
+                    <a class="btn toggle-btn" onclick="goJoinTruck()" role="button" data-target="#collapseApp" data-toggle="collapse" href="#collapseApp" aria-expanded="false" aria-controls="collapseExample">
                         <span class="icon"><ion-icon name="reader-outline"></ion-icon></span>
                         <span class="title">가입승인</span>
                     </a>
-                    <div class="collapse" id="collapseApp" style="padding: 10px;">
+                   <%-- <div class="collapse" id="collapseApp" style="padding: 10px;">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="">승인처리대기</a>
                             <a class="collapse-item" href="">승인처리완료</a>
                         </div>
-                    </div>
+                    </div>--%>
                 </li>
                 <li class="list">
                     <b></b>
@@ -409,7 +425,7 @@
                     <div class="collapse" id="collapseSale" style="padding: 10px;">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="">판매내역</a>
-                            <a class="collapse-item" href="">환불내역</a>
+<%--                            <a class="collapse-item" href="">환불내역</a>--%>
                         </div>
                     </div>
                 </li>

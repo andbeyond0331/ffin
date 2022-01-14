@@ -179,7 +179,7 @@
 	</div>
 </div>
 <!-- client section -->
-<form></form>
+
 <section class="client_section layout_padding">
 	<div class="container">
 		<div class="col-md-11 col-lg-10 mx-auto">
@@ -208,6 +208,7 @@
 
 										<input class="form-control" type="file" id="fileName1" name="fileName1" multiple style="display: none;">
 									</div>
+									<form>
 									<div style="display: flex; justify-content: center; align-items: center;">
 										<button type="button" class="btn btn-outline-warning" id="update-img" style="float: right;">
 											<label for="fileName1" class="form-label" style="float: right; margin: 0;">
@@ -215,6 +216,7 @@
 											</label>
 										</button>
 									</div>
+									</form>
 								</div>
 
 								<div class="data-input-box">
@@ -265,7 +267,7 @@
 		</div>
 	</div>
 </section>
-</form>
+
 <jsp:include page="/views/footer.jsp" />
 
 </body>
