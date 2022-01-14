@@ -1079,6 +1079,21 @@
             font-weight: bolder;
             text-align: center;
         }
+        /*주문하기Madal Radio button*/
+        .toggle3 input[type=radio]{
+            display: none;
+        }
+        .toggle3 input[type=radio] + label {
+            color: #e0e0e0;
+            font-size: 1em;
+        }
+        .toggle3 input[type=radio]:checked + label {
+            color: #000;
+        }
+        .btn-outline-primary {
+            color: #007bff;
+            border-color: #ffba49;
+        }
     </style>
 
 </head>
@@ -1285,17 +1300,19 @@
 
     <%--cart Modal--%>
     <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="cartModalLabel">New message
+                    <h5 class="modal-title" id="cartModalLabel">주문정보입력
                     </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="orderPickUpTime" class="col-form-label">픽업희망시간:</label>
-                        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <div class="toggle3" role="group" aria-label="Basic radio toggle button group">
                             <input type="radio" class="btn-check" id="orderPickUpTime" name="orderPickUpTime" value="5"
                                    id="btnradio1" autocomplete="off" checked>
                             <label class="btn btn-outline-primary" for="btnradio1">5분</label>
@@ -1329,7 +1346,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
                     <button type="button" class="btn btn-primary" id="addMenuCart">확인</button>
 
 

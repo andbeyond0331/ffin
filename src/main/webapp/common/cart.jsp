@@ -37,94 +37,94 @@
 </style>
 
 <form class="cart">
-<div class="bs-canvas bs-canvas-right position-fixed bg-light h-100">
-    <header class="bs-canvas-header p-3 bg-primary overflow-auto">
-        <button type="button" class="bs-canvas-close float-left close" aria-label="Close"><span aria-hidden="true"
-                                                                                                class="text-light">&times;</span>
-        </button>
-        <h4 class="d-inline-block text-light mb-0 float-right">장바구니</h4>
-    </header>
-    <div class="bs-canvas-content px-3 py-5">
-        <div class="content">
+    <div class="bs-canvas bs-canvas-right position-fixed bg-light h-100">
+        <header class="bs-canvas-header p-3 bg-primary overflow-auto">
+            <button type="button" class="bs-canvas-close float-left close" aria-label="Close"><span aria-hidden="true"
+                                                                                                    class="text-light">&times;</span>
+            </button>
+            <h4 class="d-inline-block text-light mb-0 float-right">장바구니</h4>
+        </header>
+        <div class="bs-canvas-content px-3 py-5">
+            <div class="content">
 
-            <div id="cartOrderMenu"></div>
+                <div id="cartOrderMenu"></div>
 
-<%--
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <div class="form-check">
-                            <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="..." style="margin-left: -0.5em;">
-                        </div>
-                        <img src="/resources/image/1.jpg"  class="btn img-fluid rounded-start" alt="image" referrerpolicy="no-referrer" style="width: 100px;">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col6">
-                                    <h6 class="card-title">메뉴이름</h6>
+                <%--
+                            <div class="card mb-3" style="max-width: 540px;">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="..." style="margin-left: -0.5em;">
+                                        </div>
+                                        <img src="/resources/image/1.jpg"  class="btn img-fluid rounded-start" alt="image" referrerpolicy="no-referrer" style="width: 100px;">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col6">
+                                                    <h6 class="card-title">메뉴이름</h6>
+                                                </div>
+                                                <div class="col-6">
+
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <p class="card-text"><small class="text-muted" style="font-size: .600em;">Last updated 3 mins ago</small><br><small class="text-muted" style="font-size: .600em;">Last updated 3 mins ago</small></p>
+                                        </div>
+                                            <tr style="text-align:center;">
+                                                <td>수량</td>
+                                                <td class="bseq_ea">7</td>
+                                                <td>
+                                                    <button type ="button" onclick="fnCalCount('p',this);">+</button>
+                                                    <input type="text" name="pop_out" value="0" readonly="readonly" style="text-align:center;"/>
+                                                    <button type="button" onclick="fnCalCount('m', this);">-</button>
+                                                </td>
+                                            </tr>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-6">
+                            </div>--%>
 
 
-                                </div>
-                            </div>
-                            <div class="row">
-                                <p class="card-text"><small class="text-muted" style="font-size: .600em;">Last updated 3 mins ago</small><br><small class="text-muted" style="font-size: .600em;">Last updated 3 mins ago</small></p>
-                        </div>
-                            <tr style="text-align:center;">
-                                <td>수량</td>
-                                <td class="bseq_ea">7</td>
-                                <td>
-                                    <button type ="button" onclick="fnCalCount('p',this);">+</button>
-                                    <input type="text" name="pop_out" value="0" readonly="readonly" style="text-align:center;"/>
-                                    <button type="button" onclick="fnCalCount('m', this);">-</button>
-                                </td>
-                            </tr>
-                        </div>
+
+                <%--<div id="order"></div>--%>
+                <%-- <c:set var="i" value="0"/>
+                 <c:forEach var="cart" items="${map.get('list')}">
+                     <c:set var="i" value="${i+1}"/>
+
+
+                     <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
+                     <input type="hidden" id="odOptionGroupName" name="odOptionGroupName"
+                            value="${cart.odOptionGroupName}"/>
+                     <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.odOptionName}"/>
+                     <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.odMenuQty}"/>
+                     <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.odMenuPrice}"/>
+                     <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
+                     <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
+                     <input type="hidden" id="odMenuQtyFlag" name="odMenuQtyFlag" value="${cart.odMenuQtyFlag}"/>
+
+
+                 </c:forEach>
+     --%>
+                <%--<div id="total"></div>--%>
+                <div class="row">
+                    <div class="col-6">
+                        <button type="button" class="btn btn btn-primary" data-toggle="modal"
+                                data-target="#exampleModalCenter">
+                            주문하기
+                        </button>
                     </div>
-                </div>
-            </div>--%>
+                    <div class="col-2">
 
-
-
-            <%--<div id="order"></div>--%>
-           <%-- <c:set var="i" value="0"/>
-            <c:forEach var="cart" items="${map.get('list')}">
-                <c:set var="i" value="${i+1}"/>
-
-
-                <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
-                <input type="hidden" id="odOptionGroupName" name="odOptionGroupName"
-                       value="${cart.odOptionGroupName}"/>
-                <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.odOptionName}"/>
-                <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.odMenuQty}"/>
-                <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.odMenuPrice}"/>
-                <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
-                <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
-                <input type="hidden" id="odMenuQtyFlag" name="odMenuQtyFlag" value="${cart.odMenuQtyFlag}"/>
-
-
-            </c:forEach>
---%>
-            <%--<div id="total"></div>--%>
-            <div class="row">
-                <div class="col-6">
-                    <button type="button" class="btn btn btn-primary" data-toggle="modal"
-                            data-target="#exampleModalCenter">
-                        주문하기
-                    </button>
-                </div>
-                <div class="col-2">
-
-                </div>
-                <div class="col-4">
-                    <button type="button" class="btn btn-primary">삭제</button>
+                    </div>
+                    <div class="col-4">
+                        <button type="button" class="btn btn-primary" id="deleteCartMenu">삭제</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
 
     <%--modal--%>
@@ -192,82 +192,86 @@
 
 
 <script>
+
+
+
+
     $(function(){
 
 
-    var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
+        var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
 
-    for( var i in beforeAnyway){
-        // console.log("beforeAnyway : " + beforeAnyway[i]);
-        for(var j in beforeAnyway[i]){
-            console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
-
-        }
-    }
-    //담을 li
-
-    var finalCart = "";
-    var forOne=0;
-    var mainOrderList = "";
-
-    ////////////시작///////////////////
-    if(beforeAnyway) { // sessionStorage에 뭔가 있다?
-        console.log("sessionStorage에 있다! 시작!");
-        for (var i = 0; i < beforeAnyway.length; i++) {//sessionStorage만큼 for문 돌리기
-
-
-
-/*            mainOrderList += "<input type='hidden' name='mainOdMQFlag' id='mainOdMQFlag' value='" + beforeAnyway[i]['odMenuQtyFlag'] + "'>" +
-                "<input type='hidden' name='mainOdMQty' id='mainOdMQty' value='" + beforeAnyway[i]['odMenuQty'] + "'>" +
-                "<input type='hidden' name='mainOdMName' id='mainOdMName' value='" + beforeAnyway[i]['odMenuName'] + "'>" +
-                "<input type='hidden' name='mainOdMPrice' id='mainOdMPrice' value='" + beforeAnyway[i]['odMenuPrice'] + "'>" +
-                "<input type='hidden' name='mainOdOGName' id='mainOdOGName' value='" + beforeAnyway[i]['odOptionGroupName'] + "'>" +
-                "<input type='hidden' name='mainOdOpName' id='mainOdOpName' value='" + beforeAnyway[i]['odOptionName'] + "'>" +
-                "<input type='hidden' name='mainOdOpPrice' id='mainOdOpPrice' value='" + beforeAnyway[i]['odOptionPrice'] + "'>" +
-                "<input type='hidden' name='mainOdMImg1' id='mainOdMImg1' value='" + beforeAnyway[i]['odMenuImg1'] + "'>";
-
-            $("#cartOrderMenu").append(mainOrderList);*/
-
-
-
-            console.log("for문 안에 있다!");
-            console.log("beforeAnyway[" + i + "] : " + JSON.stringify(beforeAnyway[i]));
-
-            if(beforeAnyway[i]['odMenuQtyFlag']==0){//플래그0일 때 메뉴 수량, 이름 출력
-                finalCart+=""+
-                    "<li class=\"list-group-item d-flex justify-content-between lh-sm\">"+
-                    "<div><h6 class=\"my-0\">"+beforeAnyway[i]['odMenuName']+"</h6>"+
-                    "<h6 class=\"my-0\">수량 : "+beforeAnyway[i]['odMenuQty']+"</h6>"+
-                    "";
-                forOne+=1;
-                // }else{
-                for(var j=i+1; j<beforeAnyway.length; j++){
-                    if(beforeAnyway[j]['odMenuQtyFlag']==1){
-                        finalCart+=""+
-                            "<p></p>"+
-                            "<small class=\"text-muted\">"+beforeAnyway[j]['odOptionGroupName']+"</small> : "+
-                            "<small class=\"text-muted\">"+beforeAnyway[j]['odOptionName']+"</small> +"+
-                            "<small class=\"text-muted\">"+beforeAnyway[j]['odOptionPrice']+"원</small>";
-                        forOne+=1;
-                    }else{
-                        // i=j-1;
-                        break;
-                    }
-                }
-            }else{
-                if(forOne!=0){
-                    i=forOne;
-                }else{
-                    break;
-                }
+        for( var i in beforeAnyway){
+            // console.log("beforeAnyway : " + beforeAnyway[i]);
+            for(var j in beforeAnyway[i]){
+                console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
 
             }
-            finalCart+="</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"원</span></li>";
-            i=forOne;
+        }
+        //담을 li
 
-        }//sessionStorage만큼 for문 돌리기
-    }
-    $("#cartOrderMenu").html(finalCart);
+        var finalCart = "";
+        var forOne=0;
+        var mainOrderList = "";
+
+        ////////////시작///////////////////
+        if(beforeAnyway) { // sessionStorage에 뭔가 있다?
+            console.log("sessionStorage에 있다! 시작!");
+            for (var i = 0; i < beforeAnyway.length; i++) {//sessionStorage만큼 for문 돌리기
+
+
+
+                /*            mainOrderList += "<input type='hidden' name='mainOdMQFlag' id='mainOdMQFlag' value='" + beforeAnyway[i]['odMenuQtyFlag'] + "'>" +
+                                "<input type='hidden' name='mainOdMQty' id='mainOdMQty' value='" + beforeAnyway[i]['odMenuQty'] + "'>" +
+                                "<input type='hidden' name='mainOdMName' id='mainOdMName' value='" + beforeAnyway[i]['odMenuName'] + "'>" +
+                                "<input type='hidden' name='mainOdMPrice' id='mainOdMPrice' value='" + beforeAnyway[i]['odMenuPrice'] + "'>" +
+                                "<input type='hidden' name='mainOdOGName' id='mainOdOGName' value='" + beforeAnyway[i]['odOptionGroupName'] + "'>" +
+                                "<input type='hidden' name='mainOdOpName' id='mainOdOpName' value='" + beforeAnyway[i]['odOptionName'] + "'>" +
+                                "<input type='hidden' name='mainOdOpPrice' id='mainOdOpPrice' value='" + beforeAnyway[i]['odOptionPrice'] + "'>" +
+                                "<input type='hidden' name='mainOdMImg1' id='mainOdMImg1' value='" + beforeAnyway[i]['odMenuImg1'] + "'>";
+
+                            $("#cartOrderMenu").append(mainOrderList);*/
+
+
+
+                console.log("for문 안에 있다!");
+                console.log("beforeAnyway[" + i + "] : " + JSON.stringify(beforeAnyway[i]));
+
+                if(beforeAnyway[i]['odMenuQtyFlag']==0){//플래그0일 때 메뉴 수량, 이름 출력
+                    finalCart+=""+
+                        "<li class=\"list-group-item d-flex justify-content-between lh-sm\">"+
+                        "<div><h6 class=\"my-0\">"+beforeAnyway[i]['odMenuName']+"</h6>"+
+                        "<h6 class=\"my-0\">수량 : "+beforeAnyway[i]['odMenuQty']+"</h6>"+
+                        "";
+                    forOne+=1;
+                    // }else{
+                    for(var j=i+1; j<beforeAnyway.length; j++){
+                        if(beforeAnyway[j]['odMenuQtyFlag']==1){
+                            finalCart+=""+
+                                "<p></p>"+
+                                "<small class=\"text-muted\">"+beforeAnyway[j]['odOptionGroupName']+"</small> : "+
+                                "<small class=\"text-muted\">"+beforeAnyway[j]['odOptionName']+"</small> +"+
+                                "<small class=\"text-muted\">"+beforeAnyway[j]['odOptionPrice']+"원</small>";
+                            forOne+=1;
+                        }else{
+                            // i=j-1;
+                            break;
+                        }
+                    }
+                }else{
+                    if(forOne!=0){
+                        i=forOne;
+                    }else{
+                        break;
+                    }
+
+                }
+                finalCart+="</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"원</span></li>";
+                i=forOne;
+
+            }//sessionStorage만큼 for문 돌리기
+        }
+        $("#cartOrderMenu").html(finalCart);
 
 
         var beforeAny = JSON.parse(sessionStorage.getItem("menuOdList"));
@@ -290,7 +294,9 @@
             mainSessionTruckId = "<input type='hidden' name='mainSessionTruckId' value='"+beforeAny[i]['menuTruckId']+"'>";
 
 
+
         }
+
         $("#mainSessionTruckId").html(mainSessionTruckId);
         $("#cartOrderMenu").append(mainOrderList);
 
@@ -335,15 +341,19 @@
 
 
     });
+    $(function () {
+        $("#deleteCartMenu").click(function () {
 
-
+            sessionStorage.removeItem('menuOdList');
+            location.reload();
+        });
+    });
 
 
 
     /*모달 화면에서 확인 클릭 시 데이터를 List로 담아서 전송*/
     $(function () {
         $("#orderGo").click(function () {
-            alert("ss")
 
             // 1. menu 없으면 메뉴를 장바구니에 저장된 메뉴가 없습니다.
             // 2. menu 정보가 있으면 장바구니 주문하기 활성화 없으면 비활성화
@@ -380,14 +390,13 @@
         var orderPickUpTime = $('input[name="mainOrderPickUpTime"]:checked').val();
         var orderTotalPrice = $('#mainOrderTotalPrice').val();
         var orderUserId = $('#mainOrderUserId').val();
-        var orderTruckId = $('#mainSessionTruckId').val();
+        var orderTruckId = $('input[name="mainSessionTruckId"]').val();
         var orderRequest = $('#mainOrderRequest').val();
         var orderQty = $('#mainOrderQty').val();
 
 
         $('input[name="mainOdMName"]').each(function (i) {
             odMenuName.push($(this).val());
-            alert(odMenuName)
         });
 
         $('input[name="mainOdOGName"]').each(function (i) {
@@ -417,15 +426,13 @@
         $('input[name="mainOdMQFlag"]').each(function (i) {
             odMenuQtyFlag.push($(this).val());
         });
-/*
-                 alert(orderPickUpTime)
-                 alert(orderTotalPrice)
-                 alert(orderUserId)
-                 alert(orderTruckId)
-                 alert(orderRequest)
-                 alert(orderQty)
-                 alert(odMenuQtyFlag)
-*/
+        /*  alert(orderPickUpTime)
+          alert(orderTotalPrice)
+          alert(orderUserId)
+          alert(orderTruckId)
+          alert(orderRequest)
+          alert(orderQty)
+          alert(odMenuQtyFlag)*/
 
         var data = {
             "odMenuName": odMenuName,
@@ -452,6 +459,7 @@
             dataType: 'json',
             success: function (retVal) {
                 reOrderNo = retVal.orderNo;
+                sessionStorage.removeItem('menuOdList');
             },
             error: function (xhr, status, error) {
                 alert("[Error]" + error);

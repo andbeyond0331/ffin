@@ -52,7 +52,7 @@
             $('.userInfo').click(function () {
 
                 var userId = $(this).find("input[name='userId']").val();
-                alert(userId);
+                //alert(userId);
                 self.location ="/user/getUser?userId="+userId;
             });
         });

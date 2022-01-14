@@ -289,7 +289,7 @@
                     </div>
                 </div>
                 <div class="detail-box">
-                    <p>coupon 받아가라... font 적용 어떻게하냐....</p>
+                    <p></p>
                 </div>
                 <div class="btn-box">
                     <a href="">

@@ -701,13 +701,15 @@
 
 
 
+
+
                 for(var i=0; i<list.length; i++){
                     var div="";
 
                     div+= "<a class='card' href='#'>"
-               +" <div class='card__background' style='background-image: url(../../resources/menu/"+list[i].ctMenu.menuImg1+")'></div>"
-               + "<div class='card__content'>"
-                   + "<p class='card__category'>"+list[i].ctDate+"</p>";
+                        +" <div class='card__background' style='background-image: url(../../resources/menu/"+list[i].ctMenu.menuImg1+")'></div>"
+                        + "<div class='card__content'>"
+                        + "<p class='card__category'>"+list[i].ctDate+"</p>";
                     if ( roleUT == 'user'){
                         div +=  "<h3 class='card__heading'>"+list[i].ctTruck.truckName+"</h3>";
                     }else{
@@ -717,8 +719,24 @@
                     }
 
                     div += "<input type='hidden' id='ctNo"+list[i].ctNo+"' name='ctNo' value='"+list[i].ctNo+"'/>"
-                    + "<input type='hidden' id='ctStatusCode"+list[i].ctNo+"' name='ctct' value='"+list[i].ctStatusCode+"'/>"
-             + "  </div></a>";
+                        + "<input type='hidden' id='ctStatusCode"+list[i].ctNo+"' name='ctct' value='"+list[i].ctStatusCode+"'/>"
+                        +"<p class='card-text'>"
+                        +"<small class='text-muted'>";
+                    if(list[i].ctStatusCode == "0"){
+                        div += "<span class='badge' style='background-color: #2ef3b7; color: #110000'>예약 가능</span>";
+                    }else if(list[i].ctStatusCode == "1"){
+                        div += "<span class='badge' style='background-color: #2ef3b7; color: #110000'>예약 가능</span>";
+                    }else if(list[i].ctStatusCode == "2"){
+                        div += "<span class='badge' style='background-color: #d9d9d9; color: #110000'>이용자 취소</span>";
+                    }else if(list[i].ctStatusCode == "3"){
+                        div += "<span class='badge' style='background-color: #d9d9d9; color: #110000'>사업자 거절</span>";
+                    }else if(list[i].ctStatusCode == "4"){
+                        div += "<span class='badge' style='background-color: #f79865; color: #110000'>결제 대기</span>";
+                    }else {
+                        div += "<span class='badge' style='background-color: #f33d6e; color: #110000'>예약 완료</span>";
+                    }
+                    div += " </small></p>"
+                        + "  </div></a>";
 
 /*
 

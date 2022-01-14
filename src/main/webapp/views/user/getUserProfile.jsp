@@ -206,7 +206,7 @@
 										</c:if>
 										<%--											<button type="button" class="btn btn-outline-warning" id="update-img"><i class="fas fa-camera"></i></button>--%>
 
-										<input class="form-control" type="file" id="fileName1" name="fileName1" multiple style="display: none;">
+										<input class="form-control" type="file" id="fileName1" name="fileName1" multiple style="display: none;" >
 									</div>
 									<form>
 									<div style="display: flex; justify-content: center; align-items: center;">
