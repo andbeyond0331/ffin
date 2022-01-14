@@ -13,6 +13,29 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <style>
+
+
+        .btn-secondary {
+            color: #212529;
+            background-color: #ffba49;
+            border-color: #ffba49;
+        }
+
+        .btn-check:active+.btn-outline-primary, .btn-check:checked+.btn-outline-primary, .btn-outline-primary.active, .btn-outline-primary.dropdown-toggle.show, .btn-outline-primary:active {
+            color: #212529;
+            background-color: #ffba49;
+            border-color: #ffba49;
+        }
+        .btn-outline-primary {
+            color: #fdc76e;
+            border-color: #ffba49;
+        }
+
+        .btn-primary {
+            color: #212529;
+            background-color: #ffba49;
+            border-color: #ffba49;
+        }
         #map_ma {
             width: 100%;
             height: 400px;

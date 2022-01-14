@@ -145,6 +145,8 @@ public class PurchaseController {
         coupon.setCouponReceivedUserId(purchase.getOrderUserId());
         coupontList = purchaseService.getCouponList(coupon);
 
+        System.out.println("couponList////////////////////////////////////////////"+coupontList);
+
         model.addAttribute("map",map);
         model.addAttribute("couponList",coupontList);
         model.addAttribute("purchase",purchase);
@@ -169,12 +171,13 @@ public class PurchaseController {
 
         orderDetail.setOdOrderNo(purchase);
         System.out.println(purchase.getOrderNo());
-        coupon.setCouponReceivedUserId(purchase.getOrderUserId());
 
-        coupontList = purchaseService.getCouponList(coupon);
         Map cart = purchaseService.getCartList(purchase.getOrderNo());
         purchase = purchaseService.getPurchase(purchase.getOrderNo());
+        coupon.setCouponReceivedUserId(purchase.getOrderUserId());
         User totalPoint = purchaseService.getTotalPoint(purchase.getOrderUserId().getUserId());
+        System.out.println("couponList////////////////////////////////////////////"+coupontList);
+        coupontList = purchaseService.getCouponList(coupon);
 
 
         model.addAttribute("couponList",coupontList);

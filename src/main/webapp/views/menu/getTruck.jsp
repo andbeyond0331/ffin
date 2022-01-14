@@ -42,6 +42,7 @@
                 /* alert("modalApply data-menuimg : " + modalApply.find('div[name="odMenuImg1"]').data('menuimg'));*/
 
                 var orderDetail = {
+                    menuTruckId : modalApply.find('h3[name="menuTruckId"]').text(),
                     odMenuNo : modalApply.find('div[name="odMenuNo"]').text(),
                     odMenuName : modalApply.find('div[name="odMenuName"]').text(),
                     odMenuImg1 : modalApply.find('div[name="odMenuImg1"]').data('menuimg'),
@@ -69,6 +70,7 @@
                 //
                 // }
 
+
                 //alert("orderDetail : " + orderDetail);
 
                 //수량 제외 옵션그룹 정보 만들기
@@ -88,6 +90,7 @@
                 if(isThereOptionGroup){
                     for (let i = 0; i < isThereOptionGroup; i++) {
                         var optionGroupOrderDetail = {
+                            menuTruckId : modalApply.find('h3[name="menuTruckId"]').text(),
                             odMenuNo : modalApply.find('div[name="odMenuNo"]').text(),
                             odMenuName : modalApply.find('div[name="odMenuName"]').text(),
                             odMenuImg1 : modalApply.find('div[name="odMenuImg1"]').data('menuimg'),
@@ -521,10 +524,6 @@
 
 
 
-
-
-
-
                         console.log("for문 안에 있다!");
                         console.log("beforeAnyway[" + i + "] : " + JSON.stringify(beforeAnyway[i]));
                         // finalCart += "<li class=\"list-group-item d-flex justify-content-between lh-sm\">"+
@@ -574,28 +573,37 @@
             });
 
 
-            var beforeAny = JSON.parse(sessionStorage.getItem("menuOdList"));
-            var orderDetailList = "";
-
-            for (var i = 0; i < beforeAny.length; i++) {
-
-
-
-                orderDetailList += "<input type='hidden' name='odMQFlag' id='odMQFlag' value='" + beforeAny[i]['odMenuQtyFlag'] + "'>" +
-                    "<input type='hidden' name='odMQty' id='odMQty' value='" + beforeAny[i]['odMenuQty'] + "'>" +
-                    "<input type='hidden' name='odMName' id='odMName' value='" + beforeAny[i]['odMenuName'] + "'>" +
-                    "<input type='hidden' name='odMPrice' id='odMPrice' value='" + beforeAny[i]['odMenuPrice'] + "'>" +
-                    "<input type='hidden' name='odOGName' id='odOGName' value='" + beforeAny[i]['odOptionGroupName'] + "'>" +
-                    "<input type='hidden' name='odOpName' id='odOpName' value='" + beforeAny[i]['odOptionName'] + "'>" +
-                    "<input type='hidden' name='odOpPrice' id='odOpPrice' value='" + beforeAny[i]['odOptionPrice'] + "'>" +
-                    "<input type='hidden' name='odMImg1' id='odMImg1' value='" + beforeAny[i]['odMenuImg1'] + "'>";
-
-                $("#cartList").append(orderDetailList);
-            }
-
 
 
         });
+
+
+
+
+$(function (){
+
+    var beforeAny = JSON.parse(sessionStorage.getItem("menuOdList"));
+    var orderDetailList = "";
+
+    for (var i in beforeAny) {
+
+
+
+        orderDetailList += "<input type='hidden' name='odMQFlag' id='odMQFlag' value='" + beforeAny[i]['odMenuQtyFlag'] + "'>" +
+            "<input type='hidden' name='odMQty' id='odMQty' value='" + beforeAny[i]['odMenuQty'] + "'>" +
+            "<input type='hidden' name='odMName' id='odMName' value='" + beforeAny[i]['odMenuName'] + "'>" +
+            "<input type='hidden' name='odMPrice' id='odMPrice' value='" + beforeAny[i]['odMenuPrice'] + "'>" +
+            "<input type='hidden' name='odOGName' id='odOGName' value='" + beforeAny[i]['odOptionGroupName'] + "'>" +
+            "<input type='hidden' name='odOpName' id='odOpName' value='" + beforeAny[i]['odOptionName'] + "'>" +
+            "<input type='hidden' name='odOpPrice' id='odOpPrice' value='" + beforeAny[i]['odOptionPrice'] + "'>" +
+            "<input type='hidden' name='odMImg1' id='odMImg1' value='" + beforeAny[i]['odMenuImg1'] + "'>";
+
+
+
+    }
+    $("#cartList").append(orderDetailList);
+
+});
 
 
 
@@ -615,81 +623,7 @@
 
             });
         });
-        $(function () {
-            $("button.btn.btn-primary:Contains('json')").click(function () {
-                alert("ddk");
-                to_ajax();
-                $("form").attr("method", "POST").attr("action", "/purchase/addCart").submit();
-            });
-        });
-        function toto (){
 
-            var reOrderNo;
-            var odMenuName = [];
-            var odOptionGroupName = [];
-            var odOptionName = [];
-            var odMenuQty = [];
-            var odMenuPrice = [];
-            var odOptionPrice = [];
-            var odMenuImage = [];
-            var odMenuQtyFlag = [];
-            var orderPickUpTime = $('input[name="orderPickUpTime"]:checked').val();
-            var orderTotalPrice = $('#orderTotalPrice').val();
-            var orderUserId = $('#orderUserId').val();
-            var orderTruckId = $('#orderTruckId').val();
-            var orderRequest = $('#orderRequest').val();
-            var orderQty = $('#orderQty').val();
-
-            $('input[name="odMName"]').each(function (i) {
-                odMenuName.push($(this).val());
-                alert(odMenuName)
-            });
-
-            $('input[name="odOGName"]').each(function (i) {
-                odOptionGroupName.push($(this).val());
-            });
-
-            $('input[name="odOpName"]').each(function (i) {
-                odOptionName.push($(this).val());
-            });
-
-            $('input[name="odMQty"]').each(function (i) {
-                odMenuQty.push($(this).val());
-            });
-
-            $('input[name="odMPrice"]').each(function (i) {
-                odMenuPrice.push($(this).val());
-            });
-
-            $('input[name="odOpPrice"]').each(function (i) {
-                odOptionPrice.push($(this).val());
-            });
-
-            $('input[name="odMImg1"]').each(function (i) {
-                odMenuImage.push($(this).val());
-            });
-
-            $('input[name="odMQFlag"]').each(function (i) {
-                odMenuQtyFlag.push($(this).val());
-            });
-  /*          alert("orderPickUpTime"+orderPickUpTime)
-            alert("orderTotalPrice"+orderTotalPrice)
-            alert("orderUserId"+orderUserId)
-            alert("orderTruckId"+orderTruckId)
-            alert("orderRequest"+orderRequest)
-            alert("orderQty"+orderQty)
-
-
-            alert("odMenuName"+odMenuName)
-            alert("odOptionGroupName"+odOptionGroupName)
-            alert("odOptionName"+odOptionName)
-            alert("odMenuQty"+odMenuQty)
-            alert("odMenuPrice"+odMenuPrice)
-            alert("odOptionPrice"+odOptionPrice)
-            alert("odOptionPrice"+odOptionPrice)
-            alert("odMenuImage"+odMenuImage)
-            alert("odMenuQtyFlag"+odMenuQtyFlag)*/
-        }
 
         function menu_ajax() {
             /*alert("1111111")*/
@@ -741,7 +675,7 @@
             $('input[name="odMQFlag"]').each(function (i) {
                 odMenuQtyFlag.push($(this).val());
             });
-/*            alert(orderPickUpTime)
+         /*   alert(orderPickUpTime)
             alert(orderTotalPrice)
             alert(orderUserId)
             alert(orderTruckId)
@@ -877,7 +811,7 @@
                     var modalFooter = "";
 
                     div +="<div class=\"page-header\">"+
-                        "<h3 class=\"getMenuTitle custom\">"+data.menu.menuTruckId+"</h3>"+
+                        "<h3 class=\"getMenuTitle custom\" name=\"menuTruckId\">"+data.menu.menuTruckId+"</h3>"+
                         "</div>"+
                         "<div class=\"row\">"+
                         "<div class=\"col-xs-4 col-md-2\"><strong>메뉴번호</strong></div>"+
