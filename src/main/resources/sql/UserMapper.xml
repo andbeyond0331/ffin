@@ -5,7 +5,7 @@
 <!DOCTYPE mapper
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-		
+
 <mapper namespace="UserMapper">
 
 	<!--User Table-->
@@ -175,12 +175,20 @@
 	<update id="updateUserProfile" parameterType="user">
 		UPDATE user
 		<set>
-			user_pro_img				= #{userProImg},
 		    user_fav_menu				= #{userFavMenu},
 			user_fav_place				= #{userFavPlace},
 			user_fav_place_detail		= #{userFavPlaceDetail},
 			user_fav_menu				= #{userFavMenu},
 			user_intro					= #{userIntro}
+		</set>
+		WHERE user_id = #{userId}
+	</update>
+
+	<!-- 프로필 이미지 수정 -->
+	<update id="updateProImg" parameterType="user">
+		UPDATE user
+		<set>
+			user_pro_img = #{userProImg}
 		</set>
 		WHERE user_id = #{userId}
 	</update>

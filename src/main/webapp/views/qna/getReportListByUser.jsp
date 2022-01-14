@@ -125,19 +125,10 @@
                                     + "<p class='card-text' style='margin-top: 10px'>"+data.report.reportContent+"</p>"
                                     +"</div>"
                                     +"<hr style='border-width:2px; margin-top: 50px;'/>"
-                                    +"<div class='d-grid gap-2 col-6 mx-auto' style='margin: 0 55px 0 55px;'>";
-
-                           if(data.report.reportProcStatus === 1){
-                               display += "<button class='btn btn-default btn-sm' onclick='nopeBtn("+data.report.reportNo+")' type='button' style='color: #110000;'>신고거절</button>";
-                           }
-
-                           display +="<button class='btn btn-default btn-sm' onclick='closeBtn()' type='button' style='color: #110000; background: #ecf0fd'>확인</button>";
-
-                           if(data.report.reportProcStatus === 1){
-                                display += "<button class='btn btn-default btn-sm' onclick='okBtn("+data.report.reportNo+")' type='button' style='color: #110000'>신고처리</button>";
-                           }
-
-                           display += "</div>"
+                                    +"<div class='d-grid gap-2 col-6 mx-auto' style='margin: 0 55px 0 55px;'>"
+                                    +"<div>"
+                                    +"<button class='btn btn-default btn-sm' onclick='closeBtn()' type='button' style='color: #110000; background: #ecf0fd'>확인</button>"
+                                    +"</div>"
                                     +"</div>"
                                     +"</div>"
                                     +"</div>";

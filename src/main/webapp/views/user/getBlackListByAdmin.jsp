@@ -188,10 +188,10 @@
 
                 <div class="card mb-10">
                     <div class="row g-0 inquiry-card">
-                        <div class="col-md-2 inquiry-con">
+                          <div class="col-md-2 inquiry-con">
                             <div class="card-body">
                                 <c:if test="${user.reportCount % 3 == 0 && user.reportCount != 0 }">
-                                    <p class="card-text"><small class="text-muted"><span class="badge" style="background-color: #f17228; color: #110000">블랙리스트</span></small></p>
+                                    <p class="card-text"><small class="text-muted"><span class="badge" style="background-color: #25323c; color: #ffffff">블랙리스트</span></small></p>
                                 </c:if>
                             </div>
                         </div>

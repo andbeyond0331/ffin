@@ -16,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/qna/*")
@@ -91,11 +93,20 @@ public class QnAController {
     }
 
     @RequestMapping(value = "addInquiry", method = RequestMethod.POST)
-    public String addInquiry(@ModelAttribute("inquiry")Inquiry inquiry, @RequestParam("inquiryId")String inquiryId ,
+    public String addInquiry(@ModelAttribute("inquiry")Inquiry inquiry, @RequestParam("inquiryId")String inquiryId , Model model, HttpServletRequest request,
                              @RequestParam("role") String role ,@RequestPart(value="uploadFile",required = false)MultipartFile file)  throws Exception{
 
         System.out.println("QnAController.addInquiry : POST");
         System.out.println("회원구별 : "+inquiryId + " && "+role);
+
+        if(!file.getOriginalFilename().isEmpty()) {
+            file.transferTo(new File( request.getSession().getServletContext().getRealPath("/resources/image") , file.getOriginalFilename()));
+            model.addAttribute("msg", "File uploaded successfully.");
+        }else {
+            model.addAttribute("msgs", "Please select a valid mediaFile..");
+        }
+
+        inquiry.setInquiryFile(file.getOriginalFilename());
 
         if( role.equals("user")) {
             inquiry.setInquiryUserId(inquiryId);
@@ -126,9 +137,22 @@ public class QnAController {
     }
 
     @RequestMapping(value = "updateInquiry", method = RequestMethod.POST)
-    public String updateInquiry(@ModelAttribute("inquiry") Inquiry inquiry, Model model, HttpSession session) throws Exception {
+    public String updateInquiry(@ModelAttribute("inquiry") Inquiry inquiry, @RequestParam("inquiryNo") int inquiryNo, Model model,
+                                @RequestParam("uploadFile")MultipartFile file, HttpSession session, HttpServletRequest request) throws Exception {
 
         System.out.println("QnAController.updateInquiry : POST");
+
+        if(!Objects.requireNonNull(file.getOriginalFilename()).isEmpty()){
+            file.transferTo(new File( request.getSession().getServletContext().getRealPath("/resources/image") , file.getOriginalFilename()));
+            model.addAttribute("msg", "File uploaded successfully.");
+        }else {
+            model.addAttribute("msgs", "Please select a valid mediaFile..");
+        }
+
+        System.out.println("!!!!!"+file.getOriginalFilename());
+
+        inquiry.setInquiryFile(file.getOriginalFilename());
+        qnAService.updateInquiry(inquiry);
 
         qnAService.updateInquiry(inquiry);
 

@@ -75,6 +75,9 @@
 <body id="page-top">
 
 <jsp:include page="/views/navbar.jsp" />
+<div style="height: auto">
+    <jsp:include page="/views/user/sidebar.jsp" />
+</div>
 
 
 <!-- client section -->

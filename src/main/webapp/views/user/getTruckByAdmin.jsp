@@ -152,8 +152,9 @@
         }
 
         h5 span {
-            margin: 0;
+            margin: 0 5px 0 5px;
         }
+
 
     </style>
 
@@ -172,6 +173,9 @@
 <body id="page-top">
 
 <jsp:include page="/views/navbar.jsp" />
+<div style="height: auto">
+    <jsp:include page="/views/user/sidebar.jsp" />
+</div>
 
 
 <!-- client section -->
@@ -192,7 +196,7 @@
 
                     <div style="display: flex; justify-content: center;">
                         <div class="col-md-6 data-input-box" style="display: flex; justify-content: center;">
-                            <div class="col-md-7">
+                            <div class="col-md-12">
 
                                 <div style="margin-top: 15px;">
                                     <h4 style="text-align: center;">${truck.truckName}</h4>
@@ -200,7 +204,7 @@
 
                                 <div>
                                     <div style="margin-top: 5px;">
-                                        <div style="display: flex; justify-content: space-between;">
+                                        <div style="display: flex; justify-content: center;">
 
                                             <c:choose>
                                                 <c:when test="${truck.truckCate eq 1}">
@@ -360,12 +364,12 @@
         </form>
 
             <div class="btn-box" style=" margin-top: 20px;">
-                <a onClick="history.go(-1);" style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
+                <a href="/truck/getTruckList" style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
                     확인
                 </a>
             </div>
         </div>
-
+    </div>
 </section>
 
 <jsp:include page="/views/footer.jsp" />

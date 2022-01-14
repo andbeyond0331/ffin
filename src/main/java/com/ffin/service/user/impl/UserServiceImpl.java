@@ -120,8 +120,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateProImg(String userId, String userProImg) throws Exception {
-        userDao.updateProImg(userId, userProImg);
+    public void updateProImg(User user) throws Exception {
+        System.out.println("UserServiceImpl.updateProImg");
+        userDao.updateProImg(user);
     }
 
     @Override

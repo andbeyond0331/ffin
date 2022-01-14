@@ -138,6 +138,11 @@
             margin-top: 5px;
             padding: 5px;
         }
+        .item-truck span {
+            display: flex;
+            align-items: center;
+        }
+
 
     </style>
 
@@ -154,6 +159,9 @@
 
 <body>
 <jsp:include page="/views/navbar.jsp" />
+<div style="height: auto">
+    <jsp:include page="/views/user/sidebar.jsp" />
+</div>
 
 <section class="client_section layout_padding">
 
@@ -248,30 +256,33 @@
                                             <h6 class="item-text-title">${truck.truckCEOIntro}</h6>
 
                                             <fmt:parseNumber var="percent" value="${truck.truckAVGStar}" integerOnly="true" />
+                                            <c:if test="${percent eq 0}">
+                                                <i class="far fa-star" style="color: #ec6a56"></i>
+                                            </c:if>
                                             <c:if test="${percent eq 1}">
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
+                                                <i class="fas fa-star" style="color: #ec6a56"></i>
                                             </c:if>
                                             <c:if test="${percent eq 2}">
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
+                                                <i class="fas fa-star" style="color: #ec6a56"></i>
+                                                <i class="fas fa-star" style="color: #ec6a56"></i>
                                             </c:if>
                                             <c:if test="${percent eq 3}">
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
+                                                <i class="fas fa-star" style="color: #ec6a56"></i>
+                                                <i class="fas fa-star" style="color: #ec6a56"></i>
+                                                <i class="fas fa-star" style="color: #ec6a56"></i>
                                             </c:if>
                                             <c:if test="${percent eq 4}">
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
+                                                <i class="fas fa-star" style="color: #ec6a56"></i>
+                                                <i class="fas fa-star" style="color: #ec6a56"></i>
+                                                <i class="fas fa-star" style="color: #ec6a56"></i>
+                                                <i class="fas fa-star" style="color: #ec6a56"></i>
                                             </c:if>
                                             <c:if test="${percent eq 5}">
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
-                                                <i class="fas fa-star" style="color: #ffffff"></i>
+                                                <i class="fas fa-star" style="color: #ec6a56"></i>
+                                                <i class="fas fa-star" style="color: #ec6a56"></i>
+                                                <i class="fas fa-star" style="color: #ec6a56"></i>
+                                                <i class="fas fa-star" style="color: #ec6a56"></i>
+                                                <i class="fas fa-star" style="color: #ec6a56"></i>
                                             </c:if>
 
                                         </div>

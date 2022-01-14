@@ -204,7 +204,9 @@
 					data : data,
 					success : function (result) {
 
-						if(userId !== "") {
+						console.log(result);
+
+						if(userId === result) {
 
 							//정규식
 							if (userIdEx.test(userId) === true) {
@@ -248,12 +250,12 @@
 							}
 						} else {
 							$(".id_vc_chk_1").css("display", "none");
-							$(".id_vc_chk_2").css("display", "none");
+							$(".id_vc_chk_2").css("display", "block");
 							$(".id_input_chk").css("display", "none");
 							$(".id_ex_chk").css("display", "none");
 							$("#userId").css({
-								"border-color": "#ffe537",
-								"box-shadow": "0 0 0 0.1rem rgb(255, 229, 55)"
+								"border-color": "#f17228",
+								"box-shadow": "0 0 0 0.1rem rgb(241, 114, 40)"
 							});
 						}
 					}

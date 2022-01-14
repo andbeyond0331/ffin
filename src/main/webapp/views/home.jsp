@@ -13,6 +13,12 @@
 
     <jsp:include page="../common/lib.jsp"/>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+
+
     <script type="text/javascript">
 
         function loginModal(){
@@ -114,22 +120,22 @@
     <jsp:include page="/views/navbar.jsp" />
 
     <!-- slider section -->
-    <section class="slider_section ">
+    <section class="slider_section">
         <div class="container ">
             <div class="row">
                 <div class="col-lg-10 mx-auto">
                     <div class="detail-box" style="margin-bottom: -40px;">
-                        <h1 class="display-1 fs-md-5 fs-lg-6 fs-xl-8 text-light">
+                        <h1 class="display-1 fs-md-5 fs-lg-6 fs-xl-8 text-light" style=" font-family: 'Pacifico', cursive; margin-top:100px; margin-bottom: 0; color: #110000">
                             FoodTruck Finder
                         </h1>
-                        <h5 class="text-800 mb-5 fs-4">Within a few clicks,<br class="d-none d-xxl-block" /><br/>find foodtruck are accessible near you</h5>
+                        <h6 class="text-800 mb-5 fs-4">Within a few clicks, find foodtruck are accessible near you</h6>
                     </div>
                     <div class="find_container ">
                         <div class="container">
                             <div class="row">
                                 <div class="col">
                                     <form>
-                                        <div class="form-row" style="margin-top: 70px;">
+                                        <div class="form-row">
                                             <div class="form-group col-lg-6">
                                                 <input type="text" class="form-control" id="inputLocation" name="inputLocation" placeholder="What's your address?">
                                                 <span class="location_icon">
@@ -204,7 +210,7 @@
 <section class="recipe_section layout_padding-top">
     <div class="container">
         <div class="heading_container heading_center">
-            <h2>
+            <h2 style=" font-family: 'Pacifico', cursive;">
                 Popular Foodtruck
             </h2>
         </div>
@@ -272,7 +278,7 @@
     <div class="container">
         <div class="col-md-11 col-lg-10 mx-auto">
             <div class="heading_container heading_center">
-                <h2>
+                <h2 style=" font-family: 'Pacifico', cursive;">
                     Coupon
                 </h2>
             </div>
@@ -304,7 +310,7 @@
     <div class="container">
         <div class="col-md-11 col-lg-10 mx-auto">
             <div class="heading_container heading_center">
-                <h2>
+                <h2 style=" font-family: 'Pacifico', cursive;">
                     Let's do it together
                 </h2>
             </div>

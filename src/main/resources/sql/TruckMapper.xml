@@ -279,7 +279,7 @@
 		UPDATE truck
 		<set>
 			TRUCK_JOIN_REQ_STATUS = #{truckJoinReqStatus},
-			truck_join_req_status = SYSDATE(),
+			truck_join_req_date = SYSDATE(),
 			role = ${role}
 		</set>
 		WHERE truck_id = #{truckId}

@@ -85,6 +85,7 @@ public class QnARestController {
     public Inquiry updateInquiryAns(@ModelAttribute Inquiry inquiry, @RequestParam("inquiryNo") int inquiryNo) throws Exception {
 
         System.out.println("QnARestController.updateInquiryAns : POST");
+
         qnAService.updateInquiryAns(inquiry);
         return qnAService.getInquiry(inquiryNo);
     }

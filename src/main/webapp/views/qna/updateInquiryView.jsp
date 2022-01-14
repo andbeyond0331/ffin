@@ -72,7 +72,7 @@
 		var inquiryTitleChk = false;
 		var inquiryContentChk = false;
 
-		/* 문의등록 */
+		/* 문의 수정 */
 		$(function () {
 			$("a[href='#' ]").click(function () {
 
@@ -81,6 +81,7 @@
 				var inquiryType = $('#inquiryType').val();
 				var inquiryTitle = $('#inquiryTitle').val();
 				var inquiryContent = $('#inquiryContent').val();
+				var inquiryFile = $('#uploadFile').val()
 
 				/* V/C */
 				if(inquiryType === ""){
