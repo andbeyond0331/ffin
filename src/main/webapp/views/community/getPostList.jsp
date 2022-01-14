@@ -22,7 +22,7 @@
         //============= "검색"  Event  처리 =============
         $(function() {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $( "button.btn.btn-default" ).on("click" , function() {
+            $( "button.btn.btn-dark" ).on("click" , function() {
                 fncGetUserList(1);
             });
         });
@@ -97,7 +97,7 @@
                     <label class="sr-only" for="searchKeyword">검색어</label>
                     <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
                            value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-                    <button type="button" class="btn btn-default">검색</button>
+                    <button type="button" class="btn btn-dark">검색</button>
                 </div>
 
 

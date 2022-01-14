@@ -229,18 +229,22 @@
         font-family: "Noto Sans CJK KR Regular", sans-serif;
     }
 
-    <!-- 드롭다운 -->
+    /*드롭다운*/
+
+
     .dropdown {
         position: relative;
-        display: inline-block;
+        display: compact;
+        color: #110000;
+        margin-left: 10px;
+        padding: 10px 15px 10px 15px;
     }
 
     .dropdown-content {
         display: none;
         position: absolute;
-        background-color: #ffba49;
+        background-color: #fefefe;
         min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
         z-index: 1;
     }
 
@@ -251,11 +255,12 @@
         display: block;
     }
 
-    .dropdown-content a:hover {background-color: #ddd;}
+    .dropdown-content a:hover {background-color: rgba(210, 210, 230, 0.26);}
 
     .dropdown:hover .dropdown-content {display: block;}
 
-    .dropdown:hover .dropbtn {background-color: #3e8e41;}
+    .dropdown:hover .dropbtn {}
+
 
 
 
@@ -482,20 +487,20 @@
             self.location = "/room"
         });
     });
-    // ============= 케이터링 ===============
-    $( function() {
-        $("#goCatering").on("click" , function() {
-            self.location = "/catering/mainCalendar"
-        });
-    });
-
-    // 진석 추가
-    // ============= 게시판 ===============
-    $( function() {
-        $("#goPost").on("click" , function() {
-            self.location = "/community/getPostList"
-        });
-    });
+    // // ============= 케이터링 ===============
+    // $( function() {
+    //     $("#goCatering").on("click" , function() {
+    //         self.location = "/catering/mainCalendar"
+    //     });
+    // });
+    //
+    // // 진석 추가
+    // // ============= 게시판 ===============
+    // $( function() {
+    //     $("#goPost").on("click" , function() {
+    //         self.location = "/community/getPostList"
+    //     });
+    // });
 
     // 진석 추가
     // ============= 푸드트럭 ===============
