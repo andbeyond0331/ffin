@@ -64,7 +64,7 @@
 				self.location = "./getUserInfo.jsp"
 			});
 			$('.user-profile').click(function () {
-				self.location = "./getUserProfile.jsp"
+				self.location = "/user/getUserProfile/"+userId
 			});
 			$('.user-purchase').click(function () {
 				self.location = ""

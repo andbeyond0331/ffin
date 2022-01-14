@@ -277,8 +277,9 @@ public class TruckServiceImpl implements TruckService {
 
     // 새로 가입한 푸드트럭 보기(관리자)
     @Override
-    public void getNewTruck(Truck truck) throws Exception {
-
+    public Truck getNewTruck(String truckId) throws Exception {
+        System.out.println("TruckServiceImpl.getNewTruck");
+        return truckDao.getTruck(truckId);
     }
 
     // 푸드트럭 아이디 중복체크

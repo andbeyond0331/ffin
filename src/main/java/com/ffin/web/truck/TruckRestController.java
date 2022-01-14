@@ -299,6 +299,36 @@ public class TruckRestController {
 
     }
 
+    @RequestMapping(value = "json/getNewTruck/{truckId}", method = RequestMethod.GET)
+    public ModelAndView getNewTruck(@PathVariable String truckId) throws Exception {
+
+        System.out.println("TruckRestController.getNewTruck : GET");
+
+        ModelAndView modelAndView = new ModelAndView();
+        Truck truck = truckService.getNewTruck(truckId);
+        modelAndView.addObject("truck", truck);
+
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "json/updateTruckJoin", method = RequestMethod.POST)
+    @ResponseBody
+    public Truck updateTruckJoin(@ModelAttribute Truck truck, @RequestParam("truckId") String truckId,
+                                 @RequestParam("truckJoinReqStatus") int truckJoinReqStatus) throws Exception {
+
+        System.out.println("TruckRestController.updateTruckJoin : POST");
+        
+        //승인
+        if(truckJoinReqStatus == 1){
+            truck.setRole(1);
+            truckService.updateTruckJoin(truck);
+            return truckService.getNewTruck(truckId);
+        }
+        //거절
+        truckService.updateTruckJoin(truck);
+        return truckService.getNewTruck(truckId);
+    }
+
 }
 
 

@@ -63,8 +63,8 @@ public class TruckDaoImpl implements TruckDao {
     }
 
     @Override
-    public void getNewTruck(Truck truck) throws Exception {
-
+    public Truck getNewTruck(String truckId) throws Exception {
+        return sqlSession.selectOne("TruckMapper.getNewTruck", truckId);
     }
 
     @Override

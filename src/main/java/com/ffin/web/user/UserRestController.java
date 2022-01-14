@@ -8,13 +8,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Random;
 
 @RestController
@@ -66,11 +69,17 @@ public class UserRestController {
     }
 
     @RequestMapping(value = "json/idChkDuplication", method = RequestMethod.POST)
-    public Boolean idChkDuplication(@RequestParam String userId) throws Exception {
+    public String idChkDuplication(@RequestParam String userId) throws Exception {
 
         System.out.println("UserRestController.idChkDuplication : POST ");
 
-        return userService.idChkDuplication(userId);
+        boolean result = userService.idChkDuplication(userId);
+
+        if(!result){
+            return "";
+        }
+
+        return userId;
     }
 
     @RequestMapping(value="kakaoLogin/{userId:.+}", method=RequestMethod.POST)
@@ -168,6 +177,28 @@ public class UserRestController {
 
         return user;
     }
+
+    @RequestMapping(value = "json/updateProImg", method = RequestMethod.POST)
+    public User updateProImg(@RequestBody User user, @RequestParam("userId") String userId, @RequestParam("userProImg") MultipartFile file,
+                               HttpServletRequest request ,Model model, HttpSession session) throws Exception{
+
+        System.out.println("UserRestController.updateProImg : POST");
+
+        if(!Objects.requireNonNull(file.getOriginalFilename()).isEmpty()){
+            file.transferTo(new File( request.getSession().getServletContext().getRealPath("/resources/image") , file.getOriginalFilename()));
+            model.addAttribute("msg", "File uploaded successfully.");
+        }else {
+            model.addAttribute("msgs", "Please select a valid mediaFile..");
+        }
+
+        System.out.println("!!!!!"+file.getOriginalFilename());
+
+        user.setUserProImg(file.getOriginalFilename());
+        userService.updateProImg(user);
+
+        return user;
+    }
+
 
     @RequestMapping(value = "json/updateUserProfile/{userId}", method = RequestMethod.POST)
     public User updateUserProfile(User user, @PathVariable String userId, HttpServletRequest request) throws Exception {

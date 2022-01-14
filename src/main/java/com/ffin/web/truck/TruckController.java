@@ -43,6 +43,7 @@ public class TruckController {
     @Value("#{commonProperties['pageSize']}")
     int pageSize;
 
+
     // 회원가입화면요청
     @RequestMapping(value = "addTruck", method = RequestMethod.GET)
     public String addTruck() throws Exception {
@@ -111,7 +112,7 @@ public class TruckController {
         String truckId = request.getParameter("truckId");
 
         System.out.println("truckId = " + truckId);
-        Truck truck = truckService.getTruck(truckId);
+        Truck truck = truckService.getNewTruck(truckId);
         System.out.println("truck = " + truck);
         m.addObject("truck", truck);
 

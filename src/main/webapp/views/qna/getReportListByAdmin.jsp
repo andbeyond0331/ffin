@@ -96,7 +96,7 @@
 
         function fncGetUserList(currentPage) {
             $("#currentPage").val(currentPage)
-            $("form").attr("method" , "POST").attr("action" , "/user/getUserList").submit();
+            $("form").attr("method" , "POST").attr("action" , "/user/getReportList").submit();
         }
 
         /* 신고내용 */
@@ -378,7 +378,7 @@
         </div>
     </div>
 </section>
-    <jsp:include page="../../common/pageNavigator_new.jsp"/>
+   <%-- <jsp:include page="../../common/pageNavigator_new.jsp"/>--%>
     <jsp:include page="/views/footer.jsp" />
 </body>
 </html>

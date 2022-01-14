@@ -188,7 +188,7 @@
                 <li class="list active">
                     <b></b>
                     <b></b>
-                    <a href="#">
+                    <a href="/views/user/userMyPage.jsp">
                         <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
                         <span class="title">MyPage</span>
                     </a>
@@ -202,8 +202,8 @@
                     </a>
                     <div class="collapse" id="collapseInfo" style="padding: 10px;">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">내정보</a>
-                            <a class="collapse-item" href="">프로필</a>
+                            <a class="collapse-item" href="/views/user/getUserInfo.jsp">내정보</a>
+                            <a class="collapse-item" href="/user/getUserProfile/${user.userId}">프로필</a>
                             <a class="collapse-item" href="">비밀번호</a>
                         </div>
                     </div>
@@ -211,7 +211,7 @@
                 <li class="list">
                     <b></b>
                     <b></b>
-                    <a href="#">
+                    <a href="/room">
                         <span class="icon"><ion-icon name="chatbubbles-outline"></ion-icon></span>
                         <span class="title">채팅</span>
                     </a>
@@ -291,7 +291,7 @@
                 <li class="list active">
                     <b></b>
                     <b></b>
-                    <a href="#">
+                    <a href="/views/user/adminMyPage.jsp">
                         <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
                         <span class="title">사이트관리</span>
                     </a>

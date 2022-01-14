@@ -150,7 +150,7 @@
              #{inquiryContent},
              #{inquiryFile},
              SYSDATE(),
-             #{inquiryAnsStatus},
+             1,
              #{inquiryUserRole});
     </insert>
 
@@ -216,7 +216,7 @@
     <update id="updateInquiryAns" parameterType="int">
         UPDATE inquiry
         <set>
-            inquiry_ans_status = 1,
+            inquiry_ans_status = 2,
             inquiry_ans_title = #{inquiryAnsTitle},
             inquiry_ans_content = #{inquiryAnsContent},
             inquiry_ans_date = SYSDATE()

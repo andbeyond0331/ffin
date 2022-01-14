@@ -152,8 +152,9 @@
         }
 
         h5 span {
-            margin: 0;
+            margin: 0 5px 0 5px;
         }
+
 
     </style>
 
@@ -162,16 +163,65 @@
 
         $(function () {
 
-           $(".bakcBtn").click(function () {
+            var truckId = $(this).find("input[name='truckId']").val();
+
+           $(".backBtn").click(function () {
                 history.go(-1);
            });
 
            $(".nopeBtn").click(function () {
-                alert(1);
 
+               alert(truckId);
+
+               $.ajax({
+                   url: "/truck/json/updateTruckJoin",
+                   method: "POST",
+                   dataType : "json",
+                   header : {
+                       "Accept" : "application/json",
+                       "Content-Type" : "application/json"
+                   },
+                   data : {
+                       truckId : truckId,
+                       truckJoinReqStatus : 2
+                   },
+                   success : function (data) {
+                       console.log(data);
+                       window.location.reload();
+                   }
+               });
+           });
+
+           $(".okBtn").click(function () {
+
+               alert(truckId);
+
+               $.ajax({
+                   url: "/truck/json/updateTruckJoin",
+                   method: "POST",
+                   dataType : "json",
+                   header : {
+                       "Accept" : "application/json",
+                       "Content-Type" : "application/json"
+                   },
+                   data : {
+                       truckId : truckId,
+                       truckJoinReqStatus : 1
+                   },
+                   success : function (data) {
+                       console.log(data);
+                       self.location="/truck/getTruck?truckId="+data.truckId;
+                   }
+               })
            })
 
         });
+
+        $(function () {
+            $(".busiLiceImg").click(function () {
+                alert(1234);
+            })
+        })
 
     </script>
 </head>
@@ -179,6 +229,9 @@
 <body id="page-top">
 
 <jsp:include page="/views/navbar.jsp" />
+<div style="height: auto">
+    <jsp:include page="/views/user/sidebar.jsp" />
+</div>
 
 
 <!-- client section -->
@@ -196,18 +249,17 @@
             <form class="row justify-content-center" id="user_update_info">
 
                 <div class="col-md-12 data-input-box adminbox">
-
+                    <input type="hidden" id="truckId" name="truckId" value="${truck.truckId}">
                     <div style="display: flex; justify-content: center;">
                         <div class="col-md-6 data-input-box" style="display: flex; justify-content: center;">
-                            <div class="col-md-7">
-
+                            <div class="col-md-12">
                                 <div style="margin-top: 15px;">
                                     <h4 style="text-align: center;">${truck.truckName}</h4>
                                 </div>
 
                                 <div>
                                     <div style="margin-top: 5px;">
-                                        <div style="display: flex; justify-content: space-between;">
+                                        <div style="display: flex; justify-content: center;">
 
                                             <c:choose>
                                                 <c:when test="${truck.truckCate eq 1}">
@@ -222,7 +274,7 @@
                                                 <c:when test="${truck.truckCate eq 4}">
                                                     <h5><span class="badge" style="background-color: #65bf96; color: #110000">양식</span></h5>
                                                 </c:when>
-                                                <c:when test="${truck.truckCate eq 5}">
+                                                <c:when test="${truck.truckCate  eq 5}">
                                                     <h5><span class="badge" style="background-color: #65bf96; color: #110000">디저트</span></h5>
                                                 </c:when>
                                                 <c:when test="${truck.truckCate eq 6}">
@@ -236,19 +288,19 @@
                                                 </c:when>
                                             </c:choose>
 
-                                            <c:if test="${truck.role eq 0 }">
-                                                <h5><span class="badge" style="background-color: #ffba49; color: #110000">가입대기</span></h5>
+                                            <c:if test="${truck.role eq 0 && truck.truckJoinReqStatus eq 0 }">
+                                                <h5><span class="badge" style="background-color: #fecb68; color: #110000">가입승인대기</span></h5>
                                             </c:if>
 
                                             <c:choose>
                                                 <c:when test="${truck.truckJoinReqStatus eq 0 }">
-                                                    <h5><span class="badge" style="background-color: #ffba49; color: #110000">승인요청</span></h5>
+                                                    <h5><span class="badge" style="background-color: #fecb68; color: #110000">승인요청</span></h5>
                                                 </c:when>
                                                 <c:when test="${truck.truckJoinReqStatus eq 1}">
-                                                    <h5><span class="badge" style="background-color: #ffe537; color: #110000">승인완료</span></h5>
+                                                    <h5><span class="badge" style="background-color: #65bf96; color: #110000">승인완료</span></h5>
                                                 </c:when>
                                                 <c:when test="${truck.truckJoinReqStatus eq 2}">
-                                                    <h5><span class="badge" style="background-color: #f17228; color: #110000">승인거절</span></h5>
+                                                    <h5><span class="badge" style="background-color: #ec6a56; color: #110000">승인거절</span></h5>
                                                 </c:when>
                                             </c:choose>
 
@@ -272,10 +324,10 @@
                                 </c:if>
 
                                 <c:if test="${truck.truckBusiLice == null}">
-                                    <li><img src="/resources/image/nothing.jpg"></li>
+                                    <li><img class="busiLiceImg" src="/resources/image/nothing.jpg"></li>
                                 </c:if>
                                 <c:if test="${truck.truckBusiLice != null}">
-                                    <li><img src="/resources/image/${truck.truckBusiLice}"></li>
+                                    <li><img class="busiLiceImg" src="/resources/image/${truck.truckBusiLice}"></li>
                                 </c:if>
 
                                 <c:if test="${truck.truckSigMenuImg1 == null}">
@@ -367,12 +419,16 @@
 
 
             <div class="btn-box" style=" margin-top: 20px;">
-                <button class="btn btn-default btn-sm nopeBtn" type="button" style="color: #110000;">가입거절</button>
-                <button class="btn btn-default btn-sm bakcBtn" type="button" style="background-color: #ecf0fd; color: #110000;">확인</button>
-                <button class="btn btn-default btn-sm okBtn" type="button" style="color: #110000;">가입승인</button>
+                <c:if test="${truck.role eq 0 && truck.truckJoinReqStatus eq 0}">
+                    <button class="btn btn-default btn-sm nopeBtn" type="button" style="color: #110000;">가입거절</button>
+                </c:if>
+                    <button class="btn btn-default btn-sm backBtn" type="button" style="background-color: #ecf0fd; color: #110000;">확인</button>
+                <c:if test="${truck.role eq 0 && truck.truckJoinReqStatus eq 0}">
+                    <button class="btn btn-default btn-sm okBtn" type="button" style="color: #110000;">가입승인</button>
+                </c:if>
             </div>
         </div>
-
+    </div>
 </section>
 
 <jsp:include page="/views/footer.jsp" />

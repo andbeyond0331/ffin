@@ -89,8 +89,6 @@
         $(function () {
             $("a[href='#' ]").click(function () {
 
-                alert(1234);
-
                 var userId = $("#userId").val();
                 var userName = $("#userName").val();
                 var userBirth = $("#userBitrh").val();
@@ -116,11 +114,15 @@
                         userEmail : userEmail
                     },
                     success: function (data) {
-                        alert("수정OK");
+                        alert("회원 정보가 수정되었습니다.");
                     }
                 });
             });
         });
+
+        function goHome() {
+            self.location = "/views/user/userMyPage.jsp";
+        }
 
     </script>
 </head>
@@ -128,6 +130,9 @@
 <body id="page-top">
 
 <jsp:include page="/views/navbar.jsp" />
+<div style="height: auto">
+    <jsp:include page="/views/user/sidebar.jsp" />
+</div>
 
 
 <!-- client section -->
@@ -206,8 +211,8 @@
             </form>
 
             <div class="btn-box" style=" margin-top: -40px;">
-                <a onClick="history.go(-1);" style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
-                    취소
+                <a onClick="goHome()" style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
+                    확인
                 </a>
                 <a href="#">
                     수정

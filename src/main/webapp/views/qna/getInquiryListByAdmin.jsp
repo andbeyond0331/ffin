@@ -80,7 +80,7 @@
         }
         .d-grid.gap-2.col-6.mx-auto{
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
         }
         #inquiryAnsContent{
             min-height: 150px;
@@ -126,9 +126,10 @@
                                     + "</div>"
                                     + "<hr style='border-width:2px;'/>";
 
-                       if(Data.inquiry.inquiryAnsStatus === 0 ){
+                       if(Data.inquiry.inquiryAnsStatus === 1 ){
 
                            display += "<div class='d-grid gap-2 col-6 mx-auto' style='margin: 0 55px 0 55px;'>"
+                                    + "<button class='btn btn-default btn-sm' onclick='closeBtn()' type='button' style='color: #110000; background: #ecf0fd'>확인</button>"
                                     + "<button class='btn btn-default btn-sm' data-bs-toggle='modal' data-bs-target='#addInquiryAns' onclick='addInquiryAns("+Data.inquiry.inquiryNo+")' type='button'>답변등록</button>"
                                     + "</div>";
                        } else {
@@ -138,6 +139,9 @@
                                + "<p class='card-text'>"+Data.inquiry.inquiryAnsDate+"</p>"
                                + "</div>"
                                + "<p class='card-text'>"+Data.inquiry.inquiryAnsContent+"</p>"
+                               + "<div class='d-grid gap-2 col-6 mx-auto' style='margin: 0 55px 0 55px;'>"
+                               + "<button class='btn btn-default btn-sm' onclick='closeBtn()' type='button' style='color: #110000; background: #ecf0fd'>확인</button>"
+                               + "</div>"
                                + "</div>"
                                + "</div>"
                                + "</div>";
@@ -149,8 +153,11 @@
                    }
                });
            }) ;
-
         });
+
+        function closeBtn() {
+            $('.card-ans').remove();
+        }
 
         /* 답변모달 */
         function addInquiryAns(inquiryNo){
@@ -196,7 +203,6 @@
                     }
                 });
             });
-
         });
 
     </script>
@@ -332,10 +338,10 @@
                     </div>
                     <div class="col-md-1 inquiry-con">
                         <div class="card-body">
-                            <c:if test="${inquiry.inquiryAnsStatus eq 0}">
+                            <c:if test="${inquiry.inquiryAnsStatus eq 1}">
                                 <p class="card-text"><small class="text-muted"><span class="badge" style="background-color: #ffe537; color: #110000">답변대기중</span></small></p>
                             </c:if>
-                            <c:if test="${inquiry.inquiryAnsStatus eq 1}">
+                            <c:if test="${inquiry.inquiryAnsStatus eq 2}">
                                 <p class="card-text"><small class="text-muted"><span class="badge" style="background-color: #ffba49; color: #110000">답변완료</span></small></p>
                             </c:if>
                         </div>
@@ -411,54 +417,6 @@
     </div>
 
 </section>
-
-<div class="container">
-
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-
-            <c:if test="${ resultPage.currentPage <= resultPage.pageUnit }">
-            <li class="disabled">
-                </c:if>
-                <c:if test="${ resultPage.currentPage > resultPage.pageUnit }">
-            <li>
-                </c:if>
-                <a href="javascript:fncGetInquiryList('${ resultPage.currentPage-1}')" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-
-            <c:forEach var="i"  begin="${resultPage.beginUnitPage}" end="${resultPage.endUnitPage}" step="1">
-                <c:if test="${ resultPage.currentPage == i }">
-                    <!--  현재 page 가르킬경우 : active -->
-                    <li class="page-item active">
-                        <a class="page-link" href="javascript:fncGetInquiryList('${ i }');">${ i }<span class="sr-only">(current)</span></a>
-                    </li>
-                </c:if>
-
-                <c:if test="${ resultPage.currentPage != i}">
-                    <li  class="page-item">
-                        <a class="page-link" href="javascript:fncGetInquiryList('${ i }');">${ i }</a>
-                    </li>
-                </c:if>
-            </c:forEach>
-
-
-            <c:if test="${ resultPage.endUnitPage >= resultPage.maxPage }">
-            <li class="disabled">
-                </c:if>
-                <c:if test="${ resultPage.endUnitPage < resultPage.maxPage }">
-            <li>
-                </c:if>
-                <a href="javascript:fncGetInquiryList('${resultPage.endUnitPage+1}')" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-
-</div>
-
     <jsp:include page="/views/footer.jsp" />
 </body>
 </html>

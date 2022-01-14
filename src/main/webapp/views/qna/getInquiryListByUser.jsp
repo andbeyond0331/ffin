@@ -120,17 +120,17 @@
                                     + "<div style='margin: 0 55px 0 55px;'>";
 
                        if(Data.inquiry.inquiryFile != null){
-                           display += "<img src="+Data.inquiry.inquiryFile+"'../../resources/image' class='card-img-top' alt='inquiryFile' style='width: 200px;'>";
+                           display += "<img src='/resources/image/'"+Data.inquiry.inquiryFile+"class='card-img-top' alt='inquiryFile' style='width: 200px;'>"
                        }
 
                        display  += "<p class='card-text'>"+Data.inquiry.inquiryContent+"</p>"
                                     + "</div>"
                                     + "<hr style='border-width:2px;'/>";
 
-                       if(Data.inquiry.inquiryAnsStatus === 0 ){
+                       if(Data.inquiry.inquiryAnsStatus === 1 ){
 
                            display += "<div class='d-grid gap-2 col-6 mx-auto' style='margin: 0 55px 0 55px;'>"
-                                    + "<button class='btn btn-sm ansBtn' type='button' onclick='closeAjax()' style='background: #ecf0fd; color: #000000'>확인</button>"
+                                    + "<button class='btn btn-default btn-sm ansBtn' type='button' onclick='closeAjax()' style='background: #ecf0fd; color: #000000'>확인</button>"
                                     + "<button class='btn btn-default btn-sm' data-bs-toggle='modal' data-bs-target='#addInquiryAns' onclick='updateInquiry("+Data.inquiry.inquiryNo+")' type='button' style='color: #000000'>수정</button>"
                                     + "</div>";
                        } else {
@@ -281,10 +281,10 @@
                     </div>
                     <div class="col-md-2 inquiry-con" style="display: flex; align-items: center;">
                         <div class="card-body">
-                            <c:if test="${inquiry.inquiryAnsStatus eq 0}">
+                            <c:if test="${inquiry.inquiryAnsStatus eq 1}">
                                 <p class="card-text"><small class="text-muted"><span class="badge" style="background-color: #ffe537; color: #110000">답변대기중</span></small></p>
                             </c:if>
-                            <c:if test="${inquiry.inquiryAnsStatus eq 1}">
+                            <c:if test="${inquiry.inquiryAnsStatus eq 2}">
                                 <p class="card-text"><small class="text-muted"><span class="badge" style="background-color: #ffba49; color: #110000">답변완료</span></small></p>
                             </c:if>
                         </div>
@@ -305,7 +305,7 @@
                     <div class="card-body">
                         <div style="margin: 0 55px 0 55px;">
                             <c:if test="${inquiry.inquiryFile != null }">
-                            <img src="../../resources/image/moma.png" class="card-img-top" alt="inquiryFile" style="width: 200px;">
+                            <img src="/resources/image/${inquiry.inquiryFile}" class="card-img-top" alt="inquiryFile" style="width: 200px;">
                             </c:if>
                             <p class="card-text">문의내용입니당~asdgaejsdhasfkjsahfskkhahadkhsdafkhl</p>
                         </div>

@@ -138,6 +138,19 @@
             margin-top: 5px;
             padding: 5px;
         }
+        .item-truck span {
+            display: flex;
+            align-items: center;
+        }
+        ion-icon{
+            margin-right: 2px;
+        }
+        .close-circle-outline{
+            color: #f17228;
+        }
+        .add-circle-outline{
+            color: #65bf96;
+        }
 
     </style>
 
@@ -154,6 +167,9 @@
 
 <body>
 <jsp:include page="/views/navbar.jsp" />
+<div style="height: auto">
+    <jsp:include page="/views/user/sidebar.jsp" />
+</div>
 
 <section class="client_section layout_padding">
 
@@ -249,7 +265,7 @@
                                                     <h5><span class="badge" style="background-color: #ffffff; color: #110000">승인요청</span></h5>
                                                 </c:when>
                                                 <c:when test="${truck.truckJoinReqStatus eq 2}">
-                                                    <h5><span class="badge" style="background-color: #ffffff; color: #110000">승인거절</span></h5>
+                                                    <h5><span class="badge" style="background-color: #f17228; color: #110000">승인거절</span></h5>
                                                 </c:when>
                                             </c:choose>
                                             <p class="item-text-dek"><strong>${truck.truckRegDate}</strong></p>
@@ -260,7 +276,12 @@
                                     <a class="item-link" href="/truck/getNewTruck?truckId=${truck.truckId}"></a>
                                 </div>
                                 <div class="item-truck">
-                                    <span>${truck.truckName}</span>
+                                    <c:if test="${truck.truckJoinReqStatus eq 0}">
+                                        <span><ion-icon class="add-circle-outline" name="add-circle-outline"></ion-icon>${truck.truckName}</span>
+                                    </c:if>
+                                    <c:if test="${truck.truckJoinReqStatus eq 2}">
+                                        <span><ion-icon class="close-circle-outline" name="close-circle-outline"></ion-icon>${truck.truckName}</span>
+                                    </c:if>
                                     <span><ion-icon name="at-outline"></ion-icon>${truck.truckId}</span>
                                 </div>
                             </div>

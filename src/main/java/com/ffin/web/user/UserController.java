@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
@@ -164,6 +161,17 @@ public class UserController {
         return "/views/user/getUserInfo.jsp";
     }
 
+    @RequestMapping(value = "getUserProfile/{userId}", method = RequestMethod.GET)
+    public String getUserProfile(@PathVariable String userId , Model model, HttpSession session) throws Exception {
+        System.out.println("UserController.getUserProfile : GET");
+
+
+        User user = userService.getUser(userId);
+        model.addAttribute("user", user);
+
+        return "/views/user/getUserProfile.jsp";
+    }
+
 
     @RequestMapping(value = "updateUserProfile", method = RequestMethod.POST)
     public String updateUserProfile(@ModelAttribute("user") User user, @RequestParam("userId") String userId,
@@ -191,11 +199,12 @@ public class UserController {
 
     @RequestMapping(value = "updateProImg", method = RequestMethod.POST)
     public String updateProImg(@ModelAttribute("user") User user, @RequestParam("userId")String userId, @RequestParam("fileName1") MultipartFile file,
-                               Model model, HttpSession session) throws Exception{
+                               HttpServletRequest request ,Model model, HttpSession session) throws Exception{
+
         System.out.println("UserController.updateProImg : POST");
 
         if(!Objects.requireNonNull(file.getOriginalFilename()).isEmpty()){
-            file.transferTo(new File(FILE_SERVER_PATH, file.getOriginalFilename()));
+            file.transferTo(new File( request.getSession().getServletContext().getRealPath("/resources/image") , file.getOriginalFilename()));
             model.addAttribute("msg", "File uploaded successfully.");
         }else {
             model.addAttribute("msgs", "Please select a valid mediaFile..");
@@ -203,8 +212,8 @@ public class UserController {
 
         System.out.println("!!!!!"+file.getOriginalFilename());
 
-        //user.setUserProImg(file.getOriginalFilename());
-        userService.updateProImg(userId, file.getOriginalFilename());
+        user.setUserProImg(file.getOriginalFilename());
+        userService.updateProImg(user);
 
         return "redirect:/views/user/getUserProfile.jsp";
     }

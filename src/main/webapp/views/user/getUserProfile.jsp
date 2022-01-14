@@ -35,9 +35,10 @@
 			height: 100px;
 		}
 
-		.card-img{
-			width: 100px;
-			height: 100px;
+		img {
+			max-height: 250px;
+			box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1);
+			transition: 0.2s;
 		}
 	</style>
 
@@ -51,18 +52,22 @@
 				//alert(1234);
 
 				var userId = $("#userId").val();
+				var userProImg = $("#uploadFile").val();
 				var userFavMenu = $("#userFavMenu").val();
 				var userFavPlace = $("#userFavPlace").val();
 				var userFavPlaceDetail = $("#userFavPlaceDetail").val();
 				var userIntro = $("#userIntro").val();
 
-				console.log(userFavMenu+userFavPlace+userFavPlaceDetail+userIntro);
+				console.log(userId+userProImg+userFavMenu+userFavPlace+userFavPlaceDetail+userIntro);
 
 				$.ajax({
 					type:"POST",
 					url: "/user/json/updateUserProfile/"+userId,
 					dataType: "json",
-					contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+					header : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
 					data:{
 						userId : userId,
 						userFavMenu : userFavMenu,
@@ -71,7 +76,7 @@
 						userIntro : userIntro
 					},
 					success: function (data) {
-						alert("수정OK");
+						alert("프로필이 수정되었습니다.");
 					}
 				});
 			});
@@ -79,11 +84,30 @@
 
 		/*프로필 수정*/
 		$(function () {
-			$(".pro-img").change(function () {
-				alert(1234);
+			$("#fileName1").change(function () {
 
-				$(".pro-img").attr("method", "POST").attr("action","/user/updateProImg").attr("enctype", "multipart/form-data").submit();
+				var userProImg = $("#fileName1").val();
+				var userId = $("#userId").val();
 
+				// alert("프로필 사진 수정");
+				$('form').attr("method", "POST").attr("action","/user/updateProImg").attr("enctype", "multipart/form-data").submit();
+				// window.location.reload();
+                /*$.ajax({
+					type:"POST",
+					url: "/user/json/updateProImg",
+					dataType: "data",
+					enctype: 'multipart/form-data',
+					processData: false,
+					contentType: false,
+					data:{
+						userId : userId,
+						userProImg : userProImg
+					},
+					success: function (data) {
+						window.location.reload();
+						alert("프로필 사진이 수정되었습니다.");
+					}
+                })*/
 			});
 		});
 
@@ -149,10 +173,13 @@
 
 <body id="page-top">
 <div>
-<jsp:include page="/views/navbar.jsp" />
+	<jsp:include page="/views/navbar.jsp" />
+	<div style="height: auto">
+		<jsp:include page="/views/user/sidebar.jsp" />
+	</div>
 </div>
 <!-- client section -->
-
+<form></form>
 <section class="client_section layout_padding">
 	<div class="container">
 		<div class="col-md-11 col-lg-10 mx-auto">
@@ -169,33 +196,41 @@
 							<input type="hidden" id="userId" name="userId" value="${user.userId}">
 							<div class="col-md-6 data-input-box">
 
-									<div class="data-input-box">
-										<%--<input type="text" class="form-control" id="userId" name="userId" placeholder="아이디">--%>
-										<div class="mb-3">
-											<%--<label for="fileName1" class="form-label">프로필 이미지</label>
-											<div class="pro-img" style="margin-top: 5px; margin-bottom: 10px">
-												<img src="../../resources/image/${user.userProImg}" class="img-thumbnail" alt="...">
-											</div>
-											<input class="form-control pro-img" type="file" id="fileName1" name="fileName1">--%>
-											<img src="${user.userProImg}" class="rounded float-start">
-											<button type="button" class="btn btn-outline-warning" id="update-img"><i class="fas fa-camera"></i></button>
-										</div>
+								<div class="data-input-box">
+									<div class="mb-3" style="text-align: center;">
+										<c:if test="${user.userProImg == null}">
+											<img src="/resources/image/user_img.jpg" class="rounded float-start" alt="userProImg">
+										</c:if>
+										<c:if test="${user.userProImg != null}">
+											<img src="/resources/image/${user.userProImg}" class="rounded float-start" alt="userProImg">
+										</c:if>
+										<%--											<button type="button" class="btn btn-outline-warning" id="update-img"><i class="fas fa-camera"></i></button>--%>
+
+										<input class="form-control" type="file" id="fileName1" name="fileName1" multiple style="display: none;">
 									</div>
+									<div style="display: flex; justify-content: center; align-items: center;">
+										<button type="button" class="btn btn-outline-warning" id="update-img" style="float: right;">
+											<label for="fileName1" class="form-label" style="float: right; margin: 0;">
+												<i class="fas fa-camera fa-lg" style="margin: 0;"></i>
+											</label>
+										</button>
+									</div>
+								</div>
 
 								<div class="data-input-box">
 									<label for="userFavPlace" class="form-label label-name">자주찾는 장소</label>
 									<div>
-										<input type="text" class="form-control" value="${user.userFavPlace}" id="userFavPlace" name="userFavPlace" placeholder="주소 검색" style="width: 80%; display: inline-block;">
+										<input type="text" class="form-control" value="${user.userFavPlace}" id="userFavPlace" name="userFavPlace"style="width: 80%; display: inline-block;">
 										<button type="button" class="btn btn-outline-warning addrApi" onclick="addrApi()" style="width: auto;">&nbsp;검색&nbsp;</button>
 									</div>
-									<input type="text" class="form-control" value="${user.userFavPlaceDetail}" id="userFavPlaceDetail" placeholder="상세주소" style="margin-top: 8px">
+									<input type="text" class="form-control" value="${user.userFavPlaceDetail}" id="userFavPlaceDetail" style="margin-top: 8px">
 								</div>
 
 								<div class="data-input-box">
 									<label for="userFavMenu" class="form-label label-name">좋아하는 메뉴</label>
-									<select class="form-select form-control" id="userFavMenu" value="${user.userFavMenu}" name="userFavMenu" aria-label="Default select example" style="padding-left: 0;">
+									<select class="form-select form-control" id="userFavMenu" name="userFavMenu" aria-label="Default select example" style="padding-left: 0;">
 										<option selected>Menu Category</option>
-										<option value="1">고기???</option>
+										<option value="1">고기</option>
 										<option value="2">한식</option>
 										<option value="3">분식</option>
 										<option value="4">양식</option>
@@ -211,12 +246,12 @@
 
 								<div class="data-input-box">
 									<label for="userIntro">한줄 소개</label>
-									<textarea class="form-control label-name" id="userIntro" value="${user.userIntro}" style="resize: none; height: 100px"></textarea>
+									<textarea class="form-control label-name" id="userIntro"style="resize: none; height: 100px">${user.userIntro}</textarea>
 								</div>
 							</div>
 						</form>
 
-						<div class="btn-box" style="margin-top: -40px;">
+						<div class="btn-box" style="margin-top: 10px;">
 							<a onClick="history.go(-1);" style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
 								취소
 							</a>
@@ -230,7 +265,7 @@
 		</div>
 	</div>
 </section>
-
+</form>
 <jsp:include page="/views/footer.jsp" />
 
 </body>
