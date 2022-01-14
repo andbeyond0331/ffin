@@ -85,7 +85,7 @@
 
         @media(min-width: 960px){
             .card-grid{
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(4, 1fr);
             }
         }
 
@@ -116,14 +116,14 @@
             top: 0;
             border: 0;
             transform-origin: center;
-            transform: scale(1) translateZ(0);
+            /*transform: scale(1) translateZ(0);*/
             transition:
                     filter 200ms linear,
                     transform 200ms linear;
         }
 
         .card:hover .card__background{
-            transform: scale(1.05) translateZ(0);
+            /*transform: scale(1.05) translateZ(0);*/
             border: 0;
         }
 
