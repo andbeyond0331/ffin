@@ -171,7 +171,7 @@
 
            $(".nopeBtn").click(function () {
 
-               alert(truckId);
+               //alert(truckId);
 
                $.ajax({
                    url: "/truck/json/updateTruckJoin",
@@ -194,7 +194,7 @@
 
            $(".okBtn").click(function () {
 
-               alert(truckId);
+               //alert(truckId);
 
                $.ajax({
                    url: "/truck/json/updateTruckJoin",
@@ -219,7 +219,7 @@
 
         $(function () {
             $(".busiLiceImg").click(function () {
-                alert(1234);
+                //alert(1234);
             })
         })
 

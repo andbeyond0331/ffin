@@ -18,6 +18,22 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
 <style>
+    .btn-outline-success {
+        color: #ffba49;
+        border-color: #ffba49;
+    }
+
+    .btn-check:active+.btn-outline-success, .btn-check:checked+.btn-outline-success, .btn-outline-success.active, .btn-outline-success.dropdown-toggle.show, .btn-outline-success:active {
+        color: #fff;
+        background-color: #ffba49;
+        border-color: #ffba49;
+    }
+
+    .btn-primary {
+        color: #f8f9fa;
+        background-color: #ffba49;
+        border-color: #ffba49;
+    }
     .row {
         display: -ms-flexbox;
         display: flex;
@@ -164,9 +180,9 @@
                                 <div class="col-6">
                                     <div class="form-check form-switch">
                                         <c:if test="${truckId.truckBusiStatus.equals('1')}">
-                                        <input class="form-check-input" type="checkbox" role="switch"
-                                               id="swCh" name="swCh"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" checked>
-                                        <label class="form-check-label" for="swCh">영업중</label>
+                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                   id="swCh" name="swCh"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" checked>
+                                            <label class="form-check-label" for="swCh">영업중</label>
                                         </c:if>
                                         <c:if test="${truckId.truckBusiStatus.equals('0')}">
                                             <input class="form-check-input" type="checkbox" role="switch"
@@ -215,7 +231,7 @@
                                     </div>
                                 </div>
 
-<%--                                <input type="hidden" id="orderNo" name="orderNo" value="${cart.odOrderNo.orderNo}"/>--%>
+                                <%--                                <input type="hidden" id="orderNo" name="orderNo" value="${cart.odOrderNo.orderNo}"/>--%>
                                 <input type="hidden" id="userId" name="userId"
                                        value="${cart.orderUserId.userId}"/>
                                 <input type="hidden" id="truckId" name="truckId"
@@ -240,43 +256,38 @@
                 <div class="col-6 p-3 mb-2 bg-light  text-dark">
                     <div class="row " id="CookingTime">
                         <c:if test="${purchase.orderStatus == 1}">
-                        <div class="col-2"> 상호 : ${purchase.orderTruckId.truckName}</div>
-                        <div class="col-2">
-                            <button class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle"
-                                    type="button">주문거절
-                            </button>
-                        </div>
-                        <div class="col-6">
+                            <div class="col-2"> 상호 : ${purchase.orderTruckId.truckName}</div>
+                            <div class="col-2">
+                                <button class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle"
+                                        type="button">주문거절
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <input type="radio" class="btn-check" name="cookingTime" id="cookingTimes" autocomplete="off" value="5" checked>
+                                <label class="btn btn-outline-success" for="cookingTimes" >5분</label>
 
-                            <input type="radio" class="btn-check" name="orderCookingTime" id="btnradio5" autocomplete="off"
-                                   value="5" checked>
-                            <label class="btn btn-primary btn-sm" for="btnradio5">5분</label>
+                                <input type="radio" class="btn-check" name="cookingTime" id="cookingTimes1" autocomplete="off" value="10">
+                                <label class="btn btn-outline-success" for="cookingTimes1" >10분</label>
 
-                            <input type="radio" class="btn-check" name="orderCookingTime" id="btnradio6" autocomplete="off"
-                                   value="10">
-                            <label class="btn btn-primary btn-sm" for="btnradio6">10분</label>
+                                <input type="radio" class="btn-check" name="cookingTime" id="cookingTimes2" autocomplete="off"  value="15">
+                                <label class="btn btn-outline-success" for="cookingTimes2">15분</label>
 
-                            <input type="radio" class="btn-check" name="orderCookingTime" id="btnradio7" autocomplete="off"
-                                   value="15">
-                            <label class="btn btn-primary btn-sm" for="btnradio7">15분</label>
+                                <input type="radio" class="btn-check" name="cookingTime" id="cookingTimes3" autocomplete="off"  value="20">
+                                <label class="btn btn-outline-success" for="cookingTimes3">20분</label>
 
-                            <input type="radio" class="btn-check" name="orderCookingTime" id="btnradio8" autocomplete="off"
-                                   value="20">
-                            <label class="btn btn-primary btn-sm" for="btnradio8">20분</label>
+                                <input type="radio" class="btn-check" name="cookingTime" id="cookingTimes4" autocomplete="off"  value="30">
+                                <label class="btn btn-outline-success" for="cookingTimes4">30분</label>
 
-                            <input type="radio" class="btn-check" name="orderCookingTime" id="btnradio9" autocomplete="off"
-                                   value="30">
-                            <label class="btn btn-primary btn-sm" for="btnradio9">30분</label>
+                                <input type="radio" class="btn-check" name="cookingTime" id="cookingTimes5" autocomplete="off"  value="40">
+                                <label class="btn btn-outline-success" for="cookingTimes5">40분</label>
 
-                            <input type="radio" class="btn-check" name="orderCookingTime" id="btnradi010" autocomplete="off"
-                                   value="40">
-                            <label class="btn btn-primary btn-sm" for="btnradi010">40분</label>
-                        </div>
-                        <div class="col-2">
 
-                            <button class="btn btn-primary" type="button" name="updateTranCode">주문접수</button>
+                            </div>
+                            <div class="col-2">
 
-                        </div>
+                                <button class="btn btn-primary" type="button" name="updateTranCode">주문접수</button>
+
+                            </div>
                         </c:if>
                         <c:if test="${purchase.orderStatus == 2}">
                             <div class="col-2"> 상호 : ${purchase.orderTruckId.truckName}</div>
@@ -579,11 +590,11 @@
             $('#order').append(divElemApply1);
 
         }
-/*        divElemApply2 = "<input type=\"hidden\" name=\"orderPrice\" id=\"orderPrice\" value=\"" + menuPrice + "\">" +
-            "<h5 id='price'>합계 : " + menuPrice + "</h5>"
+        /*        divElemApply2 = "<input type=\"hidden\" name=\"orderPrice\" id=\"orderPrice\" value=\"" + menuPrice + "\">" +
+                    "<h5 id='price'>합계 : " + menuPrice + "</h5>"
 
 
-        $('#total').append(divElemApply2);*/
+                $('#total').append(divElemApply2);*/
 
     });
 
@@ -677,75 +688,75 @@
 
     });
 
-       /* $.ajax({
-            url: "/purchase/json/getPurchase",
-            method: "POST",
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-            data: {
-                "orderNo": orderNo
+    /* $.ajax({
+         url: "/purchase/json/getPurchase",
+         method: "POST",
+         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+         data: {
+             "orderNo": orderNo
 
-            },
-            success: function (data) {
+         },
+         success: function (data) {
 
-                alert("상세보기선택하였습니다!")
-                alert(data.purchase.orderNo)
-                    var ordeerPickUp ="";
+             alert("상세보기선택하였습니다!")
+             alert(data.purchase.orderNo)
+                 var ordeerPickUp ="";
 
-                var list = data.map;
-                var usId = "";
-                var orNo = "";
-                var paDa = "";
-                var usUN = "";
-                var usUP = "";
-                var paOp = "";
-                var orderMenuName = "";
-                var orderOptionGroupName ="";
-                var orderOptionName ="";
-                var orderMenuQty ="";
-                var orderMenuPrice ="";
-                var orderOptionPrice ="";
-                var orderMenuImage ="";
-                var orderMenuQtyFlag ="";
-                var list = "";
-              /!* orderPickUp =  "<div class="col-6" id="orderPickUp">"
-                                "픽업희망시간 : cart.orderPickUpTime}"
-                             "</div>"*!/
-
-
-                usId = "<div class='row' id='usId'>"+data.purchase.orderUserId.userId+"</div>"
-                orNo = "<div class='row' id='orNo'>주문번호 :"+data.purchase.orderNo+"</div>"
-                paDa = "<div class='row' id='paDa'>주문일시 :"+data.purchase.payDateTime+"</div>"
-
-                usUN = "<div class='row' id='usUN'>이름 : "+data.purchase.orderUserId.userName+"</div>"
-                usUP = "<div class='row' id='usUP'>연락처 : "+data.purchase.orderUserId.userPhone+"</div>"
-                paOp = "<div class='row' id='paOp'>결제방법 :"+data.purchase.payOption+"</div>"
+             var list = data.map;
+             var usId = "";
+             var orNo = "";
+             var paDa = "";
+             var usUN = "";
+             var usUP = "";
+             var paOp = "";
+             var orderMenuName = "";
+             var orderOptionGroupName ="";
+             var orderOptionName ="";
+             var orderMenuQty ="";
+             var orderMenuPrice ="";
+             var orderOptionPrice ="";
+             var orderMenuImage ="";
+             var orderMenuQtyFlag ="";
+             var list = "";
+           /!* orderPickUp =  "<div class="col-6" id="orderPickUp">"
+                             "픽업희망시간 : cart.orderPickUpTime}"
+                          "</div>"*!/
 
 
-                <c:remove var="list"/>
+             usId = "<div class='row' id='usId'>"+data.purchase.orderUserId.userId+"</div>"
+             orNo = "<div class='row' id='orNo'>주문번호 :"+data.purchase.orderNo+"</div>"
+             paDa = "<div class='row' id='paDa'>주문일시 :"+data.purchase.payDateTime+"</div>"
+
+             usUN = "<div class='row' id='usUN'>이름 : "+data.purchase.orderUserId.userName+"</div>"
+             usUP = "<div class='row' id='usUP'>연락처 : "+data.purchase.orderUserId.userPhone+"</div>"
+             paOp = "<div class='row' id='paOp'>결제방법 :"+data.purchase.payOption+"</div>"
+
+
+<c:remove var="list"/>
                 <% pageContext.setAttribute("list", "data.map");%>
                 data.map.forEach(x=>{
                     alert(x.odMenuName)*/
 
 
-/*
+    /*
 
-                        orderMenuName =     "<input type='text' id='orderMenuName' name='orderMenuName' value='"+x.odMenuName+"'/>"
-                        /!*orderOptionGroupName = "<input type='text' id='orderOptionGroupName' name='orderOptionGroupName' value='"+x.odOptionGroupName+"'/>"
-                        orderOptionName =   "<input type='hidden' id='orderOptionName' name='orderOptionName' value='"+x.odOptionName+"'/>"
-                        orderMenuQty =      "<input type='hidden' id='orderMenuQty' name='orderMenuQty' value='"+x.odMenuQty+"'/>"
-                        orderMenuPrice =    "<input type='hidden' id='orderMenuPrice' name='orderMenuPrice' value='"+x.odMenuPrice+"'/>"
-                        orderOptionPrice =  "<input type='hidden' id='orderOptionPrice' name='orderOptionPrice' value='"+x.odOptionPrice+"'/>"
-                        orderMenuImage =    "<input type='hidden' id='orderMenuImage' name='orderMenuImage' value='"+x.odMenuImage+"'/>"
-                        orderMenuQtyFlag =   "<input type='hidden' id='orderMenuQtyFlag' name='orderMenuQtyFlag' value='"+x.odMenuQtyFlag+"'/>"*!/
+                            orderMenuName =     "<input type='text' id='orderMenuName' name='orderMenuName' value='"+x.odMenuName+"'/>"
+                            /!*orderOptionGroupName = "<input type='text' id='orderOptionGroupName' name='orderOptionGroupName' value='"+x.odOptionGroupName+"'/>"
+                            orderOptionName =   "<input type='hidden' id='orderOptionName' name='orderOptionName' value='"+x.odOptionName+"'/>"
+                            orderMenuQty =      "<input type='hidden' id='orderMenuQty' name='orderMenuQty' value='"+x.odMenuQty+"'/>"
+                            orderMenuPrice =    "<input type='hidden' id='orderMenuPrice' name='orderMenuPrice' value='"+x.odMenuPrice+"'/>"
+                            orderOptionPrice =  "<input type='hidden' id='orderOptionPrice' name='orderOptionPrice' value='"+x.odOptionPrice+"'/>"
+                            orderMenuImage =    "<input type='hidden' id='orderMenuImage' name='orderMenuImage' value='"+x.odMenuImage+"'/>"
+                            orderMenuQtyFlag =   "<input type='hidden' id='orderMenuQtyFlag' name='orderMenuQtyFlag' value='"+x.odMenuQtyFlag+"'/>"*!/
 
-            })
-*/
+                })
+    */
 
 
-/*
-                        list =  "<label for='orderRequest' class='col-form-label'>주문내역 :</label>"+
-                "<div id='order'></div>"+
-               "<c:set var='i' value='0'/>"+
+    /*
+                            list =  "<label for='orderRequest' class='col-form-label'>주문내역 :</label>"+
+                    "<div id='order'></div>"+
+                   "<c:set var='i' value='0'/>"+
                 "<c:forEach var='order' items='${data.map}'>"+
                 "<c:set var='i' value='${i+1}'/>"+
                 "<input type='hidden' id='orderMenuName' name='orderMenuName' value='"+order.odMenuName+"'/>"+
@@ -759,24 +770,24 @@
                 "</c:forEach>"+
                 "<div id='total'></div>"
 */
-/*
+    /*
 
-                $('#orNo').html(orNo);
-                $('#paDa').html(paDa);
-                $('#usId').html(usId);
-                $('#usUN').html(usUN);
-                $('#usUP').html(usUP);
-                $('#paOp').html(paOp);
-               $('#orderMenuName').html(orderMenuName);
-                 /!*$('#orderOptionGroupName').html(orderOptionGroupName);*!/
-               /!* $('#orderOptionName').html(orderOptionName);
-                $('#orderMenuQty').html(orderMenuQty);
-                $('#orderMenuPrice').html(orderMenuPrice);
-                $('#orderOptionPrice').html(orderOptionPrice);
-                $('#orderMenuImage').html(orderMenuImage);
-                $('#orderMenuQtyFlag').html(orderMenuQtyFlag);*!/
+                    $('#orNo').html(orNo);
+                    $('#paDa').html(paDa);
+                    $('#usId').html(usId);
+                    $('#usUN').html(usUN);
+                    $('#usUP').html(usUP);
+                    $('#paOp').html(paOp);
+                   $('#orderMenuName').html(orderMenuName);
+                     /!*$('#orderOptionGroupName').html(orderOptionGroupName);*!/
+                   /!* $('#orderOptionName').html(orderOptionName);
+                    $('#orderMenuQty').html(orderMenuQty);
+                    $('#orderMenuPrice').html(orderMenuPrice);
+                    $('#orderOptionPrice').html(orderOptionPrice);
+                    $('#orderMenuImage').html(orderMenuImage);
+                    $('#orderMenuQtyFlag').html(orderMenuQtyFlag);*!/
 
-*/
+    */
 
     /*            /!*window.location.reload();*!/
             }
@@ -787,25 +798,25 @@
 
     /*주문접수버튼*/
     $("button[name='updateTranCode']").on("click", function () {
-        var orderCookingTime = $("input[name='orderCookingTime']:checked").val();
-    if(orderCookingTime == undefined){
-        orderCookingTime = $("input[name='cookingTime']").val();
-    }
+        var orderCookingTime = $("input[name='cookingTime']:checked").val();
+        if(orderCookingTime == undefined){
+            orderCookingTime = $("input[name='cookingTime']").val();
+        }
         $.ajax({
-                url: "/purchase/json/updateTranCode",
-                method: "POST",
-                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-                data: {
-                    "orderNo": $("input[name='purchaseOrder']").val(),
-                    "orderCookingTime" : orderCookingTime
-                },
-                success: function (data) {
+            url: "/purchase/json/updateTranCode",
+            method: "POST",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            data: {
+                "orderNo": $("input[name='purchaseOrder']").val(),
+                "orderCookingTime" : orderCookingTime
+            },
+            success: function (data) {
 
-                    alert("접수되었습니다!")
+                alert("접수되었습니다!")
 
-                    window.location.reload();
-                }
-            });
+                window.location.reload();
+            }
+        });
 
     });
 

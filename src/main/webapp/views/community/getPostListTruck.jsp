@@ -73,12 +73,14 @@
         height: 40px;
         border: 0px;
         border-radius: 50%;
+        max-width: fit-content;
     }
     #write_reply_profileImage{
         width: 40px;
         height: 40px;
         border: 0px;
         border-radius: 50%;
+        max-width: fit-content;
     }
     .format{display: block}
 
@@ -462,12 +464,12 @@
         transform: translateX(0);
         opacity: 1
     }
-.postContent{
-    padding-left:30px;
-}
+    .postContent{
+        padding-left:30px;
+    }
 
     .btn.btn-primary{
-        width: -webkit-fill-available;
+
         margin-left: 0;
         color: #fff;
         background-color: #ffe537;
@@ -475,7 +477,7 @@
     }
 
     .btn.btn-primary:hover{
-        max-width: -webkit-fill-available;
+
         margin-left: 0;
         background-color: #ffffff;
         color: #ffe537;
@@ -483,19 +485,29 @@
     }
 
     .btn.btn-warning{
-        width : 100px;
+
         margin-left: 0;
         color: #060000;
         background-color: #ffe537;
         border-radius: 10px;
+        font-size: 12px;
     }
 
     .btn.btn-warning:hover{
-        width : 100px;
+
         margin-left: 0;
         background-color: #ffffff;
         color: #ffe537;
         border-color: #ffe537;
+    }
+    .align-test{
+        padding-left: 16px;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+    .row.postContent{
+        font-weight: bold;
+        font-size: 14px;
     }
 
 </style>
@@ -527,15 +539,15 @@
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" id="modaladdPostPicForm">
-                <div class="form-group">
-                    <strong> 작성자 아이디 </strong>
-                    <c:if test="${sessionScope.role eq 'user'}">
-                    <span id="postUser.userId">${sessionScope.user.userId}</span>
-                    </c:if>
-                    <c:if test="${sessionScope.role eq 'truck'}">
-                        <span id="postTruck.truckId">${sessionScope.truck.truckId}</span>
-                    </c:if>
-                </div>
+                    <div class="form-group">
+                        <strong> 작성자 아이디 </strong>
+                        <c:if test="${sessionScope.role eq 'user'}">
+                            <span id="postUser.userId">${sessionScope.user.userId}</span>
+                        </c:if>
+                        <c:if test="${sessionScope.role eq 'truck'}">
+                            <span id="postTruck.truckId">${sessionScope.truck.truckId}</span>
+                        </c:if>
+                    </div>
                     <div class="form-group">
                         <label for="postFile1" class="col-sm-offset-1 col-sm-10 control-label">업로드할 사진1</label>
                         <div class="col-sm-10">
@@ -690,11 +702,11 @@
                         }
 
                     </script>
-                <div id="here"></div>
+                    <div id="here"></div>
 
-                <div class="form-group">
-                    <textarea id="postContent" name = "postContent" style="resize:none; border-radius:2px " rows="5" cols="55" placeholder="내용을 입력해 주세요.">${post.postContent}</textarea>
-                </div>
+                    <div class="form-group">
+                        <textarea id="postContent" name = "postContent" style="resize:none; border-radius:2px " rows="5" cols="55" placeholder="내용을 입력해 주세요.">${post.postContent}</textarea>
+                    </div>
                 </form>
             </div>
 
@@ -776,7 +788,7 @@
 </div>
 
 <form class="form-inline" id="getPostListPic">
-<input type="hidden" id="currentPage" name="currentPage" value=""/>
+    <input type="hidden" id="currentPage" name="currentPage" value=""/>
 
 
 
@@ -784,7 +796,7 @@
 
     <div class="container">
         <div class="addbutton" style="padding: 0;">
-            <a class='btn btn-warning' id ='modaladdPostPicbt' role='button' data-toggle='collapse' href='#modaladdPostPic' aria-expanded='false' aria-controls='modaladdPostPic'><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle-dotted" viewBox="0 0 16 16">
+            <a class='btn btn-warning' id ='modaladdPostPicbt' role='button' data-toggle='collapse' href='#modaladdPostPic' aria-expanded='false' aria-controls='modaladdPostPic'><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="red" class="bi bi-plus-circle-dotted" viewBox="0 0 16 16">
                 <path d="M8 0c-.176 0-.35.006-.523.017l.064.998a7.117 7.117 0 0 1 .918 0l.064-.998A8.113 8.113 0 0 0 8 0zM6.44.152c-.346.069-.684.16-1.012.27l.321.948c.287-.098.582-.177.884-.237L6.44.153zm4.132.271a7.946 7.946 0 0 0-1.011-.27l-.194.98c.302.06.597.14.884.237l.321-.947zm1.873.925a8 8 0 0 0-.906-.524l-.443.896c.275.136.54.29.793.459l.556-.831zM4.46.824c-.314.155-.616.33-.905.524l.556.83a7.07 7.07 0 0 1 .793-.458L4.46.824zM2.725 1.985c-.262.23-.51.478-.74.74l.752.66c.202-.23.418-.446.648-.648l-.66-.752zm11.29.74a8.058 8.058 0 0 0-.74-.74l-.66.752c.23.202.447.418.648.648l.752-.66zm1.161 1.735a7.98 7.98 0 0 0-.524-.905l-.83.556c.169.253.322.518.458.793l.896-.443zM1.348 3.555c-.194.289-.37.591-.524.906l.896.443c.136-.275.29-.54.459-.793l-.831-.556zM.423 5.428a7.945 7.945 0 0 0-.27 1.011l.98.194c.06-.302.14-.597.237-.884l-.947-.321zM15.848 6.44a7.943 7.943 0 0 0-.27-1.012l-.948.321c.098.287.177.582.237.884l.98-.194zM.017 7.477a8.113 8.113 0 0 0 0 1.046l.998-.064a7.117 7.117 0 0 1 0-.918l-.998-.064zM16 8a8.1 8.1 0 0 0-.017-.523l-.998.064a7.11 7.11 0 0 1 0 .918l.998.064A8.1 8.1 0 0 0 16 8zM.152 9.56c.069.346.16.684.27 1.012l.948-.321a6.944 6.944 0 0 1-.237-.884l-.98.194zm15.425 1.012c.112-.328.202-.666.27-1.011l-.98-.194c-.06.302-.14.597-.237.884l.947.321zM.824 11.54a8 8 0 0 0 .524.905l.83-.556a6.999 6.999 0 0 1-.458-.793l-.896.443zm13.828.905c.194-.289.37-.591.524-.906l-.896-.443c-.136.275-.29.54-.459.793l.831.556zm-12.667.83c.23.262.478.51.74.74l.66-.752a7.047 7.047 0 0 1-.648-.648l-.752.66zm11.29.74c.262-.23.51-.478.74-.74l-.752-.66c-.201.23-.418.447-.648.648l.66.752zm-1.735 1.161c.314-.155.616-.33.905-.524l-.556-.83a7.07 7.07 0 0 1-.793.458l.443.896zm-7.985-.524c.289.194.591.37.906.524l.443-.896a6.998 6.998 0 0 1-.793-.459l-.556.831zm1.873.925c.328.112.666.202 1.011.27l.194-.98a6.953 6.953 0 0 1-.884-.237l-.321.947zm4.132.271a7.944 7.944 0 0 0 1.012-.27l-.321-.948a6.954 6.954 0 0 1-.884.237l.194.98zm-2.083.135a8.1 8.1 0 0 0 1.046 0l-.064-.998a7.11 7.11 0 0 1-.918 0l-.064.998zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
             </svg></a>
         </div>
@@ -792,23 +804,23 @@
 
 
             <c:forEach var="post" items="${list}">
-            <div class="gallery-item" tabindex="0">
+                <div class="gallery-item" tabindex="0">
 
-                <img src="../../../resources/image/${post.postFile1}" class="gallery-image" alt="" >
+                    <img src="../../../resources/image/${post.postFile1}" class="gallery-image" alt="" >
 
-                <input type="hidden" id="postNoNo" name="postNoNo" value="${post.postNo}"/>
-                <div class="gallery-item-info">
+                    <input type="hidden" id="postNoNo" name="postNoNo" value="${post.postNo}"/>
+                    <div class="gallery-item-info">
 
-                    <ul>
-                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> <span id="heart${post.postNo }">${post.heartCount }</span></li>
-                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> <span id="reply${post.postNo }">${post.replyCount }</span></li>
-                        <li class="gallery-item-Hits"><span class="visually-hidden">Hits:</span><i class="fas fa-eye" aria-hidden="true"></i> <span id="hit${post.postNo }">${post.postHit }</span></li>
+                        <ul style="padding: 0;">
+                            <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> <span id="heart${post.postNo }">${post.heartCount }</span></li>
+                            <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> <span id="reply${post.postNo }">${post.replyCount }</span></li>
+                            <li class="gallery-item-Hits"><span class="visually-hidden">Hits:</span><i class="fas fa-eye" aria-hidden="true"></i> <span id="hit${post.postNo }">${post.postHit }</span></li>
 
-                    </ul>
+                        </ul>
+
+                    </div>
 
                 </div>
-
-            </div>
             </c:forEach>
 
         </div>
@@ -925,14 +937,14 @@
                             listHtml += "		</div>";
                             // 현재 로그인 상태일때 답글작성 버튼이 나온다.
 
-                                listHtml += "		<div>";
-                                // 함수에 게시글번호(bno), 모댓글번호(no), 모댓글 작성자(writer)를 인자로 담아서 넘긴다.
-                                // 이때 모댓글 작성자 writer는 string인데 string을 인자에 넣기 위해선''나""로 감싸줘야한다.
-                                // 여기선 ''와 ""가 이미 둘다 쓰이고 있는데  href를 감싸고 있는 ''와 겹치지 않는 ""를 \" 처리해서 넣어줬다.
-                                //listHtml += "			<a href='#re_reply"+ commentNo +"' class='write_reply_start' role='button' data-bs-toggle='collapse' aria-expanded='false' aria-controls='re_reply"+ commentNo +"'>답글1&nbsp;달기</a>";
-                                //listHtml += "			<button type='button' class='write_reply_start' no='" + commentNo + "' bno='" + commentPostNo + "' data-bs-toggle='collapse' data-bs-target='#re_reply"+ commentNo +"' aria-expanded='false' aria-controls='re_reply"+ commentNo +"'>답글&nbsp;달기</button>";
-                                listHtml +="        <a class='btn btn-warning' role='button' data-toggle='collapse' href='#re_reply"+ commentNo +"' aria-expanded='false' aria-controls='collapseExample' style='width:85px'>답글달기</a>"
-                                listHtml += "		</div>";
+                            listHtml += "		<div>";
+                            // 함수에 게시글번호(bno), 모댓글번호(no), 모댓글 작성자(writer)를 인자로 담아서 넘긴다.
+                            // 이때 모댓글 작성자 writer는 string인데 string을 인자에 넣기 위해선''나""로 감싸줘야한다.
+                            // 여기선 ''와 ""가 이미 둘다 쓰이고 있는데  href를 감싸고 있는 ''와 겹치지 않는 ""를 \" 처리해서 넣어줬다.
+                            //listHtml += "			<a href='#re_reply"+ commentNo +"' class='write_reply_start' role='button' data-bs-toggle='collapse' aria-expanded='false' aria-controls='re_reply"+ commentNo +"'>답글1&nbsp;달기</a>";
+                            //listHtml += "			<button type='button' class='write_reply_start' no='" + commentNo + "' bno='" + commentPostNo + "' data-bs-toggle='collapse' data-bs-target='#re_reply"+ commentNo +"' aria-expanded='false' aria-controls='re_reply"+ commentNo +"'>답글&nbsp;달기</button>";
+                            listHtml +="        <a class='btn btn-warning' role='button' data-toggle='collapse' href='#re_reply"+ commentNo +"' aria-expanded='false' aria-controls='collapseExample' >답글달기</a>"
+                            listHtml += "		</div>";
 
                             listHtml += "	</div>";
 
@@ -957,26 +969,26 @@
 
                         listHtml += "	<div class='col-3 reply-right'>";
                         listHtml += "		<div>";
-                        listHtml += 			commentDate;
+                        listHtml += 			"<small class='pull-right text-muted'>"+commentDate+"</small>";
                         listHtml += "		</div>";
                         // 책갈피
                         // 현재 로그인 상태이고..
 
 
-                            //현재 사용자가 이 댓글의 작성자일때 삭제 버튼이 나온다.
-                            if(uId == commentUserId){
-                                listHtml += "		<div>";
-                                // 수정할 댓글의 no를 grpl과 함께 넘긴다.
-                                // 모댓글 수정칸과 답글 수정칸을 화면에 다르게 나타내야하기 때문에 모댓글과 답글을 구분하는 grpl을 함께 넘겨주어야한다.
-                                //listHtml += "			<a href='javascript:' no='"+ no +"' grpl='"+ grpl +"' class='reply_modify'>수정</a>";
-                                //listHtml += "			&nbsp;|&nbsp;";
-                                // 삭제는 no만 넘겨주면 된다.
-                                listHtml += "			<a href='javascript:' no='"+ commentNo +"' grpl='"+ grpl + "' bno='"+ commentPostNo +"' grp='"+ grp +"' class='reply_delete'>삭제</a>";
-/*
-                                listHtml += '			<a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">삭제</a>'
-*/
-                                listHtml += "		</div>";
-                            }
+                        //현재 사용자가 이 댓글의 작성자일때 삭제 버튼이 나온다.
+                        if(uId == commentUserId){
+                            listHtml += "		<div>";
+                            // 수정할 댓글의 no를 grpl과 함께 넘긴다.
+                            // 모댓글 수정칸과 답글 수정칸을 화면에 다르게 나타내야하기 때문에 모댓글과 답글을 구분하는 grpl을 함께 넘겨주어야한다.
+                            //listHtml += "			<a href='javascript:' no='"+ no +"' grpl='"+ grpl +"' class='reply_modify'>수정</a>";
+                            //listHtml += "			&nbsp;|&nbsp;";
+                            // 삭제는 no만 넘겨주면 된다.
+                            listHtml += "			<a href='javascript:' no='"+ commentNo +"' grpl='"+ grpl + "' bno='"+ commentPostNo +"' grp='"+ grp +"' class='reply_delete' style='font-size: 13px; float: right;'>삭제</a>";
+                            /*
+                                                            listHtml += '			<a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">삭제</a>'
+                            */
+                            listHtml += "		</div>";
+                        }
 
 
                         listHtml += "	</div>";
@@ -1003,7 +1015,7 @@
                         // listHtml += "			<button onclick='javascript:WriteReReply("+ no +","+ bno +")' type='button' class='btn btn-success mb-1 write_rereply' >답글&nbsp;달기</button>"
                         // 위 코드는 클릭되어도 값이 넘겨지지 않는다. 값이 undefined가 된다.
                         // 아래코드처럼 짜야한다. click이벤트를 처리하지 않고 데이터(no, bno)만 속성으로 넘겨주도록 작성한다.<button type='button' class='btn btn-success mb-1 write_rereply' no='" + commentNo + "' bno='" + commentPostNo + "'>답글&nbsp;달기</button>"
-                        listHtml += "<a href='javascript:' no='"+ commentNo + "' bno='"+ commentPostNo +"' class='write_rereply'>입력&nbsp;완료</a>";
+                        listHtml += "<a href='javascript:' no='"+ commentNo + "' bno='"+ commentPostNo +"' class='write_rereply' style='font-size: 13px; float: right;'>입력&nbsp;완료</a>";
                         listHtml += "		</div>";
                         listHtml += "	</div>";
                         // ---- 답글입력란 끝
@@ -1133,64 +1145,64 @@
                 console.log("2 : "+pto.post.postFile2);
                 console.log("3 : "+pto.post.postFile3);
 
-               div += " <form class='form-horizontal' id='updatePostPicViewForm'>"
-                +"<div class='form-group'>"
+                div += " <form class='form-horizontal' id='updatePostPicViewForm'>"
+                    +"<div class='form-group'>"
                     +"<span> 아이디 </span>"
                     +"<span id='postId'>"+uId+"</span>"
-                  + "  </div>"
+                    + "  </div>"
                     +"<div class='form-group'>"
-                      +" <label for='postFile1' class='col-sm-offset-1 col-sm-10 control-label'>파일 이미지1</label>"
-                       + "<div class='col-sm-10'>"
-                           + "<input type='file' class='form-control' id='postFile11' name='postFile111'  value='"+pto.post.postFile1+"' placeholder='파일 이미지1' onchange='setImage1Preview(event, 0);'>"
-                       + "</div>"
-                       + "<div id='m_image1preview' class='col-sm-10'>";
+                    +" <label for='postFile1' class='col-sm-offset-1 col-sm-10 control-label'>파일 이미지1</label>"
+                    + "<div class='col-sm-10'>"
+                    + "<input type='file' class='form-control' id='postFile11' name='postFile111'  value='"+pto.post.postFile1+"' placeholder='파일 이미지1' onchange='setImage1Preview(event, 0);'>"
+                    + "</div>"
+                    + "<div id='m_image1preview' class='col-sm-10'>";
                 if (pto.post.postFile1 != null){
                     div += "<img src='../../../resources/image/"+pto.post.postFile1+" '>";
                 }
 
-                   div += "</div>"
-                   + "</div>"
+                div += "</div>"
+                    + "</div>"
                     +"<div class='form-group'>"
-                       +" <label for='postFile2' class='col-sm-offset-1 col-sm-10 control-label'>파일 이미지2</label>"
-                      + " <div class='col-sm-10'>"
-                          +  "<input type='file' class='form-control' id='postFile22' name='postFile222'  value='"+pto.post.postFile2+"' placeholder='파일 이미지2' onchange='setImage2Preview(event, 0);'>"
-                       + "</div>"
-                       + "<div id='m_image2preview' class='col-sm-10'>";
+                    +" <label for='postFile2' class='col-sm-offset-1 col-sm-10 control-label'>파일 이미지2</label>"
+                    + " <div class='col-sm-10'>"
+                    +  "<input type='file' class='form-control' id='postFile22' name='postFile222'  value='"+pto.post.postFile2+"' placeholder='파일 이미지2' onchange='setImage2Preview(event, 0);'>"
+                    + "</div>"
+                    + "<div id='m_image2preview' class='col-sm-10'>";
 
-               if (pto.post.postFile2 != null){
-                   div += "<img src='../../../resources/image/"+pto.post.postFile2+" '>";
-               }
+                if (pto.post.postFile2 != null){
+                    div += "<img src='../../../resources/image/"+pto.post.postFile2+" '>";
+                }
 
-                   div += "</div>"
-                   + "</div>"
-                   + "<div class='form-group'>"
-                       + "<label for='postFile3' class='col-sm-offset-1 col-sm-10 control-label'>파일 이미지3</label>"
-                       +" <div class='col-sm-10'>"
-                          + " <input type='file' class='form-control' id='postFile33' name='postFile333'  value='"+pto.post.postFile3+"' placeholder='파일 이미지3' onchange='setImage3Preview(event, 0);'>"
-                        +"</div>"
-                        +"<div id='m_image3preview' class='col-sm-10'>";
+                div += "</div>"
+                    + "</div>"
+                    + "<div class='form-group'>"
+                    + "<label for='postFile3' class='col-sm-offset-1 col-sm-10 control-label'>파일 이미지3</label>"
+                    +" <div class='col-sm-10'>"
+                    + " <input type='file' class='form-control' id='postFile33' name='postFile333'  value='"+pto.post.postFile3+"' placeholder='파일 이미지3' onchange='setImage3Preview(event, 0);'>"
+                    +"</div>"
+                    +"<div id='m_image3preview' class='col-sm-10'>";
 
                 if (pto.post.postFile3 != null){
                     div += "<img src='../../../resources/image/"+pto.post.postFile3+" '>";
                 }
 
-                   div += "</div>"
-                   +" </div>"
-                +"<div id='here'></div>"
-                +"<div class='form-group'>"
+                div += "</div>"
+                    +" </div>"
+                    +"<div id='here'></div>"
+                    +"<div class='form-group'>"
                     +"<textarea id='postContent1' name = 'postContent' style='resize:none;' rows='5' cols='55' title='내용을 입력해 주세요.'>"+pto.post.postContent+"</textarea>"
-                   +"<input name='postNo' type='hidden' value='"+postNo+"'>"
-              + " </div>"
-                +"</form>";
+                    +"<input name='postNo' type='hidden' value='"+postNo+"'>"
+                    + " </div>"
+                    +"</form>";
 
-               div2="";
-               div2+=
-                   "<button class='button btn-warning' name='updatePostPic' onclick='fncUpdatePostPic();'>수정"
-                   +"</button>"
-                   +"<button class='btn btn-secondary' data-dismiss='modal'>취소"
-                   + "</button>" ;
+                div2="";
+                div2+=
+                    "<button class='button btn-warning' name='updatePostPic' onclick='fncUpdatePostPic();'>수정"
+                    +"</button>"
+                    +"<button class='btn btn-secondary' data-dismiss='modal'>취소"
+                    + "</button>" ;
 
-               modalPic.find('.wrapper').remove();
+                modalPic.find('.wrapper').remove();
                 modalPic.find('.modal-body').html(div);
                 modalPic.find('.modal-footer').html(div2);
                 //$('#modaladdPostPic').modal('show');
@@ -1306,7 +1318,7 @@
 
 
     $("body").on("click", ".heart-click", function() {
-   // $(".heart-click").click(function () {
+        // $(".heart-click").click(function () {
 
         // 게시물 번호(no)를 idx로 전달받아 저장
         let postNo = $(this).attr('idx');
@@ -1330,9 +1342,9 @@
 
                     var modal = $('#staticBackdrop');
                     //modal.find("span[id='m_heart'"+postNo+"]").text(heart);
-                     // 페이지에 하트수 갱신
-                     modal.find('#m_heart'+postNo).text(heart);
-                     $('#heart'+postNo).text(heart);
+                    // 페이지에 하트수 갱신
+                    modal.find('#m_heart'+postNo).text(heart);
+                    $('#heart'+postNo).text(heart);
 
                     console.log("하트 추가!!!!!!!!!!");
                 },
@@ -1343,8 +1355,8 @@
             console.log("하트채워");
 
             // 꽉찬하트로 바꾸기
-            $(this).html("<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-suit-heart-fill' viewBox='0 0 16 16'><path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z'/></svg>");
-            $('.heart_icon' + postNo).html("<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-suit-heart-fill' viewBox='0 0 16 16'><path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z'/></svg>");
+            $(this).html("<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart-fill' viewBox='0 0 20 20'><path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' /></svg>");
+            $('.heart_icon' + postNo).html("<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart-fill' viewBox='0 0 20 20'><path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' /></svg>");
 
             // 꽉찬 하트를 눌렀을 때
         } else if ($(this).children('svg').attr('class') == "bi bi-suit-heart-fill") {
@@ -1362,7 +1374,7 @@
                     console.log("pto: "+pto)
                     let heart = pto.heartCount;
                     // 페이지에 하트수 갱신
-                   //
+                    //
                     var modal = $('#staticBackdrop');
 
                     modal.find('#m_heart'+postNo).text(heart);
@@ -1377,9 +1389,9 @@
             console.log("빈하트!!!!!!!!!");
 
             // 빈하트로 바꾸기
-            $(this).html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16"><path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" /></svg>');
+            $(this).html('<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-suit-heart" viewBox="0 0 20 20"><path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" /></svg>');
 
-            $('.heart_icon' + postNo).html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16"><path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" /></svg>');
+            $('.heart_icon' + postNo).html('<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-suit-heart" viewBox="0 0 20 20"><path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" /></svg>');
         }
 
 
@@ -1505,35 +1517,36 @@
                 div += "<div class='row postContent' >"
                     +"<div>"+data.post.postContent+"</div>"
                     + "</div>";
-
+                div += "<div class='align-test'>";
                 if (data.post.heartNo == '0'){
 
                     div +=" <a idx="+data.post.postNo+" href='javascript:' class='heart-click heart_icon"+data.post.postNo+"'>"
-                        +"<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-suit-heart' viewBox='0 0 16 16'>"
+                        +"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart' viewBox='0 0 20 20'>"
                         + "<path d='M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z' />"
                         +"</svg> </a> ";
                 }else{
 
                     div +=  "<a idx="+data.post.postNo+" href='javascript:' class='heart-click heart_icon"+data.post.postNo+"'>"
-                        +"<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-suit-heart-fill' viewBox='0 0 16 16'>"
+                        +"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart-fill' viewBox='0 0 20 20'>"
                         +"<path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' />"
                         + " </svg></a>";
                 }
                 div += " <span id='m_heart"+data.post.postNo+"'>"+data.post.heartCount+"</span>"
                     +"<span>"
                     +"<a idx='"+data.post.postNo+"' href='#reply_card"+data.post.postNo+"' role='button' class='open_reply_list' data-toggle='collapse'  aria-expanded='false' aria-controls='collapseExample'> "
-                    +"<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-chat-dots' viewBox='0 0 16 16'>"
+                    +"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-chat-dots' viewBox='0 0 20 20'>"
                     +"<path d='M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z' />"
                     +"<path d='M2.165 15.803l.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z' />"
                     +"</svg>"
                     +"</a>"
                     +" </span>"
                     +" <span id='m_reply"+data.post.postNo+"'>"+data.post.replyCount+"</span>"
-                    +"<span> <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-eye' viewBox='0 0 16 16'>"
+                    +"<span> <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-eye' viewBox='0 0 20 20'>"
                     +"<path d='M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z' />"
                     +"<path d='M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z' />"
                     +"</svg>"
                     +"</span> <span id='hit"+data.post.postNo+"'>"+data.post.postHit+"</span>"
+                    +"</div>"
                     +"<div class='collapse' id='reply_card"+data.post.postNo+"'>"
                     +"<section class='modal-section'>"
                     +"<div class='card card-body'>"
@@ -1549,7 +1562,7 @@
                     +"<input class='w-100 form-control' id='input_reply"+data.post.postNo+"' type='text' placeholder='댓글입력...'>"
                     +"</div>"
                     +"<div class='col-3 '>"
-                    +"<button type='button' idx='"+data.post.postNo+"' class='btn btn-success mb-1 write_reply' style='background-color: #ffe537; border-radius:12px; border-color: #ffba49; color: black; width:85px  '>댓글달기</button>"
+                    +"<button type='button' idx='"+data.post.postNo+"' class='btn btn-success mb-1 write_reply' style='background-color: #ffe537; border-radius:12px; border-color: #ffba49; color: black; font-size: 12px; '>댓글달기</button>"
                     +"</div>"
                     +" </div>"
                     +" </div>"
@@ -1618,25 +1631,25 @@
 
                 //$('.insta-header').html(sap);
                 //$('.page1').css("background", "../../../resources/image/"+data.post.postFile1+"")
-               // $("#page1").style.background = "url('../../../resources/image/"+data.post.postFile1+"') no-repeat 0 0";
-                $(".page1").css({"background":"url(../../../resources/image/"+data.post.postFile1+")"});
+                // $("#page1").style.background = "url('../../../resources/image/"+data.post.postFile1+"') no-repeat 0 0";
+                $(".page1").css({"background":"url(../../../resources/image/"+data.post.postFile1+") 50% 50% / 50px 50px"});
                 $(".slide1").css({"background":"url(../../../resources/image/"+data.post.postFile1+")"});
-                $(".page1").css({"background-size":"450px 450px"});
+                $(".page1").css({"background-size":"50px 50px"});
                 $(".slide1").css({"background-size":"450px 450px"});
 
                 if ( data.post.postFile2 != null ) {
-                    $(".page2").css({"background": "url(../../../resources/image/" + data.post.postFile2 + ")"});
+                    $(".page2").css({"background": "url(../../../resources/image/" + data.post.postFile2 + ") 50% 50% / 50px 50px"});
                     $(".slide2").css({"background": "url(../../../resources/image/" + data.post.postFile2 + ")"});
-                    $(".page2").css({"background-size": "450px 450px"});
+                    $(".page2").css({"background-size": "50px 50px"});
                     $(".slide2").css({"background-size": "450px 450px"});
                     $(".page2").css({"display": "block"});
                     $(".numb2").css({"display": "block"});
                 }
                 if ( data.post.postFile3 != null ) {
                     //alert("333")
-                    $(".page3").css({"background": "url(../../../resources/image/" + data.post.postFile3 + ")"});
+                    $(".page3").css({"background": "url(../../../resources/image/" + data.post.postFile3 + ") 50% 50% / 50px 50px"});
                     $(".slide3").css({"background": "url(../../../resources/image/" + data.post.postFile3 + ")"});
-                    $(".page3").css({"background-size": "450px 450px"});
+                    $(".page3").css({"background-size": "50px 50px"});
                     $(".slide3").css({"background-size": "450px 450px"});
                     $(".page3").css({"display": "block"});
                     $(".numb3").css({"display": "block"});

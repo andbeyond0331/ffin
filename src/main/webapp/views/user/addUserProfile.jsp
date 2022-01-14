@@ -160,7 +160,7 @@
 						<label for="userFavMenu" class="form-label label-name">좋아하는 메뉴</label>
 						<select class="form-select form-control" id="userFavMenu" name="userFavMenu" aria-label="Default select example" style="padding-left: 0; size: 100%;">
 							<option selected>Menu Category</option>
-							<option value="1">고기???</option>
+							<option value="1">고기</option>
 							<option value="2">한식</option>
 							<option value="3">분식</option>
 							<option value="4">양식</option>

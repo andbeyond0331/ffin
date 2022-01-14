@@ -113,7 +113,7 @@
 						</if>
 					</where>
 				</if>
-			  order by user_id ) inner_table
+			  order by user_id DESC) inner_table
 		limit #{startRowNum}, #{pageSize}
 	</select>
 
