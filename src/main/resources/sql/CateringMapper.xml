@@ -126,7 +126,7 @@
 		</if>
 		<if test="search.searchCondition ==2">
 			<where>
-				ct.CT_STATUS_CODE = '0' AND ct.CT_DATE >= DATE_SUB(NOW(), INTERVAL 1 DAY))
+				ct.CT_STATUS_CODE = '0' AND ct.CT_DATE >= DATE_SUB(NOW(), INTERVAL 1 DAY)
 				AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_MENU_NO = m.MENU_NO
 
 			</where>
