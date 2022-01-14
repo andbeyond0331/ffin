@@ -179,7 +179,7 @@
                     <button type="button" class="btn btn-primary" id="orderGo">확인</button>
 
                     <input type="hidden" id="mainOrderUserId" name="mainOrderUserId" value="${user.userId}"/>
-                    <input type="hidden" id="mainOrderTruckId" name="mainOrderTruckId" value="truck01"/>
+                    <div id="mainSessionTruckId"></div>
                     <input type="hidden" id="mainOrderQty" name="mainOrderQty" value="3"/>
                     <input type="hidden" id="mainOrderTotalPrice" name="mainOrderTotalPrice" value="3000"/>
                 </div>
@@ -271,13 +271,14 @@
 
 
         var beforeAny = JSON.parse(sessionStorage.getItem("menuOdList"));
-        var orderDetailList = "";
+        var mainOrderList = "";
+        var mainSessionTruckId = "";
 
-        for (var i = 0; i < beforeAny.length; i++) {
+        for (var i in beforeAny) {
 
 
 
-            mainOrderList += "<input type='hidden' name='mainOdMQFlag' id='mainOdMQFlag' value='" + beforeAnyway[i]['odMenuQtyFlag'] + "'>" +
+            mainOrderList += "<input type='hidden' name='mainOdMQFlag' id='mainOdMQFlag' value='" + beforeAny[i]['odMenuQtyFlag'] + "'>" +
                 "<input type='hidden' name='mainOdMQty' id='mainOdMQty' value='" + beforeAny[i]['odMenuQty'] + "'>" +
                 "<input type='hidden' name='mainOdMName' id='mainOdMName' value='" + beforeAny[i]['odMenuName'] + "'>" +
                 "<input type='hidden' name='mainOdMPrice' id='mainOdMPrice' value='" + beforeAny[i]['odMenuPrice'] + "'>" +
@@ -286,9 +287,12 @@
                 "<input type='hidden' name='mainOdOpPrice' id='mainOdOpPrice' value='" + beforeAny[i]['odOptionPrice'] + "'>" +
                 "<input type='hidden' name='mainOdMImg1' id='mainOdMImg1' value='" + beforeAny[i]['odMenuImg1'] + "'>";
 
-            $("#cartOrderMenu").append(mainOrderList);
-        }
+            mainSessionTruckId = "<input type='hidden' name='mainSessionTruckId' value='"+beforeAny[i]['menuTruckId']+"'>";
 
+
+        }
+        $("#mainSessionTruckId").html(mainSessionTruckId);
+        $("#cartOrderMenu").append(mainOrderList);
 
 
     });
@@ -376,7 +380,7 @@
         var orderPickUpTime = $('input[name="mainOrderPickUpTime"]:checked').val();
         var orderTotalPrice = $('#mainOrderTotalPrice').val();
         var orderUserId = $('#mainOrderUserId').val();
-        var orderTruckId = $('#mainOrderTruckId').val();
+        var orderTruckId = $('#mainSessionTruckId').val();
         var orderRequest = $('#mainOrderRequest').val();
         var orderQty = $('#mainOrderQty').val();
 

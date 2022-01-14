@@ -698,6 +698,7 @@
                         "<input type='text' name='odMenuPrice' id='odMenuPrice' value='"+beforeAnyway[i]['odMenuPrice']+"'>"+
                         "<input type='text' name='odOptionGroupName' id='odOptionGroupName' value='"+beforeAnyway[i]['odOptionGroupName']+"'>"+
                         "<input type='text' name='odOptionName' id='odOptionName' value='"+beforeAnyway[i]['odOptionName']+"'>"+
+                        "<input type='text' name='odOptionName' id='odOptionName' value='"+beforeAnyway[i]['odOptionName']+"'>"+
                         "<input type='text' name='odOptionPrice' id='odOptionPrice' value='"+beforeAnyway[i]['odOptionPrice']+"'>";
 
 
