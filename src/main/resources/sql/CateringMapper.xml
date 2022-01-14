@@ -157,7 +157,7 @@
 					</if>
 					<if test="search.searchCondition ==1">
 						<where>
-							ct.CT_TRUCK_ID = #{id} AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_STATUS_CODE !='6' AND ct.CT_MENU_NO = m.MENU_NO
+							ct.CT_TRUCK_ID = #{id} AND ct.CT_TRUCK_ID = tr.TRUCK_ID AND ct.CT_STATUS_CODE !='6'  AND ct.CT_STATUS_CODE !='0' AND ct.CT_MENU_NO = m.MENU_NO
 						</where>
 					</if>
 					<if test="search.searchCondition ==2">
@@ -168,7 +168,7 @@
 				ORDER BY ct.CT_DATE ) inner_table
 		limit #{search.startRowNum}, #{search.pageSize}
 	</select>
-
+<!-- TODO: HHJ / 오늘 지난 날짜 노출할 지 말 지 고 민 해 볼 것 / 검 색 가넝하게 만들 것.....왜? ㅠ -->
 
 	<select id="getCtStatusList2"	parameterType="map"	resultMap="cateringSelectMap">
 		SELECT inner_table.*

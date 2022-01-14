@@ -40,8 +40,18 @@
 
 
     <style>
+        .center-align-cate{
+            LEFT: 50%;
+            margin-top: -55px;
+            POSITION: absolute;
+            TRANSFORM: TRANSLATE(-50%, -50%);
+        }
         h4{
-            color : #fd7622;
+            color : #ffbc62;
+            padding-left: 109px;
+            font-size: 24px;
+            font-weight: bold;
+
         }
 
         body{
@@ -63,7 +73,7 @@
         #calendar {
             max-width: 900px;
             margin: 20px auto;
-            margin-top: 80px
+            margin-top: 181px;
         }
         img{ max-width:100%;}
         .allCT{
@@ -92,14 +102,32 @@
 
 <div id="calendar-container">
     <div class="container">
-        <div id="calStatus" class="category-ct">
+        <%--<div id="calStatus" class="category-ct">
             <a href="/catering/listCatering"> 리스트로보기 </a>
             <a href="/catering/mainCalendar"> 메인 </a>
             <a href="/catering/getCtServAllList?cate=cld" style=" background-color : #008d62;"> 예약가능 </a>
             <a href="/catering/getCtStatusList?ctct=1&cate=cld" style=" background-color : #bcb5f3;"> 수락대기 </a>
             <a href="/catering/getCtStatusList?ctct=4&cate=cld" style=" background-color : #fcab31;"> 수락완료(결제대기) </a>
             <a href="/catering/getCtStatusList?ctct=5&cate=cld" style=" background-color : #f81f59;"> 예약완료 </a>
-        </div>
+        </div>--%>
+            <div class="detail-box" >
+                <div class="center-align-cate">
+                    <div>
+                        <h4 >
+                            C A T E R I N G
+                        </h4>
+                    </div>
+                    <div class="sorting-catering">
+                        <a href="/catering/mainCalendar"><span id="badgeClick1" class="badge badge-click" style="background-color: #2ec0f3; color: #110000">메인 캘린더</span></a>
+                        <a href="/catering/getCtServAllList?cate=cld" ><span id="badgeClick2" class="badge badge-click" style="background-color: #2ef3b7; color: #110000">예약 가능</span></a>
+                        <a href="/catering/getCtStatusList?ctct=1&cate=cld"> <span id="badgeClick3" class="badge badge-click" style="background-color: #f5cb00; color: #110000">수락 대기</span></a>
+                        <a href="/catering/getCtStatusList?ctct=4&cate=cld" ><span id="badgeClick4" class="badge badge-click" style="background-color: #f79865; color: #110000">결제 대기</span></a>
+                        <a href="/catering/getCtStatusList?ctct=5&cate=cld" ><span id="badgeClick5" class="badge badge-click" style="background-color: #f33d6e; color: #110000">예약 완료</span></a>
+                        <a href="/catering/listCatering" > <span id="badgeClick6" class="badge badge-click" style="background-color: #d9d9d9; color: #110000">리스트로 보기</span></a>
+                    </div>
+                </div>
+            </div>
+
         <div id="calendar">
         </div>
     </div>
@@ -307,6 +335,10 @@
                      Catering ct = (Catering)list.get(i);
 
 %>
+
+
+
+
                 {
                     title : '<%= ct.getCtTruck().getTruckName() %>',
                     start : '<%= ct.getCtDate() %>',
@@ -314,13 +346,13 @@
                     ctNo : '<%=ct.getCtNo()%>',
                     ctStatusCode : '<%=ct.getCtStatusCode()%>'
                     <% if (ct.getCtStatusCode().equals("5")){%>
-                    , color: "#f81f59"
+                    , color: "#f33d6e"
                     <%} else if (ct.getCtStatusCode().equals("0")){%>
-                    , color: "#008d62"
+                    , color: "#2ef3b7"
                     <%}  else if (ct.getCtStatusCode().equals("1")){%>
-                    , color: "#bcb5f3"
+                    , color: "#f5cb00"
                     <%}  else if (ct.getCtStatusCode().equals("4")){%>
-                    , color: "#fcab31"
+                    , color: "#f79865"
                     <%}  else{%>
                     , color: "#868583"
                     <%} %>
