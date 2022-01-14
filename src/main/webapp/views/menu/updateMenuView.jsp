@@ -75,7 +75,7 @@
                 } else{
                     console.log("fncUpdateMenu-target : "+$("form.form-horizontal").html());
 
-                    $("form").attr("method", "POST").attr("action","/menu/updateMenuOptionGroup").submit();
+                    $("form").attr("method", "POST").attr("action","/menu/updateMenuOptionGroup").attr("enctype","multipart/form-data").submit();
                     // $("form").post("/menu/addMenuOptionGroup", {}, "text")
 
                 }
@@ -87,6 +87,12 @@
 
 
     </script>
+
+    <style>
+        .page-header{
+            margin-top:59px;
+        }
+    </style>
 
 </head>
 
@@ -101,9 +107,9 @@
 
 
     <div class="page-header text-center">
-        <h3 class=" text-info">${menu.menuTruckId}의 ${menu.menuNo}에 대한 메뉴 수정</h3>
+        <h3 class="text">${menu.menuTruckId}의 ${menu.menuNo}에 대한 메뉴 수정</h3>
     </div>
-
+<div class="forCenter">
     <!-- form Start /////////////////////////////////////-->
     <form class="form-horizontal">
 
@@ -269,7 +275,8 @@
         <c:forEach var="optionGroup1" items="${list}">
             <c:set var="count1" value="${count1 + 1}"/>
             <c:if test="${count1 eq 1}">
-                <hr><div class="form-group">
+                <hr>
+            <div class="form-group">
                 <div>
                     <label for="optionGroupName" class="col-sm-offset-1 col-sm-3 control-label">옵션 그룹 이름 ${count1}</label>
 <%--                <strong>옵션 그룹 이름</strong></div>--%>
@@ -278,7 +285,7 @@
                     <input type="text" class="form-control" id="optionGroupName" name="optionGroupName" value="${optionGroup1.optionGroupName }" placeholder="옵션 그룹 이름 수정">
 
                 </div>
-                </div><hr>
+                </div></div><hr>
             </c:if>
             <c:if test="${count1 ne 1}">
                 <c:set var="count2" value="0"/>
@@ -286,7 +293,8 @@
                     <c:set var="count2" value="${count2 + 1}"/>
                     <c:if test="${(count1 - 1) eq count2}">
                         <c:if test="${optionGroup1.optionGroupName ne optionGroup2.optionGroupName}">
-                            <hr><div class="form-group">
+                            <hr>
+                            <div class="form-group">
                             <div>
                                 <label for="menuName" class="col-sm-offset-1 col-sm-3 control-label">옵션 그룹 이름 ${count1}</label>
 <%--                                <strong>옵션 그룹 이름</strong></div>--%>
@@ -295,7 +303,7 @@
                                 <input type="text" class="form-control" id="optionGroupName" name="optionGroupName" value="${optionGroup1.optionGroupName }" placeholder="옵션 그룹 이름 수정">
 
                             </div>
-                            </div><hr>
+                            </div></div><hr>
                         </c:if>
 
                     </c:if>
@@ -307,10 +315,10 @@
                     <div class="col-sm-3">
 <%--                    <input class="form-check-input" type="radio" name="optionName+OGName${optionGroup1.optionGroupName}" id="optionName+OGName${optionGroup1.optionGroupName}" data-op="${optionGroup1.optionName}">${optionGroup1.optionName}--%>
                         <input type="text" class="form-control" id="optionName" name="optionName" value="${optionGroup1.optionName }" placeholder="옵션 이름 수정">
-                        <input type="hidden" name="odOptionGroupNo" value="${optionGroup1.optionGroupNo}">
-                    <input type="hidden" name="odOptionGroupName" value="${optionGroup1.optionGroupName}">
-                    <input type="hidden" name="odOptionNo" value="${optionGroup1.optionNo}">
-                    <input type="hidden" name="odOptionPrice" value="${optionGroup1.optionPrice}">
+                        <input type="hidden" name="optionGroupNo" value="${optionGroup1.optionGroupNo}">
+                    <input type="hidden" name="optionGroupName" value="${optionGroup1.optionGroupName}">
+                    <input type="hidden" name="optionNo" value="${optionGroup1.optionNo}">
+                    <input type="hidden" name="optionPrice" value="${optionGroup1.optionPrice}">
                     </div>
 
                         <div><label for="optionPrice" class="col-sm-offset-1 col-sm-3 control-label">옵션 가격</label></div>
@@ -397,10 +405,10 @@
         </div>
 
     </form>
-
+</div>
 
 </div>
-</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 <jsp:include page="/views/footer.jsp" />

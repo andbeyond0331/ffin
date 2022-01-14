@@ -13,6 +13,151 @@
     <jsp:include page="../../common/lib.jsp"/>
 
     <style>
+
+        .cards-box {
+            display: flex;
+            justify-content: flex-start;
+            margin: 0 70px;
+            margin-top: 65px;
+            flex-wrap: wrap;
+
+        }
+        .container{
+            /*margin-top: 132px*/
+        }
+        .ui-timepicker-container{
+            z-index:1151 !important;
+        }
+        .ui-datepicker-div { z-index: 999999; }
+
+        :root{
+            --background-dark: #fdbf5d;
+            --text-light: rgba(255,255,255,0.6);
+            --text-lighter: rgba(255,255,255,0.9);
+            --spacing-s: 8px;
+            --spacing-m: 16px;
+            --spacing-l: 24px;
+            --spacing-xl: 32px;
+            --spacing-xxl: 64px;
+            --width-container: 1200px;
+        }
+
+        *{
+            border: 0;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html{
+            height: 100%;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+        }
+
+        body{
+            height: 100%;
+        }
+
+        .hero-section{
+            align-items: flex-start;
+
+            display: flex;
+            min-height: 100%;
+            justify-content: center;
+            padding: var(--spacing-xxl) var(--spacing-l);
+        }
+
+        .card-grid{
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            grid-column-gap: var(--spacing-l);
+            grid-row-gap: var(--spacing-l);
+            max-width: var(--width-container);
+            width: 100%;
+        }
+
+        @media(min-width: 540px){
+            .card-grid{
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(min-width: 960px){
+            .card-grid{
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .card{
+            list-style: none;
+            position: relative;
+            BORDER: 0;
+            box-shadow: 0 2px 4px 2px rgb(0 0 0 / 25%);
+            /*border-radius: 2rem*/
+        }
+
+        .card:before{
+            content: '';
+            display: block;
+            padding-bottom: 150%;
+            width: 100%;
+        }
+
+        .card__background{
+            background-size: cover;
+            background-position: center;
+            /*border-radius: var(--spacing-l);*/
+            bottom: 0;
+            filter: brightness(0.75) saturate(1.2) contrast(0.85);
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            border: 0;
+            transform-origin: center;
+            transform: scale(1) translateZ(0);
+            transition:
+                    filter 200ms linear,
+                    transform 200ms linear;
+        }
+
+        .card:hover .card__background{
+            transform: scale(1.05) translateZ(0);
+            border: 0;
+        }
+
+        .card-grid:hover > .card:not(:hover) .card__background{
+            filter: brightness(0.5) saturate(50%) contrast(1.0) blur(5px);
+            border: 0;
+
+        }
+
+        .card__content{
+            left: 0;
+            padding: var(--spacing-l);
+            position: absolute;
+            top: 0;
+        }
+
+        .card__category{
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: var(--spacing-s);
+            text-transform: uppercase;
+        }
+
+        .card__heading{
+            color: var(--text-lighter);
+            font-size: 25px;
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.2);
+            line-height: 1.4;
+            word-spacing: 100vw;
+        }
+
+    </style>
+
+    <style>
         @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap);
 
         body {
@@ -31,7 +176,7 @@
 
         .food-card {
             background: #fff;
-            border-radius: 5px;
+            /*border-radius: 5px;*/
             overflow: hidden;
             margin-bottom: 30px;
             -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
@@ -118,7 +263,7 @@
         .food-card .food-card_content .food-card_bottom-section .food-card_subscribers .food-card_subscribers-count {
             height: 45px;
             width: 45px;
-            border-radius: 45px;
+            /*border-radius: 45px;*/
             border: 3px solid #fff;
             margin-left: -17px;
             float: left;
@@ -362,7 +507,7 @@
 
     <style>
         input#inputLocation.form-control{
-            width: 100px;
+            width: 265px;
         }
     </style>
 
@@ -407,11 +552,6 @@
 
 
 
-
-
-
-
-
             };
 
             function error(err) {
@@ -453,9 +593,9 @@
                     <div class="form-row" style="margin-top: 70px;">
                         <div class="form-group col-lg-6">
                             <input type="text" class="form-control" id="inputLocation" name="inputLocation" placeholder="What's your address?">
-                            <span class="location_icon">
-                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                                  </span>
+<%--                            <span class="location_icon">--%>
+<%--                                                    <i class="fa fa-map-marker" aria-hidden="true"></i>--%>
+<%--                                                  </span>--%>
                         </div>
                     </div>
                     <div class="form-row"  style="margin-top: -15px;">
@@ -499,8 +639,9 @@
 <!-- end slider section -->
 </div>
 
-
+<div class="help">
 <!-- Tab 영역 태그는 ul이고 클래스는 nav와 nav-tabs를 설정한다. -->
+    <div class="container">
 <div class="btn-group">
     <!-- Tab 아이템이다. 태그는 li과 li > a이다. li태그에 active는 현재 선택되어 있는 탭 메뉴이다. -->
     <!-- 전체보기일 때 버튼그룹 모양-->
@@ -639,64 +780,81 @@
 
 </div>
 
+</div>
+<p></p>
 
 
-<section class="main-content">
-    <div class="container">
-<%--        <h1 class="text-center text-uppercase">Food Order Card</h1>--%>
 
-        <div class="row">
+    <section class="hero-section">
+        <div class="card-grid">
             <c:set var="i" value="0"/>
             <c:forEach var="truck" items="${list}" varStatus="status">
                 <c:set var="i" value="${i+1}"/>
-                <div class="col-sm-6 col-md-6 col-lg-4">
-                    <div class="food-card">
-                        <div class="food-card_img">
-                            <c:if test="${truck.truckSigMenuImg1 eq null}">
-                                <img src="/resources/image/${truck.truckProImg}" alt="">
-                            </c:if>
-                            <c:if test="${truck.truckSigMenuImg1 ne null}">
 
-                                <img src="/resources/menu/${truck.truckSigMenuImg1}" alt="">
-                            </c:if>
-<%--                            <img src="https://i.imgur.com/eFWRUuR.jpg" alt="">--%>
-                            <a href="#!"><i class="far fa-heart"></i></a>
-                        </div>
-                        <div class="food-card_content">
-                            <div class="food-card_title-section">
-                                <a href="getMenuList?truckId=${truck.truckId}" class="food-card_title">${truck.truckName}</a>
-<%--                                <input type="hidden" name="truckNoo" value="${truck.truckNo}">--%>
-                                <input type="hidden" name="truckId" value="${truck.truckId}">
-                                <a href="#!" class="food-card_author">${truck.truckCate} </a>
-                            </div>
-                            <div class="food-card_bottom-section">
-                                <div class="space-between">
-                                    <div>
-<%--                                        <span class="fa fa-fire"></span>${list2[status.index].menuName}--%>
-                                        <span class="fa fa-fire"></span>${truck.truckSigMenuName}
-                                    </div>
-                                    <div class="pull-right">
-                                        <span class="badge badge-success">Veg</span>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="space-between">
-                                    <div class="food-card_price">
-<%--                                        <span>${list2[status.index].menuPrice}</span>--%>
-                                    </div>
+                <a class="card" href="#">
 
-                                </div>
-                            </div>
-                        </div>
+                    <div class="card__background" style="background-image: url(../../resources/menu/${truck.truckSigMenuImg1})"></div>
+
+                    <div class="card__content">
+                        <p class="card__category"> ${truck.truckCate}</p>
+                        <input type="hidden" name="truckId" value="${truck.truckId}">
+
+                            <h3 class="card__heading">${truck.truckName}</h3>
+
+
+
                     </div>
-                </div>
+                </a>
+
+
+
+                <%--
+                 <div class="card" style="width: 23rem; margin-bottom:15px; margin-left: 10px;">
+                     <img class="card-img-top" src="../../resources/menu/${catering.ctMenu.menuImg1}" alt="Card image cap"
+                          style="border-bottom: 1px solid #eee; height: 300px;">
+                     <div class="card-body">
+                         <ul class='card-body-ul'>
+
+                             <c:if test="${sessionScope.role eq 'user'}">
+                             <li> 푸드트럭 상호명 :${catering.ctTruck.truckName}</li>
+                             </c:if>
+                             <c:if test="${sessionScope.role eq 'truck'}">
+                                 <li> 이용자 이름 :${catering.ctUser.userName}</li>
+                             </c:if>
+                             <li> 서비스 날짜 : ${catering.ctDate}</li>
+                             <li> 견적 : ${catering.ctQuotation}</li>
+                             <li> 상태코드 :
+                             <c:if test="${catering.ctStatusCode eq '0'}">예약가능</c:if>
+                             <c:if test="${catering.ctStatusCode eq '1'}">수락 대기</c:if>
+                             <c:if test="${catering.ctStatusCode eq '2'}">이용자 취소</c:if>
+                             <c:if test="${catering.ctStatusCode eq '3'}">사업자 거절</c:if>
+                             <c:if test="${catering.ctStatusCode eq '4'}">결제 대기</c:if>
+                             <c:if test="${catering.ctStatusCode eq '5'}">예약 완료</c:if>
+                             </li>
+                         </ul>
+                         <div class="btn-detail">
+                             <input type="hidden" id="ctNo${catering.ctNo}" name="ctNo" value="${catering.ctNo}"/>
+                             <input type="hidden" id="ctStatusCode${catering.ctNo}" name="ctct" value="${catering.ctStatusCode}"/>
+                             <c:if test="${catering.ctStatusCode eq '0'}">
+
+                                 <button  name="getCateringDetail" class="button is-warning is-light" style='margin-left: 100px; margin-bottom: 13px; height: 25px'>자세히
+                                 </button>
+                                 &lt;%&ndash;onclick="getCateringDetail(${catering.ctNo})&ndash;%&gt;
+                             </c:if>
+                             <c:if test="${catering.ctStatusCode ne '0'}">
+
+
+                                 <button  name="getResDetail" class="button is-warning is-light" style='margin-left: 100px; margin-bottom: 13px; height: 25px' >자세히
+                                 </button>
+                                 &lt;%&ndash;onclick="getResDetail(${catering.ctNo},${catering.ctStatusCode})"&ndash;%&gt;
+                             </c:if>
+                         </div>
+                     </div>
+                 </div>--%>
             </c:forEach>
-
-
         </div>
-    </div>
-</section>
-
+    </section>
+</div>
 
 <%--<jsp:include page="/views/footer.jsp" />--%>
 </body>
