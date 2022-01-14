@@ -409,7 +409,7 @@
 
 
 
-                    alert(couponDcPrice + Number(totalSS2[1]))
+                    /*alert(couponDcPrice + Number(totalSS2[1]))*/
 
                     var payPrice = Number(totalPP2[1]) - Number(couponDcPrice);
                     var sale = Number(totalSS2[1]) + Number(couponDcPrice);
@@ -453,33 +453,33 @@
                 var usePoint = $('input[name="usePoint"]').val();
                 if(usePoint < totalPoint) {
                     if(usePoint <= Number(dd[1])){
-                    if (usePoint != "") {
-                        if (usePoint % 1000 == 0) {
+                        if (usePoint != "") {
+                            if (usePoint % 1000 == 0) {
 
 
 
 
 
 
-                            var payPrice = Number(dd[1]) - usePoint;
-                            var sale = Number(totalSS2[1]) + Number(usePoint);
+                                var payPrice = Number(dd[1]) - usePoint;
+                                var sale = Number(totalSS2[1]) + Number(usePoint);
 
 
-                            append = "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePoint + "\">";
-                            totalPayPrice = "<span id='totalpp' name='payPrice' >결제금액 : " + payPrice + "</span>"
-                            totalsale = "<span id='sale'>한일금액 : " + sale + "</span>"
+                                append = "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePoint + "\">";
+                                totalPayPrice = "<span id='totalpp' name='payPrice' >결제금액 : " + payPrice + "</span>"
+                                totalsale = "<span id='sale'>한일금액 : " + sale + "</span>"
 
 
-                            $('#usePointAmt').append(append);
-                            $('#pp').html(totalPayPrice);
-                            $('#dcp').html(totalsale);
+                                $('#usePointAmt').append(append);
+                                $('#pp').html(totalPayPrice);
+                                $('#dcp').html(totalsale);
 
+                            } else {
+                                alert("포인트는 1000단위로 사용가능합니다.")
+                            }
                         } else {
-                            alert("포인트는 1000단위로 사용가능합니다.")
+                            alert("사용할 포인트를 입력해주세요")
                         }
-                    } else {
-                        alert("사용할 포인트를 입력해주세요")
-                    }
                     }else{
                         alert("사용가능 할인금액을 초과 하였습니다.")
                     }
@@ -622,17 +622,17 @@
                         <c:forEach var="couponLis" items="${couponList.get('list')}">
                             <c:set var="i" value="${i+1}"/>
                             <c:if test="${couponLis.couponStatus==0}">
-                            <tr>
-                                <th scope="row">${i}</th>
-                                <td><label class="btn btn-secondary active">
-                                    <input type="radio" name="options" id="option${i}" autocomplete="off"
-                                           value="${couponLis.couponDcPrice},${couponLis.couponNo}" checked> Active
-                                </label></td>
-                                <td>${couponLis.couponDcPrice}</td>
-                                <td>${couponLis.couponType}</td>
-                                <td>${couponLis.couponStatus}</td>
+                                <tr>
+                                    <th scope="row">${i}</th>
+                                    <td><label class="btn btn-secondary active">
+                                        <input type="radio" name="options" id="option${i}" autocomplete="off"
+                                               value="${couponLis.couponDcPrice},${couponLis.couponNo}" checked> Active
+                                    </label></td>
+                                    <td>${couponLis.couponDcPrice}</td>
+                                    <td>${couponLis.couponType}</td>
+                                    <td>${couponLis.couponStatus}</td>
 
-                            </tr>
+                                </tr>
                             </c:if>
                         </c:forEach>
                     </table>
@@ -753,10 +753,10 @@
                     </div>
                     <hr class="my-lg-12">
                     <div class="row">
-                    <div class="col-sm-12">
-                        <h5>상호 : ${purchase.orderTruckId.truckName}</h5>
+                        <div class="col-sm-12">
+                            <h5>상호 : ${purchase.orderTruckId.truckName}</h5>
+                        </div>
                     </div>
-                </div>
 
                     <div id="order"></div>
 
@@ -781,24 +781,24 @@
                     <hr class="my-lg-12">
                     <div class="row">
                         <div class="col-3">
-                    <p class="text"  id="total" ></p>
+                            <p class="text"  id="total" ></p>
                         </div>
                         <div class="col-3">
-                    <p class="text"  id="dcp"  ><span id="sale" name="payPrice">할인금액 :</span></p>
+                            <p class="text"  id="dcp"  ><span id="sale" name="payPrice">할인금액 :</span></p>
                         </div><div class="col-3">
-                            <p class="text"  id="pp"></p>
+                        <p class="text"  id="pp"></p>
                     </div></div>
 
                     <div class="row">
                         <div class="col-6">
-                    <button type="button" class="btn btn-primary btn-lg">
-                        뒤로가기
-                    </button>
+                            <button type="button" class="btn btn-primary btn-lg">
+                                뒤로가기
+                            </button>
                         </div>
                         <div class="col-6">
-                    <button type="button" class="btn btn-primary btn-lg">
-                        진짜결제
-                    </button>
+                            <button type="button" class="btn btn-primary btn-lg">
+                                진짜결제
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -934,8 +934,8 @@
         var menuPrice = 0;
         for (var i = 0; i < odMenuNameL.length; i++) {
 
-   /*         alert(odMenuNameL[i]);
-            alert(odOptionNameL[i]);*/
+            /*         alert(odMenuNameL[i]);
+                     alert(odOptionNameL[i]);*/
 
             menuPrice += (sum[i] + odMenuPriceL[i]);
 
