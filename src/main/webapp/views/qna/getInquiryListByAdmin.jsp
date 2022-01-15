@@ -55,6 +55,9 @@
         .card.mb-10:hover{
             background-color: rgba(255, 229, 55, 0.16);
         }
+        .card.mb-10.sub-title:hover{
+            background-color: rgb(255, 255, 255);
+        }
         .card-ans{
             box-shadow: 0 1px 2px 1px rgba(0,0,0,0.2);
             transition: 0.2s;
@@ -89,11 +92,12 @@
 
     <script type="text/javascript">
 
-        function fncGetInquiryList(currentPage) {
+        //다시다시
+        /*function fncGetInquiryList(currentPage) {
             $("#currentPage").val(currentPage)
             $("form").attr("method" , "POST").attr("action" , "/qna/getInquiryListByAdmin").submit();
         }
-
+*/
 
         /* 문의 내용 펼치기 */
         $(function () {
@@ -259,7 +263,7 @@
                 </div>
             </div>
 
-            <div class="card mb-10">
+            <div class="card mb-10 sub-title">
                 <div class="row g-0 inquiry-card">
                     <div class="col-md-2 inquiry-con">
                         <div class="card-body">

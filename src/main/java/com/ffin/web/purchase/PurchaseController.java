@@ -1,5 +1,6 @@
 package com.ffin.web.purchase;
 
+import com.ffin.common.Page;
 import com.ffin.common.Search;
 import com.ffin.service.domain.*;
 import com.ffin.service.menu.MenuService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.WebParam;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -122,6 +124,29 @@ public class PurchaseController {
         return model;
     }
 
+    //user구매목록
+    @RequestMapping(value = "getPurchaseList")
+    public String getPurchaseList(@ModelAttribute("search")Search search, Model model,
+                                  HttpSession session) throws Exception {
+
+        System.out.println("PurchaseController.getPurchaseList");
+
+        if(search.getCurrentPage() == 0){
+            search.setCurrentPage(1);
+        }
+        search.setPageSize(pageSize);
+
+        Map<String, Object> map = purchaseService.getPurchaseList(search, ((User)session.getAttribute("user")).getUserId());
+
+//        Page resultPage = new Page(search.getCurrentPage(), (Integer) map.get("totalCount"), pageUnit, pageSize);
+//        System.out.println("search = " + search + "resultPage = "+resultPage);
+
+        model.addAttribute("list", map.get("list"));
+//        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("search", search);
+
+        return "/views/user/getPurchaseListByUser.jsp";
+    }
 
 
     @RequestMapping(value = "addCart", method= RequestMethod.GET)
@@ -251,6 +276,25 @@ public class PurchaseController {
 
     }
 
+    //현재주문정보 화면으로 보여줄 데이터를 가져온다.
+    @RequestMapping(value = "getOrderUser", method= RequestMethod.GET)
+    public ModelAndView getOrderUser(@RequestParam("userId") String userId, ModelAndView model,Purchase purchase) throws Exception {
+
+        System.out.println("/purchase/getOrderUser : GET");
+        System.out.println("userId = " + userId );
+        purchase = purchaseService.getMainOrderUser(userId);
+        purchase = purchaseService.getPurchase(purchase.getOrderNo());
+        Map map = new HashMap();
+        map = purchaseService.getOrderDetail(purchase.getOrderNo());
+
+        System.out.println("map//////////"+map);
+        model.addObject("map",map);
+        model.addObject("purchase",purchase);
+        model.setViewName("forward:/views/purchase/getOrderUser.jsp");
+
+        return  model;
+
+    }
 
 
     //현재주문정보에서 주문취소 버튼을 클릭 시 iamport환불이다...!!!! Rest로 바꿔야된다!!!
@@ -380,5 +424,6 @@ public class PurchaseController {
         //.updateOrderRefusal(),updatePoint(), updateTotalPoint()
         return "forward:/purchase/getOrderList";
     }
+
 
 }

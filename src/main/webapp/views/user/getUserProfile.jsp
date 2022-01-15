@@ -39,6 +39,7 @@
 			max-height: 250px;
 			box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1);
 			transition: 0.2s;
+			background-color: white;
 		}
 	</style>
 
@@ -231,7 +232,7 @@
 								<div class="data-input-box">
 									<label for="userFavMenu" class="form-label label-name">좋아하는 메뉴</label>
 									<select class="form-select form-control" id="userFavMenu" name="userFavMenu" aria-label="Default select example" style="padding-left: 0;">
-										<option selected>Menu Category</option>
+										<option selected>수정하자</option>
 										<option value="1">고기</option>
 										<option value="2">한식</option>
 										<option value="3">분식</option>

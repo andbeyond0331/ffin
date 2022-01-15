@@ -42,6 +42,56 @@
             float: right;
             padding-right: 20px;
         }
+        .card.mb-10{
+            width: auto;
+            min-height: 50px;
+            box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1);
+            transition: 0.2s;
+            margin-top: 5px;
+            display: flex;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .card.mb-10:hover{
+            background-color: rgba(255, 229, 55, 0.16);
+        }
+        .card.mb-10.sub-title:hover{
+            background-color: rgb(255, 255, 255);
+        }
+        .card-ans{
+            box-shadow: 0 1px 2px 1px rgba(0,0,0,0.2);
+            transition: 0.2s;
+            margin-top: 5px;
+            /*display: flex;
+            justify-content: flex-start;*/
+            text-align: left;
+            font-size: 14px;
+            padding: 30px;
+        }
+        .card-body {
+            padding: 0;
+        }
+        .card-text{
+            padding: 0;
+        }
+        .report-card{
+            display: flex;
+            justify-content: space-around;
+        }
+        .report-con{
+            padding: 0;
+        }
+        .d-grid.gap-2.col-6.mx-auto{
+            display: flex;
+            justify-content: center;
+        }
+        .slickContent{
+            width: 340px;
+            display: block;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
 
     </style>
 
@@ -49,7 +99,7 @@
 
         $(function () {
 
-            $('.userInfo').click(function () {
+            $('.mb-10').click(function () {
 
                 var userId = $(this).find("input[name='userId']").val();
                 //alert(userId);
@@ -88,7 +138,7 @@
             <div class="row search">
                 <div class="col-md-6 text-left" style="display: flex; align-items: center;">
                     <p style="margin: 0; font-size: 12px;">
-                        전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+                        전체  ${resultPage.totalCount } 건, 현재 ${resultPage.currentPage}  페이지
                     </p>
                 </div>
 
@@ -117,7 +167,7 @@
                 </div>
             </div>
 
-            <div class="card" style="border: 0;">
+            <%--<div class="card" style="border: 0;">
                 <div class="card-body">
 
                     <div class="table-responsive">
@@ -157,7 +207,91 @@
             </div>
 
         </div>
-    </div>
+    </div>--%>
+
+            <div class="card mb-10 sub-title">
+                <div class="row g-0 report-card">
+                    <div class="col-md-3 report-con">
+                        <div class="card-body">
+                            <p class="card-text"><small class="text-muted"><strong>회원유형</strong></small></p>
+                        </div>
+                    </div>
+                    <div class="col-md-2 report-con">
+                        <div class="card-body">
+                            <p class="card-text"><small class="text-muted"><strong>Id</strong></small></p>
+                        </div>
+                    </div>
+                    <div class="col-md-2 report-con">
+                        <div class="card-body">
+                            <p class="card-text"><small class="text-muted"><strong>성명</strong></small></p>
+                        </div>
+                    </div>
+                    <div class="col-md-2 report-con">
+                        <div class="card-body">
+                            <p class="card-text"><small class="text-muted"><strong>연락처</strong></small></p>
+                        </div>
+                    </div>
+                    <div class="col-md-2 report-con">
+                        <div class="card-body">
+                            <p class="card-text"><small class="text-muted"><strong>가입일</strong></small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <c:set var="i" value="0" />
+            <c:forEach var="user" items="${list}">
+                <c:set var="i" value="${ i+1 }" />
+
+            <div class="card mb-10">
+                <div class="row g-0 report-card">
+                    <div class="col-md-3 report-con">
+                        <div class="card-body" style="display: flex; justify-content: center; align-items: center;">
+                            <input type="hidden" id="userId" name ="userId" value="${user.userId}">
+                            <c:if test="${user.userByeStatus eq 0}">
+                                <h6><span class="badge" style="background-color: #65bf96; color: #110000; margin-right: 10px;">활동중</span></h6>
+                            </c:if>
+                            <c:if test="${user.userByeStatus eq 1}">
+                                <h6><span class="badge" style="background-color: #ec6a56; color: white; margin-right: 10px;">탈퇴</span></h6>
+                            </c:if>
+
+                            <c:if test="${user.reportCount % 3 == 0 && user.reportCount != 0 }">
+                                <h6><span class="badge" style="background-color: #25323c; color: white; margin-right: 10px;">블랙리스트</span></h6>
+                            </c:if>
+                            <c:if test="${user.reportCount % 3 != 0 || user.reportCount == 0}">
+                                <h6><span class="badge" style="background-color: rgb(254,203,104); color: #110000; margin-right: 10px;">일반회원</span></h6>
+                            </c:if>
+                        </div>
+                    </div>
+                    <div class="col-md-2 report-con">
+                        <div class="card-body">
+                            <p class="card-text">
+                                <small class="text-muted">${user.userId}</small>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-2 report-con">
+                        <div class="card-body">
+                            <p class="card-text">
+                                <small class="text-muted">${user.userName}</small>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-2 report-con">
+                        <div class="card-body">
+                            <p class="card-text"><small class="text-muted">${user.userPhone}</small></p>
+                        </div>
+                    </div>
+                    <div class="col-md-2 report-con">
+                        <div class="card-body">
+                            <p class="card-text"><small class="text-muted">${user.userRegDate}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="${user.userId}"></div>
+            </c:forEach>
 
 </section>
     <jsp:include page="../../common/pageNavigator_new.jsp"/>

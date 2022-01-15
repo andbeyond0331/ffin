@@ -41,6 +41,6 @@ public interface PurchaseDao {
     public User getTotalPoint (String userId)throws Exception;//보유 총포인트 조회
     public String getTruckBusiStatus(String tuckId)throws Exception; //영업중 모드 조회
     public int getUsePoint (int pointNo)throws Exception; //환불에 필요한 사용한 포인트 조회
-
+    public Purchase getMainOrderUser(String userId)throws Exception;// navbar.jsp에서 현재주문정보를 보여줄지 구분
 
 }

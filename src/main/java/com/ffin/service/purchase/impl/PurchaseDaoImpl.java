@@ -191,4 +191,9 @@ public class PurchaseDaoImpl implements PurchaseDao {
         int pointAmt = point.getPointAmt();
         return pointAmt;
     }
+
+    @Override
+    public Purchase getMainOrderUser(String userId) throws Exception {
+        return sqlSession.selectOne("PurchaseMapper.getMainOrderUser",userId);
+    }
 }

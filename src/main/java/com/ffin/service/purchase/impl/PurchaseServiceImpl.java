@@ -166,4 +166,9 @@ public class PurchaseServiceImpl implements PurchaseService {
         return purchaseDao.getUsePoint(pointNo);
     }
 
+    @Override
+    public Purchase getMainOrderUser(String userId) throws Exception {
+        return purchaseDao.getMainOrderUser(userId);
+    }
+
 }
