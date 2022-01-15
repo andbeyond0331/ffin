@@ -275,6 +275,156 @@ public class TruckServiceTest {
 
     }
 
+//
+//    @Test //okay - mj
+    public void testTruckListForSortingNoKeywordNoCateLaLoNoSorting() throws Exception{
+        Search search = new Search();
+        search.setCurrentPage(1);
+        search.setPageSize(3);
+
+        Map<String,Object> map = truckService.getTruckList(search);
+
+        List<Object> list = (List<Object>)map.get("list");
+        //Assert.assertEquals(3, list.size());
+
+        //==> console 확인
+        //System.out.println(list);
+
+        //Integer totalCount = (Integer)map.get("totalCount");
+        //System.out.println(totalCount);
+
+        System.out.println("=======================================");
+
+
+    }
+
+    // TODO: 2022-01-15 mj 클립
+        @Test
+    public void testTruckListForSortingNoKeywordNoCateLaLoYesSorting() throws Exception{
+        Search search = new Search();
+        search.setCurrentPage(1);
+        search.setPageSize(3);
+//        search.setSortCondition("별점 높은 순"); //okay
+        search.setSortCondition("별점 낮은 순");
+//        search.setSortCondition("거리 순");
+//        search.setSortCondition("구매 많은 순"); //todo 시간 날 때
+//        search.setSortCondition("후기 많은 순"); //todo 시간 날 때
+
+        Map<String,Object> map = truckService.getTruckList(search);
+
+        List<Object> list = (List<Object>)map.get("list");
+        //Assert.assertEquals(3, list.size());
+
+        //==> console 확인
+        //System.out.println(list);
+
+        //Integer totalCount = (Integer)map.get("totalCount");
+        //System.out.println(totalCount);
+
+        System.out.println("=======================================");
+
+
+    }
+//
+//    @Test //okay - mj
+//    public void testTruckListForSortingYesKeywordNoCateLaLo() throws Exception{
+//        Search search = new Search();
+//        search.setCurrentPage(1);
+//        search.setPageSize(3);
+//        search.setSearchKeyword("떡볶이");
+//
+//
+//        Map<String,Object> map = truckService.getTruckList(search);
+//
+//        List<Object> list = (List<Object>)map.get("list");
+//        //Assert.assertEquals(3, list.size());
+//
+//        //==> console 확인
+//        //System.out.println(list);
+//
+//        //Integer totalCount = (Integer)map.get("totalCount");
+//        //System.out.println(totalCount);
+//
+//        System.out.println("=======================================");
+//
+//
+//    }
+//
+////    @Test //okay - mj
+//    public void testTruckListForSortingNoKeywordYesCateLaLo() throws Exception{
+//        Search search = new Search();
+//        search.setCurrentPage(1);
+//        search.setPageSize(3);
+////        search.setSearchKeyword("떡볶이");
+////        search.setCateCondition("0"); // TODO: 2022-01-08 catecondition이 0일 때는 쿼리 안 맞으니까 전체보기는 cateCondition == null
+//        search.setCateCondition("1");
+////        search.setCateCondition("2");
+////        search.setCateCondition("3");
+////        search.setCateCondition("4");
+////        search.setCateCondition("5");
+////        search.setCateCondition("6");
+////        search.setCateCondition("7");
+////        search.setCateCondition("8");
+//
+//
+//        Map<String,Object> map = truckService.getTruckList(search);
+//
+//        List<Object> list = (List<Object>)map.get("list");
+//        //Assert.assertEquals(3, list.size());
+//
+//        //==> console 확인
+//        //System.out.println(list);
+//
+//        //Integer totalCount = (Integer)map.get("totalCount");
+//        //System.out.println(totalCount);
+//
+//        System.out.println("=======================================");
+//
+////        search.setCurrentPage(1);
+////        search.setPageSize(3);
+////        search.setSearchCondition("0");
+////        search.setSearchKeyword("");
+////        map = truckService.getTruckList(search);
+////
+////        list = (List<Object>)map.get("list");
+//        //Assert.assertEquals(3, list.size());
+//
+//        //==> console 확인
+//        //System.out.println(list);
+//
+//        //totalCount = (Integer)map.get("totalCount");
+//        //System.out.println(totalCount);
+//    }
+//
+////    @Test //okay - mj
+//    public void testTruckListForSortingYesKeywordYesCateLaLo() throws Exception{
+//        Search search = new Search();
+//        search.setCurrentPage(1);
+//        search.setPageSize(3);
+//
+////        카테고리에 어울리는 키워드로 검색 시
+//        search.setSearchKeyword("떡볶이");
+//        search.setCateCondition("2");
+//
+//
+//        Map<String,Object> map = truckService.getTruckList(search);
+//
+//        List<Object> list = (List<Object>)map.get("list");
+//        //Assert.assertEquals(3, list.size());
+//
+//
+//        System.out.println("search : " + search);
+//        //==> console 확인
+//        //System.out.println(list);
+//
+//        //Integer totalCount = (Integer)map.get("totalCount");
+//        //System.out.println(totalCount);
+//
+//        System.out.println("=======================================");
+//
+//
+//    }
+//
 
 
     //@Test
@@ -387,6 +537,26 @@ public class TruckServiceTest {
         truck = truckService.getTruck("testTruckId");
 
         Assert.assertNotNull(truck);
+    }
+
+//    @Test //okay - mj
+    public void testUpdateTruckAvgStar() throws Exception{
+
+        Truck truck = new Truck();
+
+        truck = truckService.getTruck("truck01");
+
+        Assert.assertNotNull(truck);
+
+        System.out.println("수정 전 truckAvgStar :" + truck.getTruckAVGStar());
+
+        truck.setTruckAVGStar(3.5F);
+
+        truckService.updateTruckAvgStar(truck);
+
+        System.out.println("수정 후 truckAvgStar : " + truck.getTruckAVGStar());
+
+
     }
 
     //@Test

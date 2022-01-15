@@ -38,6 +38,7 @@ public class Truck {
 	private int truckSigMenuNo;
 	private String truckSigMenuName;
 	private String truckSigMenuImg1;
+	private int truckSigMenuPrice;
 	
 
 }

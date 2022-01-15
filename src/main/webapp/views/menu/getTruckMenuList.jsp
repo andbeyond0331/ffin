@@ -100,7 +100,7 @@
         .card:before{
             content: '';
             display: block;
-            padding-bottom: 150%;
+            padding-bottom: 5%;
             width: 100%;
         }
 
@@ -482,8 +482,8 @@
         //============= "검색"  Event  처리 =============
         $(function() {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $( "button.btn.btn-warning" ).on("click" , function() {
-                alert("wkdsks?");
+            $( "#search" ).on("click" , function() {
+                // alert("wkdsks?");
                 fncGetTruckList(1);
             });
         });
@@ -625,7 +625,7 @@
                                                    name="searchKeyword"
                                                    placeholder="What are you waiting for? Hit it!"
                                                    value="${! empty search.searchKeyword ? search.searchKeyword : ''}">
-                                            <button type="button" class="btn btn-warning">검색</button>
+                                            <button type="button" class="btn btn-warning" id="search">검색</button>
                                         </div>
 
                                         <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
@@ -637,6 +637,27 @@
 
 
 <!-- end slider section -->
+</div>
+
+<!-- Example single danger button -->
+<div class="dropdown">
+    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <c:if test="${search.sortCondition eq null}">
+            기본 순
+        </c:if>
+        <c:if test="${search.sortCondition eq 'moreStars'}">
+            별점 높은 순
+        </c:if>
+        <c:if test="${search.sortCondition eq 'lessStars'}">
+            별점 낮은 순
+        </c:if>
+
+    </button>
+    <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="/menu/getTruckList">기본 순</a></li>
+        <li><a class="dropdown-item" href="/menu/getTruckList?sortCondition=moreStars">별점 높은 순</a></li>
+        <li><a class="dropdown-item" href="/menu/getTruckList?sortCondition=lessStars">별점 낮은 순</a></li>
+    </ul>
 </div>
 
 <div class="help">
@@ -690,16 +711,16 @@
     <!-- 음료일 때 버튼그룹 모양-->
     <c:if test="${cateCondition ne null}">
         <c:if test="${cateCondition eq '3'}">
-            <a href="0" class="btn btn-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" style="color:orange">전체보기</a>
+            <a href="/menu/getTruckList" class="btn btn-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" style="color:orange">전체보기</a>
             <!-- a 태그의 href는 아래의 tab-content 영역의 id를 설정하고 data-toggle 속성을 tab으로 설정한다. -->
-            <a href="/getTruckListCate?cateCondition=1" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>
-            <a href="/getTruckListCate?cateCondition=2" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>
-            <a href="/getTruckListCate?cateCondition=3" class="btn btn-outline-warning active" style="color:orange" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>
-            <a href="/getTruckListCate?cateCondition=4" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>
-            <a href="/getTruckListCate?cateCondition=5" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>
-            <a href="/getTruckListCate?cateCondition=6" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>
-            <a href="/getTruckListCate?cateCondition=7" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>
-            <a href="/getTruckListCate?cateCondition=8" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>
+            <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>
+            <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>
+            <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-warning active" style="color:orange" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>
+            <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>
+            <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>
+            <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>
+            <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>
+            <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>
         </c:if>
     </c:if>
     <!-- 양식일 때 버튼그룹 모양-->
@@ -786,79 +807,303 @@
 
 
     <section class="hero-section">
-        <div class="card-grid">
-            <c:set var="i" value="0"/>
+<%--        <div class="card-grid">--%>
+<%--            <c:set var="i" value="0"/>--%>
+<%--            <c:forEach var="truck" items="${list}" varStatus="status">--%>
+<%--                <c:set var="i" value="${i+1}"/>--%>
+
+<%--                <a class="card" href="getMenuList?truckId=${truck.truckId}">--%>
+<%--                    <c:if test="${truck.truckSigMenuImg1 ne null}">--%>
+<%--                        <div class="card__background" style="background-image: url(../../resources/menu/${truck.truckSigMenuImg1})"></div>--%>
+<%--                    </c:if>--%>
+<%--                    <c:if test="${truck.truckSigMenuImg1 eq null}">--%>
+<%--                        <div class="card__background" style="background-image: url(../../resources/image/${truck.truckProImg})"></div>--%>
+<%--                    </c:if>--%>
+
+
+<%--                    <div class="card__content">--%>
+<%--                        <p class="card__category"> ${truck.truckCate}</p>--%>
+<%--                        <input type="hidden" name="truckId" value="${truck.truckId}">--%>
+
+<%--                            <h3 class="card__heading">${truck.truckName}</h3>--%>
+
+
+
+<%--                    </div>--%>
+<%--                </a>--%>
+
+
+
+<%--                &lt;%&ndash;--%>
+<%--                 <div class="card" style="width: 23rem; margin-bottom:15px; margin-left: 10px;">--%>
+<%--                     <img class="card-img-top" src="../../resources/menu/${catering.ctMenu.menuImg1}" alt="Card image cap"--%>
+<%--                          style="border-bottom: 1px solid #eee; height: 300px;">--%>
+<%--                     <div class="card-body">--%>
+<%--                         <ul class='card-body-ul'>--%>
+
+<%--                             <c:if test="${sessionScope.role eq 'user'}">--%>
+<%--                             <li> 푸드트럭 상호명 :${catering.ctTruck.truckName}</li>--%>
+<%--                             </c:if>--%>
+<%--                             <c:if test="${sessionScope.role eq 'truck'}">--%>
+<%--                                 <li> 이용자 이름 :${catering.ctUser.userName}</li>--%>
+<%--                             </c:if>--%>
+<%--                             <li> 서비스 날짜 : ${catering.ctDate}</li>--%>
+<%--                             <li> 견적 : ${catering.ctQuotation}</li>--%>
+<%--                             <li> 상태코드 :--%>
+<%--                             <c:if test="${catering.ctStatusCode eq '0'}">예약가능</c:if>--%>
+<%--                             <c:if test="${catering.ctStatusCode eq '1'}">수락 대기</c:if>--%>
+<%--                             <c:if test="${catering.ctStatusCode eq '2'}">이용자 취소</c:if>--%>
+<%--                             <c:if test="${catering.ctStatusCode eq '3'}">사업자 거절</c:if>--%>
+<%--                             <c:if test="${catering.ctStatusCode eq '4'}">결제 대기</c:if>--%>
+<%--                             <c:if test="${catering.ctStatusCode eq '5'}">예약 완료</c:if>--%>
+<%--                             </li>--%>
+<%--                         </ul>--%>
+<%--                         <div class="btn-detail">--%>
+<%--                             <input type="hidden" id="ctNo${catering.ctNo}" name="ctNo" value="${catering.ctNo}"/>--%>
+<%--                             <input type="hidden" id="ctStatusCode${catering.ctNo}" name="ctct" value="${catering.ctStatusCode}"/>--%>
+<%--                             <c:if test="${catering.ctStatusCode eq '0'}">--%>
+
+<%--                                 <button  name="getCateringDetail" class="button is-warning is-light" style='margin-left: 100px; margin-bottom: 13px; height: 25px'>자세히--%>
+<%--                                 </button>--%>
+<%--                                 &lt;%&ndash;onclick="getCateringDetail(${catering.ctNo})&ndash;%&gt;--%>
+<%--                             </c:if>--%>
+<%--                             <c:if test="${catering.ctStatusCode ne '0'}">--%>
+
+
+<%--                                 <button  name="getResDetail" class="button is-warning is-light" style='margin-left: 100px; margin-bottom: 13px; height: 25px' >자세히--%>
+<%--                                 </button>--%>
+<%--                                 &lt;%&ndash;onclick="getResDetail(${catering.ctNo},${catering.ctStatusCode})"&ndash;%&gt;--%>
+<%--                             </c:if>--%>
+<%--                         </div>--%>
+<%--                     </div>--%>
+<%--                 </div>&ndash;%&gt;--%>
+<%--            </c:forEach>--%>
+<%--        </div>--%>
+
+        <!--admin truck에서 빼오기-->
+
+        <div class="row mb-12" style="border: 0;">
+
+            <c:set var="i" value="0" />
             <c:forEach var="truck" items="${list}" varStatus="status">
-                <c:set var="i" value="${i+1}"/>
+                <c:set var="i" value="${ i+1 }" />
 
-                <a class="card" href="getMenuList?truckId=${truck.truckId}">
+                <div class="card col-md-4 mb-4" style="border: 0;">
+                    <div style="display: flex; flex-direction: column;">
+                        <div class="item">
+                            <div class="item-image">
+                                <c:if test="${truck.truckSigMenuImg1 ne null}">
+                                    <div class="card__background" style="background-image: url(../../resources/menu/${truck.truckSigMenuImg1})"></div>
+                                </c:if>
+                                <c:if test="${truck.truckSigMenuImg1 eq null}">
+                                    <div class="card__background" style="background-image: url(../../resources/image/${truck.truckProImg})"></div>
+                                </c:if>
+                            </div>
+                            <div class="item-text">
+                                <div class="item-text-wrapper">
+                                    <c:choose>
+                                        <c:when test="${truck.truckCate eq 1}">
+                                            <h5><span class="badge" style="background-color: #ffffff; color: #110000">고기</span></h5>
+                                        </c:when>
+                                        <c:when test="${truck.truckCate eq 2}">
+                                            <h5><span class="badge" style="background-color: #ffffff; color: #110000">분식</span></h5>
+                                        </c:when>
+                                        <c:when test="${truck.truckCate eq 3}">
+                                            <h5><span class="badge" style="background-color: #ffffff; color: #110000">음료</span></h5>
+                                        </c:when>
+                                        <c:when test="${truck.truckCate eq 4}">
+                                            <h5><span class="badge" style="background-color: #ffffff; color: #110000">양식</span></h5>
+                                        </c:when>
+                                        <c:when test="${truck.truckCate eq 5}">
+                                            <h5><span class="badge" style="background-color: #ffffff; color: #110000">디저트</span></h5>
+                                        </c:when>
+                                        <c:when test="${truck.truckCate eq 6}">
+                                            <h5><span class="badge" style="background-color: #ffffff; color: #110000">한식</span></h5>
+                                        </c:when>
+                                        <c:when test="${truck.truckCate eq 7}">
+                                            <h5><span class="badge" style="background-color: #ffffff; color: #110000">일식</span></h5>
+                                        </c:when>
+                                        <c:when test="${truck.truckCate eq 8}">
+                                            <h5><span class="badge" style="background-color: #ffffff; color: #110000">기타</span></h5>
+                                        </c:when>
+                                    </c:choose>
+                                    <input type="hidden" name="truckId" value="${truck.truckId}">
+                                    <p class="item-text-dek"><strong>${truck.truckSigMenuName}</strong></p>
+                                    <h6 class="item-text-title">${truck.truckCEOIntro}</h6>
 
-                    <div class="card__background" style="background-image: url(../../resources/menu/${truck.truckSigMenuImg1})"></div>
+                                    <fmt:parseNumber var="percent" value="${truck.truckAVGStar}" integerOnly="true" />
+                                    <c:if test="${percent eq 0}">
+                                        <i class="far fa-star" style="color: #ec6a56"></i>
+                                    </c:if>
+                                    <c:if test="${percent eq 1}">
+                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                    </c:if>
+                                    <c:if test="${percent eq 2}">
+                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                    </c:if>
+                                    <c:if test="${percent eq 3}">
+                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                    </c:if>
+                                    <c:if test="${percent eq 4}">
+                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                    </c:if>
+                                    <c:if test="${percent eq 5}">
+                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                    </c:if>
 
-                    <div class="card__content">
-                        <p class="card__category"> ${truck.truckCate}</p>
-                        <input type="hidden" name="truckId" value="${truck.truckId}">
-
-                            <h3 class="card__heading">${truck.truckName}</h3>
-
-
-
+                                </div>
+                            </div>
+                            <a class="item-link" href="/menu/getMenuList?truckId=${truck.truckId}"></a>
+                        </div>
+                        <div class="item-truck">
+                            <span>${truck.truckName}</span>
+                            <span><ion-icon name="at-outline"></ion-icon>${truck.truckId}</span>
+                        </div>
                     </div>
-                </a>
-
-
-
-                <%--
-                 <div class="card" style="width: 23rem; margin-bottom:15px; margin-left: 10px;">
-                     <img class="card-img-top" src="../../resources/menu/${catering.ctMenu.menuImg1}" alt="Card image cap"
-                          style="border-bottom: 1px solid #eee; height: 300px;">
-                     <div class="card-body">
-                         <ul class='card-body-ul'>
-
-                             <c:if test="${sessionScope.role eq 'user'}">
-                             <li> 푸드트럭 상호명 :${catering.ctTruck.truckName}</li>
-                             </c:if>
-                             <c:if test="${sessionScope.role eq 'truck'}">
-                                 <li> 이용자 이름 :${catering.ctUser.userName}</li>
-                             </c:if>
-                             <li> 서비스 날짜 : ${catering.ctDate}</li>
-                             <li> 견적 : ${catering.ctQuotation}</li>
-                             <li> 상태코드 :
-                             <c:if test="${catering.ctStatusCode eq '0'}">예약가능</c:if>
-                             <c:if test="${catering.ctStatusCode eq '1'}">수락 대기</c:if>
-                             <c:if test="${catering.ctStatusCode eq '2'}">이용자 취소</c:if>
-                             <c:if test="${catering.ctStatusCode eq '3'}">사업자 거절</c:if>
-                             <c:if test="${catering.ctStatusCode eq '4'}">결제 대기</c:if>
-                             <c:if test="${catering.ctStatusCode eq '5'}">예약 완료</c:if>
-                             </li>
-                         </ul>
-                         <div class="btn-detail">
-                             <input type="hidden" id="ctNo${catering.ctNo}" name="ctNo" value="${catering.ctNo}"/>
-                             <input type="hidden" id="ctStatusCode${catering.ctNo}" name="ctct" value="${catering.ctStatusCode}"/>
-                             <c:if test="${catering.ctStatusCode eq '0'}">
-
-                                 <button  name="getCateringDetail" class="button is-warning is-light" style='margin-left: 100px; margin-bottom: 13px; height: 25px'>자세히
-                                 </button>
-                                 &lt;%&ndash;onclick="getCateringDetail(${catering.ctNo})&ndash;%&gt;
-                             </c:if>
-                             <c:if test="${catering.ctStatusCode ne '0'}">
-
-
-                                 <button  name="getResDetail" class="button is-warning is-light" style='margin-left: 100px; margin-bottom: 13px; height: 25px' >자세히
-                                 </button>
-                                 &lt;%&ndash;onclick="getResDetail(${catering.ctNo},${catering.ctStatusCode})"&ndash;%&gt;
-                             </c:if>
-                         </div>
-                     </div>
-                 </div>--%>
+                </div>
             </c:forEach>
+
         </div>
+        <!--admin truck에서 빼오기-->
     </section>
 </div>
 
 <%--<jsp:include page="/views/footer.jsp" />--%>
 </body>
 <script src="../resources/bootstrap/js/custom.js"></script>
+
+
+<!--트럭 admin 빼오기-->
+<style>
+
+    /*.search{*/
+    /*    margin-top: 100px;*/
+    /*}*/
+    .item {
+        position: relative;
+        /*float: left;*/
+        /*width: 33%;*/
+        background-color: #fae100;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1);
+        transition: 0.1s;
+    }
+    .item:after {
+        content: '';
+        display: block;
+        background-color: inherit;
+        opacity: 0.7;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: scale(2) translateX(-75%) translateY(-75%) translateZ(0) rotate(-28deg);
+        transition: transform 2s cubic-bezier(0.23, 1, 0.32, 1);
+        border-radius: 10px;
+    }
+    .item:hover:after {
+        transform: scale(2) translateX(0%) translateY(0%) translateZ(0) rotate(-28deg);
+        border-radius: 5px;
+    }
+    .item:hover .item-image{
+        transform: scale(1.2) translateZ(0);
+        border-radius: 10px;
+    }
+    .item:hover .item-text{
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .item-image {
+        height: auto;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+        transition: transform 750ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .item-image:before {
+        content: "";
+        display: block;
+        padding-top: 75%;
+        overflow: hidden;
+    }
+    .item-image img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        line-height: 0;
+        border-radius: 10px;
+        background-color: white;
+    }
+    .item-text {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        opacity: 0;
+        text-align: center;
+        z-index: 1;
+        color: #110000;
+        transition: opacity 500ms cubic-bezier(0.23, 1, 0.32, 1), transform 500ms cubic-bezier(0.23, 1, 0.32, 1);
+        transition-delay: 300ms;
+        transform: translateY(-20%);
+    }
+    .item-text-wrapper {
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .item-text-title {
+        font-weight: normal;
+        /*font-style: 16px;*/
+        padding: 0 15px;
+        margin: 5px 0 0 0;
+    }
+    .item-text-dek {
+        text-transform: uppercase;
+        /* font-style: 14px;*/
+        opacity: 0.7;
+        margin: 0;
+    }
+    .item-link {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 2;
+        line-height: 0;
+        overflow: hidden;
+        text-indent: -9999px;
+    }
+    .item-truck{
+        /*width: 33%;*/
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+        padding: 5px;
+    }
+    .item-truck span {
+        display: flex;
+        align-items: center;
+    }
+
+
+</style>
 
 
 </html>

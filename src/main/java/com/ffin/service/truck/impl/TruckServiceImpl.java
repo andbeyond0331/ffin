@@ -102,6 +102,12 @@ public class TruckServiceImpl implements TruckService {
         truckDao.updateTruckJoin(truck);
     }
 
+    @Override
+    public void updateTruckAvgStar(Truck truck) throws Exception {
+        System.out.println("TruckServiceImpl.updateTruckAvgStar");
+        truckDao.updateTruckAvgStar(truck);
+    }
+
     // 푸드트럭 수정
     @Override
     public void updateTruck(Truck truck) throws Exception {

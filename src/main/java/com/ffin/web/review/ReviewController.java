@@ -90,7 +90,9 @@ public class ReviewController {
                               @RequestParam("rvImg22")MultipartFile file2,
                               @RequestParam("rvImg33")MultipartFile file3,
                               HttpServletRequest request,
-                              @ModelAttribute("review") Review review, Model model) throws Exception{
+                              @ModelAttribute("review") Review review, Model model,
+                              @ModelAttribute("search") Search search
+                                ) throws Exception{
         // TODO: 2022-01-05 truckId, userId 적용되도록! - 해결!
         // TODO: 2022-01-05 리뷰 이미지 추가 - 해결!
         // TODO: 2022-01-06 truck의 avgStar 건드리게끔 바꾸기! 
@@ -134,6 +136,23 @@ public class ReviewController {
         System.out.println("//////rvTruckId, rvUserId 확인/////////review.getRvUserId : " + review.getRvUserId());
 
         reviewService.addReview(review);
+
+        //review add후 truck avg star 건드리기!
+//        int orderNo = review.getRvOrderNo();
+
+        Truck truck = purchase.getOrderTruckId();
+
+        float rvAvg = reviewService.getReviewAvg(search,truck.getTruckId());
+
+        truck.setTruckAVGStar(rvAvg);
+
+        System.out.println("rvAvg = " + rvAvg);
+
+        System.out.println("truck update에 사용된다. : " + truck);
+
+        truckService.updateTruckAvgStar(truck);
+
+
 
         model.addAttribute("review", review);
 //        model.addAttribute("orderNo", rvOrderNo);
@@ -326,14 +345,13 @@ public class ReviewController {
 
     //truck에 의한 getReview List
     @RequestMapping("getReviewListTruck")
-    public ModelAndView getReviewListTruck(@ModelAttribute("search") Search search,
+    public ModelAndView getReviewListTruck(@RequestParam(value = "truckId", required = false) String truckId,@ModelAttribute("search") Search search,
                                            ModelAndView modelAndView, HttpSession session) throws Exception{
 
         search.setPageSize(pageSize);
 
-        Truck truck = (Truck) session.getAttribute("truck");
+//        Truck truck = (Truck) session.getAttribute("menuTruck");
 
-        String truckId = truck.getTruckId();
 
         System.out.println("truckId = " + truckId);
 

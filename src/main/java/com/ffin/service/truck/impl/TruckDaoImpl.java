@@ -78,6 +78,12 @@ public class TruckDaoImpl implements TruckDao {
         sqlSession.update("TruckMapper.updateTruckJoin", truck);
     }
 
+    @Override
+    public void updateTruckAvgStar(Truck truck) throws Exception {
+        System.out.println("TruckDaoImpl.updateTruckAvgStar");
+        sqlSession.update("TruckMapper.updateTruckAvgStar", truck);
+    }
+
     // 푸드트럭 수정...
     @Override
     public void updateTruck(Truck truck) throws Exception {
