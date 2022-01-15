@@ -119,17 +119,17 @@
 
                                 <div style="display: flex;">
                                 <c:if test="${user.userByeStatus eq 0}">
-                                    <h5><span class="badge" style="background-color: #ffe537; color: #110000">활동중</span></h5>
+                                    <h5><span class="badge" style="background-color: #65bf96; color: #110000">활동중</span></h5>
                                 </c:if>
                                 <c:if test="${user.userByeStatus eq 1}">
-                                    <h5><span class="badge" style="background-color: #f17228; color: #ffffff">탈퇴</span></h5>
+                                    <h5><span class="badge" style="background-color: #ec6a56; color: #ffffff">탈퇴</span></h5>
                                 </c:if>
 
                                 <c:if test="${user.reportCount % 3 == 0 && user.reportCount != 0 }">
-                                    <h5><span class="badge" style="background-color: #f17228; color: white">블랙리스트</span></h5>
+                                    <h5><span class="badge" style="background-color: #25323c; color: white">블랙리스트</span></h5>
                                 </c:if>
                                 <c:if test="${user.reportCount % 3 != 0 || user.reportCount == 0}">
-                                    <h5><span class="badge" style="background-color: #ffe537; color: #110000">일반회원</span></h5>
+                                    <h5><span class="badge" style="background-color: #fecb68; color: #110000">일반회원</span></h5>
                                 </c:if>
                                 </div>
                             </div>

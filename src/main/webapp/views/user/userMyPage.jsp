@@ -64,10 +64,10 @@
 				self.location = "./getUserInfo.jsp"
 			});
 			$('.user-profile').click(function () {
-				self.location = "/user/getUserProfile/"+userId
+				self.location = "/user/getUserProfile/"+userId;
 			});
 			$('.user-purchase').click(function () {
-				self.location = ""
+				self.location = "/user/getPurchaseList";
 			});
 			$('.user-point').click(function () {
 				self.location = ""
@@ -132,22 +132,15 @@
 							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
 						</div>
 					</div>
-					<div class="card user-qna" style="width: 12rem;">
-						<div class="card-body" style="display: inline-grid;">
-							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-question-circle fa-2x"></i></span>
-							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">문의•신고</h6>
-							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
-						</div>
-					</div>
-					<%--<div class="card user-purchase" style="width: 12rem;">
+					<div class="card user-purchase" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
 							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-shopping-basket fa-2x"></i></span>
 							<h6 class="card-subtitle mb-2 text-muted" style="text-align: initial;">구매</h6>
 							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
 						</div>
-					</div>--%>
+					</div>
 				</div>
-				<%--<div class="row justify-content-center">
+				<div class="row justify-content-center">
 					<div class="card user-point" style="width: 12rem;">
 						<div class="card-body" style="display: inline-grid;">
 							<span class="box-icon"  style="text-align: initial;"><i class="fas fa-donate fa-2x"></i></span>
@@ -192,7 +185,7 @@
 							<p class="card-text" style="text-align: end;"><i class="fas fa-angle-double-right"></i></p>
 						</div>
 					</div>
-				</div>--%>
+				</div>
 			</div>
 		</div>
 	</div>

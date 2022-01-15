@@ -2,7 +2,10 @@ package com.ffin.web.user;
 
 import com.ffin.common.Page;
 import com.ffin.common.Search;
+import com.ffin.service.domain.Point;
+import com.ffin.service.domain.Purchase;
 import com.ffin.service.domain.User;
+import com.ffin.service.purchase.PurchaseService;
 import com.ffin.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -31,6 +35,10 @@ public class UserController {
     @Autowired
     @Qualifier("userServiceImpl")
     private UserService userService;
+
+    @Autowired
+    @Qualifier("purchaseServiceImpl")
+    private PurchaseService purchaseService;
 
     private ModelAndView modelAndView;
 
@@ -89,11 +97,11 @@ public class UserController {
 
 //            if(user.isUseCookie())
 
-            return "redirect:/views/homeTest.jsp";
+            return "/catering/mainTruckList";
 
         } else {
             System.out.println("로그인Nope");
-            return "views/user/login.jsp";
+            return "/catering/mainTruckList";
         }
     }
 
@@ -118,7 +126,7 @@ public class UserController {
                 userService.autoLogin(user.getUserId(), session.getId(), date);
             }
         }
-        return "redirect:/";
+        return "/catering/mainTruckList";
     }
 
     @RequestMapping( value="addUser", method=RequestMethod.GET )
@@ -228,7 +236,7 @@ public class UserController {
         session.setAttribute("user", dbUser);
         session.setAttribute("role","user");
 
-        return "redirect:/views/home.jsp";
+        return "/catering/mainTruckList";
     }
 
     @RequestMapping(value = "kakaoLogout", method = RequestMethod.GET)
@@ -251,7 +259,7 @@ public class UserController {
                 userService.autoLogin(user.getUserId(), session.getId(), date);
             }
         }
-        return "redirect:/";
+        return "redirect:/catering/mainTruckList";
     }
 
 
@@ -275,7 +283,7 @@ public class UserController {
         model.addAttribute("resultPage", resultPage);
         model.addAttribute("search", search);
 
-        return "/views/user/getUserList.jsp";
+        return "/views/user/getUserListByAdmin.jsp";
     }
 
     @RequestMapping(value = "getBlackList")
@@ -300,7 +308,72 @@ public class UserController {
         return "/views/user/getBlackListByAdmin.jsp";
     }
 
+    @RequestMapping(value = "getPurchaseByUser/{orderNo}", method= RequestMethod.GET)
+    public ModelAndView getOrderUser(@PathVariable int orderNo, ModelAndView model,Purchase purchase) throws Exception {
 
+        System.out.println("UserController.getOrderUser : GET");
+
+        purchase = purchaseService.getPurchase(orderNo);
+        Map map = new HashMap();
+        map = purchaseService.getOrderDetail(orderNo);
+
+        System.out.println("map//////////"+map);
+        model.addObject("map",map);
+        model.addObject("purchase",purchase);
+        model.setViewName("forward:/views/purchase/getOrderUser.jsp");
+
+        return  model;
+
+    }
+
+    @RequestMapping(value = "getPurchaseByUser", method = RequestMethod.POST)
+    public ModelAndView getPurchaseByUser(@ModelAttribute("purchase") Purchase purchase, @ModelAttribute("user") User user,
+                                     @ModelAttribute("point") Point point, ModelAndView model) throws Exception {
+
+        System.out.println("/purchase/getOrderUser : POST");
+
+        purchase = purchaseService.getPurchase(purchase.getOrderNo());
+        Map map = new HashMap();
+        map = purchaseService.getOrderDetail(purchase.getOrderNo());
+
+        System.out.println("map//////////"+map);
+        model.addObject("map",map);
+        model.addObject("purchase",purchase);
+        model.setViewName("forward:/views/user/getPurchaseByUser.jsp");
+
+        return  model;
+
+    }
+
+
+    @RequestMapping(value = "getPurchaseList")
+    public String getPurchaseList(@ModelAttribute("search")Search search, Model model,
+                                  HttpSession session, HttpServletRequest request) throws Exception {
+
+        System.out.println("UserController.getPurchaseList");
+
+        User user = (User)session.getAttribute("user");
+        String userId = user.getUserId();
+        System.out.println("userId :: "+userId);
+
+        if(search.getCurrentPage() == 0){
+            search.setCurrentPage(1);
+        }
+        search.setPageSize(pageSize);
+
+        Map<String, Object> map = purchaseService.getPurchaseList(search, userId);
+
+//        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+//        System.out.println("resultPage :: "+resultPage);
+
+        model.addAttribute("list", map.get("list"));
+//        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("search", search);
+
+        System.out.println("map = "+map);
+
+        return "forward:/views/user/getPurchaseListByUser.jsp";
+    }
 
 
 }

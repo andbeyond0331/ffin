@@ -92,7 +92,7 @@ public class UserRestController {
         session.setAttribute("role","user");
         session.setAttribute("sns", "kakao");
 
-        return "/views/home.jsp";
+        return "/catering/mainTruckList";
     }
 
 
