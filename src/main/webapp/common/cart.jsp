@@ -320,7 +320,7 @@
 
 
 
-    /*장바구니 화면에 보여주는 기능*/
+    /*장바구니 화면을 보여주는 기능*/
     jQuery(document).ready(function ($) {
         $(document).on('click', '.pull-bs-canvas-right, .pull-bs-canvas-left', function () {
             $('body').prepend('<div class="bs-canvas-overlay bg-dark position-fixed w-100 h-100"></div>');

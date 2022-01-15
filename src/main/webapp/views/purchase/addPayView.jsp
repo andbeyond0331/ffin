@@ -373,8 +373,9 @@
     });
 
     $(function () {
+        var orderTruckId = $("input[name='orderTruckId.truckId']").val();
         $("button.btn.btn-primary:contains('뒤로가기')").click(function () {
-            history.go(-1);
+            self.location = "/menu/getMenuList?truckId=" + orderTruckId;
 
         });
     });
@@ -797,7 +798,7 @@
                         </div>
                         <div class="col-6">
                             <button type="button" class="btn btn-primary btn-lg">
-                                진짜결제
+                                결제
                             </button>
                         </div>
                     </div>
