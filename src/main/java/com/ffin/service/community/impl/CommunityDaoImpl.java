@@ -59,6 +59,27 @@ public class CommunityDaoImpl implements CommunityDao {
     public void updatePost(Post post) throws Exception {
         sqlSession.update("PostMapper.updatePost", post);
     }
+    // 게시물 비공개 처리
+    @Override
+    public void blindPost(Post post) throws Exception {
+        sqlSession.update("PostMapper.blindPost", post);
+    }
+    // 게시물 공개 처리
+    @Override
+    public void seePost(Post post) throws Exception {
+        sqlSession.update("PostMapper.seePost", post);
+    }
+
+    // 댓글 비공개 처리
+    @Override
+    public void blindComment(Comment comment) throws Exception {
+        sqlSession.update("CommentMapper.blindComment", comment);
+    }
+    // 댓글 공개 처리
+    @Override
+    public void seeComment(Comment comment) throws Exception {
+        sqlSession.update("CommentMapper.seeComment", comment);
+    }
 
     // 댓글 작성
     @Override
@@ -81,12 +102,6 @@ public class CommunityDaoImpl implements CommunityDao {
     @Override
     public int count(int commentPostNo) throws Exception {
         return 0;
-    }
-
-    // 댓글 수정
-    @Override
-    public void updateComment(Comment comment) throws Exception {
-        sqlSession.update("CommentMapper.updateComment", comment);
     }
 
     // 게시글 삭제

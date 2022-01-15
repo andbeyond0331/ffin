@@ -52,14 +52,6 @@
         WHERE post_no = #{value}
     </select>
 
-    <select id="getPost2"    parameterType="String"      resultMap="postSelectMap">
-        SELECT
-            POST_USER_ID, POST_TRUCK_ID, POST_TITLE, POST_CONTENT, POST_REG_DATE, SECRET_KEY, POST_FILE1,
-            POST_FILE2, POST_FILE3
-        FROM post
-        WHERE post_title = #{value}
-    </select>
-
 <!--    <select id="getPost3"    parameterType="String"      resultMap="postSelectMap">-->
 <!--        SELECT-->
 <!--            POST_USER_ID, POST_TRUCK_ID, POST_TITLE, POST_CONTENT, POST_REG_DATE, SECRET_KEY, POST_FILE1,-->
@@ -71,7 +63,7 @@
     <!-- SQL : SELECT LIST -->
     <select id="getPostList"    parameterType="search"      resultMap="postSelectMap">
         SELECT inner_table.*
-        FROM( SELECT post_no, post_title, post_user_id, post_truck_id, post_reg_date, HEART_COUNT
+        FROM( SELECT post_no, post_title, post_user_id, post_truck_id, post_reg_date, POST_HIT, SECRET_KEY
         FROM post
         WHERE
         <if test="searchCondition != null">
@@ -105,6 +97,22 @@
             post_file1 = #{postFile1},
             post_file2 = #{postFile2},
             post_file3 = #{postFile3}
+        </set>
+        WHERE post_no = #{postNo}
+    </update>
+
+    <update id="blindPost"     parameterType="post">
+        UPDATE post
+        <set>
+            SECRET_KEY = '1'
+        </set>
+        WHERE post_no = #{postNo}
+    </update>
+
+    <update id="seePost"     parameterType="post">
+        UPDATE post
+        <set>
+            SECRET_KEY = '0'
         </set>
         WHERE post_no = #{postNo}
     </update>

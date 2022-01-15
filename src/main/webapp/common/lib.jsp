@@ -449,15 +449,19 @@
                             console.log(data);
                             alert("통신오류");
                             return false;
-                        }else if(data == 9){
+                        }else if(data == 9) {
                             console.log(data);
                             alert("회원정보가 일치하지 않습니다");
+                            return false;
+                        }else if(data == 1){
+                            console.log(data);
+                            alert("탈퇴한 회원정보입니다.")
                             return false;
                         }else {
                             console.log(data);
                             alert(truckId + " 사장님 환영합니다.");
                             /*javascript redirect 방법*/
-                            location.replace("http://localhost:8080/views/home.jsp");
+                            location.replace("http://localhost:8080/catering/mainTruckList");
                         }
                     },
                 })

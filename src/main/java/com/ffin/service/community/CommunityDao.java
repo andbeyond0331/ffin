@@ -36,11 +36,15 @@ public interface CommunityDao {
 
     // UPDATE
     public void updatePost(Post post) throws Exception;
+    // 게시물 비공개처리
+    public void blindPost(Post post) throws Exception;
+    // 게시물 공개처리
+    public void seePost(Post post) throws Exception;
 
-    public void updateComment(Comment comment) throws Exception;
-
-    /*public void updateHeart(Heart heart) throws Exception;*/
-
+    // 댓글 비공개처리
+    public void blindComment(Comment comment) throws Exception;
+    // 댓글 공개처리
+    public void seeComment(Comment comment) throws Exception;
 
     // DELETE
     public void deletePost(Post post) throws Exception;

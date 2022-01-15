@@ -7,7 +7,7 @@
 
 <head>
 
-    <title>게시글 목록</title>
+    <title>F.FIN | 게시글 목록</title>
     <jsp:include page="../../common/lib.jsp"/>
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">
@@ -42,6 +42,10 @@
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
             $( "td:nth-child(1)" ).on("click" , function() {
                 console.log($(this).text());
+                if($(this).text()=="Blind"){
+                    alert("비공개 처리된 게시물입니다!!")
+                    return;
+                }
                 self.location ="/community/getPost?postNo="+$(this).text().trim();
             });
 
@@ -120,7 +124,7 @@
             <th align="left" >제목</th>
             <th align="left">작성자 ID</th>
             <th align="left">작성일</th>
-            <th align="left">좋아요</th>
+            <th align="left">조회수</th>
         </tr>
         </thead>
 
@@ -130,17 +134,48 @@
         <c:forEach var="post" items="${list}">
             <c:set var="i" value="${ i+1 }" />
             <tr>
+                <c:if test="${post.secretKey==0 && (sessionScope.user != null || sessionScope.truck != null)}">
                 <td align="center">${post.postNo}</td>
                 <td align="left">${post.postTitle}</td>
                 <td align="left">${post.postUser.userId}${post.postTruck.truckId}</td>
                 <td align="left"><fmt:formatDate value="${post.postRegDate}" pattern="yyyy-MM-dd"/></td>
                 <td align="left">
-                    <i class="glyphicon glyphicon-ok" id= "${post.postNo}"></i>
+                    <span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+											<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+											<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+										</svg>
+						</span> <span id="hit${post.postNo }">${post.postHit }</span>
                     <input type="hidden" value="${post.postUser}">
                 </td>
+                </c:if>
+                <c:if test="${post.secretKey==1 && (sessionScope.user.role != 0 || sessionScope.truck.role == 1)}">
+                    <td align="center">Blind</td>
+                    <td align="left">비공개 처리된 게시물</td>
+                    <td align="left">${post.postUser.userId}${post.postTruck.truckId}</td>
+                    <td align="left"><fmt:formatDate value="${post.postRegDate}" pattern="yyyy-MM-dd"/></td>
+                    <td align="left">
+<%--                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">--%>
+<%--                            <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />--%>
+<%--                        </svg>--%>
+                        <span id="heart${post.postNo }">Blind</span>
+                        <input type="hidden" value="${post.postUser}">
+                    </td>
+                </c:if>
+                <c:if test="${post.secretKey==1 && sessionScope.user.role == 0}">
+                    <td align="center">${post.postNo}</td>
+                    <td align="left">비공개 처리된 게시물 입니다.</td>
+                    <td align="left">${post.postUser.userId}${post.postTruck.truckId}</td>
+                    <td align="left"><fmt:formatDate value="${post.postRegDate}" pattern="yyyy-MM-dd"/></td>
+                    <td align="left">
+<%--                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">--%>
+<%--                            <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />--%>
+<%--                        </svg>--%>
+                        <span id="heart${post.postNo }">Blind</span>
+                        <input type="hidden" value="${post.postUser}">
+                    </td>
+                </c:if>
             </tr>
         </c:forEach>
-
         </tbody>
 
     </table>
