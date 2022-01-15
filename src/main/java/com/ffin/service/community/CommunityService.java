@@ -70,4 +70,7 @@ public interface CommunityService {
     public void updatePostHitUp (int postNo) throws Exception;
     public void addPostPic(Post post) throws Exception;
     public void updatePostPic(Post post) throws Exception;
+    // 73번부터 추가 0115 HHJ
+    public int addHeartTruck(Heart heart) throws Exception;
+    public int removeHeartTruck(Heart heart) throws Exception;
 }

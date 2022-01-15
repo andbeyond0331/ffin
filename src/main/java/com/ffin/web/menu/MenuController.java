@@ -771,7 +771,7 @@ public class MenuController {
     public ModelAndView getMenuList(@ModelAttribute("search") Search search,
                                     @RequestParam("truckId") String truckId,
                                   HttpServletResponse response,
-                                    ModelAndView modelAndView) throws Exception{
+                                    ModelAndView modelAndView,HttpSession session) throws Exception{
 
 //        File file = new File(FILE_UPLOAD_PATH, fileName);
 //        byte[] bytes = FileCopyUtils.copyToByteArray(file);
@@ -780,7 +780,8 @@ public class MenuController {
 //        response.setContentLength(bytes.length);
 
         search.setPageSize(pageSize);
-        Truck truck  = truckService.getTruck(truckId);
+        String userId = ((User)(session.getAttribute("user"))).getUserId();
+        Truck truck  = truckService.getTruck2(userId, truckId);
         float rvAvg = reviewService.getReviewAvg(search,truckId);
         int rvTotal = reviewService.getReviewTotalCount(search,truckId);
         truck.setTruckAVGStar(rvAvg);

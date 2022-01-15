@@ -46,7 +46,7 @@
 		<result property="truckSigMenuNo" 					column="truck_sig_menu_no" 						jdbcType="INTEGER"/>
 		<result property="truckSigMenuName" 					column="truck_sig_menu_name" 						jdbcType="VARCHAR"/>
 		<result property="truckSigMenuImg1" 					column="truck_sig_menu_img1" 						jdbcType="VARCHAR"/>
-
+<!--49라인추가 HHJ 0115--><result property="truckHeartCount" 					column="truck_heart_count" 						jdbcType="INTEGER"/>
 		<result property="truckSigMenuPrice"                column="menu_price"                   jdbcType="INTEGER"/>
 
 
@@ -371,5 +371,21 @@
 				</if>
 			</where>
 		</if> ) countTable
+	</select>
+	<!--0115 HHJ 수정 이라기 보다는 추가 -->
+	<!-- SQL :SELECT ONE-->
+	<select id="getTruck2"   parameterType="map"    resultMap="truckSelectMap" >
+		SELECT
+			t.TRUCK_ID, t.TRUCK_PASSWORD, t.TRUCK_CEO_NAME, t.TRUCK_CEO_BIRTH, t.TRUCK_ADDR, t.TRUCK_ADDR_DETAIL,
+			t.TRUCK_PHONE, t.TRUCK_EMAIL, t.TRUCK_NAME, t.TRUCK_BUSI_LICE, t.TRUCK_BUSI_NO, t.TRUCK_CATE, t.TRUCK_PRO_IMG,
+			t.TRUCK_CEO_INTRO, t.TRUCK_AVG_STAR, t.TRUCK_MAP_LA, t.TRUCK_MAP_LO, t.TRUCK_JOIN_REQ_STATUS,
+			t.TRUCK_JOIN_REQ_DATE, t.TRUCK_NOTICE_TITLE, t.TRUCK_NOTICE_CONTENT, t.TRUCK_NOTICE_IMG,
+			t.TRUCK_BYE_STATUS, t.TRUCK_BYE_REASON, t.TRUCK_BUSI_STATUS, t.TRUCK_REG_DATE, t.ROLE, t.TRUCK_HEART_COUNT, h.heart_no
+		FROM truck t LEFT OUTER JOIN heart AS h ON  t.truck_id = h.HEART_TARGET_T
+			and t.truck_id =  #{truckId}
+			AND h.HEART_USER_ID= #{userId}
+		GROUP BY t.truck_id
+		HAVING t.truck_id = #{truckId}
+
 	</select>
 </mapper>

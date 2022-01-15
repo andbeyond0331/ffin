@@ -357,4 +357,10 @@ public class TruckServiceImpl implements TruckService {
     public Truck getNotice(String truckId) throws Exception {
         return truckDao.getNotice(truckId);
     }
+    //HHJ 0115
+    // 푸드트럭 상세조회22222
+    @Override
+    public Truck getTruck2(String userId, String truckId) throws Exception {
+        return truckDao.getTruck2(userId, truckId);
+    }
 }

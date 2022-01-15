@@ -241,4 +241,12 @@ public class CommunityServiceImpl implements CommunityService {
     public void updatePostPic(Post post) throws Exception {
         communityDao.updatePostPic(post);
     }
+    // 244부터 추가 hhj
+    public int addHeartTruck( Heart heart) throws Exception {
+        return communityDao.addHeartTruck(heart);
+    }
+
+    public int removeHeartTruck(Heart heart) throws Exception {
+        return communityDao.removeHeartTruck(heart);
+    }
 }

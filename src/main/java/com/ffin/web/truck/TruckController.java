@@ -521,4 +521,32 @@ public class TruckController {
         return "forward:/views/truck/getSalesList.jsp";
 
     }
+    //HHJ 수정 0115
+    // 트럭조회
+    @RequestMapping(value = "getTruck2", method = RequestMethod.GET)
+    public ModelAndView getTruck2(HttpServletRequest request, ModelAndView m, HttpSession session) throws Exception {
+
+        System.out.println("TruckController.getTruck2 : GET");
+        String truckId = request.getParameter("truckId");
+
+        System.out.println("truckId = " + truckId);
+        Truck truck = new Truck() ;
+
+        if(session.getAttribute("role").equals("user")){
+           String userId = ((User)(session.getAttribute("user"))).getUserId();
+           truck = truckService.getTruck2(userId, truckId);
+            m.addObject("truck", truck);
+            m.setViewName("/views/truck/getTruck.jsp");
+
+        }else if(session.getAttribute("role").equals("admin")){
+            truck = truckService.getTruck(truckId);
+            m.addObject("truck", truck);
+            m.setViewName("/views/user/getTruckByAdmin.jsp");
+            return m;
+        }
+
+        // 이러면 truck이 못보는뎅?
+        // 일단 admin은 저거 가져가서 모하는지 물어봐야겟당..
+        return m;
+    }
 }

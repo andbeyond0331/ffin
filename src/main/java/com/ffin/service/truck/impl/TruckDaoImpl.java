@@ -268,4 +268,12 @@ public class TruckDaoImpl implements TruckDao {
         map.put("list", list);
         return map;
     }
+    // HHJ
+    @Override
+    public Truck getTruck2(String userId, String truckId) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("truckId", truckId);
+        return sqlSession.selectOne("TruckMapper.getTruck2", map);
+    }
 }

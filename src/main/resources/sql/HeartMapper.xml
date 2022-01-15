@@ -14,6 +14,7 @@
         <result property="heartFlag"        column="HEART_FLAG"         jdbcType="CHAR"/>
         <result property="heartUserId"      column="HEART_USER_ID"      jdbcType="VARCHAR"/>
         <result property="heartTruckId"      column="HEART_TRUCK_ID"      jdbcType="VARCHAR"/>
+
     </resultMap>
     <!--
         &lt;!&ndash; SQL : INSERT &ndash;&gt;
@@ -110,6 +111,44 @@
         where POST_NO=#{value}
     </select>
 
+    <!-- 114부터 추가 HHJ / 0115 / 아쉬운 점 애초에 post와 truck좋아요를 같이 설계하는걸 기억했다면 좀더 효율적으로 관리를 했을껀데
+    같은걸 중복으로 선언하고있다 ㅠㅠ 흠.....ㅠㅠㅠㅠㅠㅠ 그래서 서비스며 dao며 다 수정해야 하는게 너무 아쉽네에에에에 -->
 
+    <!-- 좋아요 추가 : TRUCK 의 좋아요 -->
+    <insert id="addHeartTruck" parameterType="heart">
+        insert into heart (heart_target_t, heart_type, heart_reg_date, heart_user_id)
+        values(#{heartTargetT}, 'T', now(), #{heartUserId})
+    </insert>
+
+    <!-- truck 의 좋아요 갯수 추가  -->
+    <update id="addHeartTruckCount" parameterType="String">
+        update truck
+        set
+            TRUCK_HEART_COUNT=TRUCK_HEART_COUNT+1
+        where TRUCK_ID=#{value}
+    </update>
+
+    <!-- truck의  좋아요 갯수 감소 -->
+    <update id="minusHeartTruckCount" parameterType="String">
+        update truck
+        set
+            TRUCK_HEART_COUNT=TRUCK_HEART_COUNT-1
+        where TRUCK_ID=#{value}
+    </update>
+
+
+    <!-- 좋아요 삭제 : truck-->
+    <delete id="removeTruckHeartT" parameterType="heart">
+        delete from heart
+        where HEART_TARGET_T=#{heartTargetT} and HEART_USER_ID=#{heartUserId}
+    </delete>
+
+
+    <!-- 좋아요 추가/삭제시 좋아요 갯수 가져오기 //// -->
+    <select id="heartTruckCountCheck" parameterType="String" resultType="int">
+        select TRUCK_HEART_COUNT
+        from TRUCK
+        where TRUCK_ID=#{value}
+    </select>
 </mapper>
 

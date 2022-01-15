@@ -110,5 +110,6 @@ public interface TruckService {
 
     // 공지 보기
     public Truck getNotice(String truckId) throws Exception ;
-
+//HHJ 0115
+public Truck getTruck2(String userId, String truckId) throws Exception ;
 }

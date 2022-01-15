@@ -40,5 +40,6 @@ public class Truck {
 	private String truckSigMenuImg1;
 	private int truckSigMenuPrice;
 	
-
+//43 추가 0115 HHJ
+	private int truckHeartCount;
 }

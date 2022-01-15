@@ -460,5 +460,52 @@ public class CommunityRestController {
     }
 
 
+/* 463부터 추가 HHJ 0115 트럭 좋아요 구현 */
+//하트 ADD
+@RequestMapping(value = "json/addHeartTruck")
+@ResponseBody
+public ModelAndView addHeartTruck(@RequestParam String truckId, HttpSession session) throws Exception {
+
+    Heart heart = new Heart();
+
+    // 좋아요 눌릴 truckId 세팅
+    heart.setHeartTargetT(truckId);
+
+    // truck은 못누르고 user만 누를 수 잇도록 해야함 이건 view에서 막도록. (노촐 자체를?)
+    // 그래서 userId 만 세팅하면 됨
+    heart.setHeartUserId(((User) session.getAttribute("user")).getUserId());
+
+
+    // +1된 하트 갯수를 담아오기위함
+    int heartCount = communityService.addHeartTruck(heart);
+    System.out.println("heartCount: "+heartCount);
+
+    ModelAndView mv = new ModelAndView("jsonView");
+    mv.addObject("heartCount", heartCount);
+    return mv;
+}
+
+    // 하트 해제
+    @RequestMapping(value = "json/removeHeartTruck")
+    @ResponseBody
+    public ModelAndView removeHeartTruck(@RequestParam String truckId, HttpSession session) throws Exception {
+
+        Heart heart = new Heart();
+        // 게시물 번호 세팅
+        // 좋아요 눌릴 truckId 세팅
+        heart.setHeartTargetT(truckId);
+
+        // truck은 못누르고 user만 누를 수 잇도록 해야함 이건 view에서 막도록. (노촐 자체를?)
+        // 그래서 userId 만 세팅하면 됨
+        heart.setHeartUserId(((User) session.getAttribute("user")).getUserId());
+
+
+        int heartCount = communityService.removeHeartTruck(heart);
+
+
+        ModelAndView mv = new ModelAndView("jsonView");
+        mv.addObject("heartCount", heartCount);
+        return mv;
+    }
 
 }

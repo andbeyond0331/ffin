@@ -431,6 +431,37 @@ public void updatePostHitUp (int postNo) throws Exception{
         sqlSession.update("PostMapper.updatePostPic", post);
     }
 
+// 434부터 추가 HHJ
+public int addHeartTruck(Heart heart) {
 
+    // 해당 게시물의 heart를 +1
+    sqlSession.update("HeartMapper.addHeartTruckCount", heart.getHeartTargetT());
+
+    // heart 테이블에 추가
+    int result =sqlSession.insert("HeartMapper.addHeartTruck", heart);
+
+    int heartCount =0; // 0으로 초기 세팅을 해도 되나.. 실패했을 때에도 걍 0으로 뜰껀데. 고민.
+    if (result == 1) {	// heart 테이블에 새로운 좋아요 추가가 성공한다면..
+        // 갱신된 하트 갯수를 가져옴
+        heartCount = sqlSession.selectOne("HeartMapper.heartTruckCountCheck", heart.getHeartTargetT());
+    }
+    return heartCount;
+}
+    public int removeHeartTruck(Heart heart) {
+
+        // 해당 게시물의 heart를 -1 한다.
+        sqlSession.update("HeartMapper.minusHeartTruckCount", heart.getHeartTargetT());
+        int result = sqlSession.delete("HeartMapper.removeTruckHeartT", heart);
+
+
+
+
+        int heartCount =0;
+        if (result == 1) {	// p_heart 테이블에 좋아요 삭제가 성공한다면..
+            // 갱신된 하트 갯수를 가져옴
+            heartCount = sqlSession.selectOne("HeartMapper.heartTruckCountCheck", heart.getHeartTargetT());
+        }
+        return heartCount;
+    }
 
 }
