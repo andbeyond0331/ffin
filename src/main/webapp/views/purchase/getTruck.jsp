@@ -15,7 +15,106 @@
 
             var modalApply = $('#exampleModalLong');
 
+//처음 로드했을 때 기존 세션 장바구니의 정보 가져와서 장바구니에 뿌리기
 
+            //  처음 화면에 담기
+
+            var targetCartFirst = $('div.sticky').find('ul'); //주문 목록 담길 장바구니
+
+            var beforeAnywayFirst = JSON.parse(sessionStorage.getItem("menuOdList")); //세션에 있는 애 가져와서 json파싱
+
+            for( var i in beforeAnywayFirst){
+                // console.log("beforeAnyway : " + beforeAnyway[i]);
+                for(var j in beforeAnywayFirst[i]){
+                    console.log(" 처음 화면에 뿌리기 전 점검 afterAnyway key : " +j+"/value : " + beforeAnywayFirst[i][j]);
+
+                }
+            } //세션에 있는 애 확인
+            //담을 li
+
+            var finalCartFirst = "";
+            var forOneFirst=0;
+
+            // ////////////시작///////////////////
+            if(beforeAnywayFirst) { // sessionStorage에 뭔가 있다?
+                console.log("처음 sessionStorage에 있다! 화면 뿌려주기 준비 시작!");
+                for (var i = 0; i < beforeAnywayFirst.length; i++) {//sessionStorage의 orderDetail만큼 for문 돌리기
+
+                    console.log("처음 for문 안에 있다!");
+                    console.log("처음 beforeAnywayFirst[" + i + "]번째 세션 : " + JSON.stringify(beforeAnywayFirst[i]));
+                    // finalCart += "<li class=\"list-group-item d-flex justify-content-between lh-sm\">"+
+                    //     "<div><h6 class=\"my-0\">"+beforeAnyway[i]['odMenuName']+"</h6>"+
+                    //     "<h6 class=\"my-0\">"+beforeAnyway[i]['odMenuQty']+"</h6>"+
+                    //     "<small class=\"text-muted\">"+beforeAnyway[i]['odOptionGroupName']+"</small>"+
+                    //     "<small class=\"text-muted\">"+beforeAnyway[i]['odOptionName']+"</small>"+
+                    //     "</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"</span></li>";
+
+                    if (beforeAnywayFirst[i]['odMenuQtyFlag'] == 0) {//플래그0일 때 메뉴 수량, 이름 출력
+                        // finalCartFirst += "" +
+                        //     "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
+                        //     "<div><h6 class=\"my-0\">" + beforeAnywayFirst[i]['odMenuName'] + "</h6>" +
+                        //     "<h6 class=\"my-0\">수량 : " + beforeAnywayFirst[i]['odMenuQty'] + "</h6>" +
+                        //     "";
+                        /*finalCartFirst += "" +
+                        "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
+                        "<div><h6 class=\"my-0\">" + beforeAnywayFirst[i]['odMenuName'] + "</h6>" +
+                        "<h6 class=\"my-0\">수량 : <input type='button' class='my-11' value='-' id='decreaseQuantity'>" +
+                        " <input type='text' id='numberUpDown' value='" + beforeAnywayFirst[i]['odMenuQty'] + "' size='2' max=''> " +
+                        "<input type='button' value='+' id='increaseQuantity'> </h6>" +
+                        "";*/
+
+                        /*수량 변경을 위해서 카운트추가*/
+                        finalCartFirst += "" +
+                            "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
+                            "<button type='button' class='close' id='cancelMenu'>"+
+                            "<span aria-hidden='true'>&times;</span></button>"+
+                            "<div><h6 class=\"my-0\">" + beforeAnywayFirst[i]['odMenuName'] + "</h6>" +
+                            "<h6 class=\"my-0\">수량 : <input type='button' class='my-11' value='-' id='decreaseQuantity'>" +
+                            "<input type='hidden' name='orderCount' value='"+i+"'>"+
+                            " <input type='text' id='numberUpDown' value='" + beforeAnywayFirst[i]['odMenuQty'] + "' size='1' max=''> " +
+                            "<input type='button' value='+' id='increaseQuantity'> </h6>" +
+                            "";
+                        forOneFirst += 1;
+                        if (beforeAnywayFirst[i + 1] != null) { //만약 다음 애가 있는데
+                            if (beforeAnywayFirst[i + 1]['odMenuQtyFlag'] == 0) { //수량제공메뉴이면(지금 이게 수량제공메뉴란 소리니까 닫아줘야함)
+                                finalCartFirst += "</div><span class=\"text-muted\">" + beforeAnywayFirst[i]['odMenuPrice'] + "원</span></li>";
+                            }
+
+                        }else{ //만약 다음 애가 없으면
+                            finalCartFirst += "</div><span class=\"text-muted\">" + beforeAnywayFirst[i]['odMenuPrice'] + "원</span></li>";
+                        }
+                    } else { //플래그 1일 때
+                        // for(var j=i+1; j<beforeAnyway.length; j++){ //옵션그룹 화면에 뿌려주기 위한 for문 (수량제공메뉴+1부터
+                        //     if(beforeAnyway[j]['odMenuQtyFlag']==1){
+                        finalCartFirst += "" +
+                            "<p></p>" +
+                            "<input type='hidden' name='orderCancelCount' value='"+i+"'>"+
+                            "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionGroupName'] + "</small> : " +
+                            "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionName'] + "</small> +" +
+                            "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionPrice'] + "원</small>";
+                        forOneFirst += 1;
+                        if (beforeAnywayFirst[i + 1] != null) {
+                            if (beforeAnywayFirst[i + 1]['odMenuQtyFlag'] == 0) {
+                                finalCartFirst += "</div><span class=\"text-muted\">" + beforeAnywayFirst[i]['odMenuPrice'] + "원</span></li>";
+                            }
+
+                        }
+
+                        // finalCart+="</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"원</span></li>";
+                        // i=forOne;
+
+
+                    }//sessionStorage만큼 for문 돌리기
+                }
+                console.log("하하"+targetCartFirst.html());
+                console.log("호호"+finalCartFirst);
+                targetCartFirst.html(finalCartFirst);
+            }
+
+
+            // location.reload();
+
+            //처음 화면에 담기 끝
 
             $(document).on("click", "#addCart", function(){
                 var menuOdList = [];
@@ -39,20 +138,22 @@
 
                 }
                 //수량 제공 역할 메뉴 만들기
+                /* alert("modalApply data-menuimg : " + modalApply.find('div[name="odMenuImg1"]').data('menuimg'));*/
 
                 var orderDetail = {
+                    menuTruckId : modalApply.find('h3[name="menuTruckId"]').text(),
                     odMenuNo : modalApply.find('div[name="odMenuNo"]').text(),
                     odMenuName : modalApply.find('div[name="odMenuName"]').text(),
-                    odMenuImg1 : modalApply.find('div[name="odMenuImg1"]').data('menuImg'),
+                    odMenuImg1 : modalApply.find('div[name="odMenuImg1"]').data('menuimg'),
                     odMenuDetail : modalApply.find('div[name="odMenuDetail"]').text(),
                     odMenuPrice : modalApply.find('div[name="odMenuPrice"]').text(),
                     odMenuQty : 1,
                     odMenuQtyFlag : 0,
-                    odOptionName : null,
-                    odOptionGroupNo : null,
-                    odOptionGroupName : null,
-                    odOptionNo : null,
-                    odOptionPrice : null
+                    odOptionName : '',
+                    odOptionGroupNo : '',
+                    odOptionGroupName : '',
+                    odOptionNo : '',
+                    odOptionPrice : 0,
                 };
                 //
                 // if(getItem!=null && getItem!=""){
@@ -68,6 +169,7 @@
                 //
                 // }
 
+
                 //alert("orderDetail : " + orderDetail);
 
                 //수량 제외 옵션그룹 정보 만들기
@@ -81,15 +183,16 @@
                 var odOptionGroupList = [];
 
                 ///////////////////////////
-                console.log("1111111111111111 : " + menuOdList);
+                //console.log("1111111111111111 : " + menuOdList);
                 ///////////////////////////
 
-                if(isThereOptionGroup){
+                if(isThereOptionGroup){ //만약 체크된 라디오 박스가 있다면
                     for (let i = 0; i < isThereOptionGroup; i++) {
                         var optionGroupOrderDetail = {
+                            menuTruckId : modalApply.find('h3[name="menuTruckId"]').text(),
                             odMenuNo : modalApply.find('div[name="odMenuNo"]').text(),
                             odMenuName : modalApply.find('div[name="odMenuName"]').text(),
-                            odMenuImg1 : modalApply.find('div[name="odMenuImg1"]').data('menuImg'),
+                            odMenuImg1 : modalApply.find('div[name="odMenuImg1"]').data('menuimg'),
                             odMenuDetail : modalApply.find('div[name="odMenuDetail"]').text(),
                             odMenuPrice : modalApply.find('div[name="odMenuPrice"]').text(),
                             odMenuQty : 1,
@@ -107,75 +210,75 @@
                     }
                 }
 ///////////////////////////
-                console.log("22222222222222222222 : " + menuOdList);
+                //console.log("22222222222222222222 : " + menuOdList);
                 var didYouAdd = 0; //session에 add했는지 여부
 
                 ///////////////////////////
                 if(!isThereOptionGroup){///////추가하고자 하는 옵션그룹==0일 때
-                    if(originalSession.length){
+                    if(originalSession.length){//세션 널체크
                         // if(isThereOptionGroup==0 && originalSession!=0 &&originalSession!=null){
 
                         if(originalSession.length==1){// 만약 session의 od 갯수가 1일 때
                             /// 1-1. 지금 담으려고 하는 수량 정보 제공 메뉴랑 od가 1개인 애의 menuNo 비교 - 같을 때
                             if(originalSession[0]['odMenuNo']==orderDetail['odMenuNo']){
                                 // 수량 추가
-                                console.log("1-1 : 수량 추가 이전 ="+originalSession[0]['odMenuQty']);
+                                //console.log("1-1 : 수량 추가 이전 ="+originalSession[0]['odMenuQty']);
                                 orderDetail['odMenuQty']=originalSession[0]['odMenuQty']+1;
-                                console.log("1-1 : 수량 추가 이후 ="+orderDetail['odMenuQty']);
+                                //console.log("1-1 : 수량 추가 이후 ="+orderDetail['odMenuQty']);
                                 //수량 추가된 메뉴를 list의 첫번째 요소와 바꾼다.(어차피 하나)
-                                console.log("1-1 : list 첫번째 요소 바꾸기 전 : "  +menuOdList[0]);
+                                //console.log("1-1 : list 첫번째 요소 바꾸기 전 : "  +menuOdList[0]);
                                 menuOdList[0]=(orderDetail);
-                                console.log("1-1 : list 첫번째 요소 바꾼 후 : "  +menuOdList[0]);
+                                //console.log("1-1 : list 첫번째 요소 바꾼 후 : "  +menuOdList[0]);
                                 //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.(겉으로는 수량이 추가된 것
                                 sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
                                 didYouAdd++;
-                                console.log("didYouAdd(1 초과 불가) : "+didYouAdd );
+                                //console.log("didYouAdd(1 초과 불가) : "+didYouAdd );
 
-                                console.log("1-1. 수량 추가 로직 끝"); //완료
+                                //console.log("1-1. 수량 추가 로직 끝"); //완료
                             }
                             else{/// 1-2. 지금 담으려고 하는 수량 정보 제공 메뉴랑 od가 1개인 애의 menuNo 비교 - 다를 때
                                 // 원래 있던 session에 수량 정보 제공 메뉴 하나 더 담기
-                                console.log("1-2 : 하나 더 담기 이전 ="+JSON.stringify(menuOdList[0]));
+                                // console.log("1-2 : 하나 더 담기 이전 ="+JSON.stringify(menuOdList[0]));
                                 menuOdList.push(orderDetail);
-                                console.log("1-2 : 하나 더 담기 이후 ="+JSON.stringify(menuOdList[0]));
+                                //console.log("1-2 : 하나 더 담기 이후 ="+JSON.stringify(menuOdList[0]));
 
                                 //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.(겉으로는 수량이 추가된 것
                                 sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
                                 didYouAdd++;
-                                console.log("didYouAdd(1 초과 불가) : "+didYouAdd );
+                                //console.log("didYouAdd(1 초과 불가) : "+didYouAdd );
 
-                                console.log("1-2. 하나 더 담기 로직 끝"); //완료
+                                //console.log("1-2. 하나 더 담기 로직 끝"); //완료
                                 /////////////////
-                                console.log("3333333333333333 : " + menuOdList);
+                                //console.log("3333333333333333 : " + menuOdList);
                             }
                         }// 만약 session의 od 갯수가 1일 때 끝 - 완료
 
                         else{// 만약 session의 od 갯수가 1과 0이 아닐 때 (0인 경우는 한 단계 outer에 있음 - null check 시
-                            console.log("@@@@@@i : "  +i  );
-                            console.log("$$$$originalSession.length : " +originalSession.length);
+                            //console.log("@@@@@@i : "  +i  );
+                            //console.log("$$$$originalSession.length : " +originalSession.length);
                             //qtyFlag가 0인 애 찾기
                             for(var i=0; i<originalSession.length;i++){//qtyFlag가 0인 애가 있으면서 추가 메뉴와 같을 때 이 안에서 session 저장 끝남
                                 if(i===originalSession.length-1){// 마지막 요소
-                                    console.log("@@@@@@i :  마지막요소 : "  +i  );
-                                    console.log("$$$$originalSession.length : " +originalSession.length);
+                                    //console.log("@@@@@@i :  마지막요소 : "  +i  );
+                                    //console.log("$$$$originalSession.length : " +originalSession.length);
                                     if(originalSession[i]['odMenuQtyFlag']===0){ //2.마지막 요소가 수량 제공 메뉴일 때
-                                        console.log("!!!!!!!!!!!!1originalSession["+i+"]['odMenuNo'] : " + JSON.stringify(originalSession)[i]['odMenuNo']);
-                                        console.log("!!!!!!!!!!!!orderDetail["+i+"]['odMenuNo'] : " + JSON.stringify(orderDetail)[i]['odMenuNo']);
+                                        //console.log("!!!!!!!!!!!!1originalSession["+i+"]['odMenuNo'] : " + JSON.stringify(originalSession)[i]['odMenuNo']);
+                                        //console.log("!!!!!!!!!!!!orderDetail["+i+"]['odMenuNo'] : " + JSON.stringify(orderDetail)[i]['odMenuNo']);
                                         if(originalSession[i]['odMenuNo']===orderDetail['odMenuNo']){ //2-1.마지막 요소가 추가할 수량 제공 메뉴와 같을 때
                                             // 수량 추가
-                                            console.log("2-1 : 수량 추가 이전 ="+originalSession[i]['odMenuQty']);
+                                            //console.log("2-1 : 수량 추가 이전 ="+originalSession[i]['odMenuQty']);
                                             orderDetail['odMenuQty']=originalSession[i]['odMenuQty']+1;
-                                            console.log("2-1 : 수량 추가 이후 ="+orderDetail['odMenuQty']);
+                                            //console.log("2-1 : 수량 추가 이후 ="+orderDetail['odMenuQty']);
                                             //수량 추가된 메뉴를 list의 마지막 요소와 바꾼다.
-                                            console.log("2-1 : list 마지막 요소 바꾸기 전 : "  +menuOdList[i]);
+                                            //console.log("2-1 : list 마지막 요소 바꾸기 전 : "  +menuOdList[i]);
                                             menuOdList[i]=(orderDetail);
-                                            console.log("2-1 : list 마지막 요소 바꾼 후 : "  +menuOdList[i]);
+                                            //console.log("2-1 : list 마지막 요소 바꾼 후 : "  +menuOdList[i]);
                                             //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.(겉으로는 수량이 추가된 것
                                             sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
                                             didYouAdd++;
-                                            console.log("didYouAdd(1 초과 불가) : "+didYouAdd );
+                                            //console.log("didYouAdd(1 초과 불가) : "+didYouAdd );
 
-                                            console.log("2-1. 마지막 요소 수량 추가 로직 끝");
+                                            //console.log("2-1. 마지막 요소 수량 추가 로직 끝");
 
                                         }//2-1.마지막 요소가 수량 제공 메뉴와 같을 때 끝
 
@@ -185,19 +288,19 @@
                                     if(originalSession[i+1]!=null && originalSession[i]['odMenuNo']!=originalSession[i+1]['odMenuNo']){//3-1. 옵션그룹이 없는 메뉴이면,
                                         if(originalSession[i]['odMenuNo']==orderDetail['odMenuNo']){//3-1-1.추가할 메뉴랑 같을 때
                                             // 수량 추가
-                                            console.log("3-1-1 : 수량 추가 이전 ="+originalSession[i]['odMenuQty']);
+                                            //console.log("3-1-1 : 수량 추가 이전 ="+originalSession[i]['odMenuQty']);
                                             orderDetail['odMenuQty']=originalSession[i]['odMenuQty']+1;
-                                            console.log("3-1-1 : 수량 추가 이후 ="+orderDetail['odMenuQty']);
+                                            //console.log("3-1-1 : 수량 추가 이후 ="+orderDetail['odMenuQty']);
                                             //수량 추가된 메뉴를 list의 요소와 바꾼다.
-                                            console.log("3-1-1 : list 요소 바꾸기 전 : "  +menuOdList[i]);
+                                            //console.log("3-1-1 : list 요소 바꾸기 전 : "  +menuOdList[i]);
                                             menuOdList[i]=(orderDetail);
-                                            console.log("3-1-1 : list 요소 바꾼 후 : "  +menuOdList[i]);
+                                            //console.log("3-1-1 : list 요소 바꾼 후 : "  +menuOdList[i]);
                                             //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.(겉으로는 수량이 추가된 것
                                             sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
                                             didYouAdd++;
-                                            console.log("didYouAdd(1 초과 불가) : "+didYouAdd );
+                                            //console.log("didYouAdd(1 초과 불가) : "+didYouAdd );
 
-                                            console.log("3-1-1. 요소 수량 추가 로직 끝");
+                                            //console.log("3-1-1. 요소 수량 추가 로직 끝");
 
                                         }//3-1-1.추가할 메뉴랑 같을 때 끝
                                         else{//3-1-2. 추가할 메뉴랑 다를 때
@@ -208,24 +311,24 @@
                                 }//3. 마지막 요소가 아니면서 수량제공메뉴일 때 끝
                             }//qtyFlag가 0인 애가 있으면서 추가 메뉴와 같을 때 이 안에서 session 저장 끝남
 ///////////////////////////
-                            console.log("44444444444444444444444444 : " + menuOdList);
+                            //console.log("44444444444444444444444444 : " + menuOdList);
                             ///////////////////////////
-                            console.log("didYouAdd(1 초과 불가) : "+didYouAdd );
+                            //console.log("didYouAdd(1 초과 불가) : "+didYouAdd );
                             if(didYouAdd==0){//4.만약 세션에 추가메뉴가 저장되지 않았다면
 
                                 // 원래 있던 session에 수량 정보 제공 메뉴 하나 더 담기
-                                console.log("4 : 하나 더 담기 이전 ="+JSON.stringify(menuOdList));
+                                //console.log("4 : 하나 더 담기 이전 ="+JSON.stringify(menuOdList));
                                 menuOdList.push(orderDetail);
-                                console.log("4 : 하나 더 담기 이후 ="+JSON.stringify(menuOdList));
+                                //console.log("4 : 하나 더 담기 이후 ="+JSON.stringify(menuOdList));
 
                                 //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.
                                 sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
 
-                                console.log("4. 하나 더 담기 로직 끝");
+                                //console.log("4. 하나 더 담기 로직 끝");
                             }//4.만약 세션에 추가메뉴가 저장되지 않았다면 끝
 
 ///////////////////////////
-                            console.log("5555555555555555 : " + menuOdList);
+                            //console.log("5555555555555555 : " + menuOdList);
                             ///////////////////////////
                         }// 만약 session의 od 갯수가 1과 0이 아닐 때 끝
 
@@ -233,19 +336,19 @@
                     else {///만약 session의 od 갯수가 0일 때
                         //list에 수량 정보 제공 메뉴 넣고 session에 담기
                         if(didYouAdd==0) {
-                            console.log("////1111///////orderDetail : " + JSON.stringify(orderDetail));
-                            console.log("//////11111111/////menuOdList : " + JSON.stringify(menuOdList));
+                            //console.log("////1111///////orderDetail : " + JSON.stringify(orderDetail));
+                            //console.log("//////11111111/////menuOdList : " + JSON.stringify(menuOdList));
                             menuOdList.push(orderDetail);
                             sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
                             didYouAdd++;
-                            console.log("didYouAdd : " +didYouAdd);
+                            //console.log("didYouAdd : " +didYouAdd);
 
                             var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
 
                             for( var i in beforeAnyway){
                                 // console.log("beforeAnyway : " + beforeAnyway[i]);
                                 for(var j in beforeAnyway[i]){
-                                    console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
+                                    //console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
 
                                 }
                             }
@@ -255,219 +358,380 @@
                     }///만약 session의 od 갯수가 0일 때 끝
                 }///////추가하고자 하는 옵션그룹==0일 때 끝
 ///////////////////////////
-                console.log("666666666666666666 : " + menuOdList);
+                //console.log("666666666666666666 : " + menuOdList);
                 ///////////////////////////
 
                 ///////////////////////////추가하고자 하는 옵션그룹이 없고(위)있고 (아래)
                 var didYouAddOp = 0; //session에 add했는지 여부
                 if(isThereOptionGroup ){///////추가하고자 하는 옵션그룹!=0일 때
-                    console.log("가");
-                    if(originalSession.length){ //세션에 담긴 애가 있을 때
-                        console.log("가가");
-                        if(originalSession.length==1){//aaa. 만약 session의 od 갯수가 1일 때
-                            console.log("가가가");
-                            // 원래 있던 session에 수량 정보 제공 메뉴랑 옵션 담기
-                            console.log("aaa : 담기 이전 ="+JSON.stringify(menuOdList));
-                            menuOdList.push(orderDetail);
-                            console.log("aaa : 담기 이후 ="+JSON.stringify(menuOdList));
-                            // 원래 있던 session에 수량 정보 제공 메뉴 하나 더 담기
-                            console.log("aaa : 옵션 더 담기 이전 ="+JSON.stringify(menuOdList));
+                    //console.log("가");
+                    // if(originalSession.length){ //세션에 담긴 애가 있을 때
+                    //console.log("가가");
+                    if(originalSession.length==1){//aaa. 만약 session의 od 갯수가 1일 때
+                        // console.log("가가가");
+                        // 원래 있던 session에 수량 정보 제공 메뉴랑 옵션 담기
+                        //console.log("aaa : 담기 이전 ="+JSON.stringify(menuOdList));
+                        menuOdList.push(orderDetail);
+                        //console.log("aaa : 담기 이후 ="+JSON.stringify(menuOdList));
+                        // 원래 있던 session에 수량 정보 제공 메뉴 하나 더 담기
+                        //console.log("aaa : 옵션 더 담기 이전 ="+JSON.stringify(menuOdList));
 
-                            for(var i=0; i<odOptionGroupList.length; i++){
-                                menuOdList.push(odOptionGroupList[i]);
-                            }
+                        for(var i=0; i<odOptionGroupList.length; i++){
+                            menuOdList.push(odOptionGroupList[i]);
+                        }
 
-                            console.log("aaa : 옵션 더 담기 이후 ="+JSON.stringify(menuOdList));
-
-
-                            //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.
-                            sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
-                            didYouAddOp++;
-                            console.log("didYouAddOp(1 초과 불가) : "+didYouAddOp );
-                            console.log("aaa. 담기 로직 끝"); //완료
-
-                        }// 만약 session의 od 갯수가 1일 때 끝 - 완료
+                        //console.log("aaa : 옵션 더 담기 이후 ="+JSON.stringify(menuOdList));
 
 
+                        //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.
+                        sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
+                        didYouAddOp++;
+                        //console.log("didYouAddOp(1 초과 불가) : "+didYouAddOp );
+                        //console.log("aaa. 담기 로직 끝"); //완료
 
-                        else{// 만약 session의 od 갯수가 1과 0이 아닐 때 (0인 경우는 한 단계 outer에 있음 - null check 시
-                            console.log("가가가가");
-                            //qtyFlag가 0인 애 찾기
-                            for(var i=0; i<originalSession.length;i++){//qtyFlag가 0인 애가 있으면서 추가 메뉴와 같을 때 이 안에서 session 저장 끝남
-                                if(originalSession[i]['odMenuQtyFlag']==0){//세션에 담긴 애 중 수량제공메뉴일 때
-                                    console.log("//세션에 담긴 애 중 수량제공메뉴일 때 i : " +i);
+                    }// 만약 session의 od 갯수가 1일 때 끝 - 완료
 
+                        //
+                    //
+                    else if(originalSession.length>1){// 만약 session의 od 갯수가 1과 0이 아닐 때 (0인 경우는 한 단계 outer에 있음 - null check 시
+                        //console.log("가가가가");
+                        //qtyFlag가 0인 애 찾기
+                        //
+                        //     var arrayMenuZero = []; //수량제공메뉴 파악해서 모아두기
+                        //     for(var zero=0; zero<originalSession.length; zero++){
+                        //         if(originalSession[zero]['odMenuQtyFlag']===0){
+                        //
+                        //             arrayMenuZero.push(zero);
+                        //         }
+                        //     }
+                        //     console.log("00000");
+                        //     console.log("00000arrayMenuZero : " + arrayMenuZero);
+                        //     console.log("00000");
+                        //
+                        //     var arrayMatch = [];
+                        //
+                        //
+                        //     if(arrayMenuZero.length>1){
+                        //         for(var match=0; match<arrayMenuZero.length-1; match++){
+                        //             // arrayMenuZero[match+1]*=1;
+                        //             // arrayMenuZero[match]*=1;
+                        //             arrayMatch.push(arrayMenuZero[match+1]-arrayMenuZero[match]-1);
+                        //         }
+                        //     }else{
+                        //         arrayMatch.push(isThereOptionGroup);
+                        //     }
+                        //
+                        //     console.log("11111");
+                        //     console.log("11111arrayMatch : " + arrayMatch);
+                        //     console.log("11111");
+                        //
+                        //     var hard = 0;
+                        //     var comparisonTarget = []; //여기에 옵션그룹 수가 같아서 비교 대상이 되는 수량제공메뉴의 순서가 들어감
+                        //
+                        //     if(arrayMatch!=0){
+                        //         for(var aOrB=0; aOrB<arrayMatch.length; aOrB++){
+                        //             if(isThereOptionGroup===arrayMatch[aOrB]){
+                        //                 ++hard;
+                        //                 comparisonTarget.push(arrayMenuZero[aOrB]);
+                        //
+                        //             }
+                        //         }
+                        //     }else {
+                        //         if (isThereOptionGroup === originalSession.length - 1) {
+                        //             ++hard;
+                        //         }
+                        //     }
+                        //
+                        //
+                        //
+                        //     console.log("22222");
+                        //     console.log("22222comparisonTarget : " + comparisonTarget);
+                        //     console.log("22222");
+                        //
+                        //     console.log("hard : " +hard);
+                        //
+                        //     // hard가 0일 때 그냥 단순 push 하면 되고, 0이 아닐 때는 comparisonTarget에 담긴 순서에 있는 애를 비교
+                        //     if(hard===0){ //단순 올리기
+                        //         ///////////////////////////////
+                        //         // 원래 있던 session에 수량 정보 제공 메뉴 하나 더 담기
+                        //         console.log("hard가 0일 때 : " +hard);
+                        //         menuOdList.push(orderDetail);
+                        //
+                        //         if(isThereOptionGroup!=0){
+                        //             for(var i=0; i<odOptionGroupList.length; i++){
+                        //                 menuOdList.push(odOptionGroupList[i]);
+                        //             }
+                        //         }
+                        //         //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.
+                        //         sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
+                        //
+                        //     }else{ // comparisonTarget에 담긴 순서에 있는 애를 추가할 메뉴랑 비교
+                        //         console.log("else");
+                        //         console.log("originalSession.length" + originalSession.length);
+                        //         for(var compa=0; compa<originalSession.length; compa++){ //
+                        //             console.log("안에 들어왔다! compa : " + compa);
+                        //             // console.log(comparisonTarget.length);
+                        //             for(var tar=0; tar<comparisonTarget.length; tar++){
+                        //                 console.log("comparisonTarget[tar] : " + comparisonTarget[tar]);
+                        //                 console.log("compa : " + compa);
+                        //                 if(comparisonTarget[tar]===compa){//여기까지가 비교대상인지 아닌지 거르기 (compa== 세션에서의 비교대상 수량제공메뉴 순번
+                        //                     console.log("옵션그룹 수만 따졌을 땐 비교대상이로군");
+                        //                     if(originalSession[compa]['odMenuNo']===orderDetail['odMenuNo']){ //수량제공메뉴가 같은지
+                        //                         console.log("수량 제공 메뉴와 추가 메뉴의 메뉴 넘버가 같군");
+                        //                         var optionSame = 0;
+                        //                         console.log("tar : " + tar);
+                        //                         console.log("comparisonTarget[tar+1] : " + comparisonTarget[tar]);
+                        //                         for(var order=compa+1;order<comparisonTarget[tar]+1;order++){//옵션no 같은지
+                        //                             // console.log(originalSession[order]['odOptionNo'])
+                        //                             console.log(order-compa-1)
+                        //                             if(originalSession[order]['odOptionNo']===odOptionGroupList[order-compa-1]){//옵션no 같으면 optionSame에 1추가
+                        //                                 optionSame++;
+                        //                             }
+                        //                         }//for문 다 돌아가고 optionSame이 isthereOptionGroup과 같은지 비교
+                        //                         console.log("optionSame : " + optionSame);
+                        //                         console.log("isThereOptionGroup : " + isThereOptionGroup);
+                        //
+                        //                         if(optionSame!=0 && optionSame===isThereOptionGroup){ //드디어 같다면 수량추가
+                        //                             console.log("수량추가를 할 만큼 충분히 같군.");
+                        //                             ///////////////////////////////수량추가
+                        //                             orderDetail['odMenuQty']=originalSession[compa]['odMenuQty']+1;
+                        //                             //수량 추가된 메뉴를 list의 요소와 바꾼다.
+                        //                             menuOdList[compa]=(orderDetail);
+                        //                             console.log("ccc : list 요소 바꾼 후 : "  +JSON.stringify(menuOdList[compa]));
+                        //                             //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.(겉으로는 수량이 추가된 것
+                        //                             // if(isThereOptionGroup!=1){
+                        //                                 for(var c=0; c<isThereOptionGroup; c++){
+                        //                                     menuOdList[compa+c+1]=odOptionGroupList[c];
+                        //                                 }
+                        //                             // }else{
+                        //                             //     menuOdList[compa+1]=odOptionGroupList[0];
+                        //                             //     //console.log("1개일 때");
+                        //                             // }
+                        //                             sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
+                        //
+                        //                             break;
+                        //                         }//!!!!!!!!!!!!!!!
+                        //                         else{//옵션이 다르면 단순 올리기
+                        //                             ///////////////////////////////
+                        //                             menuOdList.push(orderDetail);
+                        //
+                        //                             if(isThereOptionGroup!=0){
+                        //                                 for(var i=0; i<odOptionGroupList.length; i++){
+                        //                                     menuOdList.push(odOptionGroupList[i]);
+                        //                                 }
+                        //                             }
+                        //                             //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.
+                        //                             sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
+                        //                             break;
+                        //                         }
+                        //                     }
+                        //                     else{//수량제공메뉴랑 다르면 단순 올리기
+                        //                         ///////////////////////////////
+                        //                         menuOdList.push(orderDetail);
+                        //
+                        //                         if(isThereOptionGroup!=0){
+                        //                             for(var i=0; i<odOptionGroupList.length; i++){
+                        //                                 menuOdList.push(odOptionGroupList[i]);
+                        //                             }
+                        //                         }
+                        //                         //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.
+                        //                         sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
+                        //                         break;
+                        //                     }
+                        //
+                        //                 }else{//비교대상 아니라면 단순 담기
+                        //                     ///////////////////////////////
+                        //                     console.log("비교대상 아님");
+                        //                     menuOdList.push(orderDetail);
+                        //
+                        //                     if(isThereOptionGroup!=0){
+                        //                         for(var i=0; i<odOptionGroupList.length; i++){
+                        //                             menuOdList.push(odOptionGroupList[i]);
+                        //                         }
+                        //                     }
+                        //                     //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.
+                        //                     sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
+                        //                     break;
+                        //                 }
+                        //             }
+                        //         }
+                        //     }
 
+                        for(var i=0; i<originalSession.length;i++){//qtyFlag가 0인 애가 추가 메뉴&옵션 갯수와 이름까지 같을 때 이 안에서 session 저장 끝남
+                            if(originalSession[i]['odMenuQtyFlag']==0){//세션에 담긴 애 중 수량제공메뉴일 때
+                                //console.log("//세션에 담긴 애 중 수량제공메뉴일 때 i : " +i);
 
-                                    if(originalSession[i+1]!=null && originalSession[i]['odMenuNo']==originalSession[i+1]['odMenuNo']){//bbb. 세션에 옵션그룹이 있는 메뉴
-                                        console.log("cccccccccccccccc");
-                                        console.log("////bbb. 옵션그룹이 있는 메뉴 i : " +i);
-                                        console.log("추가할 메뉴랑 no 같은가");
-                                        console.log("메뉴 no 같은지 확인 : " +originalSession[i]['odMenuNo']+"==="+orderDetail['odMenuNo']);
-                                        if(originalSession[i]['odMenuNo']===orderDetail['odMenuNo']){//추가할 메뉴랑 같을 때
-                                            console.log("추가할 메뉴랑 no 같을 때");
-                                            console.log("메뉴 no 같은지 확인 : " +originalSession[i]['odMenuNo']+"==="+orderDetail['odMenuNo']);
-                                            console.log("i="+i);
-                                            var isItSame = 0;
-                                            for(var k=i+1; k<i+originalSession.length; k++){
-                                                console.log("///////////originalSession json parse"+k+" : "+JSON.stringify(originalSession[k]));
-                                            }
+                                if(originalSession[i+1]!=null
+                                    && originalSession[i]['odMenuNo']==originalSession[i+1]['odMenuNo']
+                                    && originalSession[i+1]['odMenuQtyFlag']==1){//bbb. 세션에 옵션그룹이 있는 메뉴
+                                    //console.log("cccccccccccccccc");
+                                    //console.log("////bbb. 옵션그룹이 있는 메뉴 i : " +i);
+                                    //console.log("추가할 메뉴랑 no 같은가");
+                                    //console.log("메뉴 no 같은지 확인 : " +originalSession[i]['odMenuNo']+"==="+orderDetail['odMenuNo']);
+                                    if(originalSession[i]['odMenuNo']===orderDetail['odMenuNo']){//추가할 메뉴랑 같을 때
+                                        //console.log("추가할 메뉴랑 no 같을 때");
+                                        //console.log("메뉴 no 같은지 확인 : " +originalSession[i]['odMenuNo']+"==="+orderDetail['odMenuNo']);
+                                        //console.log("i="+i);
+                                        var isItSame = 0;
+                                        // for(var k=i+1; k<i+originalSession.length; k++){
+                                        //     //console.log("///////////originalSession json parse"+k+" : "+JSON.stringify(originalSession[k]));
+                                        // }
 
-                                            if(isThereOptionGroup!=1){//추가할 옵션그룹 수가 1이 아닐 때
-                                                for(var f=i+1; f<i+originalSession.length; f++) {
+                                        if(isThereOptionGroup!=1){//추가할 옵션그룹 수가 1이 아닐 때
+                                            for(var f=i+1; f<i+originalSession.length; f++) {
 
-                                                    if(originalSession[f]!=null && originalSession[f]['odMenuQtyFlag']!=0) {
-                                                        isItSame++;
-                                                        console.log(isItSame + " : isItSame");
-                                                        console.log(isThereOptionGroup + " : isThereOptionGroup");
+                                                if(originalSession[f]!=null && originalSession[f]['odMenuQtyFlag']!=0) {
+                                                    isItSame++;
+                                                    // console.log(isItSame + " : isItSame");
+                                                    //console.log(isThereOptionGroup + " : isThereOptionGroup");
 
-                                                    }else {
-                                                        console.log("break;");
-                                                        break;
+                                                }else {
+                                                    //console.log("break;");
+                                                    break;
 
-                                                    }
                                                 }
-                                            }else{//추가할 옵션그룹 수가 1일 때
-                                                if(originalSession[i+2]!=null){
-                                                    if(originalSession[i+2]['odMenuQtyFlag']===1){
-                                                        isItSame++;
-                                                    }
-                                                }else{
+                                            }
+                                        }else{//추가할 옵션그룹 수가 1일 때
+                                            if(originalSession[i+2]!=null){
+                                                if(originalSession[i+2]['odMenuQtyFlag']===1){
                                                     isItSame++;
                                                 }
-
+                                            }else{
+                                                isItSame++;
                                             }
-                                            console.log("111111111111111isItSame : " + isItSame);
-                                            console.log("111111111111111111111isThereOptionGroup : " + isThereOptionGroup);
-                                            if(isItSame===isThereOptionGroup) { //옵션그룹의 수 같은가?
-                                                var isItReallySame =0;
-                                                if(isThereOptionGroup!=1){ //추가하려는 옵션그룹&비교대상 옵션그룹 수가 1이 아닐 때
-                                                    for(var a = i+1; a<i+isItSame+1; a++) {
-                                                        console.log("제발 111111111111");
 
-                                                        if(originalSession[a]['odOptionNo']===odOptionGroupList[a-i-1]['odOptionNo']) {
-                                                            console.log("제발 222222222222222222");
-                                                            console.log("///////////originalSession json parse"+a+" : "+JSON.stringify(originalSession[a]));
-                                                            console.log("///////////odOptionGroupList json parse"+(a-i-1)+" : "+JSON.stringify(odOptionGroupList[a-i-1]));
+                                        }
+                                        //console.log("111111111111111isItSame : " + isItSame);
+                                        //console.log("111111111111111111111isThereOptionGroup : " + isThereOptionGroup);
+                                        if(isItSame===isThereOptionGroup) { //옵션그룹의 수 같은가?
+                                            var isItReallySame =0;
+                                            if(isThereOptionGroup!=1){ //추가하려는 옵션그룹&비교대상 옵션그룹 수가 1이 아닐 때
+                                                for(var a = i+1; a<i+isItSame+1; a++) {
+                                                    //console.log("제발 111111111111");
 
+                                                    if(originalSession[a]['odOptionNo']===odOptionGroupList[a-i-1]['odOptionNo']) {
+                                                        //console.log("제발 222222222222222222");
+                                                        //console.log("///////////originalSession json parse"+a+" : "+JSON.stringify(originalSession[a]));
+                                                        //console.log("///////////odOptionGroupList json parse"+(a-i-1)+" : "+JSON.stringify(odOptionGroupList[a-i-1]));
+
+                                                        isItReallySame++;
+                                                    }//옵션그룹의 옵션 넘버가 다 같은가?
+                                                }
+                                            }else{//추가하려는 옵션그룹&비교대상 옵션그룹 수가 1일 때
+                                                //console.log("제발 3333333333333");
+                                                //console.log( " i : " + i);
+                                                if(originalSession[i+1]!=null){//널체크
+                                                    //console.log("제발 444444444444444");
+                                                    //console.log( " i : " + i);
+                                                    //console.log("JSON.stringify(originalSession["+i+1+"])"+(originalSession)[i+1]['odOptionNo']);
+                                                    //console.log("JSON.stringify(odOptionGroupList[0])"+(odOptionGroupList)[0]['odOptionNo']);
+                                                    if(originalSession[i+1]['odOptionNo']===odOptionGroupList[0]['odOptionNo']) {
+                                                        isItReallySame++;
+                                                        //console.log("제발 55555555555555");
+                                                    }//옵션그룹의 옵션 넘버가 다 같은가?
+
+                                                }else{
+                                                    //console.log("제발 66666666666");
+                                                    for(var a = i+1; a<i+isItSame; a++) {
+                                                        //console.log("제발 777777777777777");
+                                                        if(originalSession[a]['odOptionNo']===optionGroupOrderDetail['odOptionNo']) {
+                                                            //console.log("제발 88888888888888");
                                                             isItReallySame++;
                                                         }//옵션그룹의 옵션 넘버가 다 같은가?
                                                     }
-                                                }else{//추가하려는 옵션그룹&비교대상 옵션그룹 수가 1일 때
-                                                    console.log("제발 3333333333333");
-                                                    console.log( " i : " + i);
-                                                    if(originalSession[i+1]!=null){//널체크
-                                                        console.log("제발 444444444444444");
-                                                        console.log( " i : " + i);
-                                                        console.log("JSON.stringify(originalSession["+i+1+"])"+(originalSession)[i+1]['odOptionNo']);
-                                                        console.log("JSON.stringify(odOptionGroupList[0])"+(odOptionGroupList)[0]['odOptionNo']);
-                                                        if(originalSession[i+1]['odOptionNo']===odOptionGroupList[0]['odOptionNo']) {
-                                                            isItReallySame++;
-                                                            console.log("제발 55555555555555");
-                                                        }//옵션그룹의 옵션 넘버가 다 같은가?
-
-                                                    }else{
-                                                        console.log("제발 66666666666");
-                                                        for(var a = i+1; a<i+isItSame; a++) {
-                                                            console.log("제발 777777777777777");
-                                                            if(originalSession[a]['odOptionNo']===optionGroupOrderDetail['odOptionNo']) {
-                                                                console.log("제발 88888888888888");
-                                                                isItReallySame++;
-                                                            }//옵션그룹의 옵션 넘버가 다 같은가?
-                                                        }
-                                                    }
-                                                }
-
-                                                console.log("111111111111111isItReallySame : " + isItReallySame);
-                                                console.log("111111111111111111111isThereOptionGroup : " + isThereOptionGroup);
-
-                                                if(isItReallySame===isThereOptionGroup ) {//ccc. 옵션그룹들도 다 똑같으면
-                                                    // 수량 추가
-                                                    console.log("ccc : 수량 추가 이전 ="+originalSession[i]['odMenuQty']);
-                                                    orderDetail['odMenuQty']=originalSession[i]['odMenuQty']+1;
-                                                    console.log("ccc : 수량 추가 이후 ="+orderDetail['odMenuQty']);
-                                                    //수량 추가된 메뉴를 list의 요소와 바꾼다.
-                                                    console.log("ccc : list 요소 바꾸기 전 : "  +JSON.stringify(menuOdList[i]));
-                                                    menuOdList[i]=(orderDetail);
-                                                    console.log("ccc : list 요소 바꾼 후 : "  +JSON.stringify(menuOdList[i]));
-                                                    //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.(겉으로는 수량이 추가된 것
-                                                    if(odOptionGroupList.length!=1){
-                                                        for(var c=0; c<odOptionGroupList.length; c++){
-                                                            menuOdList[i+c+1]=odOptionGroupList[c];
-                                                            console.log("1개 아닐 때 "+c);
-                                                            console.log("odOptionGroupList ["+c+"] : " + odOptionGroupList[c]);
-                                                        }
-                                                    }else{
-                                                        menuOdList[i+1]=odOptionGroupList[0];
-                                                        console.log("1개일 때");
-                                                    }
-
-
-                                                    sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
-                                                    didYouAddOp++;
-                                                    console.log("didYouAddOp(1 초과 불가) : "+didYouAddOp );
-
-                                                    console.log("ccc. 요소 수량 추가 로직 끝");
-
                                                 }
                                             }
 
-                                        }//추가할 메뉴랑 같을 때 끝
+                                            //console.log("111111111111111isItReallySame : " + isItReallySame);
+                                            //console.log("111111111111111111111isThereOptionGroup : " + isThereOptionGroup);
 
-                                    }//bbb. 마지막 요소 아니면서 옵션 그룹 있는 애 끝
-                                }//세션에 담긴 애 중 수량제공메뉴일 때 끝
+                                            if(isItReallySame===isThereOptionGroup ) {//ccc. 옵션그룹들도 다 똑같으면
+                                                // 수량 추가
+                                                //console.log("ccc : 수량 추가 이전 ="+originalSession[i]['odMenuQty']);
+                                                orderDetail['odMenuQty']=originalSession[i]['odMenuQty']+1;
+                                                //console.log("ccc : 수량 추가 이후 ="+orderDetail['odMenuQty']);
+                                                //수량 추가된 메뉴를 list의 요소와 바꾼다.
+                                                //console.log("ccc : list 요소 바꾸기 전 : "  +JSON.stringify(menuOdList[i]));
+                                                menuOdList[i]=(orderDetail);
+                                                //console.log("ccc : list 요소 바꾼 후 : "  +JSON.stringify(menuOdList[i]));
+                                                //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.(겉으로는 수량이 추가된 것
+                                                if(odOptionGroupList.length!=1){
+                                                    for(var c=0; c<odOptionGroupList.length; c++){
+                                                        menuOdList[i+c+1]=odOptionGroupList[c];
+                                                        //console.log("1개 아닐 때 "+c);
+                                                        //console.log("odOptionGroupList ["+c+"] : " + odOptionGroupList[c]);
+                                                    }
+                                                }else{
+                                                    menuOdList[i+1]=odOptionGroupList[0];
+                                                    //console.log("1개일 때");
+                                                }
 
-                            }//qtyFlag가 0인 애가 있으면서 추가 메뉴와 같을 때 이 안에서 session 저장 끝남
 
-                            console.log("didYouAddOp(1 초과 불가) : "+didYouAddOp );
-                            if(didYouAddOp==0 && didYouAdd==0){//fianl 만약 세션에 추가메뉴가 저장되지 않았다면
+                                                sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
+                                                didYouAddOp++;
+                                                //console.log("didYouAddOp(1 초과 불가) : "+didYouAddOp );
 
-                                // 원래 있던 session에 수량 정보 제공 메뉴 하나 더 담기
-                                console.log("fianl : 하나 더 담기 이전 ="+JSON.stringify(menuOdList));
-                                menuOdList.push(orderDetail);
-                                console.log("fianl : 하나 더 담기 이후 ="+JSON.stringify(menuOdList));
+                                                //console.log("ccc. 요소 수량 추가 로직 끝");
 
-                                // 원래 있던 session에 수량 정보 제공 메뉴 하나 더 담기
-                                console.log("fianl : 옵션 더 담기 이전 ="+JSON.stringify(menuOdList));
-                                if(isThereOptionGroup!=0){
-                                    for(var i=0; i<odOptionGroupList.length; i++){
-                                        menuOdList.push(odOptionGroupList[i]);
-                                    }
+                                            }
+                                        }
+
+                                    }//추가할 메뉴랑 같을 때 끝
+
+                                }//bbb. 마지막 요소 아니면서 옵션 그룹 있는 애 끝
+                            }//세션에 담긴 애 중 수량제공메뉴일 때 끝
+
+                        }//qtyFlag가 0인 애가 있으면서 추가 메뉴와 같을 때 이 안에서 session 저장 끝남
+
+                        //console.log("didYouAddOp(1 초과 불가) : "+didYouAddOp );
+                        if(didYouAddOp==0 && didYouAdd==0){//fianl 만약 세션에 추가메뉴가 저장되지 않았다면
+
+                            // 원래 있던 session에 수량 정보 제공 메뉴 하나 더 담기
+                            //console.log("fianl : 하나 더 담기 이전 ="+JSON.stringify(menuOdList));
+                            menuOdList.push(orderDetail);
+                            //console.log("fianl : 하나 더 담기 이후 ="+JSON.stringify(menuOdList));
+
+                            // 원래 있던 session에 수량 정보 제공 메뉴 하나 더 담기
+                            //console.log("fianl : 옵션 더 담기 이전 ="+JSON.stringify(menuOdList));
+                            if(isThereOptionGroup!=0){
+                                for(var i=0; i<odOptionGroupList.length; i++){
+                                    menuOdList.push(odOptionGroupList[i]);
                                 }
-                                console.log("fianl : 옵션 더 담기 이후 ="+JSON.stringify(menuOdList));
-                                console.log("bbbbbbbbbbbb");
-                                var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
-
-                                for( var i in beforeAnyway){
-                                    // console.log("beforeAnyway : " + beforeAnyway[i]);
-                                    for(var j in beforeAnyway[i]){
-                                        console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
-
-                                    }
-                                }
-
-
-                                //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.
-                                sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
-                                didYouAddOp++;
-                                console.log("didYouAddOp(1 초과 불가) : "+didYouAddOp );
-
-                                console.log("fianl. 메뉴와 옵션 더 담기 로직 끝");
-                            }//fianl.만약 세션에 추가메뉴가 저장되지 않았다면 끝
-                            console.log("aaaaaaaaaaaaaaaa");
+                            }
+                            //console.log("fianl : 옵션 더 담기 이후 ="+JSON.stringify(menuOdList));
+                            //console.log("bbbbbbbbbbbb");
                             var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
 
                             for( var i in beforeAnyway){
                                 // console.log("beforeAnyway : " + beforeAnyway[i]);
                                 for(var j in beforeAnyway[i]){
-                                    console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
+                                    //console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
 
                                 }
                             }
 
-                        }// 만약 session의 od 갯수가 1과 0이 아닐 때 끝
+
+                            //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.
+                            sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
+                            didYouAddOp++;
+                            //console.log("didYouAddOp(1 초과 불가) : "+didYouAddOp );
+
+                            //console.log("fianl. 메뉴와 옵션 더 담기 로직 끝");
+                        }//fianl.만약 세션에 추가메뉴가 저장되지 않았다면 끝
+                        //console.log("aaaaaaaaaaaaaaaa");
+                        var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
+
+                        for( var i in beforeAnyway){
+                            // console.log("beforeAnyway : " + beforeAnyway[i]);
+                            for(var j in beforeAnyway[i]){
+                                //console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
+
+                            }
+                        }
+
+                    }// 만약 session의 od 갯수가 1과 0이 아닐 때 끝
 //////////////////////////////////////////////////////
-                    }///////추가하고자 하는 옵션그룹!=0일 때 끝
+//                     } //세션에 담긴 애 있을 때 끝
 
                     else {///세션에 담긴 애 없을 때
 
@@ -484,290 +748,207 @@
                         }
                     }///만약 session의 od 갯수가 0일 때 끝
                     ///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
-                }//만약 세션에 담긴 애가 있을 때 ...끝
-
-                //
-                // //수량정보제공 메뉴 담기
-                // menuOdList.push(orderDetail);
-
-                // //옵션그룹정보 메뉴 담기
-                // if(isThereOptionGroup!=0){
-                //     for(var i=0; i<odOptionGroupList.length; i++){
-                //         menuOdList.push(odOptionGroupList[i]);
-                //     }
-                // }
-                //
-                // //session에 객체 담기!
-                //sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
+                }//추가하고자 하는 옵션그룹 !=0일 때 ...끝
 
 
-         /*       // 화면에 담기
 
-                var targetCart = $('div.sticky').find('ul');
+                //////////////////////////////////////////////논리야 놀자 끝!/////////////////////////////
 
-                var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
+
+// 화면에 담기
+
+                var targetCart = $('div.sticky').find('ul'); //주문 목록 담길 장바구니
+
+                var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList")); //세션에 있는 애 가져와서 json파싱
 
                 for( var i in beforeAnyway){
                     // console.log("beforeAnyway : " + beforeAnyway[i]);
                     for(var j in beforeAnyway[i]){
-                        console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
+                        console.log(" 화면에 뿌리기 전 점검 afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
 
                     }
-                }
+                } //세션에 있는 애 확인
                 //담을 li
 
                 var finalCart = "";
-                var forOne;
-                if(beforeAnyway){
-                    for(var i = 0; i<beforeAnyway.length; i++){
-                        if(beforeAnyway[i]['OdMenuQtyFlag']==0){
-                            forOne=i;
-                        }
-                        if(beforeAnyway[i]['OdMenuQtyFlag']!=0){
-                            if(beforeAnyway[i]['odOptionGroupName']!=null){
-                                if(i==forOne+1){
-                                    var cart1 = "<li class=\"list-group-item d-flex justify-content-between lh-sm\">"+
-                                        "<div>"+
-                                        "<h6 class=\"my-0\">"+beforeAnyway[i]['odMenuName']+"</h6>";
+                var forOne=0;
 
-                                    var cart2 = "";
+                // ////////////시작///////////////////
+                if(beforeAnyway) { // sessionStorage에 뭔가 있다?
+                    console.log("sessionStorage에 있다! 화면 뿌려주기 준비 시작!");
+                    for (var i = 0; i < beforeAnyway.length; i++) {//sessionStorage의 orderDetail만큼 for문 돌리기
 
-                                    for(var j=i; j<beforeAnyway.length;j++){
-                                        if(j!=i && beforeAnyway[j]['odMenuName']!=beforeAnyway[j-1]['odMenuName']){
-                                            break;
-                                        }
-                                        cart2+="<p></p>"+
-                                            "<small class=\"text-muted\">"+beforeAnyway[j]['odOptionGroupName']+" : "+beforeAnyway[j]['odOptionName']+"</small>";
+                        console.log("for문 안에 있다!");
+                        console.log("beforeAnyway[" + i + "]번째 세션 : " + JSON.stringify(beforeAnyway[i]));
+                        // finalCart += "<li class=\"list-group-item d-flex justify-content-between lh-sm\">"+
+                        //     "<div><h6 class=\"my-0\">"+beforeAnyway[i]['odMenuName']+"</h6>"+
+                        //     "<h6 class=\"my-0\">"+beforeAnyway[i]['odMenuQty']+"</h6>"+
+                        //     "<small class=\"text-muted\">"+beforeAnyway[i]['odOptionGroupName']+"</small>"+
+                        //     "<small class=\"text-muted\">"+beforeAnyway[i]['odOptionName']+"</small>"+
+                        //     "</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"</span></li>";
 
-                                    }
-
-
-                                    var cart3=""+
-                                        "</div>"+
-                                        "<span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"</span>"+
-                                        "<p></p>"+
-                                        "<span class=\"text-muted\">"+beforeAnyway[i]['odOptionPrice']+"</span>"+
-                                        "</li>"+
-                                        ""+
-                                        "";
-                                    console.log("////target ; " + targetCart.html());
-                                    finalCart+=cart1+cart2+cart3;
+                        if (beforeAnyway[i]['odMenuQtyFlag'] == 0) {//플래그0일 때 메뉴 수량, 이름 출력
+                            finalCart += "" +
+                                "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
+                                "<button type='button' class='close' id='cancelMenu'>"+
+                                    "<span aria-hidden='true'>&times;</span></button>"+
+                                "<div><h6 class=\"my-0\">" + beforeAnyway[i]['odMenuName'] + "</h6>" +
+                                "<h6 class=\"my-0\">수량 : <input type='button' class='my-5' value='-' id='decreaseQuantity'>" +
+                                "<input type='hidden' name='orderCount' value='"+i+"'>"+
+                                " <input type='text' id='numberUpDown' value='" + beforeAnyway[i]['odMenuQty'] + "' size='2' max=''> " +
+                                "<input type='button' value='+' id='increaseQuantity'> </h6>" +
+                                "";
+                            forOne += 1;
+                            if (beforeAnyway[i + 1] != null) {
+                                if (beforeAnyway[i + 1]['odMenuQtyFlag'] == 0) {
+                                    finalCart += "</div><span class=\"text-muted\">" + beforeAnyway[i]['odMenuPrice'] + "원" +
+                                        "<input type='hidden' name='sell_price' value='"+beforeAnyway[i]['odMenuPrice']+"'></span></li>";
                                 }
+
+                            }
+                        } else { //플래그 1일 때
+                            // for(var j=i+1; j<beforeAnyway.length; j++){ //옵션그룹 화면에 뿌려주기 위한 for문 (수량제공메뉴+1부터
+                            //     if(beforeAnyway[j]['odMenuQtyFlag']==1){
+                            finalCart += "" +
+                                "<p></p>" +
+                                "<input type='hidden' name='orderCancelCount' value='"+i+"'>"+
+                                "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionGroupName'] + "</small> : " +
+                                "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionName'] + "</small> +" +
+                                "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionPrice'] + "원</small>";
+                            forOne += 1;
+                            if (beforeAnyway[i + 1] != null) {
+                                if (beforeAnyway[i + 1]['odMenuQtyFlag'] == 0) {
+                                    finalCart += "</div><span class=\"text-muted\">" + beforeAnyway[i]['odMenuPrice'] + "원</span></li>";
+                                }
+
                             }
 
-                        }
+                            // finalCart+="</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"원</span></li>";
+                            // i=forOne;
 
 
+                        }//sessionStorage만큼 for문 돌리기
                     }
+
                 }
-*/
-
-
-
-
-                //예비 복붙 2차
-                //
-                // // 화면에 담기
-                //
-                // var targetCart = $('div.sticky').find('ul');
-                //
-                // var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
-                //
-                // // alert("자면서 만들었나? getItem JSONparsing한거: " + beforeAnyway);
-                // // alert("자면서 만들었나? getItem 한거: " + beforeAnywayList);
-                //
-                // for( var i in beforeAnyway){
-                //     // console.log("beforeAnyway : " + beforeAnyway[i]);
-                //     for(var j in beforeAnyway[i]){
-                //         console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
-                //
-                //     }
-                // }
-                // //담을 li
-                //
-                // var finalCart = "";
-                // var forOne;
-                //
-                // for(var i = 0; i<beforeAnyway.length; i++){
-                //     if(beforeAnyway[i]['OdMenuQtyFlag']==0){
-                //         forOne=i;
-                //     }
-                //     if(beforeAnyway[i]['OdMenuQtyFlag']!=0){
-                //         if(beforeAnyway[i]['odOptionGroupName']!=null){
-                //             if(i==forOne+1){
-                //                 var cart1 = "<li class=\"list-group-item d-flex justify-content-between lh-sm\">"+
-                //                     "<div>"+
-                //                     "<h6 class=\"my-0\">"+beforeAnyway[i]['odMenuName']+"</h6>";
-                //
-                //                 var cart2 = "";
-                //
-                //                 for(var j=i; j<beforeAnyway.length;j++){
-                //                     if(j!=i && beforeAnyway[j]['odMenuName']!=beforeAnyway[j-1]['odMenuName']){
-                //                         break;
-                //                     }
-                //                     cart2+="<p></p>"+
-                //                         "<small class=\"text-muted\">"+beforeAnyway[j]['odOptionGroupName']+" : "+beforeAnyway[j]['odOptionName']+"</small>";
-                //
-                //                 }
-                //
-                //
-                //                 var cart3=""+
-                //                     "</div>"+
-                //                     "<span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"</span>"+
-                //                     "<p></p>"+
-                //                     "<span class=\"text-muted\">"+beforeAnyway[i]['odOptionPrice']+"</span>"+
-                //                     "</li>"+
-                //                     ""+
-                //                     "";
-                //                 console.log("////target ; " + targetCart.html());
-                //                 finalCart+=cart1+cart2+cart3;
-                //             }
-                //         }
-                //
-                //     }
-                //
-                //
-                // }
-                // targetCart.html(finalCart);
-
-                // 예비로 복붙해둠 1차
-                //
-                // var finalCart = "";
-                //
-                // for(var i = 0; i<beforeAnyway.length; i++){
-                //     var cart1 = "<li class=\"list-group-item d-flex justify-content-between lh-sm\">"+
-                //         "<div>"+
-                //         "<h6 class=\"my-0\">"+beforeAnyway[i]['odMenuName']+"</h6>"+
-                //     "<small class=\"text-muted\">"+beforeAnyway[i]['odOptionGroupName']+" : "+beforeAnyway[i]['odOptionName']+"</small>"+
-                //     "</div>"+
-                //     "<span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"</span>"+
-                //     "<span class=\"text-muted\">"+beforeAnyway[i]['odOptionPrice']+"</span>"+
-                //     "</li>"+
-                //     ""+
-                //     "";
-                //     console.log("////target ; " + targetCart.html());
-                //     finalCart+=cart1;
-                //
-                // }
-                // targetCart.html(finalCart);
-
-
-
-
-
-
-
-
-
+                targetCart.html(finalCart);
+                location.reload();
 
             });
 
 
+        });
 
 
-            // 화면에 담기
+        /*삭제버튼 클릭 이벤트*/
+        $(function(){
+            var orderDetail = JSON.parse(sessionStorage.getItem("menuOdList"));
 
-            var targetCart = $('div.sticky').find('ul');
+            var orderCancelCount = [];
 
-            var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
+            $('button#cancelMenu').click(function(){
+                var orderCount = $(this).parent('li').find('input[name="orderCount"]').val();
+               // var orderCancelCount = $(this).parent('li').find('input[name="orderCancelCount"]').val();
+                $(this).parent('li').find('input[name="orderCancelCount"]').each(function (i) {
+                    orderCancelCount.push($(this).val());
+                });
 
-            for( var i in beforeAnyway){
-                // console.log("beforeAnyway : " + beforeAnyway[i]);
-                for(var j in beforeAnyway[i]){
-                    console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
+                orderDetail.splice(orderCount,orderCancelCount.length+1);
 
+                sessionStorage.setItem("menuOdList", JSON.stringify(orderDetail));
+
+
+                $(this).parent('li').remove();
+
+            })
+
+        })
+
+        /*수량버튼 클릭 이벤트*/
+        $(function(){
+
+            var orderDetail = JSON.parse(sessionStorage.getItem("menuOdList"));
+
+
+            $('input#decreaseQuantity').click(function(e){
+                var orderCount = $(this).parent('h6').find('input[name="orderCount"]').val();
+                //alert("클릭한 메뉴의 순서 정보"+orderCount);
+                 e.preventDefault();
+
+                var stat = $(this).parent('h6').find('input#numberUpDown');
+                var num = stat.val();
+                num--;
+                if(num<=0){
+                    alert('더이상 줄일수 없습니다.');
+                    num =1;
                 }
-            }
-            //담을 li
+                // 수량 추가
+                orderDetail[orderCount]['odMenuQty']=num;
+                stat.val(num);
+                sessionStorage.setItem("menuOdList", JSON.stringify(orderDetail));
 
-            var finalCart = "";
-            var forOne = 0 ;
-            alert("start"+beforeAnyway)
-            //담긴 데이터가 있으면!!
-            if(beforeAnyway){
-                alert("들어왔다!!1111")
-                //담겨져 있는 만큼 for문을 돌린다
-                for(var i in beforeAnyway){
-                    //json객체안에 odMenuQtyFlag가 0인값을 몇번째 인지 forOne에 넣는다.
+                //$('input#numberUpDown').val(num);
+            });
+            $('input#increaseQuantity').click(function(e){
+                var orderCount = $(this).parent('h6').find('input[name="orderCount"]').val();
+                e.preventDefault();
 
-                    odMenuQtyFlag = beforeAnyway[i]['odMenuQtyFlag'];
+                var stat = $(this).parent('h6').find('input#numberUpDown');
+                var num = stat.val();
+                num++;
 
-                    var odMenuQtyFlag = "<input type='text' name='odMenuQtyFlag' id='odMenuQtyFlag' value='"+odMenuQtyFlag+"'>"+
-                        "<input type='text' name='odMenuQty' id='odMenuQty' value='"+beforeAnyway[i]['odMenuQty']+"'>"+
-                        "<input type='text' name='odMenuName' id='odMenuName' value='"+beforeAnyway[i]['odMenuName']+"'>"+
-                        "<input type='text' name='odMenuPrice' id='odMenuPrice' value='"+beforeAnyway[i]['odMenuPrice']+"'>"+
-                        "<input type='text' name='odOptionGroupName' id='odOptionGroupName' value='"+beforeAnyway[i]['odOptionGroupName']+"'>"+
-                        "<input type='text' name='odOptionName' id='odOptionName' value='"+beforeAnyway[i]['odOptionName']+"'>"+
-                        "<input type='text' name='odOptionName' id='odOptionName' value='"+beforeAnyway[i]['odOptionName']+"'>"+
-                        "<input type='text' name='odOptionPrice' id='odOptionPrice' value='"+beforeAnyway[i]['odOptionPrice']+"'>";
-
-
-
-
-
-                    if(beforeAnyway[i]['odMenuQtyFlag']==0){
-                        forOne=i;
-
-                    }
-                    //odMenuQtyFlag가 0이 아니면
-                    if(beforeAnyway[i]['odMenuQtyFlag']!=0){
-
-                        //odOptionGrouName이 null이 아니면
-                        if(beforeAnyway[i]['odOptionGroupName']!=null){
-                            //
-                            if(i==forOne+1){
-                                var cart1 = "<li class=\"list-group-item d-flex justify-content-between lh-sm\">"+
-                                    "<div>"+
-                                    "<h6 class=\"my-0\">"+beforeAnyway[i]['odMenuName']+"</h6>";
-
-                                var cart2 = "";
-
-                                for(var j=i; j<beforeAnyway.length;j++){
-                                    if(j!=i && beforeAnyway[j]['odMenuName']!=beforeAnyway[j-1]['odMenuName']){
-
-                                    }
-                                    cart2+="<p></p>"+
-                                        "<small class=\"text-muted\">"+beforeAnyway[j]['odOptionGroupName']+" : "+beforeAnyway[j]['odOptionName']+"</small>";
-
-                                }
-
-
-                                var cart3=""+
-                                    "</div>"+
-                                    "<span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"</span>"+
-                                    "<p></p>"+
-                                    "<span class=\"text-muted\">"+beforeAnyway[i]['odOptionPrice']+"</span>"+
-                                    "</li>"+
-                                    ""+
-                                    "";
-                                console.log("////target ; " + targetCart.html());
-                                finalCart+=cart1+cart2+cart3;
-                                alert(finalCart)
-                            }
-                        }
-
-                    }
-
-
-
-                    targetCart.append(odMenuQtyFlag);
+                if(num>10){
+                    alert('더이상 늘릴수 없습니다.');
+                    num=10;
                 }
+
+                orderDetail[orderCount]['odMenuQty']=num;
+                stat.val(num);
+                sessionStorage.setItem("menuOdList", JSON.stringify(orderDetail));
+                // $('input#numberUpDown').val(num);
+            });
+        });
+
+
+
+
+        $(function (){
+
+            var beforeAny = JSON.parse(sessionStorage.getItem("menuOdList"));
+            var orderDetailList = "";
+            var orderTruckIdCheck = "";
+
+            for (var i in beforeAny) {
+
+
+
+                orderDetailList += "<input type='hidden' name='odMQFlag' id='odMQFlag' value='" + beforeAny[i]['odMenuQtyFlag'] + "'>" +
+                    "<input type='hidden' name='odMQty' id='odMQty' value='" + beforeAny[i]['odMenuQty'] + "'>" +
+                    "<input type='hidden' name='odMName' id='odMName' value='" + beforeAny[i]['odMenuName'] + "'>" +
+                    "<input type='hidden' name='odMPrice' id='odMPrice' value='" + beforeAny[i]['odMenuPrice'] + "'>" +
+                    "<input type='hidden' name='odOGName' id='odOGName' value='" + beforeAny[i]['odOptionGroupName'] + "'>" +
+                    "<input type='hidden' name='odOpName' id='odOpName' value='" + beforeAny[i]['odOptionName'] + "'>" +
+                    "<input type='hidden' name='odOpPrice' id='odOpPrice' value='" + beforeAny[i]['odOptionPrice'] + "'>" +
+                    "<input type='hidden' name='odMImg1' id='odMImg1' value='" + beforeAny[i]['odMenuImg1'] + "'>";
+
+                orderTruckIdCheck = "<input type='hidden' name='checkMenuTruckId' id='checkMenuTruckId' value='" + beforeAny[i]['menuTruckId'] + "'>";
+
             }
 
-
-
-
+            $("#cartList").append(orderDetailList);
+            $("#cartList").append(orderTruckIdCheck);
 
 
         });
 
 
 
-
+        /*장바구니 주문하기 이후 Modal에서 확인 클릭 시*/
         $(function () {
-            $("button.btn.btn-primary:Contains('확인')").click(function () {
-                alert("ss")
-                var order = to_ajax()
+            $("#addMenuCart").click(function () {
+
+
+                var order = menu_ajax()
 
 
                 append = "<input type=\"hidden\" id=\"orderNo\" name=\"orderNo\" value=\"" + order + "\">";
@@ -778,15 +959,10 @@
 
             });
         });
-        $(function () {
-            $("button.btn.btn-primary:Contains('json')").click(function () {
-                alert("ddk");
-                to_ajax();
-                $("form").attr("method", "POST").attr("action", "/purchase/addCart").submit();
-            });
-        });
 
-        function to_ajax() {
+
+        function menu_ajax() {
+            /*alert("1111111")*/
             var reOrderNo;
             var odMenuName = [];
             var odOptionGroupName = [];
@@ -800,47 +976,47 @@
             var orderTotalPrice = $('#orderTotalPrice').val();
             var orderUserId = $('#orderUserId').val();
             var orderTruckId = $('#orderTruckId').val();
-            var orderRequest = $('#orderRequest').val();
+            var orderRequest = $('#menuRequest').val();
             var orderQty = $('#orderQty').val();
 
-            $('input[name="odMenuName"]').each(function (i) {
+            $('input[name="odMName"]').each(function (i) {
                 odMenuName.push($(this).val());
             });
 
-            $('input[name="odOptionGroupName"]').each(function (i) {
+            $('input[name="odOGName"]').each(function (i) {
                 odOptionGroupName.push($(this).val());
             });
 
-            $('input[name="odOptionName"]').each(function (i) {
+            $('input[name="odOpName"]').each(function (i) {
                 odOptionName.push($(this).val());
             });
 
-            $('input[name="odMenuQty"]').each(function (i) {
+            $('input[name="odMQty"]').each(function (i) {
                 odMenuQty.push($(this).val());
             });
 
-            $('input[name="odMenuPrice"]').each(function (i) {
+            $('input[name="odMPrice"]').each(function (i) {
                 odMenuPrice.push($(this).val());
             });
 
-            $('input[name="odOptionPrice"]').each(function (i) {
+            $('input[name="odOpPrice"]').each(function (i) {
                 odOptionPrice.push($(this).val());
             });
 
-            $('input[name="odMenuImage"]').each(function (i) {
+            $('input[name="odMImg1"]').each(function (i) {
                 odMenuImage.push($(this).val());
             });
 
-            $('input[name="odMenuQtyFlag"]').each(function (i) {
+            $('input[name="odMQFlag"]').each(function (i) {
                 odMenuQtyFlag.push($(this).val());
             });
-                     alert(orderPickUpTime)
-                     alert(orderTotalPrice)
-                     alert(orderUserId)
-                     alert(orderTruckId)
-                     alert(orderRequest)
-                     alert(orderQty)
-                     alert(odMenuQtyFlag)
+            /*   alert(orderPickUpTime)
+               alert(orderTotalPrice)
+               alert(orderUserId)
+               alert(orderTruckId)
+               alert(orderRequest)
+               alert(orderQty)
+               alert(odMenuQtyFlag)*/
 
             var data = {
                 "odMenuName": odMenuName,
@@ -867,6 +1043,7 @@
                 dataType: 'json',
                 success: function (retVal) {
                     reOrderNo = retVal.orderNo;
+                    sessionStorage.removeItem('menuOdList');
                 },
                 error: function (xhr, status, error) {
                     alert("[Error]" + error);
@@ -877,6 +1054,24 @@
             });
             return reOrderNo;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     </script>
@@ -951,7 +1146,7 @@
                     var modalFooter = "";
 
                     div +="<div class=\"page-header\">"+
-                        "<h3 class=\"getMenuTitle custom\">"+data.menu.menuTruckId+"</h3>"+
+                        "<h3 class=\"getMenuTitle custom\" name=\"menuTruckId\">"+data.menu.menuTruckId+"</h3>"+
                         "</div>"+
                         "<div class=\"row\">"+
                         "<div class=\"col-xs-4 col-md-2\"><strong>메뉴번호</strong></div>"+
@@ -965,7 +1160,7 @@
                         "<hr/>"+
                         "<div class=\"row\">"+
                         "<div class=\"col-xs-4 col-md-2 \"><strong>메뉴이미지1</strong></div>"+
-                        "<div class=\"col-xs-8 col-md-4\" name=\"odMenuImg1\" data-menuImg=\""+data.menu.menuImg1+"\">" +
+                        "<div class=\"col-xs-8 col-md-4\" name=\"odMenuImg1\" data-menuimg=\""+data.menu.menuImg1+"\">" +
                         "<img src=\"/resources/image/"+data.menu.menuImg1+"\"" +
                         "style=\"border-bottom: 1px solid #eee; height: 200px;\" "+
                         "alt=\""+data.menu.menuName+"의 이미지1\" title=\"메뉴이미지1\"></div> </div>"+
@@ -984,7 +1179,7 @@
                         // "<input type=\"hidden\" name=\"odMenuQty\" value="+ //todo 보류입니다!(수량을 hidden으로 넣을지가)
                         "<hr/>";
 
-                    $('.modal-body').html(div);
+                    $('.modal-body-hey').html(div);
 
                     if(optionGroupCount!=0){
                         getOptionGroupListOnModal(data.menu.menuNo);
@@ -1033,7 +1228,7 @@
                         divOG+=""+
 
                             "<div class=\"row\"> " +
-                            "<div class=\"col-xs-4 col-md-2\">" +
+                            "<div class=\"col\">" +
                             // "<label class=\"form-check-label\" for=\"optionName+OGName"+x.optionGroupName+"\"><strong>옵션 이름</strong></label></div>"+
                             "<div class=\"col-xs-8 col-md-4\">" +
                             "<input class=\"form-check-input\" type=\"radio\" name=\"optionName+OGName"+x.optionGroupName+"\" id=\"optionName+OGName"+x.optionGroupName+"\" data-op=\""+x.optionName+"\">"+x.optionName+"" +
@@ -1059,6 +1254,31 @@
             })
 
         }
+        /*confirm 해당트럭에 대한 메뉴가 아니면 Session초기화*/
+        $(document).ready(function(){
+            var checkMenuTruckId = $("input[name='checkMenuTruckId']").val();
+            var orderTruckId = $("input[name='orderTruckId.truckId']").val();
+
+     /*       alert(orderTruckId)
+            alert(checkMenuTruckId)*/
+
+            if(checkMenuTruckId != undefined) {
+
+                if (checkMenuTruckId != orderTruckId) {
+                    $('button#truckIdCheck.button.is-warning.is-light').click(function () {
+                        var result = confirm('기존에 저장된 메뉴를 삭제하시겠습니까??');
+                        if (result) { //yes
+                            sessionStorage.removeItem('menuOdList');
+                        } else {
+                            //no
+                            self.location = "/menu/getMenuList?truckId=" + checkMenuTruckId;
+
+                        }
+                    });
+                }
+            }
+        });
+
 
 
     </script>
@@ -1099,6 +1319,21 @@
             font-weight: bolder;
             text-align: center;
         }
+        /*주문하기Madal Radio button*/
+        .toggle3 input[type=radio]{
+            display: none;
+        }
+        .toggle3 input[type=radio] + label {
+            color: #e0e0e0;
+            font-size: 1em;
+        }
+        .toggle3 input[type=radio]:checked + label {
+            color: #000;
+        }
+        .btn-outline-primary {
+            color: #007bff;
+            border-color: #ffba49;
+        }
     </style>
 
 </head>
@@ -1112,7 +1347,6 @@
 
 
 <!--  화면구성 div Start /////////////////////////////////////-->
-
 <div class="container">
 
     <div class="page-header">
@@ -1175,59 +1409,32 @@
 <body class="row g-5">
 <!--헝헝헝-->
 
-<div class="col-md-5 col-lg-2 order-md-last" style="right: 80px">
+<div class="col-md-5 col-lg-4 order-md-last">
     <div class="sticky">
+        <form name="form1" id="form1">
+            <h4 class="d-flex justify-content-between align-items-center mb-3" style="width:259px;">
+                <span class="text">장바구니</span>
 
-        <h4 class="d-flex justify-content-between align-items-center mb-3" style="width:259px;">
-            <span class="text">장바구니</span>
+                <div id="cartList" name="cartList"></div>
+                <div id="add" name="add"></div>
 
-        </h4>
-        <ul class="list-group mb-3" style="width:259px;">
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                    <h6 class="my-0">Product name</h6>
-                    <small class="text-muted">Brief description</small>
-                </div>
-                <span class="text-muted">$12</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                    <h6 class="my-0">Second product</h6>
-                    <small class="text-muted">Brief description</small>
-                </div>
-                <span class="text-muted">$8</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-sm">
-                <div>
-                    <h6 class="my-0">Third item</h6>
-                    <small class="text-muted">Brief description</small>
-                </div>
-                <span class="text-muted">$5</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between bg-light">
-                <div class="text-success">
-                    <h6 class="my-0">Promo code</h6>
-                    <small>EXAMPLECODE</small>
-                </div>
-                <span class="text-success">−$5</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-                <span>Total (USD)</span>
-                <strong>$20</strong>
-            </li>
-            <div class="appendCart"></div>
-        </ul>
+            </h4>
+            <ul class="list-group mb-3" style="width:259px;">
+                <img src="data:image/png;base64,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">
 
-        <button type="button"  class="btn btn-warning" data-toggle="modal" data-target="#exampleModal" >주문하기</button>
+            </ul>
+            <input type="hidden" id="orderUserId" name="orderUserId.userId" value="user01"/>
+            <input type="hidden" id="orderTruckId" name="orderTruckId.truckId" value="${truck.truckId}"/>
+            <button type="button"  class="btn btn-warning" data-toggle="modal" data-target="#cartModal" >주문하기</button>
+        </form>
     </div>
     <%--</form></div>--%>
 </div>
 
-
 <!--헝헝헝 끝-->
 
 
-<div class="container col-md-7 col-lg-10 " style="left: 135px;">
+<div class="container col-md-7 col-lg-8">
 
     <c:set var="i" value="0"/>
     <c:forEach var="menu" items="${list}">
@@ -1243,7 +1450,7 @@
                     <h4>${menu.menuDetail}</h4>
                 </ul>
                 <div class="btn-detail">
-                    <button class="button is-warning is-light" name="getMenu"
+                   ㅑ <button class="button is-warning is-light" id="truckIdCheck" name="getMenu"
                             style='margin-left: 100px; margin-bottom: 13px; height: 25px'
                             onclick="getMenu(${menu.menuNo});"
                     >
@@ -1263,7 +1470,6 @@
     </c:forEach>
 
 </div>
-
 <!--  메뉴 목록 div End /////////////////////////////////////-->
 
 
@@ -1282,7 +1488,7 @@
                     <span aria-hidden="true"></span>
                 </button>
             </div>
-            <div class="modal-body" style="min-height: 500px">
+            <div class="modal-body-hey" style="min-height: 500px; margin-left: 19px;">
                 <p>This is some placeholder content to show the scrolling behavior for modals. Instead of repeating the text the modal, we use an inline style set a minimum height, thereby extending the length of the overall modal and demonstrating the overflow scrolling. When content becomes longer than the height of the viewport, scrolling will move the modal as needed.</p>
             </div>
             <div class="modal-happy">
@@ -1295,71 +1501,74 @@
         </div>
     </div>
 </div>
+
+
+
+
 <form>
 
+    <%--cart Modal--%>
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">주문정보입력
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="orderPickUpTime" class="col-form-label">픽업희망시간:</label>
+                        <div class="toggle3" role="group" aria-label="Basic radio toggle button group">
+                            <input type="radio" class="btn-check" id="orderPickUpTime" name="orderPickUpTime" value="5"
+                                   id="btnradio1" autocomplete="off" checked>
+                            <label class="btn btn-outline-primary" for="btnradio1">5분</label>
 
+                            <input type="radio" class="btn-check" name="orderPickUpTime" value="10" id="btnradio2"
+                                   autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio2">10분</label>
 
+                            <input type="radio" class="btn-check" name="orderPickUpTime" value="15" id="btnradio3"
+                                   autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio3">15분</label>
 
-<%--cart Modal--%>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label for="orderPickUpTime" class="col-form-label">픽업희망시간:</label>
-                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                        <input type="radio" class="btn-check" id="orderPickUpTime" name="orderPickUpTime" value="5"
-                               id="btnradio1" autocomplete="off" checked>
-                        <label class="btn btn-outline-primary" for="btnradio1">5분</label>
+                            <input type="radio" class="btn-check" name="orderPickUpTime" value="20" id="btnradio4"
+                                   autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio4">20분</label>
 
-                        <input type="radio" class="btn-check" name="orderPickUpTime" value="10" id="btnradio2"
-                               autocomplete="off">
-                        <label class="btn btn-outline-primary" for="btnradio2">10분</label>
+                            <input type="radio" class="btn-check" name="orderPickUpTime" value="30" id="btnradio5"
+                                   autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio5">30분</label>
 
-                        <input type="radio" class="btn-check" name="orderPickUpTime" value="15" id="btnradio3"
-                               autocomplete="off">
-                        <label class="btn btn-outline-primary" for="btnradio3">15분</label>
+                            <input type="radio" class="btn-check" name="orderPickUpTime" value="40" id="btnradio6"
+                                   autocomplete="off">
+                            <label class="btn btn-outline-primary" for="btnradio6">40분</label>
 
-                        <input type="radio" class="btn-check" name="orderPickUpTime" value="20" id="btnradio4"
-                               autocomplete="off">
-                        <label class="btn btn-outline-primary" for="btnradio4">20분</label>
-
-                        <input type="radio" class="btn-check" name="orderPickUpTime" value="30" id="btnradio5"
-                               autocomplete="off">
-                        <label class="btn btn-outline-primary" for="btnradio5">30분</label>
-
-                        <input type="radio" class="btn-check" name="orderPickUpTime" value="40" id="btnradio6"
-                               autocomplete="off">
-                        <label class="btn btn-outline-primary" for="btnradio6">40분</label>
-
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="menuRequest" class="col-form-label">주문요청사항:</label>
+                        <textarea class="form-control" id="menuRequest" name="menuRequest"
+                                  value="${purchase.orderRequest}"></textarea>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label for="orderRequest" class="col-form-label">주문요청사항:</label>
-                    <textarea class="form-control" id="orderRequest" name="orderRequest"
-                              value="${purchase.orderRequest}"></textarea>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary" id="addMenuCart">확인</button>
+
+
+
+
+
+                    <input type="hidden" id="orderQty" name="orderQty" value="3"/>
+                    <input type="hidden" id="orderTotalPrice" name="orderTotalPrice" value="3000"/>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-primary">확인</button>
-
-
-
-                <input type="hidden" id="orderUserId" name="orderUserId.userId" value="${user.userId}"/>
-                <input type="hidden" id="orderTruckId" name="orderTruckId.truckId" value="${truck.truckId}"/>
-                <%--<input type="hidden" id="orderQty" name="orderQty" value="3"/>--%>
-                <%--<input type="hidden" id="orderTotalPrice" name="orderTotalPrice" value="3000"/>--%>
             </div>
         </div>
     </div>
-</div>
 </form>
-
 <script>
     $(function(){
         var modal = $('#exampleModalLong');

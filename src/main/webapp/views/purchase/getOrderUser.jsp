@@ -178,199 +178,278 @@
 
 
 </script>
-
+<title>F.FIN | 현재주문정보</title>
 <style>
-    .img-fluid {
+
+    .adminbox{
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px 1px rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+    .info{
+        display: grid;
+    }
+    .info map_ma{
+        height: auto;
+        max-width: 400px;
+        box-shadow: 0 1px 2px 1px rgba(0,0,0,0.2);
+        transition: 0.2s;
+    }
+    .form-control:disabled, .form-control[readonly]{
+        background-color: rgba(255, 229, 55, 0.16);
+        width: auto;
+        opacity: 1;
+        border: 0;
+        /*border-width: 2px;
+        border-color: #ffe537;*/
+    }
+    .data-input-box{
+        margin-top: 30px;
+    }
+    h5 span{
+        margin-left: 10px;
+    }
+    #user_update_info{
+        margin-top: 20px;
+    }
+
+
+    /*.img-fluid {
 
         height: auto;
         width: 180px
-    }
+    }*/
 
 </style>
 
+<section class="client_section layout_padding">
+    <div class="container">
+        <div class="col-md-11 col-lg-10 mx-auto">
+            <div class="detail-box">
+                <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
+                <h4 style="margin-top: 10px;">
+                    현재주문정보
+                </h4>
+            </div>
 
-<main>
-    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
-         tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalToggleLabel">Modal 1</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <form class="row justify-content-center" id="user_update_info">
+
+                <div class="col-md-12 data-input-box adminbox">
+                    <hr style="margin-top: 35px;"/>
+                    <div class="data-input-box info" >
+                        <div>
+                            <div id="map_ma"></div>
+
+
+                        </div>
+                        <div>
+
+
+                        </div>
+                    </div>
+
+                    <hr style="margin-top: 60px;"/>
+
+                    <div style="display: flex; justify-content: center;">
+                        <div class="col-md-6 data-input-box" style="display: flex; justify-content: center;">
+                            <div class="data-input-box user-info">
+                                <div>
+                                    <div style="margin-bottom: 15px;">
+                                        <label for="orderNo" class="form-label label-name">주문번호</label>
+                                        <input type="text" class="form-control" value="${purchase.orderNo}" id="orderNo" name="orderNo" readonly style="width: 340px;">
+                                    </div>
+                                    <div style="margin-bottom: 15px;">
+                                        <label for="orderTruckId.truckPhone" class="form-label label-name">사장님연락처</label>
+                                        <input type="text" class="form-control" value=" ${purchase.orderTruckId.truckPhone}" id="orderTruckId.truckPhone" name="orderTruckId.truckPhone" readonly style="width: 340px;">
+                                    </div>
+
+                                    <div style="margin-bottom: 15px;">
+                                        <label for="orderRequest" class="form-label label-name">주문요청사항</label>
+                                        <input type="text" class="form-control" value="${purchase.orderRequest}" id="orderRequest" name="orderRequest" readonly style="width: 340px;">
+                                    </div>
+                                    <div style="margin-bottom: 15px;">
+                                        <label for="orderPickUpTime" class="form-label label-name">픽업희망시간</label>
+                                        <input type="text" class="form-control" value="${purchase.orderPickUpTime}" id="orderPickUpTime" name="orderPickUpTime" readonly style="width: 340px;">
+                                    </div>
+                                    <div style="margin-bottom: 15px;">
+                                        <label for="orderCookingTime" class="form-label label-name">예상조리시간</label>
+                                        <input type="text" class="form-control" value="${purchase.orderCookingTime}" id="orderCookingTime" name="orderCookingTime" readonly style="width: 340px;">
+                                    </div>
+                                    <div style="margin-bottom: 15px;">
+                                        <c:if test="${purchase.payOption == '0'}">
+                                            <label for="payOption" class="form-label label-name">결제방법</label>
+                                            <input type="text" class="form-control" value="휴대폰결제" id="payOption" name="payOption" readonly style="width: 340px;">
+                                        </c:if>
+                                        <c:if test="${purchase.payOption == '1'}">
+                                            <label for="payOption" class="form-label label-name">결제방법</label>
+                                            <input type="text" class="form-control" value="카카오결제" id="payOption" name="payOption" readonly style="width: 340px;">
+                                        </c:if>
+                                        <c:if test="${purchase.payOption == '3'}">
+                                            <label for="payOption" class="form-label label-name">결제방법</label>
+                                            <input type="text" class="form-control" value="신용카드" id="payOption" name="payOption" readonly style="width: 340px;">
+                                        </c:if>
+                                        <c:if test="${purchase.payOption == '4'}">
+                                            <label for="payOption" class="form-label label-name">결제방법</label>
+                                            <input type="text" class="form-control" value="무통장입금" id="payOption" name="payOption" readonly style="width: 340px;">
+                                        </c:if>
+
+                                    </div>
+                                    <div style="margin-bottom: 15px;">
+                                        <label for="payPrice" class="form-label label-name">결제금액액</label>
+                                        <input type="text" class="form-control" value="${purchase.payPrice}" id="payPrice" name="payPrice" readonly style="width: 340px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 data-input-box" style="display: flex; justify-content: center;">
+                            <div class="data-input-box user-profile">
+                                <div>
+                                    <div style="margin-bottom: 30px;">
+                                        <c:if test="${purchase.orderStatus == '1'}">
+                                            <label for="orderStatus" class="form-label label-name">주문정보</label>
+                                            <input type="text" class="form-control" value="주문완료되었습니다." id="orderStatus" name="orderStatus" readonly style="width: 340px; margin-bottom: 5px;">
+                                        </c:if>
+                                        <c:if test="${purchase.orderStatus == '2'}">
+                                            <label for="orderStatus" class="form-label label-name">주문정보</label>
+                                            <input type="text" class="form-control" value="주문접수되었습니다" id="orderStatus" name="orderStatus" readonly style="width: 340px; margin-bottom: 5px;">
+                                        </c:if>
+                                        <c:if test="${purchase.orderStatus == '3'}">
+                                            <label for="orderStatus" class="form-label label-name">주문정보</label>
+                                            <input type="text" class="form-control" value="주문하신 메뉴가 나왔습니다." id="orderStatus" name="orderStatus" readonly style="width: 340px; margin-bottom: 5px;">
+                                        </c:if>
+                                        <c:if test="${purchase.orderStatus == '4'}">
+                                            <label for="orderStatus" class="form-label label-name">주문정보</label>
+                                            <input type="text" class="form-control" value="맛있게 드셨나요." id="orderStatus" name="orderStatus" readonly style="width: 340px; margin-bottom: 5px;">
+                                        </c:if>
+                                        <c:if test="${purchase.orderStatus == '5'}">
+                                            <label for="orderStatus" class="form-label label-name">주문정보</label>
+                                            <input type="text" class="form-control" value="주문취소된 메뉴입니다." id="orderStatus" name="orderStatus" readonly style="width: 340px; margin-bottom: 5px;">
+                                        </c:if>
+                                    </div>
+
+                                    <div style="margin-bottom: 30px;">
+                                        <label for="orderCookingTime" class="form-label label-name">주문목록</label>
+                                        <div id="order"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="margin-bottom: 35px;"/>
                 </div>
-                <div class="modal-body">
+
+            </form>
+
+            <div class="btn-box" style=" margin-top: 20px;">
+                <a onClick="history.go(-1);" style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
+                    확인
+                </a>
+                <c:if test="${purchase.orderStatus == '1'}">
+                <a data-bs-toggle="modal" href="#exampleModalToggle"  style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
+                    주문취소
+                </a>
+                </c:if>
+                <c:set var="i" value="0"/>
+                <c:forEach var="cart" items="${map.get('list')}">
+                    <c:set var="i" value="${i+1}"/>
 
 
-                    <div class="container-fluid">
-                        <div class="row">
-                            <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio1"
-                                   autocomplete="off" value="1" checked>
-                            <label class="btn btn-outline-primary" for="btnradio1">구매의사 취소</label>
-                        </div>
-                    </div>
-
-                    <div class="container-fluid">
-                        <div class="row">
-                            <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio2"
-                                   autocomplete="off" value="2">
-                            <label class="btn btn-outline-primary" for="btnradio2">메뉴 및 수량 변경</label>
-                        </div>
-                    </div>
-
-                    <div class="container-fluid">
-                        <div class="row">
-                            <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio3"
-                                   autocomplete="off" value="3">
-                            <label class="btn btn-outline-primary" for="btnradio3">주문접수 지연</label>
-                        </div>
-                    </div>
-                    <div class="container-fluid">
-                        <div class="row">
-                            <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio4"
-                                   autocomplete="off" value="4">
-                            <label class="btn btn-outline-primary" for="btnradio4">기 타</label>
-                        </div>
-                    </div>
+                    <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
+                    <input type="hidden" id="odOptionGroupName" name="odOptionGroupName"
+                           value="${cart.odOptionGroupName}"/>
+                    <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.odOptionName}"/>
+                    <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.odMenuQty}"/>
+                    <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.odMenuPrice}"/>
+                    <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
+                    <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
+                    <input type="hidden" id="odMenuQtyFlag" name="odMenuQtyFlag" value="${cart.odMenuQtyFlag}"/>
 
 
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">취소</button>
-                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">다 음
-                    </button>
-                </div>
+                </c:forEach>
+                <input type="hidden" name="payId" value="${purchase.payId}">
+                <input type="hidden" name="orderNo" value="${purchase.orderNo}">
+                <input type="hidden" name="couponNo" value="${purchase.payCouponNo.couponNo}">
+                <input type="hidden" name="pointNo" value="${purchase.payPointNo.pointNo}">
+
             </div>
         </div>
     </div>
-    <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
-         tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    정말로 주문취소 하나요??
-                </div>
-                <div class="modal-footer">
+</section>
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalToggleLabel">Modal 1</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
 
-                    <button class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">취소</button>
-                    <button class="btn btn-primary" onclick="cancelPay()">확인</button>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio1"
+                               autocomplete="off" value="1" checked>
+                        <label class="btn btn-outline-primary" for="btnradio1">구매의사 취소</label>
+                    </div>
                 </div>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio2"
+                               autocomplete="off" value="2">
+                        <label class="btn btn-outline-primary" for="btnradio2">메뉴 및 수량 변경</label>
+                    </div>
+                </div>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio3"
+                               autocomplete="off" value="3">
+                        <label class="btn btn-outline-primary" for="btnradio3">주문접수 지연</label>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio4"
+                               autocomplete="off" value="4">
+                        <label class="btn btn-outline-primary" for="btnradio4">기 타</label>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">취소</button>
+                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">다 음
+                </button>
             </div>
         </div>
     </div>
-    <div class="container py-4">
-        <header class="pb-4 mb-5 border-bottom">
-            <span class="fs-1">현재주문정보</span>
-
-        </header>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="h-100 p-5 bg-light border rounded-3">
-                    <div class="row">
-                        <p class="text-start">주문번호 : ${purchase.orderNo}</p>
-                    </div>
-                    <div class="row">
-                        <p class="text-start">사장님연락처 : ${purchase.orderTruckId.truckPhone}</p>
-                    </div>
-                    <div class="row">
-
-                        <c:if test="${purchase.orderStatus == '1'}">
-                            <p class="text-start">주문정보 : 주문완료되었습니다.</p>
-                        </c:if>
-                        <c:if test="${purchase.orderStatus == '2'}">
-                            <p class="text-start">주문정보 : 주문접수되었습니다</p>
-                        </c:if>
-                        <c:if test="${purchase.orderStatus == '3'}">
-                            <p class="text-start">주문정보 : 주문하신 메뉴가 나왔습니다.</p>
-                        </c:if>
-                        <c:if test="${purchase.orderStatus == '4'}">
-                            <p class="text-start">주문정보 : 맛있게 드셨나요.</p>
-                        </c:if>
-                        <c:if test="${purchase.orderStatus == '5'}">
-                            <p class="text-start">주문정보 : 주문취소된 메뉴입니다.</p>
-                        </c:if>
-                    </div>
-                    <div id="order"></div>
-                    <c:set var="i" value="0"/>
-                    <c:forEach var="cart" items="${map.get('list')}">
-                        <c:set var="i" value="${i+1}"/>
-
-
-                        <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
-                        <input type="hidden" id="odOptionGroupName" name="odOptionGroupName"
-                               value="${cart.odOptionGroupName}"/>
-                        <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.odOptionName}"/>
-                        <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.odMenuQty}"/>
-                        <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.odMenuPrice}"/>
-                        <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
-                        <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
-                        <input type="hidden" id="odMenuQtyFlag" name="odMenuQtyFlag" value="${cart.odMenuQtyFlag}"/>
-
-
-                    </c:forEach>
-                    <div class="mb-3">
-                        <label for="orderRequest" class="col-form-label">주문요청사항:</label>
-                        <textarea class="form-control" id="orderRequest" name="orderRequest"
-                                  value="${purchase.orderRequest}" disabled>${purchase.orderRequest}</textarea>
-                    </div>
-                    <div class="row">
-                        <p class="text-start">픽업희망시간 : ${purchase.orderPickUpTime}</p>
-                    </div>
-                    <div class="row">
-                        <p class="text-start">예상조리시간 : ${purchase.orderCookingTime}</p>
-                    </div>
-                    <hr class="my-lg-12">
-                    <h3>결제정보</h3>
-                    <div class="row">
-                        <c:if test="${purchase.payOption == '0'}">
-                            <p class="text-start">결제방법 : 휴대폰결제</p>
-                        </c:if>
-                        <c:if test="${purchase.payOption == '2'}">
-                            <p class="text-start">결제방법 : 카카오결제</p>
-                        </c:if>
-                    </div>
-                    <div class="row">
-                        <p class="text-start">결제금액 : ${purchase.payPrice}</p>
-                    </div>
-
-                    <div id="total"></div>
-                    <dev class="row justify-content-evenly">
-                        <div class="col-3">
-                            <button type="submit" class="btn btn-secondary btn-lg">확 인</button>
-                        </div>
-                        <c:if test="${purchase.orderStatus == '1'}">
-                        <div class="col-3">
-                                <a class="btn btn-secondary btn-lg" data-bs-toggle="modal" href="#exampleModalToggle"
-                                   role="button">주문취소</a>
-
-                        </div>
-                        </c:if>
-                    </dev>
-                </div>
+</div>
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <input type="hidden" name="payId" value="${purchase.payId}">
-            <input type="hidden" name="orderNo" value="${purchase.orderNo}">
-            <input type="hidden" name="couponNo" value="${purchase.payCouponNo.couponNo}">
-            <input type="hidden" name="pointNo" value="${purchase.payPointNo.pointNo}">
-            <div class="col-md-6">
-                <div class="h-100 p-5 bg-light border rounded-3">
-                    <br><br>
-                    <h2>푸드트럭위치</h2>
-                    <br><br><br><br>
-                    <div id="map_ma"></div>
+            <div class="modal-body">
+                정말로 주문취소 하나요??
+            </div>
+            <div class="modal-footer">
 
-
-                </div>
+                <button class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">취소</button>
+                <button class="btn btn-primary" onclick="cancelPay()">확인</button>
             </div>
         </div>
-
-
     </div>
-</main>
+</div>
 
 
 <script>
