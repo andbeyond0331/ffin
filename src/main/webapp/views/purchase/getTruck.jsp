@@ -801,8 +801,7 @@
                             forOne += 1;
                             if (beforeAnyway[i + 1] != null) {
                                 if (beforeAnyway[i + 1]['odMenuQtyFlag'] == 0) {
-                                    finalCart += "</div><span class=\"text-muted\">" + beforeAnyway[i]['odMenuPrice'] + "원" +
-                                        "<input type='hidden' name='sell_price' value='"+beforeAnyway[i]['odMenuPrice']+"'></span></li>";
+                                    finalCart += "</div><span class=\"text-muted\">" + beforeAnyway[i]['odMenuPrice'] + "원" +"</span></li>";
                                 }
 
                             }

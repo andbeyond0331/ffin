@@ -236,19 +236,17 @@
             <form class="row justify-content-center" id="user_update_info">
 
                 <div class="col-md-12 data-input-box adminbox">
-                    <hr style="margin-top: 35px;"/>
                     <div class="data-input-box info" >
                         <div>
-                            <div id="map_ma"></div>
-
-
+                            <div style="margin-top: 15px;">
+                                <h4 style="text-align: center;">${purchase.orderTruckId.truckName}</h4>
+                            </div>
                         </div>
+                        <hr style="margin-top: 35px; margin-bottom: 60px;"/>
                         <div>
-
-
+                            <div id="map_ma"></div>
                         </div>
                     </div>
-
                     <hr style="margin-top: 60px;"/>
 
                     <div style="display: flex; justify-content: center;">
