@@ -5,6 +5,7 @@ import com.ffin.common.Search;
 import com.ffin.service.catering.CateringService;
 import com.ffin.service.domain.Truck;
 import com.ffin.service.domain.User;
+import com.ffin.service.truck.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +33,10 @@ public class CateringController {
     @Autowired
     @Qualifier("cateringServiceImpl")
     private CateringService cateringService;
+
+    @Autowired
+    @Qualifier("truckServiceImpl")
+    private TruckService truckService;
 
     public CateringController(){
         System.out.println(this.getClass());
@@ -280,6 +287,70 @@ public class CateringController {
     }
 
 
+
+    /*
+        HHJ
+        메인창 열릴 때 별점 순으로 소팅할까 하는데! 지금은 테스트로 1~15만 노출되게 해보려고 하유.
+        todo: 별점 순이라면 별점 순 query 필요함
+
+     */
+    @RequestMapping(value="/mainTruckList", method=RequestMethod.GET)
+    public ModelAndView mainTruckList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+
+        Search search = new Search();
+        search.setCurrentPage(1);
+        search.setPageSize(15);
+        Map<String, Object> map = new HashMap<String, Object>();
+
+//        int currentPage = Integer.parseInt(request.getP)
+
+        // todo : 우선은 테스트로 la, lo를 고정값으로 두었음 만들어둔거로 테스트 해보려고
+        float la = (float) 37.57041195853664;
+        float lo = (float) 126.98503967552996;
+
+        map = truckService.truckNearBy(search,la, lo);
+
+        System.out.println("위치기반 결과 : " + map.get("list"));
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("list", map.get("list"));
+        modelAndView.setViewName("/views/home.jsp");
+
+
+
+        return modelAndView;
+    }
+
+    /*
+        위/경도 받아서 메인 출력하려고
+     */
+    @RequestMapping(value="/mainTruckListLaLo", method=RequestMethod.POST)
+    public ModelAndView mainTruckListLaLo(HttpServletRequest request, @RequestParam("lo") float lo, @RequestParam("la") float la, @RequestParam("address") String address, HttpServletResponse response) throws Exception{
+        request.setCharacterEncoding("UTF-8");
+
+        System.out.println("mainTruckListLaLo !!!!!!!!!!!!!!!!!!!!!!!1 post");
+        System.out.println("lo = " + lo + ", la = " + la +", address: "+address);
+        Search search = new Search();
+        search.setCurrentPage(1);
+        search.setPageSize(15);
+        Map<String, Object> map = new HashMap<String, Object>();
+
+//        int currentPage = Integer.parseInt(request.getP)
+
+
+        map = truckService.truckNearBy(search,la, lo);
+
+        System.out.println("위치기반 결과 : " + map.get("list"));
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("list", map.get("list"));
+        modelAndView.addObject("inputLocation", address);
+        modelAndView.setViewName("/views/home.jsp");
+
+
+
+        return modelAndView;
+    }
 
 
 
