@@ -314,8 +314,8 @@ public class CateringController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("list", map.get("list"));
-        modelAndView.setViewName("/views/home.jsp");
-
+        modelAndView.setViewName("/catering/mainTruckList");
+/* 수정해야할수도잇음 */
 
 
         return modelAndView;
@@ -345,9 +345,9 @@ public class CateringController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("list", map.get("list"));
         modelAndView.addObject("inputLocation", address);
-        modelAndView.setViewName("/views/home.jsp");
+        modelAndView.setViewName("/catering/mainTruckList");
 
-
+/* 수정해야할*/
 
         return modelAndView;
     }

@@ -415,10 +415,14 @@
                     //alert("안녕좀비야..");
                     if( data.userId == userIdModal) {
                         //alert(data.userId);
-                        window.location.reload();
+                        //window.location.reload();
+                        //self.locaton="/catering/mainTruckList";
+                        location.href="/catering/mainTruckList";
                     } else {
                         //alert(data);
-                        window.location.reload();
+                        //window.location.reload();
+                        location.href="/catering/mainTruckList";
+                        //self.locaton="/catering/mainTruckList";
                     }
                 },
                 fail:function (error){
@@ -461,7 +465,9 @@
                             console.log(data);
                             alert(truckId + " 사장님 환영합니다.");
                             /*javascript redirect 방법*/
-                            location.replace("http://localhost:8080/catering/mainTruckList");
+                            //location.replace("/catering/mainTruckList");
+                            //self.location="/catering/mainTruckList";
+                            location.href="/catering/mainTruckList";
                         }
                     },
                 })
@@ -473,7 +479,8 @@
     $( function() {
         $(".navbar-brand").on("click" , function() {
             //alert(1234);
-            location.replace("http://localhost:8080/views/home.jsp");
+            //location.replace("http://localhost:8080/views/home.jsp");
+            location.href="/catering/mainTruckList";
         });
     });
 

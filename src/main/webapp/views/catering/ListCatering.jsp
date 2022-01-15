@@ -1118,7 +1118,7 @@
                     $('.modal-content').append(modalFooter);
                 }
                 $('.modal-body').html(div);
-                $('#staticBackdrop').modal('show');
+
 
             },
             error : function(err){

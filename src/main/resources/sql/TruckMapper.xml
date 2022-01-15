@@ -46,7 +46,10 @@
 		<result property="truckSigMenuNo" 					column="truck_sig_menu_no" 						jdbcType="INTEGER"/>
 		<result property="truckSigMenuName" 					column="truck_sig_menu_name" 						jdbcType="VARCHAR"/>
 		<result property="truckSigMenuImg1" 					column="truck_sig_menu_img1" 						jdbcType="VARCHAR"/>
+
 		<result property="truckSigMenuPrice"                column="menu_price"                   jdbcType="INTEGER"/>
+
+
 	</resultMap>
 
 	<!-- SQL : INSERT -->
@@ -204,7 +207,7 @@
 
 		<select id="truckNearBy"   parameterType="map"     resultMap="truckSelectMap">
 		SELECT inner_table.*
-		FROM( SELECT  t.truck_id , t.truck_name , t.truck_phone, t.truck_map_la, t.truck_map_lo, t.truck_cate, t.truck_avg_star, t.truck_pro_img, t.truck_busi_status, t.truck_sig_menu_no, t.truck_sig_menu_name, t.truck_sig_menu_img1, m.menu_truck_id, m.menu_name, m.menu_price
+		FROM( SELECT  t.truck_id , t.truck_name , t.truck_phone, t.truck_map_la, t.truck_map_lo, t.truck_cate, t.truck_avg_star, t.truck_pro_img, t.truck_busi_status, t.truck_sig_menu_no, t.truck_sig_menu_name, t.truck_sig_menu_img1, m.menu_truck_id, m.menu_name,
 		             (6371*acos(cos(radians(#{la}))*cos(radians(t.truck_map_la))*cos(radians(t.truck_map_lo)
 			-radians(#{lo}))+sin(radians(#{la}))*sin(radians(t.truck_map_la)))) as distance
 			FROM truck t
