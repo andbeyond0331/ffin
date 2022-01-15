@@ -97,11 +97,11 @@ public class UserController {
 
 //            if(user.isUseCookie())
 
-            return "redirect:/views/homeTest.jsp";
+            return "/catering/mainTruckList";
 
         } else {
             System.out.println("로그인Nope");
-            return "views/user/login.jsp";
+            return "/catering/mainTruckList";
         }
     }
 
@@ -126,7 +126,7 @@ public class UserController {
                 userService.autoLogin(user.getUserId(), session.getId(), date);
             }
         }
-        return "redirect:/";
+        return "/catering/mainTruckList";
     }
 
     @RequestMapping( value="addUser", method=RequestMethod.GET )
@@ -236,7 +236,7 @@ public class UserController {
         session.setAttribute("user", dbUser);
         session.setAttribute("role","user");
 
-        return "redirect:/views/home.jsp";
+        return "/catering/mainTruckList";
     }
 
     @RequestMapping(value = "kakaoLogout", method = RequestMethod.GET)
@@ -259,7 +259,7 @@ public class UserController {
                 userService.autoLogin(user.getUserId(), session.getId(), date);
             }
         }
-        return "redirect:/";
+        return "redirect:/catering/mainTruckList";
     }
 
 
@@ -326,7 +326,7 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "getPurchaseByUser/", method = RequestMethod.POST)
+    @RequestMapping(value = "getPurchaseByUser", method = RequestMethod.POST)
     public ModelAndView getPurchaseByUser(@ModelAttribute("purchase") Purchase purchase, @ModelAttribute("user") User user,
                                      @ModelAttribute("point") Point point, ModelAndView model) throws Exception {
 
