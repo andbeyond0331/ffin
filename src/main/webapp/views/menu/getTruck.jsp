@@ -8,6 +8,68 @@
     <title>메뉴 목록</title>
     <jsp:include page="../../common/lib.jsp"/>
 
+    <style>
+
+        #dataTable thead tr th, #dataTable tbody tr td{
+            text-align: center;
+        }
+
+        #dataTable tbody tr:hover{
+            color: #ffba49;
+        }
+
+        .form-inline{
+            float: right;
+            padding-right: 20px;
+        }
+        .card.mb-10{
+            width: auto;
+            min-height: 50px;
+            box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1);
+            transition: 0.2s;
+            margin-top: 5px;
+            display: flex;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .card.mb-10:hover{
+            background-color: rgba(255, 229, 55, 0.16);
+        }
+        .card.mb-10.sub-title:hover{
+            background-color: rgb(255, 255, 255);
+        }
+        .card-ans{
+            box-shadow: 0 1px 2px 1px rgba(0,0,0,0.2);
+            transition: 0.2s;
+            margin-top: 5px;
+            /*display: flex;
+            justify-content: flex-start;*/
+            text-align: left;
+            font-size: 14px;
+            padding: 30px;
+        }
+        .card-body {
+            padding: 0;
+        }
+        .card-text{
+            padding: 0;
+        }
+        .inquiry-card{
+            display: flex;
+            justify-content: space-around;
+        }
+        .inquiry-con{
+            padding: 0;
+        }
+        .d-grid.gap-2.col-6.mx-auto{
+            display: flex;
+            justify-content: center;
+        }
+        #inquiryAnsContent{
+            min-height: 150px;
+        }
+    </style>
+
     <script>
         <%--        메뉴 상세보기 모달에서 장바구니에 담기!--%>
 
@@ -1223,7 +1285,7 @@
 
         $(function(){
 
-            alert($('div.star-ratings').html());
+            // alert($('div.star-ratings').html());
 
             // var menuTruck = {
             //     truckId : $('input[name="truckId"]').val()
@@ -1251,11 +1313,14 @@
     <script>
         //리뷰 목록 뿌려주기 ajax
 
-        $(document).onload(function(){
+        $(function(){
+
+            var truckId = $('input[name="truckId"]').val();
+            alert(truckId);
 
             $.ajax({
 
-                url:"/review/json/getReviewList/"+${truck.truckId},
+                url:"/review/json/getReviewList/"+truckId,
                 method:"get",
                 success:function(data){
                     var rvDiv = "<div class=\"d-flex\"";
@@ -1269,7 +1334,7 @@
                         "<p class=\"card-text\"><small class=\"text-muted\"><strong>리뷰작성자</strong></small></p>"+
                         "</div>"+
                         "</div>"+
-                        "<div class=\"col-md-6 inquiry-con\">"+
+                        "<div class=\"col-md-1 inquiry-con\">"+
                         "<div class=\"card-body\">"+
                         "<p class=\"card-text\"><small class=\"text-muted\"><strong>리뷰 별점</strong></small></p>"+
                         "</div>"+
@@ -1294,23 +1359,23 @@
                             "<div class=\"row g-0 inquiry-card\">"+
                             "<div class=\"col-md-2 inquiry-con\">"+
                             "<div class=\"card-body\">"+
-                            "<input type=\"hidden\" id=\"rvNo\" name =\"rvNo\" value=\""+data.review.rvNo+"\">"+
+                            "<input type=\"hidden\" id=\"rvNo\" name =\"rvNo\" value=\""+rv.rvNo+"\">"+
                             "<p class=\"card-text\"><small class=\"text-muted\"><strong>리뷰작성자</strong></small></p>"+
                             "</div>"+
                             "</div>"+
                             "<div class=\"col-md-6 inquiry-con\">"+
                             "<div class=\"card-body\">"+
-                            "<p class=\"card-text\"><small class=\"text-muted\"><strong>리뷰 별점</strong></small></p>"+
+                            "<p class=\"card-text\"><small class=\"text-muted\">"+rv.rvStar+"</small></p>"+
                             "</div>"+
                             "</div>"+
                             "<div class=\"col-md-2 inquiry-con\">"+
                             "<div class=\"card-body\">"+
-                            "<p class=\"card-text\"><small class=\"text-muted\"><strong>리뷰작성일</strong></small></p>"+
+                            "<p class=\"card-text\"><small class=\"text-muted\">"+rv.rvRegTime+"</small></p>"+
                             "</div>"+
                             "</div>"+
                             "<div class=\"col-md-2 inquiry-con\">"+
                             "<div class=\"card-body\">"+
-                            "<p class=\"card-text\"><small class=\"text-muted\"><strong>답변상태</strong></small></p>"+
+                            "<p class=\"card-text\"><small class=\"text-muted\">"+rv.rvContent+"</small></p>"+
                             "</div>"+
                             "</div></div></div>"+
                             ""+
@@ -1323,6 +1388,8 @@
 
 
                     }
+                    alert($('div.card.review-body').html());
+                    $('div.card.review-body').html(rvDiv);
                 }
 
             });
@@ -1375,15 +1442,23 @@
 
     </div>
 
-    <!--좋아요-->
+    <!--좋아요--> <!-- 0115 HHJ 추가 -->
 
-    <button type="button" class="btn btn-outline-danger">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
-        </svg>
-        좋아요
+
+    <button type="button" class="btn btn-outline-danger heart-click-t">
+        <c:if test="${truck.truckHeartCount eq '0'}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+            </svg>
+        </c:if>
+        <c:if test="${truck.truckHeartCount ne '0'}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+                <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"></path>
+            </svg>
+        </c:if>
+
     </button>
-
+    <span id="heartC">${truck.truckHeartCount}</span>
     <!--좋아요-->
 
     <!--================truck info 시작=============-->
@@ -1410,20 +1485,40 @@
     <!--================truck info 끝=============-->
 
     <hr/>
-    <!--리뷰 리스트 시작-->
-    <p>
-        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-           리뷰 보기
-        </a>
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-            리뷰 보기
-        </button>
-    </p>
-    <div class="collapse" id="collapseExample">
-        <div class="card review-body">
+    <!--리뷰 리스트 시작 -->
+    <div class="wrapper">
+        <ul>
+            <li>
+                <input type="checkbox" id="list-item-1">
+                <label for="list-item-1" class="first">Serif</label>
+                <ul>
+                    <li>Slabo</li>
+                    <li>Droid Serif</li>
+                    <li>Roboto Serif</li>
+                    <li>Lora</li>
+                    <li>Meriweather</li>
+                </ul>
+            </li>
 
-        </div>
+        </ul>
     </div>
+    <!--리뷰 리스트 끝-->
+
+
+    <!--리뷰 리스트 시작-->
+<%--    <p>--%>
+<%--        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">--%>
+<%--           리뷰 보기--%>
+<%--        </a>--%>
+<%--        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">--%>
+<%--            리뷰 보기--%>
+<%--        </button>--%>
+<%--    </p>--%>
+<%--    <div class="collapse" id="collapseExample">--%>
+<%--        <div class="card review-body">--%>
+
+<%--        </div>--%>
+<%--    </div>--%>
     <!--리뷰 리스트 시작-->
 
 
@@ -1597,7 +1692,82 @@
 
 <!--리뷰 모달-->
 
+<script>
 
+$("body").on("click", ".heart-click-t", function() {
+var truckId = $('input[name="truckId"]').val();
+console.log("truckId: " + truckId);
+
+// 빈하트를 눌렀을때
+if ($(this).children('svg').attr('class') == "bi bi-suit-heart") {
+console.log("빈하트 클릭" + truckId);
+
+$.ajax({
+url: '/community/json/addHeartTruck',
+type: 'get',
+data: {
+truckId: truckId,
+},
+success: function (pto) {
+//페이지 새로고침
+//document.location.reload(true);
+console.log("pto: "+pto.heartCount)
+let heart = pto.heartCount;
+
+
+$('#heartC').text(하트);
+
+console.log("하트 추가!!!!!!!!!!");
+},
+error: function () {
+alert('서버 에러');
+}
+});
+console.log("하트채워");
+
+// 꽉찬하트로 바꾸기
+$(this).html("<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart-fill' viewBox='0 0 20 20'><path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' /></svg>");
+//$('.heart_icon').html("<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart-fill' viewBox='0 0 20 20'><path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' /></svg>");
+
+// 꽉찬 하트를 눌렀을 때
+} else if ($(this).children('svg').attr('class') == "bi bi-suit-heart-fill") {
+console.log("꽉찬거 하트 클릭 " + truckId);
+
+$.ajax({
+url: '/community/json/removeHeartTruck',
+type: 'get',
+data: {
+truckId: truckId,
+},
+success: function (pto) {
+//페이지 새로고침
+//document.location.reload(true);
+console.log("pto: "+pto)
+let heart = pto.heartCount;
+// 페이지에 하트수 갱신
+//
+
+$('#heartC').text(하트);
+
+console.log("하트삭제!!!!!!!!!");
+},
+error: function () {
+alert('서버 에러');
+}
+});
+console.log("빈하트!!!!!!!!!");
+
+// 빈하트로 바꾸기
+$(this).html('<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-suit-heart" viewBox="0 0 20 20"><path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" /></svg>');
+
+//$('.heart_icon' + postNo).html('<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-suit-heart" viewBox="0 0 20 20"><path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" /></svg>');
+}
+
+
+});
+
+
+</script>
 
 
 <form>
