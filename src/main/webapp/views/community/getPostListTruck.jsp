@@ -514,7 +514,7 @@
 
 
 <head>
-    <title>사진 게시판</title>
+    <title>F.FIN | 썸네일 게시판</title>
     <jsp:include page="../../common/lib.jsp"/>
 
 
@@ -807,8 +807,12 @@
                 <div class="gallery-item" tabindex="0">
 
                     <img src="../../../resources/image/${post.postFile1}" class="gallery-image" alt="" >
-
+                    <c:if test="${post.secretKey==0}">
                     <input type="hidden" id="postNoNo" name="postNoNo" value="${post.postNo}"/>
+                    </c:if>
+                    <c:if test="${post.secretKey==1}">
+                        <input type="hidden" id="postNoNo" name="postNoNo" value="Blind"/>
+                    </c:if>
                     <div class="gallery-item-info">
 
                         <ul style="padding: 0;">
@@ -852,6 +856,10 @@
 
         let postNo = $(this).find("input[name='postNoNo']").val()
         console.log("postNo: " + postNo);
+        if(postNo=="Blind"){
+            alert("비공개 처리된 게시물입니다.")
+            return;
+        }
         getCardDetail(postNo)
         /*let postNo = $(this).next();
         console.log("postNo: " + postNo);

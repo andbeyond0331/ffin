@@ -72,6 +72,30 @@ public class CommunityServiceImpl implements CommunityService {
         communityDao.updatePost(post);
     }
 
+    // 게시물 비공개 처리
+    @Override
+    public void blindPost(Post post) throws Exception {
+        communityDao.blindPost(post);
+    }
+
+    // 게시물 공개 처리
+    @Override
+    public void seePost(Post post) throws Exception {
+        communityDao.seePost(post);
+    }
+
+    // 댓글 비공개 처리
+    @Override
+    public void blindComment(Comment comment) throws Exception {
+        communityDao.blindComment(comment);
+    }
+
+    // 댓글 공개 처리
+    @Override
+    public void seeComment(Comment comment) throws Exception {
+        communityDao.seeComment(comment);
+    }
+
     // 댓글 작성
     @Override
     public void addComment(Comment comment) throws Exception {
@@ -88,12 +112,6 @@ public class CommunityServiceImpl implements CommunityService {
     @Override
     public List<Comment> getCommentList(Object commentPostNo) throws Exception {
         return communityDao.getCommentList(commentPostNo);
-    }
-
-    // 댓글 수정
-    @Override
-    public void updateComment(Comment comment) throws Exception {
-        communityDao.updateComment(comment);
     }
 
     // 댓글 수
@@ -154,7 +172,7 @@ public class CommunityServiceImpl implements CommunityService {
     public Map<String, Object> getPostList2(Search search, String id, String role) throws Exception {
 
 
-       // int totalCount = communityDao.getTotalCountPost(search); //이건 구현 패스, 구현해야함
+        // int totalCount = communityDao.getTotalCountPost(search); //이건 구현 패스, 구현해야함
 //        int totalCountU = communityDao.getTotalCountPostU(search);
 //        int totalCountT = communityDao.getTotalCountPostT(search);
 
@@ -218,6 +236,7 @@ public class CommunityServiceImpl implements CommunityService {
     public void addPostPic(Post post) throws Exception {
         communityDao.addPostPic(post);
     }
+
     @Override
     public void updatePostPic(Post post) throws Exception {
         communityDao.updatePostPic(post);

@@ -97,7 +97,7 @@ public class TruckRestController {
         //Business Logic
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
 
-        if(session.getAttribute("user") != null || session.getAttribute("truck") != null || session.getAttribute("admin") != null){
+        if (session.getAttribute("user") != null || session.getAttribute("truck") != null || session.getAttribute("admin") != null) {
             session.removeAttribute("user");
             session.removeAttribute("truck");
             session.removeAttribute("admin");
@@ -105,7 +105,7 @@ public class TruckRestController {
 
         Truck dbTruck = truckService.getTruck(truck.getTruckId());
 
-        if (truck.getTruckPassword().equals(dbTruck.getTruckPassword())) {
+        if (truck.getTruckPassword().equals(dbTruck.getTruckPassword()) && dbTruck.getTruckByeStatus()==0) {
 
             session.setAttribute("truck", dbTruck);
             session.setAttribute("role", "truck");
@@ -126,10 +126,13 @@ public class TruckRestController {
                 Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
                 truckService.autoLogin(truck.getTruckId(), session.getId(), sessionLimit);
             }
-            System.out.println("로그인 OK");
+            System.out.println("로그인 성공");
             return String.valueOf(0);
+        } else if (truck.getTruckPassword().equals(dbTruck.getTruckPassword()) && dbTruck.getTruckByeStatus() == 1) {
+            System.out.println("탈퇴한 회원의 로그인 시도");
+            return String.valueOf(1);
         } else {
-            System.out.println("로그인 Nope");
+            System.out.println("로그인 실패");
             return String.valueOf(9);
         }
     }
@@ -241,7 +244,7 @@ public class TruckRestController {
     @RequestMapping(value = "json/getTruckId", method = RequestMethod.POST)
     @ResponseBody
     public String getUserId(@RequestParam("truckName") String truckName, @RequestParam("truckPhone") String truckPhone,
-                            HttpServletRequest request) throws Exception{
+                            HttpServletRequest request) throws Exception {
 
         System.out.println("TruckRestController.findTruckId : POST ");
 
@@ -254,7 +257,7 @@ public class TruckRestController {
 
         String result = truckService.findTruckId(truckName, truckPhone);
 
-        if(result == null ){
+        if (result == null) {
             return "fail";
         }
 
@@ -266,7 +269,7 @@ public class TruckRestController {
     @RequestMapping(value = "json/getTruckIdForPassword", method = RequestMethod.POST)
     @ResponseBody
     public String getTruckIdForPassword(@RequestParam("truckId") String truckId, @RequestParam("truckName") String truckName,
-                                       @RequestParam("truckPhone") String truckPhone, HttpServletRequest request) throws Exception {
+                                        @RequestParam("truckPhone") String truckPhone, HttpServletRequest request) throws Exception {
         System.out.println("TruckRestController.getTruckPassword : POST");
 
         Truck truck = new Truck();
@@ -276,7 +279,7 @@ public class TruckRestController {
         truck.setTruckPhone(truckPhone);
 
         String result = truckService.getTruckIdForPassword(truckId, truckName, truckPhone);
-        System.out.println("임시비밀번호 전송을 위한 truck get!!"+result);
+        System.out.println("임시비밀번호 전송을 위한 truck get!!" + result);
         return result;
     }
 
@@ -291,7 +294,7 @@ public class TruckRestController {
         System.out.println("truckPhone = " + truckPhone);
 
         Random random = new Random();
-        int tempPassword = random.nextInt(888888)+111111;
+        int tempPassword = random.nextInt(888888) + 111111;
 
         truckService.sendSMSForPassword(truckId, truckPhone, tempPassword);
 
@@ -317,9 +320,9 @@ public class TruckRestController {
                                  @RequestParam("truckJoinReqStatus") int truckJoinReqStatus) throws Exception {
 
         System.out.println("TruckRestController.updateTruckJoin : POST");
-        
+
         //승인
-        if(truckJoinReqStatus == 1){
+        if (truckJoinReqStatus == 1) {
             truck.setRole(1);
             truckService.updateTruckJoin(truck);
             return truckService.getNewTruck(truckId);

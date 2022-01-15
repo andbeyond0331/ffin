@@ -197,6 +197,84 @@ public class CommunityController {
         return "redirect:/community/getPost?postNo="+postNo;
     }
 
+    @RequestMapping(value = "blindPost", method = RequestMethod.GET)
+    public String blindPost(@ModelAttribute("post") Post post, Model model, HttpSession session) throws Exception {
+
+        System.out.println("/community/blindPost : GET");
+        //Business Logic
+        int postNo = (int) session.getAttribute("postNo");
+
+        System.out.println("postNo = " + postNo);
+
+        post = (Post) model.getAttribute("post");
+
+        post.setPostNo(postNo);
+
+        System.out.println("post = " + post);
+
+        communityService.blindPost(post);
+
+        communityService.getPost(postNo);
+
+        return "redirect:/community/getPost?postNo="+postNo;
+    }
+
+    @RequestMapping(value = "seePost", method = RequestMethod.GET)
+    public String seePost(@ModelAttribute("post") Post post, Model model, HttpSession session) throws Exception {
+
+        System.out.println("/community/seePost : GET");
+        //Business Logic
+        int postNo = (int) session.getAttribute("postNo");
+
+        System.out.println("postNo = " + postNo);
+
+        post = (Post) model.getAttribute("post");
+
+        post.setPostNo(postNo);
+        post.setSecretKey(0);
+
+        System.out.println("post = " + post);
+
+        communityService.seePost(post);
+
+        communityService.getPost(postNo);
+
+        return "redirect:/community/getPost?postNo="+postNo;
+    }
+
+    // 댓글 비공개처리
+    @RequestMapping(value = "blindComment", method = RequestMethod.GET)
+    public String blindComment(@ModelAttribute("comment") Comment comment, @RequestParam("commentNo") int commentNo, HttpSession session, HttpServletRequest request) throws Exception {
+
+        System.out.println("/community/blindComment : GET");
+
+        int postNo = (int) session.getAttribute("postNo");
+
+        System.out.println("postNo = " + postNo);
+
+        comment = communityService.getComment(commentNo);
+
+        communityService.blindComment(comment);
+
+        return "redirect:/community/getPost?postNo="+postNo;
+    }
+
+    @RequestMapping(value = "seeComment", method = RequestMethod.GET)
+    public String seeComment(@ModelAttribute("comment") Comment comment,@RequestParam("commentNo") int commentNo, Model model, HttpSession session) throws Exception {
+
+        System.out.println("/community/seeComment : GET");
+        //Business Logic
+        int postNo = (int) session.getAttribute("postNo");
+
+        System.out.println("postNo = " + postNo);
+
+        comment = communityService.getComment(commentNo);
+
+        communityService.seeComment(comment);
+
+        return "redirect:/community/getPost?postNo="+postNo;
+    }
+
     @RequestMapping(value = "getPostList")
     public String getPostList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request, HttpSession session) throws Exception {
 
@@ -221,7 +299,7 @@ public class CommunityController {
 
     }
 
-
+    // 게시물 삭제
     @RequestMapping(value = "deletePost", method = RequestMethod.GET)
     public String deletePost(@ModelAttribute("post") Post post, @RequestParam("postNo") int postNo, Model model, HttpServletRequest request, HttpSession session)
             throws Exception {

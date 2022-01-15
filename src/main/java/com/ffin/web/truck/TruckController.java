@@ -80,7 +80,7 @@ public class TruckController {
 
         model.addAttribute("truck", truck);
 
-        return "redirect:/views/home.jsp";
+        return "/catering/mainTruckList";
     }
 
     // 트럭조회
@@ -309,7 +309,7 @@ public class TruckController {
 
         session.invalidate();
 
-        return "redirect:/views/home.jsp";
+        return "/catering/mainTruckList";
     }
 
     // 트럭 로그인 화면 요청 // 이제 안씀
@@ -353,7 +353,7 @@ public class TruckController {
 
         System.out.println("로그아웃성공");
 
-        return "redirect:/views/home.jsp";
+        return "/catering/mainTruckList";
     }
 
     // 트럭 리스트
@@ -442,7 +442,7 @@ public class TruckController {
         session.invalidate();
 
         // 홈화면으로 이동
-        return "redirect:/views/home.jsp";
+        return "/catering/mainTruckList";
     }
 
     // 사업자 아이디 찾기 화면 요청

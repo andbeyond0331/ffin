@@ -118,28 +118,6 @@ public class CommunityServiceTest {
     }
 
     //@Test
-    public void testUpdateComment() throws Exception {
-
-        Comment comment = communityService.getComment(1);
-
-        comment.setCommentContent("퓨퓨ㅠㅠ");
-
-        communityService.updateComment(comment);
-
-    }
-
-    //@Test
-    /*public void testUpdateHeart() throws Exception {
-
-        Heart heart = communityService.getHeart(1);
-
-        heart.setHeartFlag(0);
-
-        communityService.updateHeart(heart);
-
-    }*/
-
-    //@Test
     public void testGetPostListAll() throws Exception {
         Search search = new Search();
         search.setCurrentPage(1);
