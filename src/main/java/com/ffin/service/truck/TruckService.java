@@ -51,6 +51,8 @@ public interface TruckService {
     // 트럭 가입승인 & 거절
     public void updateTruckJoin(Truck truck) throws Exception;
 
+    public void updateTruckAvgStar(Truck truck) throws Exception;
+
     // 푸드트럭 로그인
     public void login(Truck truck) throws Exception ;
     // 푸드트럭 로그아웃

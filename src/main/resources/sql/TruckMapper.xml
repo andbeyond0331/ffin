@@ -46,6 +46,7 @@
 		<result property="truckSigMenuNo" 					column="truck_sig_menu_no" 						jdbcType="INTEGER"/>
 		<result property="truckSigMenuName" 					column="truck_sig_menu_name" 						jdbcType="VARCHAR"/>
 		<result property="truckSigMenuImg1" 					column="truck_sig_menu_img1" 						jdbcType="VARCHAR"/>
+		<result property="truckSigMenuPrice"                column="menu_price"                   jdbcType="INTEGER"/>
 	</resultMap>
 
 	<!-- SQL : INSERT -->
@@ -177,14 +178,33 @@
 			<![CDATA[
 					having distance <= 500
 		]]>
-
-				order by truck_id ) inner_table
-		limit 0,20;
+			<trim prefix="ORDER BY">
+				<if test="sortCondition != null ">
+					<if test='sortCondition.equals("moreStars")'>
+						t.truck_avg_star is null asc, t.truck_avg_star DESC
+					</if>
+					<if test='sortCondition.equals("lessStars")'>
+						t.truck_avg_star is null asc, t.truck_avg_star ASC
+					</if>
+<!--					<if test='sortCondition.equals("거리 순")'>-->
+<!--						BLABLA DESC-->
+<!--					</if>-->
+<!--					<if test='sortCondition.equals("구매 많은 순")'>-->
+<!--						BLABLA DESC-->
+<!--					</if>-->
+				</if>
+				<if test="sortCondition == null">
+					truck_id ASC
+				</if>
+			</trim>
+-- 				order by truck_id
+		    ) inner_table;
+-- 		limit 0,20;
 	</select>
 
 		<select id="truckNearBy"   parameterType="map"     resultMap="truckSelectMap">
 		SELECT inner_table.*
-		FROM( SELECT  t.truck_id , t.truck_name , t.truck_phone, t.truck_map_la, t.truck_map_lo, t.truck_cate, t.truck_avg_star, t.truck_pro_img, t.truck_busi_status, t.truck_sig_menu_no, t.truck_sig_menu_name, t.truck_sig_menu_img1, m.menu_truck_id, m.menu_name,
+		FROM( SELECT  t.truck_id , t.truck_name , t.truck_phone, t.truck_map_la, t.truck_map_lo, t.truck_cate, t.truck_avg_star, t.truck_pro_img, t.truck_busi_status, t.truck_sig_menu_no, t.truck_sig_menu_name, t.truck_sig_menu_img1, m.menu_truck_id, m.menu_name, m.menu_price
 		             (6371*acos(cos(radians(#{la}))*cos(radians(t.truck_map_la))*cos(radians(t.truck_map_lo)
 			-radians(#{lo}))+sin(radians(#{la}))*sin(radians(t.truck_map_la)))) as distance
 			FROM truck t
@@ -281,6 +301,14 @@
 			TRUCK_JOIN_REQ_STATUS = #{truckJoinReqStatus},
 			truck_join_req_date = SYSDATE(),
 			role = ${role}
+		</set>
+		WHERE truck_id = #{truckId}
+	</update>
+
+	<update id="updateTruckAvgStar" parameterType="truck">
+		UPDATE truck
+		<set>
+			TRUCK_AVG_STAR = #{truckAVGStar}
 		</set>
 		WHERE truck_id = #{truckId}
 	</update>

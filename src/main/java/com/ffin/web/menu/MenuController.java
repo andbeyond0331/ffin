@@ -191,9 +191,11 @@ public class MenuController {
     // 트럭 리스트 - 카테고리에 따른
     @RequestMapping(value = "getTruckListCate")
 //    public String getTruckList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
-    public String getTruckListCate(@RequestParam(value="cateCondition", required = false) String cateCondition, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+    public String getTruckListCate(@RequestParam(value="sortCondition", required = false) String sortCondition, @RequestParam(value="cateCondition", required = false) String cateCondition, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
 
         System.out.println("/truck/getTruckList : GET / POST");
+//        if(sortCondition != null) sortCondition = new String(sortCondition.getBytes("EUC-KR"), "utf-8");
+        System.out.println("sortCondition = " + sortCondition + ", cateCondition = " + cateCondition + ", search = " + search + ", model = " + model + ", request = " + request);
 
         if (search.getCurrentPage() == 0) {
             search.setCurrentPage(1);
@@ -213,6 +215,10 @@ public class MenuController {
         if (cateCondition!=null && !cateCondition.equals("")){
 
             search.setCateCondition(cateCondition);
+        }
+        if (sortCondition!=null && !sortCondition.equals("")){
+
+            search.setSortCondition(sortCondition);
         }
         System.out.println("search ; " + search);
 
@@ -238,6 +244,7 @@ public class MenuController {
         model.addAttribute("resultPage", resultPage);
         model.addAttribute("search", search);
         model.addAttribute("cateCondition", cateCondition);
+        model.addAttribute("sortCondition",sortCondition);
 
         return "forward:/views/menu/getTruckMenuList.jsp";
     }
