@@ -12,7 +12,7 @@ public interface PurchaseService {
     public void addCart(List list) throws Exception ;//장바구니에 정보 등록
     public int addPurchase(Purchase purchase)throws Exception;//주문번호 생성을 위해서
     public int updatePoint(Point point)throws Exception;// 포인트 적립차감 등록
-    public void addCoupon(Coupon coupon)throws Exception;// 쿠폰발급 등록
+    public int addCoupon(Coupon coupon)throws Exception;// 쿠폰발급 등록
 
 
     public void updatePurchase(Purchase purchase)throws Exception; //결제 시 결제에 대한 정보 업데이트
@@ -41,4 +41,6 @@ public interface PurchaseService {
     public int getUsePoint (int pointNo)throws Exception; //환불시 사용한 포인트 조회
     public Purchase getMainOrderUser(String userId)throws Exception;//main 화면에서 현재주문정보를 보여줄지 아닌지 구분
 
+    //HHJ
+    public String checkCoupon(Coupon coupon) throws Exception; // 쿠폰 있는지 체크
 }

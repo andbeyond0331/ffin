@@ -633,7 +633,15 @@
 */
     $("#busiStatus").on("click",function(){
         var truckId = $("input[name='truck']").val();
-        var tb = $("input[name='truckBusiStatus']").val();
+        var tb = $("input[name='swCh']:checked").val();
+
+
+        if(tb == 'on'){
+            tb=1;
+        }else if(tb==undefined){
+            tb=0;
+        }
+
         $.ajax({
             url: "/purchase/json/updateBusiStatus",
             method: "POST",
@@ -644,7 +652,7 @@
             },
             success: function (data) {
 
-                alert("영업중모드 변경되었습니다!")
+                alert("영업모드 변경되었습니다!")
 
                 window.location.reload();
             }
@@ -670,11 +678,11 @@
         self.location = "/purchase/getOrderList?truckId="+truckId+"&search="+1
     })
 
-    $("#swCh").on("click",function(){
+/*    $("#swCh").on("click",function(){
 
         var on = $("input[name='swCh']:checked").val();
 
-    })
+    })*/
 
 
 

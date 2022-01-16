@@ -48,10 +48,11 @@ public class PurchaseDaoImpl implements PurchaseDao {
         int no = point.getPointNo();
         return no;
     }// 포인트 적립차감 등록
-    @Override
-    public void addCoupon(Coupon coupon)throws Exception{
+    @Override//수정 HHJ
+    public int addCoupon(Coupon coupon)throws Exception{
         sqlSession.insert("PurchaseMapper.addCoupon",coupon);
-
+        int no = coupon.getCouponNo();
+        return no;
     }// 쿠폰발급 등록
 
 
@@ -195,5 +196,11 @@ public class PurchaseDaoImpl implements PurchaseDao {
     @Override
     public Purchase getMainOrderUser(String userId) throws Exception {
         return sqlSession.selectOne("PurchaseMapper.getMainOrderUser",userId);
+    }
+
+    //HHJ
+    @Override
+    public String checkCoupon(Coupon coupon) throws Exception {
+        return sqlSession.selectOne("PurchaseMapper.checkCoupon",coupon);
     }
 }

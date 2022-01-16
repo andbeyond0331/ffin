@@ -253,7 +253,7 @@
                     //     if(beforeAnyway[j]['odMenuQtyFlag']==1){
                     finalCart += "" +
                         "<p></p>" +
-                        "<input type='hidden' name='orderCancelCount' value='"+i+"'>"+
+                        "<input type='hidden' name='mainOrderCancelCount' value='"+i+"'>"+
                         "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionGroupName'] + "</small> : " +
                         "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionName'] + "</small> +" +
                         "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionPrice'] + "원</small>";
@@ -337,12 +337,12 @@
         var orderDetail = JSON.parse(sessionStorage.getItem("menuOdList"));
 
 
-        $('input#decreaseQuantity').click(function(e){
-            var orderCount = $(this).parent('h6').find('input[name="orderCount"]').val();
+        $('input#mainDecreaseQuantity').click(function(e){
+            var orderCount = $(this).parent('h6').find('input[name="mainOrderCount"]').val();
             //alert("클릭한 메뉴의 순서 정보"+orderCount);
             e.preventDefault();
 
-            var stat = $(this).parent('h6').find('input#numberUpDown');
+            var stat = $(this).parent('h6').find('input#mainNumberUpDown');
             var num = stat.val();
             num--;
             if(num<=0){
@@ -356,11 +356,11 @@
 
             //$('input#numberUpDown').val(num);
         });
-        $('input#increaseQuantity').click(function(e){
-            var orderCount = $(this).parent('h6').find('input[name="orderCount"]').val();
+        $('input#mainIncreaseQuantity').click(function(e){
+            var orderCount = $(this).parent('h6').find('input[name="mainOrderCount"]').val();
             e.preventDefault();
 
-            var stat = $(this).parent('h6').find('input#numberUpDown');
+            var stat = $(this).parent('h6').find('input#mainNumberUpDown');
             var num = stat.val();
             num++;
 

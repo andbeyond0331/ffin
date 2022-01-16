@@ -177,11 +177,20 @@ public class PurchaseServiceTest {
     }
 
 
-    @Test
+    //@Test
     public void TestGetUsePoint() throws Exception {
 
         int pointAmt = purchaseService.getUsePoint(39);
         System.out.println(pointAmt);
+
+    }
+
+
+    @Test
+    public void TestGetMainUser() throws Exception {
+
+        Purchase purchase = purchaseService.getMainOrderUser("user01");
+        System.out.println(purchase);
 
     }
 

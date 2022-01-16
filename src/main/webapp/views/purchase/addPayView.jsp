@@ -124,6 +124,7 @@
         //총 합계 급액 처리가 완료가 되면 price로 amount에 넣어서 사용
 
 
+
         if (payOption == '1') {
             IMP.request_pay({
                 pg: 'danal',
@@ -364,7 +365,7 @@
 
 
     $(function () {
-        $("button.btn.btn-primary:contains('진짜결제')").click(function () {
+        $("button.btn.btn-primary:contains('결제')").click(function () {
 
             kakaopay();
 
@@ -944,7 +945,7 @@
             divElemApply1 = "<div class=\"card mb-3\">" +
                 " <div class=\"row g-0\">" +
                 "<div class=\"col-md-4\">" +
-                "<img src=\"/resources/image/"+odMenuImageL[i]+"\" class=\"img-fluid rounded-start\" alt=\"image\">" +
+                "<img src=\"/resources/menu/"+odMenuImageL[i]+"\" class=\"img-fluid rounded-start\" alt=\"image\">" +
                 "</div>" +
                 "<div class=\"col-md-8\">" +
                 "<div class=\"card-body\">" +
