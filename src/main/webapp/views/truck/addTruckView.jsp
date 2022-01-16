@@ -234,7 +234,7 @@
 
 
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ddc53a66745421ebb9015c2ad4197751&libraries=services"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ddc53a66745421ebb9015c2ad4197751"></script>
     <script>
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div
             mapOption = {
@@ -467,8 +467,7 @@
                                         <input type="text" class="form-control" id="truckAddrDetail"
                                                name="truckAddrDetail" placeholder="주소 상세"/>
                                     </div>
-                                    <div id="map"
-                                         style="width:300px;height:300px;margin-top:10px;display: flex"></div>
+
                                 </div>
 
                                 <hr/>
