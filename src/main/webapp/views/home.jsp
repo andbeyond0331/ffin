@@ -36,6 +36,8 @@
 
     <script type="text/javascript">
 
+     //todo : truck은 쿠폰 못누르게 해야함~
+
         // $(function(){
         //     alert("'#call': " +$('#call').html());
         //     $('#call').on('click', function(){
@@ -182,7 +184,7 @@
 
 
 <!-- coupon section -->
-<section class="about_section layout_padding">
+<section id = "couponSection" class="about_section layout_padding" style="display:none;">
     <div class="container">
         <div class="col-md-11 col-lg-10 mx-auto">
             <div class="heading_container heading_center">
@@ -200,7 +202,7 @@
                     <p></p>
                 </div>
                 <div class="btn-box">
-                    <a href="">
+                    <a href="/views/purchase/getCouponList.jsp">
                         coupon
                     </a>
                 </div>

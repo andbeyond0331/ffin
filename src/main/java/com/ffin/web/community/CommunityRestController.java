@@ -508,4 +508,31 @@ public ModelAndView addHeartTruck(@RequestParam String truckId, HttpSession sess
         return mv;
     }
 
+    // updateSecretKey
+    @ResponseBody
+    @RequestMapping(value = "json/updateSecretKey")
+    public ModelAndView updateSecretKey(@RequestParam int postNo, @RequestParam int secretKey ) throws Exception {
+        System.out.println("CommunityRestController.updateSecretKey");
+
+        Post post = new Post();
+        post.setPostNo(postNo);
+        if (secretKey==0){ //공개이기땜에 비공개 버튼 활성화 되어 비공개 처리 필요
+            System.out.println("비공개처리 / postNo : "+postNo);
+            communityService.blindPost(post);
+        }else if (secretKey==1){
+            System.out.println("공개처리 / postNo : "+postNo);
+            communityService.seePost(post);
+        }
+
+        post = communityService.getPost(postNo);
+        int secret_Key = post.getSecretKey();
+        System.out.println("post : "+post);
+
+
+        ModelAndView mv = new ModelAndView("jsonView");
+        mv.addObject("secretKey", secret_Key);
+        return mv;
+
+    }
+
 }

@@ -250,6 +250,9 @@
                     <if test="role == 'truck'">
                         AND h.HEART_TRUCK_ID=#{id}
                     </if>
+                    <if test="role == 'admin'">
+                        group by p.post_no
+                    </if>
                     ) p1 where p1.POST_CATEGORY='p' order by p1.post_no ) inner_table
         limit #{search.startRowNum}, #{search.pageSize}
     </select>
@@ -263,6 +266,9 @@
         </if>
         <if test="role == 'truck'">
            AND h.HEART_TRUCK_ID=#{id}
+        </if>
+        <if test="role == 'admin'">
+            group by p.post_no
         </if>
         ) p1 where p1.POST_CATEGORY='p' order by p1.post_no
         ) countTable
