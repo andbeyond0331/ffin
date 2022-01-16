@@ -30,6 +30,8 @@ public interface UserDao {
     public List<User> getBlackList(Search search) throws Exception;
     //page
     public int getTotalCount(Search search) throws Exception;
+    //page
+    public int getBlackTotalCount(Search search) throws Exception;
 
     //내정보수정
     public void updateUserInfo(User user) throws Exception;

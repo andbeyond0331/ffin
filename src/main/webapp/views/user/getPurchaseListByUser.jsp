@@ -271,24 +271,17 @@
     .blue .postcard__bar {
       background-color: #fae100;
     }
-/*    .blue::before {
-      background-image: linear-gradient(-30deg, rgba(255, 229, 55, 0.16), transparent 50%);
-    }
-    .blue:nth-child(2n)::before {
-      background-image: linear-gradient(30deg, rgba(255, 229, 55, 0.16), transparent 50%);
-    }*/
+
 
 
   </style>
 
   <script type="text/javascript">
 
-    //다시다시
-    /*function fncGetInquiryList(currentPage) {
-        $("#currentPage").val(currentPage)
-        $("form").attr("method" , "POST").attr("action" , "/qna/getInquiryListByAdmin").submit();
+    function fncGetUserList(currentPage) {
+      $("#currentPage").val(currentPage)
+      $("form").attr("method", "POST").attr("action", "/user/getPurchaseList").submit();
     }
-*/
 
   </script>
 
@@ -312,7 +305,7 @@
         </h4>
       </div>
 
-      <div class="row search">
+      <div class="row search" style="margin-bottom: 20px;">
         <div class="col-md-6 text-left" style="display: flex; align-items: center;">
           <p style="margin: 0; font-size: 12px;">
             전체  ${resultPage.totalCount } 건, 현재 ${resultPage.currentPage}  페이지
@@ -320,7 +313,7 @@
         </div>
 
         <div class="col-md-6 text-right">
-          <form class="form-inline" name="detailForm" style="padding: 0;">
+          <form class="form-inline" name="detailForm" style="padding: 0; float: right;">
 
             <div class="form-group">
               <select class="form-control" name="searchCondition" >
@@ -328,11 +321,12 @@
                 <option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>답변여부</option>
               </select>
             </div>
+            <style>.nice-select.form-control{min-width: 95px;}</style>
 
             <div class="form-group">
               <label class="sr-only" for="searchKeyword">검색어</label>
               <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-                     value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+                     value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  style="width: 200px;">
             </div>
 
             <button type="button" class="btn btn-default">검색</button>
@@ -392,9 +386,9 @@
                     <c:if test="${orderDetail.odOrderNo.orderStatus eq 4 }">
                     <li class="tag__item reviewBtn"><a href="/review/addReview?orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-clock mr-2"></i>리뷰작성</a></li>
                     </c:if>
-                    <c:if test="${orderDetail.odOrderNo.orderStatus eq 6 }">
-                      <li class="tag__item reviewBtn"><a href="/review/addReview?orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-clock mr-2"></i>리뷰확인</a></li>
-                    </c:if>
+                    <%--<c:if test="${orderDetail.odOrderNo.orderStatus eq 6 }">
+                      <li class="tag__item reviewBtn"><a href="/review/getReview?orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-clock mr-2"></i>리뷰확인</a></li>
+                    </c:if>--%>
                   </ul>
                 </div>
               </article>
@@ -404,38 +398,6 @@
 
       </c:forEach>
 
-
-<%--      <div class="show">${orderDetail.odOrderNo.orderNo}</div>--%>
-
-      <%-- ajax ex --%>
-
-      <%--            <div class="card-ans mb-10">
-                      <div class="row g-0 inquiry-card">
-                          <div class="card-body">
-                              <div style="margin: 0 55px 0 55px;">
-                                  <c:if test="${inquiry.inquiryFile != null }">
-                                  <img src="../../resources/image/moma.png" class="card-img-top" alt="inquiryFile" style="width: 200px;">
-                                  </c:if>
-                                  <p class="card-text">문의내용입니당~asdgaejsdhasfkjsahfskkhahadkhsdafkhl</p>
-                              </div>
-                              <hr style="border-width:2px;"/>
-                              <c:if test="${inquiry.inquiryAnsStatus eq 0 }">
-                                  <div class="d-grid gap-2 col-6 mx-auto" style="margin: 0 55px 0 55px;">
-                                      <button class="btn btn-primary" type="button">답변등록</button>
-                                  </div>
-                              </c:if>
-                              <c:if test="${inquiry.inquiryAnsStatus eq 1 }">
-                              <div style="margin: 0 55px 0 55px;">
-                                  <div style="display: flex; justify-content: space-between">
-                                      <h6 class="card-title">문의답변제목 : 안녕하세요 고갱님!</h6>
-                                      <p class="card-text">답변일입니당~</p>
-                                  </div>
-                                  <p class="card-text">답변내용입니당~</p>
-                              </div>
-                              </c:if>
-                          </div>
-                      </div>
-                  </div>--%>
 
     </div>
   </div>
@@ -469,6 +431,7 @@
   </div>
 
 </section>
+<jsp:include page="../../common/pageNavigator_new.jsp"/>
 <jsp:include page="/views/footer.jsp" />
 </body>
 </html>

@@ -77,6 +77,18 @@ public class TruckServiceImpl implements TruckService {
     }
 
     @Override
+    public Map<String, Object> getTruckListByAdmin(Search search) throws Exception {
+        List<Truck> list = truckDao.getTruckListByAdmin(search);
+        int totalCount = truckDao.getTotalCount(search);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("list", list);
+        map.put("totalCount", new Integer(totalCount));
+
+        return map;
+    }
+
+    @Override
     public Map<String, Object> truckNearBy(Search search, float la, float lo) throws Exception {
         return truckDao.truckNearBy(search, la, lo);
     }

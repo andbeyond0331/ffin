@@ -20,6 +20,8 @@ public interface QnADao {
     public List<Report> getReportList(Search search) throws Exception;
     //totalCount
     public int getTotalCount(Search search) throws Exception;
+    //page
+    public int getTotalCountByUser(Search search, String reportUserId) throws Exception;
     //신고수정
     public void updateReport(Report report) throws Exception;
     //신고처리

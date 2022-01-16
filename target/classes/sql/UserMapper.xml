@@ -99,7 +99,7 @@
 	<!--limit을 어떻게 변수처리할지 생각해보자-->
 	<select id="getUserList" parameterType="search" resultMap="userSelectMap">
 		SELECT inner_table.*
-		FROM( SELECT USER_ID, USER_PASSWORD, USER_NAME, USER_PHONE, USER_BIRTH, USER_ADDR, USER_ADDR_DETAIL, USER_MAP_LA, USER_MAP_LO, REPORT_COUNT,
+		FROM( SELECT USER_ID, USER_PASSWORD, USER_NAME, USER_PHONE, USER_BIRTH, USER_ADDR, USER_ADDR_DETAIL, USER_MAP_LA, USER_MAP_LO, REPORT_COUNT, ROLE,
 		             USER_EMAIL, USER_EMAIL_STATUS, USER_PRO_IMG, USER_FAV_MENU, USER_FAV_PLACE, USER_FAV_PLACE_DETAIL, USER_INTRO, USER_TOTAL_POINT, USER_REG_DATE
 			  FROM user
 				<if test="searchCondition != null">
@@ -107,9 +107,11 @@
 						<bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
 						<if test="searchCondition == 0 and searchKeyword !='' ">
 							AND user_id LIKE #{searchKeyword}
+							AND role = 0
 						</if>
 						<if test="searchCondition == 1 and searchKeyword !='' ">
 							AND user_name LIKE #{searchKeyword}
+							AND role = 0
 						</if>
 					</where>
 				</if>
@@ -154,6 +156,13 @@
 				</if>
 			</where>
 		</if> ) countTable
+	</select>
+
+	<select id="getBlackTotalCount" parameterType="search" resultType="int">
+		SELECT COUNT(*)
+		FROM(	SELECT USER_ID, USER_NAME, USER_PHONE, USER_BIRTH, USER_ADDR, USER_ADDR_DETAIL, USER_MAP_LA, USER_MAP_LO, REPORT_COUNT, USER_EMAIL, USER_EMAIL_STATUS, USER_REG_DATE
+				FROM user
+				WHERE REPORT_COUNT%3 = 0 AND REPORT_COUNT != 0) countTable
 	</select>
 
 	<!--내정보수정-->

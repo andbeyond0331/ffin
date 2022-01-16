@@ -367,11 +367,16 @@ public class UserController {
 
         Map<String, Object> map = purchaseService.getPurchaseList(search, userId);
 
-//        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
-//        System.out.println("resultPage :: "+resultPage);
+        System.out.println("search.getCurrentPage() = " + search.getCurrentPage());
+        System.out.println("pageUnit = " + pageUnit);
+        System.out.println("pageSize = " + pageSize);
+        System.out.println("((Integer) map.get(\"totalCount\")).intValue() = " + ((Integer) map.get("totalCount")).intValue());
+
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+        System.out.println("resultPage :: "+resultPage);
 
         model.addAttribute("list", map.get("list"));
-//        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("resultPage", resultPage);
         model.addAttribute("search", search);
 
         System.out.println("map = "+map);

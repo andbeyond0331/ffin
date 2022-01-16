@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
     public Map<String, Object> getBlackList(Search search) throws Exception {
         System.out.println("UserServiceImpl.getBlackList");
         List<User> list = userDao.getBlackList(search);
-        int totalCount = userDao.getTotalCount(search);
+        int totalCount = userDao.getBlackTotalCount(search);
 
         Map<String, Object>map = new HashMap<String, Object>();
         map.put("list", list);

@@ -68,7 +68,7 @@
 				self.location = "/user/getUserList"
 			});
 			$('.truckList').click(function () {
-				self.location = "/truck/getTruckList"
+				self.location = "/truck/getTruckListByAdmin"
 			});
 			$('.postList').click(function () {
 				self.location = ""

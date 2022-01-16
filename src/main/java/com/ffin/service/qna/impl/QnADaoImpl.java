@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +58,15 @@ public class QnADaoImpl implements QnADao {
     public int getTotalCount(Search search) throws Exception {
         System.out.println("QnADaoImpl.getTotalCount");
         return sqlSession.selectOne("QnAMapper.getTotalCount", search);
+    }
+
+    @Override
+    public int getTotalCountByUser(Search search, String reportUserId) throws Exception {
+        System.out.println("QnADaoImpl.getTotalCountByUser");
+        Map<String, Object> map = new HashMap<>();
+        map.put("search", search);
+        map.put("reportUserId", reportUserId);
+        return sqlSession.selectOne("QnAMapper.getTotalCountByUser", map);
     }
 
     @Override

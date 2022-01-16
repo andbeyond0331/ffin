@@ -11,14 +11,6 @@
 
 </style>
 
-<script type="text/javascript">
-
-/*	function fncGetUserList(currentPage) {
-		$("#currentPage").val(currentPage)
-		$("form").attr("method" , "POST").attr("action" , "/user/getUserList").submit();
-	}*/
-
-</script>
 
 
 <div class="container">

@@ -120,6 +120,11 @@ public class TruckDaoImpl implements TruckDao {
         return sqlSession.selectList("TruckMapper.getTruckList", search);
     }
 
+    @Override
+    public List<Truck> getTruckListByAdmin(Search search) throws Exception {
+        return sqlSession.selectList("TruckMapper.getTruckListByAdmin", search);
+    }
+
     // 푸드트럭 로그인
     @Override
     public void login(Truck truck) throws Exception {

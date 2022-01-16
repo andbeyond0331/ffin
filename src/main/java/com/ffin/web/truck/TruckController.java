@@ -357,10 +357,35 @@ public class TruckController {
     }
 
     // 트럭 리스트
-    @RequestMapping(value = "getTruckList")
-    public String getTruckList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+//    @RequestMapping(value = "getTruckList")
+//    public String getTruckList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+//
+//        System.out.println("/truck/getTruckList : GET / POST");
+//
+//        if (search.getCurrentPage() == 0) {
+//            search.setCurrentPage(1);
+//        }
+//        search.setPageSize(pageSize);
+//
+//        // Business logic 수행
+//        Map<String, Object> map = truckService.getTruckList(search);
+//
+//        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+//        System.out.println(resultPage);
+//
+//        // Model 과 View 연결
+//        model.addAttribute("list", map.get("list"));
+//        model.addAttribute("resultPage", resultPage);
+//        model.addAttribute("search", search);
+//
+//        return "forward:/views/user/getTruckListByAdmin.jsp";
+//    }
 
-        System.out.println("/truck/getTruckList : GET / POST");
+    // 트럭 리스트 - admin
+    @RequestMapping(value = "getTruckListByAdmin")
+    public String getTruckListByAdmin(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+
+        System.out.println("/truck/getTruckListByAdmin : GET / POST");
 
         if (search.getCurrentPage() == 0) {
             search.setCurrentPage(1);
@@ -368,7 +393,7 @@ public class TruckController {
         search.setPageSize(pageSize);
 
         // Business logic 수행
-        Map<String, Object> map = truckService.getTruckList(search);
+        Map<String, Object> map = truckService.getTruckListByAdmin(search);
 
         Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
         System.out.println(resultPage);
