@@ -93,7 +93,7 @@ public class TruckRestController {
     public String login(@ModelAttribute("truck") Truck truck, @PathVariable String truckId, HttpSession session,
                         HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        System.out.println("/truck/jon/login : POST");
+        System.out.println("/truck/json/login : POST");
         //Business Logic
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
 
@@ -110,24 +110,10 @@ public class TruckRestController {
             session.setAttribute("truck", dbTruck);
             session.setAttribute("role", "truck");
 
-            if (request.getParameter("truckCookie") == null) {
-                System.out.println("자동로그인");
-
-                Cookie loginCookie = new Cookie("loginCookie", session.getId());
-
-                loginCookie.setPath("/");
-                int amount = 60 * 60 * 24 * 7;
-                loginCookie.setMaxAge(amount);
-
-                System.out.println("쿠키줘!!!" + session.getId());
-
-                response.addCookie(loginCookie);
-
-                Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount));
-                truckService.autoLogin(truck.getTruckId(), session.getId(), sessionLimit);
-            }
             System.out.println("로그인 성공");
+
             return String.valueOf(0);
+
         } else if (truck.getTruckPassword().equals(dbTruck.getTruckPassword()) && dbTruck.getTruckByeStatus() == 1) {
             System.out.println("탈퇴한 회원의 로그인 시도");
             return String.valueOf(1);

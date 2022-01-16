@@ -166,6 +166,21 @@ public class CommunityRestController {
         return communityService.getComment(commentNo);
     }
 
+    // 일반게시판 댓글 삭제
+    @ResponseBody
+    @RequestMapping(value = "json/deleteComment", method = RequestMethod.GET)
+    public String deleteComment(@RequestParam int commentNo) throws Exception {
+
+        Comment comment = new Comment();
+
+        // 댓글 번호 세팅
+        comment.setCommentNo(commentNo);
+
+        communityService.deleteComment(comment);
+
+        return "yes";
+    }
+
 
 
 

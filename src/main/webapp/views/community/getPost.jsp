@@ -106,6 +106,18 @@
                     data   : param, //보낼 데이터
                     success: function () { //데이터를 보내는것이 성공했을시 출력되는 메시지
                         //alert("댓글이 등록되었습니다.");
+                        var postNo = ${post.postNo};
+                        var userId = '${sessionScope.user.userId}${sessionScope.truck.truckId}';
+                        var postUserId = '${post.postUser.userId}${post.postTruck.truckId}'
+
+                        console.log("post.socket::::" + socket);
+                        if(socket) {
+                            // websocket에 보내기!!! (message, 보내는이, 받는이)
+                            let socketMessage = "post,"+userId+","+postUserId+","+postNo;
+                            console.log("socketM::::" + socketMessage);
+                            socket.send(socketMessage);
+                        }
+
                         listReply(); //댓글 목록 출력
                         location.reload();
                     }
@@ -113,7 +125,6 @@
             });
 
         })
-
         // 게시물 비공개처리
         function fncBlind() {
             if(${post.secretKey == 1}){
@@ -135,6 +146,23 @@
                 self.location="/community/seePost";
                 alert("게시물 공개처리가 완료되었습니다.");
             }
+        }
+
+        function fncDeleteC(commentNo){
+            //let commentNo = $(this).parent().find("input[name='deleteCNO']").val();
+            //alert("먹먹먹ㅁ "+commentNo);
+            $.ajax({
+                type   : "get", //데이터를 보낼 방식
+                url    : "/community/json/deleteComment", //데이터를 보낼 url
+                data   : {
+                    commentNo : commentNo
+                }, //보낼 데이터
+                success: function () { //데이터를 보내는것이 성공했을시 출력되는 메시지
+                    //alert("댓글이 삭제되었습니다.");
+                    listReply(); //댓글 목록 출력
+                    location.reload();
+                }
+            });
         }
 
 
@@ -305,7 +333,7 @@
                 </div>
             </div>
         </div>
-        <c:if test="${sessionScope.user.role==0}">
+        <c:if test="${sessionScope.role.equals(admin)}">
             <button type="button" id="goBlindPost" class="btn-secondary">비공개처리</button>
             <button type="button" id="goSeePost" class="btn-secondary">공개처리</button>
         </c:if>
@@ -321,28 +349,6 @@
     </div>
     <!-- 게시판 글쓰기 양식 영역 끝 -->
 
-
-    <!-- 댓글 수정 Modal -->
-<%--    <div class="modal fade" id="updateCModal" tabindex="-1" role="dialog"--%>
-<%--         aria-labelledby="updateCModalLabel" aria-hidden="true"--%>
-<%--    >--%>
-<%--        <div class="modal-dialog" role="document">--%>
-<%--            <div class="modal-content">--%>
-<%--                <div class="modal-header">--%>
-<%--                    <h5 class="modal-title" id="updateCModalLabel">댓글수정</h5>--%>
-<%--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--%>
-<%--                        <span aria-hidden="true">&times;</span>--%>
-<%--                    </button>--%>
-<%--                </div>--%>
-<%--                <div class="modal-body"><textarea class="form-control" rows="3" id="commentContentU"--%>
-<%--                                                  style="width: 100%;" value=""></textarea></div>--%>
-<%--                <div class="modal-footer">--%>
-<%--                    <a type="button" class="btn btn-primary" href="/community/updateComment?commentNo=${comment.commentNo}">수정완료</a>--%>
-<%--                    <a type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</a>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
 
     <br/>
 
@@ -417,19 +423,12 @@
                                         <br>
                                         <c:if test="${sessionScope.user.userId.equals(comment.commentUserId) || sessionScope.truck.truckId.equals(comment.commentTruckId)}">
                                             <a class="btn-outline-dark pull-right"
-                                               href="/community/deleteComment?commentNo=${comment.commentNo}">삭제</a>
-                                            <input type="hidden" value="${comment.commentNo}">
+                                               href="javascript:void(0)" onclick="fncDeleteC('${comment.commentNo}')">삭제</a>
+                                            <input type="hidden" name="deleteCNO" value="${comment.commentNo}">
                                             <input type="hidden" value="${comment.commentPostNo}">
-<%--                                            <a name="updateC" class="btn-outline-dark pull-right" data-toggle="modal"--%>
-<%--                                               data-target="#updateCModal">수정</a>--%>
-<%--                                            <input type="hidden" value="${comment.commentNo}">--%>
-<%--                                            <input type="hidden" value="${comment.commentPostNo}">--%>
                                         </c:if>
                                     </div>
-                                    <c:if test="${comment.secretKey==0}">
                                     <p class="col-sm-8">${comment.commentContent}</p>
-                                    </c:if>
-                                    <c:if test="${comment.secretKey==1}">비공개 처리된 댓글입니다.</c:if>
                                     <hr style="margin:0 "/>
                                 </div>
 
