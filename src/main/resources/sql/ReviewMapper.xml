@@ -22,6 +22,9 @@
 		<result property="rvImg3" 			column="RV_IMG3" 	jdbcType="VARCHAR" />
 		<result property="rvDelete" 			column="RV_DELETE" 	jdbcType="CHAR" />
 		<result property="rvTCDelete" 			column="RV_TC_DELETE" 	jdbcType="CHAR" />
+
+		<result property="truckProImg"       column="TRUCK_PRO_IMG"        jdbcType="VARCHAR"/>
+		<result property="userProImg"       column="USER_PRO_IMG"        jdbcType="VARCHAR"/>
 	</resultMap>
 
 
@@ -37,7 +40,8 @@
 		             RV_IMG2,
 		             RV_IMG3,
 		             ffin.review.RV_DELETE,
-		             ffin.review.RV_TC_DELETE)
+		             ffin.review.RV_TC_DELETE
+		             )
 		VALUES (
 				   #{rvOrderNo},
 		        #{rvTruckId},
@@ -55,7 +59,7 @@
 
 	<select 	id="getReview"	parameterType="int"	resultMap="ReviewSelectMap" >
 		SELECT
-			rv_no, RV_USER_ID, RV_TRUCK_ID, rv_order_no, rv_reg_time, rv_star, rv_content, rv_truck_cmt_content, rv_truck_cmt_reg_time, rv_img1, rv_img2, rv_img3, rv_delete, rv_tc_delete
+			rv_no, RV_USER_ID, RV_TRUCK_ID, rv_order_no, rv_reg_time, rv_star, rv_content, rv_truck_cmt_content, rv_truck_cmt_reg_time, rv_img1, rv_img2, rv_img3, rv_delete, rv_tc_delete, truck_pro_img, user_pro_img
 
 		FROM review
 		WHERE RV_NO = #{value}
@@ -73,7 +77,9 @@
 			RV_CONTENT,
 			RV_IMG1,
 			RV_IMG2,
-			RV_IMG3
+			RV_IMG3,
+		       TRUCK_PRO_IMG,
+		       USER_PRO_IMG
 		FROM 	review
 		WHERE RV_TRUCK_ID=#{truckId}
 	</select>
@@ -96,7 +102,9 @@
 			RV_CONTENT,
 			RV_IMG1,
 			RV_IMG2,
-			RV_IMG3
+			RV_IMG3,
+		       TRUCK_PRO_IMG,
+		       USER_PRO_IMG
 		FROM 	review
 		WHERE RV_USER_ID = #{userId}
 	</select>
@@ -140,6 +148,15 @@
 			) countTable
 	</select>
 
+	<!-- SQL : SELECT ROW Count -->
+	<select  id="getTotalCountUser"  parameterType="map"	 resultType="int">
+		SELECT COUNT(*)
+		FROM(	SELECT *
+		FROM review
+				 WHERE RV_USER_ID=#{userId}
+			) countTable
+	</select>
+
 
 	<!-- SQL : SELECT ROW Count -->
 	<select  id="getReviewTotalCount"  parameterType="map"	 resultMap="ReviewSelectMap">
@@ -148,6 +165,17 @@
 		FROM review
 				 WHERE RV_TRUCK_ID=#{truckId}
 			) countTable
+	</select>
+
+	<!-- 사진 갖고오깅 ㅜ user-->
+	<select id="getProImgUser" parameterType="String" resultType="String">
+		select USER_PRO_IMG from user
+		where USER_ID = #{userId}
+	</select>
+	<!-- 사진 갖고오깅 ㅜ truck-->
+	<select id="getProImgTruck" parameterType="String" resultType="String">
+		select TRUCK_PRO_IMG from truck
+		where TRUCK_ID = #{truckId}
 	</select>
 
 

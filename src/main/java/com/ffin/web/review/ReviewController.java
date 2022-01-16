@@ -364,6 +364,7 @@ public class ReviewController {
         modelAndView.addObject("resultPage", resultPage);
         modelAndView.addObject("list", map.get("list"));
         modelAndView.addObject("rvAvg", rvAvg);
+        modelAndView.addObject("truckId", truckId);
         modelAndView.setViewName("/views/review/getReviewList.jsp");
 
         return modelAndView;
@@ -377,9 +378,11 @@ public class ReviewController {
         search.setPageSize(pageSize);
         User user  = userService.getUser(userId);
 
-        Map<String , Object> map= reviewService.getReviewListTruck(search, user.getUserId());
+        Map<String , Object> map= reviewService.getReviewListUser(search, user.getUserId());
 
         modelAndView.addObject("list", map.get("list"));
+        modelAndView.addObject("userId", userId);
+
         modelAndView.setViewName("/views/review/getReviewList.jsp");
 
         return modelAndView;

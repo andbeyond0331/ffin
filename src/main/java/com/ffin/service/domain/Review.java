@@ -19,6 +19,10 @@ public class Review {
 	private char rvDelete;
 	private char rvTCDelete;
 
+	//프로필사진을 가져온다.
+	private String userProImg;
+	private String truckProImg;
+
 	
 
 }

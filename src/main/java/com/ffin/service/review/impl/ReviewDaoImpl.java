@@ -34,8 +34,13 @@ public class ReviewDaoImpl implements ReviewDao {
     //delete와 update를 위한 get
     @Override
     public Review getReview(int reviewNo) throws Exception {
+        Review review = sqlSession.selectOne("ReviewMapper.getReview", reviewNo);
+        if(review.getRvTruckCmtContent()!=null){//사장님 댓글이 있다면
+            review.setTruckProImg(sqlSession.selectOne("ReviewMapper.getProImgTruck", review.getRvTruckId()));
+        }
+        review.setUserProImg(sqlSession.selectOne("ReviewMapper.getProImgUser", review.getRvUserId()));
 
-        return sqlSession.selectOne("ReviewMapper.getReview", reviewNo);
+        return review;
     }
 
     @Override
@@ -44,6 +49,15 @@ public class ReviewDaoImpl implements ReviewDao {
         map.put("search", search);
         map.put("truckId", truckId);
         List<Review> list =sqlSession.selectList("ReviewMapper.getReviewListTruck", map);
+        for(int i = 0; i<list.size(); i++){
+            if(list.get(i).getRvTruckCmtContent()!=null){
+                list.get(i).setTruckProImg(sqlSession.selectOne("ReviewMapper.getProImgTruck", list.get(i).getRvTruckId()));
+
+            }
+            list.get(i).setUserProImg(sqlSession.selectOne("ReviewMapper.getProImgUser", list.get(i).getRvUserId()));
+        }
+
+
         System.out.println("list : " + list);
 
         int totalCount = sqlSession.selectOne("ReviewMapper.getTotalCount", truckId);
@@ -103,10 +117,21 @@ public class ReviewDaoImpl implements ReviewDao {
         map.put("search", search);
         map.put("userId", userId);
         List<Review> list =sqlSession.selectList("ReviewMapper.getReviewListUser", map);
+        for(int i = 0; i<list.size(); i++){
+            if(list.get(i).getRvTruckCmtContent()!=null){
+                list.get(i).setTruckProImg(sqlSession.selectOne("ReviewMapper.getProImgTruck", list.get(i).getRvTruckId()));
+
+            }
+            list.get(i).setUserProImg(sqlSession.selectOne("ReviewMapper.getProImgUser", list.get(i).getRvUserId()));
+        }
+
         System.out.println("list : " + list);
+
+        int totalCount = sqlSession.selectOne("ReviewMapper.getTotalCountUser", userId);
 
         map.clear();
         map.put("list", list);
+        map.put("totalCount", totalCount);
 
         return map;
     }

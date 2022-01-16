@@ -54,7 +54,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public Map<String, Object> getReviewListUser(Search search, String userId) throws Exception {
-        return reviewDao.getReviewListTruck(search, userId);
+        return reviewDao.getReviewListUser(search, userId);
     }
 
     @Override
