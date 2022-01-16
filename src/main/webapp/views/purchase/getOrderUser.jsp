@@ -9,8 +9,7 @@
 <head>
     <jsp:include page="../../common/lib.jsp"/>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
 
     <style>
 
@@ -343,7 +342,7 @@
             </form>
 
             <div class="btn-box" style=" margin-top: 20px;">
-                <a onClick="history.go(-1);" style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
+                <a type="button" href="../" onClick="/" style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
                     »Æ¿Œ
                 </a>
                 <c:if test="${purchase.orderStatus == '1'}">
@@ -372,6 +371,7 @@
                 <input type="hidden" name="orderNo" value="${purchase.orderNo}">
                 <input type="hidden" name="couponNo" value="${purchase.payCouponNo.couponNo}">
                 <input type="hidden" name="pointNo" value="${purchase.payPointNo.pointNo}">
+                <input type="hidden" name="userId" value="${user.userId}">
 
             </div>
         </div>
@@ -564,7 +564,7 @@
             divElemApply1 = "<div class=\"card mb-3\" >" +
                 " <div class=\"row g-0\">" +
                 "<div class=\"col-md-4\">" +
-                "<img src=\"/resources/image/"+odMenuImageL[i]+"\" class=\"img-fluid rounded-start\" alt=\"image\">" +
+                "<img src=\"/resources/menu/"+odMenuImageL[i]+"\" class=\"img-fluid rounded-start\" alt=\"image\" style='height: 124px;'>" +
                 "</div>" +
                 "<div class=\"col-md-8\">" +
                 "<div class=\"card-body\">" +

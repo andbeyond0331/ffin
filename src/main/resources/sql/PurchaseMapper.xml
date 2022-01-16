@@ -225,7 +225,8 @@
     </insert>
 
 
-    <insert id="addCoupon" parameterType="coupon">
+    <!-- HHJ 수정 -->
+    <insert id="addCoupon" parameterType="coupon" useGeneratedKeys="true" keyProperty="couponNo">
         INSERT
         INTO ffin.COUPON (COUPON_RECEIVED_USER_ID, COUPON_DC_PRICE,
                           COUPON_TYPE, COUPON_STATUS)
@@ -392,6 +393,8 @@
 
 
 -->
+
+
   <select id="getSalesList"    parameterType="map"      resultMap="purchaseSelectMap">
         SELECT inner_table.*
         FROM( SELECT p.ORDER_NO, p.ORDER_USER_ID, u.USER_PRO_IMG ,p.PAY_DATE_TIME ,p.ORDER_REQUEST
@@ -684,5 +687,10 @@
         limit 1;
     </select>
 
-
+    <!--HHJ 추가 -->
+    <select id="checkCoupon" parameterType="coupon" resultType="string">
+        SELECT COUPON_RECEIVED_USER_ID
+        FROM ffin.coupon
+        WHERE COUPON_RECEIVED_USER_ID = #{couponReceivedUserId.userId} AND COUPON_TYPE = #{couponType}
+    </select>
 </mapper>

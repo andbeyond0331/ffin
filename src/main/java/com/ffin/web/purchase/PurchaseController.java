@@ -256,13 +256,34 @@ public class PurchaseController {
 
         return "forward:/purchase/getOrderUser";
     }
-    //현재주문정보 화면으로 보여줄 데이터를 가져온다.
+
     @RequestMapping(value = "getOrderUser", method= RequestMethod.POST)
     public ModelAndView getOrderUser(@ModelAttribute("purchase")Purchase purchase, @ModelAttribute("user") User user,
-                                    @ModelAttribute("point") Point point, ModelAndView model) throws Exception {
+                                     @ModelAttribute("point") Point point, ModelAndView model) throws Exception {
 
         System.out.println("/purchase/getOrderUser : POST");
 
+        purchase = purchaseService.getPurchase(purchase.getOrderNo());
+        Map map = new HashMap();
+        map = purchaseService.getOrderDetail(purchase.getOrderNo());
+
+        System.out.println("map//////////"+map);
+        model.addObject("map",map);
+        model.addObject("purchase",purchase);
+        model.setViewName("forward:/views/purchase/getOrderUser.jsp");
+
+        return  model;
+
+    }
+
+
+    //현재주문정보 화면으로 보여줄 데이터를 가져온다.
+    @RequestMapping(value = "getOrderUser", method= RequestMethod.GET)
+    public ModelAndView getOrderUser(@RequestParam("userId") String userId, ModelAndView model,Purchase purchase) throws Exception {
+
+        System.out.println("/purchase/getOrderUser : GET");
+        System.out.println("userId = " + userId );
+            purchase = purchaseService.getMainOrderUser(userId);
             purchase = purchaseService.getPurchase(purchase.getOrderNo());
             Map map = new HashMap();
             map = purchaseService.getOrderDetail(purchase.getOrderNo());
@@ -276,25 +297,6 @@ public class PurchaseController {
 
     }
 
-    //현재주문정보 화면으로 보여줄 데이터를 가져온다.
-    @RequestMapping(value = "getOrderUser", method= RequestMethod.GET)
-    public ModelAndView getOrderUser(@RequestParam("userId") String userId, ModelAndView model,Purchase purchase) throws Exception {
-
-        System.out.println("/purchase/getOrderUser : GET");
-        System.out.println("userId = " + userId );
-        purchase = purchaseService.getMainOrderUser(userId);
-        purchase = purchaseService.getPurchase(purchase.getOrderNo());
-        Map map = new HashMap();
-        map = purchaseService.getOrderDetail(purchase.getOrderNo());
-
-        System.out.println("map//////////"+map);
-        model.addObject("map",map);
-        model.addObject("purchase",purchase);
-        model.setViewName("forward:/views/purchase/getOrderUser.jsp");
-
-        return  model;
-
-    }
 
 
     //현재주문정보에서 주문취소 버튼을 클릭 시 iamport환불이다...!!!! Rest로 바꿔야된다!!!

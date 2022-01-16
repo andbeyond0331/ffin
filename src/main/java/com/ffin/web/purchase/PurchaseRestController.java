@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -415,7 +416,7 @@ public class PurchaseRestController {
     //영업중 모드 변경
     @RequestMapping( value = "json/updateBusiStatus", method = RequestMethod.POST)
     @ResponseBody
-    public ModelAndView updateBusiStatus(@RequestParam("tb") String tb,HttpServletRequest request,
+    public ModelAndView updateBusiStatus(@RequestParam("tb") int tb,HttpServletRequest request,
                                          HttpServletResponse response,@RequestParam("truckId")String truckId)throws Exception{
         request.setCharacterEncoding("UTF-8");
         System.out.println("json/updateBusiStatus POST");
@@ -424,10 +425,10 @@ public class PurchaseRestController {
 
 
         truck.setTruckId(truckId);
-        if(tb.equals("0")){
-            truck.setTruckBusiStatus("1");
-        }else if(tb.equals("1")){
+        if(tb==0){
             truck.setTruckBusiStatus("0");
+        }else if(tb==1){
+            truck.setTruckBusiStatus("1");
         }
         purchaseService.updateBusiStatus(truck);
 
@@ -437,4 +438,44 @@ public class PurchaseRestController {
     }
 
 
+    //HHJ 추가, 쿠폰
+    @RequestMapping( value = "json/addCoupon", method = RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView addCoupon(@RequestParam("couponType") String couponType, HttpSession session) throws Exception {
+
+        System.out.println("json/addCoupon GET");
+        System.out.println("couponType = " + couponType );
+
+        Coupon coupon = new Coupon();
+        if (couponType.equals("rain")){
+            coupon.setCouponType(1);
+        }else if (couponType.equals("snow")){
+            coupon.setCouponType(2);
+        }
+
+        coupon.setCouponReceivedUserId((User)(session.getAttribute("user")));
+        coupon.setCouponStatus(0); //todo: 사용 안한게 0 맞지?
+        coupon.setCouponDcPrice(3000); //todo: 날씨 쿠폰은 3000원?
+
+        String check = purchaseService.checkCoupon(coupon);
+        System.out.println("check: "+check);
+        int result =0;
+        String message="";
+        if ( check != null ){
+            message = " 쿠폰을 이미 발급받았습니다.  ";
+
+        } else{
+            result = purchaseService.addCoupon(coupon);
+            message = " 쿠폰이 정상적으로 발급되었습니다! ";
+        }
+
+
+
+        ModelAndView mv = new ModelAndView("jsonView");
+
+        mv.addObject("result",result);
+        mv.addObject("message", message);
+
+        return mv;
+    }
 }

@@ -42,8 +42,8 @@ public class PurchaseServiceImpl implements PurchaseService {
        return purchaseDao.updatePoint(point);
     }// 포인트 적립차감 등록
     @Override
-    public void addCoupon(Coupon coupon)throws Exception{
-       purchaseDao.addCoupon(coupon);
+    public int addCoupon(Coupon coupon)throws Exception{
+        return purchaseDao.addCoupon(coupon);
     }// 쿠폰발급 등록
 
 
@@ -165,10 +165,16 @@ public class PurchaseServiceImpl implements PurchaseService {
     public int getUsePoint(int pointNo)throws Exception{
         return purchaseDao.getUsePoint(pointNo);
     }
-
     @Override
-    public Purchase getMainOrderUser(String userId) throws Exception {
+    public Purchase getMainOrderUser (String userId)throws Exception{
         return purchaseDao.getMainOrderUser(userId);
     }
+
+    //HHJ
+    @Override
+    public String checkCoupon(Coupon coupon) throws Exception{
+        return purchaseDao.checkCoupon(coupon);
+    }// 쿠폰 있는지 체크
+
 
 }
