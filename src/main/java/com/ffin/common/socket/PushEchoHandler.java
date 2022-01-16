@@ -1,6 +1,7 @@
 package com.ffin.common.socket;
 
 
+import com.ffin.service.domain.Truck;
 import com.ffin.service.domain.User;
 import com.mysql.cj.util.StringUtils;
 import org.springframework.web.socket.CloseStatus;
@@ -27,9 +28,7 @@ public class PushEchoHandler extends TextWebSocketHandler {
         System.out.println("afterConnectionEstablished : "+session);
         sessions.add(session); //세션을 관리하기 위하여 저장
         String senderId = getId(session); //세션의 고유한 id
-        System.out.println("::::::::::::::::::::::::::::::::::senderId = " + senderId);
         userSessions.put(senderId, session);
-        System.out.println("vvvvvvvvvvvvvvvvvvvvv    " +userSessions);
     }
 
     @Override
@@ -54,10 +53,11 @@ public class PushEchoHandler extends TextWebSocketHandler {
         if (msg != null) {
             String[] strs = msg.split(",");
             System.out.println("strs:::::::::::::::::::::::"+ strs);
+            String cmd = strs[0]; //message
+            String sendUser = strs[1]; // 보내는 사람
+            String recvUser = strs[2]; // 받는 사람
             if(strs != null && strs.length == 3) {
-                String cmd = strs[0]; //message
-                String sendUser = strs[1]; // 보내는 사람
-                String recvUser = strs[2]; // 받는 사람
+
                 System.out.println("recvUser = " + recvUser);
                 System.out.println("sendUser = " + sendUser);
                 System.out.println("cmd = " + cmd);
@@ -71,6 +71,22 @@ public class PushEchoHandler extends TextWebSocketHandler {
                     System.out.println("::::::::::::::::::::::::::::tmpMsg = " + tmpMsg);
                     recvUserSession.sendMessage(tmpMsg);
                 }
+            }else {
+                String noKey = strs[3];
+                WebSocketSession recvUserSession = userSessions.get(recvUser.trim());
+                if("post".equals(cmd) && recvUserSession != null){ // 다른 cmd일 땐 다르게 알림 날릴 수 잇쥐
+                    TextMessage tmpMsg = new TextMessage(sendUser+" 님이 <a href='/community/getPost?postNo="+noKey+"'>"+ noKey + "</a>번 글에 댓글을 달았습니다.  ");
+                    // 여기서 no 를 달꺼면 여기에 <a href = ~~~~> 해서 쓰면 누르면 갈꺼야!!!!!!
+
+                    System.out.println("::::::::::::::::::::::::::::tmpMsg = " + tmpMsg);
+                    recvUserSession.sendMessage(tmpMsg);
+                }else if("purchase".equals(cmd) && recvUserSession != null){ // 다른 cmd일 땐 다르게 알림 날릴 수 잇쥐
+                    TextMessage tmpMsg = new TextMessage(sendUser+" 님의 <a href='/purchase/getOrderTruckList?truckId="+noKey+"'>결제 요청</a>을 확인해주세요.   ");
+                    // 여기서 no 를 달꺼면 여기에 <a href = ~~~~> 해서 쓰면 누르면 갈꺼야!!!!!!
+
+                    System.out.println("::::::::::::::::::::::::::::tmpMsg = " + tmpMsg);
+                    recvUserSession.sendMessage(tmpMsg);
+                }
             }
         }
 
@@ -78,13 +94,21 @@ public class PushEchoHandler extends TextWebSocketHandler {
 
     private String getId(WebSocketSession session) {
         Map<String, Object> httpSession = session.getAttributes();
-        User loginUser = (User)httpSession.get("user"); //user로 나중에 저장하면 글케 들고오기
+        String loginId ="";
+        if ((String)httpSession.get("role")=="user") {
+            User loginUser = (User) httpSession.get("user"); //user로 나중에 저장하면 글케 들고오기
+            loginId = loginUser.getUserId();
+        }else if ((String)httpSession.get("role")=="truck") {
+            Truck loginTruck = (Truck) httpSession.get("truck"); //user로 나중에 저장하면 글케 들고오기
+            loginId = loginTruck.getTruckId();
+        }
+        System.out.println("loginId = "+loginId);
        // String loginUserId = ((User) httpSession.get("user")).getUserId();
-        System.out.println("loginUser = " + loginUser);
-        if(null == loginUser)
+        //System.out.println("loginUser = " + loginUser);
+        if(null == loginId)
             return session.getId();
         else
-            return loginUser.getUserId();
+            return loginId;
     }
 
     @Override
