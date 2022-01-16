@@ -84,7 +84,13 @@
 
 
     <select id="getReportList" parameterType="search" resultMap="reportSelectMap">
-        select *
+        SELECT inner_table.*
+        FROM( SELECT r.report_no, r.report_user_id, r.report_target_id, r.report_content, r.report_link, r.report_type, r.report_proc_status
+                FROM report r, user u
+                WHERE r.report_user_id = u.user_id
+                order by r.report_no DESC ) inner_table
+        limit #{startRowNum}, #{pageSize}
+        <!--select *
         FROM ( SELECT inner_table.*, @rownum := @rownum + 1 as row_seq
                FROM( SELECT r.report_no, r.report_user_id, r.report_target_id, r.report_content, r.report_link, r.report_type, r.report_proc_status
                      FROM report r, user u
@@ -100,7 +106,7 @@
                         </if>
                     order by r.report_no DESC ) inner_table,  (select @rownum := 0) r
                limit #{startRowNum}, #{pageSize} ) l
-        WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+        WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}-->
     </select>
 
     <select id="getTotalCount" parameterType="search" resultType="int">
@@ -117,6 +123,13 @@
                         </if>
                     </where>
                 </if> ) countTable
+    </select>
+
+    <select id="getTotalCountByUser" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM ( SELECT report_no, report_user_id, report_target_id, report_date, report_content, report_link, report_type, report_proc_status
+                FROM report
+                WHERE REPORT_USER_ID = #{reportUserId} ) countTable
     </select>
 
     <update id="updateReport" parameterType="report">

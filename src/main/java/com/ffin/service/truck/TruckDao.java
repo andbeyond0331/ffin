@@ -47,7 +47,8 @@ public interface TruckDao {
     // SELECT LIST
     // 푸드트럭 목록보기
     public List<Truck> getTruckList(Search search) throws Exception ;
-
+    //푸드트럭 목록보기 - 관리자
+    public List<Truck> getTruckListByAdmin(Search search) throws Exception;
     // 새로 가입한 푸드트럭 목록보기(관리자)
     public List<Truck> getNewTruckListByAdmin(Search search) throws Exception ;
     // 트럭 가입승인 & 거절

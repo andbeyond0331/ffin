@@ -79,7 +79,7 @@
 				self.location = ""
 			});
 			$('.user-review').click(function () {
-				self.location = ""
+				self.location = "/review/getReviewListUser?userId="+userId;
 			});
 			$('.user-post').click(function () {
 				self.location = ""

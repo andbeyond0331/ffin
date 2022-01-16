@@ -41,7 +41,7 @@ public class QnAServiceImpl implements QnAService {
     public Map<String, Object> getReportListByUser(Search search, String reportUserId) throws Exception {
         System.out.println("QnAServiceImpl.getReportListByUser");
 
-        int totalCount = qnADao.getTotalCount(search);
+        int totalCount = qnADao.getTotalCountByUser(search, reportUserId);
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("search", search);

@@ -93,6 +93,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public int getBlackTotalCount(Search search) throws Exception {
+        System.out.println("UserDaoImpl.getBlackTotalCount");
+        return sqlSession.selectOne("UserMapper.getBlackTotalCount", search);
+    }
+
+    @Override
     public void updateUserInfo(User user) throws Exception {
         System.out.println("UserDaoImpl.updateUserInfo");
         sqlSession.update("UserMapper.updateUserInfo", user);
