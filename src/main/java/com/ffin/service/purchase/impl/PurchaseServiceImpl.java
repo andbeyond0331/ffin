@@ -138,6 +138,12 @@ public class PurchaseServiceImpl implements PurchaseService {
         System.out.println(map);
         return map;
     } //주문정보 조회 이용자의 정보도 함께
+    @Override
+    public Map getOrderUserList (Search search,String userId)throws Exception{
+        return purchaseDao.getOrderUserList(search,userId);
+    }
+
+
 
 
 
@@ -164,10 +170,6 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Override
     public int getUsePoint(int pointNo)throws Exception{
         return purchaseDao.getUsePoint(pointNo);
-    }
-    @Override
-    public Purchase getMainOrderUser (String userId)throws Exception{
-        return purchaseDao.getMainOrderUser(userId);
     }
 
     //HHJ

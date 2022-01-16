@@ -574,6 +574,11 @@
 
         }
 
+        $(function (){
+            $("a#endTruck").on("click",function(){
+                alert("영업종료하였습니다.")
+            })
+        })
 
     </script>
 
@@ -963,11 +968,22 @@
 
                                 </div>
                             </div>
-                            <a class="item-link" href="/menu/getMenuList?truckId=${truck.truckId}"></a>
+                            <c:if test="${truck.truckBusiStatus eq 0}">
+                                <a type="button" class="item-link" id="endTruck"></a>
+                            </c:if>
+                            <c:if test="${truck.truckBusiStatus eq 1}">
+                                <a class="item-link" href="/menu/getMenuList?truckId=${truck.truckId}"></a>
+                            </c:if>
+
                         </div>
                         <div class="item-truck">
                             <span>${truck.truckName}</span>
-                            <span><ion-icon name="at-outline"></ion-icon>${truck.truckId}</span>
+                            <c:if test="${truck.truckBusiStatus eq 0}">
+                                <span class="badge" style="background-color: #ffba49; color: #110000">영업종료</span>
+                            </c:if>
+                            <c:if test="${truck.truckBusiStatus eq 1}">
+                                <span class="badge" style="background-color: #fae100; color: #110000">영업중</span>
+                            </c:if>
                         </div>
                     </div>
                 </div>

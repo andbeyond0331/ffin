@@ -70,79 +70,7 @@
         }
     </style>
 
-    <!--장바구니 삭제 & 수량 버튼-->
-    <script>
-        //2022-01-16
-        /*삭제버튼 클릭 이벤트*/
-        $(function(){
-            var orderDetail = JSON.parse(sessionStorage.getItem("menuOdList"));
 
-            var orderCancelCount = [];
-
-            $('button#cancelMenu').click(function(){
-                var orderCount = $(this).parent('li').find('input[name="orderCount"]').val();
-                // var orderCancelCount = $(this).parent('li').find('input[name="orderCancelCount"]').val();
-                $(this).parent('li').find('input[name="orderCancelCount"]').each(function (i) {
-                    orderCancelCount.push($(this).val());
-                });
-
-                orderDetail.splice(orderCount,orderCancelCount.length+1);
-
-                sessionStorage.setItem("menuOdList", JSON.stringify(orderDetail));
-
-
-                $(this).parent('li').remove();
-
-            })
-
-        })
-
-        /*수량버튼 클릭 이벤트*/
-        $(function(){
-
-            var orderDetail = JSON.parse(sessionStorage.getItem("menuOdList"));
-
-
-            $('input#decreaseQuantity').click(function(e){
-                var orderCount = $(this).parent('h6').find('input[name="orderCount"]').val();
-                //alert("클릭한 메뉴의 순서 정보"+orderCount);
-                e.preventDefault();
-
-                var stat = $(this).parent('h6').find('input#numberUpDown');
-                var num = stat.val();
-                num--;
-                if(num<=0){
-                    alert('더이상 줄일수 없습니다.');
-                    num =1;
-                }
-                // 수량 추가
-                orderDetail[orderCount]['odMenuQty']=num;
-                stat.val(num);
-                sessionStorage.setItem("menuOdList", JSON.stringify(orderDetail));
-
-                //$('input#numberUpDown').val(num);
-            });
-            $('input#increaseQuantity').click(function(e){
-                var orderCount = $(this).parent('h6').find('input[name="orderCount"]').val();
-                e.preventDefault();
-
-                var stat = $(this).parent('h6').find('input#numberUpDown');
-                var num = stat.val();
-                num++;
-
-                if(num>10){
-                    alert('더이상 늘릴수 없습니다.');
-                    num=10;
-                }
-
-                orderDetail[orderCount]['odMenuQty']=num;
-                stat.val(num);
-                sessionStorage.setItem("menuOdList", JSON.stringify(orderDetail));
-                // $('input#numberUpDown').val(num);
-            });
-        });
-
-    </script>
 
     <script>
         <%--        메뉴 상세보기 모달에서 장바구니에 담기!--%>
@@ -247,9 +175,11 @@
             }
 
 
+
+
             // location.reload();
 
-        //처음 화면에 담기 끝
+            //처음 화면에 담기 끝
 
 
 
@@ -504,36 +434,36 @@
                 if(isThereOptionGroup ){///////추가하고자 하는 옵션그룹!=0일 때
                     //console.log("가");
                     // if(originalSession.length){ //세션에 담긴 애가 있을 때
-                        //console.log("가가");
-                        if(originalSession.length==1){//aaa. 만약 session의 od 갯수가 1일 때
-                            // console.log("가가가");
-                            // 원래 있던 session에 수량 정보 제공 메뉴랑 옵션 담기
-                            //console.log("aaa : 담기 이전 ="+JSON.stringify(menuOdList));
-                            menuOdList.push(orderDetail);
-                            //console.log("aaa : 담기 이후 ="+JSON.stringify(menuOdList));
-                            // 원래 있던 session에 수량 정보 제공 메뉴 하나 더 담기
-                            //console.log("aaa : 옵션 더 담기 이전 ="+JSON.stringify(menuOdList));
+                    //console.log("가가");
+                    if(originalSession.length==1){//aaa. 만약 session의 od 갯수가 1일 때
+                        // console.log("가가가");
+                        // 원래 있던 session에 수량 정보 제공 메뉴랑 옵션 담기
+                        //console.log("aaa : 담기 이전 ="+JSON.stringify(menuOdList));
+                        menuOdList.push(orderDetail);
+                        //console.log("aaa : 담기 이후 ="+JSON.stringify(menuOdList));
+                        // 원래 있던 session에 수량 정보 제공 메뉴 하나 더 담기
+                        //console.log("aaa : 옵션 더 담기 이전 ="+JSON.stringify(menuOdList));
 
-                            for(var i=0; i<odOptionGroupList.length; i++){
-                                menuOdList.push(odOptionGroupList[i]);
-                            }
+                        for(var i=0; i<odOptionGroupList.length; i++){
+                            menuOdList.push(odOptionGroupList[i]);
+                        }
 
-                            //console.log("aaa : 옵션 더 담기 이후 ="+JSON.stringify(menuOdList));
+                        //console.log("aaa : 옵션 더 담기 이후 ="+JSON.stringify(menuOdList));
 
 
-                            //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.
-                            sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
-                            didYouAddOp++;
-                            //console.log("didYouAddOp(1 초과 불가) : "+didYouAddOp );
-                            //console.log("aaa. 담기 로직 끝"); //완료
+                        //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.
+                        sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
+                        didYouAddOp++;
+                        //console.log("didYouAddOp(1 초과 불가) : "+didYouAddOp );
+                        //console.log("aaa. 담기 로직 끝"); //완료
 
-                        }// 만약 session의 od 갯수가 1일 때 끝 - 완료
+                    }// 만약 session의 od 갯수가 1일 때 끝 - 완료
 
                         //
-                        //
-                        else if(originalSession.length>1){// 만약 session의 od 갯수가 1과 0이 아닐 때 (0인 경우는 한 단계 outer에 있음 - null check 시
-                            //console.log("가가가가");
-                            //qtyFlag가 0인 애 찾기
+                    //
+                    else if(originalSession.length>1){// 만약 session의 od 갯수가 1과 0이 아닐 때 (0인 경우는 한 단계 outer에 있음 - null check 시
+                        //console.log("가가가가");
+                        //qtyFlag가 0인 애 찾기
                         //
                         //     var arrayMenuZero = []; //수량제공메뉴 파악해서 모아두기
                         //     for(var zero=0; zero<originalSession.length; zero++){
@@ -695,168 +625,149 @@
                         //         }
                         //     }
 
-                            for(var i=0; i<originalSession.length;i++){//qtyFlag가 0인 애가 추가 메뉴&옵션 갯수와 이름까지 같을 때 이 안에서 session 저장 끝남
-                                if(originalSession[i]['odMenuQtyFlag']==0){//세션에 담긴 애 중 수량제공메뉴일 때
-                                    //console.log("//세션에 담긴 애 중 수량제공메뉴일 때 i : " +i);
+                        for(var i=0; i<originalSession.length;i++){//qtyFlag가 0인 애가 추가 메뉴&옵션 갯수와 이름까지 같을 때 이 안에서 session 저장 끝남
+                            if(originalSession[i]['odMenuQtyFlag']==0){//세션에 담긴 애 중 수량제공메뉴일 때
+                                //console.log("//세션에 담긴 애 중 수량제공메뉴일 때 i : " +i);
 
-                                    if(originalSession[i+1]!=null
-                                        && originalSession[i]['odMenuNo']==originalSession[i+1]['odMenuNo']
-                                        && originalSession[i+1]['odMenuQtyFlag']==1){//bbb. 세션에 옵션그룹이 있는 메뉴
-                                        //console.log("cccccccccccccccc");
-                                        //console.log("////bbb. 옵션그룹이 있는 메뉴 i : " +i);
-                                        //console.log("추가할 메뉴랑 no 같은가");
+                                if(originalSession[i+1]!=null
+                                    && originalSession[i]['odMenuNo']==originalSession[i+1]['odMenuNo']
+                                    && originalSession[i+1]['odMenuQtyFlag']==1){//bbb. 세션에 옵션그룹이 있는 메뉴
+                                    //console.log("cccccccccccccccc");
+                                    //console.log("////bbb. 옵션그룹이 있는 메뉴 i : " +i);
+                                    //console.log("추가할 메뉴랑 no 같은가");
+                                    //console.log("메뉴 no 같은지 확인 : " +originalSession[i]['odMenuNo']+"==="+orderDetail['odMenuNo']);
+                                    if(originalSession[i]['odMenuNo']===orderDetail['odMenuNo']){//추가할 메뉴랑 같을 때
+                                        //console.log("추가할 메뉴랑 no 같을 때");
                                         //console.log("메뉴 no 같은지 확인 : " +originalSession[i]['odMenuNo']+"==="+orderDetail['odMenuNo']);
-                                        if(originalSession[i]['odMenuNo']===orderDetail['odMenuNo']){//추가할 메뉴랑 같을 때
-                                            //console.log("추가할 메뉴랑 no 같을 때");
-                                            //console.log("메뉴 no 같은지 확인 : " +originalSession[i]['odMenuNo']+"==="+orderDetail['odMenuNo']);
-                                            //console.log("i="+i);
-                                            var isItSame = 0;
-                                            // for(var k=i+1; k<i+originalSession.length; k++){
-                                            //     //console.log("///////////originalSession json parse"+k+" : "+JSON.stringify(originalSession[k]));
-                                            // }
+                                        //console.log("i="+i);
+                                        var isItSame = 0;
+                                        // for(var k=i+1; k<i+originalSession.length; k++){
+                                        //     //console.log("///////////originalSession json parse"+k+" : "+JSON.stringify(originalSession[k]));
+                                        // }
 
-                                            if(isThereOptionGroup!=1){//추가할 옵션그룹 수가 1이 아닐 때
-                                                for(var f=i+1; f<i+originalSession.length; f++) {
+                                        if(isThereOptionGroup!=1){//추가할 옵션그룹 수가 1이 아닐 때
+                                            for(var f=i+1; f<i+originalSession.length; f++) {
 
-                                                    if(originalSession[f]!=null && originalSession[f]['odMenuQtyFlag']!=0) {
-                                                        isItSame++;
-                                                        // console.log(isItSame + " : isItSame");
-                                                        //console.log(isThereOptionGroup + " : isThereOptionGroup");
+                                                if(originalSession[f]!=null && originalSession[f]['odMenuQtyFlag']!=0) {
+                                                    isItSame++;
+                                                    // console.log(isItSame + " : isItSame");
+                                                    //console.log(isThereOptionGroup + " : isThereOptionGroup");
 
-                                                    }else {
-                                                        //console.log("break;");
-                                                        break;
+                                                }else {
+                                                    //console.log("break;");
+                                                    break;
 
-                                                    }
                                                 }
-                                            }else{//추가할 옵션그룹 수가 1일 때
-                                                if(originalSession[i+2]!=null){
-                                                    if(originalSession[i+2]['odMenuQtyFlag']===1){
-                                                        isItSame++;
-                                                    }
-                                                }else{
+                                            }
+                                        }else{//추가할 옵션그룹 수가 1일 때
+                                            if(originalSession[i+2]!=null){
+                                                if(originalSession[i+2]['odMenuQtyFlag']===1){
                                                     isItSame++;
                                                 }
-
+                                            }else{
+                                                isItSame++;
                                             }
-                                            //console.log("111111111111111isItSame : " + isItSame);
-                                            //console.log("111111111111111111111isThereOptionGroup : " + isThereOptionGroup);
-                                            if(isItSame===isThereOptionGroup) { //옵션그룹의 수 같은가?
-                                                var isItReallySame =0;
-                                                if(isThereOptionGroup!=1){ //추가하려는 옵션그룹&비교대상 옵션그룹 수가 1이 아닐 때
-                                                    for(var a = i+1; a<i+isItSame+1; a++) {
-                                                        //console.log("제발 111111111111");
 
-                                                        if(originalSession[a]['odOptionNo']===odOptionGroupList[a-i-1]['odOptionNo']) {
-                                                            //console.log("제발 222222222222222222");
-                                                            //console.log("///////////originalSession json parse"+a+" : "+JSON.stringify(originalSession[a]));
-                                                            //console.log("///////////odOptionGroupList json parse"+(a-i-1)+" : "+JSON.stringify(odOptionGroupList[a-i-1]));
+                                        }
+                                        //console.log("111111111111111isItSame : " + isItSame);
+                                        //console.log("111111111111111111111isThereOptionGroup : " + isThereOptionGroup);
+                                        if(isItSame===isThereOptionGroup) { //옵션그룹의 수 같은가?
+                                            var isItReallySame =0;
+                                            if(isThereOptionGroup!=1){ //추가하려는 옵션그룹&비교대상 옵션그룹 수가 1이 아닐 때
+                                                for(var a = i+1; a<i+isItSame+1; a++) {
+                                                    //console.log("제발 111111111111");
 
-                                                            isItReallySame++;
-                                                        }//옵션그룹의 옵션 넘버가 다 같은가?
-                                                    }
-                                                }else{//추가하려는 옵션그룹&비교대상 옵션그룹 수가 1일 때
-                                                    //console.log("제발 3333333333333");
+                                                    if(originalSession[a]['odOptionNo']===odOptionGroupList[a-i-1]['odOptionNo']) {
+                                                        //console.log("제발 222222222222222222");
+                                                        //console.log("///////////originalSession json parse"+a+" : "+JSON.stringify(originalSession[a]));
+                                                        //console.log("///////////odOptionGroupList json parse"+(a-i-1)+" : "+JSON.stringify(odOptionGroupList[a-i-1]));
+
+                                                        isItReallySame++;
+                                                    }//옵션그룹의 옵션 넘버가 다 같은가?
+                                                }
+                                            }else{//추가하려는 옵션그룹&비교대상 옵션그룹 수가 1일 때
+                                                //console.log("제발 3333333333333");
+                                                //console.log( " i : " + i);
+                                                if(originalSession[i+1]!=null){//널체크
+                                                    //console.log("제발 444444444444444");
                                                     //console.log( " i : " + i);
-                                                    if(originalSession[i+1]!=null){//널체크
-                                                        //console.log("제발 444444444444444");
-                                                        //console.log( " i : " + i);
-                                                        //console.log("JSON.stringify(originalSession["+i+1+"])"+(originalSession)[i+1]['odOptionNo']);
-                                                        //console.log("JSON.stringify(odOptionGroupList[0])"+(odOptionGroupList)[0]['odOptionNo']);
-                                                        if(originalSession[i+1]['odOptionNo']===odOptionGroupList[0]['odOptionNo']) {
+                                                    //console.log("JSON.stringify(originalSession["+i+1+"])"+(originalSession)[i+1]['odOptionNo']);
+                                                    //console.log("JSON.stringify(odOptionGroupList[0])"+(odOptionGroupList)[0]['odOptionNo']);
+                                                    if(originalSession[i+1]['odOptionNo']===odOptionGroupList[0]['odOptionNo']) {
+                                                        isItReallySame++;
+                                                        //console.log("제발 55555555555555");
+                                                    }//옵션그룹의 옵션 넘버가 다 같은가?
+
+                                                }else{
+                                                    //console.log("제발 66666666666");
+                                                    for(var a = i+1; a<i+isItSame; a++) {
+                                                        //console.log("제발 777777777777777");
+                                                        if(originalSession[a]['odOptionNo']===optionGroupOrderDetail['odOptionNo']) {
+                                                            //console.log("제발 88888888888888");
                                                             isItReallySame++;
-                                                            //console.log("제발 55555555555555");
                                                         }//옵션그룹의 옵션 넘버가 다 같은가?
-
-                                                    }else{
-                                                        //console.log("제발 66666666666");
-                                                        for(var a = i+1; a<i+isItSame; a++) {
-                                                            //console.log("제발 777777777777777");
-                                                            if(originalSession[a]['odOptionNo']===optionGroupOrderDetail['odOptionNo']) {
-                                                                //console.log("제발 88888888888888");
-                                                                isItReallySame++;
-                                                            }//옵션그룹의 옵션 넘버가 다 같은가?
-                                                        }
                                                     }
-                                                }
-
-                                                //console.log("111111111111111isItReallySame : " + isItReallySame);
-                                                //console.log("111111111111111111111isThereOptionGroup : " + isThereOptionGroup);
-
-                                                if(isItReallySame===isThereOptionGroup ) {//ccc. 옵션그룹들도 다 똑같으면
-                                                    // 수량 추가
-                                                    //console.log("ccc : 수량 추가 이전 ="+originalSession[i]['odMenuQty']);
-                                                    orderDetail['odMenuQty']=originalSession[i]['odMenuQty']+1;
-                                                    //console.log("ccc : 수량 추가 이후 ="+orderDetail['odMenuQty']);
-                                                    //수량 추가된 메뉴를 list의 요소와 바꾼다.
-                                                    //console.log("ccc : list 요소 바꾸기 전 : "  +JSON.stringify(menuOdList[i]));
-                                                    menuOdList[i]=(orderDetail);
-                                                    //console.log("ccc : list 요소 바꾼 후 : "  +JSON.stringify(menuOdList[i]));
-                                                    //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.(겉으로는 수량이 추가된 것
-                                                    if(odOptionGroupList.length!=1){
-                                                        for(var c=0; c<odOptionGroupList.length; c++){
-                                                            menuOdList[i+c+1]=odOptionGroupList[c];
-                                                            //console.log("1개 아닐 때 "+c);
-                                                            //console.log("odOptionGroupList ["+c+"] : " + odOptionGroupList[c]);
-                                                        }
-                                                    }else{
-                                                        menuOdList[i+1]=odOptionGroupList[0];
-                                                        //console.log("1개일 때");
-                                                    }
-
-
-                                                    sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
-                                                    didYouAddOp++;
-                                                    //console.log("didYouAddOp(1 초과 불가) : "+didYouAddOp );
-
-                                                    //console.log("ccc. 요소 수량 추가 로직 끝");
-
                                                 }
                                             }
 
-                                        }//추가할 메뉴랑 같을 때 끝
+                                            //console.log("111111111111111isItReallySame : " + isItReallySame);
+                                            //console.log("111111111111111111111isThereOptionGroup : " + isThereOptionGroup);
 
-                                    }//bbb. 마지막 요소 아니면서 옵션 그룹 있는 애 끝
-                                }//세션에 담긴 애 중 수량제공메뉴일 때 끝
+                                            if(isItReallySame===isThereOptionGroup ) {//ccc. 옵션그룹들도 다 똑같으면
+                                                // 수량 추가
+                                                //console.log("ccc : 수량 추가 이전 ="+originalSession[i]['odMenuQty']);
+                                                orderDetail['odMenuQty']=originalSession[i]['odMenuQty']+1;
+                                                //console.log("ccc : 수량 추가 이후 ="+orderDetail['odMenuQty']);
+                                                //수량 추가된 메뉴를 list의 요소와 바꾼다.
+                                                //console.log("ccc : list 요소 바꾸기 전 : "  +JSON.stringify(menuOdList[i]));
+                                                menuOdList[i]=(orderDetail);
+                                                //console.log("ccc : list 요소 바꾼 후 : "  +JSON.stringify(menuOdList[i]));
+                                                //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.(겉으로는 수량이 추가된 것
+                                                if(odOptionGroupList.length!=1){
+                                                    for(var c=0; c<odOptionGroupList.length; c++){
+                                                        menuOdList[i+c+1]=odOptionGroupList[c];
+                                                        //console.log("1개 아닐 때 "+c);
+                                                        //console.log("odOptionGroupList ["+c+"] : " + odOptionGroupList[c]);
+                                                    }
+                                                }else{
+                                                    menuOdList[i+1]=odOptionGroupList[0];
+                                                    //console.log("1개일 때");
+                                                }
 
-                            }//qtyFlag가 0인 애가 있으면서 추가 메뉴와 같을 때 이 안에서 session 저장 끝남
 
-                            //console.log("didYouAddOp(1 초과 불가) : "+didYouAddOp );
-                            if(didYouAddOp==0 && didYouAdd==0){//fianl 만약 세션에 추가메뉴가 저장되지 않았다면
+                                                sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
+                                                didYouAddOp++;
+                                                //console.log("didYouAddOp(1 초과 불가) : "+didYouAddOp );
 
-                                // 원래 있던 session에 수량 정보 제공 메뉴 하나 더 담기
-                                //console.log("fianl : 하나 더 담기 이전 ="+JSON.stringify(menuOdList));
-                                menuOdList.push(orderDetail);
-                                //console.log("fianl : 하나 더 담기 이후 ="+JSON.stringify(menuOdList));
+                                                //console.log("ccc. 요소 수량 추가 로직 끝");
 
-                                // 원래 있던 session에 수량 정보 제공 메뉴 하나 더 담기
-                                //console.log("fianl : 옵션 더 담기 이전 ="+JSON.stringify(menuOdList));
-                                if(isThereOptionGroup!=0){
-                                    for(var i=0; i<odOptionGroupList.length; i++){
-                                        menuOdList.push(odOptionGroupList[i]);
-                                    }
+                                            }
+                                        }
+
+                                    }//추가할 메뉴랑 같을 때 끝
+
+                                }//bbb. 마지막 요소 아니면서 옵션 그룹 있는 애 끝
+                            }//세션에 담긴 애 중 수량제공메뉴일 때 끝
+
+                        }//qtyFlag가 0인 애가 있으면서 추가 메뉴와 같을 때 이 안에서 session 저장 끝남
+
+                        //console.log("didYouAddOp(1 초과 불가) : "+didYouAddOp );
+                        if(didYouAddOp==0 && didYouAdd==0){//fianl 만약 세션에 추가메뉴가 저장되지 않았다면
+
+                            // 원래 있던 session에 수량 정보 제공 메뉴 하나 더 담기
+                            //console.log("fianl : 하나 더 담기 이전 ="+JSON.stringify(menuOdList));
+                            menuOdList.push(orderDetail);
+                            //console.log("fianl : 하나 더 담기 이후 ="+JSON.stringify(menuOdList));
+
+                            // 원래 있던 session에 수량 정보 제공 메뉴 하나 더 담기
+                            //console.log("fianl : 옵션 더 담기 이전 ="+JSON.stringify(menuOdList));
+                            if(isThereOptionGroup!=0){
+                                for(var i=0; i<odOptionGroupList.length; i++){
+                                    menuOdList.push(odOptionGroupList[i]);
                                 }
-                                //console.log("fianl : 옵션 더 담기 이후 ="+JSON.stringify(menuOdList));
-                                //console.log("bbbbbbbbbbbb");
-                                var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
-
-                                for( var i in beforeAnyway){
-                                    // console.log("beforeAnyway : " + beforeAnyway[i]);
-                                    for(var j in beforeAnyway[i]){
-                                        //console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
-
-                                    }
-                                }
-
-
-                                //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.
-                                sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
-                                didYouAddOp++;
-                                //console.log("didYouAddOp(1 초과 불가) : "+didYouAddOp );
-
-                                //console.log("fianl. 메뉴와 옵션 더 담기 로직 끝");
-                            }//fianl.만약 세션에 추가메뉴가 저장되지 않았다면 끝
-                            //console.log("aaaaaaaaaaaaaaaa");
+                            }
+                            //console.log("fianl : 옵션 더 담기 이후 ="+JSON.stringify(menuOdList));
+                            //console.log("bbbbbbbbbbbb");
                             var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
 
                             for( var i in beforeAnyway){
@@ -867,7 +778,26 @@
                                 }
                             }
 
-                        }// 만약 session의 od 갯수가 1과 0이 아닐 때 끝
+
+                            //list의 json을 스트링으로 만들어서 menu에 넣고 session에 담는다.
+                            sessionStorage.setItem("menuOdList", JSON.stringify(menuOdList));
+                            didYouAddOp++;
+                            //console.log("didYouAddOp(1 초과 불가) : "+didYouAddOp );
+
+                            //console.log("fianl. 메뉴와 옵션 더 담기 로직 끝");
+                        }//fianl.만약 세션에 추가메뉴가 저장되지 않았다면 끝
+                        //console.log("aaaaaaaaaaaaaaaa");
+                        var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
+
+                        for( var i in beforeAnyway){
+                            // console.log("beforeAnyway : " + beforeAnyway[i]);
+                            for(var j in beforeAnyway[i]){
+                                //console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
+
+                            }
+                        }
+
+                    }// 만약 session의 od 갯수가 1과 0이 아닐 때 끝
 //////////////////////////////////////////////////////
 //                     } //세션에 담긴 애 있을 때 끝
 
@@ -931,11 +861,12 @@
                                 "<button type='button' class='close' id='cancelMenu'>"+
                                 "<span aria-hidden='true'>&times;</span></button>"+
                                 "<div><h6 class=\"my-0\">" + beforeAnyway[i]['odMenuName'] + "</h6>" +
-                                "<h6 class=\"my-0\">수량 : <input type='button' class='my-5' value='-' id='decreaseQuantity'>" +
+                                "<h6 class=\"my-0\">수량 : <input type='button' class='my-11' value='-' id='decreaseQuantity'>" +
                                 "<input type='hidden' name='orderCount' value='"+i+"'>"+
-                                " <input type='text' id='numberUpDown' value='" + beforeAnyway[i]['odMenuQty'] + "' size='2' max=''> " +
+                                " <input type='text' id='numberUpDown' value='" + beforeAnyway[i]['odMenuQty'] + "' size='1' max=''> " +
                                 "<input type='button' value='+' id='increaseQuantity'> </h6>" +
                                 "";
+                            ///////////////수정/////////////////
                             //2022-01-16
                             // finalCart += "" +
                             //     "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
@@ -982,8 +913,34 @@
                     }
 
                 }
+                /*    ///////////////////////////////////////////////////////////////////////////////////수정///*/
+                var beforeAny = JSON.parse(sessionStorage.getItem("menuOdList"));
+                var orderDetailList = "";
+                var orderTruckIdCheck = "";
+
+                for (var i in beforeAny) {
+
+
+
+                    orderDetailList += "<input type='hidden' name='odMQFlag' id='odMQFlag' value='" + beforeAny[i]['odMenuQtyFlag'] + "'>" +
+                        "<input type='hidden' name='odMQty' id='odMQty' value='" + beforeAny[i]['odMenuQty'] + "'>" +
+                        "<input type='hidden' name='odMName' id='odMName' value='" + beforeAny[i]['odMenuName'] + "'>" +
+                        "<input type='hidden' name='odMPrice' id='odMPrice' value='" + beforeAny[i]['odMenuPrice'] + "'>" +
+                        "<input type='hidden' name='odOGName' id='odOGName' value='" + beforeAny[i]['odOptionGroupName'] + "'>" +
+                        "<input type='hidden' name='odOpName' id='odOpName' value='" + beforeAny[i]['odOptionName'] + "'>" +
+                        "<input type='hidden' name='odOpPrice' id='odOpPrice' value='" + beforeAny[i]['odOptionPrice'] + "'>" +
+                        "<input type='hidden' name='odMImg1' id='odMImg1' value='" + beforeAny[i]['odMenuImg1'] + "'>";
+
+                    orderTruckIdCheck = "<input type='hidden' name='checkMenuTruckId' id='checkMenuTruckId' value='" + beforeAny[i]['menuTruckId'] + "'>";
+
+                }
+
+                $("#cartList").append(orderDetailList);
+                $("#cartList").append(orderTruckIdCheck);
                 targetCart.html(finalCart);
                 // location.reload();
+
+
 
             });
 
@@ -994,6 +951,86 @@
 
         });
 
+        /*//////////////////////////////////////////////수정//////////////////////////*/
+        <!--장바구니 삭제 & 수량 버튼-->
+        //2022-01-16
+        /*삭제버튼 클릭 이벤트*/
+        $(function(){
+            var orderDetail = JSON.parse(sessionStorage.getItem("menuOdList"));
+
+            var orderCancelCount = [];
+
+            $('button#cancelMenu').click(function(){
+                var orderCount = $(this).parent('li').find('input[name="orderCount"]').val();
+                // var orderCancelCount = $(this).parent('li').find('input[name="orderCancelCount"]').val();
+                $(this).parent('li').find('input[name="orderCancelCount"]').each(function (i) {
+                    orderCancelCount.push($(this).val());
+                });
+
+                orderDetail.splice(orderCount,orderCancelCount.length+1);
+
+                sessionStorage.setItem("menuOdList", JSON.stringify(orderDetail));
+
+
+                $(this).parent('li').remove();
+
+            })
+
+        })
+
+        $(function(){
+            $("#cancelCartMenuList").on("click",function(){
+                sessionStorage.removeItem("menuOdList");
+                location.reload();
+            })
+        })
+
+
+        /*수량버튼 클릭 이벤트*/
+        $(function(){
+
+
+            var orderDetail = JSON.parse(sessionStorage.getItem("menuOdList"));
+
+
+            $('input#decreaseQuantity').click(function(e){
+                var orderCount = $(this).parent('h6').find('input[name="orderCount"]').val();
+                //alert("클릭한 메뉴의 순서 정보"+orderCount);
+                e.preventDefault();
+
+                var stat = $(this).parent('h6').find('input#numberUpDown');
+                var num = stat.val();
+                num--;
+                if(num<=0){
+                    alert('더이상 줄일수 없습니다.');
+                    num =1;
+                }
+                // 수량 추가
+                orderDetail[orderCount]['odMenuQty']=num;
+                stat.val(num);
+                sessionStorage.setItem("menuOdList", JSON.stringify(orderDetail));
+
+                //$('input#numberUpDown').val(num);
+            });
+            $('input#increaseQuantity').click(function(e){
+                var orderCount = $(this).parent('h6').find('input[name="orderCount"]').val();
+                e.preventDefault();
+
+                var stat = $(this).parent('h6').find('input#numberUpDown');
+                var num = stat.val();
+                num++;
+
+                if(num>10){
+                    alert('더이상 늘릴수 없습니다.');
+                    num=10;
+                }
+
+                orderDetail[orderCount]['odMenuQty']=num;
+                stat.val(num);
+                sessionStorage.setItem("menuOdList", JSON.stringify(orderDetail));
+                // $('input#numberUpDown').val(num);
+            });
+        });
 
 
 
@@ -1001,6 +1038,8 @@
 
             var beforeAny = JSON.parse(sessionStorage.getItem("menuOdList"));
             var orderDetailList = "";
+            /*    ///////////////////////////////////////////////////////////////////////////////////수정///*/
+            var orderTruckIdCheck = "";
 
             for (var i in beforeAny) {
 
@@ -1031,10 +1070,15 @@
 
 
 
-        /*장바구니 주문하기 이후 Modal에서 확인 클릭 시*/
+        /*장바구니 주문하기 */
         $(function () {
             $("#addMenuCart").click(function () {
-
+                /*//////////////////////////수정///////////////////////////*/
+                var orderCheck = $("input[name='checkMenuTruckId']").val();
+                if(orderCheck== undefined){
+                    alert("담겨있는 메뉴가 없습니다")
+                    return;
+                }
 
                 var order = menu_ajax()
 
@@ -1349,8 +1393,8 @@
             var checkMenuTruckId = $("input[name='checkMenuTruckId']").val();
             var orderTruckId = $("input[name='orderTruckId.truckId']").val();
 
-            /*       alert(orderTruckId)
-                   alert(checkMenuTruckId)*/
+            /*  alert(orderTruckId)
+              alert(checkMenuTruckId)*/
 
             if(checkMenuTruckId != undefined) {
 
@@ -1474,11 +1518,11 @@
 
                     rvDiv+=""+
                         "<section id=\"testimonials\">"+
-                            "<div class=\"testimonial-heading\">"+
-                                "<span>Comments</span>"+
-                                "<h4>Clients Says</h4>"+
-                            "</div>"+
-                            "<div class=\"testimonial-box-container\">"+
+                        "<div class=\"testimonial-heading\">"+
+                        "<span>Comments</span>"+
+                        "<h4>Clients Says</h4>"+
+                        "</div>"+
+                        "<div class=\"testimonial-box-container\">"+
                         ""+
                         "";
 
@@ -1487,17 +1531,17 @@
                         rvDiv+=""+
                             "<div class=\"testimonial-box\">"+
                             "<input type=\"hidden\" name=\"rvNo\" value=\""+rv.rvNo+"\">"+
-                                "<div class=\"box-top\">"+
-                                    "<div class=\"profile\">"+
-                                       " <div class=\"profile-img\">"+
-                                           " <img src=\"https://cdn.clien.net/web/api/file/F01/3026181/26c0c7097b4545faa89.JPG\" />"+
-                                        "</div>"+
-                                        "<div class=\"name-user\">"+
-                                            "<strong>"+rv.rvUserId+"</strong>"+
-                                            "<span>"+rv.rvRegTime+"</span>"+
-                                        "</div>"+
-                                    "</div>"+
-                                    "<div class=\"reviews\">";
+                            "<div class=\"box-top\">"+
+                            "<div class=\"profile\">"+
+                            " <div class=\"profile-img\">"+
+                            " <img src=\"https://cdn.clien.net/web/api/file/F01/3026181/26c0c7097b4545faa89.JPG\" />"+
+                            "</div>"+
+                            "<div class=\"name-user\">"+
+                            "<strong>"+rv.rvUserId+"</strong>"+
+                            "<span>"+rv.rvRegTime+"</span>"+
+                            "</div>"+
+                            "</div>"+
+                            "<div class=\"reviews\">";
                         if(rv.rvStar==0){
                             rvDiv+=""+
                                 "<i class=\"far fa-star\"></i>"+
@@ -1576,20 +1620,20 @@
                                 "<i class=\"fas fa-star\"></i>"+
                                 "<i class=\"fas fa-star\"></i>";
                         }
-                            rvDiv+=""+
-                                "</div>"+
+                        rvDiv+=""+
                             "</div>"+
-                        "<div class=\"client-comment\">"+
+                            "</div>"+
+                            "<div class=\"client-comment\">"+
                             "<p>"+rv.rvContent+"</p>"+
-                    "</div>"+
-                    "</div>"+
+                            "</div>"+
+                            "</div>"+
                             ""+
                             "";
 
 
                     }
                     rvDiv+="</div>"+
-                "</section>";
+                        "</section>";
 
                     // alert($('div.card.review-body').html());
                     $('div.card.review-body').html(rvDiv);
@@ -1825,7 +1869,7 @@
 
 
 
-<%--리뷰 css--%>
+    <%--리뷰 css--%>
     <style>
 
         *{
@@ -2398,12 +2442,12 @@
 
 
     <!--리뷰 리스트 시작-->
-<%--    <p>--%>
-<%--      --%>
-<%--        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">--%>
-<%--            리뷰 보기--%>
-<%--        </button>--%>
-<%--    </p>--%>
+    <%--    <p>--%>
+    <%--      --%>
+    <%--        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">--%>
+    <%--            리뷰 보기--%>
+    <%--        </button>--%>
+    <%--    </p>--%>
     <div class="collapse" id="collapseExample">
         <div class="card review-body">
 
@@ -2430,11 +2474,12 @@
 
             </h4>
             <ul class="list-group mb-3" style="width:259px;">
-               <img src="data:image/png;base64,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">
+                <img src="data:image/png;base64,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">
             </ul>
             <input type="hidden" id="orderUserId" name="orderUserId.userId" value="${user.userId}"/>
             <input type="hidden" id="orderTruckId" name="orderTruckId.truckId" value="${truck.truckId}"/>
-            <button type="button"  class="btn btn-warning" data-toggle="modal" data-target="#cartModal" >주문하기</button>
+            &emsp;&emsp;<button type="button"  class="btn btn-warning" data-toggle="modal" data-target="#cartModal" >주문하기</button>
+            &emsp;&emsp;<button type="button"  class="btn btn-warning" id="cancelCartMenuList"  >삭  제</button>
         </form>
     </div>
     <%--</form></div>--%>
@@ -2459,7 +2504,8 @@
                     <h4>${menu.menuDetail}</h4>
                 </ul>
                 <div class="btn-detail">
-                    <button class="button is-warning is-light" name="getMenu"
+                        <%--          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 수정--%>
+                    <button class="button is-warning is-light" id="truckIdCheck" name="getMenu"
                             style='margin-left: 100px; margin-bottom: 13px; height: 25px'
                             onclick="getMenu(${menu.menuNo});"
                     >
@@ -2493,8 +2539,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">메뉴 정보</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"></span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body-hey" style="min-height: 500px; margin-left: 19px;">
@@ -2504,8 +2550,9 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-default" id="addCart" name="addCart">장바구니로!</button>
+
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" id="addCart" data-dismiss='modal' name="addCart">장바구니로!</button>
             </div>
         </div>
     </div>
@@ -2587,78 +2634,86 @@
 <!--review 모달-->
 
 <script>
-
     $("body").on("click", ".heart-click-t", function() {
-    var truckId = $('input[name="truckId"]').val();
-    console.log("truckId: " + truckId);
+        var role = '${sessionScope.role}';
+        console.log("role"+role);
 
-    // 빈하트를 눌렀을때
-    if ($(this).children('svg').attr('class') == "bi bi-suit-heart") {
-    console.log("빈하트 클릭" + truckId);
+        if(role=="truck") {
+            alert("푸드트럭은 좋아요를 누를 수 없어요 ( ´･･)ﾉ(._.`)");
+        }else{
+            var truckId = $('input[name="truckId"]').val();
+            console.log("truckId: " + truckId);
 
-    $.ajax({
-        url: '/community/json/addHeartTruck',
-        type: 'get',
-        data: {
-            truckId: truckId,
-        },
-        success: function (pto) {
-        //페이지 새로고침
-        //document.location.reload(true);
-        console.log("pto: "+pto.heartCount)
-        let heart = pto.heartCount;
+            // 빈하트를 눌렀을때
+            if ($(this).children('svg').attr('class') == "bi bi-suit-heart") {
+                console.log("빈하트 클릭" + truckId);
+
+                $.ajax({
+                    url: '/community/json/addHeartTruck',
+                    type: 'get',
+                    data: {
+                        truckId: truckId,
+                    },
+                    success: function (pto) {
+                        //페이지 새로고침
+                        //document.location.reload(true);
+                        console.log("pto: "+pto.heartCount)
+                        let heart = pto.heartCount;
 
 
-        $('#heartC').text(heart);
+                        $('#heartC').text(하트);
 
-            console.log("하트 추가!!!!!!!!!!");
-        },
-        error: function () {
-            alert('서버 에러');
+                        console.log("하트 추가!!!!!!!!!!");
+                    },
+                    error: function () {
+                        alert('서버 에러');
+                    }
+
+
+                });
+                console.log("하트채워");
+
+                // 꽉찬하트로 바꾸기
+                $(this).html("<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart-fill' viewBox='0 0 20 20'><path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' /></svg>");
+                //$('.heart_icon').html("<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart-fill' viewBox='0 0 20 20'><path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' /></svg>");
+
+                // 꽉찬 하트를 눌렀을 때
+            } else if ($(this).children('svg').attr('class') == "bi bi-suit-heart-fill") {
+                console.log("꽉찬거 하트 클릭 " + truckId);
+
+                $.ajax({
+                    url: '/community/json/removeHeartTruck',
+                    type: 'get',
+                    data: {
+                        truckId: truckId,
+                    },
+                    success: function (pto) {
+                        //페이지 새로고침
+                        //document.location.reload(true);
+                        console.log("pto: "+pto)
+                        let heart = pto.heartCount;
+                        // 페이지에 하트수 갱신
+                        //
+
+                        $('#heartC').text(하트);
+
+                        console.log("하트삭제!!!!!!!!!");
+                    },
+                    error: function () {
+                        alert('서버 에러');
+                    }
+                });
+                console.log("빈하트!!!!!!!!!");
+
+                // 빈하트로 바꾸기
+                $(this).html('<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-suit-heart" viewBox="0 0 20 20"><path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" /></svg>');
+
+                //$('.heart_icon' + postNo).html('<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-suit-heart" viewBox="0 0 20 20"><path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" /></svg>');
+            }
         }
+
+
     });
-    console.log("하트채워");
-
-    // 꽉찬하트로 바꾸기
-    $(this).html("<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart-fill' viewBox='0 0 20 20'><path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' /></svg>");
-    //$('.heart_icon').html("<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart-fill' viewBox='0 0 20 20'><path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' /></svg>");
-
-    // 꽉찬 하트를 눌렀을 때
-    } else if ($(this).children('svg').attr('class') == "bi bi-suit-heart-fill") {
-    console.log("꽉찬거 하트 클릭 " + truckId);
-
-    $.ajax({
-    url: '/community/json/removeHeartTruck',
-    type: 'get',
-    data: {
-    truckId: truckId,
-    },
-    success: function (pto) {
-    //페이지 새로고침
-    //document.location.reload(true);
-    console.log("pto: "+pto)
-    let heart = pto.heartCount;
-    // 페이지에 하트수 갱신
-    //
-
-    $('#heartC').text(heart);
-
-    console.log("하트삭제!!!!!!!!!");
-    },
-    error: function () {
-    alert('서버 에러');
-    }
-    });
-    console.log("빈하트!!!!!!!!!");
-
-    // 빈하트로 바꾸기
-    $(this).html('<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-suit-heart" viewBox="0 0 20 20"><path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" /></svg>');
-
-    //$('.heart_icon' + postNo).html('<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-suit-heart" viewBox="0 0 20 20"><path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" /></svg>');
-    }
-
-
-});
 
 
 </script>
