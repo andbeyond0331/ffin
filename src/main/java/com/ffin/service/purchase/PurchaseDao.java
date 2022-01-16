@@ -32,7 +32,7 @@ public interface PurchaseDao {
     public List<Purchase> getPurchaseList(Search search , String userId)throws Exception;//마이페이지에서 구매이력
     public List<Purchase> getSalesList(Search search , String truckId)throws Exception; //마이페이지에서 판매이력
     public List<Point> getPointList(Search search , String userId)throws Exception;//마이페이지에서 포인트내역조회
-
+    public Map<String,Object> getOrderUserList(Search search,String userId)throws Exception;// navbar.jsp에서 현재주문목록
     public List getOrderDetail(int orderNo) throws Exception;//주문정보 조회 이용자의 정보도 함께
 
     public int getLastOrderNo (String truckId)throws Exception; //푸드트럭 주문정보 조회에서 첫화면에 보여줄 주문번호
@@ -41,7 +41,6 @@ public interface PurchaseDao {
     public User getTotalPoint (String userId)throws Exception;//보유 총포인트 조회
     public String getTruckBusiStatus(String tuckId)throws Exception; //영업중 모드 조회
     public int getUsePoint (int pointNo)throws Exception; //환불에 필요한 사용한 포인트 조회
-    public Purchase getMainOrderUser(String userId)throws Exception;// navbar.jsp에서 현재주문정보를 보여줄지 구분
 
     //HHJ
     public String checkCoupon(Coupon coupon) throws Exception; // 쿠폰 있는지 체크

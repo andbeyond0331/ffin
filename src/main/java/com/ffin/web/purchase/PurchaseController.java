@@ -55,11 +55,11 @@ public class PurchaseController {
     //==> 아래의 두개를 주석을 풀어 의미를 확인 할것
     @Value("#{commonProperties['pageUnit']}")
     //@Value("#{commonProperties['pageUnit'] ?: 3}")
-        int pageUnit;
+            int pageUnit;
 
     @Value("#{commonProperties['pageSize']}")
     //@Value("#{commonProperties['pageSize'] ?: 2}")
-        int pageSize;
+    int pageSize;
 
     @Autowired
     @Qualifier("reviewServiceImpl")
@@ -71,7 +71,7 @@ public class PurchaseController {
     public ModelAndView getMenuList(@ModelAttribute("search") Search search,
                                     @RequestParam("truckId") String truckId,
                                     HttpServletResponse response,
-                                    ModelAndView modelAndView) throws Exception{
+                                    ModelAndView modelAndView) throws Exception {
 
 //        File file = new File(FILE_UPLOAD_PATH, fileName);
 //        byte[] bytes = FileCopyUtils.copyToByteArray(file);
@@ -80,17 +80,17 @@ public class PurchaseController {
 //        response.setContentLength(bytes.length);
 
         search.setPageSize(pageSize);
-        Truck truck  = truckService.getTruck(truckId);
-        float rvAvg = reviewService.getReviewAvg(search,truckId);
-        int rvTotal = reviewService.getReviewTotalCount(search,truckId);
+        Truck truck = truckService.getTruck(truckId);
+        float rvAvg = reviewService.getReviewAvg(search, truckId);
+        int rvTotal = reviewService.getReviewTotalCount(search, truckId);
         truck.setTruckAVGStar(rvAvg);
 
-        Map<String , Object> map= menuService.getMenuList(search, truck.getTruckId());
+        Map<String, Object> map = menuService.getMenuList(search, truck.getTruckId());
 
         modelAndView.addObject("list", map.get("list"));
         modelAndView.addObject("path", FILE_UPLOAD_PATH);
         modelAndView.addObject("truck", truck);
-        if (rvTotal!=0){
+        if (rvTotal != 0) {
 
             modelAndView.addObject("rvTotal", rvTotal);
         }
@@ -102,8 +102,8 @@ public class PurchaseController {
 
     //장바구니에 출력할 데이터이다 현재는 UI가 없어서 저장된 데이터를 불러오고 있다
     //Session에 저장할때 어떻게 할지 생각해보자
-    @RequestMapping(value = "getCartMenuList", method= RequestMethod.GET)
-    public ModelAndView getCartMenuList(@RequestParam("orderNo")int orderNo , ModelAndView model,HttpSession session ) throws Exception{
+    @RequestMapping(value = "getCartMenuList", method = RequestMethod.GET)
+    public ModelAndView getCartMenuList(@RequestParam("orderNo") int orderNo, ModelAndView model, HttpSession session) throws Exception {
         System.out.println("/purchase/getCartMenuList : GET");
         //Session에 저장되어 있는 메뉴정보를 map에 담아서 List 로 확인
         Purchase purchase = new Purchase();
@@ -112,12 +112,12 @@ public class PurchaseController {
         map = purchaseService.getOrderDetail(orderNo);
 
         session.getAttribute("menuOdList");
-        System.out.println("session에 저장된 정보"+session);
+        System.out.println("session에 저장된 정보" + session);
 
-       // session.setAttribute("cart",orderDetail);
+        // session.setAttribute("cart",orderDetail);
         purchase = purchaseService.getPurchase(orderNo);
-        model.addObject("purchase",purchase);
-        model.addObject("map",map);
+        model.addObject("purchase", purchase);
+        model.addObject("map", map);
         model.setViewName("forward:/views/purchase/getCartMenuList.jsp");
 
 
@@ -126,17 +126,17 @@ public class PurchaseController {
 
     //user구매목록
     @RequestMapping(value = "getPurchaseList")
-    public String getPurchaseList(@ModelAttribute("search")Search search, Model model,
+    public String getPurchaseList(@ModelAttribute("search") Search search, Model model,
                                   HttpSession session) throws Exception {
 
         System.out.println("PurchaseController.getPurchaseList");
 
-        if(search.getCurrentPage() == 0){
+        if (search.getCurrentPage() == 0) {
             search.setCurrentPage(1);
         }
         search.setPageSize(pageSize);
 
-        Map<String, Object> map = purchaseService.getPurchaseList(search, ((User)session.getAttribute("user")).getUserId());
+        Map<String, Object> map = purchaseService.getPurchaseList(search, ((User) session.getAttribute("user")).getUserId());
 
 //        Page resultPage = new Page(search.getCurrentPage(), (Integer) map.get("totalCount"), pageUnit, pageSize);
 //        System.out.println("search = " + search + "resultPage = "+resultPage);
@@ -149,18 +149,16 @@ public class PurchaseController {
     }
 
 
-    @RequestMapping(value = "addCart", method= RequestMethod.GET)
-    public String addCart(@RequestParam("orderNo") int orderNo, Model model) throws Exception{
+    @RequestMapping(value = "addCart", method = RequestMethod.GET)
+    public String addCart(@RequestParam("orderNo") int orderNo, Model model) throws Exception {
 
         System.out.println("/purchase/addCart : GET");
         System.out.println("orderNo = " + orderNo + ", model = " + model);
-        Map<String,Object> coupontList = new HashMap<String,Object>();
+        Map<String, Object> coupontList = new HashMap<String, Object>();
         Purchase purchase = new Purchase();
         User user = new User();
         Coupon coupon = new Coupon();
         Map map = new HashMap();
-
-
 
 
         map = purchaseService.getOrderDetail(orderNo);
@@ -170,29 +168,29 @@ public class PurchaseController {
         coupon.setCouponReceivedUserId(purchase.getOrderUserId());
         coupontList = purchaseService.getCouponList(coupon);
 
-        System.out.println("couponList////////////////////////////////////////////"+coupontList);
+        System.out.println("couponList////////////////////////////////////////////" + coupontList);
 
-        model.addAttribute("map",map);
-        model.addAttribute("couponList",coupontList);
-        model.addAttribute("purchase",purchase);
-        model.addAttribute("cart",cart);
-        model.addAttribute("orderNo",purchase.getOrderNo());
-        model.addAttribute("totalPoint",user);
+        model.addAttribute("map", map);
+        model.addAttribute("couponList", coupontList);
+        model.addAttribute("purchase", purchase);
+        model.addAttribute("cart", cart);
+        model.addAttribute("orderNo", purchase.getOrderNo());
+        model.addAttribute("totalPoint", user);
 
 
         return "forward:/views/purchase/addPayView.jsp";
     }
 
-        //장바구니에서 주문하기 클릭시 선택한 주문정보와 픽업희망시간 주문요청사항을 입력받아서 같이 등록한다.
-    @RequestMapping(value = "addCart", method= RequestMethod.POST)
-    public String addCart(@ModelAttribute("orderDetail") OrderDetail orderDetail, @ModelAttribute("purchase") Purchase purchase, Model model) throws Exception{
+    //장바구니에서 주문하기 클릭시 선택한 주문정보와 픽업희망시간 주문요청사항을 입력받아서 같이 등록한다.
+    @RequestMapping(value = "addCart", method = RequestMethod.POST)
+    public String addCart(@ModelAttribute("orderDetail") OrderDetail orderDetail, @ModelAttribute("purchase") Purchase purchase, Model model) throws Exception {
 
         System.out.println("/purchase/addCart : POST");
         System.out.println("orderDetail11111 = " + orderDetail + ", purchase2222 = " + purchase);
         Point point = new Point();
         Purchase pur = new Purchase();
         Coupon coupon = new Coupon();
-        Map<String,Object> coupontList = new HashMap<String,Object>();
+        Map<String, Object> coupontList = new HashMap<String, Object>();
 
         orderDetail.setOdOrderNo(purchase);
         System.out.println(purchase.getOrderNo());
@@ -201,16 +199,16 @@ public class PurchaseController {
         purchase = purchaseService.getPurchase(purchase.getOrderNo());
         coupon.setCouponReceivedUserId(purchase.getOrderUserId());
         User totalPoint = purchaseService.getTotalPoint(purchase.getOrderUserId().getUserId());
-        System.out.println("couponList////////////////////////////////////////////"+coupontList);
+        System.out.println("couponList////////////////////////////////////////////" + coupontList);
         coupontList = purchaseService.getCouponList(coupon);
 
 
-        model.addAttribute("couponList",coupontList);
-        model.addAttribute("point",point);
-        model.addAttribute("purchase",purchase);
-        model.addAttribute("cart",cart);
-        model.addAttribute("orderNo",purchase.getOrderNo());
-        model.addAttribute("totalPoint",totalPoint);
+        model.addAttribute("couponList", coupontList);
+        model.addAttribute("point", point);
+        model.addAttribute("purchase", purchase);
+        model.addAttribute("cart", cart);
+        model.addAttribute("orderNo", purchase.getOrderNo());
+        model.addAttribute("totalPoint", totalPoint);
 
 
         return "forward:/views/purchase/addPayView.jsp";
@@ -221,9 +219,9 @@ public class PurchaseController {
     // Rest로 하게 되면 add하고 get해서 ㅓㅣㅇㄴㅁ럼니 고민 해보자 뭔가 이유가 있었는데 안돌아간다..
     // 아니다 함쳐야겠다!!!!
     // 아닌가?? 주문하고 주문취소했을때를 위해??
-    @RequestMapping(value = "addOrder", method= RequestMethod.POST)
-    public String addOrder(@ModelAttribute("purchase")Purchase purchase, @ModelAttribute("user") User user,
-                           @ModelAttribute("coupon") Coupon coupon, @ModelAttribute("point") Point point, Model model) throws Exception{
+    @RequestMapping(value = "addOrder", method = RequestMethod.POST)
+    public String addOrder(@ModelAttribute("purchase") Purchase purchase, @ModelAttribute("user") User user,
+                           @ModelAttribute("coupon") Coupon coupon, @ModelAttribute("point") Point point, Model model) throws Exception {
         //결제하기 클릭 시 입력한 결제방법과 결제금액 결제일시
         //
         System.out.println("/purchase/addOrder : POST");
@@ -231,12 +229,12 @@ public class PurchaseController {
         //       updatePoint (),updateTotalPoint ()
 
         purchaseService.updatePurchase(purchase);
-        if(coupon.getCouponNo() != 0) {
+        if (coupon.getCouponNo() != 0) {
             purchaseService.updateCouponStatus(coupon);
             purchase.setPayCouponNo(coupon);
         }
 
-        if(point.getPointAmt() != 0) {
+        if (point.getPointAmt() != 0) {
             int pointNo = purchaseService.updatePoint(point);
             purchaseService.updateTotalPoint(user);
             point.setPointNo(pointNo);
@@ -257,8 +255,8 @@ public class PurchaseController {
         return "forward:/purchase/getOrderUser";
     }
 
-    @RequestMapping(value = "getOrderUser", method= RequestMethod.POST)
-    public ModelAndView getOrderUser(@ModelAttribute("purchase")Purchase purchase, @ModelAttribute("user") User user,
+    @RequestMapping(value = "getOrderUser", method = RequestMethod.POST)
+    public ModelAndView getOrderUser(@ModelAttribute("purchase") Purchase purchase, @ModelAttribute("user") User user,
                                      @ModelAttribute("point") Point point, ModelAndView model) throws Exception {
 
         System.out.println("/purchase/getOrderUser : POST");
@@ -267,23 +265,52 @@ public class PurchaseController {
         Map map = new HashMap();
         map = purchaseService.getOrderDetail(purchase.getOrderNo());
 
-        System.out.println("map//////////"+map);
-        model.addObject("map",map);
-        model.addObject("purchase",purchase);
+        System.out.println("map//////////" + map);
+        model.addObject("map", map);
+        model.addObject("purchase", purchase);
         model.setViewName("forward:/views/purchase/getOrderUser.jsp");
 
-        return  model;
+        return model;
 
     }
 
+    @RequestMapping(value = "getOrderUserList")
+    public String getOrderUserList(@ModelAttribute("search")Search search, HttpSession session,Model model)throws Exception{
+         System.out.println("UserController.getPurchaseList");
 
-    //현재주문정보 화면으로 보여줄 데이터를 가져온다.
+    User user = (User) session.getAttribute("user");
+    String userId = user.getUserId();
+        System.out.println("userId :: "+userId);
+
+        if(search.getCurrentPage()==0)
+
+    {
+        search.setCurrentPage(1);
+    }
+        search.setPageSize(pageSize);
+
+    Map<String, Object> map = purchaseService.getOrderUserList(search, userId);
+
+//        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+//        System.out.println("resultPage :: "+resultPage);
+/*List<Purchase> list = new ArrayList<>();
+list.add( map.get("list"));*/
+        model.addAttribute("list",map.get("list"));
+//        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("search",search);
+        System.out.println("주문량을 확인하기 위해서");
+        System.out.println("map = "+map);
+        return "forward:/views/purchase/getOrderUserList.jsp";
+}
+
+
+/*    //현재주문정보 화면으로 보여줄 데이터를 가져온다.
     @RequestMapping(value = "getOrderUser", method= RequestMethod.GET)
     public ModelAndView getOrderUser(@RequestParam("userId") String userId, ModelAndView model,Purchase purchase) throws Exception {
 
         System.out.println("/purchase/getOrderUser : GET");
         System.out.println("userId = " + userId );
-            purchase = purchaseService.getMainOrderUser(userId);
+            purchase = purchaseService.getOrderUserList(userId);
             purchase = purchaseService.getPurchase(purchase.getOrderNo());
             Map map = new HashMap();
             map = purchaseService.getOrderDetail(purchase.getOrderNo());
@@ -295,7 +322,7 @@ public class PurchaseController {
 
     return  model;
 
-    }
+    }*/
 
 
 

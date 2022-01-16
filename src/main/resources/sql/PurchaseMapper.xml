@@ -482,6 +482,18 @@
 
     </select>
 
+    <select id="getOrderUserList"    parameterType="Map"      resultMap="orderDetailSelectMap">
+        SELECT inner_table.*
+        FROM( SELECT p.*, t.*, o.*
+              FROM purchase p, truck t, orderdetail o
+              WHERE p.ORDER_TRUCK_ID = t.TRUCK_ID
+                AND p.order_No = o.od_order_no
+                AND p.ORDER_USER_ID = #{userId}
+                and  p.order_status between 1 and 3
+              order by order_no ) inner_table
+            limit #{search.startRowNum}, #{search.pageSize}
+    </select>
+
     <!--<select id="getPurchaseList" parameterType="map" resultMap="purchaseSelectMap">
         SELECT inner_table.*
         FROM (SELECT *
@@ -678,14 +690,6 @@
         ) countTable
     </select>
 
-    <select id="getMainOrderUser"    parameterType="purchase"      resultMap="purchaseSelectMap">
-        SELECT order_no,ORDER_USER_ID
-        FROM purchase
-        WHERE ORDER_USER_ID = #{value}
-          and  order_status <![CDATA[>=]]> 1
-        order by order_No desc
-        limit 1;
-    </select>
 
     <!--HHJ 추가 -->
     <select id="checkCoupon" parameterType="coupon" resultType="string">

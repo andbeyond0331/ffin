@@ -186,13 +186,13 @@ public class PurchaseServiceTest {
     }
 
 
-    @Test
+ /*   //@Test
     public void TestGetMainUser() throws Exception {
 
         Purchase purchase = purchaseService.getMainOrderUser("user01");
         System.out.println(purchase);
 
-    }
+    }*/
 
 
 

@@ -26,7 +26,6 @@
     }
 
 
-
     .bs-canvas-right {
         right: 0;
         margin-right: -330px;
@@ -38,7 +37,7 @@
 
 <form class="cart">
     <div class="bs-canvas bs-canvas-right position-fixed bg-light h-100">
-        <header class="bs-canvas-header p-3 bg-primary overflow-auto">
+        <header class="bs-canvas-header p-3 bg-primary overflow-auto" style="background-color: #ffba49 !important;">
             <button type="button" class="bs-canvas-close float-left close" aria-label="Close"><span aria-hidden="true"
                                                                                                     class="text-light">&times;</span>
             </button>
@@ -87,7 +86,6 @@
                             </div>--%>
 
 
-
                 <%--<div id="order"></div>--%>
                 <%-- <c:set var="i" value="0"/>
                  <c:forEach var="cart" items="${map.get('list')}">
@@ -111,7 +109,7 @@
                 <div class="row">
                     <div class="col-6">
                         <button type="button" class="btn btn btn-primary" data-toggle="modal"
-                                data-target="#exampleModalCenter">
+                                data-target="#exampleModalCenter" style="color: #fff;     background-color: #ffba49; border-color: #ffba49;">
                             주문하기
                         </button>
                     </div>
@@ -119,7 +117,7 @@
 
                     </div>
                     <div class="col-4">
-                        <button type="button" class="btn btn-primary" id="deleteCartMenu">삭제</button>
+                        <button type="button" class="btn btn-primary" id="deleteCartMenu" style="color: #fff; background-color: #ffba49; border-color: #ffba49;">삭제</button>
                     </div>
                 </div>
             </div>
@@ -128,7 +126,8 @@
 
 
     <%--modal--%>
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -141,7 +140,8 @@
                     <div class="mb-3">
                         <label for="mainOrderPickUpTime" class="col-form-label">픽업희망시간:</label>
                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                            <input type="radio" class="btn-check" id="mainOrderPickUpTime" name="mainOrderPickUpTime" value="5"
+                            <input type="radio" class="btn-check" id="mainOrderPickUpTime" name="mainOrderPickUpTime"
+                                   value="5"
                                    id="cancelTime1" autocomplete="off" checked>
                             <label class="btn btn-outline-primary" for="cancelTime1">5분</label>
 
@@ -194,28 +194,26 @@
 <script>
 
 
-
-
-    $(function(){
+    $(function () {
 
 
         var beforeAnyway = JSON.parse(sessionStorage.getItem("menuOdList"));
 
-        for( var i in beforeAnyway){
+        for (var i in beforeAnyway) {
             // console.log("beforeAnyway : " + beforeAnyway[i]);
-            for(var j in beforeAnyway[i]){
-                console.log("afterAnyway key : " +j+"/value : " + beforeAnyway[i][j]);
+            for (var j in beforeAnyway[i]) {
+                console.log("afterAnyway key : " + j + "/value : " + beforeAnyway[i][j]);
 
             }
         }
         //담을 li
 
         var finalCart = "";
-        var forOne=0;
+        var forOne = 0;
         var mainOrderList = "";
 
         ////////////시작///////////////////
-        if(beforeAnyway) { // sessionStorage에 뭔가 있다?
+        if (beforeAnyway) { // sessionStorage에 뭔가 있다?
             console.log("sessionStorage에 있다! 화면 뿌려주기 준비 시작!");
             for (var i = 0; i < beforeAnyway.length; i++) {//sessionStorage의 orderDetail만큼 for문 돌리기
 
@@ -229,13 +227,13 @@
                 //     "</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"</span></li>";
 
                 if (beforeAnyway[i]['odMenuQtyFlag'] == 0) {//플래그0일 때 메뉴 수량, 이름 출력
-                    finalCart +=  "" +
+                    finalCart += "" +
                         "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
-                        "<button type='button' class='close' id='mainCancelMenu'>"+
-                        "<span aria-hidden='true'>&times;</span></button>"+
+                        "<button type='button' class='close' id='mainCancelMenu'>" +
+                        "<span aria-hidden='true'>&times;</span></button>" +
                         "<div><h6 class=\"my-0\">" + beforeAnyway[i]['odMenuName'] + "</h6>" +
                         "<h6 class=\"my-0\">수량 : <input type='button' class='my-5' value='-' id='mainDecreaseQuantity'>" +
-                        "<input type='hidden' name='mainOrderCount' value='"+i+"'>"+
+                        "<input type='hidden' name='mainOrderCount' value='" + i + "'>" +
                         " <input type='text' id='mainNumberUpDown' value='" + beforeAnyway[i]['odMenuQty'] + "' size='2' max=''> " +
                         "<input type='button' value='+' id='mainIncreaseQuantity'> </h6>" +
                         "";
@@ -245,7 +243,7 @@
                             finalCart += "</div><span class=\"text-muted\">" + beforeAnyway[i]['odMenuPrice'] + "원</span></li>";
                         }
 
-                    }else{ //만약 다음 애가 없으면
+                    } else { //만약 다음 애가 없으면
                         finalCart += "</div><span class=\"text-muted\">" + beforeAnyway[i]['odMenuPrice'] + "원</span></li>";
                     }
                 } else { //플래그 1일 때
@@ -253,7 +251,7 @@
                     //     if(beforeAnyway[j]['odMenuQtyFlag']==1){
                     finalCart += "" +
                         "<p></p>" +
-                        "<input type='hidden' name='mainOrderCancelCount' value='"+i+"'>"+
+                        "<input type='hidden' name='mainOrderCancelCount' value='" + i + "'>" +
                         "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionGroupName'] + "</small> : " +
                         "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionName'] + "</small> +" +
                         "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionPrice'] + "원</small>";
@@ -276,14 +274,11 @@
         $("#cartOrderMenu").html(finalCart);
 
 
-
-
         var beforeAny = JSON.parse(sessionStorage.getItem("menuOdList"));
         var mainOrderList = "";
         var mainSessionTruckId = "";
 
         for (var i in beforeAny) {
-
 
 
             mainOrderList += "<input type='hidden' name='mainOdMQFlag' id='mainOdMQFlag' value='" + beforeAny[i]['odMenuQtyFlag'] + "'>" +
@@ -295,8 +290,7 @@
                 "<input type='hidden' name='mainOdOpPrice' id='mainOdOpPrice' value='" + beforeAny[i]['odOptionPrice'] + "'>" +
                 "<input type='hidden' name='mainOdMImg1' id='mainOdMImg1' value='" + beforeAny[i]['odMenuImg1'] + "'>";
 
-            mainSessionTruckId = "<input type='hidden' name='mainSessionTruckId' value='"+beforeAny[i]['menuTruckId']+"'>";
-
+            mainSessionTruckId = "<input type='hidden' name='mainSessionTruckId' value='" + beforeAny[i]['menuTruckId'] + "'>";
 
 
         }
@@ -308,19 +302,19 @@
     });
 
     /*삭제버튼 클릭 이벤트*/
-    $(function(){
+    $(function () {
         var orderDetail = JSON.parse(sessionStorage.getItem("menuOdList"));
 
         var orderCancelCount = [];
 
-        $('button#mainCancelMenu').click(function(){
+        $('button#mainCancelMenu').click(function () {
             var orderCount = $(this).parent('li').find('input[name="mainOrderCount"]').val();
             // var orderCancelCount = $(this).parent('li').find('input[name="orderCancelCount"]').val();
             $(this).parent('li').find('input[name="mainOrderCancelCount"]').each(function (i) {
                 orderCancelCount.push($(this).val());
             });
 
-            orderDetail.splice(orderCount,orderCancelCount.length+1);
+            orderDetail.splice(orderCount, orderCancelCount.length + 1);
 
             sessionStorage.setItem("menuOdList", JSON.stringify(orderDetail));
 
@@ -332,12 +326,12 @@
     })
 
     /*수량버튼 클릭 이벤트*/
-    $(function(){
+    $(function () {
 
         var orderDetail = JSON.parse(sessionStorage.getItem("menuOdList"));
 
 
-        $('input#mainDecreaseQuantity').click(function(e){
+        $('input#mainDecreaseQuantity').click(function (e) {
             var orderCount = $(this).parent('h6').find('input[name="mainOrderCount"]').val();
             //alert("클릭한 메뉴의 순서 정보"+orderCount);
             e.preventDefault();
@@ -345,18 +339,18 @@
             var stat = $(this).parent('h6').find('input#mainNumberUpDown');
             var num = stat.val();
             num--;
-            if(num<=0){
+            if (num <= 0) {
                 alert('더이상 줄일수 없습니다.');
-                num =1;
+                num = 1;
             }
             // 수량 추가
-            orderDetail[orderCount]['odMenuQty']=num;
+            orderDetail[orderCount]['odMenuQty'] = num;
             stat.val(num);
             sessionStorage.setItem("menuOdList", JSON.stringify(orderDetail));
 
             //$('input#numberUpDown').val(num);
         });
-        $('input#mainIncreaseQuantity').click(function(e){
+        $('input#mainIncreaseQuantity').click(function (e) {
             var orderCount = $(this).parent('h6').find('input[name="mainOrderCount"]').val();
             e.preventDefault();
 
@@ -364,19 +358,17 @@
             var num = stat.val();
             num++;
 
-            if(num>10){
+            if (num > 10) {
                 alert('더이상 늘릴수 없습니다.');
-                num=10;
+                num = 10;
             }
 
-            orderDetail[orderCount]['odMenuQty']=num;
+            orderDetail[orderCount]['odMenuQty'] = num;
             stat.val(num);
             sessionStorage.setItem("menuOdList", JSON.stringify(orderDetail));
             // $('input#numberUpDown').val(num);
         });
     });
-
-
 
 
     /*장바구니 화면을 보여주는 기능*/
@@ -398,7 +390,6 @@
         });
 
 
-
     });
     $(function () {
         $("#deleteCartMenu").click(function () {
@@ -409,7 +400,6 @@
     });
 
 
-
     /*모달 화면에서 확인 클릭 시 데이터를 List로 담아서 전송*/
     $(function () {
         $("#orderGo").click(function () {
@@ -417,6 +407,11 @@
             // 1. menu 없으면 메뉴를 장바구니에 저장된 메뉴가 없습니다.
             // 2. menu 정보가 있으면 장바구니 주문하기 활성화 없으면 비활성화
             //var menucheck = document.getElementById().val;
+            var orderCheck = $("input[name='mainSessionTruckId']").val();
+            if(orderCheck== undefined){
+                alert("담겨있는 메뉴가 없습니다")
+                return;
+            }
 
 
             var order = main_cart()

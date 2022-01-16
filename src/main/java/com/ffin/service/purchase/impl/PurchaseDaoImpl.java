@@ -151,7 +151,15 @@ public class PurchaseDaoImpl implements PurchaseDao {
         map.put("orderNo",orderNo);
         return sqlSession.selectList("PurchaseMapper.getOrderDetail",map);
     } //주문정보 조회 이용자의 정보도 함께
-
+    @Override
+    public Map<String, Object> getOrderUserList(Search search,String userId) throws Exception {
+        Map<String,Object> map = new HashMap<>();
+        map.put("userId",userId);
+        map.put("search",search);
+        List<Purchase> list = sqlSession.selectList("PurchaseMapper.getOrderUserList",map);
+        map.put("list",list);
+        return map;
+    }
 
 
 
@@ -193,10 +201,7 @@ public class PurchaseDaoImpl implements PurchaseDao {
         return pointAmt;
     }
 
-    @Override
-    public Purchase getMainOrderUser(String userId) throws Exception {
-        return sqlSession.selectOne("PurchaseMapper.getMainOrderUser",userId);
-    }
+
 
     //HHJ
     @Override
