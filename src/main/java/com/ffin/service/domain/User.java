@@ -35,5 +35,6 @@ public class User {
     private int role;
     private String sessionKey;
     private Date sessionLimit;
+    private boolean autoLogin;
 
 }

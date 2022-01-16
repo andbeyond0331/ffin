@@ -400,18 +400,34 @@
 
             var userIdModal = $("#userIdModal").val();
             var userPasswordModal = $("#userPasswordModal").val();
+            const autoLogin = $("input[name='autoLoginUser']").is(":checked");
 
             console.log(userIdModal);
             console.log(userPasswordModal);
+            console.log("auto : "+autoLogin);
+
+            alert(autoLogin);
+
+            const userInfo = {
+                userId : userIdModal,
+                userPassword : userPasswordModal,
+                autoLogin : autoLogin
+            };
+
+            alert(userInfo.autoLogin);
 
             $.ajax({
                 type: "POST",
-                url: "/user/json/login/"+userIdModal,
-                data: {userId : userIdModal,
-                    userPassword : userPasswordModal},
+                url: "/user/json/loginCheck",
+                headers : {
+                    "Accept" : "application/json",
+                    "Content-Type" : "application/json;charset=utf-8"
+                },
+                dataType : "text",
+                data: JSON.stringify(userInfo),
                 success: function (data) {
 
-                    console.log(data.userId);
+                    console.log(data);
                     //alert("안녕좀비야..");
                     if( data.userId == userIdModal) {
                         //alert(data.userId);
@@ -474,6 +490,37 @@
             });
         });
     });
+
+
+    /* 자동로그인 */
+    /*$(function () {
+        $("#autoLoginUser").click(function () {
+            alert("자동로그인!");
+
+            //자동로그인 return val
+            const autoLogin = $("input[name='autoLoginUser']").is(":checked");
+            console.log("auto : "+autoLogin);
+
+            const userInfo = {
+                autoLogin : autoLogin
+            };
+
+            $.ajax({
+                type : "POST",
+                url : "/user/json/loginCheck",
+                headers : {
+                    "Accept" : "application/json",
+                    "Content-Type" : "application/json"
+                },
+                data : JSON.stringify(userInfo),
+                dataType : "text",
+                success : function (data) {
+                    console.log(data);
+                }
+            })
+        });
+    });*/
+
 
     //왜때문에 경로에 user가 자꾸 붙는지...ㅠ
     $( function() {

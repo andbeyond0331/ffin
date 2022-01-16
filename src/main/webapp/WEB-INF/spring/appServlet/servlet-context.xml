@@ -38,11 +38,18 @@
 
 
     <!-- Interceptor -->
-    <bean id="logonCheckInterceptor" class="com.ffin.common.web.LogonCheckInterceptor"/>
+    <!--<bean id="logonCheckInterceptor" class="com.ffin.common.web.LogonCheckInterceptor"/>
 
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/views/user/login"/>
+            <mvc:mapping path="/views/home.jsp"/>
+            <ref bean="logonCheckInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>-->
+    <bean id="logonCheckInterceptor" class="com.ffin.common.web.LogonCheckInterceptor"/>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
             <ref bean="logonCheckInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
@@ -75,7 +82,7 @@
 
     <!-- 	:: exception resolver  선언 :: 서술적 / 선언적 예외처리
             :: Servlet 에서의 선언적 예외처리를 다시 생각하며....  -->
-    <bean id="exceptionResolver"
+<!--    <bean id="exceptionResolver"
           class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 
         <property name="exceptionMappings">
@@ -87,7 +94,7 @@
 
         <property name="defaultErrorView"	value="/common/error.jsp" />
 
-    </bean>
+    </bean>-->
 
     <!--  spring -upload -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>

@@ -37,6 +37,56 @@ public class UserRestController {
     }
     
     //Method
+    //auto
+    @RequestMapping(value = "json/loginCheck", method = RequestMethod.POST)
+    public String login(@RequestBody User user, HttpSession session, HttpServletResponse response) throws Exception {
+
+        System.out.println("UserController.login");
+
+        String result = null;
+        User dbUser = userService.getUser(user.getUserId());
+        System.out.println("1111 user: "+user);
+        System.out.println("2222 dbUser : "+dbUser);
+
+        if(dbUser !=null){
+            if(user.getUserPassword().equals(dbUser.getUserPassword())){
+                session.setAttribute("user", user);
+                if(dbUser.getRole() == 1 ) {
+                    session.setAttribute("role", "user");
+                } else if (dbUser.getRole() == 0){
+                    session.setAttribute("role","admin");
+                }
+
+                //autoLogin
+                if(user.isAutoLogin()){
+                    System.out.println("333333333333333333333333333333333333333333333333333333");
+                    long second = 60*60*24*90;
+
+                    Cookie loginCookie = new Cookie("loginCookie", session.getId());
+                    loginCookie.setPath("/");
+                    loginCookie.setMaxAge((int)second);
+                    response.addCookie(loginCookie);
+                    System.out.println("ccccccccccccccccccccc: "+loginCookie);
+                    //3개월 후
+                    long millis = System.currentTimeMillis() + (second * 1000);
+                    Date sessionLimit = new Date(millis);
+                    System.out.println("sessionLimit :: "+sessionLimit);
+
+                    userService.autoLogin( user.getUserId(), session.getId(), sessionLimit);
+
+                    session.setAttribute("loginCookie", loginCookie);
+                }
+                result = user.getUserId();
+            }else {
+                result = "PW NOPE";
+            }
+        }else {
+            result = "ID NOPE";
+        }
+        System.out.println("44444444444444444444444444444" +result);
+        return result;
+    }
+
     //phone 인증(회원가입)
     @RequestMapping(value = "json/sendSMS/{inputPhone}", method = RequestMethod.GET)
     @ResponseBody

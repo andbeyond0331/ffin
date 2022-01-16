@@ -37,20 +37,22 @@
     <mvc:annotation-driven />
 
 
-    <!-- ■ Annotation 기반의 모든 기능을 사용 할 수 있는 설정
-              <mvc:annotation-driven /> 사용으로 interceptor 를 직접
-              DefaultAnnotationHandlerMapping 에 주입 할 수 없으니
-                 아래의 설정방법으로 interceptor 주입
-       <mvc:interceptors>
+    <!-- Interceptor -->
+    <!--<bean id="logonCheckInterceptor" class="com.ffin.common.web.LogonCheckInterceptor"/>
 
-           <mvc:interceptor>
-            <mvc:mapping path="/user/**"/>
-            <bean class="com.model2.mvc.common.web.LogonCheckInterceptor" />
-           </mvc:interceptor>
-
-       </mvc:interceptors>
-
-       -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/views/home.jsp"/>
+            <ref bean="logonCheckInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>-->
+    <bean id="logonCheckInterceptor" class="com.ffin.common.web.LogonCheckInterceptor"/>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <ref bean="logonCheckInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 
     <!--  :: ViewResolver 선언 -->
@@ -80,7 +82,7 @@
 
     <!-- 	:: exception resolver  선언 :: 서술적 / 선언적 예외처리
             :: Servlet 에서의 선언적 예외처리를 다시 생각하며....  -->
-    <bean id="exceptionResolver"
+<!--    <bean id="exceptionResolver"
           class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 
         <property name="exceptionMappings">
@@ -92,10 +94,20 @@
 
         <property name="defaultErrorView"	value="/common/error.jsp" />
 
-    </bean>
+    </bean>-->
 
     <!--  spring -upload -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
+
+
+    <!-- ajax 객체 리턴 -->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+        <property name="order" value="0"/>
+    </bean>
+    <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+        <property name="contentType" value="application/json;charset=UTF-8"> </property>
+    </bean>
+
 
 
     <!-- web socket handler -->

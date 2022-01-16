@@ -12,7 +12,7 @@ public interface UserService {
     //로그인 유지
     void autoLogin(String userId, String sessionKey, Date sessionLimit) throws Exception;
     //세션키 검증
-    User SessionKeyAuth(String sessionKey) throws Exception;
+    User sessionKeyAuth(String sessionKey) throws Exception;
 
     //회원가입
     public void addUserInfo(User user) throws Exception;
