@@ -236,16 +236,15 @@
             <form class="row justify-content-center" id="user_update_info">
 
                 <div class="col-md-12 data-input-box adminbox">
-                    <hr style="margin-top: 35px;"/>
                     <div class="data-input-box info" >
                         <div>
-                            <div id="map_ma"></div>
-
-
+                            <div style="margin-top: 15px;">
+                                <h4 style="text-align: center;">${purchase.orderTruckId.truckName}</h4>
+                            </div>
                         </div>
+                        <hr style="margin-top: 35px; margin-bottom: 60px;"/>
                         <div>
-
-
+                            <div id="map_ma"></div>
                         </div>
                     </div>
 
@@ -296,7 +295,7 @@
 
                                     </div>
                                     <div style="margin-bottom: 15px;">
-                                        <label for="payPrice" class="form-label label-name">결제금액액</label>
+                                        <label for="payPrice" class="form-label label-name">결제금액</label>
                                         <input type="text" class="form-control" value="${purchase.payPrice}" id="payPrice" name="payPrice" readonly style="width: 340px;">
                                     </div>
                                 </div>

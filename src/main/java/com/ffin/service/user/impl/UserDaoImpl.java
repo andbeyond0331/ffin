@@ -44,9 +44,9 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User SessionKeyAuth(String sessionKey) throws Exception {
-        System.out.println("UserDaoImpl.SessionKeyAuth");
-        return sqlSession.selectOne("UserMapper.SessionKeyAuth", sessionKey);
+    public User sessionKeyAuth(String sessionKey) throws Exception {
+        System.out.println("UserDaoImpl.sessionKeyAuth");
+        return sqlSession.selectOne("UserMapper.sessionKeyAuth", sessionKey);
     }
 
     ///Method

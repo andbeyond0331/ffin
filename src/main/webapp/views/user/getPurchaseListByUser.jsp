@@ -356,7 +356,10 @@
                   <img class="postcard__img" src="/resources/image/${orderDetail.odMenuImage}" alt="Image Title" />
                 </a>
                 <div class="postcard__text t-dark">
-                  <h1 class="postcard__title blue"><a href="#">${orderDetail.odOrderNo.orderTruckId.truckName}</a></h1>
+                  <h1 class="postcard__title blue">
+                    <a href="/menu/getMenuList?truckId=${orderDetail.odOrderNo.orderTruckId.truckId}">
+                        ${orderDetail.odOrderNo.orderTruckId.truckName}
+                    </a></h1>
                   <div class="postcard__subtitle small">
                     <c:choose>
                       <c:when test="${orderDetail.odOrderNo.orderStatus eq 1 }">
@@ -385,9 +388,9 @@
                   <div class="postcard__preview-txt"><h6>${orderDetail.odOrderNo.payPrice}&nbsp;₩</h6></div>
 
                   <ul class="postcard__tagbox">
-                    <li class="tag__item orderBtn"><a href="/user/getPurchaseByUser/orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-tag mr-2"></i>주문상세</a></li>
+                    <li class="tag__item orderBtn"><a href="/user/getPurchaseByUser?orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-tag mr-2"></i>주문상세</a></li>
                     <c:if test="${orderDetail.odOrderNo.orderStatus eq 4 }">
-                    <li class="tag__item reviewBtn"><a href="/user/getPurchase?orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-clock mr-2"></i>리뷰작성</a></li>
+                    <li class="tag__item reviewBtn"><a href="/review/addReview?orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-clock mr-2"></i>리뷰작성</a></li>
                     </c:if>
                     <c:if test="${orderDetail.odOrderNo.orderStatus eq 6 }">
                       <li class="tag__item reviewBtn"><a href="/review/addReview?orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-clock mr-2"></i>리뷰확인</a></li>

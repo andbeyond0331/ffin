@@ -40,9 +40,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User SessionKeyAuth(String sessionKey) throws Exception {
+    public User sessionKeyAuth(String sessionKey) throws Exception {
         System.out.println("UserServiceImpl.SessionKeyAuth");
-        return userDao.SessionKeyAuth(sessionKey);
+        return userDao.sessionKeyAuth(sessionKey);
     }
 
     ///Method

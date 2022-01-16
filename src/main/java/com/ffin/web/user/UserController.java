@@ -65,6 +65,9 @@ public class UserController {
         return "views/user/login.jsp";
     }
 
+
+
+/*
     @RequestMapping( value="login", method=RequestMethod.POST )
     public String login(@ModelAttribute("user") User user , HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception{
 
@@ -104,6 +107,7 @@ public class UserController {
             return "/catering/mainTruckList";
         }
     }
+*/
 
     //Rest gogo!
     @RequestMapping(value = "logout", method = RequestMethod.GET)
@@ -115,15 +119,15 @@ public class UserController {
 
             session.removeAttribute("user");
             session.invalidate();
+            Cookie cookie = WebUtils.getCookie(request, "cookie"  );
 
-            Cookie loginCookie = WebUtils.getCookie(request, "loginCookie"  );
-            if(loginCookie != null){
-                loginCookie.setPath("/");
-                loginCookie.setMaxAge(0);
-                response.addCookie(loginCookie);
+            if(cookie != null){
+                cookie.setPath("/");
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
 
                 Date date = new Date(System.currentTimeMillis());
-                userService.autoLogin(user.getUserId(), session.getId(), date);
+                userService.autoLogin(user.getUserId(), "none", new Date());
             }
         }
         return "/catering/mainTruckList";
@@ -308,8 +312,8 @@ public class UserController {
         return "/views/user/getBlackListByAdmin.jsp";
     }
 
-    @RequestMapping(value = "getPurchaseByUser/{orderNo}", method= RequestMethod.GET)
-    public ModelAndView getOrderUser(@PathVariable int orderNo, ModelAndView model,Purchase purchase) throws Exception {
+    @RequestMapping(value = "getPurchaseByUser", method= RequestMethod.GET)
+    public ModelAndView getOrderUser(@RequestParam("orderNo") int orderNo, ModelAndView model,Purchase purchase) throws Exception {
 
         System.out.println("UserController.getOrderUser : GET");
 
@@ -320,7 +324,7 @@ public class UserController {
         System.out.println("map//////////"+map);
         model.addObject("map",map);
         model.addObject("purchase",purchase);
-        model.setViewName("forward:/views/purchase/getOrderUser.jsp");
+        model.setViewName("forward:/views/user/getPurchaseByUser.jsp");
 
         return  model;
 
