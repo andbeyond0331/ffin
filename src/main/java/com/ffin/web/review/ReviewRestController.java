@@ -1,6 +1,8 @@
 package com.ffin.web.review;
 
 import com.ffin.common.Search;
+import com.ffin.service.domain.Menu;
+import com.ffin.service.domain.Review;
 import com.ffin.service.review.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -65,6 +67,31 @@ public class ReviewRestController {
 
         return mv;
     }
+
+
+    @RequestMapping(value="json/getReviewDetail/{rvNo}", method=RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView getReviewDetail(@PathVariable("rvNo")int rvNo, HttpServletRequest request, HttpServletResponse response) throws Exception{
+        /*
+            리뷰 상세정보 조회 !
+         */
+        request.setCharacterEncoding("utf-8");
+
+        System.out.println("ReviewController.REST");
+        System.out.println("rvNo = " + rvNo);
+
+        Review review = reviewService.getReview(rvNo);
+        System.out.println("rest.getReviewDetail.review : " + review);
+
+        ModelAndView mv = new ModelAndView("jsonView");
+        mv.addObject("review", review);
+
+
+
+
+        return mv;
+    }
+
 
 
 

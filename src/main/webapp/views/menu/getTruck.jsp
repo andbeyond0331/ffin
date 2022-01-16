@@ -70,6 +70,80 @@
         }
     </style>
 
+    <!--장바구니 삭제 & 수량 버튼-->
+    <script>
+        //2022-01-16
+        /*삭제버튼 클릭 이벤트*/
+        $(function(){
+            var orderDetail = JSON.parse(sessionStorage.getItem("menuOdList"));
+
+            var orderCancelCount = [];
+
+            $('button#cancelMenu').click(function(){
+                var orderCount = $(this).parent('li').find('input[name="orderCount"]').val();
+                // var orderCancelCount = $(this).parent('li').find('input[name="orderCancelCount"]').val();
+                $(this).parent('li').find('input[name="orderCancelCount"]').each(function (i) {
+                    orderCancelCount.push($(this).val());
+                });
+
+                orderDetail.splice(orderCount,orderCancelCount.length+1);
+
+                sessionStorage.setItem("menuOdList", JSON.stringify(orderDetail));
+
+
+                $(this).parent('li').remove();
+
+            })
+
+        })
+
+        /*수량버튼 클릭 이벤트*/
+        $(function(){
+
+            var orderDetail = JSON.parse(sessionStorage.getItem("menuOdList"));
+
+
+            $('input#decreaseQuantity').click(function(e){
+                var orderCount = $(this).parent('h6').find('input[name="orderCount"]').val();
+                //alert("클릭한 메뉴의 순서 정보"+orderCount);
+                e.preventDefault();
+
+                var stat = $(this).parent('h6').find('input#numberUpDown');
+                var num = stat.val();
+                num--;
+                if(num<=0){
+                    alert('더이상 줄일수 없습니다.');
+                    num =1;
+                }
+                // 수량 추가
+                orderDetail[orderCount]['odMenuQty']=num;
+                stat.val(num);
+                sessionStorage.setItem("menuOdList", JSON.stringify(orderDetail));
+
+                //$('input#numberUpDown').val(num);
+            });
+            $('input#increaseQuantity').click(function(e){
+                var orderCount = $(this).parent('h6').find('input[name="orderCount"]').val();
+                e.preventDefault();
+
+                var stat = $(this).parent('h6').find('input#numberUpDown');
+                var num = stat.val();
+                num++;
+
+                if(num>10){
+                    alert('더이상 늘릴수 없습니다.');
+                    num=10;
+                }
+
+                orderDetail[orderCount]['odMenuQty']=num;
+                stat.val(num);
+                sessionStorage.setItem("menuOdList", JSON.stringify(orderDetail));
+                // $('input#numberUpDown').val(num);
+            });
+        });
+
+    </script>
+
     <script>
         <%--        메뉴 상세보기 모달에서 장바구니에 담기!--%>
 
@@ -114,9 +188,20 @@
                     if (beforeAnywayFirst[i]['odMenuQtyFlag'] == 0) {//플래그0일 때 메뉴 수량, 이름 출력
                         finalCartFirst += "" +
                             "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
+                            "<button type='button' class='close' id='cancelMenu'>"+
+                            "<span aria-hidden='true'>&times;</span></button>"+
                             "<div><h6 class=\"my-0\">" + beforeAnywayFirst[i]['odMenuName'] + "</h6>" +
-                            "<h6 class=\"my-0\">수량 : " + beforeAnywayFirst[i]['odMenuQty'] + "</h6>" +
+                            "<h6 class=\"my-0\">수량 : <input type='button' class='my-11' value='-' id='decreaseQuantity'>" +
+                            "<input type='hidden' name='orderCount' value='"+i+"'>"+
+                            " <input type='text' id='numberUpDown' value='" + beforeAnywayFirst[i]['odMenuQty'] + "' size='1' max=''> " +
+                            "<input type='button' value='+' id='increaseQuantity'> </h6>" +
                             "";
+                        //2022-01-16
+                        // finalCartFirst += "" +
+                        //     "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
+                        //     "<div><h6 class=\"my-0\">" + beforeAnywayFirst[i]['odMenuName'] + "</h6>" +
+                        //     "<h6 class=\"my-0\">수량 : " + beforeAnywayFirst[i]['odMenuQty'] + "</h6>" +
+                        //     "";
                         forOneFirst += 1;
                         if (beforeAnywayFirst[i + 1] != null) { //만약 다음 애가 있는데
                             if (beforeAnywayFirst[i + 1]['odMenuQtyFlag'] == 0) { //수량제공메뉴이면(지금 이게 수량제공메뉴란 소리니까 닫아줘야함)
@@ -131,9 +216,17 @@
                         //     if(beforeAnyway[j]['odMenuQtyFlag']==1){
                         finalCartFirst += "" +
                             "<p></p>" +
+                            "<input type='hidden' name='orderCancelCount' value='"+i+"'>"+
                             "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionGroupName'] + "</small> : " +
                             "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionName'] + "</small> +" +
                             "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionPrice'] + "원</small>";
+                        //2022-01-16
+                        // finalCartFirst += "" +
+                        //     "<p></p>" +
+                        //     "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionGroupName'] + "</small> : " +
+                        //     "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionName'] + "</small> +" +
+                        //     "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionPrice'] + "원</small>";
+                        //
                         forOneFirst += 1;
                         if (beforeAnywayFirst[i + 1] != null) {
                             if (beforeAnywayFirst[i + 1]['odMenuQtyFlag'] == 0) {
@@ -835,9 +928,20 @@
                         if (beforeAnyway[i]['odMenuQtyFlag'] == 0) {//플래그0일 때 메뉴 수량, 이름 출력
                             finalCart += "" +
                                 "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
+                                "<button type='button' class='close' id='cancelMenu'>"+
+                                "<span aria-hidden='true'>&times;</span></button>"+
                                 "<div><h6 class=\"my-0\">" + beforeAnyway[i]['odMenuName'] + "</h6>" +
-                                "<h6 class=\"my-0\">수량 : " + beforeAnyway[i]['odMenuQty'] + "</h6>" +
+                                "<h6 class=\"my-0\">수량 : <input type='button' class='my-5' value='-' id='decreaseQuantity'>" +
+                                "<input type='hidden' name='orderCount' value='"+i+"'>"+
+                                " <input type='text' id='numberUpDown' value='" + beforeAnyway[i]['odMenuQty'] + "' size='2' max=''> " +
+                                "<input type='button' value='+' id='increaseQuantity'> </h6>" +
                                 "";
+                            //2022-01-16
+                            // finalCart += "" +
+                            //     "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
+                            //     "<div><h6 class=\"my-0\">" + beforeAnyway[i]['odMenuName'] + "</h6>" +
+                            //     "<h6 class=\"my-0\">수량 : " + beforeAnyway[i]['odMenuQty'] + "</h6>" +
+                            //     "";
                             forOne += 1;
                             if (beforeAnyway[i + 1] != null) { //만약 다음 애가 있는데
                                 if (beforeAnyway[i + 1]['odMenuQtyFlag'] == 0) { //수량제공메뉴이면(지금 이게 수량제공메뉴란 소리니까 닫아줘야함)
@@ -852,9 +956,16 @@
                             //     if(beforeAnyway[j]['odMenuQtyFlag']==1){
                             finalCart += "" +
                                 "<p></p>" +
+                                "<input type='hidden' name='orderCancelCount' value='"+i+"'>"+
                                 "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionGroupName'] + "</small> : " +
                                 "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionName'] + "</small> +" +
                                 "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionPrice'] + "원</small>";
+                            //2022-01-16
+                            // finalCart += "" +
+                            //     "<p></p>" +
+                            //     "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionGroupName'] + "</small> : " +
+                            //     "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionName'] + "</small> +" +
+                            //     "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionPrice'] + "원</small>";
                             forOne += 1;
                             if (beforeAnyway[i + 1] != null) {
                                 if (beforeAnyway[i + 1]['odMenuQtyFlag'] == 0) {
@@ -904,10 +1015,17 @@
                     "<input type='hidden' name='odOpPrice' id='odOpPrice' value='" + beforeAny[i]['odOptionPrice'] + "'>" +
                     "<input type='hidden' name='odMImg1' id='odMImg1' value='" + beforeAny[i]['odMenuImg1'] + "'>";
 
-
+                orderTruckIdCheck = "<input type='hidden' name='checkMenuTruckId' id='checkMenuTruckId' value='" + beforeAny[i]['menuTruckId'] + "'>";
 
             }
+
             $("#cartList").append(orderDetailList);
+            $("#cartList").append(orderTruckIdCheck);
+            //2022-01-16
+            //
+            //
+            // }
+            // $("#cartList").append(orderDetailList);
 
         });
 
@@ -1225,9 +1343,34 @@
 
         }
 
+        //2022-01-16
+        /*confirm 해당트럭에 대한 메뉴가 아니면 Session초기화*/
+        $(document).ready(function(){
+            var checkMenuTruckId = $("input[name='checkMenuTruckId']").val();
+            var orderTruckId = $("input[name='orderTruckId.truckId']").val();
 
+            /*       alert(orderTruckId)
+                   alert(checkMenuTruckId)*/
+
+            if(checkMenuTruckId != undefined) {
+
+                if (checkMenuTruckId != orderTruckId) {
+                    $('button#truckIdCheck.button.is-warning.is-light').click(function () {
+                        var result = confirm('기존에 저장된 메뉴를 삭제하시겠습니까??');
+                        if (result) { //yes
+                            sessionStorage.removeItem('menuOdList');
+                        } else {
+                            //no
+                            self.location = "/menu/getMenuList?truckId=" + checkMenuTruckId;
+
+                        }
+                    });
+                }
+            }
+        });
     </script>
 
+    <!--별점-->
     <style>
 
         <%--        별점 css--%>
@@ -1310,13 +1453,16 @@
 
     </script>
 
+
+
     <script>
         //리뷰 목록 뿌려주기 ajax
 
         $(function(){
 
             var truckId = $('input[name="truckId"]').val();
-            alert(truckId);
+            // alert(truckId);
+
 
             $.ajax({
 
@@ -1327,69 +1473,127 @@
                     var reviewPLZ = 0;
 
                     rvDiv+=""+
-                        "<div class=\"card mb-10\">"+
-                        "<div class=\"row g-0 inquiry-card\">"+
-                        "<div class=\"col-md-2 inquiry-con\">"+
-                        "<div class=\"card-body\">"+
-                        "<p class=\"card-text\"><small class=\"text-muted\"><strong>리뷰작성자</strong></small></p>"+
-                        "</div>"+
-                        "</div>"+
-                        "<div class=\"col-md-1 inquiry-con\">"+
-                        "<div class=\"card-body\">"+
-                        "<p class=\"card-text\"><small class=\"text-muted\"><strong>리뷰 별점</strong></small></p>"+
-                        "</div>"+
-                        "</div>"+
-                        "<div class=\"col-md-2 inquiry-con\">"+
-                        "<div class=\"card-body\">"+
-                        "<p class=\"card-text\"><small class=\"text-muted\"><strong>리뷰작성일</strong></small></p>"+
-                        "</div>"+
-                        "</div>"+
-                        "<div class=\"col-md-2 inquiry-con\">"+
-                        "<div class=\"card-body\">"+
-                        "<p class=\"card-text\"><small class=\"text-muted\"><strong>답변상태</strong></small></p>"+
-                        "</div>"+
-                        "</div></div></div>"+
+                        "<section id=\"testimonials\">"+
+                            "<div class=\"testimonial-heading\">"+
+                                "<span>Comments</span>"+
+                                "<h4>Clients Says</h4>"+
+                            "</div>"+
+                            "<div class=\"testimonial-box-container\">"+
                         ""+
                         "";
 
                     for(var rv of data.review){
                         reviewPLZ++;
                         rvDiv+=""+
-                            "<div class=\"card mb-10\">"+
-                            "<div class=\"row g-0 inquiry-card\">"+
-                            "<div class=\"col-md-2 inquiry-con\">"+
-                            "<div class=\"card-body\">"+
-                            "<input type=\"hidden\" id=\"rvNo\" name =\"rvNo\" value=\""+rv.rvNo+"\">"+
-                            "<p class=\"card-text\"><small class=\"text-muted\"><strong>리뷰작성자</strong></small></p>"+
+                            "<div class=\"testimonial-box\">"+
+                            "<input type=\"hidden\" name=\"rvNo\" value=\""+rv.rvNo+"\">"+
+                                "<div class=\"box-top\">"+
+                                    "<div class=\"profile\">"+
+                                       " <div class=\"profile-img\">"+
+                                           " <img src=\"https://cdn.clien.net/web/api/file/F01/3026181/26c0c7097b4545faa89.JPG\" />"+
+                                        "</div>"+
+                                        "<div class=\"name-user\">"+
+                                            "<strong>"+rv.rvUserId+"</strong>"+
+                                            "<span>"+rv.rvRegTime+"</span>"+
+                                        "</div>"+
+                                    "</div>"+
+                                    "<div class=\"reviews\">";
+                        if(rv.rvStar==0){
+                            rvDiv+=""+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(rv.rvStar==0.5){
+                            rvDiv+=""+
+                                "<i class=\"fas fa-star-half\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(rv.rvStar==1){
+                            rvDiv+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(rv.rvStar==1.5){
+                            rvDiv+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star-half\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(rv.rvStar==2){
+                            rvDiv+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(rv.rvStar==2.5){
+                            rvDiv+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star-half\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(rv.rvStar==3){
+                            rvDiv+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(rv.rvStar==3.5){
+                            rvDiv+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star-half\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(rv.rvStar==4){
+                            rvDiv+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(rv.rvStar==4.5){
+                            rvDiv+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star-half\"></i>";
+                        }else if(rv.rvStar==5){
+                            rvDiv+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>";
+                        }
+                            rvDiv+=""+
+                                "</div>"+
                             "</div>"+
-                            "</div>"+
-                            "<div class=\"col-md-6 inquiry-con\">"+
-                            "<div class=\"card-body\">"+
-                            "<p class=\"card-text\"><small class=\"text-muted\">"+rv.rvStar+"</small></p>"+
-                            "</div>"+
-                            "</div>"+
-                            "<div class=\"col-md-2 inquiry-con\">"+
-                            "<div class=\"card-body\">"+
-                            "<p class=\"card-text\"><small class=\"text-muted\">"+rv.rvRegTime+"</small></p>"+
-                            "</div>"+
-                            "</div>"+
-                            "<div class=\"col-md-2 inquiry-con\">"+
-                            "<div class=\"card-body\">"+
-                            "<p class=\"card-text\"><small class=\"text-muted\">"+rv.rvContent+"</small></p>"+
-                            "</div>"+
-                            "</div></div></div>"+
+                        "<div class=\"client-comment\">"+
+                            "<p>"+rv.rvContent+"</p>"+
+                    "</div>"+
+                    "</div>"+
                             ""+
                             "";
 
 
-
-
-
-
-
                     }
-                    alert($('div.card.review-body').html());
+                    rvDiv+="</div>"+
+                "</section>";
+
+                    // alert($('div.card.review-body').html());
                     $('div.card.review-body').html(rvDiv);
+
                 }
 
             });
@@ -1398,20 +1602,720 @@
 
     </script>
 
+    <!--리뷰 상세보기 모달-->
+    <script>
+        $(function(){
+
+            $("body").on("click", ".testimonial-box", function() {
+
+                let rvNo = $(this).find("input[name='rvNo']").val()
+                console.log("rvNo: " + rvNo);
+                // if(postNo=="Blind"){
+                //     alert("비공개 처리된 게시물입니다.")
+                //     return;
+                // }
+                getReviewDetail(rvNo)
+                /*let postNo = $(this).next();
+                console.log("postNo: " + postNo);
+                getCardDetail(postNo)*/
+            });
+        })
+
+
+
+
+        // 리뷰 클릭했을 때, modal 호출
+
+        function getReviewDetail(rvNo) {
+
+            // alert("얍");
+
+            // alert("rvNo: "+rvNo);
+            $.ajax({
+                url:"/review/json/getReviewDetail/"+rvNo,
+                method:"get",
+
+                success: function (data) {
+                    var div="";
+                    var modalFooter = "";
+                    // var hit = data.post.postHit;
+                    // $('#hit'+postNo).text(hit);
+
+                    div += "<div class='cloneFail' >"+
+                        "</div>";
+
+                    div += "<div class='row rvContent' >"
+                        +"<div>"+data.review.rvContent+"</div>"
+                        + "</div>";
+                    div += "<div class='align-test'>";
+                    alert(data.review.rvTruckCmtContent);
+                    if(data.review.rvTruckCmtContent!=null){
+                        div+= "<hr><div>사장님 댓글 : "+data.review.rvTruckCmtContent+"</div></div>";
+                    }
+                    // if (data.review.heartNo == '0'){
+                    //
+                    //     div +=" <a idx="+data.review.postNo+" href='javascript:' class='heart-click heart_icon"+data.post.postNo+"'>"
+                    //         +"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart' viewBox='0 0 20 20'>"
+                    //         + "<path d='M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z' />"
+                    //         +"</svg> </a> ";
+                    // }else{
+                    //
+                    //     div +=  "<a idx="+data.review.postNo+" href='javascript:' class='heart-click heart_icon"+data.post.postNo+"'>"
+                    //         +"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart-fill' viewBox='0 0 20 20'>"
+                    //         +"<path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' />"
+                    //         + " </svg></a>";
+                    // }
+                    // div += " <span id='m_heart"+data.review.postNo+"'>"+data.review.heartCount+"</span>"
+                    //     +"<span>"
+                    //     +"<a idx='"+data.review.postNo+"' href='#reply_card"+data.review.postNo+"' role='button' class='open_reply_list' data-toggle='collapse'  aria-expanded='false' aria-controls='collapseExample'> "
+                    //     +"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-chat-dots' viewBox='0 0 20 20'>"
+                    //     +"<path d='M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z' />"
+                    //     +"<path d='M2.165 15.803l.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z' />"
+                    //     +"</svg>"
+                    //     +"</a>"
+                    //     +" </span>"
+                    //     +" <span id='m_reply"+data.review.postNo+"'>"+data.review.replyCount+"</span>"
+                    //     +"<span> <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-eye' viewBox='0 0 20 20'>"
+                    //     +"<path d='M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z' />"
+                    //     +"<path d='M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z' />"
+                    //     +"</svg>"
+                    //     +"</span> <span id='hit"+data.review.postNo+"'>"+data.review.postHit+"</span>"
+                    //     +"</div>"
+                    //     +"<div class='collapse' id='reply_card"+data.review.postNo+"'>"
+                    //     +"<section class='modal-section'>"
+                    //     +"<div class='card card-body'>"
+                    //     +"<div class='reply-list reply-list"+data.review.postNo+"'>"
+                    //     +"</div>"
+                    //     +"<div class='row reply_write'>"
+                    //     +"<div class='col-1'>"
+                    //     +"<a href='other_profile.do?other_nick='>"
+                    //     +"<img id='write_reply_profileImage' src='../../../resources/image/"+proImg+"' />"
+                    //     +" </a>"
+                    //     +"</div>"
+                    //     +"<div class='col-8' class='input_reply_div'>"
+                    //     +"<input class='w-100 form-control' id='input_reply"+data.review.postNo+"' type='text' placeholder='댓글입력...'>"
+                    //     +"</div>"
+                    //     +"<div class='col-3 '>"
+                    //     +"<button type='button' idx='"+data.review.postNo+"' class='btn btn-success mb-1 write_reply' style='background-color: #ffe537; border-radius:12px; border-color: #ffba49; color: black; font-size: 12px; '>댓글달기</button>"
+                    //     +"</div>"
+                    //     +" </div>"
+                    //     +" </div>"
+                    //     +" </section>"
+                    //     +"</div>";
+
+
+                    <%--if (role == "user"){--%>
+
+                    <%--    var userId = '${sessionScope.user.userId}'--%>
+
+                    <%--    if (data.post.postTruck == null && data.post.postUser.userId == userId){--%>
+
+                    <%--        modalFooter = "<div class='modal-footer'>"--%>
+                    <%--            +"<button class='button btn-warning' name='deletePostPic' onclick='deletePostPic("+data.post.postNo+");'>글 삭제"--%>
+                    <%--            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/></button>"--%>
+                    <%--            +"<button class='button is-warning is-light' name='updatePostPicView'"--%>
+                    <%--            +"onclick='updatePostPicView("+data.post.postNo+");'>글 수정"--%>
+                    <%--            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/>"--%>
+                    <%--            + "</button>"--%>
+                    <%--            +"</div>";--%>
+                    <%--    }else {--%>
+                    <%--        modalFooter = "<div class='modal-footer'>"--%>
+                    <%--            + " <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></div>";--%>
+                    <%--    }--%>
+
+                    <%--}else if(role == "truck"){--%>
+
+                    <%--    var truckId = '${sessionScope.truck.truckId}'--%>
+
+                    <%--    if (data.post.postUser == null && data.post.postTruck.truckId == truckId){--%>
+
+                    <%--        modalFooter = "<div class='modal-footer'>"--%>
+                    <%--            +"<button class='button btn-warning' name='deletePostPic' onclick='deletePostPic("+data.post.postNo+");'>글 삭제"--%>
+                    <%--            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/></button>"--%>
+                    <%--            +"<button class='button is-warning is-light' name='updatePostPicView'"--%>
+                    <%--            +"onclick='updatePostPicView("+data.post.postNo+");'>글 수정"--%>
+                    <%--            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/>"--%>
+                    <%--            + "</button>"--%>
+                    <%--            +"</div>";--%>
+
+                    <%--    }else {--%>
+                    <%--        modalFooter = "<div class='modal-footer'>"--%>
+                    <%--            + " <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></div>";--%>
+                    <%--    }--%>
+                    <%--}--%>
+                    //$('body').find( '.format' ).clone().appendTo( '#carouselFail' ).css("display", "block");
+
+                    // var postPicUserId;
+                    // var postPicProImg;
+                    // if (data.post.truckProImg != null){
+                    //     postPicUserId = data.post.postTruck.truckId;
+                    //     postPicProImg = data.post.truckProImg;
+                    // }else {
+                    //     postPicUserId = data.post.postUser.userId;
+                    //     postPicProImg = data.post.userProImg;
+                    // }
+
+                    // console.log("id : "+postPicUserId);
+                    // console.log("img : "+postPicProImg);
+
+
+
+
+
+                    // $(".header-title").css({"background-image":"url(../../../resources/image/"+postPicProImg+")"});
+                    $(".insta-header").find('h2').text(data.review.rvUserId);
+
+                    // $('.insta-header').html(sap);
+                    //$('.page1').css("background", "../../../resources/image/"+data.post.postFile1+"")
+                    // $("#page1").style.background = "url('../../../resources/image/"+data.post.postFile1+"') no-repeat 0 0";
+                    if(data.review.rvImg1!=null){
+                        $(".page1").css({"background":"url(../../../resources/image/"+data.review.rvImg1+") 50% 50% / 50px 50px"});
+                        $(".slide1").css({"background":"url(../../../resources/image/"+data.review.rvImg1+")"});
+                        $(".page1").css({"background-size":"50px 50px"});
+                        $(".slide1").css({"background-size":"450px 450px"});
+                    }
+
+                    if ( data.review.rvImg2 != null ) {
+                        $(".page2").css({"background": "url(../../../resources/image/" + data.review.rvImg2 + ") 50% 50% / 50px 50px"});
+                        $(".slide2").css({"background": "url(../../../resources/image/" + data.review.rvImg2 + ")"});
+                        $(".page2").css({"background-size": "50px 50px"});
+                        $(".slide2").css({"background-size": "450px 450px"});
+                        $(".page2").css({"display": "block"});
+                        $(".numb2").css({"display": "block"});
+                    }
+                    if ( data.review.rvImg3 != null ) {
+                        //alert("333")
+                        $(".page3").css({"background": "url(../../../resources/image/" + data.review.rvImg3 + ") 50% 50% / 50px 50px"});
+                        $(".slide3").css({"background": "url(../../../resources/image/" + data.review.rvImg3 + ")"});
+                        $(".page3").css({"background-size": "50px 50px"});
+                        $(".slide3").css({"background-size": "450px 450px"});
+                        $(".page3").css({"display": "block"});
+                        $(".numb3").css({"display": "block"});
+                    }
+
+                    // $('.modal-footer').remove();
+                    // alert("여기까지 오는가?");
+
+
+                    // $('.modal-content-review').append(modalFooter);
+                    $('.modal-body.review').html(div);
+                    // $( '.format .wrapper' ).clone().appendTo( '.cloneFail' );
+
+                    // console.log("data.review.postHit: "+data.post.postHit);
+
+                    $('#staticBackdrop').modal('show');
+
+
+
+
+
+
+
+                },
+                error : function(err){
+                    console.log('에러')
+                }
+            });
+
+
+
+        }
+    </script>
+
+
+
+
+<%--리뷰 css--%>
+    <style>
+
+        *{
+            margin: 0px;
+            padding: 0px;
+            font-family: poppins;
+            box-sizing: border-box;
+        }
+        a{
+            text-decoration: none;
+        }
+        #testimonials{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width:100%;
+        }
+        .testimonial-heading{
+            letter-spacing: 1px;
+            margin: 30px 0px;
+            padding: 10px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .testimonial-heading span{
+            font-size: 1.3rem;
+            color: #252525;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .testimonial-box-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            width:100%;
+        }
+        .testimonial-box{
+            width:500px;
+            box-shadow: 2px 2px 30px rgba(0,0,0,0.1);
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 15px;
+            cursor: pointer;
+        }
+        .profile-img{
+            width:50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+        .profile-img img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        .profile{
+            display: flex;
+            align-items: center;
+        }
+        .name-user{
+            display: flex;
+            flex-direction: column;
+        }
+        .name-user strong{
+            color: #3d3d3d;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+        .name-user span{
+            color: #979797;
+            font-size: 0.8rem;
+        }
+        .reviews{
+            color: #f9d71c;
+        }
+        .box-top{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .client-comment p{
+            font-size: 0.9rem;
+            color: #4b4b4b;
+        }
+        .testimonial-box:hover{
+            transform: translateY(-10px);
+            transition: all ease 0.3s;
+        }
+
+        @media(max-width:1060px){
+            .testimonial-box{
+                width:80%;
+                padding: 10px;
+            }
+        }
+        @media(max-width:790px){
+            .testimonial-box{
+                width:100%;
+            }
+            .testimonial-heading h1{
+                font-size: 1.4rem;
+            }
+        }
+        @media(max-width:340px){
+            .box-top{
+                flex-wrap: wrap;
+                margin-bottom: 10px;
+            }
+            .reviews{
+                margin-top: 10px;
+            }
+        }
+        ::selection{
+            color: #ffffff;
+            background-color: #252525;
+        }
+    </style>
+    <!--리뷰 상세보기-->
+    <style>
+        .main-insta {
+            max-width:450px;
+            min-width: 450px;
+            margin: auto;
+            background-color: rgba(250, 250, 250, 0.85);
+            -webkit-box-shadow: 0 2px 26px rgba(0, 0, 0, .3), 0 0 0 1px rgba(0, 0, 0, .1);
+            /*box-shadow: 0 2px 26px rgba(0, 0, 0, .3), 0 0 0 1px rgba(0, 0, 0, .1);
+                padding: 1rem;
+                flex: 1 1 auto;
+            */
+            border-radius: 5px;
+
+            position: relative;
+            -ms-flex: 1 1 auto;
+
+
+        }
+        .insta-header h2:after,
+        .insta-header .dots,
+        .insta-reaction span, .insta-reaction label {
+            background-image: url(https://2.bp.blogspot.com/-dvvriE9ZKTA/Wi6rZx7U7kI/AAAAAAAAC4g/U2OrjuO9lvIHxdsYTFv_0TFqPpHeGR4NgCLcBGAs/s1600/f2eee39b755e.png);
+        }
+        .insta-header {
+            padding: 10px;
+            position: relative;
+            overflow: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .insta-header .header-title {
+            float: left
+        }
+        .insta-header h2 {
+            position: relative;
+            color: #444;
+            margin: 5px 0;
+            font-size: 18px;
+        }
+        .insta-header h3 {
+            color: #03A9F4;
+            font-size: 12px
+        }
+        .insta-header h2:after {
+            content: '';
+            width: 19px;
+            height: 19px;
+            display: inline-block;
+            position: absolute;
+            background-position: -434px -226px;
+            -webkit-transform: scale(.9);
+            -ms-transform: scale(.9);
+            transform: scale(.9);
+            top: 50%;
+            margin: -9.5px 0 0 4px;
+        }
+        .insta-header .header-title:hover .tooltip{
+            display: block
+        }
+        .insta-header span:nth-child(1) {
+            display: inline-block;
+            width: 60px;
+            height: 50px;
+            border-radius: 50%;
+
+            background-size: cover;
+            background-position: 100% 25%;
+            overflow: hidden;
+            float: left;
+            margin-right: 8px
+        }
+        .insta-post {
+            position: relative;
+            height: 350px;
+            width: 100%;
+            overflow: hidden;
+        }
+        .css-slider-wrapper {
+            overflow: hidden;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+        .slider {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 1;
+            z-index: 0;
+            display: -webkit-box;
+            display: flex;
+            display: -ms-flexbox;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -webkit-flex-align: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -ms-flex-line-pack: center;
+            align-content: center;
+            -webkit-transition: all 1s cubic-bezier(0.01, 0.97, 0.35, 0.99);
+            -o-transition: all 1s cubic-bezier(0.01, 0.97, 0.35, 0.99);
+            transition: all 1s cubic-bezier(0.01, 0.97, 0.35, 0.99);
+        }
+        .slide1,
+        .page1 {
+
+
+            left: 0;
+        }
+        .slide2,
+        .page2 {
+
+
+            left: 100%
+        }
+        .slide3,
+        .page3 {
+
+
+            left: 200%
+        }
+
+        .slider > div {
+            text-align: center;
+        }
+        .slider h2 {
+            color: rgba(250, 250, 250, 0.85);
+            font-weight: 900;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+            text-transform: uppercase;
+            font-size: 40px;
+            opacity: 0;
+            -webkit-transform: translateX(500px);
+            -ms-transform: translateX(500px);
+            transform: translateX(500px);
+            -webkit-transition: opacity 800ms, -webkit-transform 800ms;
+            transition: opacity 800ms, -webkit-transform 800ms;
+            -o-transition: transform 800ms, opacity 800ms;
+            transition: transform 800ms, opacity 800ms;
+            transition: transform 800ms, opacity 800ms, -webkit-transform 800ms;
+            -webkit-transition-delay: 1s;
+            -o-transition-delay: 1s;
+            transition-delay: 1s;
+        }
+        .pagi-main {
+            position: absolute;
+            bottom: 0%;
+            z-index: 1000;
+            overflow: hidden;
+            height: 54px;
+            line-height: 54px;
+            width: 35px;
+            color: #444;
+            font-size: 20px;
+            background-color: rgba(250, 250, 250, 0.85);
+        }
+        .pagi-main > label {
+            z-index: 0;
+            position: absolute;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        .previous {
+            left: 0;
+            border-top-right-radius: 25.5px;
+            border-bottom-right-radius: 25.5px;
+        }
+        .next {
+            right: 0;
+            border-top-left-radius: 25.5px;
+            border-bottom-left-radius: 25.5px;
+        }
+        .previous > label {
+
+        }
+        .previous > label:before {
+            content: '\f053';
+            font-family: fontAwesome;
+            display: inline-block;
+            -webkit-transform: translateX(50%);
+            -ms-transform: translateX(50%);
+            transform: translateX(50%);
+        }
+        .next > label {
+
+        }
+        .next > label:before {
+            content: '\f054';
+            font-family: fontAwesome;
+            -webkit-transform: translateX(100%);
+            -ms-transform: translateX(100%);
+            transform: translateX(100%);
+            display: inline-block;
+        }
+        .slider-pagination {
+            height: 54.1px;
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+            left: 0;
+            text-align: center;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+        .slider-pagination label {
+            height: 47px;
+            width: 47px;
+            border-radius: 50%;
+            display: inline-block;
+            -webkit-filter: grayscale(1);
+            filter: grayscale(1);
+            margin: 0 -6px 0 0;
+            cursor: pointer;
+            -webkit-box-shadow: 0px 0px 0px 3px rgba(0, 0, 0, 0.4);
+            box-shadow: 0px 0px 0px 3px rgba(0, 0, 0, 0.4);
+        }
+
+
+        .slide-radio1:checked ~ .next .numb2,
+        .slide-radio2:checked ~ .next .numb3,
+        .slide-radio5:checked ~ .next .numb1,
+        .slide-radio2:checked ~ .previous .numb1,
+        .slide-radio3:checked ~ .previous .numb2,
+        .slide-radio4:checked ~ .previous .numb3,
+        .slide-radio5:checked ~ .previous  {
+
+            z-index: 1
+        }
+
+
+        /* Slider Pagger event */
+
+        .slide-radio1:checked ~ .slider-pagination .page1,
+        .slide-radio2:checked ~ .slider-pagination .page2,
+        .slide-radio3:checked ~ .slider-pagination .page3,
+        .slide-radio4:checked ~ .slider-pagination .page4,
+        .slide-radio5:checked ~ .slider-pagination .page5 {
+            -webkit-filter: grayscale(0);
+            filter: grayscale(0);
+            -webkit-box-shadow: 0px 0px 0px 3px #03A9F4;
+            box-shadow: 0px 0px 0px 3px #03A9F4;
+        }
+        .slide-radio1:checked ~ .slider {
+            -webkit-transform: translateX(0%);
+            -ms-transform: translateX(0%);
+            transform: translateX(0%);
+        }
+        .slide-radio2:checked ~ .slider {
+            -webkit-transform: translateX(-100%);
+            -ms-transform: translateX(-100%);
+            transform: translateX(-100%);
+        }
+        .slide-radio3:checked ~ .slider {
+            -webkit-transform: translateX(-200%);
+            -ms-transform: translateX(-200%);
+            transform: translateX(-200%);
+        }
+        .slide-radio4:checked ~ .slider {
+            -webkit-transform: translateX(-300%);
+            -ms-transform: translateX(-300%);
+            transform: translateX(-300%);
+        }
+        .slide-radio5:checked ~ .slider {
+            -webkit-transform: translateX(-400%);
+            -ms-transform: translateX(-400%);
+            transform: translateX(-400%);
+        }
+        .slide-radio1:checked ~ .slide1 h2,
+        .slide-radio2:checked ~ .slide2 h2,
+        .slide-radio3:checked ~ .slide3 h2,
+        .slide-radio4:checked ~ .slide4 h2,
+        .slide-radio5:checked ~ .slide5 h2 {
+            -webkit-transform: translateX(0);
+            -ms-transform: translateX(0);
+            transform: translateX(0);
+            opacity: 1
+        }
+        .postContent{
+            padding-left:30px;
+        }
+
+        .btn.btn-primary{
+
+            margin-left: 0;
+            color: #fff;
+            background-color: #ffe537;
+            border-radius: 10px;
+        }
+
+        .btn.btn-primary:hover{
+
+            margin-left: 0;
+            background-color: #ffffff;
+            color: #ffe537;
+            border-color: #ffe537;
+        }
+
+        .btn.btn-warning{
+
+            margin-left: 0;
+            color: #060000;
+            background-color: #ffe537;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        .btn.btn-warning:hover{
+
+            margin-left: 0;
+            background-color: #ffffff;
+            color: #ffe537;
+            border-color: #ffe537;
+        }
+        .align-test{
+            padding-left: 16px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .row.postContent{
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+    </style>
+
+
+
 </head>
 <body>
 <jsp:include page="/views/navbar.jsp" />
-<br>
-<br>
-<br>
-<br>
-<br>
+
 
 
 
 
 <!--  화면구성 div Start /////////////////////////////////////-->
-<div class="container">
+<div class="container" style="margin-top:119px;">
 
     <div class="page-header">
         <h3 class="truckNameForMenu">${truck.truckName}</h3>
@@ -1441,6 +2345,11 @@
         <%--            <div class="beside-of-star-ratings">(${rvTotal})</div>--%>
 
     </div>
+
+    <!--리뷰보기 버튼-->
+    <a class="btnf btn-warning" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        리뷰 보기
+    </a>
 
     <!--좋아요--> <!-- 0115 HHJ 추가 -->
 
@@ -1485,46 +2394,29 @@
     <!--================truck info 끝=============-->
 
     <hr/>
-    <!--리뷰 리스트 시작 -->
-    <div class="wrapper">
-        <ul>
-            <li>
-                <input type="checkbox" id="list-item-1">
-                <label for="list-item-1" class="first">Serif</label>
-                <ul>
-                    <li>Slabo</li>
-                    <li>Droid Serif</li>
-                    <li>Roboto Serif</li>
-                    <li>Lora</li>
-                    <li>Meriweather</li>
-                </ul>
-            </li>
 
-        </ul>
-    </div>
-    <!--리뷰 리스트 끝-->
 
 
     <!--리뷰 리스트 시작-->
 <%--    <p>--%>
-<%--        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">--%>
-<%--           리뷰 보기--%>
-<%--        </a>--%>
+<%--      --%>
 <%--        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">--%>
 <%--            리뷰 보기--%>
 <%--        </button>--%>
 <%--    </p>--%>
-<%--    <div class="collapse" id="collapseExample">--%>
-<%--        <div class="card review-body">--%>
+    <div class="collapse" id="collapseExample">
+        <div class="card review-body">
 
-<%--        </div>--%>
-<%--    </div>--%>
+        </div>
+    </div>
     <!--리뷰 리스트 시작-->
 
 
 </div>
 <!--  메뉴 목록 div Start /////////////////////////////////////-->
 <body class="row g-5">
+
+
 <!--헝헝헝-->
 
 <div class="col-md-5 col-lg-4 order-md-last">
@@ -1540,7 +2432,7 @@
             <ul class="list-group mb-3" style="width:259px;">
                <img src="data:image/png;base64,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">
             </ul>
-            <input type="hidden" id="orderUserId" name="orderUserId.userId" value="user01"/>
+            <input type="hidden" id="orderUserId" name="orderUserId.userId" value="${user.userId}"/>
             <input type="hidden" id="orderTruckId" name="orderTruckId.truckId" value="${truck.truckId}"/>
             <button type="button"  class="btn btn-warning" data-toggle="modal" data-target="#cartModal" >주문하기</button>
         </form>
@@ -1620,11 +2512,11 @@
 </div>
 
 
-<!-- Modal -->
+<!--review Modal -->
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
+    <div class="modal-dialog review" role="document">
+        <div class="modal-content review">
+            <div class="modal-header review">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"></span>
                 </button>
@@ -1681,87 +2573,89 @@
 
                 </div>
             </div>
-            <div class="modal-body">
+            <div class="modal-body review">
+                내용이 없어서 안 나오는 걸까?
+
             </div>
 
-            <div class="modal-footer">
+            <div class="modal-footer review">
             </div>
         </div>
     </div>
 </div>
 
-<!--리뷰 모달-->
+<!--review 모달-->
 
 <script>
 
-$("body").on("click", ".heart-click-t", function() {
-var truckId = $('input[name="truckId"]').val();
-console.log("truckId: " + truckId);
+    $("body").on("click", ".heart-click-t", function() {
+    var truckId = $('input[name="truckId"]').val();
+    console.log("truckId: " + truckId);
 
-// 빈하트를 눌렀을때
-if ($(this).children('svg').attr('class') == "bi bi-suit-heart") {
-console.log("빈하트 클릭" + truckId);
+    // 빈하트를 눌렀을때
+    if ($(this).children('svg').attr('class') == "bi bi-suit-heart") {
+    console.log("빈하트 클릭" + truckId);
 
-$.ajax({
-url: '/community/json/addHeartTruck',
-type: 'get',
-data: {
-truckId: truckId,
-},
-success: function (pto) {
-//페이지 새로고침
-//document.location.reload(true);
-console.log("pto: "+pto.heartCount)
-let heart = pto.heartCount;
+    $.ajax({
+        url: '/community/json/addHeartTruck',
+        type: 'get',
+        data: {
+            truckId: truckId,
+        },
+        success: function (pto) {
+        //페이지 새로고침
+        //document.location.reload(true);
+        console.log("pto: "+pto.heartCount)
+        let heart = pto.heartCount;
 
 
-$('#heartC').text(하트);
+        $('#heartC').text(heart);
 
-console.log("하트 추가!!!!!!!!!!");
-},
-error: function () {
-alert('서버 에러');
-}
-});
-console.log("하트채워");
+            console.log("하트 추가!!!!!!!!!!");
+        },
+        error: function () {
+            alert('서버 에러');
+        }
+    });
+    console.log("하트채워");
 
-// 꽉찬하트로 바꾸기
-$(this).html("<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart-fill' viewBox='0 0 20 20'><path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' /></svg>");
-//$('.heart_icon').html("<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart-fill' viewBox='0 0 20 20'><path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' /></svg>");
+    // 꽉찬하트로 바꾸기
+    $(this).html("<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart-fill' viewBox='0 0 20 20'><path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' /></svg>");
+    //$('.heart_icon').html("<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart-fill' viewBox='0 0 20 20'><path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' /></svg>");
 
-// 꽉찬 하트를 눌렀을 때
-} else if ($(this).children('svg').attr('class') == "bi bi-suit-heart-fill") {
-console.log("꽉찬거 하트 클릭 " + truckId);
+    // 꽉찬 하트를 눌렀을 때
+    } else if ($(this).children('svg').attr('class') == "bi bi-suit-heart-fill") {
+    console.log("꽉찬거 하트 클릭 " + truckId);
 
-$.ajax({
-url: '/community/json/removeHeartTruck',
-type: 'get',
-data: {
-truckId: truckId,
-},
-success: function (pto) {
-//페이지 새로고침
-//document.location.reload(true);
-console.log("pto: "+pto)
-let heart = pto.heartCount;
-// 페이지에 하트수 갱신
-//
+    $.ajax({
+    url: '/community/json/removeHeartTruck',
+    type: 'get',
+    data: {
+    truckId: truckId,
+    },
+    success: function (pto) {
+    //페이지 새로고침
+    //document.location.reload(true);
+    console.log("pto: "+pto)
+    let heart = pto.heartCount;
+    // 페이지에 하트수 갱신
+    //
 
-$('#heartC').text(하트);
+    $('#heartC').text(heart);
 
-console.log("하트삭제!!!!!!!!!");
-},
-error: function () {
-alert('서버 에러');
-}
-});
-console.log("빈하트!!!!!!!!!");
+    console.log("하트삭제!!!!!!!!!");
+    },
+    error: function () {
+    alert('서버 에러');
+    }
+    });
+    console.log("빈하트!!!!!!!!!");
 
-// 빈하트로 바꾸기
-$(this).html('<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-suit-heart" viewBox="0 0 20 20"><path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" /></svg>');
+    // 빈하트로 바꾸기
+    $(this).html('<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-suit-heart" viewBox="0 0 20 20"><path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" /></svg>');
 
-//$('.heart_icon' + postNo).html('<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-suit-heart" viewBox="0 0 20 20"><path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" /></svg>');
-}
+    //$('.heart_icon' + postNo).html('<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-suit-heart" viewBox="0 0 20 20"><path d="M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z" /></svg>');
+    }
 
 
 });

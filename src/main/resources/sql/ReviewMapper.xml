@@ -55,7 +55,7 @@
 
 	<select 	id="getReview"	parameterType="int"	resultMap="ReviewSelectMap" >
 		SELECT
-			rv_no, rv_order_no, rv_reg_time, rv_star, rv_content, rv_truck_cmt_content, rv_truck_cmt_reg_time, rv_img1, rv_img2, rv_img3, rv_delete, rv_tc_delete
+			rv_no, RV_USER_ID, RV_TRUCK_ID, rv_order_no, rv_reg_time, rv_star, rv_content, rv_truck_cmt_content, rv_truck_cmt_reg_time, rv_img1, rv_img2, rv_img3, rv_delete, rv_tc_delete
 
 		FROM review
 		WHERE RV_NO = #{value}
