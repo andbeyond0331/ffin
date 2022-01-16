@@ -467,8 +467,8 @@
                     success: function (data) {
                         if(data == 0){
                             console.log(data);
-                            alert("통신오류");
-                            return false;
+                            alert(truckId + " 사장님 환영합니다.");
+                            location.href="/catering/mainTruckList";
                         }else if(data == 9) {
                             console.log(data);
                             alert("회원정보가 일치하지 않습니다");

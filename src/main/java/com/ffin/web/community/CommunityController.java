@@ -316,31 +316,6 @@ public class CommunityController {
     }
 
 
-    @RequestMapping(value = "deleteComment", method = RequestMethod.GET)
-    public String deleteComment(@ModelAttribute("comment") Comment comment, @RequestParam("commentNo") int commentNo, Model model, HttpServletRequest request, HttpSession session)
-            throws Exception {
-
-        System.out.println("/community/deleteComment : GET");
-
-        commentNo = Integer.parseInt(request.getParameter("commentNo"));
-
-        System.out.println("commentNo = " + commentNo);
-
-        communityService.getComment(commentNo);
-
-        System.out.println("comment = " + comment);
-
-        int postNo = (int) session.getAttribute("postNo");
-
-        System.out.println("postNo = " + postNo);
-
-        communityService.deleteComment(comment);
-
-        return "redirect:/community/getPost?postNo="+postNo;
-    }
-
-
-
 
 
 

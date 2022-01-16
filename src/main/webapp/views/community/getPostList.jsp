@@ -317,7 +317,7 @@
                                 </div>
                             </div>
                         </c:if>
-                        <c:if test="${post.secretKey==1 && (sessionScope.user.role != 0 || sessionScope.truck.role == 1)}">
+                        <c:if test="${post.secretKey == 1 && (sessionScope.role ne 'admin' || sessionScope.truck.role == 1)}">
                             <div class="col-md-1 inquiry-con">
                                 <div class="card-body">
                                     <input type="hidden" name="postNo" value="Blind">
@@ -351,7 +351,7 @@
                                 </div>
                             </div>
                         </c:if>
-                        <c:if test="${post.secretKey==1 && sessionScope.user.role == 0}">
+                        <c:if test="${post.secretKey==1 && sessionScope.role.equals(admin)}">
                             <div class="col-md-1 inquiry-con">
                                 <div class="card-body">
                                     <input type="hidden" name="postNo" value="${post.postNo}">
