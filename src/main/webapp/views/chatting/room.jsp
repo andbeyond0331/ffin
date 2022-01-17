@@ -17,7 +17,8 @@
         .container{
             width: 500px;
             margin: 0 auto;
-            padding: 25px
+            padding: 25px;
+            padding-top: 100px;
         }
         .container h1{
             text-align: left;
@@ -130,6 +131,7 @@
     }
 </script>
 <body>
+<jsp:include page="../navbar.jsp"></jsp:include>
 <div class="container">
     <h1>채팅방</h1>
     <div id="roomContainer" class="roomContainer">

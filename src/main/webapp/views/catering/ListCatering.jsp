@@ -325,10 +325,10 @@
         });
 
         $("body").on("click", ".card", function() {
-            let ctNo = $(this).find("input[name='ctNo']").val();
-            let ctct = $(this).find("input[name='ctct']").val();
-
-            if (ctct == "0"){
+            var ctNo = $(this).find("input[name='ctNo']").val();
+            var ctct = $(this).find("input[name='ctct']").val();
+            console.log('ctct: '+ctct)
+            if (ctct.trim() == '0'){
                 getCateringDetail(ctNo);
             }else{
                 getResDetail(ctNo, ctct);
@@ -623,7 +623,7 @@
         //$("#currentPage").val(currentPage)
         //$("#cate").val("list");
 
-
+        alert("1")
         $("input[name='flag']").val('2')
         self.location="/catering/getCtServAllList?cate=list";
        // $("form").attr("method" , "POST").attr("action" , "/catering/getCtServAllList?cate=list").submit();
@@ -1035,6 +1035,7 @@
         /* statusCode == 0 */
       //  alert("ccccctt : "+ctNo);
       //  console.log("111ctNo : "+ctNo);
+        console.log("여기"+ctNo)
         $.ajax({
             url:"/catering/json/getCtDetail/"+ctNo,
             method:"get",
@@ -1118,6 +1119,7 @@
                     $('.modal-content').append(modalFooter);
                 }
                 $('.modal-body').html(div);
+                $('#staticBackdrop').modal('show');
 
 
             },

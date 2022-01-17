@@ -87,7 +87,7 @@ public class PushEchoHandler extends TextWebSocketHandler {
                     System.out.println("::::::::::::::::::::::::::::tmpMsg = " + tmpMsg);
                     recvUserSession.sendMessage(tmpMsg);
                 } else if("purchaseUser".equals(cmd) && recvUserSession != null){
-                    TextMessage tmpMsg = new TextMessage("푸드트럭 : [ "+sendUser+" ]에서 <a href='/purchase/getOrderUser?userId="+noKey+"&search=0'>주문</a>을 접수하였습니다.   ");
+                    TextMessage tmpMsg = new TextMessage("푸드트럭 : [ "+sendUser+" ]에서 <a href='/purchase/getOrderUser?userId="+noKey+"'>주문</a>을 접수하였습니다.   ");
                     // 여기서 no 를 달꺼면 여기에 <a href = ~~~~> 해서 쓰면 누르면 갈꺼야!!!!!!
 
                     System.out.println("::::::::::::::::::::::::::::tmpMsg = " + tmpMsg);

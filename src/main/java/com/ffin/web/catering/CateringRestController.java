@@ -4,10 +4,8 @@ package com.ffin.web.catering;
 
 import com.ffin.common.Search;
 import com.ffin.service.catering.CateringService;
-import com.ffin.service.domain.Catering;
-import com.ffin.service.domain.Menu;
-import com.ffin.service.domain.Truck;
-import com.ffin.service.domain.User;
+import com.ffin.service.domain.*;
+import com.ffin.service.qna.QnAService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -434,7 +432,35 @@ public class CateringRestController {
 
         return modelAndView;
     }
+/*
 
+
+    @RequestMapping( value="json/addReport", method= RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView addReport(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+
+
+
+        System.out.println("REST  addReport   : POST");
+
+
+        Report report = new Report();
+        report.setReportUserId(request.getParameter("reportUserId"));
+        report.setReportTargetId(request.getParameter("reportTargetId"));
+        report.setReportContent(request.getParameter("reportContent"));
+        report.setReportLink(request.getParameter("reportLink"));
+        report.setReportType(Integer.parseInt(request.getParameter("reportType")));
+
+
+        qnAService.addReport(report);
+
+        ModelAndView modelAndView = new ModelAndView("jsonView");
+
+        return modelAndView;
+    }
+
+
+*/
 
 
 }

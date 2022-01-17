@@ -36,7 +36,7 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 		System.out.println("LogonCheckInterceptor.preHandle");
 		//Cookie autoLogin = WebUtils.getCookie(request, "loginCookie");
 		HttpSession session = request.getSession();
-		Object user = session.getAttribute("user");
+		User user = (User)session.getAttribute("user");
 
 		// login처리를 담당하는 사용자 정보를 담고 있는 객체를 가져옴
 		//Object obj = session.getAttribute("loginCookie");
@@ -54,10 +54,12 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 
 				// autoLogin의 값을 꺼내오고 -> 즉, 저장해논 세션Id를 꺼내오고
 				String SESSIONKEY = autoLogin.getValue();
-				user = userService.sessionKeyAuth(SESSIONKEY);
-				if(user != null)
+				User user2 = userService.sessionKeyAuth(SESSIONKEY);
+				if(user2 != null)
 				{
-					session.setAttribute("user", user);
+					System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+					System.out.println("USER:::::::::::::::::::"+user2);
+					session.setAttribute("user", user2);
 					session.setAttribute("role", "user");
 					return true;
 				}

@@ -10,6 +10,20 @@
     <jsp:include page="../../common/lib.jsp"/>
 
 
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="../../resources/bootstrap/css/bootstrap.css" />
+    <!-- Custom styles for this template -->
+    <link href="../../resources/bootstrap/css/style.css" rel="stylesheet" />
+
+    <!--    Favicons-->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../resources/bootstrap/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../resources/bootstrap/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../resources/bootstrap/assets/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../resources/bootstrap/assets/favicons/favicon.ico">
+    <link rel="manifest" href="../../resources/bootstrap/assets/favicons/manifest.json">
+    <meta name="msapplication-TileImage" content="../../resources/bootstrap/assets/favicons/mstile-150x150.png">
+    <meta name="theme-color" content="#ffffff">
+
     <%--주소API--%>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
@@ -71,7 +85,6 @@
         }
 
         #calendar {
-            max-width: 900px;
             margin: 20px auto;
             margin-top: 181px;
         }
@@ -90,6 +103,9 @@
             margin : 0 126px 21px;
             margin-top: 90px;
 
+        }
+        .fc-prev-button .fc-next-button .fc-button .fc-button-primary{
+            background-color: #ffbc62;
         }
     </style>
 
@@ -138,18 +154,28 @@
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">서비스 상세정보</h5>
+
+
+            <div class="detail-box">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true"></span>
                 </button>
+                <i class="fa fa-quote-left" aria-hidden="true"></i>
+                <h4 style="margin-top: 10px;padding-left: 0px">
+                    케이터링
+                </h4>
             </div>
             <div class="modal-body"></div>
+
             <div id="map" style='width:100%;height:350px; display:none;'></div>
+
+
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-default" id="AddCtRes" name="AddCtRes">예약</button>
             </div>
+
         </div>
     </div>
 </div>
@@ -318,7 +344,7 @@
             defaultView: 'dayGridMonth',
             defaultDate: new Date(),
             header: {
-                left: 'prev,next',
+                left : 'prev, next',
                 center: 'title',
                 right: 'today'
             },
@@ -391,20 +417,20 @@
 
                 <%--${sessionScope.role};--%>
 
-                div += "<div class='row'>"
+                div += "<div class='data-input-box'>"
                     + "<div><strong>푸드트럭 이름</strong> : "+data.catering.ctTruck.truckName+"</div>" +
                     "</div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong>서비스 가능 날짜</strong> : "+check+"</div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong></strong> <img src='../../../resources/menu/"+data.catering.ctMenu.menuImg1+"'></div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong>최소 수량</strong> : <input type='text' id='servMenuMinQty' name='servMenuMinQty'  /></div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong>최대 수량</strong> : <input type='text' id='servMenuMaxQty' name='servMenuMaxQty' /></div></div>"
                    +"<input type='hidden' id='menuNo' name='menuNo' value='"+data.catering.ctMenu.menuNo+"'/>"
                    +"<input type='hidden' id='ctDate' name='ctDate' value='"+check+"'/>";
@@ -446,29 +472,29 @@
 
                 <%--${sessionScope.role};--%>
                 console.log("role : "+role)
-                div += "<div class='row'>"+
+                div += "<div class='data-input-box'>"+
                     "<div><strong>서비스 번호</strong> : "+data.catering.ctNo+"</div></div>" +
-                    "<div class='row'>"
+                    "<div class='data-input-box'>"
                     + "<div><strong>푸드트럭 이름</strong> : "+data.catering.ctTruck.truckName+"</div>" +
                     "</div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong>서비스 가능 날짜</strong> : "+data.catering.ctDate+"</div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong></strong> <img src='../../../resources/menu/"+data.catering.ctMenu.menuImg1+"'></div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
                     +"<input type='hidden' id='ctNo' name='ctNo' value='"+data.catering.ctNo+"'/>"
                 if (role=="user") {
 
 
                     div +=
-                        "<div class='row'>"
+                        "<div class='data-input-box'>"
                         +"<div ><strong>최소 수량</strong> : "+data.catering.ctMenuMinQty+"</div></div>"
-                        +"<div class='row'>"
+                        +"<div class='data-input-box'>"
                         +"<div ><strong>최대 수량</strong> : "+data.catering.ctMenuMaxQty+"</div></div>"
-                        +"<div class='row'>"
+                        +"<div class='data-input-box'>"
                         +"<div ><strong>필요 수량</strong> : "
                         +"<input type='button' name='minus' value='-'/>"
                         +"<input type='hidden' id='minQ' name='minQ' value='"+data.catering.ctMenuMinQty+"' readOnly />"
@@ -477,32 +503,32 @@
                         +"<input type='text' id='ctMenuQty' name='ctMenuQty' value='"+data.catering.ctMenuMinQty+"' readOnly />"
                         +"<input type='button' name='plus' value='+'/>"
                         +"</div></div>"
-                        +"<div class='row'>"
+                        +"<div class='data-input-box'>"
                         +"<div ><strong>예상 견적</strong> : <input type='text' id='ctQuotation' name='ctQuotation' value = '"+minPrice+"' readOnly /></div></div>"
-                        +"<div class='row'>"
+                        +"<div class='data-input-box'>"
                         +"<div ><strong>예약자 아이디</strong> : "+'${sessionScope.user.userId}'+"</div></div>"
-                        +"<div class='row'>"
+                        +"<div class='data-input-box'>"
                         +"<div ><strong>예약자 전화번호</strong> : <input type='text' id='ctUserPhone' name='ctUserPhone' value="+'${sessionScope.user.userPhone}'+"></div></div>"
-                        +"<div class='row'>"
+                        +"<div class='data-input-box'>"
                         +"<div ><strong>예약자 주소</strong> : " +
                         "<input type='text'  id='ctUserAddr' name='ctUserAddr' placeholder='주소검색' readonly='readonly'></div>" +
                         "<button type='button' onclick='addrApi()'>주소검색</button></div>"
-                        +"<div class='row'>"
+                        +"<div class='data-input-box'>"
                         +"<div ><strong>예약자 상세 주소</strong> : <input type='text' id='ctUserAddrDetail' name='ctUserAddrDetail' placeholder='상세주소를 입력해주세요' readonly='readonly'>	</div></div>"
 
                         // 예상견적 자동 계산되도록 하자
                         // input data 값 더 깔끔하게 수정
-                        +"<div class='row'>"
+                        +"<div class='data-input-box'>"
                         +"<div><strong>시작 시간</strong> : <input type='text' id='ctStartTime' name='ctStartTime'  class='form-control' style='width:200px;'/></div></div>"
-                        +"<div class='row'>"
+                        +"<div class='data-input-box'>"
                         +"<div><strong>종료 시간</strong> : <input type='text' id='ctEndTime' name='ctEndTime'  class='form-control' style='width:200px;'/></div></div>"
-                        +"<div class='row'>"
+                        +"<div class='data-input-box'>"
                         +"<div><strong>요청 사항</strong> : <textarea name='ctUserRequest' rows='3'></textarea></div></div>"
                         + "</div><hr/>";
                 }else if (role=="truck"){
-                    div += "<div class='row'>"
+                    div += "<div class='data-input-box'>"
                         +"<div ><strong>최소 수량</strong> : <input type='text' id='ctMenuMinQty' name='ctMenuMinQty' value='"+data.catering.ctMenuMinQty+"' /></div></div>"
-                        +"<div class='row'>"
+                        +"<div class='data-input-box'>"
                         +"<div ><strong>최대 수량</strong> : <input type='text' id='ctMenuMaxQty' name='ctMenuMaxQty' value='"+data.catering.ctMenuMaxQty+"' /></div></div>";
 
                     $('.modal-footer').remove();
@@ -561,33 +587,33 @@
 
                 <%--${sessionScope.role};--%>
                 console.log("role : "+role)
-                div += "<div class='row'>"+
+                div += "<div class='data-input-box'>"+
                     "<div><strong>서비스 번호</strong> : "+data.catering.ctNo+"</div></div>" +
-                    "<div class='row'>"
+                    "<div class='data-input-box'>"
                     + "<div><strong>이용자 이름</strong> : "+data.catering.ctUser.userName+"</div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                      + "<div><strong>이용자 전화번호</strong> : "+data.catering.ctPhone+"</div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     + "<div><strong>푸드트럭 이름</strong> : "+data.catering.ctTruck.truckName+"</div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong>예약 날짜</strong> : "+data.catering.ctDate+"</div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong>시작 시간</strong> : "+data.catering.ctStartTime+"</div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong>종료 시간</strong> : "+data.catering.ctEndTime+"</div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong></strong> <img src='../../../resources/menu/"+data.catering.ctMenu.menuImg1+"'></div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong>필요 수량</strong> : "+data.catering.ctMenuQty+"</div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong>요청사항</strong> : "+data.catering.ctUserRequest+"</div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong>견적</strong> : "+data.catering.ctQuotation+"</div></div>"
-                    +"<div class='row'>"
+                    +"<div class='data-input-box'>"
                     +"<div ><strong>주소</strong> : "+data.catering.ctAdd+" "+data.catering.ctAddDetail+"</div><button type='button' class='btn btn-outline-danger' id='lookMap' name='lookMap' onclick='lookMap();'>지도가 궁금행?</button></div>"
 
                 +"<input type='hidden' id='ctNo' name='ctNo' value='"+data.catering.ctNo+"'/>"
