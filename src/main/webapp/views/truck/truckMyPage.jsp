@@ -74,7 +74,7 @@
 				self.location = ""
 			});
 			$('.truck-review').click(function () {
-				self.location = "/review/getReviewListTruck"
+				self.location = "/review/getReviewListTruck?truckId=${truck.truckId}"
 			});
 			$('.truck-post').click(function () {
 				self.location = "getPostList.jsp"

@@ -23,6 +23,9 @@ public class Review {
 	private String userProImg;
 	private String truckProImg;
 
+	//트럭 이름 받아오기.. 아오..
+	private String truckName;
+
 	
 
 }

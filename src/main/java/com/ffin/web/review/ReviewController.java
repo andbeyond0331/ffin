@@ -380,9 +380,11 @@ public class ReviewController {
 
         Map<String , Object> map= reviewService.getReviewListUser(search, user.getUserId());
 
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+
+        modelAndView.addObject("resultPage", resultPage);
         modelAndView.addObject("list", map.get("list"));
         modelAndView.addObject("userId", userId);
-
         modelAndView.setViewName("/views/review/getReviewList.jsp");
 
         return modelAndView;

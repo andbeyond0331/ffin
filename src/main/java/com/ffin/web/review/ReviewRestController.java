@@ -1,6 +1,7 @@
 package com.ffin.web.review;
 
 import com.ffin.common.Search;
+import com.ffin.service.domain.Inquiry;
 import com.ffin.service.domain.Menu;
 import com.ffin.service.domain.Review;
 import com.ffin.service.review.ReviewService;
@@ -91,6 +92,30 @@ public class ReviewRestController {
 
         return mv;
     }
+
+
+    //트럭 마이페이지에서 리뷰 목록 중 사장님 댓글 작성 post
+    @RequestMapping(value = "json/updateRvForAddTruckCmt", method = RequestMethod.POST)
+    @ResponseBody
+    public Review updateRvForAddTruckCmt(@ModelAttribute Review review, @RequestParam("rvNo") int rvNo) throws Exception {
+
+        System.out.println("ReviewRestController.updateRvForAddTruckCmt : POST");
+
+        reviewService.updateRVAddTruckComment(review);
+        return reviewService.getReview(rvNo);
+    }
+
+    //트럭 마이페이지에서 리뷰 목록 중 사장님 댓글 수정 post
+    @RequestMapping(value = "json/updateRvForUpdateTruckCmt", method = RequestMethod.POST)
+    @ResponseBody
+    public Review updateRvForUpdateTruckCmt(@ModelAttribute Review review, @RequestParam("rvNo") int rvNo) throws Exception {
+
+        System.out.println("ReviewRestController.updateRvForAddTruckCmt : POST");
+
+        reviewService.updateRVUpdateTruckComment(review);
+        return reviewService.getReview(rvNo);
+    }
+
 
 
 

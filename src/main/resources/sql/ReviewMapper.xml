@@ -25,6 +25,8 @@
 
 		<result property="truckProImg"       column="TRUCK_PRO_IMG"        jdbcType="VARCHAR"/>
 		<result property="userProImg"       column="USER_PRO_IMG"        jdbcType="VARCHAR"/>
+		<result property="truckName"       column="TRUCK_NAME"        jdbcType="VARCHAR"/>
+
 	</resultMap>
 
 
@@ -59,7 +61,7 @@
 
 	<select 	id="getReview"	parameterType="int"	resultMap="ReviewSelectMap" >
 		SELECT
-			rv_no, RV_USER_ID, RV_TRUCK_ID, rv_order_no, rv_reg_time, rv_star, rv_content, rv_truck_cmt_content, rv_truck_cmt_reg_time, rv_img1, rv_img2, rv_img3, rv_delete, rv_tc_delete, truck_pro_img, user_pro_img
+			rv_no, RV_USER_ID, RV_TRUCK_ID, rv_order_no, rv_reg_time, rv_star, rv_content, rv_truck_cmt_content, rv_truck_cmt_reg_time, rv_img1, rv_img2, rv_img3, rv_delete, rv_tc_delete, truck_pro_img, user_pro_img, TRUCK_NAME
 
 		FROM review
 		WHERE RV_NO = #{value}
@@ -75,11 +77,14 @@
 			RV_REG_TIME,
 			RV_STAR,
 			RV_CONTENT,
+		       RV_TRUCK_CMT_CONTENT,
+		       RV_TRUCK_CMT_REG_TIME,
 			RV_IMG1,
 			RV_IMG2,
 			RV_IMG3,
 		       TRUCK_PRO_IMG,
-		       USER_PRO_IMG
+		       USER_PRO_IMG,
+		       TRUCK_NAME
 		FROM 	review
 		WHERE RV_TRUCK_ID=#{truckId}
 	</select>
@@ -100,11 +105,14 @@
 			RV_REG_TIME,
 			RV_STAR,
 			RV_CONTENT,
+			RV_TRUCK_CMT_CONTENT,
+			RV_TRUCK_CMT_REG_TIME,
 			RV_IMG1,
 			RV_IMG2,
 			RV_IMG3,
 		       TRUCK_PRO_IMG,
-		       USER_PRO_IMG
+		       USER_PRO_IMG,
+		       TRUCK_NAME
 		FROM 	review
 		WHERE RV_USER_ID = #{userId}
 	</select>
@@ -149,8 +157,8 @@
 	</select>
 
 	<!-- SQL : SELECT ROW Count -->
-	<select  id="getTotalCountUser"  parameterType="map"	 resultType="int">
-		SELECT COUNT(*)
+	<select  id="getTotalCountUser"  parameterType="map"	 resultMap="ReviewSelectMap">
+		SELECT COUNT(*) as rv_no
 		FROM(	SELECT *
 		FROM review
 				 WHERE RV_USER_ID=#{userId}
@@ -175,6 +183,11 @@
 	<!-- 사진 갖고오깅 ㅜ truck-->
 	<select id="getProImgTruck" parameterType="String" resultType="String">
 		select TRUCK_PRO_IMG from truck
+		where TRUCK_ID = #{truckId}
+	</select>
+	<!-- 트럭이름 갖고오깅 ㅜ truck-->
+	<select id="getTruckName" parameterType="String" resultType="String">
+		select TRUCK_NAME from truck
 		where TRUCK_ID = #{truckId}
 	</select>
 

@@ -39,6 +39,7 @@ public class ReviewDaoImpl implements ReviewDao {
             review.setTruckProImg(sqlSession.selectOne("ReviewMapper.getProImgTruck", review.getRvTruckId()));
         }
         review.setUserProImg(sqlSession.selectOne("ReviewMapper.getProImgUser", review.getRvUserId()));
+        review.setTruckName(sqlSession.selectOne("ReviewMapper.getTruckName", review.getRvTruckId()));
 
         return review;
     }
@@ -55,6 +56,7 @@ public class ReviewDaoImpl implements ReviewDao {
 
             }
             list.get(i).setUserProImg(sqlSession.selectOne("ReviewMapper.getProImgUser", list.get(i).getRvUserId()));
+            list.get(i).setTruckName(sqlSession.selectOne("ReviewMapper.getTruckName", list.get(i).getRvTruckId()));
         }
 
 
@@ -123,11 +125,14 @@ public class ReviewDaoImpl implements ReviewDao {
 
             }
             list.get(i).setUserProImg(sqlSession.selectOne("ReviewMapper.getProImgUser", list.get(i).getRvUserId()));
+            list.get(i).setTruckName(sqlSession.selectOne("ReviewMapper.getTruckName", list.get(i).getRvTruckId()));
+
         }
 
         System.out.println("list : " + list);
+        Review forTotalCount = sqlSession.selectOne("ReviewMapper.getTotalCountUser", userId);
 
-        int totalCount = sqlSession.selectOne("ReviewMapper.getTotalCountUser", userId);
+        int totalCount = forTotalCount.getRvNo();
 
         map.clear();
         map.put("list", list);
