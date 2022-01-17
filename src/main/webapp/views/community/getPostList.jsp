@@ -351,7 +351,7 @@
                                 </div>
                             </div>
                         </c:if>
-                        <c:if test="${post.secretKey==1 && sessionScope.role.equals(admin)}">
+                        <c:if test="${post.secretKey==1 && sessionScope.role eq 'admin'}">
                             <div class="col-md-1 inquiry-con">
                                 <div class="card-body">
                                     <input type="hidden" name="postNo" value="${post.postNo}">
