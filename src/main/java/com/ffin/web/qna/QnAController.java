@@ -102,11 +102,13 @@ public class QnAController {
         if(!file.getOriginalFilename().isEmpty()) {
             file.transferTo(new File( request.getSession().getServletContext().getRealPath("/resources/image") , file.getOriginalFilename()));
             model.addAttribute("msg", "File uploaded successfully.");
+            inquiry.setInquiryFile("empty");
         }else {
             model.addAttribute("msgs", "Please select a valid mediaFile..");
+            inquiry.setInquiryFile(file.getOriginalFilename());
         }
 
-        inquiry.setInquiryFile(file.getOriginalFilename());
+
 
         if( role.equals("user")) {
             inquiry.setInquiryUserId(inquiryId);

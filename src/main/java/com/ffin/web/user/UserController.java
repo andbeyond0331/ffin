@@ -110,7 +110,7 @@ public class UserController {
 */
 
     //Rest gogo!
-    @RequestMapping(value = "logout", method = RequestMethod.GET)
+/*    @RequestMapping(value = "logout", method = RequestMethod.GET)
     public String logout(HttpSession session, HttpServletResponse response, HttpServletRequest request) throws Exception {
         System.out.println("UserController.logout : GET");
 
@@ -131,7 +131,29 @@ public class UserController {
             }
         }
         return "redirect:/catering/mainTruckList";
+    }*/
+
+    @RequestMapping(value = "logout", method = RequestMethod.GET)
+    public ModelAndView logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        System.out.println("UserController.logout : GET");
+
+        User user = (User)session.getAttribute("user");
+
+        if(user != null){
+            session.removeAttribute("user");
+            session.invalidate();
+            Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+
+            if( loginCookie != null) {
+                loginCookie.setMaxAge(0);
+                response.addCookie(loginCookie);
+                userService.autoLogin(user.getUserId(), "none", new Date());
+            }
+        }
+        return new ModelAndView("redirect:/catering/mainTruckList");
     }
+
 
     @RequestMapping( value="addUser", method=RequestMethod.GET )
     public String addUser() throws Exception{
@@ -171,6 +193,17 @@ public class UserController {
 
         System.out.println("회원전용페이지로 이동");
         return "/views/user/getUserInfo.jsp";
+    }
+
+    @RequestMapping(value = "updatePassword/{userId}", method = RequestMethod.GET)
+    public String updatePassword(@PathVariable String userId, Model model) throws Exception {
+
+        System.out.println("UserController.updatePassword : GET");
+
+        User user = userService.getUser(userId);
+        model.addAttribute("user", user);
+
+        return "/views/user/updatePWByUser.jsp";
     }
 
     @RequestMapping(value = "getUserProfile/{userId}", method = RequestMethod.GET)

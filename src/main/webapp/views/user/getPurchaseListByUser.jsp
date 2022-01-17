@@ -272,15 +272,13 @@
       background-color: #fae100;
     }
 
-
-
   </style>
 
   <script type="text/javascript">
 
     function fncGetUserList(currentPage) {
       $("#currentPage").val(currentPage)
-      $("form").attr("method", "POST").attr("action", "/user/getPurchaseList").submit();
+      $("#search_form").attr("method", "POST").attr("action", "/user/getPurchaseList").submit();
     }
 
   </script>
@@ -313,7 +311,7 @@
         </div>
 
         <div class="col-md-6 text-right">
-          <form class="form-inline" name="detailForm" style="zoom: 90%; padding: 0; float: right;">
+          <form class="form-inline" id="search_form" name="detailForm" style="zoom: 90%; padding: 0; float: right;">
 
             <div class="form-group">
               <select class="form-control" name="searchCondition" >
@@ -384,7 +382,9 @@
                   <ul class="postcard__tagbox">
                     <li class="tag__item orderBtn"><a href="/user/getPurchaseByUser?orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-tag mr-2"></i>주문상세</a></li>
                     <c:if test="${orderDetail.odOrderNo.orderStatus eq 4 }">
-                    <li class="tag__item reviewBtn"><a href="/review/addReview?orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-clock mr-2"></i>리뷰작성</a></li>
+                    <li class="tag__item reviewBtn">
+                      <a href="/review/addReview?orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-clock mr-2"></i>리뷰작성</a>
+                    </li>
                     </c:if>
                     <%--<c:if test="${orderDetail.odOrderNo.orderStatus eq 6 }">
                       <li class="tag__item reviewBtn"><a href="/review/getReview?orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-clock mr-2"></i>리뷰확인</a></li>
@@ -402,7 +402,7 @@
     </div>
   </div>
 
-  <div class="modal fade" id="addInquiryAns" tabindex="-1" aria-labelledby="addInquiryAns" aria-hidden="true">
+  <div class="modal fade" id="addReview" tabindex="-1" aria-labelledby="addInquiryAns" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -410,7 +410,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <input type="hidden" id="hiddenInquiryNo" name ="hiddenInquiryNo" value="">
+          <input type="hidden" id="hiddenOrderNo" name ="hiddenOrderNo" value="">
           <form style="text-align: left;">
             <div class="mb-3">
               <label for="inquiryAnsTitle" class="col-form-label">답변 제목</label>
@@ -429,6 +429,7 @@
       </div>
     </div>
   </div>
+
 
 </section>
 <jsp:include page="../../common/pageNavigator_new.jsp"/>

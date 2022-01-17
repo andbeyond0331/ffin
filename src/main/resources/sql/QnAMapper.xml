@@ -59,7 +59,7 @@
         VALUES
             (#{reportUserId},
              #{reportTargetId},
-             #{reportDate},
+             now() ,
              #{reportContent},
              #{reportLink},
              #{reportType});

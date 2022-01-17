@@ -420,11 +420,11 @@
 
             <div class="btn-box" style=" margin-top: 20px;">
                 <c:if test="${truck.role eq 0 && truck.truckJoinReqStatus eq 0}">
-                    <button class="btn btn-default btn-sm nopeBtn" type="button" style="color: #110000;">가입거절</button>
+                    <button class="btn btn-default btn-sm nopeBtn" type="button">가입거절</button>
                 </c:if>
-                    <button class="btn btn-default btn-sm backBtn" type="button" style="background-color: #ecf0fd; color: #110000;">확인</button>
+                    <button class="btn btn-cancle btn-sm backBtn" type="button">확인</button>
                 <c:if test="${truck.role eq 0 && truck.truckJoinReqStatus eq 0}">
-                    <button class="btn btn-default btn-sm okBtn" type="button" style="color: #110000;">가입승인</button>
+                    <button class="btn btn-default btn-sm okBtn" type="button" >가입승인</button>
                 </c:if>
             </div>
         </div>

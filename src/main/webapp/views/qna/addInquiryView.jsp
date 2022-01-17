@@ -76,8 +76,6 @@
 		$(function () {
 			$("a[href='#' ]").click(function () {
 
-				alert("등록");
-
 				var inquiryType = $('#inquiryType').val();
 				var inquiryTitle = $('#inquiryTitle').val();
 				var inquiryContent = $('#inquiryContent').val();
@@ -117,6 +115,12 @@
 				}
 
 				if(inquiryTypeChk&&inquiryTitleChk&&inquiryContentChk){
+
+					Swal.fire({
+						text: "문의사항이 등록되었습니다.",
+						buttons: true
+					})
+
 					$("#addInquiry").attr("method", "POST").attr("action","/qna/addInquiry").attr("enctype","multipart/form-data").submit();
 				}
 

@@ -240,6 +240,14 @@
 	</update>
 
 	<!--블랙여부-->
+	<update id = "updateReportCount" parameterType="User">
+		UPDATE user
+		<set>
+			report_count	= #{reportCount} + 1
+		</set>
+		WHERE user_id = #{userId}
+	</update>
+
 	<update id = "updateBlackStatus" parameterType="User">
 		UPDATE user
 		<set>

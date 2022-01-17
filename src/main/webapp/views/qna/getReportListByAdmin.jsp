@@ -120,6 +120,8 @@
                        console.log(data.report.reportNo);
                        console.log(data.report.reportLink);
                        console.log(data.report.reportContent);
+                       console.log(data.report.reportTargetId);
+
                        var display = "<div class='card-ans mb-10'>"
                                     + "<div class='row g-0 inquiry-card'>"
                                     + "<div class='card-body'>"
@@ -131,13 +133,17 @@
                                     +"<div class='d-grid gap-2 col-6 mx-auto' style='margin: 0 55px 0 55px;'>";
 
                            if(data.report.reportProcStatus === 1){
-                               display += "<button class='btn btn-default btn-sm' onclick='nopeBtn("+data.report.reportNo+")' type='button' style='color: #110000;'>신고거절</button>";
+                               display += "<button class='btn btn-default btn-sm' onclick='nopeBtn("+data.report.reportNo+")' type='button' >신고거절</button>";
                            }
 
-                           display +="<button class='btn btn-default btn-sm' onclick='closeBtn()' type='button' style='color: #110000; background: #ecf0fd'>확인</button>";
+                           display +="<button class='btn btn-cancle btn-sm' onclick='closeBtn()' type='button' >확인</button>";
 
                            if(data.report.reportProcStatus === 1){
-                                display += "<button class='btn btn-default btn-sm' onclick='okBtn("+data.report.reportNo+")' type='button' style='color: #110000'>신고처리</button>";
+                                display += "<button class='btn btn-default btn-sm' id='okBtn' type='button'>신고처리"
+                                    + "</button>"
+                                    +"<input type='hidden' name='reportTargetIdId' value='"+data.report.reportTargetId+"'>"
+                                    +"<input type='hidden' name='reportTargetIdId' value='"+data.report.reportNo+"'>";
+
                            }
 
                            display += "</div>"
@@ -176,9 +182,15 @@
             })
         }
 
+
+
         function okBtn(reportNo){
 
-            $.ajax({
+            alert(reportNo);
+
+            var reportTargetId = $(this).next().val();
+                alert("11: "+reportTargetId);
+       /*     $.ajax({
                 url: "/qna/json/updateReportProcStatus",
                 method: "POST",
                 dataType: "json",
@@ -186,23 +198,47 @@
                     "Accept" : "application/json",
                     "Content-Type" : "application/json"
                 },
-                data: {
+                data: JSON.stringify({
                     reportNo : reportNo,
-                    reportProcStatus : 2
-                },
+                    reportProcStatus : 2,
+                    reportTargetId : reportTargetId
+                }) ,
                 success :function (data) {
                     console.log(data);
                     window.location.reload();
                 }
-            })
+            });*/
         }
 
         function closeBtn() {
             $('.card-ans').remove();
         }
-
-
-
+        $(function() {
+            $("body").on("click", "#okBtn", function () {
+                var reportTargetId = $(this).next().val();
+                var reportNo = $(this).next().next().val();
+                console.log("reportTargetId : "+reportTargetId);
+                console.log("reportNo : "+reportNo)
+                $.ajax({
+                    url: "/qna/json/updateReportProcStatus",
+                    method: "POST",
+                    dataType: "json",
+                    header : {
+                        "Accept" : "application/json",
+                        "Content-Type" : "application/json"
+                    },
+                    data: {
+                        reportNo : reportNo,
+                        reportProcStatus : 2,
+                        reportTargetId : reportTargetId
+                    } ,
+                    success :function (data) {
+                        console.log(data);
+                        window.location.reload();
+                    }
+                });
+            });
+        });
     </script>
 
 
@@ -298,6 +334,7 @@
                     <div class="col-md-2 report-con">
                         <div class="card-body">
                             <input type="hidden" id="reportNo" name ="reportNo" value="${report.reportNo}">
+                            <input type="hidden" id="reportTargetId" name ="reportTargetId" value="${report.reportTargetId}">
                             <c:choose>
                                 <c:when test="${report.reportType eq 1}">
                                     <p class="card-text"><small class="text-muted">광고/도배</small></p>
@@ -354,8 +391,8 @@
                     </div>
                 </div>
             </div>
-
                 <div id="${report.reportNo}"></div>
+                <div id="${report.reportTargetId}"></div>
             </c:forEach>
 
             <%-- ajax ex --%>

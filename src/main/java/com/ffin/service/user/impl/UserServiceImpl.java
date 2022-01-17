@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.xml.crypto.Data;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("userServiceImpl")
 public class UserServiceImpl implements UserService {
@@ -180,6 +177,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean nowPwCheck(String userId, String userPassword) throws Exception {
+        System.out.println("UserServiceImpl.nowPwCheck");
+        boolean result = true;
+        User user = userDao.getUser(userId);
+        if(!Objects.equals(user.getUserPassword(), userPassword)) {
+            result = false;
+        }
+        return result;
+    }
+
+    @Override
     public void updatePassword(User user) throws Exception {
         System.out.println("UserServiceImpl.updatePassword");
         userDao.updatePassword(user);
@@ -212,6 +220,12 @@ public class UserServiceImpl implements UserService {
     public void updateUserByeStatus(User user) throws Exception {
         System.out.println("UserServiceImpl.updateUserByeStatus");
         userDao.updateUserByeStatus(user);
+    }
+
+    @Override
+    public void updateReportCount(User user) throws Exception {
+        System.out.println("UserServiceImpl.updateReportCount");
+        userDao.updateReportCount(user);
     }
 
     @Override

@@ -51,6 +51,8 @@ public interface UserDao {
 
     //회원탈퇴
     public void updateUserByeStatus(User user) throws Exception;
+    //신고count
+    public void updateReportCount(User user) throws Exception;
     //블랙여부
     public void updateBlackStatus(User user) throws Exception;
 
