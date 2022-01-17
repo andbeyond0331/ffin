@@ -353,6 +353,13 @@ public class MenuController {
 //            model.addAttribute("file", "error");
 //        }
 
+//        //대표메뉴 로직
+//        if(menu.getIsSigMenu()==0){
+//
+//        }else{
+//
+//        }
+
 
         int menuNo = menuService.addMenu(menu);
 

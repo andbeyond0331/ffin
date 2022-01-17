@@ -93,6 +93,135 @@
         }
     </style>
 
+
+    <%--리뷰 css--%>
+    <style>
+
+        *{
+            margin: 0px;
+            padding: 0px;
+            font-family: poppins;
+            box-sizing: border-box;
+        }
+        a{
+            text-decoration: none;
+        }
+        #testimonials{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width:100%;
+        }
+        .testimonial-heading{
+            letter-spacing: 1px;
+            margin: 30px 0px;
+            padding: 10px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .testimonial-heading span{
+            font-size: 1.3rem;
+            color: #252525;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .testimonial-box-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            width:100%;
+        }
+        .testimonial-box{
+            width:500px;
+            box-shadow: 2px 2px 30px rgba(0,0,0,0.1);
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 15px;
+            cursor: pointer;
+        }
+        .profile-img{
+            width:50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+        .profile-img img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        .profile{
+            display: flex;
+            align-items: center;
+        }
+        .name-user{
+            display: flex;
+            flex-direction: column;
+        }
+        .name-user strong{
+            color: #3d3d3d;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+        .name-user span{
+            color: #979797;
+            font-size: 0.8rem;
+        }
+        .reviews{
+            color: #f9d71c;
+        }
+        .box-top{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .client-comment p{
+            font-size: 0.9rem;
+            color: #4b4b4b;
+        }
+        .testimonial-box:hover{
+            transform: translateY(-10px);
+            transition: all ease 0.3s;
+        }
+
+        @media(max-width:1060px){
+            .testimonial-box{
+                width:80%;
+                padding: 10px;
+            }
+        }
+        @media(max-width:790px){
+            .testimonial-box{
+                width:100%;
+            }
+            .testimonial-heading h1{
+                font-size: 1.4rem;
+            }
+        }
+        @media(max-width:340px){
+            .box-top{
+                flex-wrap: wrap;
+                margin-bottom: 10px;
+            }
+            .reviews{
+                margin-top: 10px;
+            }
+        }
+        ::selection{
+            color: #ffffff;
+            background-color: #252525;
+        }
+    </style>
+
     <script type="text/javascript">
 
         function fncGetUserList(currentPage) {
@@ -109,7 +238,7 @@
         }
 
 
-        /* 문의 내용 펼치기 */
+        /* 리뷰 내용 펼치기 */
         $(function () {
 
             $('.mb-10').click(function () {
@@ -132,6 +261,124 @@
                             + "<div class='row g-0 inquiry-card'>"
                             + "<div class='card-body'>"
                             + "<div style='margin: 0 55px 0 55px;'>";
+                        display += "<hr>";
+                        for(var i in Data.orderDetail){
+                            display+=""+
+                                ""+
+                                ""+
+                                ""+
+                                ""+
+                                "";
+                        }
+
+
+
+                        // alert(Data.review.rvTruckCmtContent);
+
+                        // 스타일 바꾸기 시도 시작
+                        display +="<div class=\"testimonial-box\">"+
+                        "<input type=\"hidden\" name=\"rvNo\" value=\""+Data.review.rvNo+"\">"+
+                        "<div class=\"box-top\">"+
+                        "<div class=\"profile\">"+
+                        " <div class=\"profile-img\">"+
+                        " <img src=\"/resources/image/"+Data.review.userProImg+"\" />"+
+                        "</div>"+
+                        "<div class=\"name-user\">"+
+                        "<strong>"+Data.review.rvUserId+"</strong>"+
+                        "<span>"+Data.review.rvRegTime+"</span>"+
+                        "</div>"+
+                        "</div>"+
+                        "<div class=\"reviews\">";
+                        if(Data.review.rvStar==0){
+                            display+=""+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(Data.review.rvStar==0.5){
+                            display+=""+
+                                "<i class=\"fas fa-star-half\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(Data.review.rvStar==1){
+                            display+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(Data.review.rvStar==1.5){
+                            display+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star-half\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(Data.review.rvStar==2){
+                            display+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(Data.review.rvStar==2.5){
+                            display+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star-half\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(Data.review.rvStar==3){
+                            display+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(Data.review.rvStar==3.5){
+                            display+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star-half\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(Data.review.rvStar==4){
+                            display+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(Data.review.rvStar==4.5){
+                            display+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star-half\"></i>";
+                        }else if(Data.review.rvStar==5){
+                            display+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>";
+                        }
+                        display+=""+
+                            "</div>"+
+                            "</div>"+
+                            "<div class=\"client-comment\">"+
+                            "<p>"+Data.review.rvContent+"</p>"+
+                            "</div>"+
+                            "</div>"+
+                            ""+
+
+                            "";
+
+                        //스타일 바꾸기 시도 끝
 
                         if(Data.review.rvImg1){
                             display += "<img src='../../resources/image/"+Data.review.rvImg1+"' class='card-img-top' alt='reviewImg' style='width: 200px;'>";
@@ -145,11 +392,10 @@
                             display += "<img src='../../resources/image/"+Data.review.rvImg3+"' class='card-img-top' alt='reviewImg' style='width: 200px;'>";
                         }
 
-                        display  += "<p class='card-text'>"+Data.review.rvContent+"</p>"
-                            + "</div>"
-                            + "<hr style='border-width:2px;'/>";
-                        // alert(Data.review.rvTruckCmtContent);
+                        // display  += "<p class='card-text'>"+Data.review.rvContent+"</p>"
+                        //     + "</div>";
 
+                        display +="<hr style='border-width:2px;'/>";
                         var role = $('input[name="role"]').val();
 
                         if(!Data.review.rvTruckCmtContent){
@@ -169,7 +415,7 @@
                         } else {
                             display += "<div style='margin: 0 55px 0 55px;'>"
                                 + "<div style='display: flex; justify-content: space-between'>"
-                                + "<h6 class='card-title'><span class=\"badge badge-warning\">사장님 댓글 &nbsp&nbsp</span>"+Data.review.rvTruckCmtContent+"</h6>"
+                                + "<h6 class='card-title'><span class=\"badge badge-warning\">사장님 댓글</span> &nbsp&nbsp"+Data.review.rvTruckCmtContent+"</h6>"
                                 // + "<p class='card-text'>사장님 댓글 작성 일시 : </p>"
                                 + "<p class='card-text'>"+Data.review.rvTruckCmtRegTime+"</p>"
                                 + "</div>"
@@ -326,7 +572,13 @@
                     </div>
                     <div class="col-md-2 inquiry-con">
                         <div class="card-body">
-                            <p class="card-text"><small class="text-muted"><strong>사장님 댓글</strong></small></p>
+                            <c:if test="${sessionScope.role eq 'truck'}">
+                                <p class="card-text"><small class="text-muted"><strong>사장님 댓글</strong></small></p>
+                            </c:if>
+                            <c:if test="${sessionScope.role eq 'user'}">
+                                <p class="card-text"><small class="text-muted"><strong>리뷰 별점</strong></small></p>
+                            </c:if>
+
                         </div>
                     </div>
                 </div>
@@ -366,13 +618,96 @@
                         </div>
                         <div class="col-md-2 inquiry-con">
                             <div class="card-body">
-
+                                <c:if test="${sessionScope.role eq 'truck'}">
                                     <c:if test="${review.rvTruckCmtContent ne null}">
                                         <p class="card-text"><h6><span class="badge badge-secondary">있음</span></h6></p>
                                     </c:if>
                                     <c:if test="${review.rvTruckCmtContent eq null}">
                                         <p class="card-text"><h6><span class="badge badge-secondary">없음</span></h6></p>
                                     </c:if>
+                                </c:if>
+                                <c:if test="${sessionScope.role eq 'user'}">
+                                    <c:if test="${review.rvStar eq 0}">
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </c:if>
+                                   <c:if test="${review.rvStar eq 0.5}">
+                                       <i class="fas fa-star-half"></i>
+                                       <i class="far fa-star"></i>
+                                       <i class="far fa-star"></i>
+                                       <i class="far fa-star"></i>
+                                       <i class="far fa-star"></i>
+                                    </c:if>
+                                   <c:if test="${review.rvStar eq 1}">
+                                       <i class="fas fa-star"></i>
+                                       <i class="far fa-star"></i>
+                                       <i class="far fa-star"></i>
+                                       <i class="far fa-star"></i>
+                                       <i class="far fa-star"></i>
+                                    </c:if>
+                                   <c:if test="${review.rvStar eq 1.5}">
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star-half"></i>
+                                       <i class="far fa-star"></i>
+                                       <i class="far fa-star"></i>
+                                       <i class="far fa-star"></i>
+                                    </c:if>
+                                   <c:if test="${review.rvStar eq 2}">
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star"></i>
+                                       <i class="far fa-star"></i>
+                                       <i class="far fa-star"></i>
+                                       <i class="far fa-star"></i>
+                                    </c:if>
+                                   <c:if test="${review.rvStar eq 2.5}">
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star-half"></i>
+                                       <i class="far fa-star"></i>
+                                       <i class="far fa-star"></i>
+                                    </c:if>
+                                   <c:if test="${review.rvStar eq 3}">
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star"></i>
+                                       <i class="far fa-star"></i>
+                                       <i class="far fa-star"></i>
+                                    </c:if>
+                                   <c:if test="${review.rvStar eq 3.5}">
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star-half"></i>
+                                       <i class="far fa-star"></i>
+                                    </c:if>
+                                   <c:if test="${review.rvStar eq 4}">
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star"></i>
+                                       <i class="far fa-star"></i>
+                                    </c:if>
+                                   <c:if test="${review.rvStar eq 4.5}">
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star-half"></i>
+                                    </c:if>
+                                   <c:if test="${review.rvStar eq 5}">
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star"></i>
+                                       <i class="fas fa-star"></i>
+                                    </c:if>
+
+                                </c:if>
+
+
 
 
                             </div>

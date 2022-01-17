@@ -8,6 +8,8 @@
     <title>메뉴 관리 페이지</title>
     <jsp:include page="../../common/lib.jsp"/>
 
+
+
     <style>
         .div.flex.card.h-100{
             float:left;
@@ -64,7 +66,7 @@
         function applyOptionGroupNamer(){ // 모달에서 옵션그룹이름 적용누르면 돌아가는 function
 
             var modal = $('#optionGroupModal');
-            realOptionGroupName = modal.find('input#optionGroupName.form-control').val();
+            realOptionGroupName = modal.find('input#optionGroupNamer.form-control').val();
 
             console.log(realOptionGroupName + " : realOptionGroupName");
             //alert(realOptionGroupName)
@@ -93,7 +95,7 @@
 
 
 
-
+// 옵션 모달에서 옵션 추가 버튼 클릭 시?
         $(function(){
 
 
@@ -103,8 +105,8 @@
             modalOp.find('button.btn.btn-primary.addOption').on("click", function(){
                 //countOp++;
 
-                var realOptionName = modalOp.find('input#optionName.form-control').val();
-                var realOptionPrice = modalOp.find('input#optionPrice.form-control').val();
+                var realOptionName = modalOp.find('input#optionNamer.form-control').val();
+                var realOptionPrice = modalOp.find('input#optionPricer.form-control').val();
 
                 console.log(realOptionName +" : realOptionName");
                 console.log(realOptionPrice +" : realOptionPrice");
@@ -126,8 +128,8 @@
 
                 $('#optionGroupModal').find('.modal-body').append($(divElemOp));
 
-                modalOp.find('input#optionName.form-control').val("");
-                modalOp.find('input#optionPrice.form-control').val("");
+                modalOp.find('input#optionNamer.form-control').val("");
+                modalOp.find('input#optionPricer.form-control').val("");
 
 
             });
@@ -137,7 +139,7 @@
         //modal창 안에서의 적용버튼 눌렀을 때 로직
         $(function(){
 
-            var modalApply = $('#exampleModal');
+            var modalApply = $('#optionGroupModal');
 
             $(document).on("click", "#add-optionGroup", function(){
                 // modalApply.find('#add-optionGroup').on("click", function(){
@@ -167,21 +169,21 @@
 
                     divElemApply1 = "</hr>"+
                         "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\">"+
-                        " <label for=\"optionGroupName\" class=\"col-sm-offset-1 col-sm-3 control-label\">옵션그룹이름</label>"+
+                        " <label for=\"optionGroupName\" class=\"col-sm-offset-1 col-sm-5 control-label\">옵션그룹이름</label>"+
                         "<div class=\"col-sm-4\">"+
                         "<input type=\"text\" class=\"form-control\" id=\"optionGroupName\" name=\"optionGroupName\"  value=\""+applyOptionGroupName+"\" placeholder=\""+applyOptionGroupName+"\">"+
                         "</div>"+
                         "</div>"+
                         "</hr>";
                     divElemApply2 =  "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\">"+
-                        " <label for=\"optionName\" class=\"col-sm-offset-1 col-sm-3 control-label\">옵션이름</label>"+
+                        " <label for=\"optionName\" class=\"col-sm-offset-1 col-sm-5 control-label\">옵션이름</label>"+
                         "<div class=\"col-sm-4\">"+
                         "<input type=\"text\" class=\"form-control\" id=\"optionName\" name=\"optionName\"  value=\""+finalOptionName+"\" placeholder=\""+finalOptionName+"\">"+
                         "</div>"+
                         "</div>"+
                         "</hr>"+
                         "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\">"+
-                        " <label for=\"optionPrice\" class=\"col-sm-offset-1 col-sm-3 control-label\">옵션가격</label>"+
+                        " <label for=\"optionPrice\" class=\"col-sm-offset-1 col-sm-5 control-label\">옵션가격</label>"+
                         "<div class=\"col-sm-4\">"+
                         "<input type=\"text\" class=\"form-control\" id=\"optionPrice\" name=\"optionPrice\"  value=\""+finalOptionPrice+"\" placeholder=\""+finalOptionPrice+"\">"+
                         "</div>"+
@@ -280,7 +282,7 @@
 
 <!--modal1(메뉴 추가)-->
 <div class="modal fade" id="menuModal" aria-hidden="true" aria-labelledby="menuModalLabel" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="menuModalLabel">메뉴 추가</h5>
@@ -315,7 +317,7 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="col-sm-10">
+                        <div class="col-sm-10" id="sigMenu">
 
                             <div class="form-check form-switch" id="isThereSigMenu">
                             </div>
@@ -345,6 +347,8 @@
                         </div>
                         <div id="image3preview" class="col-sm-10"></div>
                     </div>
+
+                    <hr>
 
                     <script>
 
@@ -462,8 +466,8 @@
             <div class="modal-body">
                 <!--옵션그룹추가 시이이이작-->
                 <div class="form-group" id="rrrrrr" name="rrrrrr">
-                    <label for="optionGroupName" class="col-from-label">옵션그룹이름</label>
-                    <input type="text" class="form-control" id="optionGroupName" value="">
+                    <label for="optionGroupNamer" class="col-from-label">옵션그룹이름</label>
+                    <input type="text" class="form-control" id="optionGroupNamer" value="">
                 </div>
                 <!--옵션그룹추가 끄으으으읕-->
             </div>
@@ -487,10 +491,10 @@
             <div class="modal-body">
                 <!--옵션추가 시이이이이작-->
                 <span>옵션 이름
-                                <input type="text" class="form-control" id="optionName" value="${optionGroup.optionName}"></span>
+                                <input type="text" class="form-control" id="optionNamer" value="${optionGroup.optionName}"></span>
 
                 <span>옵션 가격</span>
-                <input type="text" class="form-control" id="optionPrice" value="${optionGroup.optionPrice}" placeholder="옵션 가격 - 숫자를 입력해주세요.">
+                <input type="text" class="form-control" id="optionPricer" value="${optionGroup.optionPrice}" placeholder="옵션 가격 - 숫자를 입력해주세요.">
                 <!--옵션추가 끄으으으으읕-->
 
             </div>
@@ -514,13 +518,240 @@
     </div>
 
     <!--메뉴 추가 버튼-->
-    <a class="btn btn-warning" data-toggle="modal" href="#menuModal" role="button" >메뉴 추가</a>
+    <a class="btn btn-warning" role="button" onclick="javascript:fncSigMenu('${truck.truckId}')" >메뉴 추가</a>
+<%--    <a class="btn btn-warning" data-toggle="modal" href="#menuModal" role="button" onclick="fncSigMenu(${truck.truckId})" >메뉴 추가</a> todo : 대표메뉴 로직--%>
     <hr/>
+
+    <script>
+        // 메뉴 추가 눌렀을 때 메뉴 없으면(메뉴가 하나라도 있다면 대표메뉴일수밖에 없음) 대표메뉴 스위치 버튼 선택상태로 되어 있고 비활성화(못 누르도록, 눌러도 alert로 "대표메뉴는 최소 하나 이상이어야 합니다".)
+        //                  대표메뉴 있으면 대표메뉴 스위치 버튼 선택안함 상태로 되어 있고, 누르면 대표메뉴가 이 메뉴로 바뀝니다. confirm창
+
+        function fncSigMenu(truckId){
+
+            //
+            $.ajax({
+
+                url:"/menu/json/isThereSigMenu/"+truckId,
+                method:"get",
+                success:function(data){
+                    console.log("data.menu : " + data.menu[0]);
+                    var isSigMenuButton="";
+                    if (data.menu[0]==undefined){
+                        iamSig=null;
+                        iamIsThereSM = 'no';
+                        isSigMenuButton +=
+                            " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" name=\"isSigMenu\" value=\"1\" data-val=\"disabled\" checked disabled>"+
+                            "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴여부</label>";
+
+                    }else{
+
+                        iamSig=data.menu;
+                        iamIsThereSM = 'yes';
+                        isSigMenuButton+=
+
+                            " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" name=\"isSigMenu\" value=\"0\" data-val=\"abled\">"+
+                            "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
+
+
+                        // $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton); //todo 대표메뉴가 없어서 나온 버튼이니까 disabled 해놓고 클릭 시 대표메뉴는 최소 1개 있어야 합니다. alert 띄우기
+                    }
+                    $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
+
+                }
+
+
+            });
+
+            $('#menuModal').modal('show');
+
+        }
+
+
+        //==========대표메뉴를 클릭했을 때!===========
+
+        $(function(){
+
+            var divIsSigMenu = $('div#isThereSigMenu.form-check.form-switch');
+
+            $("div#sigMenu").on("click", function(){
+
+                alert("onclick");
+                var isSigMenuButton ="";
+
+                if(divIsSigMenu.find('input#isSigMenu').data("val")=='disabled'){
+                    alert("대표메뉴는 최소 1개 이상 있어야 합니다.");
+                }else if(divIsSigMenu.find('input#isSigMenu').val()==0){
+
+                    if(!confirm("대표메뉴가 이미 있습니다. 변경하시겠습니까?")){
+                        isSigMenuButton+=
+                            " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" value=\"0\" data-val=\"abled\" name=\"isSigMenu\">"+
+                            "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
+                        $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
+                    }else{
+                        isSigMenuButton +=
+                            " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" value=\"1\" data-val=\"abled\" name=\"isSigMenu\" checked>"+
+                            "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
+                        $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
+
+                    }
+                }else{
+
+                    if(confirm("이전 대표메뉴로 다시 변경하시겠습니까?")){
+                        isSigMenuButton+=
+                            " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" value=\"0\" data-val=\"abled\" name=\"isSigMenu\">"+
+                            "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
+                        $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
+                    }else{
+                        isSigMenuButton +=
+                            " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" value=\"1\" data-val=\"abled\" name=\"isSigMenu\" checked>"+
+                            "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
+                        $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
+
+                    }
+
+                }
+
+
+            });
+
+        });
+    </script>
+
+
 
 
 
 
 </div>
+
+
+<!--20220117 메뉴 스타일 바꾸기 시도 -->
+
+<style>
+    .single_menu {
+        position: relative;
+        margin-bottom: 75px;
+        transition: .3s;
+    }
+    .single_menu:hover img{
+        -webkit-clip-path: polygon(0% 0%, 100% 0, 100% 50%, 100% 100%, 0% 100%);
+        clip-path: polygon(0% 0%, 100% 0, 100% 50%, 100% 100%, 0% 100%);
+
+    }
+    .single_menu img {
+        width: 33%;
+        position: absolute;
+        height: 140px;
+        -webkit-clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+        clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+        transition: .3s;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    .menu_content {
+        padding-left: 200px;
+    }
+    .menu_content h4 {
+        font-size: 25px;
+        font-weight: 300;
+        border-bottom: 1px dashed #c0392b;
+        line-height: 2;
+        text-transform: capitalize;
+    }
+    .menu_content h4 span {
+        font-size: 25px;
+        font-weight: 800;
+        float: right;
+        font-style: italic;
+        color: #c0392b;
+    }
+    .menu_content p {
+        font-weight: 200;
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+    .menu_btn.btn.btn-danger {
+        margin: 0 auto;
+        display: block;
+        width: 140px;
+    }
+    /*Menu ends*/
+    .menu_btn.btn.btn-danger {
+        margin: 0 auto;
+        display: block;
+        width: 140px;
+    }
+    .btn.btn-danger {
+        background: #c0392b;
+        border: 1px solid #c0392b;
+        transition: .3s;
+        position: relative;
+        z-index: 1;
+        text-transform: capitalize;
+        font-weight: 700;
+        overflow: hidden;
+        padding: 15px 25px;
+    }
+    .btn.btn-danger::before {
+        position: absolute;
+        content: '';
+        background: #e74c3c;
+        width: 100%;
+        height: 100%;
+        left: -100%;
+        top: 100%;
+        transition: .3s;
+        z-index: -1;
+    }
+    .btn.btn-danger:hover:before{
+        top: 0;
+        left: 0;
+    }
+</style>
+<div class="container-fluid content-row">
+    <div class="row mb-3">
+
+        <c:set var="i" value="0"/>
+        <c:forEach var="menu" items="${list}">
+            <c:set var="i" value="${i+1}"/>
+            <div class="single_menu">
+                <img src="/resources/menu/${menu.menuImg1}" alt="${menu.menuName}">
+                <div class="menu_content">
+                    <h4>${menu.menuName}  <span>${menu.menuPrice}원</span></h4>
+                    <p>${menu.menuDetail}</p>
+                </div>
+            </div>
+<%--            <div class="flex card h-100" style="width: 17rem; margin-bottom:15px; margin-left: 10px;">--%>
+<%--                <img class="card-img-top" src="/resources/menu/${menu.menuImg1}" alt="Card image cap"--%>
+<%--                     style="border-bottom: 1px solid #eee; height: 200px;">--%>
+<%--                <div class="card-body" style="text:center ">--%>
+<%--                    <h3 class="align-content-center"> <strong style="text:center;">${menu.menuName}</strong></h3>--%>
+<%--                    <h3> ${menu.menuPrice}원</h3>--%>
+<%--                    <ul class='card-body-ul'>--%>
+<%--                        <h4>${menu.menuDetail}</h4>--%>
+<%--                    </ul>--%>
+<%--                    <div class="btn-detail">--%>
+<%--                        <button class="button btn-warning" name="deleteMenu" onclick="deleteMenu(${menu.menuNo});">--%>
+<%--                            메뉴 삭제하기--%>
+<%--                            <input type="hidden" name="menuNo" value="${menu.menuNo}"/></button>--%>
+<%--                        <button class="button is-warning is-light" name="getMenu"--%>
+<%--                                style='margin-left: 100px; margin-bottom: 13px; height: 25px'--%>
+<%--                                onclick="updateMenu(${menu.menuNo});"--%>
+<%--                        >--%>
+<%--                            메뉴 수정하기--%>
+<%--                            <input type="hidden" name="menuNo" value="${menu.menuNo}"/>--%>
+<%--                        </button>--%>
+
+<%--                    </div>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+            <%--</div>--%>
+        </c:forEach>
+    </div>
+
+</div>
+
+
 <!--  메뉴 목록 div Start /////////////////////////////////////-->
 
 
@@ -541,13 +772,13 @@
                     </ul>
                     <div class="btn-detail">
                         <button class="button btn-warning" name="deleteMenu" onclick="deleteMenu(${menu.menuNo});">
-                            메뉴 삭제하기
+                            메뉴 삭제
                             <input type="hidden" name="menuNo" value="${menu.menuNo}"/></button>
                         <button class="button is-warning is-light" name="getMenu"
                                 style='margin-left: 100px; margin-bottom: 13px; height: 25px'
                                 onclick="updateMenu(${menu.menuNo});"
                         >
-                            메뉴 수정하기
+                            메뉴 수정
                             <input type="hidden" name="menuNo" value="${menu.menuNo}"/>
                         </button>
 

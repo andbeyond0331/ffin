@@ -3,7 +3,9 @@ package com.ffin.web.review;
 import com.ffin.common.Search;
 import com.ffin.service.domain.Inquiry;
 import com.ffin.service.domain.Menu;
+import com.ffin.service.domain.Purchase;
 import com.ffin.service.domain.Review;
+import com.ffin.service.purchase.PurchaseService;
 import com.ffin.service.review.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,6 +28,10 @@ public class ReviewRestController {
     @Autowired
     @Qualifier("reviewServiceImpl")
     private ReviewService reviewService;
+
+    @Autowired
+    @Qualifier("purchaseServiceImpl")
+    private PurchaseService purchaseService;
 
     public ReviewRestController(){
         System.out.println(this.getClass());
@@ -74,7 +80,7 @@ public class ReviewRestController {
     @ResponseBody
     public ModelAndView getReviewDetail(@PathVariable("rvNo")int rvNo, HttpServletRequest request, HttpServletResponse response) throws Exception{
         /*
-            리뷰 상세정보 조회 !
+            리뷰 상세정보 조회 ! orderDetail도 뿌려주기~
          */
         request.setCharacterEncoding("utf-8");
 
@@ -84,8 +90,14 @@ public class ReviewRestController {
         Review review = reviewService.getReview(rvNo);
         System.out.println("rest.getReviewDetail.review : " + review);
 
+//        Purchase purchase = purchaseService.getPurchase(review.getRvOrderNo());
+
+        Map orderDetail = purchaseService.getOrderDetail(review.getRvOrderNo());
+        System.out.println("orderDetail = " + orderDetail);
+
         ModelAndView mv = new ModelAndView("jsonView");
         mv.addObject("review", review);
+        mv.addObject("orderDetail", orderDetail);
 
 
 
