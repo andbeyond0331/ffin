@@ -314,6 +314,7 @@ public class CateringController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("list", map.get("list"));
+   //     modelAndView.setViewName("/views/home.jsp");
         modelAndView.setViewName("/views/home.jsp");
 /* 수정해야할수도잇음 */
 

@@ -109,7 +109,7 @@
     <br/><br/>
     <a href="/views/user/addUserInfo.jsp" class="btn-warning">일반회원가입</a>
     <a href="/views/truck/addTruckView.jsp" class="btn-warning">사업자회원가입</a>
-    <a href="/views/home.jsp" class="btn-warning">메인화면으로</a>
+    <a href="/catering/mainTruckList" class="btn-warning">메인화면으로</a>
 </div>
 </c:if>
     <jsp:include page="/views/footer.jsp"/>

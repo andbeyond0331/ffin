@@ -136,7 +136,7 @@
             <div class="form-group">
                 <button id="searchBtn" type="button" onclick="idSearch_click()" class="btn btn-primary">확인</button>
 
-                <a class="btn btn-danger" href="/views/home.jsp">취소</a>
+                <a class="btn btn-danger" href="/catering/mainTruckList">취소</a>
             </div>
         </div>
 <%--        <div id="searchP" style="display: none;">--%>

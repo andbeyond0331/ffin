@@ -143,7 +143,7 @@
             탈퇴하기
         </button>
         <input type="button" class="btn btn-dark" value="취소"
-               onclick="javascript:window.location='/views/home.jsp'">
+               onclick="javascript:window.location='/catering/mainTruckList'">
     </form>
 
 

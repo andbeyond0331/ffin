@@ -152,7 +152,7 @@
 <!-- ToolBar Start /////////////////////////////////////-->
 <div class="navbar  navbar-default">
 	<div class="container">
-		<a class="navbar-brand" href="/home.jsp">F.FIN</a>
+		<a class="navbar-brand" href="/catering/mainTruckList">F.FIN</a>
 	</div>
 </div>
 <!-- ToolBar End /////////////////////////////////////-->
