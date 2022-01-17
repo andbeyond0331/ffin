@@ -276,7 +276,7 @@ public class PurchaseController {
 
     @RequestMapping(value = "getOrderUserList")
     public String getOrderUserList(@ModelAttribute("search")Search search, HttpSession session,Model model)throws Exception{
-         System.out.println("UserController.getPurchaseList");
+         System.out.println("getOrderList\n\n");
 
     User user = (User) session.getAttribute("user");
     String userId = user.getUserId();
@@ -291,26 +291,34 @@ public class PurchaseController {
 
     Map<String, Object> map = purchaseService.getOrderUserList(search, userId);
 
+
 //        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
 //        System.out.println("resultPage :: "+resultPage);
-/*List<Purchase> list = new ArrayList<>();
-list.add( map.get("list"));*/
+        ArrayList list = new ArrayList<>();
+        list.add(map.get("list").toString());
+        System.out.println("주문량을 확인"+map.size());
+        System.out.println("list"+map.get("list"));
+        System.out.println("list에 담은 정보");
+
+        System.out.println("주문량을 확인하기 위해서");
+        System.out.println("map = "+map);
+        for(int i =0; i<list.size(); i++){
+        }
         model.addAttribute("list",map.get("list"));
 //        model.addAttribute("resultPage", resultPage);
         model.addAttribute("search",search);
-        System.out.println("주문량을 확인하기 위해서");
-        System.out.println("map = "+map);
+
         return "forward:/views/purchase/getOrderUserList.jsp";
 }
 
 
-/*    //현재주문정보 화면으로 보여줄 데이터를 가져온다.
+    //현재주문정보 화면으로 보여줄 데이터를 가져온다.
     @RequestMapping(value = "getOrderUser", method= RequestMethod.GET)
-    public ModelAndView getOrderUser(@RequestParam("userId") String userId, ModelAndView model,Purchase purchase) throws Exception {
+    public ModelAndView getOrderUser(@RequestParam("orderNo") int orderNo, ModelAndView model,Purchase purchase) throws Exception {
 
         System.out.println("/purchase/getOrderUser : GET");
-        System.out.println("userId = " + userId );
-            purchase = purchaseService.getOrderUserList(userId);
+
+        purchase.setOrderNo(orderNo);
             purchase = purchaseService.getPurchase(purchase.getOrderNo());
             Map map = new HashMap();
             map = purchaseService.getOrderDetail(purchase.getOrderNo());
@@ -322,7 +330,7 @@ list.add( map.get("list"));*/
 
     return  model;
 
-    }*/
+    }
 
 
 
@@ -361,19 +369,22 @@ list.add( map.get("list"));*/
         } else if (request.getParameter("search").equals("0")) {
             search.setSearchCondition(request.getParameter("search"));
         }
-
+        int check = 0;
         Map map = purchaseService.getOrderList(search,truckId);
         Map orderMap = new HashMap();
         if(request.getParameter("orderNo") == null || request.getParameter("orderNo") == ""  ) {
             int orderNo = purchaseService.getLastOrderNo(truckId);
             orderMap = purchaseService.getOrderDetail(orderNo);
             purchase = purchaseService.getPurchase(orderNo);
+            System.out.println("11111111111111111111111111111");
+            check = 1;
 
         }else {
 
             int orderNo = Integer.parseInt(request.getParameter("orderNo"));
             orderMap = purchaseService.getOrderDetail(orderNo);
             purchase = purchaseService.getPurchase(orderNo);
+            System.out.println("2222222222222222222222222222222");
         }
 
         truck.setTruckBusiStatus(purchaseService.getTruckBusiStatus(truckId));
@@ -384,6 +395,7 @@ list.add( map.get("list"));*/
         model.addAttribute("purchase",purchase);
         model.addAttribute("search",search);
         model.addAttribute("truckId",truck);
+        model.addAttribute("check",check);
 
         return "forward:/views/purchase/getOrderTruckList.jsp";
     }
