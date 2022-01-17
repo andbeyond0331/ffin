@@ -37,7 +37,7 @@
 
 <form class="cart">
     <div class="bs-canvas bs-canvas-right position-fixed bg-light h-100">
-        <header class="bs-canvas-header p-3 bg-primary overflow-auto" style="background-color: #ffba49 !important;">
+        <header class="bs-canvas-header p-3 bg-primary overflow-auto" id="mainCartCancel" style="background-color: #ffba49 !important;">
             <button type="button" class="bs-canvas-close float-left close" aria-label="Close"><span aria-hidden="true"
                                                                                                     class="text-light">&times;</span>
             </button>
@@ -325,12 +325,19 @@
             return false;
         });
 
-        $(document).on('click', '.bs-canvas-close, .bs-canvas-overlay, .btn.btn.btn-primary', function () {
+        $(document).on('click', 'div.bs-canvas.bs-canvas-right.position-fixed.bg-light.h-100', function () {
             var elm = $(this).hasClass('bs-canvas-close') ? $(this).closest('.bs-canvas') : $('.bs-canvas');
             elm.removeClass('mr-0 ml-0');
             $('.bs-canvas-overlay').remove();
             return false;
         });
+
+       /* $(document).on('click', '.bs-canvas-close, .bs-canvas-overlay, .btn.btn.btn-primary', function () {
+            var elm = $(this).hasClass('bs-canvas-close') ? $(this).closest('.bs-canvas') : $('.bs-canvas');
+            elm.removeClass('mr-0 ml-0');
+            $('.bs-canvas-overlay').remove();
+            return false;
+        });*/
 
 
     });
@@ -366,13 +373,13 @@
 
         });
     });
-    $(function () {
+/*    $(function () {
         $("button.btn.btn-primary:Contains('json')").click(function () {
             alert("ddk");
             to_ajax();
             $("form.cart").attr("method", "POST").attr("action", "/purchase/addCart").submit();
         });
-    });
+    });*/
 
     function main_cart() {
         var reOrderNo;
