@@ -970,7 +970,7 @@
                     console.log("commentUserId: "+commentUserId)
                     console.log("userProImg: "+userProImg)
 
-                    listHtml += "<div style='display: flex; align-items: center; justify-content: space-between; margin-top: 10px; max-width: 350px;' class='row replyrow reply" + commentNo + "'>";
+                    listHtml += "<div style='display: flex; align-items: center; justify-content: space-between; margin-top: 10px; padding: 5px;' class='row replyrow reply" + commentNo + "'>";
 
                     if(commentContent == ""){		// 삭제된 댓글일때
                         listHtml += "	<div>";
@@ -1594,10 +1594,10 @@
                     +"</svg>"
                     +"</span> <span id='hit"+data.post.postNo+"'>"+data.post.postHit+"</span>"
                     +"</div>"
-                    +"<div class='collapse' style='margin-left: 20px;' id='reply_card"+data.post.postNo+"'>"
-                    +"<section class='modal-section' style='margin-top: 10px; box-shadow: 1px 1px 4px 1px rgb(0 0 0 / 10%); transition: 0.3s; border: 0; max-width: fit-content; font-size: 14px;'>"
+                    +"<div class='collapse' id='reply_card"+data.post.postNo+"'>"
+                    +"<section class='modal-section' style='margin-top: 10px; margin-right: 0px; box-shadow: 1px 1px 4px 1px rgb(0 0 0 / 10%); transition: 0.3s; border: 0; font-size: 14px;'>"
                     +"<div class='card card-body' style='padding: 10px; display: flex; align-items: center;'>"
-                    +"<div class='reply-list reply-list"+data.post.postNo+"'>"
+                    +"<div class='reply-list col-12 reply-list"+data.post.postNo+"'>"
                     +"</div>"
                     +"<div class='col-12 row reply_write' style='display: flex; align-items: center; margin-top: 25px;'>"
                     +"<div class='col-1' style='padding-left: 0;'>"
