@@ -50,7 +50,7 @@ public class UserRestController {
 
         if(dbUser !=null){
             if(user.getUserPassword().equals(dbUser.getUserPassword())){
-                session.setAttribute("user", user);
+                session.setAttribute("user", dbUser);
                 if(dbUser.getRole() == 1 ) {
                     session.setAttribute("role", "user");
                 } else if (dbUser.getRole() == 0){
@@ -130,6 +130,18 @@ public class UserRestController {
         }
 
         return userId;
+    }
+
+    @RequestMapping(value = "json/nowPwCheck", method = RequestMethod.POST)
+    public String nowPwCheck(@RequestParam String userId ,@RequestParam String userPassword) throws Exception {
+
+        System.out.println("UserRestController.nowPwCheck : POST ");
+
+        boolean result = userService.nowPwCheck(userId, userPassword);
+        if(!result){
+            return "";
+        }
+        return userPassword;
     }
 
     @RequestMapping(value="kakaoLogin/{userId:.+}", method=RequestMethod.POST)

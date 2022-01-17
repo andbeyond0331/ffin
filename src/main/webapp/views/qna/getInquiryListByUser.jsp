@@ -94,7 +94,7 @@
 
         function fncGetUserList(currentPage) {
             $("#currentPage").val(currentPage)
-            $("form").attr("method" , "POST").attr("action" , "/qna/getInquiryListByUser").submit();
+            $("#search_form").attr("method" , "POST").attr("action" , "/qna/getInquiryListByUser").submit();
         }
 
 
@@ -122,8 +122,8 @@
                                     + "<div class='card-body'>"
                                     + "<div style='margin: 0 55px 0 55px;'>";
 
-                       if(Data.inquiry.inquiryFile != null){
-                           display += "<img src='/resources/image/'"+Data.inquiry.inquiryFile+"class='card-img-top' alt='inquiryFile' style='width: 200px;'>"
+                       if(Data.inquiry.inquiryFile != null && Data.inquiry.inquiryFile != ""){
+                           display += "<img src='/resources/image/"+Data.inquiry.inquiryFile+"'class='card-img-top' alt='inquiryFile' style='width: 200px;'>"
                        }
 
                        display  += "<p class='card-text'>"+Data.inquiry.inquiryContent+"</p>"
@@ -196,7 +196,7 @@
                 </div>
 
                 <div class="col-md-6 text-right">
-                    <form class="form-inline" name="detailForm" style="zoom: 90%; padding: 0; float: right;">
+                    <form class="form-inline" id="search_form" name="detailForm" style="zoom: 90%; padding: 0; float: right;">
 
                         <div class="form-group">
                             <select class="form-control" name="searchCondition" >

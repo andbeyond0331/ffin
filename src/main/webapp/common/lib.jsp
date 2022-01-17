@@ -88,6 +88,7 @@
 <style>
     *{
         font-family: 'Nanum Gothic', sans-serif;
+        font-size: 14px;
     }
 
     .nav-user{
@@ -124,9 +125,9 @@
         border-radius: 10rem;
     }
     .btn.btn-cancle:hover{
-        color: #ecf0fd;
+        color: #7d8080;
         background-color: #ffffff;
-        border-color: #ecf0fd;
+        border-color: #7d8080;
         border-radius: 10rem;
         padding: 10px 20px 10px 20px;
     }
@@ -436,7 +437,7 @@
             console.log(userPasswordModal);
             console.log("auto : "+autoLogin);
 
-            alert(autoLogin);
+            //alert(autoLogin);
 
             const userInfo = {
                 userId : userIdModal,
@@ -444,7 +445,7 @@
                 autoLogin : autoLogin
             };
 
-            alert(userInfo.autoLogin);
+            //alert(userInfo.autoLogin);
 
             $.ajax({
                 type: "POST",

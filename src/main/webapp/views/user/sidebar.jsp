@@ -209,7 +209,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a class="collapse-item" href="/views/user/getUserInfo.jsp">내정보</a>
                             <a class="collapse-item" href="/user/getUserProfile/${user.userId}">프로필</a>
-                            <a class="collapse-item" href="">비밀번호</a>
+                            <a class="collapse-item" href="/user/updatePassword/${user.userId}">비밀번호</a>
                         </div>
                     </div>
                 </li>

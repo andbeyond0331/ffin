@@ -18,7 +18,7 @@ public class User {
     private String userRegDate;
     private double userMapLa;
     private double userMapLo;
-    private String reportCount;
+    private int reportCount;
     private String userEmail;
     private int userEmailStatus;
     private String userProImg;

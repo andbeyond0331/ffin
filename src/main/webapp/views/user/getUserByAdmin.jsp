@@ -193,8 +193,8 @@
 
             </form>
 
-            <div class="btn-box" style=" margin-top: 20px;">
-                <a onClick="history.go(-1);" style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
+            <div class="btn btn-default">
+                <a onClick="history.go(-1);" style="color: #000;">
                     확인
                 </a>
             </div>

@@ -160,6 +160,12 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public void updateReportCount(User user) throws Exception {
+        System.out.println("UserDaoImpl.updateReportCount");
+        sqlSession.update("UserMapper.updateReportCount",user);
+    }
+
+    @Override
     public void updateBlackStatus(User user) throws Exception {
         System.out.println("UserDaoImpl.updateBlackStatus");
         sqlSession.update("UserMapper.updateBlackStatus", user);

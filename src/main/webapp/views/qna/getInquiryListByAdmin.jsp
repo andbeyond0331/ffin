@@ -88,13 +88,14 @@
         #inquiryAnsContent{
             min-height: 150px;
         }
+
     </style>
 
     <script type="text/javascript">
 
         function fncGetUserList(currentPage) {
             $("#currentPage").val(currentPage)
-            $("form").attr("method", "POST").attr("action", "/qna/getInquiryListByAdmin").submit();
+            $("#search_form").attr("method", "POST").attr("action", "/qna/getInquiryListByAdmin").submit();
         }
 
         /* 문의 내용 펼치기 */
@@ -115,15 +116,16 @@
                    },
                    success : function (Data) {
                        console.log(Data.inquiry.inquiryNo);
+                       console.log(Data.inquiry.inquiryFile);
+
                        var display = "<div class='card-ans mb-10'>"
                                     + "<div class='row g-0 inquiry-card'>"
                                     + "<div class='card-body'>"
                                     + "<div style='margin: 0 55px 0 55px;'>";
 
-                       if(Data.inquiry.inquiryFile != null){
-                           display += "<img src="+Data.inquiry.inquiryFile+"'../../resources/image' class='card-img-top' alt='inquiryFile' style='width: 200px;'>";
+                       if(Data.inquiry.inquiryFile != null && Data.inquiry.inquiryFile != "" ){
+                           display += "<img src='/resources/image/"+Data.inquiry.inquiryFile+"' class='card-img-top' alt='inquiryFile' style='width: 200px;'>";
                        }
-
                        display  += "<p class='card-text'>"+Data.inquiry.inquiryContent+"</p>"
                                     + "</div>"
                                     + "<hr style='border-width:2px;'/>";
@@ -131,7 +133,7 @@
                        if(Data.inquiry.inquiryAnsStatus === 1 ){
 
                            display += "<div class='d-grid gap-2 col-6 mx-auto' style='margin: 0 55px 0 55px;'>"
-                                    + "<button class='btn btn-default btn-sm' onclick='closeBtn()' type='button' style='color: #110000; background: #ecf0fd'>확인</button>"
+                                    + "<button class='btn btn-cancle btn-sm' onclick='closeBtn()' type='button'>확인</button>"
                                     + "<button class='btn btn-default btn-sm' data-bs-toggle='modal' data-bs-target='#addInquiryAns' onclick='addInquiryAns("+Data.inquiry.inquiryNo+")' type='button'>답변등록</button>"
                                     + "</div>";
                        } else {
@@ -142,7 +144,7 @@
                                + "</div>"
                                + "<p class='card-text'>"+Data.inquiry.inquiryAnsContent+"</p>"
                                + "<div class='d-grid gap-2 col-6 mx-auto' style='margin: 0 55px 0 55px;'>"
-                               + "<button class='btn btn-default btn-sm' onclick='closeBtn()' type='button' style='color: #110000; background: #ecf0fd'>확인</button>"
+                               + "<button class='btn btn-cancle btn-sm' onclick='closeBtn()' type='button'>확인</button>"
                                + "</div>"
                                + "</div>"
                                + "</div>"
@@ -230,7 +232,7 @@
                 </div>
 
                 <div class="col-md-6 text-right">
-                    <form class="form-inline" name="detailForm" style="zoom: 90%; padding: 0; float: right;">
+                    <form class="form-inline" id="search_form" name="detailForm" style="zoom: 90%; padding: 0; float: right;">
 
                         <div class="form-group">
                             <select class="form-control" name="searchCondition" >

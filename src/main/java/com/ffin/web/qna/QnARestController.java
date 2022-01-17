@@ -3,7 +3,9 @@ package com.ffin.web.qna;
 import com.ffin.service.domain.Inquiry;
 import com.ffin.service.domain.Report;
 import com.ffin.service.domain.UploadImage;
+import com.ffin.service.domain.User;
 import com.ffin.service.qna.QnAService;
+import com.ffin.service.user.UserService;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,6 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -37,9 +42,39 @@ public class QnARestController {
     @Qualifier("qnAServiceImpl")
     private QnAService qnAService;
 
+    @Autowired
+    @Qualifier("userServiceImpl")
+    private UserService userService;
+
     public QnARestController() {
         System.out.println("QnARestController.QnARestController");
     }
+
+
+    @RequestMapping( value="json/addReport", method= RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView addReport(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+
+
+
+        System.out.println("REST  addReport   : POST");
+
+
+        Report report = new Report();
+        report.setReportUserId(request.getParameter("reportUserId"));
+        report.setReportTargetId(request.getParameter("reportTargetId"));
+        report.setReportContent(request.getParameter("reportContent"));
+        report.setReportLink(request.getParameter("reportLink"));
+        report.setReportType(Integer.parseInt(request.getParameter("reportType")));
+
+
+        qnAService.addReport(report);
+
+        ModelAndView modelAndView = new ModelAndView("jsonView");
+
+        return modelAndView;
+    }
+
 
 
     @RequestMapping(value = "json/getReport/{reportNo}", method = RequestMethod.GET)
@@ -56,13 +91,34 @@ public class QnARestController {
 
     @RequestMapping(value = "json/updateReportProcStatus", method = RequestMethod.POST)
     @ResponseBody
-    public Report updateReportProcStatus(@ModelAttribute Report report, @RequestParam("reportNo") int reportNo,
-                                         @RequestParam("reportProcStatus") int reportProcStatus) throws Exception {
+    public Report updateReportProcStatus(@RequestParam("reportNo") int reportNo,
+                                         @RequestParam("reportProcStatus") int reportProcStatus, @RequestParam("reportTargetId") String reportTargetId) throws Exception {
 
         System.out.println("QnARestController.updateReportProcStatus : POST");
 
+        User user = new User();
+        user.setUserId(reportTargetId);
+
+        Report report = new Report();
+        report.setReportNo(reportNo);
+        //신고처리 - reportCount up
+        if( reportProcStatus == 2){
+
+            report.setReportProcStatus(reportProcStatus);
+            qnAService.updateReportProcStatus(report);
+            userService.updateReportCount(user);
+
+            System.out.println("!!!!!!!!!!!!!!!111report = " + report);
+            System.out.println("Report !!!! user = " + user);
+
+            return qnAService.getReport(reportNo);
+        }
+
+        report.setReportProcStatus(reportProcStatus);
         qnAService.updateReportProcStatus(report);
+
         System.out.println("신고처리 : "+report);
+
         return qnAService.getReport(reportNo);
     }
 

@@ -45,6 +45,8 @@ public interface UserService {
     public String getUserIdForPassword(String userId, String userName, String userPhone) throws Exception;
     //임시비밀번호 발송&저장
     public void sendSMSForPassword(String userId, String userPhone, int tempPassword) throws Exception;
+    //PW변경을 위한 findPw
+    public boolean nowPwCheck(String userId, String userPassword) throws Exception;
     //PW변경
     public void updatePassword(User user) throws Exception;
     //phone auth
@@ -53,6 +55,8 @@ public interface UserService {
 
     //회원탈퇴
     public void updateUserByeStatus(User user) throws Exception;
+    //신고count
+    public void updateReportCount(User user) throws Exception;
     //블랙여부
     public void updateBlackStatus(User user) throws Exception;
 }
