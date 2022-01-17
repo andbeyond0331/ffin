@@ -781,8 +781,15 @@ public class MenuController {
 //        response.setContentLength(bytes.length);
 
         search.setPageSize(pageSize);
-        String userId = ((User)(session.getAttribute("user"))).getUserId();
-        Truck truck  = truckService.getTruck2(userId, truckId);
+
+        Truck truck;
+        if(session.getAttribute("user")!=null){
+            String userId = ((User)(session.getAttribute("user"))).getUserId();
+            truck  = truckService.getTruck2(userId, truckId);
+        }
+        else{
+            truck = truckService.getTruck(truckId);
+        }
         float rvAvg = reviewService.getReviewAvg(search,truckId);
         int rvTotal = reviewService.getReviewTotalCount(search,truckId);
         truck.setTruckAVGStar(rvAvg);

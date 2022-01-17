@@ -2621,7 +2621,7 @@
                 </div>
             </div>
             <div class="modal-body review">
-                내용이 없어서 안 나오는 걸까?
+
 
             </div>
 

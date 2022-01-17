@@ -116,7 +116,7 @@
 
 
                 var rvNo = $(this).find("input[name='rvNo']").val();
-                alert(rvNo);
+                // alert(rvNo);
 
                 $.ajax({
                     url : "/review/json/getReviewDetail/"+rvNo,
@@ -133,33 +133,63 @@
                             + "<div class='card-body'>"
                             + "<div style='margin: 0 55px 0 55px;'>";
 
-                        if(Data.review.rvImg1 != null){
-                            display += "<img src="+Data.review.rvImg1+"'../../resources/image' class='card-img-top' alt='reviewImg' style='width: 200px;'>";
+                        if(Data.review.rvImg1){
+                            display += "<img src='../../resources/image/"+Data.review.rvImg1+"' class='card-img-top' alt='reviewImg' style='width: 200px;'>";
+                        }
+
+                        if(Data.review.rvImg2){
+                            display += "<img src='../../resources/image/"+Data.review.rvImg2+"' class='card-img-top' alt='reviewImg' style='width: 200px;'>";
+                        }
+
+                        if(Data.review.rvImg3){
+                            display += "<img src='../../resources/image/"+Data.review.rvImg3+"' class='card-img-top' alt='reviewImg' style='width: 200px;'>";
                         }
 
                         display  += "<p class='card-text'>"+Data.review.rvContent+"</p>"
                             + "</div>"
                             + "<hr style='border-width:2px;'/>";
+                        // alert(Data.review.rvTruckCmtContent);
 
-                        if(Data.review.rvTruckCmtContent !=null ){
+                        var role = $('input[name="role"]').val();
 
-                            display += "<div class='d-grid gap-2 col-6 mx-auto' style='margin: 0 55px 0 55px;'>"
-                                + "<button class='btn btn-sm ansBtn' type='button' onclick='closeAjax()' style='background: #ecf0fd; color: #000000'>확인</button>"
-                                + "<button class='btn btn-default btn-sm' data-bs-toggle='modal' data-bs-target='#addInquiryAns' onclick='updateReview("+Data.review.rvNo+")' type='button' style='color: #000000'>수정</button>"
-                                + "</div>";
+                        if(!Data.review.rvTruckCmtContent){
+                            // alert(Data.review.rvTruckCmtContent);
+                            if(role=='truck'){
+                                display += "<div class='d-grid gap-2 col-6 mx-auto' style='margin: 0 55px 0 55px;'>"
+                                    + "<button class='btn btn-sm ansBtn' type='button' onclick='closeAjax()' style='background: #ecf0fd; color: #000000'>확인</button>"
+                                    + "<button class='btn btn-default btn-sm' data-bs-toggle='modal' data-bs-target='#addTruckComment' onclick='updateReview("+Data.review.rvNo+")' type='button' style='color: #000000'>댓글달기</button>"
+                                    + "</div>";
+                            }else if(role=='user'){
+                                display += "<div class='d-grid gap-2 col-6 mx-auto' style='margin: 0 55px 0 55px;'>"
+                                    + "<button class='btn btn-sm ansBtn' type='button' onclick='closeAjax()' style='background: #ecf0fd; color: #000000'>확인</button>"
+
+                                    + "</div>";
+                            }
+
                         } else {
                             display += "<div style='margin: 0 55px 0 55px;'>"
                                 + "<div style='display: flex; justify-content: space-between'>"
-                                + "<h6 class='card-title'>"+Data.review.rvContent+"</h6>"
-                                + "<p class='card-text'>"+Data.review.rvRegTime+"</p>"
+                                + "<h6 class='card-title'><span class=\"badge badge-warning\">사장님 댓글 &nbsp&nbsp</span>"+Data.review.rvTruckCmtContent+"</h6>"
+                                // + "<p class='card-text'>사장님 댓글 작성 일시 : </p>"
+                                + "<p class='card-text'>"+Data.review.rvTruckCmtRegTime+"</p>"
                                 + "</div>"
-                                + "<p class='card-text'>"+Data.review.rvContent+"</p>"
                                 + "<div style='display: flex; justify-content: center;'>"
-                                + "<button class='btn btn-sm ansBtn' type='button' onclick='closeAjax()' style='background: #ecf0fd; color: #000000'>확인</button>"
-                                + "</div>"
-                                + "</div>"
-                                + "</div>"
-                                + "</div>";
+                                + "<button class='btn btn-sm ansBtn' type='button' onclick='closeAjax()' style='background: #ecf0fd; color: #000000'>확인</button>";
+                                if(role=='truck'){
+                                    display +=""
+                                        + "<button class='btn btn-default btn-sm' data-bs-toggle='modal' data-bs-target='#addTruckComment' onclick='updateReviewUpdate("+Data.review.rvNo+")' type='button' style='color: #000000'>수정하기</button>"
+                                        + "</div>"
+                                        + "</div>"
+                                        + "</div>"
+                                        + "</div>";
+                                }else if(role=='user'){
+                                    display+=""
+                                        + "</div>"
+                                        + "</div>"
+                                        + "</div>"
+                                        + "</div>";
+                                }
+
                         }
 
                         //alert(display);
@@ -174,8 +204,61 @@
             $(".card-ans").remove();
         }
 
+
+        //사장님댓글 달기
         function updateReview(rvNo) {
-            self.location = "/review/updateReview?rvNo="+rvNo;
+
+
+
+            $.ajax({
+                url:"/review/json/getReviewDetail/"+rvNo,
+                method:"get",
+                success:function(data){
+                    var div="";
+                    var modalFooter = "";
+                    // var hit = data.post.postHit;
+                     $('#hiddenRvNo').val(rvNo);
+
+
+                    div += "<div class='row rvContent' >"
+                        +"<div>"+data.review.rvContent+"</div>"
+                        + "</div>"+"<div class='align-test'>";
+
+                    $('.mb-3.truck').html(div);
+
+
+                }
+
+            })
+            $('#addTruckComment').modal('show');
+        }
+        //사장님댓글 수정
+        function updateReviewUpdate(rvNo) {
+
+
+
+            $.ajax({
+                url:"/review/json/getReviewDetail/"+rvNo,
+                method:"get",
+                success:function(data){
+                    var div="";
+                    var modalFooter = "";
+                    // var hit = data.post.postHit;
+                     $('#hiddenRvNoNo').val(rvNo);
+
+
+                    div += "<div class='row rvContent' >"
+                        +"<div>"+data.review.rvContent+"</div>"
+                        + "</div>"+"<div class='align-test'>";
+                    $('#updateTruckCmtContent.form-control').text(data.review.rvTruckCmtContent);
+
+                    $('.mb-3.truckUpdate').html(div);
+
+
+                }
+
+            })
+            $('#updateTruckComment').modal('show');
         }
 
     </script>
@@ -190,7 +273,7 @@
 </div>
 <input type="hidden" name="truckId" value="${truckId}">
 <input type="hidden" name="userId" value="${userId}">
-
+<input type="hidden" name="role" value="${sessionScope.role}">
 
 <section class="client_section layout_padding">
     <div class="container">
@@ -207,28 +290,28 @@
             <div class="row search">
                 <div class="col-md-6 text-left" style="display: flex; align-items: center;">
                     <p style="margin: 0; font-size: 12px;">
-                        전체  ${resultPage.totalCount } 건, 현재 ${resultPage.currentPage}  페이지
+                        <c:if test="${truckId ne null}">
+                            전체  ${resultPage.totalCount} 건 평균 ${rvAvg}/5
+                        </c:if>
+                        <c:if test="${userId ne null}">
+                            전체  ${resultPage.totalCount} 건
+                        </c:if>
                     </p>
                 </div>
-
-                <c:if test="${truckId ne null}">
-                    <div class="col-md-6 text-right">
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h4 class="m-0">${resultPage.totalCount} Reviews(평균 ${rvAvg})</h4>
-
-
-                        </div>
-                    </div>
-                </c:if>
 
 
             </div>
 
             <div class="card mb-10">
-                <div class="row g-0 inquiry-card">
+                <div class="row g-0 inquiry-card" style="align-items: center;">
                     <div class="col-md-2 inquiry-con">
                         <div class="card-body">
-                            <p class="card-text"><small class="text-muted"><strong>사장님댓글여부</strong></small></p>
+                            <c:if test="${sessionScope.role eq 'truck'}">
+                                <p class="card-text"><small class="text-muted"><strong>리뷰 작성자</strong></small></p>
+                            </c:if>
+                            <c:if test="${sessionScope.role eq 'user'}">
+                                <p class="card-text"><small class="text-muted"><strong>트럭 이름</strong></small></p>
+                            </c:if>
                         </div>
                     </div>
                     <div class="col-md-6 inquiry-con">
@@ -243,7 +326,7 @@
                     </div>
                     <div class="col-md-2 inquiry-con">
                         <div class="card-body">
-                            <p class="card-text"><small class="text-muted"><strong>사장님리뷰?</strong></small></p>
+                            <p class="card-text"><small class="text-muted"><strong>사장님 댓글</strong></small></p>
                         </div>
                     </div>
                 </div>
@@ -254,22 +337,22 @@
                 <c:set var="i" value="${ i+1 }" />
 
                 <div class="card mb-10">
-                    <div class="row g-0 inquiry-card">
+                    <div class="row g-0 inquiry-card" style="align-items: center;">
                         <div class="col-md-2 inquiry-con">
                             <div class="card-body">
                                 <input type="hidden" id="rvNo" name ="rvNo" value="${review.rvNo}">
-                                <c:choose>
-                                    <c:when test="${review.rvTruckCmtContent ne null}">
-                                        <p class="card-text"><small class="text-muted">${review.rvTruckCmtContent}</small></p>
-                                    </c:when>
-                                    <c:when test="${review.rvTruckCmtContent eq null}">
-                                        <p class="card-text"><small class="text-muted">사장님 댓글 없음</small></p>
-                                    </c:when>
 
-                                </c:choose>
+                                <c:if test="${sessionScope.role eq 'truck'}">
+                                    <p class="card-text"><small class="text-muted">${review.rvUserId}</small></p>
+                                </c:if>
+                                <c:if test="${sessionScope.role eq 'user'}">
+                                    <p class="card-text"><small class="text-muted">${review.truckName}</small></p>
+                                </c:if>
+
+
                             </div>
                         </div>
-                        <div class="col-md-6 inquiry-con">
+                        <div class="col-md-6 inquiry-con" style="text-align-last: center;">
                             <div class="card-body">
                                 <p class="card-text" style="text-align: initial;">
                                     <small class="text-muted">${review.rvContent}</small>
@@ -283,12 +366,15 @@
                         </div>
                         <div class="col-md-2 inquiry-con">
                             <div class="card-body">
-<%--                                <c:if test="${review.rvTruckCmtContent eq null}">--%>
-<%--&lt;%&ndash;                                    <p class="card-text"><small class="text-muted"><span class="badge" style="background-color: #ffe537; color: #110000">사장님 댓글 없음</span></small></p>&ndash;%&gt;--%>
-<%--                                </c:if>--%>
-                                <c:if test="${review.rvTruckCmtContent ne null}">
-                                    <p class="card-text"><small class="text-muted"><span class="badge" style="background-color: #ffba49; color: #110000">${review.rvTruckCmtContent}</span></small></p>
-                                </c:if>
+
+                                    <c:if test="${review.rvTruckCmtContent ne null}">
+                                        <p class="card-text"><h6><span class="badge badge-secondary">있음</span></h6></p>
+                                    </c:if>
+                                    <c:if test="${review.rvTruckCmtContent eq null}">
+                                        <p class="card-text"><h6><span class="badge badge-secondary">없음</span></h6></p>
+                                    </c:if>
+
+
                             </div>
                         </div>
                     </div>
@@ -300,67 +386,140 @@
 
             <div class="show"></div>
 
-            <%-- ajax ex --%>
-
-            <%--            <div class="card-ans mb-10">
-                            <div class="row g-0 inquiry-card">
-                                <div class="card-body">
-                                    <div style="margin: 0 55px 0 55px;">
-                                        <c:if test="${inquiry.inquiryFile != null }">
-                                        <img src="../../resources/image/moma.png" class="card-img-top" alt="inquiryFile" style="width: 200px;">
-                                        </c:if>
-                                        <p class="card-text">문의내용입니당~asdgaejsdhasfkjsahfskkhahadkhsdafkhl</p>
-                                    </div>
-                                    <hr style="border-width:2px;"/>
-                                    <c:if test="${inquiry.inquiryAnsStatus eq 0 }">
-                                        <div class="d-grid gap-2 col-6 mx-auto" style="margin: 0 55px 0 55px;">
-                                            <button class="btn btn-primary" type="button">답변등록</button>
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${inquiry.inquiryAnsStatus eq 1 }">
-                                    <div style="margin: 0 55px 0 55px;">
-                                        <div style="display: flex; justify-content: space-between">
-                                            <h6 class="card-title">문의답변제목 : 안녕하세요 고갱님!</h6>
-                                            <p class="card-text">답변일입니당~</p>
-                                        </div>
-                                        <p class="card-text">답변내용입니당~</p>
-                                    </div>
-                                    </c:if>
-                                </div>
-                            </div>
-                        </div>--%>
 
         </div>
     </div>
-
-    <div class="modal fade" id="addInquiryAns" tabindex="-1" aria-labelledby="addInquiryAns" aria-hidden="true">
+<!--댓글달기-->
+    <div class="modal fade" id="addTruckComment" tabindex="-1" aria-labelledby="addTruckComment" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">문의 답변</h5>
+                    <h5 class="modal-title" id="updateTruckCmtModalLabel">사장님 댓글 달기</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" id="hiddenRvNo" name ="hiddenRvNo" value="">
+                    <input type="hidden" id="NohiddenRvNo" name ="hiddenRvNo" value="">
                     <form style="text-align: left;">
-                        <div class="mb-3">
-                            <label for="inquiryAnsTitle" class="col-form-label">답변 제목</label>
-                            <input type="text" class="form-control" id="inquiryAnsTitle">
+                        <div class="mb-3 truck">
+                            <label for="addTruckCommentTitle" class="col-form-label">리뷰 정보</label>
+                            <input type="text" class="form-control" id="addTruckCommentTitle">
                         </div>
                         <div class="mb-3">
-                            <label for="inquiryAnsContent" class="col-form-label">답변 내용</label>
+                            <label for="inquiryAnsContent" class="col-form-label">사장님 댓글 내용</label>
                             <textarea class="form-control" id="inquiryAnsContent"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-default btn-sm" id="updateInquiryAnsBtn">답변등록</button>
+                    <button type="button" class="btn btn-default btn-sm" id="updateRVForAddTruckCmt">사장님 댓글등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--수정하기-->
+    <div class="modal fade" id="updateTruckComment" tabindex="-1" aria-labelledby="updateTruckComment" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">사장님 댓글 달기</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="hiddenRvNoNo" name ="hiddenRvNoNo" value="">
+                    <form style="text-align: left;">
+                        <div class="mb-3 truckUpdate">
+                            <label for="updateTruckCommentTitle" class="col-form-label">리뷰 정보</label>
+                            <input type="text" class="form-control" id="updateTruckCommentTitle">
+                        </div>
+                        <div class="mb-3">
+                            <label for="updateTruckCmtContent" class="col-form-label">사장님 댓글 내용</label>
+                            <textarea class="form-control" id="updateTruckCmtContent"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-default btn-sm" id="updateRVForUpdateTruckCmt">사장님 댓글수정</button>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+
+    /* 사장님 댓글 등록 */
+    $(function () {
+
+        $('#updateRVForAddTruckCmt').click(function () {
+
+
+
+            var rvNo = $('#hiddenRvNo').val();
+            var rvTruckCmtContent = $('#inquiryAnsContent').val();
+
+            console.log(rvNo);
+            console.log(rvTruckCmtContent);
+
+            $.ajax({
+
+                url : "/review/json/updateRvForAddTruckCmt",
+                method : "POST",
+                dataType: "json",
+                header : {
+                    "Accept" : "application/json",
+                    "Content-Type" : "application/json"
+                },
+                data : {
+                    rvNo : rvNo,
+                    rvTruckCmtContent : rvTruckCmtContent
+                },
+                success : function (data){
+                    console.log(data);
+                    window.location.reload();
+                }
+            });
+        });
+    });
+
+
+    /* 사장님 댓글 수정 */
+    $(function () {
+
+        $('#updateRVForUpdateTruckCmt').click(function () {
+
+
+
+            var rvNo = $('#hiddenRvNoNo').val();
+            var rvTruckCmtContent = $('#updateTruckCmtContent').val();
+
+            console.log(rvNo);
+            console.log(rvTruckCmtContent);
+
+            $.ajax({
+
+                url : "/review/json/updateRvForUpdateTruckCmt",
+                method : "POST",
+                dataType: "json",
+                header : {
+                    "Accept" : "application/json",
+                    "Content-Type" : "application/json"
+                },
+                data : {
+                    rvNo : rvNo,
+                    rvTruckCmtContent : rvTruckCmtContent
+                },
+                success : function (data){
+                    console.log(data);
+                    window.location.reload();
+                }
+            });
+        });
+    });
+
+
+</script>
 
 <jsp:include page="/common/pageNavigator_new.jsp" />
 <jsp:include page="/views/footer.jsp" />
