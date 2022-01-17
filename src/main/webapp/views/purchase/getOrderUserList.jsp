@@ -283,6 +283,20 @@
 
     <script type="text/javascript">
 
+        $(function(){
+            var orderCount =[];
+            var getOrderUser = $("input#getOrderUser").val();
+            $('input[name="orderCount"]').each(function (i) {
+
+                orderCount.push($(this).val());
+            });
+
+            if(orderCount.length == 1){
+
+                self.location = "/purchase/getOrderUser?orderNo="+getOrderUser;
+            }
+
+        });
         //다시다시
         /*function fncGetInquiryList(currentPage) {
             $("#currentPage").val(currentPage)
@@ -308,7 +322,7 @@
             <div class="detail-box">
                 <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
                 <h4 style="margin-top: 10px;">
-                    구매내역
+                    현재주문목록
                 </h4>
             </div>
 
@@ -350,6 +364,7 @@
 
                 <section class="light">
                     <div class="container py-2">
+                        <input type="hidden" name="orderCount" value="${i}">
 
                         <article class="postcard light blue">
                             <a class="postcard__img_link" href="#">
@@ -357,6 +372,7 @@
                             </a>
                             <div class="postcard__text t-dark">
                                 <h1 class="postcard__title blue">
+                                    <input type="hidden" name="getOrderUser" id="getOrderUser" value="${orderDetail.odOrderNo.orderNo}">
                                     <a href="/menu/getMenuList?truckId=${orderDetail.odOrderNo.orderTruckId.truckId}">
                                             ${orderDetail.odOrderNo.orderTruckId.truckName}
                                     </a></h1>
@@ -388,7 +404,7 @@
                                 <div class="postcard__preview-txt"><h6>${orderDetail.odOrderNo.payPrice}&nbsp;₩</h6></div>
 
                                 <ul class="postcard__tagbox">
-                                    <li class="tag__item orderBtn"><a href="/user/getPurchaseByUser?orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-tag mr-2"></i>주문상세</a></li>
+                                    <li class="tag__item orderBtn"><a href="/purchase/getOrderUser?orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-tag mr-2"></i>주문상세</a></li>
                                     <c:if test="${orderDetail.odOrderNo.orderStatus eq 4 }">
                                         <li class="tag__item reviewBtn"><a href="/review/addReview?orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-clock mr-2"></i>리뷰작성</a></li>
                                     </c:if>

@@ -1449,7 +1449,7 @@
                     <h4>${menu.menuDetail}</h4>
                 </ul>
                 <div class="btn-detail">
-                   ㅑ <button class="button is-warning is-light" id="truckIdCheck" name="getMenu"
+                    <button class="button is-warning is-light" id="truckIdCheck" name="getMenu"
                             style='margin-left: 100px; margin-bottom: 13px; height: 25px'
                             onclick="getMenu(${menu.menuNo});"
                     >

@@ -533,26 +533,29 @@
                             <div class="data-input-box user-profile">
                                 <div>
                                     <div style="margin-bottom: 30px;">
-                                        <c:if test="${purchase.orderStatus == '1'}">
-                                            <label for="orderStatus" class="form-label label-name">주문정보</label>
-                                            <input type="text" class="form-control" value="주문완료되었습니다." id="orderStatus" name="orderStatus" readonly style="width: 340px; margin-bottom: 5px;">
-                                        </c:if>
-                                        <c:if test="${purchase.orderStatus == '2'}">
-                                            <label for="orderStatus" class="form-label label-name">주문정보</label>
-                                            <input type="text" class="form-control" value="주문접수되었습니다" id="orderStatus" name="orderStatus" readonly style="width: 340px; margin-bottom: 5px;">
-                                        </c:if>
-                                        <c:if test="${purchase.orderStatus == '3'}">
-                                            <label for="orderStatus" class="form-label label-name">주문정보</label>
-                                            <input type="text" class="form-control" value="주문하신 메뉴가 나왔습니다." id="orderStatus" name="orderStatus" readonly style="width: 340px; margin-bottom: 5px;">
-                                        </c:if>
-                                        <c:if test="${purchase.orderStatus == '4'}">
-                                            <label for="orderStatus" class="form-label label-name">주문정보</label>
-                                            <input type="text" class="form-control" value="맛있게 드셨나요." id="orderStatus" name="orderStatus" readonly style="width: 340px; margin-bottom: 5px;">
-                                        </c:if>
-                                        <c:if test="${purchase.orderStatus == '5'}">
-                                            <label for="orderStatus" class="form-label label-name">주문정보</label>
-                                            <input type="text" class="form-control" value="주문취소된 메뉴입니다." id="orderStatus" name="orderStatus" readonly style="width: 340px; margin-bottom: 5px;">
-                                        </c:if>
+                                        <c:choose>
+                                            <c:when test="${purchase.orderStatus == '1'}">
+                                                <label  class="form-label label-name">주문상태</label>
+                                                <span class="badge" style="background-color: #fae100; color: #110000">결제완료</span>
+                                            </c:when>
+                                            <c:when test="${purchase.orderStatus == '2'}">
+                                                <label  class="form-label label-name">주문상태</label>
+                                                <span class="badge" style="background-color: #fae100; color: #110000">주문접수</span>
+                                            </c:when>
+                                            <c:when test="${purchase.orderStatus == '3'}">
+                                                <label class="form-label label-name">주문상태</label>
+                                                <span class="badge" style="background-color: #fae100; color: #110000">픽업요청</span>
+                                            </c:when>
+                                            <c:when test="${purchase.orderStatus == '4'}">
+                                                <label  class="form-label label-name">주문상태</label>
+                                                <span class="badge" style="background-color: #65bf96; color: #110000">픽업완료</span>
+                                            </c:when>
+                                            <c:when test="${purchase.orderStatus == '5'}">
+                                                <label class="form-label label-name">주문상태</label>
+                                                <span class="badge" style="background-color: #ffba49; color: #110000">결제취소</span>
+                                            </c:when>
+                                        </c:choose>&nbsp;&nbsp;
+
                                     </div>
 
                                     <div style="margin-bottom: 30px;">
