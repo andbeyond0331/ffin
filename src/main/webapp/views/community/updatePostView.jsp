@@ -62,10 +62,11 @@
 <c:if test="${sessionScope.user != null || sessionScope.truck != null}">
     <div class="container">
 
-        <div class="page-header">
-            <label for="page-top" class="col-sm-offset-4 control-label"/>
-            <h3 class="text-info">게시글수정</h3>
-
+        <div class="page-header" style="text-align: center">
+            <label for="page-top"/>
+            <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
+            <h4 style="margin-top: 10px;"> 게시글 수정
+            </h4>
         </div>
 
         <form name="updateP" class="form-horizontal">
@@ -83,10 +84,113 @@
                     </tr>
                     <!-- 푸드트럭 사업자등록증 파일업로드란 -->
                     <td>
-                        <label for="inputFile" class="col-sm-2 col-form-label"><strong>첨부 파일</strong></label>
-                        <input id="file1" type="file" name="file1" class="form-control-file" value="${post.postFile1}"/>
-                        <input id="file2" type="file" name="file2" class="form-control-file" value="${post.postFile2}"/>
-                        <input id="file3" type="file" name="file3" class="form-control-file" value="${post.postFile3}"/></td>
+                        <label class="col-sm-2 col-form-label"><strong>첨부 파일</strong></label>
+                        <div class="form-group">
+                            <div class="col-sm-6 offset-2" style="display: flex; align-items: baseline;">
+                                <label for="file1" class="col-sm-offset-1 col-sm-4 control-label">첨부파일1</label>
+                                <input type="file" class="form-control" id="file1" name="file1" placeholder="이미지1" onchange="setPostFile1Preview(event);">
+                            </div>
+                            <div id="file1preview"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-6 offset-2" style="display: flex; align-items: baseline;">
+                                <label for="file2" class="col-sm-offset-1 col-sm-4 control-label">첨부파일2</label>
+                                <input type="file" class="form-control" id="file2" name="file2" placeholder="이미지2" onchange="setPostFile2Preview(event);">
+                            </div>
+                            <div id="file2preview"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-6 offset-2" style="display: flex; align-items: baseline;">
+                                <label for="file3" class="col-sm-offset-1 col-sm-4 control-label">첨부파일3</label>
+                                <input type="file" class="form-control" id="file3" name="file3" placeholder="이미지3" onchange="setPostFile3Preview(event);">
+                            </div>
+                            <div id="file3preview"></div>
+                        </div>
+                    </td>
+
+                    <script>
+
+
+                        function setPostFile1Preview(event){
+
+                            var DIVimage1preview = $('#file1preview');
+                            var isTherePreview = DIVimage1preview.find('img').length;
+                            //alert("isTherePreview : " + isTherePreview);
+                            var reader  = new FileReader();
+
+                            if(isTherePreview==0){
+
+                            }else{
+
+                                DIVimage1preview.find('img').remove();
+
+                            }
+
+                            reader.onload = function(event){
+                                var img = document.createElement("img");
+                                img.setAttribute("src", event.target.result);
+                                document.querySelector("div#file1preview").appendChild(img);
+
+                            };
+
+                            reader.readAsDataURL(event.target.files[0]);
+
+
+                        }
+
+                        function setPostFile2Preview(event){
+                            var reader  = new FileReader();
+                            var DIVimage2preview = $('#file2preview');
+                            var isTherePreview = DIVimage2preview.find('img').length;
+                            //alert("isTherePreview : " + isTherePreview);
+                            var reader  = new FileReader();
+
+                            if(isTherePreview==0){
+
+                            }else{
+
+                                DIVimage2preview.find('img').remove();
+
+                            }
+
+                            reader.onload = function(event){
+                                var img = document.createElement("img");
+                                img.setAttribute("src", event.target.result);
+                                document.querySelector("div#file2preview").appendChild(img);
+
+                            };
+
+                            reader.readAsDataURL(event.target.files[0]);
+
+                        }
+
+                        function setPostFile3Preview(event){
+                            var reader  = new FileReader();
+                            var DIVimage3preview = $('#file3preview');
+                            var isTherePreview = DIVimage3preview.find('img').length;
+                            // alert("isTherePreview : " + isTherePreview);
+                            var reader  = new FileReader();
+
+                            if(isTherePreview==0){
+
+                            }else{
+
+                                DIVimage3preview.find('img').remove();
+
+                            }
+
+                            reader.onload = function(event){
+                                var img = document.createElement("img");
+                                img.setAttribute("src", event.target.result);
+                                document.querySelector("div#file3preview").appendChild(img);
+
+                            };
+
+                            reader.readAsDataURL(event.target.files[0]);
+
+                        }
+
+                    </script>
 
 
                     </tbody>
@@ -96,7 +200,7 @@
 
             <br/>
             <div class="form-group">
-                <div class="col-sm-offset-6 col-sm-6 text-center">
+                <div class="offset-3 col-sm-6 text-center">
                     <button type="button" class="btn btn-secondary">수 정 완 료</button>
                     <a class="btn btn-secondary btn" href="#" role="button">취 소</a>
                 </div>

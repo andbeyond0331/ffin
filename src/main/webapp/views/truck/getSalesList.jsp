@@ -66,9 +66,13 @@
 <!--  화면구성 div Start /////////////////////////////////////-->
 <div class="container">
 
-    <div class="page-header text-info">
-        <h3>판매 목록</h3>
+    <div class="page-header" align="center">
+        <label for="page-top" class="control-label"/>
+        <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
+        <h4 style="margin-top: 10px;">
+            판매 목록</h4>
     </div>
+    <br>
 
     <!-- table 위쪽 검색 Start /////////////////////////////////////-->
     <div class="row">

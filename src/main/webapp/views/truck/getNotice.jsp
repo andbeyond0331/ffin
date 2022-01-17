@@ -26,7 +26,6 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
-            padding-right: 16px;
         }
 
 
@@ -53,7 +52,7 @@
         //============= "수정하기"  Event 연결 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $("button.btn.btn-secondary").on("click", function () {
+            $("button.btn.btn-default goUpdate").on("click", function () {
                 self.location = "/views/truck/updateNotice.jsp"
             });
         });
@@ -144,7 +143,7 @@
                         <%--                    <strong class="pull-right text-dark" style="padding-top:10px; padding-right:10px "><fmt:formatDate--%>
                         <%--                            value="${post.postRegDate}" pattern="yyyy-MM-dd"/></strong>--%>
                     <img style="border-radius:70px; margin-left:20px; padding-top:10px"
-                         src="../resources/image/${truck.truckProImg}" width="100"
+                         src="../../../resources/image/${truck.truckProImg}" width="100"
                          height="100" class="pull-left"/>
 
                     <br/>
@@ -172,11 +171,13 @@
                             >${truck.truckNoticeContent}</midium>
                 </ul>
 
-                <ul>
-                    <td>
+                <ul style="padding-left:0; ">
+                    <td colspan="1">
                         <br/>
-                        <img class="notiImg" src="../resources/image/${truck.truckNoticeImg}" width="300"
-                             height="300"/>
+                        <c:if test="${truck.truckNoticeImg ne '' and truck.truckNoticeImg ne null}">
+                            <img src="../../../resources/image/${truck.truckNoticeImg}" width="500"
+                                 height="400" style="border-radius:20px; " class="notiImg"/>
+                        </c:if>
                     </td>
                 </ul>
 
@@ -204,11 +205,11 @@
                 </div>
 
                 <c:if test="${sessionScope.truck.truckId.equals(truck.truckId)}">
-                    <button id="noticeU" type="button" class="btn-secondary pull-right" data-toggle="modal"
+                    <button id="noticeU" type="button" class="btn btn-default goUpdate pull-right" data-toggle="modal"
                             data-target="#updateNModal">수정하기
                     </button>
                 </c:if>
-                <button type="button" id="goMain" class="btn-secondary pull-right">메인화면으로</button>
+                <button type="button" id="goMain" class="btn btn-cancle goMain pull-right">메인화면으로</button>
             </div>
         </div>
         <br/><br/><br/><br/>

@@ -55,7 +55,7 @@
         //============= "수정하러가기"  Event 연결 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $("button.btn.btn-primary").on("click", function () {
+            $("button.btn.btn-default.updateInfo").on("click", function () {
                 self.location = "/truck/updateTruckInfo"
             });
         });
@@ -63,7 +63,7 @@
         //============= "마이페이지로"  Event 처리 및  연결 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $("button.btn.btn-warning").on("click", function () {
+            $("button.btn.btn-cancle.goMyPage").on("click", function () {
                 //alert("수정을 취소하시겠습니까? 확인을 누르시면 홈화면으로 이동합니다.")
                 self.location = "/views/truck/truckMyPage.jsp"
             });
@@ -228,15 +228,13 @@
         <br/>
         <div class="form-group" align="center">
             <strong class="col-sm-offset-1 col-sm-3 control-label">사업자등록증</strong>
-            <div class="col-sm-6">
-                <%--                <input id="busiLice" type="file" name="busiLice" class="form-control" value="${truck.truckBusiLice}" readonly/>--%>
-                <%--                ${truck.truckBusiLice}--%>
-            </div>
-            <div><a href="../../resources/image/${truck.truckBusiLice}" data-fancybox
-                                              data-caption="캡션"><img src="../../resources/image/${truck.truckBusiLice}"
+            <c:if test="${truck.truckBusiLice ne '' and truck.truckBusiLice ne null}">
+            <div><a href="../../../resources/image/${truck.truckBusiLice}" data-fancybox
+                                              data-caption="캡션"><img src="../../../resources/image/${truck.truckBusiLice}"
                                                                      style="border-bottom: 1px solid #eee; height: 200px;"
                                                                      alt="${truck.truckName}의 사업자등록증 이미지"
                                                                      title="트럭사업자등록증"></a></div>
+            </c:if>
         </div>
         <input type="hidden" id="checkL"/>
 
@@ -294,12 +292,13 @@
         <!-- 푸드트럭 프로필이미지 파일업로드란 -->
         <div class="form-group" align="center">
             <strong class="col-sm-offset-1 col-sm-3 control-label">프로필 이미지</strong>
-
-            <div><a href="../../resources/image/${truck.truckProImg}" data-fancybox
-                                              data-caption="캡션"><img src="../../resources/image/${truck.truckProImg}"
+            <c:if test="${truck.truckProImg ne '' and truck.truckProImg ne null}">
+            <div><a href="../../../resources/image/${truck.truckProImg}" data-fancybox
+                                              data-caption="캡션"><img src="../../../resources/image/${truck.truckProImg}"
                                                                      style="border-bottom: 1px solid #eee; height: 200px; width:200px "
                                                                      alt="${truck.truckName}의 프로필 이미지"
                                                                      title="트럭프로필"></a></div>
+            </c:if>
         </div>
         <input type="hidden" id="checkP"/>
 
@@ -325,9 +324,9 @@
 
         <%--        <hr/>--%>
         <div class="form-group" align="center">
-            <div class="col-sm-offset-1  col-sm-6 text-center">
-                <button type="button" class="btn btn-primary">수정하러가기</button>
-                <button type="button" class="btn btn-warning">마이페이지로</button>
+            <div class="col-sm-offset-1  col-sm-10 text-center">
+                <button type="button" class="btn btn-default updateInfo">수정하러가기</button>
+                <button type="button" class="btn btn-cancle goMyPage">마이페이지로</button>
             </div>
             <hr/>
             <div class="col-sm-offset-1 text-center">

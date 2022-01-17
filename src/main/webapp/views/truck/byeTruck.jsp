@@ -5,6 +5,30 @@
 <html lang="ko">
 
 <head>
+    <style>
+        strong {
+            font-size: 17px;
+            text-align: left;
+        }
+
+        .col-sm-6 {
+            font-size: 17px;
+            text-align: left;
+        }
+
+        img {
+            display: block;
+            margin: 0px;
+        }
+
+        .join-layout {
+            display: flex;
+            padding-top:20px ;
+            justify-content:center ;
+        }
+
+
+    </style>
 
     <title>F.FIN | 푸드트럭(사업자) 회원탈퇴</title>
     <jsp:include page="../../common/lib.jsp"/>
@@ -86,17 +110,21 @@
 
 <div class="container">
 
-    <div class="page-header">
-        <label for="page-top" class="col-sm-offset-4 control-label"/>
-        <h3 class="text-info" color="gray">사업자 회원탈퇴</h3>
+    <div class="page-header" style="text-align: center">
+        <label for="page-top"/>
+        <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
+        <h4 style="margin-top: 10px;">사업자 회원탈퇴</h4>
     </div>
+    <br>
     <!-- 회원탈퇴 전 Password 체크 -->
-    <form class="form-horizontal">
-        <div class="form-group">
-            <label for="tPassword" class="col-sm-offset-1 col-sm-3 control-label">Password</label>
-            <div class="col-sm-4">
+    <form class="form-horizontal" style="border-radius:10px ; border: 0; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2); transition: 0.3s;">
+        <div class="form-group join-layout">
+            <div class="col-md-3" style="text-align: end; margin-top: 8px">
+                <strong for="tPassword" class="col-sm-offset-1 col-sm-3 control-label">Password</strong>
+            </div>
+            <div class="col-sm-6">
                 <input id="tPassword" type="password" name="tPassword" placeholder="패스워드를 입력해주세요." required
-                       maxlength="10"/>
+                       maxlength="10" class="form-control w-50"/>
                 <span class="point successPw"></span><br/>
                 <input type="hidden" id="truckPasswordS" name="truckPasswordS" value="${truck.truckPassword}"/>
                 <input type="hidden" id="pwDouble"/>
@@ -106,8 +134,11 @@
         <hr/>
 
         <!-- 회원탈퇴사유 선택 -->
-        <div class="form-group">
-            <label for="truckByeReason" class="col-sm-offset-1 col-sm-3 control-label">탈퇴사유선택</label><br>
+        <div class="form-group join-layout" align="center">
+            <div class="col-md-3" style="text-align: end; margin-top: 8px">
+            <strong for="truckByeReason" class="col-sm-offset-1 col-sm-3 control-label">탈퇴사유선택</strong>
+            </div>
+            <div class="col-sm-6">
             <input type="radio" name="truckByeReason" value="1">개인정보 유출 우려<br>
             <input type="radio" name="truckByeReason" value="2">수익 불만족<br>
             <input type="radio" name="truckByeReason" value="3">사이트를 통한 손님 유입 없음<br>
@@ -115,6 +146,7 @@
             <input type="radio" name="truckByeReason" value="5">기타<br>
             <input type="hidden" id="truckByeReason" name="truckByeReason">
             <button type="button" class="btn-dark" onclick="getValue()">탈퇴사유선택완료</button>
+            </div>
         </div>
         <hr/>
 
@@ -139,11 +171,16 @@
         </div>
 
         <!-- Button trigger modal -->
+        <div class="form-group" align="center">
+            <div class="col-sm-offset-1  col-sm-10 text-center">
         <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             탈퇴하기
         </button>
         <input type="button" class="btn btn-dark" value="취소"
                onclick="javascript:window.location='/catering/mainTruckList'">
+            </div>
+        </div>
+        <br/>
     </form>
 
 

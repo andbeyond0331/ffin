@@ -309,7 +309,8 @@ public class TruckController {
 
         session.invalidate();
 
-        return "/catering/mainTruckList";
+        // 홈화면으로 이동
+        return "redirect:/catering/mainTruckList";
     }
 
     // 트럭 로그인 화면 요청 // 이제 안씀
@@ -445,11 +446,11 @@ public class TruckController {
         System.out.println("/truck/byeTruck : POST");
         //Business Logic
         // 세션 값 불러오기
-        truckId = (String) (session.getAttribute("truckId"));
+        truck = (Truck) session.getAttribute("truck");
+
+        truckId = (String) truck.getTruckId();
 
         System.out.println("truckId = " + truckId);
-
-        truck = (Truck) session.getAttribute("truck");
 
         // 탈퇴사유 받아오기 getParameter
         truckByeReason = Integer.parseInt(request.getParameter("truckByeReason"));
@@ -467,7 +468,7 @@ public class TruckController {
         session.invalidate();
 
         // 홈화면으로 이동
-        return "/catering/mainTruckList";
+        return "redirect:/catering/mainTruckList";
     }
 
     // 사업자 아이디 찾기 화면 요청

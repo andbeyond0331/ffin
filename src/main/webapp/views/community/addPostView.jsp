@@ -6,7 +6,7 @@
 
 <head>
 
-    <title>게시글 작성</title>
+    <title>F.FIN | 게시글 작성</title>
     <jsp:include page="../../common/lib.jsp"/>
     <!-- 참조 : http://getbootstrap.com/css/   참조 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -60,11 +60,13 @@
 <c:if test="${sessionScope.user != null || sessionScope.truck != null}">
 <div class="container">
 
-<div class="page-header">
-    <label for="page-top" class="col-sm-offset-4 control-label"/>
-    <h3 class="text-info">게시글 작성</h3>
-
+    <div class="page-header" style="text-align: center">
+        <label for="page-top"/>
+        <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
+        <h4 style="margin-top: 10px;"> 게시글 작성
+        </h4>
 </div>
+    <br>
 
 <form class="form-horizontal">
 <!-- 게시판 글쓰기 양식 영역 시작 -->
@@ -81,10 +83,117 @@
         </tr>
         <!-- 푸드트럭 사업자등록증 파일업로드란 -->
         <td>
-            <label for="inputFile" class="col-sm-2 col-form-label"><strong>첨부 파일</strong></label>
-            <input id="file1" type="file" name="file1" class="form-control-file"/>
-            <input id="file2" type="file" name="file2" class="form-control-file"/>
-            <input id="file3" type="file" name="file3" class="form-control-file"/></td>
+            <label class="col-sm-2 col-form-label"><strong>첨부 파일</strong></label>
+            <div class="form-group">
+                <div class="col-sm-6 offset-2" style="display: flex; align-items: baseline;">
+                    <label for="file1" class="col-sm-offset-1 col-sm-4 control-label">첨부파일1</label>
+                    <input type="file" class="form-control" id="file1" name="file1"  value="${post.postFile1}" placeholder="이미지1" onchange="setPostFile1Preview(event);">
+                </div>
+                <div id="file1preview"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6 offset-2" style="display: flex; align-items: baseline;">
+                    <label for="file2" class="col-sm-offset-1 col-sm-4 control-label">첨부파일2</label>
+                    <input type="file" class="form-control" id="file2" name="file2"  value="${post.postFile2}" placeholder="이미지2" onchange="setPostFile2Preview(event);">
+                </div>
+                <div id="file2preview"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6 offset-2" style="display: flex; align-items: baseline;">
+                    <label for="file3" class="col-sm-offset-1 col-sm-4 control-label">첨부파일3</label>
+                    <input type="file" class="form-control" id="file3" name="file3"  value="${post.postFile3}" placeholder="이미지3" onchange="setPostFile3Preview(event);">
+                </div>
+                <div id="file3preview"></div>
+            </div>
+            </td>
+
+        <script>
+
+
+            function setPostFile1Preview(event){
+
+                var DIVimage1preview = $('#file1preview');
+                var isTherePreview = DIVimage1preview.find('img').length;
+                alert("isTherePreview : " + isTherePreview);
+                //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
+                var reader  = new FileReader();
+
+                if(isTherePreview==0){
+
+                }else{
+
+                    DIVimage1preview.find('img').remove();
+
+                }
+
+                reader.onload = function(event){
+                    var img = document.createElement("img");
+                    img.setAttribute("src", event.target.result);
+                    document.querySelector("div#file1preview").appendChild(img);
+
+                };
+
+                reader.readAsDataURL(event.target.files[0]);
+
+
+            }
+
+            function setPostFile2Preview(event){
+                var reader  = new FileReader();
+                var DIVimage2preview = $('#file2preview');
+                var isTherePreview = DIVimage2preview.find('img').length;
+                alert("isTherePreview : " + isTherePreview);
+                //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
+                var reader  = new FileReader();
+
+                if(isTherePreview==0){
+
+                }else{
+
+                    DIVimage2preview.find('img').remove();
+
+                }
+
+                reader.onload = function(event){
+                    var img = document.createElement("img");
+                    img.setAttribute("src", event.target.result);
+                    document.querySelector("div#file2preview").appendChild(img);
+
+                };
+
+                reader.readAsDataURL(event.target.files[0]);
+
+            }
+
+            function setPostFile3Preview(event){
+                var reader  = new FileReader();
+                var DIVimage3preview = $('#file3preview');
+                var isTherePreview = DIVimage3preview.find('img').length;
+                alert("isTherePreview : " + isTherePreview);
+                //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
+                var reader  = new FileReader();
+
+                if(isTherePreview==0){
+
+                }else{
+
+                    DIVimage3preview.find('img').remove();
+
+                }
+
+                reader.onload = function(event){
+                    var img = document.createElement("img");
+                    img.setAttribute("src", event.target.result);
+                    document.querySelector("div#file3preview").appendChild(img);
+
+                };
+
+                reader.readAsDataURL(event.target.files[0]);
+
+            }
+
+        </script>
+
 
 
         </tbody>
@@ -94,7 +203,7 @@
 
     <br/>
     <div class="form-group">
-    <div class="col-sm-offset-6 col-sm-6 text-center">
+    <div class="offset-3 col-sm-6 text-center">
     <button type="button" class="btn btn-secondary">작 성 완 료</button>
     <button class="btn btn-warning" type="button">취 소</button>
     </div>
