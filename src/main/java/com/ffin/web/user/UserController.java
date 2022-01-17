@@ -130,7 +130,7 @@ public class UserController {
                 userService.autoLogin(user.getUserId(), "none", new Date());
             }
         }
-        return "/catering/mainTruckList";
+        return "redirect:/catering/mainTruckList";
     }
 
     @RequestMapping( value="addUser", method=RequestMethod.GET )
@@ -272,6 +272,8 @@ public class UserController {
     public String getUserList(@ModelAttribute("search")Search search, Model model, HttpServletRequest request) throws Exception{
 
         System.out.println("UserController.getUserList");
+        System.out.println("***********search.getCurrentPage() = " + search.getCurrentPage());
+
 
         if(search.getCurrentPage() == 0){
             search.setCurrentPage(1);
@@ -353,6 +355,8 @@ public class UserController {
     @RequestMapping(value = "getPurchaseList")
     public String getPurchaseList(@ModelAttribute("search")Search search, Model model,
                                   HttpSession session, HttpServletRequest request) throws Exception {
+
+        System.out.println("***********search.getCurrentPage() = " + search.getCurrentPage());
 
         System.out.println("UserController.getPurchaseList");
 

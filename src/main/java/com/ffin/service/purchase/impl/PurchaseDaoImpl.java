@@ -122,13 +122,19 @@ public class PurchaseDaoImpl implements PurchaseDao {
         map.put("list",list);
         return map;
     } //현재판매목록
+
     @Override
+    public List<Purchase> getPurchaseList(Map<String, Object> map) throws Exception {
+        return sqlSession.selectList("PurchaseMapper.getPurchaseList", map);
+    }
+
+    /*@Override
     public List getPurchaseList(Search search , String userId)throws Exception{
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("search",search);
         map.put("userId",userId);
         return sqlSession.selectList("PurchaseMapper.getPurchaseList",map);
-    }//마이페이지에서 구매이력
+    }//마이페이지에서 구매이력*/
     @Override
     public List getSalesList(Search search , String truckId)throws Exception{
         Map<String,Object> map = new HashMap<String,Object>();
@@ -207,5 +213,13 @@ public class PurchaseDaoImpl implements PurchaseDao {
     @Override
     public String checkCoupon(Coupon coupon) throws Exception {
         return sqlSession.selectOne("PurchaseMapper.checkCoupon",coupon);
+    }
+
+    @Override
+    public int getTotalCountByUser(Search search, String userId) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("search", search);
+        map.put("userId", userId);
+        return sqlSession.selectOne("PurchaseMapper.getTotalCountByUser", map);
     }
 }

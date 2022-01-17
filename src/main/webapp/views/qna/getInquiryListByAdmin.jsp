@@ -92,12 +92,10 @@
 
     <script type="text/javascript">
 
-        //다시다시
-        /*function fncGetInquiryList(currentPage) {
+        function fncGetUserList(currentPage) {
             $("#currentPage").val(currentPage)
-            $("form").attr("method" , "POST").attr("action" , "/qna/getInquiryListByAdmin").submit();
+            $("form").attr("method", "POST").attr("action", "/qna/getInquiryListByAdmin").submit();
         }
-*/
 
         /* 문의 내용 펼치기 */
         $(function () {
@@ -224,14 +222,7 @@
     <div class="container">
         <div class="col-md-11 col-lg-12 mx-auto">
 
-            <div class="detail-box">
-                <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
-                <h4 style="margin-top: 10px;">
-                    문의목록
-                </h4>
-            </div>
-
-            <div class="row search">
+            <div class="row search" style="margin-bottom: 20px;">
                 <div class="col-md-6 text-left" style="display: flex; align-items: center;">
                     <p style="margin: 0; font-size: 12px;">
                         전체  ${resultPage.totalCount } 건, 현재 ${resultPage.currentPage}  페이지
@@ -239,7 +230,7 @@
                 </div>
 
                 <div class="col-md-6 text-right">
-                    <form class="form-inline" name="detailForm" style="padding: 0;">
+                    <form class="form-inline" name="detailForm" style="zoom: 90%; padding: 0; float: right;">
 
                         <div class="form-group">
                             <select class="form-control" name="searchCondition" >
@@ -247,14 +238,15 @@
                                 <option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>답변여부</option>
                             </select>
                         </div>
+                        <style>.nice-select.form-control{min-width: 95px;}</style>
 
                         <div class="form-group">
                             <label class="sr-only" for="searchKeyword">검색어</label>
                             <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-                                   value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+                                   value="${! empty search.searchKeyword ? search.searchKeyword : '' }" style="width: 200px;" >
                         </div>
 
-                        <button type="button" class="btn btn-default">검색</button>
+                        <button type="button" class="btn btn-cancle" style="zoom: 90%;">검색</button>
 
                         <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
                         <input type="hidden" id="currentPage" name="currentPage" value=""/>
@@ -421,6 +413,7 @@
     </div>
 
 </section>
+<jsp:include page="../../common/pageNavigator_new.jsp"/>
     <jsp:include page="/views/footer.jsp" />
 </body>
 </html>

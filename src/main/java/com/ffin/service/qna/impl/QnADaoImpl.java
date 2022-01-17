@@ -118,6 +118,15 @@ public class QnADaoImpl implements QnADao {
     }
 
     @Override
+    public int getInquiryTotalCountByUser(Search search, String inquiryUserId) throws Exception {
+        System.out.println("QnADaoImpl.getInquiryTotalCountByUser");
+        Map<String, Object> map = new HashMap<>();
+        map.put("search", search);
+        map.put("inquiryUserId", inquiryUserId);
+        return sqlSession.selectOne("QnAMapper.getInquiryTotalCountByUser", map);
+    }
+
+    @Override
     public void updateInquiry(Inquiry inquiry) throws Exception {
         System.out.println("QnADaoImpl.updateInquiry");
         sqlSession.update("QnAMapper.updateInquiry",inquiry);
