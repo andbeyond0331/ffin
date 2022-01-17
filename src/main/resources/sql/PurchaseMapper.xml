@@ -418,6 +418,7 @@
               WHERE p.ORDER_TRUCK_ID = t.TRUCK_ID
                 AND p.order_No = o.od_order_no
                 AND p.ORDER_USER_ID = #{userId}
+              group by ORDER_NO
         order by order_no ) inner_table
         limit #{search.startRowNum}, #{search.pageSize}
     </select>
@@ -490,7 +491,8 @@
                 AND p.order_No = o.od_order_no
                 AND p.ORDER_USER_ID = #{userId}
                 and  p.order_status between 1 and 3
-              order by order_no ) inner_table
+              group by ORDER_NO
+              order by order_no desc ) inner_table
             limit #{search.startRowNum}, #{search.pageSize}
     </select>
 
@@ -658,7 +660,7 @@
 
             <select id="getTruckBusiStatus" parameterType="String" resultMap="truckSelectMap">
                 SELECT
-                    truck_busi_status
+                    truck_busi_status,truck_id
                 FROM truck
                 where TRUCK_ID = #{value}
 

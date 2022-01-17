@@ -369,39 +369,25 @@ public class PurchaseController {
         } else if (request.getParameter("search").equals("0")) {
             search.setSearchCondition(request.getParameter("search"));
         }
-        int check = 0;
+
         Map map = purchaseService.getOrderList(search,truckId);
-        Map orderMap = new HashMap();
-        if(request.getParameter("orderNo") == null || request.getParameter("orderNo") == ""  ) {
-            int orderNo = purchaseService.getLastOrderNo(truckId);
-            orderMap = purchaseService.getOrderDetail(orderNo);
-            purchase = purchaseService.getPurchase(orderNo);
-            System.out.println("11111111111111111111111111111");
-            check = 1;
 
-        }else {
 
-            int orderNo = Integer.parseInt(request.getParameter("orderNo"));
-            orderMap = purchaseService.getOrderDetail(orderNo);
-            purchase = purchaseService.getPurchase(orderNo);
-            System.out.println("2222222222222222222222222222222");
-        }
-
-        truck.setTruckBusiStatus(purchaseService.getTruckBusiStatus(truckId));
+        truck = purchaseService.getTruckBusiStatus(truckId);
        // purchase = purchaseService.getPurchase();
         System.out.println(map.get("purchase.getOrderNo"));
-        model.addAttribute("orderMap", orderMap);
+
         model.addAttribute("map",map);
-        model.addAttribute("purchase",purchase);
         model.addAttribute("search",search);
-        model.addAttribute("truckId",truck);
-        model.addAttribute("check",check);
+        model.addAttribute("truck",truck);
+
+        System.out.println("END\n\n\n\n\n");
 
         return "forward:/views/purchase/getOrderTruckList.jsp";
     }
 
 
-    @RequestMapping(value = "getOrderEndList", method= RequestMethod.GET)
+    /*@RequestMapping(value = "getOrderEndList", method= RequestMethod.GET)
     public String getOrderEndList(@RequestParam("truckId")String truckId, Model model, Purchase purchase, HttpServletRequest request, HttpServletResponse response) throws Exception{
 
         System.out.println("/purchase/getOrderEndList : GET");
@@ -438,7 +424,7 @@ public class PurchaseController {
         model.addAttribute("truck",truck);
 
         return "forward:/views/purchase/getOrderTruckList.jsp";
-    }
+    }*/
     //접수클릭시 주문상태코드 변경
     @RequestMapping(value = "updateOrderTranCode", method= RequestMethod.GET)
     public String updateOrderTranCode(@RequestParam("purchase")Purchase purchase,Model model) throws Exception{

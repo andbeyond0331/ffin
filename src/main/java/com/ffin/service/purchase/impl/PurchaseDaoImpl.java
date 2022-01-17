@@ -192,13 +192,13 @@ public class PurchaseDaoImpl implements PurchaseDao {
     }// 푸드트럭 주문목록에서 마지막결과 값으로 상세정보
 
     @Override
-    public String getTruckBusiStatus(String truckId)throws Exception{
-        Truck truck = sqlSession.selectOne("PurchaseMapper.getTruckBusiStatus",truckId);
-        String truckBusiStatus = truck.getTruckBusiStatus();
+    public Truck getTruckBusiStatus(String truckId)throws Exception{
+        /*Truck truck = sqlSession.selectOne("PurchaseMapper.getTruckBusiStatus",truckId);
+        String truckBusiStatus = truck.getTruckBusiStatus();*/
 
 
 
-        return truckBusiStatus;
+        return sqlSession.selectOne("PurchaseMapper.getTruckBusiStatus",truckId);
     }
     @Override
     public int getUsePoint(int pointNo)throws Exception{

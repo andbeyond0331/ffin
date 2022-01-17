@@ -478,4 +478,20 @@ public class PurchaseRestController {
 
         return mv;
     }
+    @RequestMapping(value = "json/getDetailOrder", method = RequestMethod.POST)
+    public ModelAndView getDetailOrder(@RequestParam("orderNo")int orderNo,Purchase purchase)throws Exception{
+
+
+        Map<String,Object> map = new HashMap<String,Object>();
+        map = purchaseService.getOrderDetail(orderNo);
+        purchase = purchaseService.getPurchase(orderNo);
+
+        ModelAndView mv = new ModelAndView("jsonView");
+        System.out.println("dd");
+        mv.addObject("map",map.get("list"));
+        mv.addObject("purchase",purchase);
+
+        return mv;
+    }
+
 }

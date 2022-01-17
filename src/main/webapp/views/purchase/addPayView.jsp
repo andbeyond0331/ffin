@@ -127,8 +127,8 @@
 
         if (payOption == '1') {
             IMP.request_pay({
-                pg: 'danal',
-                pay_method: 'phone',
+                pg: 'html5_inicis',
+                pay_method: 'card',
                 merchant_uid: 'merchant_' + new Date().getTime(),
                 name: '주문명:결제테스트',
                 amount: price,
@@ -198,11 +198,11 @@
             });
         } else if (payOption == '2') {
             IMP.request_pay({
-                pg: 'kakaopay',
-                pay_method: 'card',
+                pg: 'danal',
+                pay_method: 'phone',
                 merchant_uid: 'merchant_' + new Date().getTime(),
                 name: '주문명:결제테스트',
-                amount: orderTotalPrice,
+                amount: price,
                 buyer_tel: '010-2056-1658',
                 buyer_name: 'receiverName'
 
@@ -261,7 +261,7 @@
             });
         } else if (payOption == '3') {
             IMP.request_pay({
-                pg: 'html5_inicis',
+                pg: 'kakaopay',
                 pay_method: 'card',
                 merchant_uid: 'merchant_' + new Date().getTime(),
                 name: '주문명:결제테스트',
@@ -745,29 +745,17 @@
                         <div class="row row-cols-2">
                             <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio1"
                                                     value="1" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary w-100" for="btnradio1">휴대폰결제</label>
+                                <label class="btn btn-outline-primary w-100" for="btnradio1">일반 결제</label>
                             </div>
                             <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio2"
                                                     value="2" autocomplete="off">
-                                <label class="btn btn-outline-primary w-100" for="btnradio2">카카오 페이</label>
+                                <label class="btn btn-outline-primary w-100" for="btnradio2">휴대폰결제</label>
                             </div>
 
                         </div>
                     </div>
                     <br>
-                    <div class="container">
-                        <div class="row row-cols-2">
-                            <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio3"
-                                                    value="3" autocomplete="off">
-                                <label class="btn btn-outline-primary w-100" for="btnradio3">신용카드</label>
-                            </div>
-                            <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio4"
-                                                    value="4" autocomplete="off">
-                                <label class="btn btn-outline-primary w-100" for="btnradio4">무통장입금</label>
-                            </div>
 
-                        </div>
-                    </div>
                 </div>
             </div>
 

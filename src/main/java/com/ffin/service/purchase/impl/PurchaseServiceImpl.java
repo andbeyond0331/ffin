@@ -173,7 +173,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         return purchaseDao.getLastOrderNo(truckId);
     }
     @Override
-    public String getTruckBusiStatus(String truckId)throws Exception{
+    public Truck getTruckBusiStatus(String truckId)throws Exception{
         return purchaseDao.getTruckBusiStatus(truckId);
     }
     @Override

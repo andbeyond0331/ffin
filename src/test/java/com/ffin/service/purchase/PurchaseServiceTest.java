@@ -82,14 +82,14 @@ public class PurchaseServiceTest {
         System.out.println("orderNo ddd"+orderNo);
     }
 
-    //@Test
+    @Test
     public void TestGetTruckBusiStatus() throws Exception {
 
 
 
-        String truckBusiStatus = purchaseService.getTruckBusiStatus("truck01");
+        Truck truck = purchaseService.getTruckBusiStatus("truck01");
 
-        System.out.println("orderNo ddd"+truckBusiStatus);
+        System.out.println("orderNo ddd"+truck.getTruckId());
     }
 
 

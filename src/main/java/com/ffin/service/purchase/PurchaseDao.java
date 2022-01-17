@@ -39,7 +39,7 @@ public interface PurchaseDao {
     public Purchase getPurchase( int orderNo)throws Exception; // 결제정보 조회
     public Coupon getCoupon(int couponNo)throws Exception;// 쿠폰 할인금
     public User getTotalPoint (String userId)throws Exception;//보유 총포인트 조회
-    public String getTruckBusiStatus(String tuckId)throws Exception; //영업중 모드 조회
+    public Truck getTruckBusiStatus(String tuckId)throws Exception; //영업중 모드 조회
     public int getUsePoint (int pointNo)throws Exception; //환불에 필요한 사용한 포인트 조회
 
     //HHJ

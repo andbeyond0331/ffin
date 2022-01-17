@@ -46,70 +46,13 @@
         <div class="bs-canvas-content px-3 py-5">
             <div class="content">
 
-                <div id="cartOrderMenu"></div>
-
-                <%--
-                            <div class="card mb-3" style="max-width: 540px;">
-                                <div class="row no-gutters">
-                                    <div class="col-md-4">
-                                        <div class="form-check">
-                                            <input class="form-check-input position-static" type="checkbox" id="blankCheckbox" value="option1" aria-label="..." style="margin-left: -0.5em;">
-                                        </div>
-                                        <img src="/resources/image/1.jpg"  class="btn img-fluid rounded-start" alt="image" referrerpolicy="no-referrer" style="width: 100px;">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col6">
-                                                    <h6 class="card-title">메뉴이름</h6>
-                                                </div>
-                                                <div class="col-6">
+                <div id="mainCartOrderMenu"></div>
 
 
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <p class="card-text"><small class="text-muted" style="font-size: .600em;">Last updated 3 mins ago</small><br><small class="text-muted" style="font-size: .600em;">Last updated 3 mins ago</small></p>
-                                        </div>
-                                            <tr style="text-align:center;">
-                                                <td>수량</td>
-                                                <td class="bseq_ea">7</td>
-                                                <td>
-                                                    <button type ="button" onclick="fnCalCount('p',this);">+</button>
-                                                    <input type="text" name="pop_out" value="0" readonly="readonly" style="text-align:center;"/>
-                                                    <button type="button" onclick="fnCalCount('m', this);">-</button>
-                                                </td>
-                                            </tr>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>--%>
-
-
-                <%--<div id="order"></div>--%>
-                <%-- <c:set var="i" value="0"/>
-                 <c:forEach var="cart" items="${map.get('list')}">
-                     <c:set var="i" value="${i+1}"/>
-
-
-                     <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
-                     <input type="hidden" id="odOptionGroupName" name="odOptionGroupName"
-                            value="${cart.odOptionGroupName}"/>
-                     <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.odOptionName}"/>
-                     <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.odMenuQty}"/>
-                     <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.odMenuPrice}"/>
-                     <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
-                     <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
-                     <input type="hidden" id="odMenuQtyFlag" name="odMenuQtyFlag" value="${cart.odMenuQtyFlag}"/>
-
-
-                 </c:forEach>
-     --%>
-                <%--<div id="total"></div>--%>
                 <div class="row">
                     <div class="col-6">
                         <button type="button" class="btn btn btn-primary" data-toggle="modal"
-                                data-target="#exampleModalCenter" style="color: #fff;     background-color: #ffba49; border-color: #ffba49;">
+                                data-target="#orderPickUpTimeCheckModal" style="color: #fff;     background-color: #ffba49; border-color: #ffba49;">
                             주문하기
                         </button>
                     </div>
@@ -126,7 +69,7 @@
 
 
     <%--modal--%>
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+    <div class="modal fade" id="orderPickUpTimeCheckModal" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -176,7 +119,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary" id="orderGo">확인</button>
+                    <button type="button" class="btn btn-primary" id="mainOrderGo">확인</button>
 
                     <input type="hidden" id="mainOrderUserId" name="mainOrderUserId" value="${user.userId}"/>
                     <div id="mainSessionTruckId"></div>
@@ -271,7 +214,7 @@
             }
 
         }
-        $("#cartOrderMenu").html(finalCart);
+        $("#mainCartOrderMenu").html(finalCart);
 
 
         var beforeAny = JSON.parse(sessionStorage.getItem("menuOdList"));
@@ -296,7 +239,7 @@
         }
 
         $("#mainSessionTruckId").html(mainSessionTruckId);
-        $("#cartOrderMenu").append(mainOrderList);
+        $("#mainCartOrderMenu").append(mainOrderList);
 
 
     });
@@ -402,7 +345,7 @@
 
     /*모달 화면에서 확인 클릭 시 데이터를 List로 담아서 전송*/
     $(function () {
-        $("#orderGo").click(function () {
+        $("#mainOrderGo").click(function () {
 
             // 1. menu 없으면 메뉴를 장바구니에 저장된 메뉴가 없습니다.
             // 2. menu 정보가 있으면 장바구니 주문하기 활성화 없으면 비활성화

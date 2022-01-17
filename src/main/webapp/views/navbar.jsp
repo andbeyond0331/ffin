@@ -2,7 +2,7 @@
 <%@ page pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%--<jsp:include page="../common/cart.jsp"/>--%>
+<jsp:include page="../common/cart.jsp"/>
 
 
 
@@ -112,7 +112,7 @@
                                     <ul class="dropdown-menu" aria-labelledby="user-dropdown">
                                         <li><a class="dropdown-item user-menu" href="/views/user/userMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
                                         <li><a class="dropdown-item user-menu" href="/views/qna/addInquiryView.jsp"><i class="fas fa-question-circle"></i>문의</a></li>
-                                        <li><a class="dropdown-item user-menu" href="/purchase/getOrderUser?userId=${sessionScope.user.userId}"><i class="fas fa-question-circle"></i>현재주문목록</a></li>
+                                        <li><a class="dropdown-item user-menu" href="/purchase/getOrderUserList?userId=${sessionScope.user.userId}"><i class="fas fa-question-circle"></i>현재주문목록</a></li>
                                         <c:if test="${sessionScope.sns eq 'kakao'}">
                                             <li><a class="dropdown-item user-menu" href="https://kauth.kakao.com/oauth/logout?client_id=c5cd6068fce64f5187211674e3872ec7&logout_redirect_uri=http://localhost:8080/user/kakaoLogout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
                                         </c:if>
