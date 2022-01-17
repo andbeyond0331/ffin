@@ -615,7 +615,6 @@
                 where u.user_id = p.order_user_id
                   and p.ORDER_NO = o.OD_ORDER_NO
                   and order_no = #{orderNo};
-
             </select>
 
             <select id="getPurchaseByUser" parameterType="int" resultMap="orderDetailSelectMap">
@@ -688,6 +687,13 @@
             AND ORDER_TRUCK_ID = #{truckId}
         </where>
         ) countTable
+    </select>
+
+    <select id="getTotalCountByUser" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM ( SELECT *
+               FROM purchase
+               WHERE order_user_id = #{userId} ) countTable
     </select>
 
 

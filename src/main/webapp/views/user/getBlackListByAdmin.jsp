@@ -131,7 +131,7 @@
                 </div>
 
                 <div class="col-md-6 text-right">
-                    <form class="form-inline" name="detailForm" style="padding: 0; float: right;">
+                    <form class="form-inline" name="detailForm" style="zoom: 90%; padding: 0; float: right;">
 
                         <div class="form-group">
                             <select class="form-control" name="searchCondition" >
@@ -147,7 +147,7 @@
                                    value="${! empty search.searchKeyword ? search.searchKeyword : '' }" style="width: 200px;" >
                         </div>
 
-                        <button type="button" class="btn btn-default">검색</button>
+                        <button type="button" class="btn btn-cancle" style="zoom: 90%;">검색</button>
 
                         <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
                         <input type="hidden" id="currentPage" name="currentPage" value=""/>

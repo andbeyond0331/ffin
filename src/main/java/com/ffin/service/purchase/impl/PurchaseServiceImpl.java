@@ -115,8 +115,17 @@ public class PurchaseServiceImpl implements PurchaseService {
     } //현재판매목록
     @Override
     public Map<String,Object> getPurchaseList(Search search , String userId)throws Exception{
+
+        int totalCount = purchaseDao.getTotalCountByUser(search, userId);
+
         Map<String,Object> map = new HashMap<String,Object>();
-        map.put("list", purchaseDao.getPurchaseList(search, userId));
+        map.put("search", search);
+        map.put("userId", userId);
+        map.put("totalCount", totalCount);
+
+        List<Purchase> list = purchaseDao.getPurchaseList(map);
+        map.put("list", list);
+
         return map;
     }//마이페이지에서 구매이력
     @Override

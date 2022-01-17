@@ -172,7 +172,7 @@
                 </h4>
             </div>
 
-            <div class="row search">
+            <div class="row search" style="margin-bottom: 20px;">
                 <div class="col-md-6 text-left" style="display: flex; align-items: center;">
                     <p style="margin: 0; font-size: 12px;">
                         전체  ${resultPage.totalCount } 건, 현재 ${resultPage.currentPage}  페이지
@@ -180,7 +180,7 @@
                 </div>
 
                 <div class="col-md-6 text-right">
-                    <form class="form-inline" name="detailForm" style="padding: 0;">
+                    <form class="form-inline" name="detailForm" style="zoom: 90%; padding: 0; float: right;">
 
                         <div class="form-group">
                             <select class="form-control" name="searchCondition" >
@@ -188,14 +188,15 @@
                                 <option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>답변여부</option>
                             </select>
                         </div>
+                        <style>.nice-select.form-control{min-width: 95px;}</style>
 
                         <div class="form-group">
                             <label class="sr-only" for="searchKeyword">검색어</label>
                             <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-                                   value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+                                   value="${! empty search.searchKeyword ? search.searchKeyword : '' }" style="width: 200px;" >
                         </div>
 
-                        <button type="button" class="btn btn-default">검색</button>
+                        <button type="button" class="btn btn-cancle" style="zoom: 90%;">검색</button>
 
                         <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
                         <input type="hidden" id="currentPage" name="currentPage" value=""/>

@@ -177,10 +177,10 @@
             <div class="modal-body">
                 <ul class="nav nav-pills nav-fill" id="roleTab">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#user" style="margin-left: 0;">User</a>
+                        <a class="nav-link active" data-toggle="tab" href="#user" style="margin-left: 0; border-radius: 50px;">User</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#CEO">CEO</a>
+                        <a class="nav-link" data-toggle="tab" href="#CEO" style="border-radius: 50px;">CEO</a>
                     </li>
                 </ul>
                 <form id = "modalForm" name="modalFormmodalFormmodalForm">
@@ -206,7 +206,7 @@
                             </div>
                             <%--                            <hr style="margin-top: 30px; margin-bottom: 20px; border-width: 2px;"/>--%>
                             <div class="mb-3 d-grid gap-2 mx-auto">
-                                <button type="button" class="btn btn-default login" id="modalLoginBtn" style="margin-bottom: 10px; margin-top: 40px; color: #110000">login</button>
+                                <button type="button" class="btn btn-default login" id="modalLoginBtn" style="margin-bottom: 10px; margin-top: 40px;">login</button>
                             </div>
                             <hr style="margin-bottom: 20px; border-width: 2px;"/>
                             <div class="d-grid gap-10 mx-auto">
@@ -245,7 +245,7 @@
                                 <a class="addChk" href="/views/truck/addTruckView.jsp" style="color: #ffba49; margin-left: 0; font-size: 14px;"> <strong style="float: right; stroke: #ffba49; margin-right: 5px;">사업자 회원가입</strong></a>
                             </div>
                             <div class="mb-3 d-grid gap-2 mx-auto">
-                                <button type="button" class="btn btn-default login" id="modalLoginTBtn" style="margin-bottom: 10px; margin-top: 40px; color: #110000">login</button>
+                                <button type="button" class="btn btn-default login" id="modalLoginTBtn" style="margin-bottom: 10px; margin-top: 40px;">login</button>
                             </div>
                         </div>
                     </div>

@@ -202,17 +202,8 @@
     <select id="getInquiryTotalCount" parameterType="search" resultType="int">
         SELECT COUNT(*)
         FROM ( SELECT inquiry_no, inquiry_user_id, inquiry_truck_id, inquiry_type, inquiry_date, inquiry_ans_status
-        FROM inquiry
-        <if test="searchCondition != null">
-            <where>
-                <if test="searchCondition == 0 and searchKeyword !='' ">
-                    inquiry_type = #{searchKeyword}
-                </if>
-                <if test="searchCondition == 1 and searchKeyword !='' ">
-                    inquiry_ans_status = #{searchKeyword}
-                </if>
-            </where>
-        </if> ) countTable
+               FROM inquiry
+             ) countTable
     </select>
 
     <update id="updateInquiry" parameterType="int">
@@ -236,6 +227,13 @@
         </set>
         WHERE inquiry_no = #{inquiryNo}
     </update>
+
+    <select id="getInquiryTotalCountByUser" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM ( SELECT inquiry_no, inquiry_user_id, inquiry_type, inquiry_title, inquiry_content, inquiry_file, inquiry_date, inquiry_ans_status, inquiry_ans_title, inquiry_ans_content, inquiry_ans_date, inquiry_user_role
+               FROM Inquiry
+               WHERE inquiry_user_id = #{inquiryUserId} ) countTable
+    </select>
 
 
 </mapper>

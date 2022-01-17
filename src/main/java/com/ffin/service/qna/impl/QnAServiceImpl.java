@@ -117,7 +117,7 @@ public class QnAServiceImpl implements QnAService {
 
         System.out.println("QnAServiceImpl.getUserInquiryList");
 
-        int totalCount = qnADao.getInquiryTotalCount(search);
+        int totalCount = qnADao.getInquiryTotalCountByUser(search, inquiryUserId);
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("search", search);

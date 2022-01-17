@@ -80,6 +80,11 @@
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
+<!-- swal -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="@sweetalert2/theme-bootstrap-4/bootstrap-4.css">
+<script src="sweetalert2/dist/sweetalert2.min.js"></script>
+
 <style>
     *{
         font-family: 'Nanum Gothic', sans-serif;
@@ -97,9 +102,10 @@
 
     .btn.btn-default{
         color: #110000;
+        border-color: #ffe537;
         background-color: #ffe537;
         margin-left: 10px;
-        padding: 10px 15px 10px 15px;
+        padding: 10px 20px 10px 20px;
         border-radius: 10rem;
     }
     .btn.btn-default:hover{
@@ -107,13 +113,28 @@
         background-color: #ffffff;
         border-color: #ffe537;
         border-radius: 10rem;
-        padding: 0.75rem 1rem;
+        padding: 10px 20px 10px 20px;
+    }
+    .btn.btn-cancle{
+        color: #110000;
+        border-color: #ecf0fd;
+        background-color: #ecf0fd;
+        margin-left: 10px;
+        padding: 10px 20px 10px 20px;
+        border-radius: 10rem;
+    }
+    .btn.btn-cancle:hover{
+        color: #ecf0fd;
+        background-color: #ffffff;
+        border-color: #ecf0fd;
+        border-radius: 10rem;
+        padding: 10px 20px 10px 20px;
     }
 
     .btn.btn-default.login{
         width: -webkit-fill-available;
         margin-left: 0;
-        color: #fff;
+        color: #110000;
         background-color: #ffe537;
     }
 
@@ -203,10 +224,11 @@
     }
 
     .btn.findIdBtn, .btn.findPwBtn, #longinGoBtn, #findUserPw, .btn.findIdBtnT, .btn.findPwBtnT, #findTruckPw{
-        color: #fff;
+        color: #110000;
         background-color: #ffe537;
         margin-left: 10px;
-        padding: 10px 15px 10px 15px;
+        padding: 10px 20px 10px 20px;
+        border-radius: 50px;
     }
 
     .btn.findIdBtn:hover , .btn.findPwBtn:hover, #longinGoBtn:hover, #findUserPw:hover, .btn.findIdBtnT:hover , .btn.findPwBtnT:hover, #longinGoBtnT:hover, #findTruckPw:hover{
@@ -214,7 +236,8 @@
         background-color: #ffffff;
         border-color: #ffe537;
         margin-left: 10px;
-        padding: 10px 15px 10px 15px;
+        padding: 10px 20px 10px 20px;
+        border-radius: 50px;
     }
 
     .btn.findIdBtn, .btn.findPwBtn, .btn.findIdBtnT, .btn.findPwBtnT{
@@ -261,7 +284,14 @@
 
     .dropdown:hover .dropbtn {}
 
-
+    .swal2-styled.swal2-confirm{
+        background-color: #ffe537;
+        display: flex;
+        align-items: center;
+        margin: 0;
+        border-radius: 50px;
+        zoom: 0.85;
+    }
 
 
 </style>
@@ -467,23 +497,43 @@
                     success: function (data) {
                         if(data == 0){
                             console.log(data);
-                            alert(truckId + " 사장님 환영합니다.");
-                            location.href="/catering/mainTruckList";
+                            //alert(truckId + " 사장님 환영합니다.");
+                            Swal.fire({
+                                text: truckId + " 사장님 환영합니다.",
+                                buttons: true
+                            }).then(function(){
+                                location.href="/catering/mainTruckList";
+                            });
+                            //location.href="/catering/mainTruckList";
                         }else if(data == 9) {
                             console.log(data);
-                            alert("회원정보가 일치하지 않습니다");
+                            //alert("회원정보가 일치하지 않습니다");
+                            Swal.fire({
+                                text: "회원정보가 일치하지 않습니다.",
+                                buttons: true
+                            })
                             return false;
                         }else if(data == 1){
                             console.log(data);
-                            alert("탈퇴한 회원정보입니다.")
+                            //alert("탈퇴한 회원정보입니다.")
+                            Swal.fire({
+                                text: "탈퇴한 회원정보입니다.",
+                                buttons: true
+                            })
                             return false;
                         }else {
                             console.log(data);
-                            alert(truckId + " 사장님 환영합니다.");
+                            //alert(truckId + " 사장님 환영합니다.");
                             /*javascript redirect 방법*/
                             //location.replace("/catering/mainTruckList");
                             //self.location="/catering/mainTruckList";
-                            location.href="/catering/mainTruckList";
+                            //location.href="/catering/mainTruckList";
+                            Swal.fire({
+                                text: truckId + " 사장님 환영합니다.",
+                                buttons: true
+                            }).then(function(){
+                                location.href="/catering/mainTruckList";
+                            });
                         }
                     },
                 })

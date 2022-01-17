@@ -40,6 +40,8 @@ public interface QnADao {
     public List<Inquiry> getInquiryListByTruck(Map<String, Object> map) throws Exception;
     //totalCount
     public int getInquiryTotalCount(Search search) throws Exception;
+    //page
+    public int getInquiryTotalCountByUser(Search search, String inquiryUserId) throws Exception;
     //문의수정
     public void updateInquiry(Inquiry inquiry) throws Exception;
     //답변등록

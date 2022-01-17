@@ -4120,6 +4120,7 @@ input[type="button"].btn-block {
 
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
+  border-radius: 50px;
   color: #fff;
   background-color: #ffe537;
 }
