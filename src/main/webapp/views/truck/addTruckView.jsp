@@ -28,8 +28,9 @@
         }
 
         .join-layout {
-            display: -ms-flexbox;
-            content-align: center;
+            display: flex;
+            padding-top:20px ;
+            justify-content:center ;
         }
 
 
@@ -57,7 +58,7 @@
         //============= "가입"  Event 연결 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $("button.btn.btn-primary").on("click", function () {
+            $("button.btn.btn-default.addTBtn").on("click", function () {
                 fncAddTruck();
             });
         });
@@ -65,7 +66,7 @@
         //============= "취소"  Event 처리 및  연결 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $("button.btn.btn-warning").on("click", function () {
+            $("button.btn.btn-cancle").on("click", function () {
                 alert("회원가입을 취소하시겠습니까? 확인을 누르시면 메인화면으로 이동합니다.")
                 self.location = "/views/home.jsp"
             });
@@ -359,23 +360,25 @@
 
         <!-- 아이디 중복검사 -->
         <div class="form-group join-layout" align="center" style="padding-top:20px ">
-            <div>
+            <div class="col-md-3" style="text-align: end;">
             <strong class="col-sm-offset-1 col-sm-3 control-label" style="margin-top:5px ">ID</strong>
             </div>
                 <div class="col-md-6">
                 <input id="tId" type="text" class="form-control align-center" name="truckId"
                        placeholder="아이디를 입력해주세요." required
                        maxlength="10"/>
-                <span class="point successIdChk align-center"></span><br/>
                 <span class="point" style="font-size:16px ">※ 영문자, 소문자 입력가능, 최대 10자 까지 입력</span>
-                <input type="hidden" id="idDoubleChk"/>
+                    <span class="point successIdChk align-center"></span><br/>
+                    <input type="hidden" id="idDoubleChk"/>
             </div>
         </div>
 
 
         <!-- 비밀번호 확인 -->
         <div class="form-group join-layout" align="center">
+            <div class="col-md-3" style="text-align: end;">
             <strong for="tPassword" class="col-sm-offset-1 col-sm-3 control-label">Password</strong>
+            </div>
             <div class="col-sm-6">
                 <input type="password" class="form-control align-center" id="tPassword"
                        name="truckPassword"
@@ -388,8 +391,10 @@
         <br>
 
         <div class="form-group join-layout" align="center">
+            <div class="col-md-3" style="text-align: end;">
             <strong for="tPassword" class="col-sm-offset-1 col-sm-3 control-label" style="font-size:17px ">Password
                 확인</strong>
+            </div>
             <div class="col-sm-6">
                 <input id="truckPasswordChk" type="password" class="form-control align-center"
                        name="truckPasswordChk"
@@ -404,7 +409,9 @@
         <!-- 트럭 대표자 이름 입력란 -->
         <br/>
         <div class="form-group join-layout" align="center">
+            <div class="col-md-3" style="text-align: end;">
             <strong for="truckCEOName" class="col-sm-offset-1 col-sm-3 control-label">이름</strong>
+            </div>
             <div class="col-sm-6">
                 <input id="truckCEOName" class="form-control align-center" name="truckCEOName"
                        placeholder="대표자이름"/>
@@ -415,7 +422,9 @@
 
         <!-- 트럭 대표자 생년월일 입력란 -->
         <div class="form-group join-layout" align="center">
+            <div class="col-md-3" style="text-align: end;">
             <strong for="truckCEOBirth" class="col-sm-offset-1 col-sm-3 control-label">생년월일</strong>
+            </div>
             <div class="col-sm-6">
                 <input id="truckCEOBirth" class="form-control" name="truckCEOBirth"
                        placeholder="대표자 생년월일"/>
@@ -425,7 +434,9 @@
         <br/>
         <!-- 주소 -->
         <div class="form-group join-layout" align="center">
+            <div class="col-md-3" style="text-align: end;">
             <strong for="truckAddr" class="col-sm-offset-1 col-sm-3 control-label">주소</strong>
+            </div>
             <div class="col-sm-6">
                 <input type="text" class="form-control" id="truckAddr" name="truckAddr"
                        placeholder="사업자등록증에 등록된 주소"/>
@@ -438,7 +449,9 @@
 
         <br/>
         <div class="form-group join-layout" align="center">
+            <div class="col-md-3" style="text-align: end;">
             <strong for="truckAddrDetail" class="col-sm-offset-1 col-sm-3 control-label">주소 상세</strong>
+            </div>
             <div class="col-sm-6"><input type="text" class="form-control" id="truckAddrDetail"
                                          name="truckAddrDetail" placeholder="주소 상세"/>
             </div>
@@ -447,7 +460,9 @@
         <!-- 핸드폰 문자 인증 -->
         <br/>
         <div class="form-group join-layout" align="center">
+            <div class="col-md-3" style="text-align: end;">
             <strong for="truckPhone" class="col-sm-offset-1 col-sm-3 control-label">연락처</strong>
+            </div>
             <div class="col-sm-6">
                 <input type="text" class="form-control" id="truckPhone" name="truckPhone"
                        placeholder=" - 를 제외한 전화번호 입력"/>
@@ -458,7 +473,9 @@
             </div>
         </div>
         <div class="form-group join-layout" align="center">
+            <div class="col-md-3" style="text-align: end;">
             <strong for="truckPhoneAuth" class="col-sm-offset-1 col-sm-3 control-label"></strong>
+            </div>
             <div class="col-sm-6 phone-check-input-box" id="phone-check-input-box-fail">
                 <input type="text" class="form-control phone-check-input" id="truckPhoneAuth"
                        name="truckPhoneAuth"
@@ -472,7 +489,9 @@
 
         <!-- 이메일 입력란 -->
         <div class="form-group join-layout" align="center">
+            <div class="col-md-3" style="text-align: end;">
             <strong for="truckEmail" class="col-sm-offset-1 col-sm-3 control-label">Email</strong>
+            </div>
             <div class="col-sm-6">
                 <input type="text" class="form-control" id="truckEmail" name="truckEmail"
                        placeholder="인증번호 확인이 가능한 Email"/>
@@ -483,7 +502,9 @@
             </div>
         </div>
         <div class="form-group join-layout" align="center">
+            <div class="col-md-3" style="text-align: end;">
             <strong for="truckEmailAuth" class="col-sm-offset-1 col-sm-3 control-label"></strong>
+            </div>
             <div class="col-sm-6 mail-check-input-box" id="mail-check-input-box-fail">
                 <input type="text" class="form-control mail-check-input" id="truckEmailAuth"
                        name="truckEmailAuth"
@@ -497,7 +518,9 @@
         <!-- 푸드트럭상호 중복검사 -->
         <br/>
         <div class="form-group join-layout" align="center">
+            <div class="col-md-3" style="text-align: end;">
             <strong for="truckName" class="col-sm-offset-1 col-sm-3 control-label">푸드트럭 상호</strong>
+            </div>
             <div class="col-sm-6">
                 <input id="truckName" type="text" name="truckName" placeholder="푸드트럭 상호 입력"
                        required maxlength="10" class="form-control"/>
@@ -510,7 +533,9 @@
         <!-- 푸드트럭 사업자등록증 파일업로드란 -->
         <br/>
         <div class="form-group join-layout" align="center">
+            <div class="col-md-3" style="text-align: end;">
             <strong for="truckPhone" class="col-sm-offset-1 col-sm-3 control-label">사업자등록증</strong>
+            </div>
             <div class="col-sm-6">
                 <input id="busiLice" type="file" name="busiLice" class="form-control"/>
             </div>
@@ -519,8 +544,11 @@
 
         <br/>
         <!-- 푸드트럭 카테고리 -->
-        <div class="form-group join-layout" align="center">
+        <div class="form-group join-layout" align="center" style="display: block;">
+            <div>
+            <div class="col-md-3" style="text-align: end;">
             <strong for="truckPhone" class="col-sm-offset-1 col-sm-3 control-label">푸드트럭 카테고리</strong>
+            </div>
             <div class="col-sm-6">
             <select name="truckCate" class="col-md-8 ct_input_g"
                     style="width: auto; height: auto">
@@ -535,13 +563,16 @@
                 <option value="8">기타</option>
             </select>
             <input type="hidden" id="truckCate" name="truckCate">
+            </div>
         </div>
 
         <br/>
         <!-- 푸드트럭 프로필이미지 파일업로드란 -->
         <br/>
             <div class="form-group join-layout" align="center">
+                <div class="col-md-3" style="text-align: end;">
             <strong for="truckProImg" class="col-sm-offset-1 col-sm-3 control-label">프로필 이미지</strong>
+                </div>
                 <div class="col-sm-6">
                 <input id="proImg" type="file" name="proImg" class="form-control"/>
             </div>
@@ -551,7 +582,9 @@
         <br/>
         <!-- 푸드트럭 사장님 한마디 -->
             <div class="form-group join-layout" align="center">
+                <div class="col-md-3" style="text-align: end;">
                 <strong for="truckCEOIntro" class="col-sm-offset-1 col-sm-3 control-label">사장님 한마디</strong>
+                </div>
                 <div class="col-sm-6">
                 <input type="text" class="form-control" id="truckCEOIntro" name="truckCEOIntro"
                        placeholder="사장님 한마디"/>
@@ -570,8 +603,8 @@
         <br/>
             <div class="form-group join-layout" align="center">
             <div class="col-sm-offset-1  col-sm-4 text-center">
-                <button type="button" class="btn btn-primary">가 입</button>
-                <button type="button" class="btn btn-warning">취 소</button>
+                <button type="button" class="btn btn-default addTBtn">가 입</button>
+                <button type="button" class="btn btn-cancle">취 소</button>
             </div>
         </div>
         </div>
