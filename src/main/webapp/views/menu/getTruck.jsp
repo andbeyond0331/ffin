@@ -938,7 +938,7 @@
                 $("#cartList").append(orderDetailList);
                 $("#cartList").append(orderTruckIdCheck);
                 targetCart.html(finalCart);
-                // location.reload();
+                location.reload();
 
 
 
@@ -1267,6 +1267,8 @@
             });
 
             // alert("optionGroupCount : " + optionGroupCount);
+            var truckName = $('h3.truckNameForMenu').text();
+
 
             $.ajax({
                 url:"/menu/json/getMenu/"+menuNo,
@@ -1277,39 +1279,55 @@
                     var div="";
                     var modalFooter = "";
 
-                    div +="<div class=\"page-header\">"+
-                        "<h3 class=\"getMenuTitle custom\" name=\"menuTruckId\">"+data.menu.menuTruckId+"</h3>"+
-                        "</div>"+
-                        "<div class=\"row\">"+
-                        "<div class=\"col-xs-4 col-md-2\"><strong>메뉴번호</strong></div>"+
-                        " <div class=\"col-xs-8 col-md-4\" name=\"odMenuNo\">"+data.menu.menuNo+"</div>"+
-                        "</div>"+
+                    div +=
+                        // "<div class=\"page-header\">"+
+                        // "<h3 class=\"getMenuTitle custom\" name=\"menuTruckName\">"+truckName+"</h3>"+
+                        // "</div>"+
+                        // "<div class=\"row\">"+
+                        // "<div class=\"col-xs-4 col-md-2\"><strong>메뉴번호</strong></div>"+
+                        // " <div class=\"col-xs-8 col-md-4\" name=\"odMenuNo\">"+data.menu.menuNo+"</div>"+
+                        // "</div>"+
+                        // "<hr/>"+
+                        // "<div class=\"row\"><strong>메뉴이미지1</strong></div>"+
+                        "<div class=\"odMenuImg\" name=\"odMenuImg1\" data-menuimg=\""+data.menu.menuImg1+"\" style=\"padding-right:19px;\">" +
+                        "<img src=\"/resources/menu/"+data.menu.menuImg1+"\"" +
+                        "style=\"border-bottom: 1px solid #eee; width: 100%;\" "+
+                        "alt=\""+data.menu.menuName+"의 이미지1\" title=\""+data.menu.menuName+"\"></div> </div>"+
                         "<hr/>"+
-                        "<div class=\"row\">"+
-                        "<div class=\"col-xs-4 col-md-2 \"><strong>메뉴 이름</strong></div>"+
-                        "<div class=\"col-xs-8 col-md-4\" name=\"odMenuName\">"+data.menu.menuName+"</div>"+
+                        "<div class=\"row\">";
+                        // "<div class=\"col-xs-4 col-md-2 \"><strong>메뉴 이름</strong></div>"+
+                        //  "<div class=\"col-xs-8 col-md-4\" name=\"odMenuName\"><strong>"+data.menu.menuName+"</strong></div>"+
+
+                    if(data.menu.isSigMenu==1){
+                        div+=""+
+                            "<h5><span class=\"badge badge-warning\" style=\"margin-left: 15px;\">대표메뉴</span></h5>"+
+                            "";
+                    }
+                    div+="<h3 style=\"margin-left: 15px;\">"+data.menu.menuName+"</h3>"+
                         "</div>"+
-                        "<hr/>"+
-                        "<div class=\"row\">"+
-                        "<div class=\"col-xs-4 col-md-2 \"><strong>메뉴이미지1</strong></div>"+
-                        "<div class=\"col-xs-8 col-md-4\" name=\"odMenuImg1\" data-menuimg=\""+data.menu.menuImg1+"\">" +
-                        "<img src=\"/resources/image/"+data.menu.menuImg1+"\"" +
-                        "style=\"border-bottom: 1px solid #eee; height: 200px;\" "+
-                        "alt=\""+data.menu.menuName+"의 이미지1\" title=\"메뉴이미지1\"></div> </div>"+
-                        "<hr/>"+
-                        "<div class=\"row\">" +
-                        "<div class=\"col-xs-4 col-md-2 \">" +
-                        "<strong>메뉴상세정보</strong>" +
-                        "</div><div class=\"col-xs-8 col-md-4\" name=\"odMenuDetail\">"+data.menu.menuDetail+"</div>"+
+                        // "<hr/>"+
+                        "<div>"+
+
+                        // "<div class=\"row\">" +
+                        // "<div class=\"col-xs-4 col-md-2 \">" +
+                        // "<strong>메뉴상세정보</strong>" +
+                        // "</div>" +
+                        "<p></p>"+
+                        "<h5 class=\"odMenuDetail\" name=\"odMenuDetail\" style=\"text-align: right; margin-right: 47px;\">"+data.menu.menuDetail
+
+                        +"</h5>"+
                         "</div><hr/>"+
-                        "<div class=\"row\">"+
-                        "<div class=\"col-xs-4 col-md-2\"><strong>대표메뉴여부</strong></div>"+
-                        "<div class=\"col-xs-8 col-md-4\">"+data.menu.isSigMenu+"</div>"+
-                        "</div><hr/><div class=\"row\">"+
-                        "<div class=\"col-xs-4 col-md-2 \"><strong>메뉴가격</strong></div>"+
-                        "<div class=\"col-xs-8 col-md-4\" name=\"odMenuPrice\">"+data.menu.menuPrice+"</div></div>" +
-                        // "<input type=\"hidden\" name=\"odMenuQty\" value="+ //todo 보류입니다!(수량을 hidden으로 넣을지가)
-                        "<hr/>";
+                        // "<div class=\"row\">"+
+                        // "<div class=\"col-xs-4 col-md-2\"><strong>대표메뉴여부</strong></div>"+
+                        // "<div class=\"col-xs-8 col-md-4\">"+data.menu.isSigMenu+"</div>"+
+                        // "</div><hr/>" +
+                            "<div>"+
+                        // "<div class=\"col-xs-4 col-md-2 \"><strong>메뉴가격</strong></div>"+
+                        "<div class=\"odMenuPrice\" name=\"odMenuPrice\">"+
+                        "<h4><span>가격</span><span style=\"float: right;margin-right: 19px;\">"+data.menu.menuPrice+"원</span></h4>"
+                    "</div></div><hr/>";
+                    // "<input type=\"hidden\" name=\"odMenuQty\" value="+ //todo 보류입니다!(수량을 hidden으로 넣을지가)
+
 
                     $('.modal-body-hey').html(div);
 
@@ -1534,7 +1552,7 @@
                             "<div class=\"box-top\">"+
                             "<div class=\"profile\">"+
                             " <div class=\"profile-img\">"+
-                            " <img src=\"https://cdn.clien.net/web/api/file/F01/3026181/26c0c7097b4545faa89.JPG\" />"+
+                            " <img src=\"/resources/image/"+rv.userProImg+"\" />"+
                             "</div>"+
                             "<div class=\"name-user\">"+
                             "<strong>"+rv.rvUserId+"</strong>"+
@@ -1692,9 +1710,12 @@
                         +"<div>"+data.review.rvContent+"</div>"
                         + "</div>";
                     div += "<div class='align-test'>";
-                    alert(data.review.rvTruckCmtContent);
+                    // alert(data.review.rvTruckCmtContent);
                     if(data.review.rvTruckCmtContent!=null){
-                        div+= "<hr><div>사장님 댓글 : "+data.review.rvTruckCmtContent+"</div></div>";
+                        div+= "<hr>" +
+                            "<span class=\"truck-profile\">"+
+
+                        "</span><div>사장님 댓글 : "+data.review.rvTruckCmtContent+"</div></div>";
                     }
                     // if (data.review.heartNo == '0'){
                     //
@@ -1806,7 +1827,7 @@
 
 
 
-                    // $(".header-title").css({"background-image":"url(../../../resources/image/"+postPicProImg+")"});
+                    $(".header-title").css({"background-image":"url(../../../resources/image/"+data.review.userProImg+")"});
                     $(".insta-header").find('h2').text(data.review.rvUserId);
 
                     // $('.insta-header').html(sap);
@@ -1843,6 +1864,10 @@
 
                     // $('.modal-content-review').append(modalFooter);
                     $('.modal-body.review').html(div);
+
+                    if(data.review.rvTruckCmtContent!=null){
+                        $(".truck-profile").css({"background-image":"url(../../../resources/image/"+data.review.truckProImg+")"});
+                    }
                     // $( '.format .wrapper' ).clone().appendTo( '.cloneFail' );
 
                     // console.log("data.review.postHit: "+data.post.postHit);
@@ -2033,6 +2058,9 @@
         .insta-header .header-title {
             float: left
         }
+        .truck-profile {
+            float: left;
+        }
         .insta-header h2 {
             position: relative;
             color: #444;
@@ -2059,6 +2087,9 @@
         .insta-header .header-title:hover .tooltip{
             display: block
         }
+        .truck-profile:hover .tooltip {
+            display: block;
+        }
         .insta-header span:nth-child(1) {
             display: inline-block;
             width: 60px;
@@ -2071,6 +2102,19 @@
             float: left;
             margin-right: 8px
         }
+        .align-test span {
+            display: inline-block;
+            width: 60px;
+            height: 50px;
+            border-radius: 50%;
+
+            background-size: cover;
+            background-position: 100% 25%;
+            overflow: hidden;
+            float: left;
+            margin-right: 8px
+        }
+
         .insta-post {
             position: relative;
             height: 350px;
@@ -2488,12 +2532,12 @@
 <!--헝헝헝 끝-->
 
 
-<div class="container col-md-7 col-lg-8">
+<div class="col-md-7 col-lg-8">
 
     <c:set var="i" value="0"/>
     <c:forEach var="menu" items="${list}">
         <c:set var="i" value="${i+1}"/>
-        <div class="card" style="width: 17rem; margin-bottom:15px; margin-left: 10px;">
+        <div class="card" style="width: 17rem; margin-bottom:15px; margin-left: 10px; margin-right: 10px;">
             <img class="card-img-top" src="/resources/menu/${menu.menuImg1}" alt="Card image cap"
                 <%--                        <img class="card-img-top" src="/resources/image/menu/${menu.menuImg1}" alt="Card image cap"--%>
                  style="border-bottom: 1px solid #eee; height: 200px;">

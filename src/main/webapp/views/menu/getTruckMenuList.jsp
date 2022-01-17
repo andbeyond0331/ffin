@@ -492,6 +492,7 @@
         function fncGetTruckList(currentPage) {
             // function fncGetTruckList(currentPage) {
             // var menu=$("input[name='menu']").val();
+            //todo cate가 있을 때랑 없을 때 나눠서! sort도 마찬가지!!!
 
             $("#currentPage").val(currentPage)
 
@@ -659,6 +660,51 @@
 
     </button>
     <ul class="dropdown-menu">
+        <c:if test="${cartCondition eq null or cateCondition eq '0'}">
+            <li><a class="dropdown-item" href="/menu/getTruckList">기본 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckList?sortCondition=moreStars">별점 높은 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckList?sortCondition=lessStars">별점 낮은 순</a></li>
+        </c:if>
+        <c:if test="${cartCondition ne null and cateCondition eq '1'}">
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=1">기본 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=1&sortCondition=moreStars">별점 높은 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=1&sortCondition=lessStars">별점 낮은 순</a></li>
+        </c:if>
+        <c:if test="${cartCondition ne null and cateCondition eq '2'}">
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=2">기본 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=2&sortCondition=moreStars">별점 높은 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=2&sortCondition=lessStars">별점 낮은 순</a></li>
+        </c:if>
+        <c:if test="${cartCondition ne null and cateCondition eq '3'}">
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=3">기본 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=3&sortCondition=moreStars">별점 높은 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=3&sortCondition=lessStars">별점 낮은 순</a></li>
+        </c:if>
+        <c:if test="${cartCondition ne null and cateCondition eq '4'}">
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=4">기본 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=4&sortCondition=moreStars">별점 높은 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=4&sortCondition=lessStars">별점 낮은 순</a></li>
+        </c:if>
+        <c:if test="${cartCondition ne null and cateCondition eq '5'}">
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=5">기본 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=5&sortCondition=moreStars">별점 높은 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=5&sortCondition=lessStars">별점 낮은 순</a></li>
+        </c:if>
+        <c:if test="${cartCondition ne null and cateCondition eq '6'}">
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=6">기본 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=6&sortCondition=moreStars">별점 높은 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=6&sortCondition=lessStars">별점 낮은 순</a></li>
+        </c:if>
+        <c:if test="${cartCondition ne null and cateCondition eq '7'}">
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=7">기본 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=7&sortCondition=moreStars">별점 높은 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=7&sortCondition=lessStars">별점 낮은 순</a></li>
+        </c:if>
+        <c:if test="${cartCondition ne null and cateCondition eq '8'}">
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=8">기본 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=8&sortCondition=moreStars">별점 높은 순</a></li>
+            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=8&sortCondition=lessStars">별점 낮은 순</a></li>
+        </c:if>
         <li><a class="dropdown-item" href="/menu/getTruckList">기본 순</a></li>
         <li><a class="dropdown-item" href="/menu/getTruckList?sortCondition=moreStars">별점 높은 순</a></li>
         <li><a class="dropdown-item" href="/menu/getTruckList?sortCondition=lessStars">별점 낮은 순</a></li>
@@ -670,6 +716,30 @@
     <div class="container">
 <div class="btn-group">
     <!-- Tab 아이템이다. 태그는 li과 li > a이다. li태그에 active는 현재 선택되어 있는 탭 메뉴이다. -->
+    <!--노가다 말고 foreach로 새로운 시도!-->
+    <!-- 전체보기일 때 버튼그룹 모양-->
+    <c:if test="${cateCondition eq null or cateCondition eq '0'}">
+        <a href="0" class="btn btn-warning active" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckList">전체보기</a>
+        <!-- a 태그의 href는 아래의 tab-content 영역의 id를 설정하고 data-toggle 속성을 tab으로 설정한다. -->
+        <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>
+        <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>
+        <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>
+        <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>
+        <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>
+        <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>
+        <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>
+        <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>
+    </c:if>
+
+
+
+    <c:forEach var="i" begin="1" end="8">
+        <c:if test="${cateCondition eq null and cateCondition eq i}">
+
+        </c:if>
+    </c:forEach>
+    <!--노가다 말고 foreach로 새로운 시도! 끝-->
+
     <!-- 전체보기일 때 버튼그룹 모양-->
     <c:if test="${cateCondition eq null or cateCondition eq '0'}">
         <a href="0" class="btn btn-warning active" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckList">전체보기</a>

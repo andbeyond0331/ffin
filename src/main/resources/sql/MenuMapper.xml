@@ -49,6 +49,16 @@
 
 	</insert>
 
+
+	<update id="updateSigMenu" parameterType="String">
+		UPDATE menu
+		<set>
+			IS_SIG_MENU = 0
+		</set>
+		WHERE IS_SIG_MENU = 1 and menu_truck_id=#{value}
+	</update>
+
+
 	<insert id="addOptionGroup" parameterType="map" useGeneratedKeys="true" keyProperty="menuNo">
 			INSERT INTO ffin.optiongroup
 			(MENU_NO, OPTION_GROUP_NO, OPTION_NO, OPTION_GROUP_NAME, OPTION_NAME, OPTION_PRICE)

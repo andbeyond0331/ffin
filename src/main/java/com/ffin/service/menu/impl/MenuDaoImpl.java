@@ -36,6 +36,12 @@ public class MenuDaoImpl implements MenuDao {
     @Override
     public int addMenu(Menu menu) throws Exception{
         System.out.println("MenuDaoImpl.addMenu");
+        //대표메뉴 로직
+        if(menu.getIsSigMenu()==0){
+
+        }else{
+            sqlSession.update("MenuMapper.updateSigMenu",menu.getMenuTruckId());
+        }
         sqlSession.insert("MenuMapper.addMenu",menu);
         int menuNo = menu.getMenuNo();
         return menuNo;
