@@ -80,9 +80,12 @@
 <div class="container">
 
     <div class="page-header" align="center">
-        <label for="page-top" class="col-sm-offset-4 control-label"/>
-        <h3 class="text-info">푸드트럭(사업자) 정보조회</h3>
+        <label for="page-top" class="control-label"/>
+        <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
+        <h4 style="margin-top: 10px;">
+        푸드트럭(사업자) 정보조회</h4>
     </div>
+    <br>
 
     <div class="form-horizontal" style="border-radius:10px ; border: 0; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2); max-width: 550px;
 			transition: 0.3s;">
@@ -229,7 +232,7 @@
                 <%--                <input id="busiLice" type="file" name="busiLice" class="form-control" value="${truck.truckBusiLice}" readonly/>--%>
                 <%--                ${truck.truckBusiLice}--%>
             </div>
-            <div class="col-xs-8 col-md-4"><a href="../../resources/image/${truck.truckBusiLice}" data-fancybox
+            <div><a href="../../resources/image/${truck.truckBusiLice}" data-fancybox
                                               data-caption="캡션"><img src="../../resources/image/${truck.truckBusiLice}"
                                                                      style="border-bottom: 1px solid #eee; height: 200px;"
                                                                      alt="${truck.truckName}의 사업자등록증 이미지"

@@ -333,7 +333,7 @@
                 </div>
             </div>
         </div>
-        <c:if test="${sessionScope.role.equals(admin)}">
+        <c:if test="${sessionScope.role eq 'admin'}">
             <button type="button" id="goBlindPost" class="btn-secondary">비공개처리</button>
             <button type="button" id="goSeePost" class="btn-secondary">공개처리</button>
         </c:if>
