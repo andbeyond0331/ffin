@@ -2705,7 +2705,7 @@
                         let heart = pto.heartCount;
 
 
-                        $('#heartC').text(하트);
+                        $('#heartC').text(heart);
 
                         console.log("하트 추가!!!!!!!!!!");
                     },
@@ -2739,7 +2739,7 @@
                         // 페이지에 하트수 갱신
                         //
 
-                        $('#heartC').text(하트);
+                        $('#heartC').text(heart);
 
                         console.log("하트삭제!!!!!!!!!");
                     },
