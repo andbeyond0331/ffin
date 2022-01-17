@@ -26,7 +26,7 @@
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
             $("button.btn.btn-warning").on("click", function () {
-                self.location = "/truck/truckMyPage"
+                self.location = "/views/truck/truckMyPage.jsp"
             });
         });
 
@@ -63,10 +63,10 @@
 <c:if test="${sessionScope.truck != null && sessionScope.truck.role == 1}">
     <div class="container">
 
-        <div class="page-header">
-            <label for="page-top" class="col-sm-offset-4 control-label"/>
-            <h3 class="text-info">공지 작성(수정)</h3>
-
+        <div class="page-header" style="text-align: center">
+            <label for="page-top"/>
+            <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
+            <h4 style="margin-top: 10px;">공지 작성(수정)</h4>
         </div>
 
         <form name="updateN" class="form-horizontal">
@@ -75,18 +75,61 @@
                 <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
                     <tbody>
                     <tr>
-                        <td><input id="truckNoticeTitle" type="text" class="form-control" placeholder="공지 제목" name="truckNoticeTitle"
+                        <td><input id="truckNoticeTitle" type="text" class="form-control" placeholder="공지 제목"
+                                   name="truckNoticeTitle"
                                    maxlength="50" value="${truck.truckNoticeTitle}"></td>
                     </tr>
                     <tr>
-                        <td><textarea id="truckNoticeContent" class="form-control" placeholder="공지 내용" name="truckNoticeContent" maxlength="3000"
+                        <td><textarea id="truckNoticeContent" class="form-control" placeholder="공지 내용"
+                                      name="truckNoticeContent" maxlength="3000"
                                       style="height: 350px;" wrap="hard">${truck.truckNoticeContent}</textarea></td>
                     </tr>
                     <!-- 푸드트럭 공지 파일업로드란 -->
                     <td>
-                        <label for="truckNoticeImg1" class="col-sm-2 col-form-label"><strong>첨부 파일</strong></label>
-                        <input id="truckNoticeImg1" type="file" name="truckNoticeImg1" class="form-control-file" value="${truck.truckNoticeImg}"/>
-                        </td>
+                        <div class="form-group join-layout">
+                            <div class="col-md-6 offset-3" style="text-align:center">
+                                <strong for="truckNoticeImg1" class="col-sm-offset-1 col-sm-4 control-label">첨부
+                                    파일</strong>
+                            </div>
+                            <div class="col-sm-6 offset-3"  style="content-align:center ">
+                                <input id="truckNoticeImg1" type="file" name="truckNoticeImg1" class="form-control"
+                                       value="${truck.truckNoticeImg}" id="truckNoticeImg1" placeholder="파일첨부"
+                                       onchange="setNotiPreview(event);"/>
+                                <div id="notiFilePreview"></div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="checkL"/>
+                        <script>
+
+
+                            function setNotiPreview(event) {
+
+                                var DIVimage1preview = $('#notiFilePreview');
+                                var isTherePreview = DIVimage1preview.find('img').length;
+                                //alert("isTherePreview : " + isTherePreview);
+                                var reader = new FileReader();
+
+                                if (isTherePreview == 0) {
+
+                                } else {
+
+                                    DIVimage1preview.find('img').remove();
+
+                                }
+
+                                reader.onload = function (event) {
+                                    var img = document.createElement("img");
+                                    img.setAttribute("src", event.target.result);
+                                    document.querySelector("div#notiFilePreview").appendChild(img);
+
+                                };
+
+                                reader.readAsDataURL(event.target.files[0]);
+
+
+                            }
+                        </script>
+                    </td>
 
 
                     </tbody>
@@ -96,7 +139,7 @@
 
             <br/>
             <div class="form-group">
-                <div class="col-sm-offset-6 col-sm-6 text-center">
+                <div class="offset-3 col-sm-6 text-center">
                     <button type="button" class="btn btn-secondary">작성(수정) 완 료</button>
                     <button class="btn btn-warning" type="button">취 소</button>
                 </div>

@@ -111,9 +111,9 @@
                         var postUserId = '${post.postUser.userId}${post.postTruck.truckId}'
 
                         console.log("post.socket::::" + socket);
-                        if(socket) {
+                        if (socket) {
                             // websocket에 보내기!!! (message, 보내는이, 받는이)
-                            let socketMessage = "post,"+userId+","+postUserId+","+postNo;
+                            let socketMessage = "post," + userId + "," + postUserId + "," + postNo;
                             console.log("socketM::::" + socketMessage);
                             socket.send(socketMessage);
                         }
@@ -125,13 +125,14 @@
             });
 
         })
+
         // 게시물 비공개처리
         function fncBlind() {
-            if(${post.secretKey == 1}){
+            if (${post.secretKey == 1}) {
                 alert("이미 비공개 처리된 게시물입니다.")
                 return;
-            }else {
-                self.location="/community/blindPost";
+            } else {
+                self.location = "/community/blindPost";
                 alert("게시물 비공개처리가 완료되었습니다.");
             }
         }
@@ -139,23 +140,23 @@
         // 게시물 공개처리
         function fncSee() {
             console.log("fncSee");
-            if(${post.secretKey == 0}){
+            if (${post.secretKey == 0}) {
                 alert("이미 공개처리된 게시물입니다.");
                 return;
-            }else {
-                self.location="/community/seePost";
+            } else {
+                self.location = "/community/seePost";
                 alert("게시물 공개처리가 완료되었습니다.");
             }
         }
 
-        function fncDeleteC(commentNo){
+        function fncDeleteC(commentNo) {
             //let commentNo = $(this).parent().find("input[name='deleteCNO']").val();
             //alert("먹먹먹ㅁ "+commentNo);
             $.ajax({
                 type   : "get", //데이터를 보낼 방식
                 url    : "/community/json/deleteComment", //데이터를 보낼 url
                 data   : {
-                    commentNo : commentNo
+                    commentNo: commentNo
                 }, //보낼 데이터
                 success: function () { //데이터를 보내는것이 성공했을시 출력되는 메시지
                     //alert("댓글이 삭제되었습니다.");
@@ -195,7 +196,7 @@
             });
 
             $(function () {
-                $(updateC).click(function (){
+                $(updateC).click(function () {
                     var data_var = $(this).data('id');
                     $(".modal-body #commentContentU").val(data_var);
                 })
@@ -215,8 +216,9 @@
 <br/><br/><br/><br/><br/>
 
 <div class="container" align="center">
-    <div class="page-header text-info">
-        <h3 class="text-info"> 게시글조회 </h3>
+    <div class="page-header">
+        <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
+        <h3> 게시글조회 </h3>
     </div>
 
     <br/>
@@ -265,22 +267,41 @@
                     <midium colspan="2" style="font-size: 28px">${post.postContent}</midium>
                 </ul>
 
-                <ul>
+                <ul style="padding-left:0; ">
                     <td colspan="1">
                         <br/>
-                        <img src="../resources/image/${post.postFile1}" width="300"
-                             height="300"/>
-                        <img src="../resources/image/${post.postFile2}" width="300"
-                             height="300"/>
-                        <img src="../resources/image/${post.postFile3}" width="300"
-                             height="300"/>
+                        <c:if test="${post.postFile1 ne '' and post.postFile1 ne null}">
+                            <img src="../../../resources/image/${post.postFile1}" width="500"
+                        height="400" style="border-radius:20px; "/>
+                        </c:if>
+                    </td>
+                </ul>
+                <br/>
+                <ul style="padding-left:0; ">
+                    <td colspan="1">
+                        <br/>
+                        <c:if test="${post.postFile2 ne '' and post.postFile2 ne null}">
+                            <img src="../resources/image/${post.postFile2}" width="500"
+                                 height="400" style="border-radius:20px; "/>
+                        </c:if>
+                    </td>
+                </ul>
+                <br/>
+                <ul style="padding-left:0; ">
+                    <td colspan="1">
+                        <br/>
+                        <c:if test="${post.postFile3 ne '' and post.postFile3 ne null}">
+                            <img src="../resources/image/${post.postFile3}" width="500"
+                                 height="400" style="border-radius:20px; "/>
+                        </c:if>
                     </td>
                 </ul>
                 <ul class="chat_list" style="font-size:30px ">
 
-                    <span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-											<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
-											<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                    <span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-eye" viewBox="0 0 16 16">
+											<path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+											<path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
 										</svg>
 						</span> <span id="hit${post.postNo }">${post.postHit }</span>
 
@@ -397,8 +418,6 @@
             </div>
 
 
-
-
             <table class="table table-hover table-striped" id="list">
                 <br/>
                 <hr style="max-width: 770px">
@@ -415,7 +434,8 @@
                                 <div>
                                     <div class="header">
                                         <img style="border-radius:70px; margin-left:5px"
-                                             src="../resources/image/${comment.userProImg}${comment.truckProImg}" width="60"
+                                             src="../resources/image/${comment.userProImg}${comment.truckProImg}"
+                                             width="60"
                                              height="55" class="pull-left"/>
                                         <strong style="padding-top:10px"
                                                 class="primary-font pull-left">${comment.commentUserId}${comment.commentTruckId}</strong>
@@ -423,7 +443,8 @@
                                         <br>
                                         <c:if test="${sessionScope.user.userId.equals(comment.commentUserId) || sessionScope.truck.truckId.equals(comment.commentTruckId)}">
                                             <a class="btn-outline-dark pull-right"
-                                               href="javascript:void(0)" onclick="fncDeleteC('${comment.commentNo}')">삭제</a>
+                                               href="javascript:void(0)"
+                                               onclick="fncDeleteC('${comment.commentNo}')">삭제</a>
                                             <input type="hidden" name="deleteCNO" value="${comment.commentNo}">
                                             <input type="hidden" value="${comment.commentPostNo}">
                                         </c:if>

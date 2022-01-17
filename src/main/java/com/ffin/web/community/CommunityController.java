@@ -176,7 +176,7 @@ public class CommunityController {
     }
 
     @RequestMapping(value = "updatePost", method = RequestMethod.POST)
-    public String updatePost(@ModelAttribute("post") Post post, Model model, HttpSession session) throws Exception {
+    public String updatePost(@ModelAttribute("post") Post post,@RequestParam("file1") MultipartFile file1,@RequestParam("file2") MultipartFile file2,@RequestParam("file3") MultipartFile file3, Model model, HttpServletRequest request, HttpSession session) throws Exception {
 
         System.out.println("/community/updatePost : POST");
         //Business Logic
@@ -189,6 +189,23 @@ public class CommunityController {
         post.setPostNo(postNo);
 
         System.out.println("post = " + post);
+
+        String temDir = request.getSession().getServletContext().getRealPath("/resources/image");
+        System.out.println("temDir = " + temDir);
+
+        if (!file1.getOriginalFilename().isEmpty()) {
+            file1.transferTo(new File(temDir, file1.getOriginalFilename()));
+        }
+        if (!file2.getOriginalFilename().isEmpty()) {
+            file2.transferTo(new File(temDir, file2.getOriginalFilename()));
+        }
+        if (!file3.getOriginalFilename().isEmpty()) {
+            file3.transferTo(new File(temDir, file3.getOriginalFilename()));
+        }
+
+        post.setPostFile1(file1.getOriginalFilename());
+        post.setPostFile2(file2.getOriginalFilename());
+        post.setPostFile3(file3.getOriginalFilename());
 
         communityService.updatePost(post);
 
