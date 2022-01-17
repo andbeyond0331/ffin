@@ -179,6 +179,13 @@
                             //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
                         }
                     });
+                    console.log("purchase.socket::::" + socket);
+                    if(socket) {
+                        // websocket에 보내기!!! (message, 보내는이, 받는이)
+                        let socketMessage = "purchase,"+orderUserId+","+orderTruckId+","+orderTruckId;
+                        console.log("socketM::::" + socketMessage);
+                        socket.send(socketMessage);
+                    }
                     //성공시 이동할 페이지
                     $("form").attr("method", "POST").attr("action", "/purchase/getOrderUser").submit();
                 } else {
@@ -235,6 +242,13 @@
                             //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
                         }
                     });
+                    console.log("purchase.socket::::" + socket);
+                    if(socket) {
+                        // websocket에 보내기!!! (message, 보내는이, 받는이)
+                        let socketMessage = "purchase,"+orderUserId+","+orderTruckId+","+orderTruckId;
+                        console.log("socketM::::" + socketMessage);
+                        socket.send(socketMessage);
+                    }
                     //성공시 이동할 페이지
                     $("form").attr("method", "POST").attr("action", "/purchase/getOrderUser").submit();
                 } else {
@@ -291,6 +305,13 @@
                             //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
                         }
                     });
+                    console.log("purchase.socket::::" + socket);
+                    if(socket) {
+                        // websocket에 보내기!!! (message, 보내는이, 받는이)
+                        let socketMessage = "purchase,"+orderUserId+","+orderTruckId+","+orderTruckId;
+                        console.log("socketM::::" + socketMessage);
+                        socket.send(socketMessage);
+                    }
                     //성공시 이동할 페이지
                     $("form").attr("method", "POST").attr("action", "/purchase/getOrderUser").submit();
                 } else {
@@ -348,6 +369,13 @@
                             //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
                         }
                     });
+                    console.log("purchase.socket::::" + socket);
+                    if(socket) {
+                        // websocket에 보내기!!! (message, 보내는이, 받는이)
+                        let socketMessage = "purchase,"+orderUserId+","+orderTruckId+","+orderTruckId;
+                        console.log("socketM::::" + socketMessage);
+                        socket.send(socketMessage);
+                    }
                     //성공시 이동할 페이지
                     $("form").attr("method", "POST").attr("action", "/purchase/getOrderUser").submit();
                 } else {
