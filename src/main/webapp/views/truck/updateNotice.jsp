@@ -110,7 +110,7 @@
         <h3>가입승인이 완료된 사업자 회원만 공지를 작성하실 수 있습니다</h3>
         <br/><br/>
         <a href="/views/truck/addTruckView.jsp" class="btn-warning">사업자회원가입</a>
-        <a href="/views/home.jsp" class="btn-warning">메인화면으로</a>
+        <a href="/catering/mainTruckList" class="btn-warning">메인화면으로</a>
     </div>
 </c:if>
 <jsp:include page="/views/footer.jsp"/>

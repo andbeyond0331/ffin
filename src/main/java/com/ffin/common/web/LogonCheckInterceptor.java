@@ -26,7 +26,7 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 
 	///Constructor
 	public LogonCheckInterceptor(){
-		System.out.println("\nCommon :: "+this.getClass()+"\n");		
+		System.out.println("\nCommon :: "+this.getClass()+"\n");
 	}
 
 	///Method
@@ -41,29 +41,24 @@ public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 		// login처리를 담당하는 사용자 정보를 담고 있는 객체를 가져옴
 		//Object obj = session.getAttribute("loginCookie");
 		//System.out.println("***********************cookie = " + autoLogin);
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@ user = " + user);
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!session = " + session);
-		System.out.println("????????????????session = " + session.getId());
+
 		// 로그인된 세션이 없는 경우...
 		if ( user == null ) {
 			// 우리가 만들어 논 쿠키를 꺼내온다.
 			Cookie autoLogin = WebUtils.getCookie(request, "loginCookie");
-			System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+
 
 			// 쿠키가 존재하는 경우(이전에 로그인때 생성된 쿠키가 존재한다는 것)
 			if ( autoLogin != null )
 			{
-				System.out.println("####################################");
+
 				// autoLogin의 값을 꺼내오고 -> 즉, 저장해논 세션Id를 꺼내오고
 				String SESSIONKEY = autoLogin.getValue();
-				System.out.println("SESSIONKEY = " + SESSIONKEY);
 				user = userService.sessionKeyAuth(SESSIONKEY);
-				System.out.println("user = " + user);
 				if(user != null)
 				{
-					System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 					session.setAttribute("user", user);
-
+					session.setAttribute("role", "user");
 					return true;
 				}
 

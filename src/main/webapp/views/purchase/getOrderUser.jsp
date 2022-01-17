@@ -574,7 +574,7 @@
             </form>
 
             <div class="btn-box" style=" margin-top: 20px;">
-                <a type="button" href="../" onClick="/" style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
+                <a type="button" href="/catering/mainTruckList" style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
                     »Æ¿Œ
                 </a>
                 <c:if test="${purchase.orderStatus == '1'}">

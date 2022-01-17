@@ -9,13 +9,13 @@
 
 <header class="header">
     <%-- 로그인 X --%>
-    <c:if test="${ user.userId == null && truck.truckId == null }">
+    <c:if test="${ sessionScope.user.userId == null && sessionScope.truck.truckId == null }">
         <div class="container-fluid">
             <nav class="navbar navbar-expand-md fixed-top">
                 <!-- navbar-brand의 content 변경 -->
                     <%--<a class="navbar-brand" href="#">F.Fin</a>--%>
                 <div class="logo">
-                    <a class="navbar-brand" href="/">
+                    <a class="navbar-brand" href="/catering/mainTruckList">
                         <img class="d-inline-block" src="/resources/bootstrap/assets/logo.svg" alt="logo" />
                         <span style="color: #ffba49; ">F.FIN</span>
                     </a>
@@ -41,13 +41,13 @@
         </div>
     </c:if>
     <%-- 로그인 O --%>
-    <c:if test="${ (user.userId != null && (sessionScope.role == 'user' || sessionScope.role == 'admin')) || (truck.truckId != null && sessionScope.role == 'truck') }">
+    <c:if test="${ (sessionScope.user.userId != null && (sessionScope.role == 'user' || sessionScope.role == 'admin')) || (sessionScope.truck.truckId != null && sessionScope.role == 'truck') }">
         <div class="container-fluid">
             <nav class="navbar navbar-expand-md fixed-top">
                 <!-- navbar-brand의 content 변경 -->
                     <%--<a class="navbar-brand" href="#">F.Fin</a>--%>
                 <div class="logo">
-                    <a class="navbar-brand" href="/">
+                    <a class="navbar-brand" href="/catering/mainTruckList">
                         <img class="d-inline-block" src="/resources/bootstrap/assets/logo.svg" alt="logo" />
                         <span style="color: #ffba49; ">F.FIN</span>
                     </a>
@@ -74,7 +74,7 @@
                                 <a href="/community/getPostList">일반게시판</a>
                             </div>
                         </li>
-                        <c:if test="${user.userId != null && (sessionScope.role == 'user' || sessionScope.role == 'admin')}">
+                        <c:if test="${sessionScope.user.userId != null && (sessionScope.role == 'user' || sessionScope.role == 'admin')}">
                             <li class="dropdown" style="color: black">
                                 <a class="dropbtn" id="goChat">채팅방</a>
                             </li>
@@ -88,12 +88,12 @@
                             <a class="nav-link" id="goMsg" href="#" style="margin-top: 3px;"><i class="fas fa-envelope fa-lg" ></i></a>
                         </li>
                         <c:choose>
-                            <c:when test="${user.userId != null && sessionScope.role eq 'user' }">
+                            <c:when test="${sessionScope.user.userId != null && sessionScope.role eq 'user' }">
                                 <li class="nav-item">
                                     <a class="pull-bs-canvas-right d-block text-primary text-decoration-none" href="#" style="margin-top: 10px;"><i class="fas fa-shopping-cart fa-lg"></i></a>
                                 </li>
                             </c:when>
-                            <c:when test="${truck.truckId != null && sessionScope.role eq 'truck' }">
+                            <c:when test="${sessionScope.truck.truckId != null && sessionScope.role eq 'truck' }">
                                 <li class="nav-item">
                                     <a class="nav-link" href="/purchase/getOrderList?truckId=${truck.truckId}&search=0" style="margin-top: 3px;"><i class="fas fa-shopping-cart fa-lg"></i></a>
                                 </li>
@@ -105,14 +105,14 @@
                             <c:choose>
 
                                 <%-- User --%>
-                                <c:when test="${user.userId != null && sessionScope.role eq 'user' }">
+                                <c:when test="${sessionScope.user.userId != null && sessionScope.role eq 'user' }">
                                     <button type="button" class="btn btn-default dropdown-toggle" id="user-dropdown" data-toggle="dropdown"  aria-expanded="false">
-                                        <i class="fas fa-user-alt"></i>${user.userId}
+                                        <i class="fas fa-user-alt"></i>${sessionScope.user.userId}
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="user-dropdown">
                                         <li><a class="dropdown-item user-menu" href="/views/user/userMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
                                         <li><a class="dropdown-item user-menu" href="/views/qna/addInquiryView.jsp"><i class="fas fa-question-circle"></i>문의</a></li>
-                                        <li><a class="dropdown-item user-menu" href="/purchase/getOrderUser?userId=${user.userId}"><i class="fas fa-question-circle"></i>현재주문목록</a></li>
+                                        <li><a class="dropdown-item user-menu" href="/purchase/getOrderUser?userId=${sessionScope.user.userId}"><i class="fas fa-question-circle"></i>현재주문목록</a></li>
                                         <c:if test="${sessionScope.sns eq 'kakao'}">
                                             <li><a class="dropdown-item user-menu" href="https://kauth.kakao.com/oauth/logout?client_id=c5cd6068fce64f5187211674e3872ec7&logout_redirect_uri=http://localhost:8080/user/kakaoLogout"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
                                         </c:if>
@@ -123,9 +123,9 @@
                                 </c:when>
 
                                 <%-- Admin --%>
-                                <c:when test="${user.userId != null && sessionScope.role eq 'admin'}">
+                                <c:when test="${sessionScope.user.userId != null && sessionScope.role eq 'admin'}">
                                     <button type="button" class="btn btn-default dropdown-toggle" id="user-dropdown" data-toggle="dropdown"  aria-expanded="false">
-                                        <i class="fas fa-user-alt"></i>${user.userId}
+                                        <i class="fas fa-user-alt"></i>${sessionScope.user.userId}
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="user-dropdown">
                                         <li><a class="dropdown-item user-menu" href="/views/user/adminMyPage.jsp"><i class="fas fa-user-circle"></i>사이트 관리</a></li>
@@ -135,9 +135,9 @@
                                 </c:when>
 
                                 <%-- Truck --%>
-                                <c:when test="${truck.truckId != null && sessionScope.role eq 'truck' }">
+                                <c:when test="${sessionScope.truck.truckId != null && sessionScope.role eq 'truck' }">
                                     <button type="button" class="btn btn-default dropdown-toggle" id="truck-dropdown" data-toggle="dropdown"  aria-expanded="false">
-                                        <i class="fas fa-user-alt"></i>${truck.truckId}
+                                        <i class="fas fa-user-alt"></i>${sessionScope.truck.truckId}
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="truck-dropdown">
                                         <li><a class="dropdown-item user-menu" href="/views/truck/truckMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
