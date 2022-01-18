@@ -295,7 +295,7 @@
                     <img src="../../resources/image/seoul.jpg" class="card__image" alt="" />
                     <div class="card__overlay">
                         <div class="card__header">
-                            <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>
+                            <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path/></svg>
                             <img class="card__thumb" src="../../resources/bootstrap/assets/logo.svg" alt="" style="max-width: 30px;"/>
                             <div class="card__header-text" style="display: inherit;">
                                 <h3 class="card__title">SEUOL</h3>

@@ -21,8 +21,18 @@ p {
 
 
 
-.msg-container{max-width:1170px; margin:auto;}
-img{ max-width:100%;}
+.msg-container{
+    max-width:1170px;
+    margin:auto;
+    box-shadow: 0 1px 2px 1px rgba(0,0,0,0.2);
+    transition: 0.2s;
+    border-radius: 20px;
+}
+img{
+    max-width:100%;
+    box-shadow: 0 1px 2px 1px rgb(0 0 0 / 20%);
+    transition: 0.2s;
+}
 .inbox_people {
     background: #f8f8f8 none repeat scroll 0 0;
     float: left;
@@ -34,6 +44,10 @@ img{ max-width:100%;}
     border-radius: 15px;
     clear: both;
     overflow: hidden;
+    background-color: white;
+    display: flex;
+    align-items: stretch;
+    flex-direction: row;
 }
 .top_spac{ margin: 20px 0 0;}
 
@@ -62,9 +76,22 @@ img{ max-width:100%;}
 }
 .srch_bar .input-group-addon { margin: 0 0 0 -27px;}
 
-.chat_ib h5{ font-size:20px; color:#464646; margin:0 0 8px 0; }
-.chat_ib h5 span{ font-size:17px; float:right;}
-.chat_ib p{ font-size:14px; color:#989898; margin:auto}
+.chat_ib h5{
+    font-size:18px;
+    color:#464646;
+    margin:0 0 8px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chat_ib h5 span{ font-size:12px; float:right;}
+
+.chat_ib p{
+    font-size:14px;
+    color:#989898;
+    margin:auto;
+    float: left;
+}
 .chat_img {
     float: left;
     width: 11%;
@@ -75,21 +102,26 @@ img{ max-width:100%;}
     width: 88%;
 }
 
-.chat_people{ overflow:hidden; clear:both;}
+.chat_people{
+    display: flex;
+    align-items: center;
+    overflow:hidden;
+    clear:both;
+}
 .chat_list {
     border-bottom: 1px solid #f7f7f7;
     margin: 0;
-    padding: 18px 16px 10px;
+    padding: 15px;
 }
 
 
 .chat_list_box :hover{
-    background-color: #ead6d0;
+    background-color: #fff3ec;
 }
 
 .inbox_chat { height: 550px; overflow-y: scroll;}
 
-.active_chat{ background:#ebebeb;}
+.active_chat{ background:#fff3ec;}
 
 .incoming_msg_img {
     display: inline-block;
@@ -111,20 +143,29 @@ img{ max-width:100%;}
     color: #646464;
     font-size: 14px;
     margin: 0;
-    padding: 10px 10px 10px 12px;
-    width: 100%;
+    padding: 5px 15px 5px 15px;
+    width: fit-content;
+    border-radius: 50px;
+    box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1);
+    transition: 0.2s;
     /*font-family: 'Noto Sans KR', sans-serif;*/
 }
 .time_date {
     color: #747474;
-    display: block;
+    display: flex;
+    align-items: flex-end;
     font-size: 12px;
-    margin: 5px 0 8px;
+    margin: 5px 15px 5px 0;
+    font-size: 11px;
 }
-.received_withd_msg { width: 57%;}
+
+.received_withd_msg {
+    width: fit-content;
+    margin-left: 10px;
+}
 .mesgs {
     float: left;
-    padding: 30px 15px 0 25px;
+    padding: 15px 15px 0 10px;
     width: 60%;
 }
 
@@ -133,24 +174,40 @@ img{ max-width:100%;}
     border-radius: 7px;
     font-size: 14px;
     margin: 0; color:#fff;
-    padding: 10px 10px 10px 12px;
-    width:100%;
+    padding: 5px 15px 5px 15px;
+    width:fit-content;
+    border-radius: 50px;
+    box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1);
+    transition: 0.2s;
     /*font-family: 'Noto Sans KR', sans-serif;*/
 
 }
-.outgoing_msg{ overflow:hidden;} /*margin:26px 0 26px;*/
+.outgoing_msg{
+    overflow:hidden;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 25px;
+} /*margin:26px 0 26px;*/
 .sent_msg {
-    float: right;
-    width: 46%;
+    display: flex;
+    align-content: center;
+    width: fit-content;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 10px;
     /*font-family: 'Noto Sans KR', sans-serif;*/
 }
 .input_msg_write input {
-    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    background: #e9ecef none repeat scroll 0 0;
+    border-radius: 50px;
     border: medium none;
     color: #4c4c4c;
-    font-size: 15px;
-    min-height: 48px;
+    font-size: 14px;
+    height: 35px;
     width: 100%;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding-left: 15px;
 }
 
 .type_msg {border-top: 1px solid #dfdfdf;position: relative;}
@@ -172,8 +229,18 @@ img{ max-width:100%;}
     background: #ff5900 none repeat scroll 0 0;
 }
 
-.messaging { padding: 0 0 50px 0;}
+.messaging {
+    padding: 10 0 50px 0;
+}
 .msg_history {
     height: 516px;
     overflow-y: auto;
+}
+
+.write_msg:focus{
+    color: #212529;
+    background-color: #fff;
+    border-color: #ffec8a;
+    outline: 0;
+    box-shadow: 0 0 0 0.1rem rgb(255, 236, 138);
 }

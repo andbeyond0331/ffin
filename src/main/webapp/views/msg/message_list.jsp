@@ -59,48 +59,42 @@
 <br />
 <br />
 <br />
+<section class="client_section layout_padding" style="padding-top: 30px;">
+    <div class="col-md-11 col-lg-10 mx-auto">
 
-<div class="msg-container">
-
-    <div class="messaging">
-        <div class="inbox_msg">
-            <!-- 메세지 목록 영역 -->
-            <div class="inbox_people">
-                <div class="headind_srch">
-                    <div class="recent_heading">
-                        <h4>메세지함</h4>
-                    </div>
-                    <!-- 메세지 검색 -->
-          <%--          <div class="srch_bar">
-                        <div class="stylish-input-group">
-                            <input type="text" class="search-bar"  placeholder="Search" >
-                            <span class="input-group-addon">
-	                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-	                </span>
-                        </div>
-                    </div>--%>
-                </div>
-
-                <!-- 메세지 리스트 -->
-                <div class="inbox_chat">
-
-                </div>
+            <div class="detail-box" style="margin-top: 30px; margin-bottom: 50px;">
+                <i class="fa fa-quote-left" aria-hidden="true"></i>
+                <h4 style="margin-top: 10px;">
+                    메세지함
+                </h4>
             </div>
 
-            <!-- 메세지 내용 영역 -->
-            <div class="mesgs">
-                <!-- 메세지 내용 목록 -->
-                <div class="msg_history" name="contentList">
-                    <!-- 메세지 내용이 올 자리 -->
+        <div class="msg-container">
+            <div class="messaging">
+                <div class="inbox_msg">
+                    <!-- 메세지 목록 영역 -->
+                    <div class="inbox_people">
+                        <!-- 메세지 리스트 -->
+                        <div class="inbox_chat">
+
+                        </div>
+                    </div>
+
+                    <!-- 메세지 내용 영역 -->
+                    <div class="mesgs">
+                        <!-- 메세지 내용 목록 -->
+                        <div class="msg_history" name="contentList">
+                            <!-- 메세지 내용이 올 자리 -->
+                        </div>
+                        <div class="send_message">
+                        </div>
+                        <!-- 메세지 입력란이 올자리 -->
+                    </div>
                 </div>
-                <div class="send_message">
-                </div>
-                <!-- 메세지 입력란이 올자리 -->
             </div>
         </div>
-
     </div>
-</div>
+</section>
 
 <script>
 
@@ -131,12 +125,12 @@
 
                     let send_msg = "";
                     send_msg += "<div class='type_msg'>";
-                    send_msg += "	<div class='input_msg_write row'>";
-                    send_msg += "		<div class='col-11'>";
-                    send_msg += "			<input type='text' class='write_msg form-control' placeholder='메세지를 입력...' />";
+                    send_msg += "	<div class='input_msg_write row' style='display: flex; justify-content: center;'>";
+                    send_msg += "		<div class='col-10'>";
+                    send_msg += "			<input type='text' class='write_msg form-control' placeholder='메세지를 입력해주세요.' />";
                     send_msg += "		</div>";
                     send_msg += "		<div class='col-1'>";
-                    send_msg += "			<button class='msg_send_btn' type='button'><i class='fa fa-paper-plane-o' aria-hidden='true'></i></button>";
+                    send_msg += "			<button class='msg_send_btn' type='button' style='zoom: 90%; position: inherit;'><i class='fa fa-paper-plane-o' aria-hidden='true'></i></button>";
                     send_msg += "		</div>";
                     send_msg += "	</div>";
                     send_msg += "</div>";
@@ -281,7 +275,10 @@
       //  alert("other_id: "+other_id);
       //  alert("msgRoom: "+msgRoom);
         if(msgContent == ""){
-            alert("메세지를 입력하세요!");
+            Swal.fire({
+                text: "메세지를 입력해주세요.",
+                buttons: true
+            })
         }else{
             $.ajax({
                 url:"/msg/json/message_send_inlist",
