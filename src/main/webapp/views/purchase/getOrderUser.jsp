@@ -440,7 +440,12 @@
     }*/
 
 </style>
-
+<%--<script>
+    $(document).ready(function(){
+        var a = ${purchase.orderTruckId.truckName};
+       console.log()
+    });
+</script>--%>
 <section class="client_section layout_padding">
     <div class="container">
         <div class="col-md-11 col-lg-10 mx-auto">
@@ -500,7 +505,7 @@
                                     </div>
                                     <div style="margin-bottom: 15px;">
                                         <label for="orderCookingTime" class="form-label label-name">예상조리시간</label>
-                                        <input type="text" class="form-control" value="${purchase.orderCookingTime}" id="orderCookingTime" name="orderCookingTime" readonly style="width: 340px;">
+                                        <input type="text" class="form-control" value="<c:if test="${purchase.orderCookingTime eq 0}">주문 접수 중</c:if><c:if test="${purchase.orderCookingTime ne 0}">${purchase.orderCookingTime}</c:if>" id="orderCookingTime" name="orderCookingTime" readonly style="width: 340px;">
                                     </div>
                                     <div style="margin-bottom: 15px;">
                                         <c:if test="${purchase.payOption == '0'}">

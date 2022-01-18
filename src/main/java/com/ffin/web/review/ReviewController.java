@@ -47,12 +47,12 @@ public class ReviewController {
     @Qualifier("userServiceImpl")
     private UserService userService;
 
-    @Value("100") //pageUnit은 propertySource를 위에 선언하고 @value의 값을 지정해줌
+    @Value("6") //pageUnit은 propertySource를 위에 선언하고 @value의 값을 지정해줌
     //추후 pageUnit과 pageSize 출력되는지 jUnit에서 확인이 필요합니다.
     //@Value("#{commonProperties['pageUnit'] ?: 3}")
     int pageUnit;
 
-    @Value("100")
+    @Value("5")
     int pageSize;
 
     //FILE UPLOAD를 위한 FIELD 설정
@@ -347,7 +347,9 @@ public class ReviewController {
     @RequestMapping("getReviewListTruck")
     public ModelAndView getReviewListTruck(@RequestParam(value = "truckId", required = false) String truckId,@ModelAttribute("search") Search search,
                                            ModelAndView modelAndView, HttpSession session) throws Exception{
-
+        if (search.getCurrentPage() == 0) {
+            search.setCurrentPage(1);
+        }
         search.setPageSize(pageSize);
 
 //        Truck truck = (Truck) session.getAttribute("menuTruck");
@@ -374,7 +376,9 @@ public class ReviewController {
     @RequestMapping("getReviewListUser")
     public ModelAndView getReviewListUser(@ModelAttribute("search") Search search, @RequestParam("userId") String userId,
                                     ModelAndView modelAndView) throws Exception{
-
+        if (search.getCurrentPage() == 0) {
+            search.setCurrentPage(1);
+        }
         search.setPageSize(pageSize);
         User user  = userService.getUser(userId);
 

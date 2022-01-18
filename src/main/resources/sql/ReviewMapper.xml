@@ -69,7 +69,8 @@
 	</select>
 
 	<select id="getReviewListTruck"	parameterType="map"	resultMap="ReviewSelectMap">
-		SELECT
+		SELECT inner_table.*
+		FROM( SELECT
 			RV_NO,
 		       RV_TRUCK_ID,
 		       RV_USER_ID,
@@ -86,7 +87,8 @@
 		       USER_PRO_IMG,
 		       TRUCK_NAME
 		FROM 	review
-		WHERE RV_TRUCK_ID=#{truckId}
+		WHERE RV_TRUCK_ID=#{truckId}  ) inner_table
+		limit #{search.startRowNum}, #{search.pageSize}
 	</select>
 
 	<select id="getReviewAvg" parameterType="map" resultMap="ReviewSelectMap">
@@ -97,7 +99,8 @@
 	</select>
 
 	<select id="getReviewListUser"	parameterType="map"	resultMap="ReviewSelectMap">
-		SELECT
+		SELECT inner_table.*
+		FROM( SELECT
 			RV_NO,
 			RV_ORDER_NO,
 		    RV_TRUCK_ID,
@@ -114,7 +117,8 @@
 		       USER_PRO_IMG,
 		       TRUCK_NAME
 		FROM 	review
-		WHERE RV_USER_ID = #{userId}
+		WHERE RV_USER_ID = #{userId}  ) inner_table
+		limit #{search.startRowNum}, #{search.pageSize}
 	</select>
 
 	<update id="updateReview"	parameterType="review">

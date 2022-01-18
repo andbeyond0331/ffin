@@ -58,12 +58,12 @@ public class MenuController {
     @Qualifier("reviewServiceImpl")
     private ReviewService reviewService;
 
-    @Value("100") //pageUnit은 propertySource를 위에 선언하고 @value의 값을 지정해줌
+    @Value("5") //pageUnit은 propertySource를 위에 선언하고 @value의 값을 지정해줌
     //추후 pageUnit과 pageSize 출력되는지 jUnit에서 확인이 필요합니다.
     //@Value("#{commonProperties['pageUnit'] ?: 3}")
     int pageUnit;
 
-    @Value("100")
+    @Value("6")
     int pageSize;
 
 
