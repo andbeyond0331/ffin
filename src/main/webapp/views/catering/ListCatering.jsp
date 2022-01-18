@@ -211,7 +211,15 @@
             line-height: 1.4;
             word-spacing: 100vw;
         }
-
+        .modal-body div div img{
+            max-width: 90%;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px 2px rgb(0 0 0 / 15%);
+            border-radius: 2rem
+        }
+        ion-icon{
+            color: #ffba49;
+        }
     </style>
 
 </head>
@@ -225,16 +233,16 @@
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">서비스 상세정보</h5>
+            <%--<div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel" style="margin-left: 185px;">온라인 예약</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"><ion-icon name="close-outline"></ion-icon></span>
                 </button>
-            </div>
+            </div>--%>
             <div class="modal-body"></div>
             <div id="map" style='width:100%;height:350px; display:none;'></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <div class="modal-footer" style="display: flex; justify-content: center;">
+                <button type="button" class="btn btn-cancle" data-dismiss="modal">확인</button>
                 <button type="button" class="btn btn-default" id="AddCtRes" name="AddCtRes">예약</button>
             </div>
         </div>
@@ -292,12 +300,12 @@
                     <input type="hidden" id="ctStatusCode${catering.ctNo}" name="ctct" value="${catering.ctStatusCode}"/>
                     <p class="card-text">
                         <small class="text-muted">
-                    <c:if test="${catering.ctStatusCode eq '0'}"><span class="badge" style="background-color: #2ef3b7; color: #110000">예약 가능</span></c:if>
-                    <c:if test="${catering.ctStatusCode eq '1'}"><span class="badge" style="background-color: #f5cb00; color: #110000">수락 대기</span></c:if>
-                    <c:if test="${catering.ctStatusCode eq '2'}"><span class="badge" style="background-color: #d9d9d9; color: #110000">이용자 취소</span></c:if>
-                    <c:if test="${catering.ctStatusCode eq '3'}"><span class="badge" style="background-color: #d9d9d9; color: #110000">사업자 거절</span></c:if>
-                    <c:if test="${catering.ctStatusCode eq '4'}"><span class="badge" style="background-color: #f79865; color: #110000">결제 대기</span></c:if>
-                    <c:if test="${catering.ctStatusCode eq '5'}"><span class="badge" style="background-color: #f33d6e; color: #110000">예약 완료</span></c:if>
+                    <c:if test="${catering.ctStatusCode eq '0'}"><span class="badge" style="background-color: #2ef3b7; color: #110000; zoom: 110%;">예약 가능</span></c:if>
+                    <c:if test="${catering.ctStatusCode eq '1'}"><span class="badge" style="background-color: #f5cb00; color: #110000; zoom: 110%;">수락 대기</span></c:if>
+                    <c:if test="${catering.ctStatusCode eq '2'}"><span class="badge" style="background-color: #d9d9d9; color: #110000; zoom: 110%;">이용자 취소</span></c:if>
+                    <c:if test="${catering.ctStatusCode eq '3'}"><span class="badge" style="background-color: #d9d9d9; color: #110000; zoom: 110%;">사업자 거절</span></c:if>
+                    <c:if test="${catering.ctStatusCode eq '4'}"><span class="badge" style="background-color: #f79865; color: #110000; zoom: 110%;">결제 대기</span></c:if>
+                    <c:if test="${catering.ctStatusCode eq '5'}"><span class="badge" style="background-color: #f33d6e; color: #110000; zoom: 110%;">예약 완료</span></c:if>
 
                         </small>
                     </p>
@@ -419,37 +427,52 @@
                 // var role = '${sessionScope.role}';
                 var modalFooter = "";
 
+                /* !!수락대기 모달!! */
                 <%--${sessionScope.role};--%>
                 console.log("role : "+role)
-                div += "<div class='row'>"+
-                    "<div><strong>서비스 번호</strong> : "+data.catering.ctNo+"</div></div>" +
-                    "<div class='row'>"
-                    + "<div><strong>이용자 이름</strong> : "+data.catering.ctUser.userName+"</div></div>"
+                div += "<div class='row' style='display: flex; justify-content: center; margin: 30px;'>"
+                    + "<div><h5 style='margin: 0; box-shadow: inset 0 -11px 0 #fae100; line-height: 21px;font-size: 22px;'>"+data.catering.ctTruck.truckName+"</h5></div>"
+                    + "</div>"
+                    +"<div style='display: flex; justify-content: space-between; padding: 0 45px 0 45px; margin-top: 25px; margin-bottom: 5px;'>"
                     +"<div class='row'>"
-                    + "<div><strong>이용자 전화번호</strong> : "+data.catering.ctPhone+"</div></div>"
+                    +"<div><strong>no.</strong>"+data.catering.ctNo+"</div></div>"
                     +"<div class='row'>"
-                    + "<div><strong>푸드트럭 이름</strong> : "+data.catering.ctTruck.truckName+"</div></div>"
+                    +"<div><ion-icon name='calendar-outline'></ion-icon>&nbsp;"+data.catering.ctDate+"</div></div>"
+                    +"</div>"
+                    +"<hr style='width: 420px; margin-left:30px; margin-top: 0;'/>"
                     +"<div class='row'>"
-                    +"<div ><strong>예약 날짜</strong> : "+data.catering.ctDate+"</div></div>"
+                    +"<div style='display: flex; justify-content: center; margin-bottom: 5px;' ><strong></strong> <img src='../../../resources/menu/"+data.catering.ctMenu.menuImg1+"'></div></div>"
+                    +"<hr style='width: 420px; margin-left:30px;'/>"
+                    +"<div style='display: flex; justify-content: space-between; padding: 0 45px 0 45px; margin-top: 15px;'>"
                     +"<div class='row'>"
-                    +"<div ><strong>시작 시간</strong> : "+data.catering.ctStartTime+"</div></div>"
+                    + "<div style='font-size: 16px; box-shadow: inset 0 -11px 0 #fae100; line-height: 21px;'><strong>이름</strong> : "+data.catering.ctUser.userName+"</div></div>"
                     +"<div class='row'>"
-                    +"<div ><strong>종료 시간</strong> : "+data.catering.ctEndTime+"</div></div>"
-                    +"<div class='row'>"
+                    + "<div style='font-size: 16px; box-shadow: inset 0 -11px 0 #fae100; line-height: 21px;'><strong>전화번호</strong> : "+data.catering.ctPhone+"</div></div>"
+                    +"</div>"
+                    +"<hr style='width: 420px; margin-left:30px;'/>"
+                    +"<div style='display: flex; justify-content: flex-start; padding: 0 45px 0 45px; margin-top: 15px;'>"
+                    +"<div class='row col-8' style='padding: 0;'>"
                     +"<div ><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong></strong> <img src='../../../resources/menu/"+data.catering.ctMenu.menuImg1+"'></div></div>"
-                    +"<div class='row'>"
+                    +"<div class='row col-6'>"
                     +"<div ><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong>필요 수량</strong> : "+data.catering.ctMenuQty+"</div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong>요청사항</strong> : "+data.catering.ctUserRequest+"</div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong>견적</strong> : "+data.catering.ctQuotation+"</div></div>"
-                    +"<div class='row'>"
-                    +"<div ><strong>주소</strong> : "+data.catering.ctAdd+" "+data.catering.ctAddDetail+"</div><button type='button' class='btn btn-outline-danger' id='lookMap' name='lookMap' onclick='lookMap();'>지도가 궁금행?</button></div>"
-
+                    +"</div>"
+                    +"<div style='display: flex; justify-content: flex-start; padding: 0 45px 0 45px; margin-top: 15px;'>"
+                    +"<div class='row col-8' style='padding: 0;'>"
+                    +"<div style='box-shadow: inset 0 -11px 0 #fae100; line-height: 21px;'><strong>필요 수량</strong> : "+data.catering.ctMenuQty+"</div></div>"
+                    +"<div class='row col-6'>"
+                    +"<div style='box-shadow: inset 0 -11px 0 #fae100; line-height: 21px;'><strong>견적</strong> : "+data.catering.ctQuotation+"</div></div>"
+                    +"</div>"
+                    +"<div style='display: flex; justify-content: flex-start; padding: 0 45px 0 45px; margin-top: 15px;'>"
+                    +"<div class='row col-8' style='padding: 0;'>"
+                    +"<div style='width: max-content;'><strong>시작 시간</strong> : "+data.catering.ctStartTime+"</div></div>"
+                    +"<div class='row col-6'>"
+                    +"<div style='width: max-content;'><strong>종료 시간</strong> : "+data.catering.ctEndTime+"</div></div>"
+                    +"</div>"
+                    +"<div class='row' style='display: flex; align-items: baseline;'>"
+                    +"<div style='margin-left: 45px; margin-top: 15px;'><strong>요청사항</strong> : "+data.catering.ctUserRequest+"</div></div>"
+                    +"<div class='row' style='display: flex; align-items: baseline;'>"
+                    +"<div style='margin-left: 45px; margin-top: 15px; '><strong>주소</strong> : "+data.catering.ctAdd+" "+data.catering.ctAddDetail+"</div>" +
+                    "<button type='button' class='btn btn-default' id='lookMap' name='lookMap' onclick='lookMap();' style='zoom:70%;'>지도가 궁금행?</button></div>"
                     +"<input type='hidden' id='ctNo"+data.catering.ctNo+"' name='ctNo' value='"+data.catering.ctNo+"'/>"
                     +"<input type='hidden' id='ctAdd"+data.catering.ctNo+"' name='ctAdd' value='"+data.catering.ctAdd+"'/>"
                     +"<input type='hidden' id='ctAddDetail"+data.catering.ctNo+"' name='ctAddDetail' value='"+data.catering.ctAddDetail+"'/>"
@@ -464,14 +487,15 @@
                 if (statusCode == '1') {
                     /* 이용자: 취소가능 , 사업자: 수락 or 거절 */
                     if (role=="user") { // '취소'버튼, '확인'버튼
-                        modalFooter += "<div class='modal-footer'>"
-                            +"<button type='button' class='btn btn-outline-danger' id='resCancel' name='resCancel' onclick='updateCtResCancel(2);'>예약 취소</button>"
-                            +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
+                        modalFooter += "<div class='modal-footer' style='display: flex; justify-content: center;'>"
+                            +"<button type='button' class='btn btn-cancle' data-dismiss='modal'>확인</button></button>"
+                            +"<button type='button' class='btn btn-default' id='resCancel' name='resCancel' onclick='updateCtResCancel(2);'>예약 취소</button>"
                             +"</div>";
                     }else{
-                        modalFooter += "<div class='modal-footer'>"
-                            +"<button type='button' class='btn btn-outline-success' id='resAccept' name='resAccept' onclick='updateCtResCancel(4);'>수락</button>"
-                            +"<button type='button' class='btn btn-outline-danger' id='resReject' name='resReject' onclick='updateCtResCancel(3);'>거절</button>"
+                        modalFooter += "<div class='modal-footer' style='display: flex; justify-content: center;'>"
+                            +"<button type='button' class='btn btn-default' id='resReject' name='resReject' onclick='updateCtResCancel(3);'>거절</button>"
+                            +"<button type='button' class='btn btn-cancle' data-dismiss='modal'>확인</button></button>"
+                            +"<button type='button' class='btn btn-default' id='resAccept' name='resAccept' onclick='updateCtResCancel(4);'>수락</button>"
                             +"</div>";
                     }
 
@@ -481,12 +505,12 @@
                          truck - 수락 취소 버튼 출력 > statusCode = 1로 변경
                      */
                     if (role=="user") { // '취소'버튼, '확인'버튼
-                        modalFooter += "<div class='modal-footer'>"
+                        modalFooter += "<div class='modal-footer' style='display: flex; justify-content: center;'>"
                             +"<button type='button' class='btn btn-outline-danger' id='purchaseRes' name='purchaseRes' onclick='purchaseRes();'>결제</button>"
                             +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
                             +"</div>";
                     }else{
-                        modalFooter += "<div class='modal-footer'>"
+                        modalFooter += "<div class='modal-footer' style='display: flex; justify-content: center;'>"
                             +"<button type='button' class='btn btn-outline-success' id='resAccept' name='resAccept' onclick='updateCtResCancel(1);'>수락 취소</button>"
                             +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
                             +"</div>";
@@ -1028,7 +1052,7 @@
     }
 
 
-
+    // *** 온라인 예약 모달 ***
     //$("#getCateringDetail").on("click", function () {
     //    alert("1")
     function getCateringDetail(ctNo) {
@@ -1050,71 +1074,83 @@
 
                 <%--${sessionScope.role};--%>
                 console.log("role : "+role)
-                div += "<div class='row'>"+
-                    "<div><strong>서비스 번호</strong> : "+data.catering.ctNo+"</div></div>" +
-                    "<div class='row'>"
-                    + "<div><strong>푸드트럭 이름</strong> : "+data.catering.ctTruck.truckName+"</div>" +
+                div += "<div class='row' style='display: flex; justify-content: center; margin: 30px;'>"
+                    + "<div><h5 style='margin: 0; box-shadow: inset 0 -11px 0 #fae100; line-height: 21px;font-size: 22px;'>"+data.catering.ctTruck.truckName+"</h5></div>" +
                     "</div>"
+                    +"<div style='display: flex; justify-content: space-between; padding: 0 45px 0 45px; margin-top: 25px; margin-bottom: 5px;'>"
                     +"<div class='row'>"
-                    +"<div ><strong>서비스 가능 날짜</strong> : "+data.catering.ctDate+"</div></div>"
+                    +"<div><strong>no.</strong>"+data.catering.ctNo+"</div></div>"
                     +"<div class='row'>"
-                    +"<div ><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
+                    +"<div><ion-icon name='calendar-outline'></ion-icon>&nbsp;"+data.catering.ctDate+"</div></div>"
+                    +"</div>"
+                    +"<hr style='width: 420px; margin-left:30px; margin-top: 0;'/>"
                     +"<div class='row'>"
-                    +"<div ><strong></strong> <img src='../../../resources/menu/"+data.catering.ctMenu.menuImg1+"'></div></div>"
+                    +"<div style='display: flex; justify-content: center; margin-bottom: 5px;' ><strong></strong> <img src='../../../resources/menu/"+data.catering.ctMenu.menuImg1+"'></div></div>"
+                    +"<hr style='width: 420px; margin-left:30px;'/>"
+                    +"<div style='display: flex; justify-content: space-between; padding: 0 45px 0 45px; margin-top: 15px;'>"
                     +"<div class='row'>"
-                    +"<div ><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
+                    +"<div style='font-size: 16px; box-shadow: inset 0 -11px 0 #fae100; line-height: 21px;'><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div style='font-size: 16px; box-shadow: inset 0 -11px 0 #fae100; line-height: 21px;'><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
+                    +"</div>"
                     +"<input type='hidden' id='ctNo"+data.catering.ctNo+"' name='ctNo' value='"+data.catering.ctNo+"'/>"
+
                 if (role=="user") {
 
 
-                    div +=
-                        "<div class='row'>"
+                    div +="<div style='display: flex; justify-content: flex-start;'>"
+                        +"<div class='row' style='margin-left: 30px; margin-top: 5px; margin-top: 15px;'>"
                         +"<div ><strong>최소 수량</strong> : "+data.catering.ctMenuMinQty+"</div></div>"
-                        +"<div class='row'>"
-                        +"<div ><strong>최대 수량</strong> : "+data.catering.ctMenuMaxQty+"</div></div>"
-                        +"<div class='row'>"
+                        +"<div class='row' style='margin-left: 30px; margin-top: 5px;'>"
+                        +"<div ><strong>/&nbsp;&nbsp;&nbsp;최대 수량</strong> : "+data.catering.ctMenuMaxQty+"</div></div>"
+                        +"</div>"
+                        +"<div class='row' style='margin-left: 30px; margin-top: 5px; margin-top: 15px;'>"
                         +"<div ><strong>필요 수량</strong> : "
-                        +"<input type='button' name='minus' value='-'/>"
+                        +"<input type='button' name='minus' value='-' style=' width: 20px; color: #000; background-color: #ffe537; border-radius: 50px;'/>"
                         +"<input type='hidden' id='minQ' name='minQ' value='"+data.catering.ctMenuMinQty+"' readOnly />"
                         +"<input type='hidden' id='minQ' name='minQ' value='"+data.catering.ctMenuMinQty+"' readOnly />"
                         +"<input type='hidden' id='prc' name='prc' value='"+data.catering.ctMenu.menuPrice+"' readOnly />"
-                        +"<input type='text' id='ctMenuQty' name='ctMenuQty' value='"+data.catering.ctMenuMinQty+"' readOnly />"
-                        +"<input type='button' name='plus' value='+'/>"
+                        +"<input type='text' id='ctMenuQty' name='ctMenuQty' value='"+data.catering.ctMenuMinQty+"' style='margin:0 3px 0 3px; border-radius: 50px; width: 70px; padding-left: 10px; background-color: #ecf0fd;' readOnly />"
+                        +"<input type='button' name='plus' value='+' style=' width: 20px; color: #000; background-color: #ffe537; border-radius: 50px;'/>"
                         +"</div></div>"
-                        +"<div class='row'>"
-                        +"<div ><strong>예상 견적</strong> : <input type='text' id='ctQuotation' name='ctQuotation' value = '"+minPrice+"' readOnly /></div></div>"
-                        +"<div class='row'>"
+                        +"<div class='row' style='margin-left: 30px; margin-top: 5px; margin-top: 15px;'>"
+                        +"<div ><strong>예상 견적</strong> : <input type='text' id='ctQuotation' name='ctQuotation' value = '"+minPrice+"' style='margin:0 3px 0 3px; border-radius: 50px; width: 115px; padding-left: 10px; background-color: #ecf0fd;' readOnly /></div></div>"
+                        +"<hr style='width: 420px; margin-left:30px;'/>"
+                        +"<div class='row' style='margin-left: 30px; margin-top: 5px; margin-top: 15px;'>"
                         +"<div ><strong>예약자 아이디</strong> : "+'${sessionScope.user.userId}'+"</div></div>"
-                        +"<div class='row'>"
+                        +"<div class='row' style='margin-left: 30px; margin-top: 5px; margin-top: 15px;'>"
                         +"<div ><strong>예약자 전화번호</strong> : <input type='text' id='ctUserPhone' name='ctUserPhone' value="+'${sessionScope.user.userPhone}'+"></div></div>"
-                        +"<div class='row'>"
+                        +"<div class='row' style='margin-left: 30px; margin-top: 5px; margin-top: 15px;'>"
                         +"<div ><strong>예약자 주소</strong> : " +
-                        "<input type='text'  id='ctUserAddr' name='ctUserAddr' placeholder='주소검색' readonly='readonly'></div>" +
-                        "<button type='button' onclick='addrApi()'>주소검색</button></div>"
-                        +"<div class='row'>"
-                        +"<div ><strong>예약자 상세 주소</strong> : <input type='text' id='ctUserAddrDetail' name='ctUserAddrDetail' placeholder='상세주소를 입력해주세요' readonly='readonly'>	</div></div>"
+                        "<input type='text'  id='ctUserAddr' name='ctUserAddr' placeholder='주소검색' style='padding: 2px; margin:0 3px 0 3px; border-radius: 50px; width: 260px; padding-left: 10px; background-color: #ecf0fd;' readonly='readonly'></div>" +
+                        "<button type='button' onclick='addrApi()' style='background-color: #ffe537; width: 65px; border-radius: 50px;'>주소검색</button></div>"
+                        +"<div class='row' style='margin-left: 30px; margin-top: 5px; margin-top: 15px;'>"
+                        +"<div ><strong>예약자 상세 주소</strong> : <input type='text' id='ctUserAddrDetail' name='ctUserAddrDetail' style='padding: 2px; margin:0 3px 0 3px; border-radius: 50px; width: 300px; padding-left: 10px; background-color: #ecf0fd;' placeholder='상세주소를 입력해주세요' readonly='readonly'>	</div></div>"
 
                         // 예상견적 자동 계산되도록 하자
                         // input data 값 더 깔끔하게 수정
-                        +"<div class='row'>"
-                        +"<div><strong>시작 시간</strong> : <input type='text' id='ctStartTime' name='ctStartTime'  class='form-control' style='width:200px;'/></div></div>"
-                        +"<div class='row'>"
-                        +"<div><strong>종료 시간</strong> : <input type='text' id='ctEndTime' name='ctEndTime'  class='form-control' style='width:200px;'/></div></div>"
-                        +"<div class='row'>"
-                        +"<div><strong>요청 사항</strong> : <textarea name='ctUserRequest' rows='3'></textarea></div></div>"
-                        + "</div><hr/>";
+                        +"<div style='display: flex; justify-content: space-between;'>"
+                        +"<div class='row' style='margin-left: 30px; margin-top: 5px; margin-top: 15px;'>"
+                        +"<div style='display: flex; align-items: center;'><strong>시작 시간</strong>&nbsp; :&nbsp; <input type='text' id='ctStartTime' name='ctStartTime'  class='form-control' style='width: 100px;height: 25px;border: 0; border-radius: 50px; padding-left: 10px; background-color: #ecf0fd;'/></div></div>"
+                        +"<div class='row' style='margin-right: 25px; margin-top: 5px;'>"
+                        +"<div style='display: flex; align-items: center;'><strong>종료 시간</strong>&nbsp; :&nbsp; <input type='text' id='ctEndTime' name='ctEndTime'  class='form-control' style='width: 100px;height: 25px;border: 0; border-radius: 50px; padding-left: 10px; background-color: #ecf0fd;'/></div></div>"
+                        +"</div>"
+                        +"<div class='row' style='margin-left: 30px; margin-top: 5px; margin-top: 15px;'>"
+                        +"<div style = 'display:flex; margin-bottom: 10px;'><strong>요청 사항</strong> &nbsp; :&nbsp; <textarea style='background-color: #ecf0fd; width:345px;' name='ctUserRequest' rows='3'></textarea></div></div>"
+                        + "</div>";
                 }else if (role=="truck"){
                     div += "<div class='row'>"
-                        +"<div ><strong>최소 수량</strong> : <input type='text' id='ctMenuMinQty' name='ctMenuMinQty' value='"+data.catering.ctMenuMinQty+"' /></div></div>"
-                        +"<div class='row'>"
-                        +"<div ><strong>최대 수량</strong> : <input type='text' id='ctMenuMaxQty' name='ctMenuMaxQty' value='"+data.catering.ctMenuMaxQty+"' /></div></div>";
+                        +"<div style='margin-left: 45px; margin-top: 15px;'><strong>최소 수량</strong> : <input type='text' id='ctMenuMinQty' name='ctMenuMinQty' value='"+data.catering.ctMenuMinQty+"' style='margin:0 3px 0 3px; border-radius: 50px; width: 115px; padding-left: 10px; background-color: #ecf0fd;'/></div></div>"
+                        +"<div class='row' style='padding: 0 45px 0 45px;'>"
+                        +"<div style='margin-top: 15px;'><strong>최대 수량</strong> : <input type='text' id='ctMenuMaxQty' name='ctMenuMaxQty' value='"+data.catering.ctMenuMaxQty+"' style='margin:0 3px 0 3px; border-radius: 50px; width: 115px; padding-left: 10px; background-color: #ecf0fd;'/></div></div>";
 
                     $('.modal-footer').remove();
 
 
-                    modalFooter += "<div class='modal-footer'>"
-                        +"<button type='button' class='btn btn-outline-info' id='updateCtServ' name='updateCtServ' onclick='updateCtServ();'>서비스 수정</button>"
-                        +"<button type='button' class='btn btn-outline-danger' id='deleteCtServ' name='deleteCtServ' onclick='deleteCtServ();'>서비스 삭제</button>"
+                    modalFooter += "<div class='modal-footer' style='display: flex; justify-content: center;'>"
+                        +"<button type='button' class='btn btn-default' id='deleteCtServ' name='deleteCtServ' onclick='deleteCtServ();'>서비스 삭제</button>"
+                        +"<button type='button' class='btn btn-cancle' data-dismiss='modal'>확인</button></button>"
+                        +"<button type='button' class='btn btn-default' id='updateCtServ' name='updateCtServ' onclick='updateCtServ();'>서비스 수정</button>"
                         +"</div>";
                     $('.modal-content').append(modalFooter);
                 }
