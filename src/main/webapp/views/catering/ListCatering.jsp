@@ -506,13 +506,13 @@
                      */
                     if (role=="user") { // '취소'버튼, '확인'버튼
                         modalFooter += "<div class='modal-footer' style='display: flex; justify-content: center;'>"
-                            +"<button type='button' class='btn btn-outline-danger' id='purchaseRes' name='purchaseRes' onclick='purchaseRes();'>결제</button>"
-                            +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
+                            +"<button type='button' class='btn btn-cancle' data-dismiss='modal'>확인</button></button>"
+                            +"<button type='button' class='btn btn-default' id='purchaseRes' name='purchaseRes' onclick='purchaseRes();'>결제</button>"
                             +"</div>";
                     }else{
                         modalFooter += "<div class='modal-footer' style='display: flex; justify-content: center;'>"
-                            +"<button type='button' class='btn btn-outline-success' id='resAccept' name='resAccept' onclick='updateCtResCancel(1);'>수락 취소</button>"
-                            +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
+                            +"<button type='button' class='btn btn-cancle' data-dismiss='modal'>확인</button></button>"
+                            +"<button type='button' class='btn btn-default' id='resAccept' name='resAccept' onclick='updateCtResCancel(1);'>수락 취소</button>"
                             +"</div>";
                     }
 
@@ -526,11 +526,11 @@
                          아니면 1대1연락하기? 이런건 좀 고민해보기!!!!
                      */
                     modalFooter += "<div class='modal-footer'>"
-                        +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
+                        +"<button type='button' class='btn btn-cancle' data-dismiss='modal'>확인</button></button>"
                         +"</div>";
                 }else {
                     modalFooter+=  "<div class='modal-footer'>"
-                        +"<button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></button>"
+                        +"<button type='button' class='btn btn-default' data-dismiss='modal'>확인</button></button>"
                         +"</div>";
                 }
 
