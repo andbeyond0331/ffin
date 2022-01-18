@@ -16,7 +16,7 @@
             padding:0;
         }
         .container{
-            width: 500px;
+            width: 800px;
             margin: 0 auto;
             padding: 25px;
             padding-top: 100px;
@@ -28,12 +28,22 @@
             border-left: 3px solid #FFBB00;
             margin-bottom: 20px;
         }
+        .chating-box{
+            margin-bottom: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+            padding: 15px;
+            border-radius: 10px 10px 10px 10px;
+        }
+
         .chating{
-            background-color: #ffffff;
-            width: 430px;
+            padding: 10px;
+            display: table-cell;
+            background-color: #ffba49;
+            width: 750px;
             height: 500px;
             overflow: auto;
-            margin-bottom: 20px;
+            transition: 0.3s;
         }
         .chating .me{
             color: #F6F6F6;
@@ -72,6 +82,22 @@
         }
         .incoming_msg_img{position: relative;}
         .uuuuuddd{position: absolute; top: 20px;left: 0;}
+        .input_msg_write{
+            display: flex;
+            justify-content: center;
+        }
+        .write_msg.form-control{
+            background: #e9ecef none repeat scroll 0 0;
+            border-radius: 50px;
+            margin-top: 10px;
+            font-size: 14px;
+            height: 35px;
+            padding-left: 20px;
+            min-height: unset;
+        }
+        .msg_send_btn{
+            margin-top: 5px;
+        }
 
     </style>
 </head>
@@ -256,16 +282,41 @@
 <%--<jsp:include page="/views/navbar.jsp" />--%>
 
 
+<section class="client_section layout_padding">
+    <div id="container" class="container">
+        <div class="col-md-11 col-lg-10 mx-auto" style="margin-top: 10px;">
+            <div class="detail-box">
+                <i class="fa fa-quote-left" aria-hidden="true"></i>
+                <h4 style="margin-top: 10px;">
+                    ${roomName}의 채팅방
+                        <input type="hidden" id="sessionId" value="">
+                        <input type="hidden" id="sessionName" value="">
+                        <input type="hidden" id="roomNumber" value="${roomNumber}">
+                </h4>
 
-<div id="container" class="container">
-    <h1>${roomName}의 채팅방</h1>
-    <input type="hidden" id="sessionId" value="">
-    <input type="hidden" id="sessionName" value="">
-    <input type="hidden" id="roomNumber" value="${roomNumber}">
+            </div>
+        </div>
 
-    <div id="chating" class="chating">
-    </div>
-    <input type="hidden" name="userName" id="userName">
+        <%-- 채팅창 --%>
+        <div class="col-12 chating-box">
+            <%-- 메세지 전송창 --%>
+            <div id="chating" class="chating">
+            </div>
+            <input type="hidden" name="userName" id="userName">
+
+            <%-- 메세지 입력창 --%>
+            <div class='type_msg'>
+                <div class='input_msg_write row'>
+                    <div class='col-10' style="padding-right: 0;">
+                        <input type='text' id="chatting" class='write_msg form-control' placeholder='보내실 메시지를 입력하세요.' />
+                    </div>
+                    <div class='col-1' style="padding: 0">
+                        <div><button class='msg_send_btn' type='button' onclick="send()" id="sendBtn"><ion-icon name="paper-plane-outline"></ion-icon></button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
    <%-- <div id="yourName">
         <table class="inputTable">
             <tr>
@@ -291,17 +342,8 @@
         </table>
     </div>--%>
 
-    <div class='type_msg'>
-        <div class='input_msg_write row'>
-            <div class='col-11'>
-                <input type='text' id="chatting" class='write_msg form-control' placeholder='보내실 메시지를 입력하세요.' />
-            </div>
-            <div class='col-1'>
-                <button class='msg_send_btn' type='button' onclick="send()" id="sendBtn"><i class='fa fa-paper-plane-o' aria-hidden='true'></i></button>
-            </div>
-        </div>
     </div>
-</div>
+</section>
 </body>
 </html>
 
