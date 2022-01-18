@@ -4,6 +4,7 @@ import com.ffin.common.Search;
 import com.ffin.service.domain.Menu;
 import com.ffin.service.domain.OptionGroup;
 import com.ffin.service.domain.Review;
+import com.ffin.service.domain.Truck;
 import com.ffin.service.menu.MenuDao;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +37,20 @@ public class MenuDaoImpl implements MenuDao {
     @Override
     public int addMenu(Menu menu) throws Exception{
         System.out.println("MenuDaoImpl.addMenu");
+        Truck truck = new Truck();
+
         //대표메뉴 로직
         if(menu.getIsSigMenu()==0){
 
         }else{
             sqlSession.update("MenuMapper.updateSigMenu",menu.getMenuTruckId());
+
+            truck.setTruckSigMenuNo(menu.getMenuNo());
+            truck.setTruckSigMenuName(menu.getMenuName());
+            truck.setTruckSigMenuImg1(menu.getMenuImg1());
+            truck.setTruckSigMenuPrice(menu.getMenuPrice());
+            sqlSession.update("TruckMapper.updateTruckSigMenu", truck);
+            System.out.println("truck - sigMenuNo, sigMenuName, sigMenuImg1, sigMenuPrice = " + truck);
         }
         sqlSession.insert("MenuMapper.addMenu",menu);
         int menuNo = menu.getMenuNo();
@@ -141,6 +151,21 @@ public class MenuDaoImpl implements MenuDao {
 
     @Override
     public void updateMenu(Menu menu) throws Exception {
+        Truck truck = new Truck();
+
+        //대표메뉴 로직
+        if(menu.getIsSigMenu()==0){
+
+        }else{
+            sqlSession.update("MenuMapper.updateSigMenu",menu.getMenuTruckId());
+
+            truck.setTruckSigMenuNo(menu.getMenuNo());
+            truck.setTruckSigMenuName(menu.getMenuName());
+            truck.setTruckSigMenuImg1(menu.getMenuImg1());
+            truck.setTruckSigMenuPrice(menu.getMenuPrice());
+            sqlSession.update("TruckMapper.updateTruckSigMenu", truck);
+            System.out.println("truck - sigMenuNo, sigMenuName, sigMenuImg1, sigMenuPrice = " + truck);
+        }
 
         sqlSession.update("MenuMapper.updateMenu", menu);
 

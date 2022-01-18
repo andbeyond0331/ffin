@@ -107,11 +107,16 @@
 
 
     <div class="page-header text-center">
-        <h3 class="text">${menu.menuTruckId}의 ${menu.menuNo}에 대한 메뉴 수정</h3>
+        <h3 class="text">메뉴 수정</h3>
+<%--        <h3 class="text">${menu.menuTruckId}의 ${menu.menuNo}에 대한 메뉴 수정</h3>--%>
     </div>
-<div class="forCenter">
+    <p></p>
+    <p></p>
+    <p></p>
+<div class="forCenter" style="text-align: -webkit-center;">
     <!-- form Start /////////////////////////////////////-->
     <form class="form-horizontal">
+        <input type="hidden" name="menuTruckId" value="${menu.menuTruckId}">
 
 
         <div class="form-group">
@@ -136,12 +141,119 @@
             </div>
         </div>
 
+<%--        <div class="form-group">--%>
+<%--            <label for="isSigMenu" class="col-sm-offset-1 col-sm-3 control-label">대표메뉴여부</label>--%>
+<%--            <div class="col-sm-4">--%>
+<%--                <input type="text" class="form-control" id="isSigMenu" name="isSigMenu" value="${menu.isSigMenu}" placeholder="대표메뉴여부 수정">--%>
+<%--            </div>--%>
+<%--        </div>--%>
+
         <div class="form-group">
-            <label for="isSigMenu" class="col-sm-offset-1 col-sm-3 control-label">대표메뉴여부</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="isSigMenu" name="isSigMenu" value="${menu.isSigMenu}" placeholder="대표메뉴여부 수정">
+            <div class="col-sm-10" id="sigMenu">
+
+                <div class="form-check form-switch" id="isThereSigMenu">
+                </div>
             </div>
         </div>
+
+
+        <script>
+            // 메뉴 추가 눌렀을 때 메뉴 없으면(메뉴가 하나라도 있다면 대표메뉴일수밖에 없음) 대표메뉴 스위치 버튼 선택상태로 되어 있고 비활성화(못 누르도록, 눌러도 alert로 "대표메뉴는 최소 하나 이상이어야 합니다".)
+            //                  대표메뉴 있으면 대표메뉴 스위치 버튼 선택안함 상태로 되어 있고, 누르면 대표메뉴가 이 메뉴로 바뀝니다. confirm창
+
+            // function fncSigMenu(truckId){
+            $(function(){
+
+                var truckId = $('input[name="menuTruckId"]').val();
+                //
+                $.ajax({
+
+                    url:"/menu/json/isThereSigMenu/"+truckId,
+                    method:"get",
+                    success:function(data){
+                        console.log("data.menu : " + data.menu[0]);
+                        var isSigMenuButton="";
+                        if (data.menu[0]==undefined){
+                            iamSig=null;
+                            iamIsThereSM = 'no';
+                            isSigMenuButton +=
+                                " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" name=\"isSigMenu\" value=\"1\" data-val=\"disabled\" checked disabled>"+
+                                "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴여부</label>";
+
+                        }else{
+
+                            iamSig=data.menu;
+                            iamIsThereSM = 'yes';
+                            isSigMenuButton+=
+
+                                " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" name=\"isSigMenu\" value=\"0\" data-val=\"abled\">"+
+                                "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
+
+
+                            // $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton); //todo 대표메뉴가 없어서 나온 버튼이니까 disabled 해놓고 클릭 시 대표메뉴는 최소 1개 있어야 합니다. alert 띄우기
+                        }
+                        $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
+
+                    }
+
+
+                });
+
+                // $('#menuModal').modal('show');
+
+            });
+
+
+            //==========대표메뉴를 클릭했을 때!===========
+
+            $(function(){
+
+                var divIsSigMenu = $('div#isThereSigMenu.form-check.form-switch');
+
+                $("div#sigMenu").on("click", function(){
+
+                    alert("onclick");
+                    var isSigMenuButton ="";
+
+                    if(divIsSigMenu.find('input#isSigMenu').data("val")=='disabled'){
+                        alert("대표메뉴는 최소 1개 이상 있어야 합니다.");
+                    }else if(divIsSigMenu.find('input#isSigMenu').val()==0){
+
+                        if(!confirm("대표메뉴가 이미 있습니다. 변경하시겠습니까?")){
+                            isSigMenuButton+=
+                                " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" value=\"0\" data-val=\"abled\" name=\"isSigMenu\">"+
+                                "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
+                            $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
+                        }else{
+                            isSigMenuButton +=
+                                " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" value=\"1\" data-val=\"abled\" name=\"isSigMenu\" checked>"+
+                                "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
+                            $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
+
+                        }
+                    }else{
+
+                        if(confirm("이전 대표메뉴로 다시 변경하시겠습니까?")){
+                            isSigMenuButton+=
+                                " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" value=\"0\" data-val=\"abled\" name=\"isSigMenu\">"+
+                                "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
+                            $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
+                        }else{
+                            isSigMenuButton +=
+                                " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" value=\"1\" data-val=\"abled\" name=\"isSigMenu\" checked>"+
+                                "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
+                            $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
+
+                        }
+
+                    }
+
+
+                });
+
+            });
+        </script>
+
 
         <div class="form-group">
             <label for="menuImg11" class="col-sm-offset-1 col-sm-3 control-label">메뉴 이미지1</label>

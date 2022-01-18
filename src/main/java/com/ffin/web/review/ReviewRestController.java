@@ -128,6 +128,17 @@ public class ReviewRestController {
         return reviewService.getReview(rvNo);
     }
 
+    //유저 마이페이지에서 리뷰 목록 중 리뷰 수정 post
+    @RequestMapping(value = "json/updateReview", method = RequestMethod.POST)
+    @ResponseBody
+    public Review updateReview(@ModelAttribute Review review, @RequestParam("rvNo") int rvNo) throws Exception {
+
+        System.out.println("ReviewRestController.updateReview : POST");
+
+        reviewService.updateReview(review);
+        return reviewService.getReview(rvNo);
+    }
+
 
 
 

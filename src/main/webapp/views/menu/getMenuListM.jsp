@@ -202,17 +202,17 @@
                     "<div class=\"modal-content\">"+
                     "<div class=\"modal-header\">"+
                     "<h5 class=\"modal-title\" id=\"optionGroupModalLabel\">옵션 그룹 추가</h5>"+
-                    "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>"+
+                    "<button type=\"button\" class=\"btn-close\" data-dismiss=\"modal\" aria-label=\"Close\"></button>"+
                     "</div>"+
                     "<div class=\"modal-body\">"+
                     "<div class=\"form-group\" id=\"rrrrrr\" name=\"rrrrrr\">"+
                     "<label for=\"optionGroupNamer\" class=\"col-from-label\">옵션그룹이름</label>"+
                     "<input type=\"text\" class=\"form-control\" id=\"optionGroupNamer\" value=\"\">"+
                     "</div>"+
-                    // "</div>"+
+                    "</div>"+
                     "<div class=\"modal-footer\">"+
                     //"<button type=\"button\" class=\"btn btn-primary custom\" onclick='applyOptionGroupNamer();'>옵션그룹이름적용</button>"+
-                    "<button type=\"button\" class=\"btn btn-primary addOption\" data-target=\"#optionModal\" area-label=\"Close\" onclick=\"applyOptionGroupNamer();\" data-bs-toggle=\"modal\">옵션추가</button>"+
+                    "<button type=\"button\" class=\"btn btn-primary addOption\" data-target=\"#optionModal\" data-dismiss=\"modal\" area-label=\"Close\" onclick=\"applyOptionGroupNamer();\" data-toggle=\"modal\">옵션추가</button>"+
                     "<button type=\"button\" class=\"btn btn-primary addOptionGroup\" id=\"add-optionGroup\" data-dismiss=\"modal\" aria-label=\"Close\" data-target=\"#menuModal\" data-toggle=\"modal\">옵션 그룹 적용</button>"+
                     "</div>"+
                     "</div>"+
@@ -771,7 +771,7 @@
                         <h4>${menu.menuDetail}</h4>
                     </ul>
                     <div class="btn-detail">
-                        <button class="button btn-warning" name="deleteMenu" onclick="deleteMenu(${menu.menuNo});">
+                        <button class="button btn-warning" name="deleteMenu" onclick="deleteMenu(${menu.menuNo}, ${menu.isSigMenu});">
                             메뉴 삭제
                             <input type="hidden" name="menuNo" value="${menu.menuNo}"/></button>
                         <button class="button is-warning is-light" name="getMenu"
@@ -806,23 +806,29 @@
 
     }
 
-    function deleteMenu(menuNo){
+    function deleteMenu(menuNo, isSigMenu){
 
-        if(!confirm("정말 삭제하시겠습니까?(복구 불가)")){
-
+        if(isSigMenu==1) {
+            alert("대표메뉴는 최소 한 개 이상이어야 합니다.");
         }else{
-            $.ajax({
-                url:"/menu/json/deleteMenu/"+menuNo,
-                method:"get",
-                success:function(data){
-                    // console.log("")
-                    alert("메뉴가 삭제되었습니다.");
-                    location.reload();
+
+            if(!confirm("정말 삭제하시겠습니까?(복구 불가)")){
+
+            }else{
+                $.ajax({
+                    url:"/menu/json/deleteMenu/"+menuNo,
+                    method:"get",
+                    success:function(data){
+                        // console.log("")
+                        alert("메뉴가 삭제되었습니다.");
+                        location.reload();
 
 
-                }
-            })
+                    }
+                })
+            }
         }
+
 
     }
 </script>

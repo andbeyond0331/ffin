@@ -100,23 +100,24 @@ public class ReviewController {
         System.out.println("/review/addReview:POST");
         System.out.println("review = " + review + ", model = " + model);
 
+        String realPath = request.getSession().getServletContext().getRealPath("/resources/image");
         String rvImg1  = file1.getOriginalFilename();
         String rvImg2  = file2.getOriginalFilename();
         String rvImg3  = file3.getOriginalFilename();
 
         if(!file1.getOriginalFilename().isEmpty()){
-            file1.transferTo(new File(FILE_UPLOAD_PATH, rvImg1));
+            file1.transferTo(new File(realPath, rvImg1));
         }
         review.setRvImg1(file1.getOriginalFilename());
 
         if(!file2.getOriginalFilename().isEmpty()){
-            file2.transferTo(new File(FILE_UPLOAD_PATH, rvImg2));
+            file2.transferTo(new File(realPath, rvImg2));
 
         }
         review.setRvImg2(file2.getOriginalFilename());
 //
         if(!file3.getOriginalFilename().isEmpty()){
-            file3.transferTo(new File(FILE_UPLOAD_PATH, rvImg3));
+            file3.transferTo(new File(realPath, rvImg3));
 //            model.addAttribute("msg", "File uploaded successfully.");
 //            model.addAttribute("menuImg3", menuImg3);
 //        }else {
@@ -154,10 +155,10 @@ public class ReviewController {
 
 
 
-        model.addAttribute("review", review);
+        model.addAttribute("userId", review.getRvUserId());
 //        model.addAttribute("orderNo", rvOrderNo);
 
-        return "forward:/views/menu/getMenu.jsp"; //송화님&진석님과 얘기해보기
+        return "redirect:/review/getReviewListUser"; //송화님&진석님과 얘기해보기
 
 
     }
@@ -224,28 +225,31 @@ public class ReviewController {
             @RequestParam("rvImg33")MultipartFile file3,
             @ModelAttribute("rvNo") int rvNo,
             @ModelAttribute("review") Review review,
-            Model model) throws Exception{
+            Model model,
+            HttpServletRequest request) throws Exception{
 
         System.out.println("/review/updateReview:POST");
         System.out.println("rvNo = " + rvNo + ", review = " + review + ", model = " + model);
+
+        String realPath = request.getSession().getServletContext().getRealPath("/resources/image");
 
         String rvImg1  = file1.getOriginalFilename();
         String rvImg2  = file2.getOriginalFilename();
         String rvImg3  = file3.getOriginalFilename();
 
         if(!file1.getOriginalFilename().isEmpty()){
-            file1.transferTo(new File(FILE_UPLOAD_PATH, rvImg1));
+            file1.transferTo(new File(realPath, rvImg1));
         }
         review.setRvImg1(file1.getOriginalFilename());
 
         if(!file2.getOriginalFilename().isEmpty()){
-            file2.transferTo(new File(FILE_UPLOAD_PATH, rvImg2));
+            file2.transferTo(new File(realPath, rvImg2));
 
         }
         review.setRvImg2(file2.getOriginalFilename());
 
         if(!file3.getOriginalFilename().isEmpty()){
-            file3.transferTo(new File(FILE_UPLOAD_PATH, rvImg3));
+            file3.transferTo(new File(realPath, rvImg3));
 
         }
         review.setRvImg3(file3.getOriginalFilename());
@@ -255,10 +259,10 @@ public class ReviewController {
 
         reviewService.updateReview(review);
 
-        model.addAttribute("review", review);
-        model.addAttribute("truckId", review.getRvTruckId());
+//        model.addAttribute("review", review);
+        model.addAttribute("userId", review.getRvUserId());
 
-        return "redirect:/views/review/getReviewList.jsp"; //송화님&진석님과 얘기해보기
+        return "redirect:/review/getReviewListUser"; //송화님&진석님과 얘기해보기
 
 
     }

@@ -1,7 +1,9 @@
 package com.ffin.service.review.impl;
 
 import com.ffin.common.Search;
+import com.ffin.service.domain.Purchase;
 import com.ffin.service.domain.Review;
+import com.ffin.service.domain.Truck;
 import com.ffin.service.review.ReviewDao;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,39 @@ public class ReviewDaoImpl implements ReviewDao {
 
     @Override
     public void addReview(Review review) throws Exception {
+
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        String truckId = review.getRvTruckId();
+
+        Search search = new Search();
+
+        map.put("search", search);
+        map.put("truckId", truckId);
+        List<Review> list =sqlSession.selectList("ReviewMapper.getReviewAvg", map);
+        System.out.println("list : " + list);
+
+        map.clear();
+        map.put("list", list);
+        float avg;
+        if(list.size()!=0){
+            avg=list.get(0).getRvStar();
+        }else {
+            avg = 0;
+        }
+        Truck truck = new Truck();
+        truck.setTruckId(truckId);
+        truck.setTruckAVGStar(avg);
+        sqlSession.selectOne("TruckMapper.updateTruckAVGStar",truck);
+
+        //리뷰 작성 후 orderStatus 4->6 변경
+
+        Purchase purchase = new Purchase();
+        purchase.setOrderNo(review.getRvOrderNo());
+
+        sqlSession.update("PurchaseMapper.updateOrderStatusReview", purchase);
+
+
         sqlSession.insert("ReviewMapper.addReview", review);
     }
 
@@ -143,11 +178,42 @@ public class ReviewDaoImpl implements ReviewDao {
 
     @Override
     public void updateReview(Review review) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+
+        String truckId = review.getRvTruckId();
+
+        Search search = new Search();
+
+        map.put("search", search);
+        map.put("truckId", truckId);
+        List<Review> list =sqlSession.selectList("ReviewMapper.getReviewAvg", map);
+        System.out.println("list : " + list);
+
+        map.clear();
+        map.put("list", list);
+        float avg;
+        if(list.size()!=0){
+            avg=list.get(0).getRvStar();
+        }else {
+            avg = 0;
+        }
+        Truck truck = new Truck();
+        truck.setTruckId(truckId);
+        truck.setTruckAVGStar(avg);
+        sqlSession.selectOne("TruckMapper.updateTruckAVGStar",truck);
+
         sqlSession.update("ReviewMapper.updateReview",review);
     }
 
     @Override
     public void updateRVAddTruckComment(Review review) throws Exception {
+        //사장님 댓글 작성 후 orderStatus 4->6 변경
+
+        Purchase purchase = new Purchase();
+        purchase.setOrderNo(review.getRvOrderNo());
+
+        sqlSession.update("PurchaseMapper.updateOrderStatusReviewTruck", purchase);
+
         sqlSession.update("ReviewMapper.updateRVAddTruckComment", review);
     }
 

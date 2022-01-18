@@ -318,6 +318,26 @@
         WHERE order_no = #{orderNo}
     </update>
 
+    <!-->리뷰 작성 후 orderStatus 4 ->6 변경 - mj-->
+    <update id="updateOrderStatusReview" parameterType="purchase">
+        UPDATE ffin.purchase
+        <set>
+            ORDER_STATUS = 6
+        </set>
+
+        WHERE order_no = #{orderNo}
+    </update>
+
+    <!-->리뷰 사장님댓글 작성 후 orderStatus 6 ->7 변경 - mj-->
+    <update id="updateOrderStatusReviewTruck" parameterType="purchase">
+        UPDATE ffin.purchase
+        <set>
+            ORDER_STATUS = 7
+        </set>
+
+        WHERE order_no = #{orderNo}
+    </update>
+
 
     <!--주문대기 상태의 최초 주문접수 시 예상조리시간-->
     <update id="updateOrderCookingTime" parameterType="purchase">
