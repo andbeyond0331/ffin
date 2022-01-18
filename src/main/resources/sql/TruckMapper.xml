@@ -156,53 +156,53 @@
 		limit #{startRowNum}, #{pageSize}
 	</select>
 
-		<select id="getTruckList"   parameterType="search"     resultMap="truckSelectMap">
+	<select id="getTruckList"   parameterType="search"     resultMap="truckSelectMap">
 		SELECT inner_table.*
 		FROM( SELECT  t.truck_id , t.truck_name , t.truck_phone, t.truck_map_la, t.truck_map_lo, t.truck_cate, t.truck_avg_star, t.truck_pro_img, t.truck_busi_status, t.truck_sig_menu_no, t.truck_sig_menu_name, t.truck_sig_menu_img1, m.menu_truck_id, m.menu_name,
-		             (6371*acos(cos(radians(37.4685225))*cos(radians(t.truck_map_la))*cos(radians(t.truck_map_lo)
-			-radians(126.8943311))+sin(radians(37.4685225))*sin(radians(t.truck_map_la)))) as distance
-			FROM truck t
-			left join menu m
-			on m.menu_truck_id=t.truck_id
-				<trim prefix="WHERE" prefixOverrides="AND">
+		(6371*acos(cos(radians(37.4685225))*cos(radians(t.truck_map_la))*cos(radians(t.truck_map_lo)
+		-radians(126.8943311))+sin(radians(37.4685225))*sin(radians(t.truck_map_la)))) as distance
+		FROM truck t
+		left join menu m
+		on m.menu_truck_id=t.truck_id
+		<trim prefix="WHERE" prefixOverrides="AND">
 
 
-					<if test="searchKeyword !='' and searchKeyword!=null">
-						<bind name="searchKeyword" value="'%'+searchKeyword+'%'"></bind>
-						AND ((t.truck_name LIKE #{searchKeyword} or t.truck_sig_menu_name like #{searchKeyword}) or m.menu_name like #{searchKeyword})
-					</if>
+			<if test="searchKeyword !='' and searchKeyword!=null">
+				<bind name="searchKeyword" value="'%'+searchKeyword+'%'"></bind>
+				AND ((t.truck_name LIKE #{searchKeyword} or t.truck_sig_menu_name like #{searchKeyword}) or m.menu_name like #{searchKeyword})
+			</if>
 
-					<if test="cateCondition!=null and cateCondition != ''">
-						AND t.truck_cate = #{cateCondition}
-					</if>
-				</trim>
+			<if test="cateCondition!=null and cateCondition != ''">
+				AND t.truck_cate = #{cateCondition}
+			</if>
+		</trim>
 
-					group by truck_id
-			<![CDATA[
-					having distance <= 500
-		]]>
-			<trim prefix="ORDER BY">
-				<if test="sortCondition != null ">
-					<if test='sortCondition.equals("moreStars")'>
-						t.truck_avg_star is null asc, t.truck_avg_star DESC
-					</if>
-					<if test='sortCondition.equals("lessStars")'>
-						t.truck_avg_star is null asc, t.truck_avg_star ASC
-					</if>
-<!--					<if test='sortCondition.equals("거리 순")'>-->
-<!--						BLABLA DESC-->
-<!--					</if>-->
-<!--					<if test='sortCondition.equals("구매 많은 순")'>-->
-<!--						BLABLA DESC-->
-<!--					</if>-->
+		group by truck_id
+		<![CDATA[
+               having distance <= 500
+      ]]>
+		<trim prefix="ORDER BY">
+			<if test="sortCondition != null ">
+				<if test='sortCondition.equals("moreStars")'>
+					t.truck_avg_star is null asc, t.truck_avg_star DESC
 				</if>
-				<if test="sortCondition == null">
-					truck_id ASC
+				<if test='sortCondition.equals("lessStars")'>
+					t.truck_avg_star is null asc, t.truck_avg_star ASC
 				</if>
-			</trim>
--- 				order by truck_id
-		    ) inner_table;
--- 		limit 0,20;
+				<!--               <if test='sortCondition.equals("거리 순")'>-->
+				<!--                  BLABLA DESC-->
+				<!--               </if>-->
+				<!--               <if test='sortCondition.equals("구매 많은 순")'>-->
+				<!--                  BLABLA DESC-->
+				<!--               </if>-->
+			</if>
+			<if test="sortCondition == null">
+				truck_id ASC
+			</if>
+		</trim>
+		--             order by truck_id
+		) inner_table
+		limit #{startRowNum},#{pageSize};
 	</select>
 
 		<select id="truckNearBy"   parameterType="map"     resultMap="truckSelectMap">
@@ -228,10 +228,10 @@
 
 					group by truck_id
 			<![CDATA[
-					having distance <= 500
+					having distance <= 5
 		]]>
 
-				order by truck_id ) inner_table
+				order by distance ) inner_table
 		limit 0,20;
 	</select>
 
