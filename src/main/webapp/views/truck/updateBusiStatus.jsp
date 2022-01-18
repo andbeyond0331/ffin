@@ -183,9 +183,12 @@
                                     </button>
                                 </div>
                             </div>
+                            <input type="hidden" name="la" />
+                            <input type="hidden" name="lo" />
+                            <input type="hidden" name="address" />
                         </form>
                     </div>
-                    <div id="map" name="map" style='width:100%;height:350px; margin-bottom:30px '></div>
+                    <div id="map" name="map" style='width:100%;height:350px; margin-bottom:30px; border-radius:15px '></div>
 
                 </div>
             </div>
@@ -235,8 +238,6 @@
 
 
 <jsp:include page="/views/footer.jsp"/>
-
-<script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=l7xx3252a097320d47aca5b8cef4762894c5"></script>
 
 <script src="../resources/bootstrap/js/custom.js"></script>
 <script type="text/javascript">
@@ -356,7 +357,7 @@
                 $("input[name='la']").val(lat);
                 $("input[name='lo']").val(lng);
                 // todo: HHJ 주소창에 이거 뜨는거 뵈기시러.... post로 바꿔야할거같은디.....  깩 :::: 바까따~~~~~!
-                $("form").attr("method", "post").attr("action", "/catering/mainTruckListLaLo").attr("target", "_parent").submit();
+                $("form").attr("method", "post").attr("action", "/truck/mainTruckListLaLo").attr("target", "_parent").submit();
 
 
 //todo: 토) 쿼리 수정 (menu price 필요 )
@@ -369,7 +370,7 @@
 
 
     // 지도 클릭하여 지도 위치 변경
-    function mapLocationSelect() {
+    function mapLocationSelect(callback) {
 
 //todo : tmap 이 좀 예뻐서 쓰고싶엇는뎅 일단 정보가 많은 카카오로 구현해보깅 대신 도보경로는 tmap 으루 햇당
         /* var map = new Tmapv2.Map("map", {

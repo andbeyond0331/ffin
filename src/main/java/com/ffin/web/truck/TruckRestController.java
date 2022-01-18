@@ -347,33 +347,33 @@ public class TruckRestController {
         return mv;
     }
 
-//    @RequestMapping(value="/mainTruckListLaLo", method=RequestMethod.POST)
-//    public ModelAndView mainTruckListLaLo(HttpServletRequest request, @RequestParam("lo") float lo, @RequestParam("la") float la, @RequestParam("address") String address, HttpServletResponse response) throws Exception{
-//        request.setCharacterEncoding("UTF-8");
-//
-//        System.out.println("mainTruckListLaLo !!!!!!!!!!!!!!!!!!!!!!!1 post");
-//        System.out.println("lo = " + lo + ", la = " + la +", address: "+address);
-//        Search search = new Search();
-//        search.setCurrentPage(1);
-//        search.setPageSize(15);
-//        Map<String, Object> map = new HashMap<String, Object>();
-//
-////        int currentPage = Integer.parseInt(request.getP)
-//
-//
-//        map = truckService.truckNearBy(search,la, lo);
-//
-//        System.out.println("위치기반 결과 : " + map.get("list"));
-//
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.addObject("list", map.get("list"));
-//        modelAndView.addObject("inputLocation", address);
-//        modelAndView.setViewName("/views/home.jsp");
-//
-//        /* 수정해야할*/
-//
-//        return modelAndView;
-//    }
+    @RequestMapping(value="/mainTruckListLaLo", method=RequestMethod.POST)
+    public ModelAndView mainTruckListLaLo(HttpServletRequest request, @RequestParam("lo") float lo, @RequestParam("la") float la, @RequestParam("address") String address, HttpServletResponse response) throws Exception{
+        request.setCharacterEncoding("UTF-8");
+
+        System.out.println("mainTruckListLaLo !!!!!!!!!!!!!!!!!!!!!!!1 post");
+        System.out.println("lo = " + lo + ", la = " + la +", address: "+address);
+        Search search = new Search();
+        search.setCurrentPage(1);
+        search.setPageSize(15);
+        Map<String, Object> map = new HashMap<String, Object>();
+
+//        int currentPage = Integer.parseInt(request.getP)
+
+
+        map = truckService.truckNearBy(search,la, lo);
+
+        System.out.println("위치기반 결과 : " + map.get("list"));
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("list", map.get("list"));
+        modelAndView.addObject("inputLocation", address);
+        modelAndView.setViewName("/views/truck/updateBusiStatus.jsp");
+
+        /* 수정해야할*/
+
+        return modelAndView;
+    }
 
 }
 
