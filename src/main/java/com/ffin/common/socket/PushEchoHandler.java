@@ -65,7 +65,7 @@ public class PushEchoHandler extends TextWebSocketHandler {
                 WebSocketSession recvUserSession = userSessions.get(recvUser.trim());
                 System.out.println("::::::::::recvUserSession = " + recvUserSession);
                 if("message".equals(cmd) && recvUserSession != null){ // 다른 cmd일 땐 다르게 알림 날릴 수 잇쥐
-                    TextMessage tmpMsg = new TextMessage("<a href='/msg/message_list'>"+sendUser + "</a>님이 메세지를 날려써여 CRUD 화이팅 ");
+                    TextMessage tmpMsg = new TextMessage("<a href='/msg/message_list'>"+sendUser + "</a>님으로부터 메세지가 전달되었습니다.  ");
                     // 여기서 no 를 달꺼면 여기에 <a href = ~~~~> 해서 쓰면 누르면 갈꺼야!!!!!!
 
                     System.out.println("::::::::::::::::::::::::::::tmpMsg = " + tmpMsg);
@@ -75,7 +75,7 @@ public class PushEchoHandler extends TextWebSocketHandler {
                 String noKey = strs[3];
                 WebSocketSession recvUserSession = userSessions.get(recvUser.trim());
                 if("post".equals(cmd) && recvUserSession != null){ // 다른 cmd일 땐 다르게 알림 날릴 수 잇쥐
-                    TextMessage tmpMsg = new TextMessage(sendUser+" 님이 <a href='/community/getPost?postNo="+noKey+"'>"+ noKey + "</a>번 글에 댓글을 달았습니다.  ");
+                    TextMessage tmpMsg = new TextMessage(sendUser+" 님이 "+ noKey + "번 글에 댓글을 달았습니다.  ");
                     // 여기서 no 를 달꺼면 여기에 <a href = ~~~~> 해서 쓰면 누르면 갈꺼야!!!!!!
 
                     System.out.println("::::::::::::::::::::::::::::tmpMsg = " + tmpMsg);
