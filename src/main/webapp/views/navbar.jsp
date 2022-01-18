@@ -84,11 +84,11 @@
                 <div class="collapse navbar-collapse justify-content-end nav-user" id="navbarSupportedContent" >
 
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" id="goMsg" href="#" style="margin-top: 3px;"><i class="fas fa-envelope fa-lg" ></i></a>
-                        </li>
                         <c:choose>
                             <c:when test="${sessionScope.user.userId != null && sessionScope.role eq 'user' }">
+                                <li class="nav-item">
+                                    <a class="nav-link" id="goMsg" href="#" style="margin-top: 3px;"><i class="fas fa-envelope fa-lg" ></i></a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="pull-bs-canvas-right d-block text-primary text-decoration-none" href="#" style="margin-top: 10px;"><i class="fas fa-shopping-cart fa-lg"></i></a>
                                 </li>
@@ -141,7 +141,7 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="truck-dropdown">
                                         <li><a class="dropdown-item user-menu" href="/views/truck/truckMyPage.jsp"><i class="fas fa-user-circle"></i>MyPage</a></li>
-                                        <li><a class="dropdown-item user-menu" href="#"><i class="fas fa-power-off"></i>영업상태변경</a></li>
+                                        <li><a class="dropdown-item user-menu" href="/views/truck/updateBusiStatus.jsp"><i class="fas fa-power-off"></i>영업상태변경</a></li>
                                         <li><a class="dropdown-item user-menu" href="/views/qna/addInquiryView.jsp"><i class="fas fa-question-circle"></i>문의</a></li>
                                         <li><a class="dropdown-item user-menu" href="/truck/logoutTruck"><i class="fas fa-sign-out-alt"></i>로그아웃</a></li>
                                     </ul>

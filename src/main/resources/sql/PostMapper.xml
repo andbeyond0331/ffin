@@ -72,7 +72,7 @@
                 ( post_user_id LIKE #{searchKeyword} OR post_truck_id LIKE #{searchKeyword} )
                  </if>
                 <if test="searchCondition == 1 and searchKeyword !='' ">
-                    post_title LIKE #{searchKeyword}
+                    post_title LIKE #{searchKeyword} AND secret_key = 0
                 </if>
                  AND POST_CATEGORY="g"
 
@@ -80,7 +80,7 @@
         <if test="searchCondition == null">
             POST_CATEGORY="g"
         </if>
-        order by post_no ) inner_table
+        order by post_no DESC ) inner_table
         limit #{startRowNum}, #{pageSize}
     </select>
 
@@ -131,7 +131,7 @@
                     OR post_truck_id LIKE #{searchKeyword} )
                 </if>
                 <if test="searchCondition == 1 and searchKeyword !='' ">
-                    post_title LIKE #{searchKeyword}
+                    post_title LIKE #{searchKeyword} AND secret_key = 0
                 </if>
                 AND POST_CATEGORY="g"
         </if>
