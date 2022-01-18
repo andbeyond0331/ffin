@@ -209,9 +209,9 @@
                 /* alert("modalApply data-menuimg : " + modalApply.find('div[name="odMenuImg1"]').data('menuimg'));*/
 
                 var orderDetail = {
-                    menuTruckId : modalApply.find('h3[name="menuTruckId"]').text(),
-                    odMenuNo : modalApply.find('div[name="odMenuNo"]').text(),
-                    odMenuName : modalApply.find('div[name="odMenuName"]').text(),
+                    menuTruckId : modalApply.find('input[name="menuTruckId"]').val(),
+                    odMenuNo : modalApply.find('input[name="odMenuNo"]').val(),
+                    odMenuName : modalApply.find('h3[name="odMenuName"]').text(),
                     odMenuImg1 : modalApply.find('div[name="odMenuImg1"]').data('menuimg'),
                     odMenuDetail : modalApply.find('div[name="odMenuDetail"]').text(),
                     odMenuPrice : modalApply.find('div[name="odMenuPrice"]').text(),
@@ -257,9 +257,9 @@
                 if(isThereOptionGroup){ //만약 체크된 라디오 박스가 있다면
                     for (let i = 0; i < isThereOptionGroup; i++) {
                         var optionGroupOrderDetail = {
-                            menuTruckId : modalApply.find('h3[name="menuTruckId"]').text(),
-                            odMenuNo : modalApply.find('div[name="odMenuNo"]').text(),
-                            odMenuName : modalApply.find('div[name="odMenuName"]').text(),
+                            menuTruckId : modalApply.find('input[name="menuTruckId"]').val(),
+                            odMenuNo : modalApply.find('input[name="odMenuNo"]').val(),
+                            odMenuName : modalApply.find('h3[name="odMenuName"]').text(),
                             odMenuImg1 : modalApply.find('div[name="odMenuImg1"]').data('menuimg'),
                             odMenuDetail : modalApply.find('div[name="odMenuDetail"]').text(),
                             odMenuPrice : modalApply.find('div[name="odMenuPrice"]').text(),
@@ -1282,10 +1282,14 @@
                     div +=
                         // "<div class=\"page-header\">"+
                         // "<h3 class=\"getMenuTitle custom\" name=\"menuTruckName\">"+truckName+"</h3>"+
+                        "<input type=\"hidden\" name=\"menuTruckId\" value=\""+data.menu.menuTruckId+"\">"+
+                        "<input type=\"hidden\" name=\"isSigMenu\" value=\""+data.menu.isSigMenu+"\">"+
+
                         // "</div>"+
                         // "<div class=\"row\">"+
                         // "<div class=\"col-xs-4 col-md-2\"><strong>메뉴번호</strong></div>"+
                         // " <div class=\"col-xs-8 col-md-4\" name=\"odMenuNo\">"+data.menu.menuNo+"</div>"+
+                        "<input type=\"hidden\" name=\"odMenuNo\" value=\""+data.menu.menuNo+"\">"+
                         // "</div>"+
                         // "<hr/>"+
                         // "<div class=\"row\"><strong>메뉴이미지1</strong></div>"+
@@ -1295,15 +1299,15 @@
                         "alt=\""+data.menu.menuName+"의 이미지1\" title=\""+data.menu.menuName+"\"></div> </div>"+
                         "<hr/>"+
                         "<div class=\"row\">";
-                        // "<div class=\"col-xs-4 col-md-2 \"><strong>메뉴 이름</strong></div>"+
-                        //  "<div class=\"col-xs-8 col-md-4\" name=\"odMenuName\"><strong>"+data.menu.menuName+"</strong></div>"+
+                    // "<div class=\"col-xs-4 col-md-2 \"><strong>메뉴 이름</strong></div>"+
+                    //  "<div class=\"col-xs-8 col-md-4\" name=\"odMenuName\"><strong>"+data.menu.menuName+"</strong></div>"+
 
                     if(data.menu.isSigMenu==1){
                         div+=""+
                             "<h5><span class=\"badge badge-warning\" style=\"margin-left: 15px;\">대표메뉴</span></h5>"+
                             "";
                     }
-                    div+="<h3 style=\"margin-left: 15px;\">"+data.menu.menuName+"</h3>"+
+                    div+="<h3 name=\"odMenuName\" style=\"margin-left: 15px;\">"+data.menu.menuName+"</h3>"+
                         "</div>"+
                         // "<hr/>"+
                         "<div>"+
@@ -1321,10 +1325,10 @@
                         // "<div class=\"col-xs-4 col-md-2\"><strong>대표메뉴여부</strong></div>"+
                         // "<div class=\"col-xs-8 col-md-4\">"+data.menu.isSigMenu+"</div>"+
                         // "</div><hr/>" +
-                            "<div>"+
+                        "<div>"+
                         // "<div class=\"col-xs-4 col-md-2 \"><strong>메뉴가격</strong></div>"+
                         "<div class=\"odMenuPrice\" name=\"odMenuPrice\">"+
-                        "<h4><span>가격</span><span style=\"float: right;margin-right: 19px;\">"+data.menu.menuPrice+"원</span></h4>"
+                        "<h4><span></span><span style=\"float: right;margin-right: 19px;\">"+data.menu.menuPrice+"</span></h4>"
                     "</div></div><hr/>";
                     // "<input type=\"hidden\" name=\"odMenuQty\" value="+ //todo 보류입니다!(수량을 hidden으로 넣을지가)
 
@@ -1423,7 +1427,7 @@
                             sessionStorage.removeItem('menuOdList');
                         } else {
                             //no
-                            self.location = "/menu/getMenuList?truckId=" + checkMenuTruckId;
+                            location.reload();
 
                         }
                     });
@@ -1715,7 +1719,7 @@
                         div+= "<hr>" +
                             "<span class=\"truck-profile\">"+
 
-                        "</span><div>사장님 댓글 : "+data.review.rvTruckCmtContent+"</div></div>";
+                            "</span><div>사장님 댓글 : "+data.review.rvTruckCmtContent+"</div></div>";
                     }
                     // if (data.review.heartNo == '0'){
                     //
