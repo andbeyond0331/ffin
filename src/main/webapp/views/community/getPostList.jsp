@@ -114,6 +114,13 @@
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">
 
+        document.addEventListener('keydown',function(event) {
+            if (event.keyCode === 13) {
+                // 엔터키가 눌렸을 때
+                event.preventDefault();
+            };
+        });
+
         //=============    검색 / page 두가지 경우 모두  Event  처리 =============
         function fncGetUserList(currentPage) {
             $("#currentPage").val(currentPage)

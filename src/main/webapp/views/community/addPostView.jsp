@@ -114,7 +114,7 @@
 
                 var DIVimage1preview = $('#file1preview');
                 var isTherePreview = DIVimage1preview.find('img').length;
-                alert("isTherePreview : " + isTherePreview);
+                //alert("isTherePreview : " + isTherePreview);
                 //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
                 var reader  = new FileReader();
 
@@ -142,7 +142,7 @@
                 var reader  = new FileReader();
                 var DIVimage2preview = $('#file2preview');
                 var isTherePreview = DIVimage2preview.find('img').length;
-                alert("isTherePreview : " + isTherePreview);
+                //alert("isTherePreview : " + isTherePreview);
                 //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
                 var reader  = new FileReader();
 
@@ -169,7 +169,7 @@
                 var reader  = new FileReader();
                 var DIVimage3preview = $('#file3preview');
                 var isTherePreview = DIVimage3preview.find('img').length;
-                alert("isTherePreview : " + isTherePreview);
+                //alert("isTherePreview : " + isTherePreview);
                 //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
                 var reader  = new FileReader();
 

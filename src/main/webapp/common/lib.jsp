@@ -738,7 +738,7 @@
                     console.log("아이디 찾기 data : "+data);
                     if(data === "fail" ){
                         //alert(data);
-                        $('#id_value').text('회원 정보를 찾을 수 없습니다.');
+                        $('#id_valueT').text('회원 정보를 찾을 수 없습니다.');
                         $('#longinGoBtn').css('display','none');
                         $('#findTruckPw').css('display', 'none');
                     } else {
