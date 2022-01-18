@@ -28,7 +28,7 @@ public class Purchase {
 	private int orderCancelReason; //주문취소 사유
 	private int orderNopeReason; //주문거절 사유
 	private int orderTotalPrice; //주문금액
-	private Timestamp payDateTime; //결제일시
+	private String payDateTime; //결제일시
 	private Timestamp payRefundDateTime; //결제취소일시
 	private int payServiceType; //일반결제,케이터링결제
 	private int payOption; //결제방법

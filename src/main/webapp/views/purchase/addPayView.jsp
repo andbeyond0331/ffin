@@ -802,6 +802,8 @@
                     <div class="row">
                         <br>
                         <div class="col-sm-12">
+                            <input type="hidden" name="userName" value="${purchase.orderUserId.userName}">
+                            <input type="hidden" name="userName" value="${purchase.orderUserId.userName}">
                             <input type="hidden" name="orderTruckId.truckId" value="${purchase.orderTruckId.truckId}">
                             <input type="hidden" name="orderUserId.userId" value="${purchase.orderUserId.userId}">
                             <input type="hidden" name="orderNo" value="${purchase.orderNo}">
@@ -1003,7 +1005,6 @@
                 menuCheck[menuCount] = odMenuName;
             }
 
-
             if(odMenuQtyFlag == '0'){
                 if(menuPriceOne[menuCount] == undefined){
                     menuPriceOne[menuCount] = Number(odMenuPrice);
@@ -1012,16 +1013,18 @@
                 }
             }
 
-            if(odMenuQtyFlag == '1'){
-                if(optionPriceOne[menuCount]==undefined){
+                if(optionPriceOne[menuCount] == undefined){
+                    if(odOptionPrice == 0 || odOptionPrice ==undefined){
+                        optionPriceOne[menuCount] = 0 ;
+
+                    }else{
                     optionPriceOne[menuCount] = Number(odOptionPrice);
+
+                    }
                 }else{
                     optionPriceOne[menuCount] += Number(odOptionPrice);
-                }
+
             }
-
-
-
 
 
 
@@ -1141,8 +1144,6 @@
 
         var menuPrice = 0;
         for (var i = 0; i < odMenuNameL.length; i++) {
-            alert("optionPriceOne : "+optionPriceOne[i])
-            alert("menuPriceOne : "+Number(menuPriceOne[i]+optionPriceOne[i]))
 
             /*         alert(odMenuNameL[i]);
                      alert(odOptionNameL[i]);*/

@@ -622,9 +622,19 @@
                     CookingTime = "<div class='col-2'> 상호 : "+data.purchase.orderTruckId.truckName+"</div>"+
                            "<div class='col-5'></div>"+
                             "<div class='col-5'>주문취소된 메뉴 입니다</div>";
+                    }else if(data.purchase.orderStatus == 6) {
+
+                    CookingTime = "<div class='col-2'> 상호 : " + data.purchase.orderTruckId.truckName + "</div>" +
+                        "<div class='col-5'></div>" +
+                        "<div class='col-5'>주문처리가 완료되었습니다</div>";
+                    }else if(data.purchase.orderStatus == 7) {
+
+                        CookingTime = "<div class='col-2'> 상호 : " + data.purchase.orderTruckId.truckName + "</div>" +
+                            "<div class='col-5'></div>" +
+                            "<div class='col-5'>주문처리가 완료되었습니다</div>";
                     }
 
-                orderMenuHidden = ""+
+                    orderMenuHidden = ""+
                     "<input type='hidden' name='payId' id='payId' value='"+data.purchase.payId+"'>"+
                     "<input type='hidden' name='purchaseOrder' id='purchaseOrder' value='"+data.purchase.orderNo+"'>"+
                     "<input type='hidden' name='truck' value='"+data.purchase.orderTruckId.truckId+"'>"+
