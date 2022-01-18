@@ -583,8 +583,7 @@
                                         var saleT = Number(totalSS2T[1]) + Number(usePointT);
 
 
-                                        alert(payPriceT)
-                                        alert(saleT)
+
 
                                         append = "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePointT + "\">";
                                         totalPayPrice = "<span id='totalpp' name='payPrice' >결제금액 : " + payPriceT + "</span>"
