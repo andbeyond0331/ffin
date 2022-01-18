@@ -34,16 +34,17 @@
             box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
             padding: 15px;
             border-radius: 10px 10px 10px 10px;
+            background-color: white;
         }
 
         .chating{
             padding: 10px;
             display: table-cell;
-            background-color: #ffba49;
             width: 750px;
             height: 500px;
             overflow: auto;
             transition: 0.3s;
+            border-radius: 10px 10px 10px 10px;
         }
         .chating .me{
             color: #F6F6F6;
@@ -80,24 +81,46 @@
             /*border: 1px solid #cecece;*/
             border-radius: 50%;
         }
-        .incoming_msg_img{position: relative;}
+        .incoming_msg_img{
+            position: relative;
+            display: grid;
+            align-items: center;
+        }
         .uuuuuddd{position: absolute; top: 20px;left: 0;}
         .input_msg_write{
             display: flex;
             justify-content: center;
         }
-        .write_msg.form-control{
+        .write_msg_chat.form-control{
             background: #e9ecef none repeat scroll 0 0;
             border-radius: 50px;
-            margin-top: 10px;
+            margin-top: 15px;
             font-size: 14px;
             height: 35px;
             padding-left: 20px;
             min-height: unset;
+            margin-bottom: 0;
         }
-        .msg_send_btn{
-            margin-top: 5px;
+        .write_msg_chat:focus{
+            color: #212529;
+            background-color: #fff;
+            border-color: #ffec8a;
+            outline: 0;
+            box-shadow: 0 0 0 0.1rem rgb(255, 236, 138);
         }
+        .sent_msg{
+            float: right;
+        }
+        .incoming_msg{
+            display: flex;
+            margin-top: 10px;
+        }
+        .outgoing_msg_chat{
+            overflow: hidden;
+            display: flex;
+            justify-content: flex-end;
+        }
+
 
     </style>
 </head>
@@ -145,7 +168,7 @@
                     console.log("d2: "+d.time)
                     if(d.sessionId == $("#sessionId").val()){
                         var div = "";
-                       div += "<div class='outgoing_msg'>"
+                       div += "<div class='outgoing_msg_chat'>"
                 +"<div class='sent_msg'>"
                    +" <p>"+d.msg+"</p>"
                     +"<span class='time_date'>"+d.time+"</span>"
@@ -177,12 +200,12 @@
                                 +"<li><a class='dropdown-item user-menu user-message' href='#' idx='"+d.userName+"'><i class='fas fa-broom'></i>쪽지보내기</a></li>"
                                 +"<li><a class='dropdown-item user-menu user-report' href='#' idx='"+d.userName+"'><i class='fas fa-sign-out-alt'></i>신고하기</a></li>"
                             +"</ul>"
-                            +"<span class='time_date'>"+d.userName+"</span>"
+                            +"<span class='time_date' style='margin-right: 0; display: grid;'>"+d.userName+"</span>"
                             + "</div>"
-                            +"  <div class='received_msg'>"
+                            +"  <div class='received_msg' style='padding-left: 0;'>"
                             +"<div class='received_withd_msg'>"
                             + "<p>"+d.msg+"</p>"
-                            +"<span class='time_date' style='text-align:right;'>"+d.time+"</span>"
+                            +"<span class='time_date' style='text-align:right; margin-left: 15px;'>"+d.time+"</span>"
                             + " </div>"
                             +  "</div>"
                             + " </div>";
@@ -288,7 +311,7 @@
             <div class="detail-box">
                 <i class="fa fa-quote-left" aria-hidden="true"></i>
                 <h4 style="margin-top: 10px;">
-                    ${roomName}의 채팅방
+                    ${roomName} 채팅방
                         <input type="hidden" id="sessionId" value="">
                         <input type="hidden" id="sessionName" value="">
                         <input type="hidden" id="roomNumber" value="${roomNumber}">
@@ -308,9 +331,9 @@
             <div class='type_msg'>
                 <div class='input_msg_write row'>
                     <div class='col-10' style="padding-right: 0;">
-                        <input type='text' id="chatting" class='write_msg form-control' placeholder='보내실 메시지를 입력하세요.' />
+                        <input type='text' id="chatting" class='write_msg_chat form-control' placeholder='보내실 메시지를 입력하세요.' />
                     </div>
-                    <div class='col-1' style="padding: 0">
+                    <div class='col-1' style="padding: 0; position: relative; margin-top: 5px;">
                         <div><button class='msg_send_btn' type='button' onclick="send()" id="sendBtn"><ion-icon name="paper-plane-outline"></ion-icon></button></div>
                     </div>
                 </div>

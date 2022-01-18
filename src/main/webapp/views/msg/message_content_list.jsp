@@ -15,10 +15,10 @@
                        <img src="../../../resources/image/${tmp.profile }" alt="보낸사람 프로필">
                     </a>
                 </div>
-                <div class="received_msg">
+                <div class="received_msg" style="padding-left: 0;">
                     <div class="received_withd_msg">
                         <p>${tmp.msgContent }</p>
-                        <span class="time_date"> ${tmp.msgSendDate }</span>
+                        <span class="time_date" style="margin-left: 10px;"> ${tmp.msgSendDate }</span>
                     </div>
                 </div>
             </div>

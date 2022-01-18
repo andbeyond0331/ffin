@@ -151,28 +151,14 @@
 </div>
 
 <!-- Modal -->
+<%-- 예약 가능 모달 !!! --%>
 <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-
-
-            <div class="detail-box">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"></span>
-                </button>
-                <i class="fa fa-quote-left" aria-hidden="true"></i>
-                <h4 style="margin-top: 10px;padding-left: 0px">
-                    케이터링
-                </h4>
-            </div>
             <div class="modal-body"></div>
-
             <div id="map" style='width:100%;height:350px; display:none;'></div>
-
-
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <div class="modal-footer" style="display: flex; justify-content: center;">
+                <button type="button" class="btn btn-cancle" data-dismiss="modal">확인</button>
                 <button type="button" class="btn btn-default" id="AddCtRes" name="AddCtRes">예약</button>
             </div>
 
@@ -472,20 +458,26 @@
 
                 <%--${sessionScope.role};--%>
                 console.log("role : "+role)
-                div += "<div class='data-input-box'>"+
-                    "<div><strong>서비스 번호</strong> : "+data.catering.ctNo+"</div></div>" +
-                    "<div class='data-input-box'>"
-                    + "<div><strong>푸드트럭 이름</strong> : "+data.catering.ctTruck.truckName+"</div>" +
-                    "</div>"
-                    +"<div class='data-input-box'>"
-                    +"<div ><strong>서비스 가능 날짜</strong> : "+data.catering.ctDate+"</div></div>"
-                    +"<div class='data-input-box'>"
-                    +"<div ><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
-                    +"<div class='data-input-box'>"
-                    +"<div ><strong></strong> <img src='../../../resources/menu/"+data.catering.ctMenu.menuImg1+"'></div></div>"
-                    +"<div class='data-input-box'>"
-                    +"<div ><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
-                    +"<input type='hidden' id='ctNo' name='ctNo' value='"+data.catering.ctNo+"'/>"
+                div += "<div class='row' style='display: flex; justify-content: center; margin: 30px;'>"
+                    + "<div><h5 style='margin: 0; box-shadow: inset 0 -11px 0 #fae100; line-height: 21px;font-size: 22px;'>"+data.catering.ctTruck.truckName+"</h5></div>"
+                    + "</div>"
+                    +"<div style='display: flex; justify-content: space-between; padding: 0 45px 0 45px; margin-top: 25px; margin-bottom: 5px;'>"
+                    +"<div class='row'>"
+                    +"<div><strong>no.</strong>"+data.catering.ctNo+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div><ion-icon name='calendar-outline'></ion-icon>&nbsp;"+data.catering.ctDate+"</div></div>"
+                    +"</div>"
+                    +"<hr style='width: 420px; margin-left:30px; margin-top: 0;'/>"
+                    +"<div class='row'>"
+                    +"<div style='display: flex; justify-content: center; margin-bottom: 5px;' ><strong></strong> <img src='../../../resources/menu/"+data.catering.ctMenu.menuImg1+"'></div></div>"
+                    +"<hr style='width: 420px; margin-left:30px;'/>"
+                    +"<div style='display: flex; justify-content: space-between; padding: 0 45px 0 45px; margin-top: 15px;'>"
+                    +"<div class='row'>"
+                    +"<div style='font-size: 16px; box-shadow: inset 0 -11px 0 #fae100; line-height: 21px;'><strong>메뉴</strong> : "+data.catering.ctMenu.menuName+"</div></div>"
+                    +"<div class='row'>"
+                    +"<div style='font-size: 16px; box-shadow: inset 0 -11px 0 #fae100; line-height: 21px;'><strong>가격(1개)</strong> : "+data.catering.ctMenu.menuPrice+"원</div></div>"
+                    +"</div>"
+                    +"<input type='hidden' id='ctNo"+data.catering.ctNo+"' name='ctNo' value='"+data.catering.ctNo+"'/>"
                 if (role=="user") {
 
 
