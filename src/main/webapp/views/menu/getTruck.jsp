@@ -2549,7 +2549,7 @@
         <i class="fas fa-star"></i>
         <i class="fas fa-star-half"></i>
     </c:if>
-    <c:if test="${truck.truckAVGStar >= 4.65 && truck.truckAVGStar <5}">
+    <c:if test="${truck.truckAVGStar >= 4.65 && truck.truckAVGStar <=5}">
         <i class="fas fa-star"></i>
         <i class="fas fa-star"></i>
         <i class="fas fa-star"></i>

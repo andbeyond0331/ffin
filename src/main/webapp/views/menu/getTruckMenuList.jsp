@@ -736,9 +736,167 @@
                         }
 
                         div +=  "<input type='hidden' name='truckId' value='"+list[i].truckId+"'>"
-                            +"<p class='item-text-dek'><strong>"+list[i].truckSigMenuName+"</strong></p>"
-                            +"<h6 class='item-text-title'>"+list[i].truckCEOIntro+"</h6>"
+                            +"<p class='item-text-dek'><strong>"+list[i].truckSigMenuName+"</strong></p>";
+                            // +"<h6 class='item-text-title'>"+list[i].truckCEOIntro+"</h6>"
 
+                        if(list[i].truckAVGStar >= 0 && list[i].truckAVGStar <0.35) {
+                            div += "" +
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(list[i].truckAVGStar >= 0.35 && list[i].truckAVGStar <0.65){
+                            div+=""+
+                                "<i class=\"fas fa-star-half\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(list[i].truckAVGStar >= 0.65 && list[i].truckAVGStar <1.35){
+                            div+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(list[i].truckAVGStar >= 1.35 && list[i].truckAVGStar <1.65){
+                            div+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star-half\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(list[i].truckAVGStar >= 1.65 && list[i].truckAVGStar <2.35){
+                            div+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(list[i].truckAVGStar >= 2.35 && list[i].truckAVGStar <2.65){
+                            div+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star-half\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(list[i].truckAVGStar >= 2.65 && list[i].truckAVGStar <3.35){
+                            div+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(list[i].truckAVGStar >= 3.35 && list[i].truckAVGStar <3.65){
+                            div+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star-half\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(list[i].truckAVGStar >= 3.65 && list[i].truckAVGStar <4.35){
+                            div+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"far fa-star\"></i>";
+                        }else if(list[i].truckAVGStar >= 4.35 && list[i].truckAVGStar <4.65){
+                            div+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star-half\"></i>";
+                        }else if(list[i].truckAVGStar >= 4.65 && list[i].truckAVGStar <=5){
+                            div+=""+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>"+
+                                "<i class=\"fas fa-star\"></i>";
+                        }
+
+
+
+                            <c:if test="${truck.truckAVGStar >= 0 && truck.truckAVGStar <0.35}">
+                            <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 0.35 && truck.truckAVGStar <0.65}">
+                        <i class="fas fa-star-half"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 0.65 && truck.truckAVGStar <1.35}">
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 1.35 && truck.truckAVGStar <1.65}">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 1.65 && truck.truckAVGStar <2.35}">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 2.35 && truck.truckAVGStar <2.65}">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 2.65 && truck.truckAVGStar <3.35}">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        <i class="far fa-star"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 3.35 && truck.truckAVGStar <3.65}">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half"></i>
+                        <i class="far fa-star"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 3.65 && truck.truckAVGStar <4.35}">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 4.35 && truck.truckAVGStar <4.65}">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 4.65 && truck.truckAVGStar <=5}">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        </c:if>
                             +"<i class='fas fa-star' style='color: #ec6a56'></i>";
                         // 여기 위에 바꿔야할 곳, 평점 처리  임의로 해줌
 
@@ -1271,35 +1429,114 @@
                                     <p class="item-text-dek"><strong>${truck.truckSigMenuName}</strong></p>
                                     <h6 class="item-text-title">${truck.truckCEOIntro}</h6>
 
-                                    <fmt:parseNumber var="percent" value="${truck.truckAVGStar}" integerOnly="true" />
-                                    <c:if test="${percent eq 0}">
-                                        <i class="far fa-star" style="color: #ec6a56"></i>
+<%--                                    <fmt:parseNumber var="percent" value="${truck.truckAVGStar}" integerOnly="true" />--%>
+<%--                                    <c:if test="${percent eq 0}">--%>
+<%--                                        <i class="far fa-star" style="color: #ec6a56"></i>--%>
+<%--                                    </c:if>--%>
+<%--                                    <c:if test="${percent eq 1}">--%>
+<%--                                        <i class="fas fa-star" style="color: #ec6a56"></i>--%>
+<%--                                    </c:if>--%>
+<%--                                    <c:if test="${percent eq 2}">--%>
+<%--                                        <i class="fas fa-star" style="color: #ec6a56"></i>--%>
+<%--                                        <i class="fas fa-star" style="color: #ec6a56"></i>--%>
+<%--                                    </c:if>--%>
+<%--                                    <c:if test="${percent eq 3}">--%>
+<%--                                        <i class="fas fa-star" style="color: #ec6a56"></i>--%>
+<%--                                        <i class="fas fa-star" style="color: #ec6a56"></i>--%>
+<%--                                        <i class="fas fa-star" style="color: #ec6a56"></i>--%>
+<%--                                    </c:if>--%>
+<%--                                    <c:if test="${percent eq 4}">--%>
+<%--                                        <i class="fas fa-star" style="color: #ec6a56"></i>--%>
+<%--                                        <i class="fas fa-star" style="color: #ec6a56"></i>--%>
+<%--                                        <i class="fas fa-star" style="color: #ec6a56"></i>--%>
+<%--                                        <i class="fas fa-star" style="color: #ec6a56"></i>--%>
+<%--                                    </c:if>--%>
+<%--                                    <c:if test="${percent eq 5}">--%>
+<%--                                        <i class="fas fa-star" style="color: #ec6a56"></i>--%>
+<%--                                        <i class="fas fa-star" style="color: #ec6a56"></i>--%>
+<%--                                        <i class="fas fa-star" style="color: #ec6a56"></i>--%>
+<%--                                        <i class="fas fa-star" style="color: #ec6a56"></i>--%>
+<%--                                        <i class="fas fa-star" style="color: #ec6a56"></i>--%>
+<%--                                    </c:if>--%>
+
+                                    <c:if test="${truck.truckAVGStar >= 0 && truck.truckAVGStar <0.35}">
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
                                     </c:if>
-                                    <c:if test="${percent eq 1}">
-                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                    <c:if test="${truck.truckAVGStar >= 0.35 && truck.truckAVGStar <0.65}">
+                                        <i class="fas fa-star-half"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
                                     </c:if>
-                                    <c:if test="${percent eq 2}">
-                                        <i class="fas fa-star" style="color: #ec6a56"></i>
-                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                    <c:if test="${truck.truckAVGStar >= 0.65 && truck.truckAVGStar <1.35}">
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
                                     </c:if>
-                                    <c:if test="${percent eq 3}">
-                                        <i class="fas fa-star" style="color: #ec6a56"></i>
-                                        <i class="fas fa-star" style="color: #ec6a56"></i>
-                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                    <c:if test="${truck.truckAVGStar >= 1.35 && truck.truckAVGStar <1.65}">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
                                     </c:if>
-                                    <c:if test="${percent eq 4}">
-                                        <i class="fas fa-star" style="color: #ec6a56"></i>
-                                        <i class="fas fa-star" style="color: #ec6a56"></i>
-                                        <i class="fas fa-star" style="color: #ec6a56"></i>
-                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                    <c:if test="${truck.truckAVGStar >= 1.65 && truck.truckAVGStar <2.35}">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
                                     </c:if>
-                                    <c:if test="${percent eq 5}">
-                                        <i class="fas fa-star" style="color: #ec6a56"></i>
-                                        <i class="fas fa-star" style="color: #ec6a56"></i>
-                                        <i class="fas fa-star" style="color: #ec6a56"></i>
-                                        <i class="fas fa-star" style="color: #ec6a56"></i>
-                                        <i class="fas fa-star" style="color: #ec6a56"></i>
+                                    <c:if test="${truck.truckAVGStar >= 2.35 && truck.truckAVGStar <2.65}">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
                                     </c:if>
+                                    <c:if test="${truck.truckAVGStar >= 2.65 && truck.truckAVGStar <3.35}">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </c:if>
+                                    <c:if test="${truck.truckAVGStar >= 3.35 && truck.truckAVGStar <3.65}">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half"></i>
+                                        <i class="far fa-star"></i>
+                                    </c:if>
+                                    <c:if test="${truck.truckAVGStar >= 3.65 && truck.truckAVGStar <4.35}">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </c:if>
+                                    <c:if test="${truck.truckAVGStar >= 4.35 && truck.truckAVGStar <4.65}">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half"></i>
+                                    </c:if>
+                                    <c:if test="${truck.truckAVGStar >= 4.65 && truck.truckAVGStar <=5}">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </c:if>
+
 
                                 </div>
                             </div>
@@ -1360,16 +1597,16 @@
         position: absolute;
         top: 0;
         left: 0;
-        /*transform: scale(2) translateX(-75%) translateY(-75%) translateZ(0) rotate(-28deg);*/
+        transform: scale(2) translateX(-75%) translateY(-75%) translateZ(0) rotate(-28deg);
         transition: transform 2s cubic-bezier(0.23, 1, 0.32, 1);
         border-radius: 10px;
     }
     .item:hover:after {
-        /*transform: scale(2) translateX(0%) translateY(0%) translateZ(0) rotate(-28deg);*/
+        transform: scale(2) translateX(0%) translateY(0%) translateZ(0) rotate(-28deg);
         border-radius: 5px;
     }
     .item:hover .item-image{
-        /*transform: scale(1.2) translateZ(0);*/
+        transform: scale(1.2) translateZ(0);
         border-radius: 10px;
     }
     .item:hover .item-text{
@@ -1379,7 +1616,7 @@
     .item-image {
         height: auto;
         backface-visibility: hidden;
-        /*transform: translateZ(0);*/
+        transform: translateZ(0);
         transition: transform 750ms cubic-bezier(0.23, 1, 0.32, 1);
     }
     .item-image:before {
