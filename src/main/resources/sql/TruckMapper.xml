@@ -339,7 +339,9 @@
 	<update id="updateBusiStatus" parameterType="truck">
 		UPDATE truck
 		<set>
-			TRUCK_BUSI_STATUS = #{truckBusiStatus}
+			TRUCK_BUSI_STATUS = #{truckBusiStatus},
+		    TRUCK_MAP_LA = #{truckMapLa},
+		    TRUCK_MAP_LO = #{truckMapLo}
 		</set>
 
 		WHERE TRUCK_ID = #{truckId}

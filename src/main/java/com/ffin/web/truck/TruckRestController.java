@@ -322,28 +322,21 @@ public class TruckRestController {
     //영업중 모드 변경
     @RequestMapping( value = "json/updateBusiStatus", method = RequestMethod.POST)
     @ResponseBody
-    public ModelAndView updateBusiStatus(HttpSession session)throws Exception{
+    public ModelAndView updateBusiStatus(HttpSession session, @RequestParam("truckId") String truckId, @RequestParam("la") double la,@RequestParam("lo") double lo, @RequestParam("tb") String tb )throws Exception{
 
         System.out.println("json/updateBusiStatus POST");
 
         Truck truck = new Truck();
-
         truck = (Truck) session.getAttribute("truck");
 
-        int tb = Integer.parseInt(truck.getTruckBusiStatus());
-        String truckId = truck.getTruckId();
+        truck.setTruckMapLa(la);
+        truck.setTruckMapLo(lo);
+        truck.setTruckBusiStatus(tb);
 
-        System.out.println("tb = " + tb + "truckId = " + truckId );
-
-        if(tb==0){
-            truck.setTruckBusiStatus("1");
-        }else if(tb==1){
-            truck.setTruckBusiStatus("0");
-        }
         truckService.updateBusiStatus(truck);
 
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("/views/truck/updateBusiStatus.jsp");
+        ModelAndView mv = new ModelAndView("jsonView");
+
         return mv;
     }
 
