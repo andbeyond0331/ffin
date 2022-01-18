@@ -498,7 +498,7 @@
 
     /*이용자아이디 클릭시*/
     $("a#orderUserId.text-break").on("click", function () {
-        alert("dd")
+
         var orderNo = $(this).parent().find("input[name='orderNo']").val();
         var couponNo = 0;
         var pointNo = 0;
@@ -513,11 +513,9 @@
             success: function (data) {
 
                 if(data.purchase.payCouponNo==null){
-                alert(data.purchase.payCouponNo)
                 }else{
-                    alert("11111111212")
-                    couponNo = data.puchase.payCouponNo.couponNo
-                    alert(couponNo)
+
+                    couponNo = data.purchase.payCouponNo.couponNo
                 }
 
                 if(data.purchase.payPointNo == null){
@@ -612,15 +610,15 @@
                     }
 
                 orderMenuHidden = ""+
-                    "<input type='text' name='payId' id='payId' value='"+data.purchase.payId+"'>"+
-                    "<input type='text' name='purchaseOrder' id='purchaseOrder' value='"+data.purchase.orderNo+"'>"+
-                    "<input type='text' name='truck' value='"+data.purchase.orderTruckId.truckId+"'>"+
-                    "<input type='text' name='cookingTime' value='"+data.purchase.orderCookingTime+"'>";
+                    "<input type='hidden' name='payId' id='payId' value='"+data.purchase.payId+"'>"+
+                    "<input type='hidden' name='purchaseOrder' id='purchaseOrder' value='"+data.purchase.orderNo+"'>"+
+                    "<input type='hidden' name='truck' value='"+data.purchase.orderTruckId.truckId+"'>"+
+                    "<input type='hidden' name='cookingTime' value='"+data.purchase.orderCookingTime+"'>";
 
-                    pointNoCouponNo = "<input type='text' name='couponNo' value='"+couponNo+"'>"+
-                    "<input type='text' name='pointNo' value='"+pointNo+"'>";
+                    pointNoCouponNo = "<input type='hidden' name='couponNo' value='"+couponNo+"'>"+
+                    "<input type='hidden' name='pointNo' value='"+pointNo+"'>";
 
-
+                total = "<p class='text-end'>결제금액 : "+data.purchase.payPrice+"</p>";
                 $("#usId").html(usId);
                 $("#orNo").html(orNo);
                 $("#paDa").html(paDa);
@@ -647,22 +645,25 @@
                         console.log("처음 for문 안에 있다!");
                         console.log("처음 beforeAnywayFirst[" + i + "]번째 세션 : " + list[i]);
 
-                total = "<p class='text-end'>결제금액 : "+data.purchase.payPrice+"</p>";
+
 
                         if (list[i]['odMenuQtyFlag'] == 0) {//플래그0일 때 메뉴 수량, 이름 출력
 
 
                             /*수량 변경을 위해서 카운트추가*/
                             menuList += "" +
-                                "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
-                                "<button type='button' class='close' id='cancelMenu'>"+
-                                "<span aria-hidden='true'>&times;</span></button>"+
-                                "<div><h6 class=\"my-0\">" + list[i]['odMenuName'] + "</h6>" +
-                                "<h6 class=\"my-0\">수량 : <input type='button' class='my-11' value='-' id='decreaseQuantity'>" +
-                                "<input type='hidden' name='orderCount' value='"+i+"'>"+
-                                " <input type='text' id='numberUpDown' value='" + list[i]['odMenuQty'] + "' size='1' max=''> " +
-                                "<input type='button' value='+' id='increaseQuantity'> </h6>" +
-                                "";
+                                "<div class=\"card mb-3\">" +
+                            " <div class=\"row g-0\">" +
+                            "<div class=\"col-md-4\">" +
+                            "<img src=\"/resources/menu/"+list[i]['odMenuImage']+"\" class=\"img-fluid rounded-start\" alt=\"image\">" +
+                            "</div>" +
+                            "<div class=\"col-md-8\">" +
+                            "<div class=\"card-body\">" +
+                            "<h5 class=\"card-title\">" + list[i]['odMenuName'] ,list[i]['odMenuPrice'] + "</h5>" +
+                            "<p class=\"card-text\"><small class=\"text-muted\">수량 " +  list[i]['odMenuQty'] + "  :</small><br>" ;
+
+
+
 
                             if(totalPrice == undefined){
                                 totalPrice = Number(list[i]['odMenuPrice']);
@@ -672,25 +673,29 @@
                             forOneFirst += 1;
                             if (list[i + 1] != null) { //만약 다음 애가 있는데
                                 if (list[i + 1]['odMenuQtyFlag'] == 0) { //수량제공메뉴이면(지금 이게 수량제공메뉴란 소리니까 닫아줘야함)
-                                    menuList += "</div><span class=\"text-muted\">" + list[i]['odMenuPrice'] + "원</span></li>";
-                                }
+                                  /*  menuList += "</div><span class=\"text-muted\">" + list[i]['odMenuPrice'] + "원</span></li>";
+                               */ }
 
                             }
                         } else { //플래그 1일 때
                             // for(var j=i+1; j<beforeAnyway.length; j++){ //옵션그룹 화면에 뿌려주기 위한 for문 (수량제공메뉴+1부터
                             //     if(beforeAnyway[j]['odMenuQtyFlag']==1){
                             menuList += "" +
-                                "<p></p>" +
-                                "<input type='hidden' name='orderCancelCount' value='"+i+"'>"+
-                                "<small class=\"text-muted\">" + list[i]['odOptionGroupName'] + "</small> : " +
-                                "<small class=\"text-muted\">" + list[i]['odOptionName'] + "</small> +" +
-                                "<small class=\"text-muted\">" + list[i]['odOptionPrice'] + "원</small>";
+                                "<p class=\"card-text\"><small class=\"text-muted\">옵션 " + list[i]['odOptionGroupName'] + " :" + list[i]['odOptionName'] + "</small><br>" +
+                                "<small class=\"text-muted\">  가격 :" + list[i]['odOptionPrice'] + "원 </small></p>" ;
+
+
+
 
                             totalPrice = Number(totalPrice) + Number(list[i]['odOptionPrice']);
                             forOneFirst += 1;
                             if (list[i + 1] != null) {
                                 if (list[i + 1]['odMenuQtyFlag'] == 0) {
-                                    menuList += "</div><span class=\"text-muted\">" + list[i]['odMenuPrice'] + "원</span></li>";
+                                    menuList += "</div><span class=\"text-muted\">" + totalPrice + "원</span></li>"+
+                                        "</div>" +
+                                        "</div>" +
+                                        "</div>" +
+                                        "</div>"
                                 }
 
                             }
