@@ -227,7 +227,7 @@ public class PurchaseController {
         System.out.println("/purchase/addOrder : POST");
         //addOrder(),updateCouponStatus(),
         //       updatePoint (),updateTotalPoint ()
-
+        System.out.println("1111111111111111: "+purchase);
         purchaseService.updatePurchase(purchase);
         if (coupon.getCouponNo() != 0) {
             purchaseService.updateCouponStatus(coupon);
@@ -246,8 +246,9 @@ public class PurchaseController {
         //updatePoint메서드 두번을 사용한다 orderNo를 point정보에 넣어서 추후 환불시 거기에 맞게 로직
         //1번째는 point사용시 로지 2번째는 결제시 2%적립 되는로직 생각하자!!
 
-
+        System.out.println("22222222222"+purchase);
         Map map = purchaseService.getOrderDetail(purchase.getOrderNo());
+        System.out.println("3333333333"+map.get("list"));
         model.addAttribute(purchase);
 
 
@@ -259,13 +260,21 @@ public class PurchaseController {
     public ModelAndView getOrderUser(@ModelAttribute("purchase") Purchase purchase, @ModelAttribute("user") User user,
                                      @ModelAttribute("point") Point point, ModelAndView model) throws Exception {
 
-        System.out.println("/purchase/getOrderUser : POST");
+        System.out.println("/purchase/getOrderUser : POSTPOSTPOSTPOSTPOST");
 
+        System.out.println("4444444444444444"+purchase);
+        int payPrice = purchase.getPayPrice();
+        int payOption = purchase.getPayOption();
         purchase = purchaseService.getPurchase(purchase.getOrderNo());
+        purchase.setPayPrice(payPrice);
+        purchase.setPayOption(payOption);
+        purchase.setOrderStatus(1);
+        System.out.println("5555555555555555"+purchase);
         Map map = new HashMap();
         map = purchaseService.getOrderDetail(purchase.getOrderNo());
 
         System.out.println("map//////////" + map);
+        System.out.println("map.put "+map.get("list"));
         model.addObject("map", map);
         model.addObject("purchase", purchase);
         model.setViewName("forward:/views/purchase/getOrderUser.jsp");
@@ -316,13 +325,17 @@ public class PurchaseController {
     @RequestMapping(value = "getOrderUser", method= RequestMethod.GET)
     public ModelAndView getOrderUser(@RequestParam("orderNo") int orderNo, ModelAndView model,Purchase purchase) throws Exception {
 
-        System.out.println("/purchase/getOrderUser : GET");
+        System.out.println("/purchase/getOrderUser : GETGETGETGETGETGET");
 
         purchase.setOrderNo(orderNo);
             purchase = purchaseService.getPurchase(purchase.getOrderNo());
+
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println("ppppppppppppurchase11111 + "+purchase);
             Map map = new HashMap();
             map = purchaseService.getOrderDetail(purchase.getOrderNo());
 
+        System.out.println("map.get "+map.get("list"));
         System.out.println("map//////////"+map);
             model.addObject("map",map);
             model.addObject("purchase",purchase);

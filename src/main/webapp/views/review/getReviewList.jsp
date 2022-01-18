@@ -230,9 +230,9 @@
             let userId = $('input[name="userId"]').val();
 
             if(truckId!=null && truckId!=''){
-                $("form").attr("method" , "POST").attr("action" , "/review/getReviewListTruck").submit();
+                $("#getReviewList").attr("method" , "POST").attr("action" , "/review/getReviewListTruck").submit();
             }else if(userId!=null && userId!=''){
-                $("form").attr("method" , "POST").attr("action" , "/review/getReviewListUser").submit();
+                $("#getReviewList").attr("method" , "POST").attr("action" , "/review/getReviewListUser").submit();
             }
 
         }
@@ -517,11 +517,13 @@
 <div style="height: auto">
 <%--    <jsp:include page="/views/user/sidebar.jsp" />--%>
 </div>
-<input type="hidden" name="truckId" value="${truckId}">
-<input type="hidden" name="userId" value="${userId}">
-<input type="hidden" name="role" value="${sessionScope.role}">
 
-<section class="client_section layout_padding">
+
+<form class="client_section layout_padding" id="getReviewList">
+    <input type="hidden" name="truckId" value="${truckId}">
+    <input type="hidden" name="userId" value="${userId}">
+    <input type="hidden" name="role" value="${sessionScope.role}">
+    <input type="hidden" id="currentPage" name="currentPage" value=""/>
     <div class="container">
 
         <div class="col-md-11 col-lg-12 mx-auto">
@@ -724,6 +726,7 @@
 
         </div>
     </div>
+</form>
 <!--댓글달기-->
     <div class="modal fade" id="addTruckComment" tabindex="-1" aria-labelledby="addTruckComment" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">

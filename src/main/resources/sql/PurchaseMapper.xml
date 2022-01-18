@@ -574,7 +574,7 @@
         order by point_no) inner_table
         limit #{startRowNum}, #{pageSize}
     </select>
-    <select id="getPurchase" parameterType="purchase" resultMap="purchaseSelectMap">
+    <select id="getPurchase" parameterType="int" resultMap="purchaseSelectMap">
         SELECT p.order_no,
                p.order_user_id,
                p.order_truck_id,

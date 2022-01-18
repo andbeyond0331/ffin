@@ -1,5 +1,6 @@
 package com.ffin.web.menu;
 
+import com.ffin.common.Page;
 import com.ffin.common.Search;
 import com.ffin.service.domain.Menu;
 import com.ffin.service.menu.MenuService;
@@ -7,6 +8,7 @@ import com.ffin.service.truck.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -206,6 +208,34 @@ public class MenuRestController {
 
 
 
+
+        return mv;
+    }
+
+    // 트럭 리스트 - 전체
+    @RequestMapping(value = "json/getTruckList")
+    @ResponseBody
+    public ModelAndView getTruckList (@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+//    public String getTruckList(@RequestParam(value="cateCondition", required = false) String cateCondition, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+
+        int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+        System.out.println("currentPage : "+currentPage);
+
+        search.setCurrentPage(currentPage);
+        search.setPageSize(pageSize);
+
+
+        // Business logic 수행
+        Map<String, Object> map = truckService.getTruckList(search);
+
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+        System.out.println(resultPage);
+
+
+        ModelAndView mv = new ModelAndView("jsonView");
+        mv.addObject("list", map.get("list"));
+        mv.addObject("resultPage", resultPage);
+        mv.addObject("search", search);
 
         return mv;
     }
