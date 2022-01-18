@@ -31,7 +31,7 @@
         //============= "작성완료"  Event 연결 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $("button.btn.btn-secondary").on("click", function () {
+            $("#addPostView").on("click", function () {
                 fncAddPost();
             });
         });
@@ -39,7 +39,7 @@
         //============= "취소"  Event 처리 및  연결 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $("button.btn.btn-warning").on("click", function () {
+            $("button.btn.btn-cancle").on("click", function () {
                 self.location = "/community/getPostList"
             });
         });
@@ -218,8 +218,8 @@
     <br/>
     <div class="form-group">
     <div class="offset-3 col-sm-6 text-center">
-    <button type="button" class="btn btn-secondary">작 성 완 료</button>
-    <button class="btn btn-warning" type="button">취 소</button>
+    <button type="button" class="btn btn-default" id="addPostView">작 성 완 료</button>
+    <button class="btn btn-cancle" type="button">취 소</button>
     </div>
     </div>
     </form>

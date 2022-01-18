@@ -234,8 +234,8 @@
                                 <input type="password" class="form-control" id="truckPassword">
                             </div>
                             <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="autoLoginTruck">
-                                <label class="form-check-label" for="autoLoginTruck">자동로그인</label>
+<%--                                <input type="checkbox" class="form-check-input" id="autoLoginTruck">--%>
+<%--                                <label class="form-check-label" for="autoLoginTruck">자동로그인</label>--%>
                                 <a class="findTruckId" style="color: #ffba49; margin-left: 5px; font-size: 14px;" onclick="findTruck()">
                                     <strong style="float: right; stroke: #ffba49; margin-right: 5px; margin-top: 2px;">ID/PW 찾기</strong>
                                 </a>
