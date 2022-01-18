@@ -114,14 +114,21 @@ public class CommunityController {
 
         /* HHJ 추가 */
         String role = (String)session.getAttribute("role");
+
         String id="";
         if (role == "user" || role.equals("user")){
+
             id = ((User) session.getAttribute("user")).getUserId();
+
         }else if(role == "truck" || role.equals("truck")){
+
             id = ((Truck) session.getAttribute("truck")).getTruckId();
+
         }
 
-        Post post = communityService.getPost(postNo);
+        Post post = communityService.getCardDetail(id, role, postNo);
+
+       // Post post = communityService.getPost(postNo);
        //Post post = communityService.getCardDetail(id, role, postNo);
 
         System.out.println("post = " + post);
@@ -130,14 +137,16 @@ public class CommunityController {
                 User user = (User) userService.getUser(post.getPostUser().getUserId());
                 String postUserProImg = user.getUserProImg();
                 System.out.println("postUserProImg = " + postUserProImg);
-                session.setAttribute("userProImg", postUserProImg);
-                System.out.println("session에 담긴 postUserProImg = " + postUserProImg);
+                //session.setAttribute("userProImg", postUserProImg);
+               // System.out.println("session에 담긴 postUserProImg = " + postUserProImg);
+                post.setUserProImg(postUserProImg);
             } else if (post.getPostTruck() != null) {
                 Truck truck = (Truck) truckService.getTruck(post.getPostTruck().getTruckId());
                 String postTruckProImg = truck.getTruckProImg();
-                session.setAttribute("truckProImg", postTruckProImg);
-                System.out.println("postTruckProImg = " + postTruckProImg);
-                System.out.println("session에 담긴 postTruckProImg = " + postTruckProImg);
+                //session.setAttribute("truckProImg", postTruckProImg);
+                //System.out.println("postTruckProImg = " + postTruckProImg);
+                //System.out.println("session에 담긴 postTruckProImg = " + postTruckProImg);
+                post.setTruckProImg(postTruckProImg);
             }
         }catch (Exception e){
             e.printStackTrace();

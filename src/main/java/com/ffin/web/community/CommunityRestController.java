@@ -1,5 +1,7 @@
 package com.ffin.web.community;
 
+import com.ffin.common.Page;
+import com.ffin.common.Search;
 import com.ffin.service.community.CommunityService;
 import com.ffin.service.domain.*;
 import com.ffin.service.truck.TruckService;
@@ -549,5 +551,47 @@ public ModelAndView addHeartTruck(@RequestParam String truckId, HttpSession sess
         return mv;
 
     }
+
+    @RequestMapping(value = "json/getPostList2")
+    public ModelAndView getPostList2(@ModelAttribute("search") Search search, Model model, HttpServletRequest request, HttpSession session) throws Exception {
+
+
+        int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+        System.out.println("currentPage : "+currentPage);
+
+        search.setCurrentPage(currentPage);
+        search.setPageSize(pageSize);
+
+        String role = (String)session.getAttribute("role");
+        String id= "";
+        if (role == "user" || role.equals("user")){
+
+            id =((User) session.getAttribute("user")).getUserId();
+
+        }else if(role == "truck" || role.equals("truck")){
+
+            id = ((Truck)session.getAttribute("truck")).getTruckId();
+
+        }
+
+        String cate = "p"; //게시판 구분
+
+        // Business Logic 수행
+        Map<String, Object> map = communityService.getPostList2(search, id, role);
+
+
+
+        Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+        System.out.println(resultPage);
+        //  Model 과 View 연결
+        ModelAndView mv = new ModelAndView("jsonView");
+        mv.addObject("list", map.get("list"));
+        mv.addObject("resultPage", resultPage);
+        mv.addObject("search", search);
+
+        return mv;
+
+    }
+
 
 }

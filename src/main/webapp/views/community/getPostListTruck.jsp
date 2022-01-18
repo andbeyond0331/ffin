@@ -861,9 +861,7 @@
 
 </form>
 
-<!-- PageNavigation Start... -->
-<jsp:include page="../../common/pageNavigator.jsp"/>
-<!-- PageNavigation End... -->
+
 <script type="text/javascript">
     var role =  '${sessionScope.role}';
     var proImg;
@@ -894,6 +892,134 @@
 
 
     });
+
+
+
+
+
+    /* 무한스크롤 */
+    let isEnd = false; // 다 불러왔을 때 더이상 노출 되지 않기 위함
+    var page=2;
+    var roleUT = '${sessionScope.role}';
+
+
+
+    $(window).scroll(function(){
+
+        let $window = $(this);
+        let scrollTop = $window.scrollTop();
+        let windowHeight = $window.height();
+        let documentHeight = $(document).height();
+
+        //console.log("documentHeight:" + documentHeight + " | scrollTop:" + scrollTop + " | windowHeight: " + windowHeight );
+
+        // scrollbar의 thumb가 바닥 전 30px까지 도달 하면 리스트를 가져온다.
+        //if( scrollTop + windowHeight + 30 > documentHeight ){
+        //if ($(window).scrollTop()  == $(document).height() - $(window).height()) {
+
+
+        // 이게 '카드' 사이즈에서 가장 잘 먹혔던 무한스크롤임 근데 나는 이걸 망해버렷다
+        // var isBottom =  (window.innerHeight + window.scrollY) >= document.body.offsetHeight; // 바닥
+
+        // 현재 카드 길이에서는 이게 제일 잘먹는다~~~
+        // var isBottom =  scrollTop + windowHeight + 30 > documentHeight
+        var isBottom =  (window.innerHeight + window.scrollY) >= document.body.offsetHeight; // 바닥
+        //var isBottom = $(window).scrollTop()  == $(document).height() - $(window).height()
+
+        if (isBottom) {
+            if(isEnd===true || isEnd){
+                return;
+            }
+            isEnd = true; // 스크롤시 무한대로 함수 호출하는것을 막기 위함
+            /* 마지막에 한 번 더 호출하는 현상이 있어서 수정 필요.. 그치만 무한대로 호출은 안하쟈나..?..헤헤..히..ㅠ.... */
+
+            loadList();
+        }
+    })
+    // loadList();
+
+
+
+
+    var loadList = function(){
+        /* if(isEnd === true){
+             return;
+         }*/
+        console.log("야야ㅑ")
+        $.ajax({
+
+            url : "/community/json/getPostList2",
+            method : "POST",
+            dataType : "json",
+            data : { currentPage : page
+            },
+
+            //contentType:"application/json;charset=UTF-8",
+            contentType: "application/x-www-form-urlencoded;",
+            success : function(jsonData) {
+
+                page++;
+                var list = jsonData.list;
+                console.log("list: "+list)
+                let length = list.length;
+
+                console.log("length: "+length)
+                for(var i=0; i<list.length; i++){
+                    var div="";
+
+
+
+                    div += "<div class='gallery-item' tabindex='0'>";
+                        if ( list[i].secretKey == 1){
+
+                        div +=  "<img src='../../../resources/image/"+list[i].postFile1+"' class='gallery-image' alt='' style='-webkit-filter: grayscale(100%);' >";
+                        }else{
+
+                            div +=  "<img src='../../../resources/image/"+list[i].postFile1+"' class='gallery-image' alt='' >";
+                        }
+                   div += " <input type='hidden' id='postNoNo' name='postNoNo' value='"+list[i].postNo+"'/>"
+                    +"<input type='hidden' id='postS' name='postS' value='"+list[i].secretKey+"'/>"
+                    +"<div class='gallery-item-info'>"
+                       + "<ul style='padding: 0;'>"
+                            +"<li class='gallery-item-likes'><span class='visually-hidden'>Likes:</span><i class='fas fa-heart' aria-hidden='true'></i> <span id='heart"+list[i].postNo+"'>"+list[i].heartCount+"</span></li>"
+                            +"<li class='gallery-item-comments'><span class='visually-hidden'>Comments:</span><i class='fas fa-comment' aria-hidden='true'></i> <span id='reply"+list[i].postNo+"'>"+list[i].replyCount+"</span></li>"
+                            +"<li class='gallery-item-Hits'><span class='visually-hidden'>Hits:</span><i class='fas fa-eye' aria-hidden='true'></i> <span id='hit"+list[i].postNo+"'>"+list[i].postHit+"</span></li>"
+                        +"</ul>"
+                   +" </div>"
+              + " </div>";
+
+
+                    $('.gallery').append(div);
+                    if( length < 6 ){
+                        isEnd = true;
+                        // return;
+                    }
+                    isEnd=false;
+
+                }
+
+
+
+            },
+
+            error : function() {
+
+                alert("1에러가 발생하였습니다.")
+
+            },
+
+        });
+
+
+    }
+
+
+
+
+
+
+
+
     //todo: HHJ 삭제된 댓글입니다 -> 이거 아래의 댓글 다 사라지면 이 댓글도 사라지게 해
     $("body").on("click", ".gallery-item", function() {
 
@@ -1012,7 +1138,7 @@
                             listHtml += "		<img class='reply_list_profileImage' src='../../../resources/image/"+userProImg+"'/>";
                             listHtml += "	</div>";
                             listHtml += "	<div class='rereply-content"+ commentNo +" col-7'>";
-                            listHtml += "		<div>";
+                            listHtml += "		<div class='rereply-content col-8'>";
                             listHtml += "			<span>";
                             listHtml += "				<b style='margin-left: 5px;'>"+ commentUserId +"</b>";
                             listHtml += "			</span>";
@@ -1134,6 +1260,10 @@
     const WriteReReply = function(bno,no) {
 
 
+        var modal = $('#staticBackdrop');
+        var uid = modal.find("input[name='uid']").val()
+
+        console.log("uid: "+uid);
         console.log(bno);
         console.log(no);
 
@@ -1173,6 +1303,16 @@
                     $('#reply'+bno).text(reply);
 
                     console.log("답글 작성 성공");
+
+                   /* // socket 알림
+                    console.log("purchase.socket::::" + socket);
+                    if(socket) {
+                        // websocket에 보내기!!! (message, 보내는이, 받는이)
+                        let socketMessage = "post,"+orderUserId+","+orderTruckId+","+orderTruckId;
+                        console.log("socketM::::" + socketMessage);
+                        socket.send(socketMessage);
+                    }*/
+
 
                     // 게시물 번호(bno)에 해당하는 댓글리스트를 새로 받아오기
                     ReplyList(bno);
@@ -1456,6 +1596,7 @@
 
     $("body").on("click", ".write_reply", function() {
         var modal = $('#staticBackdrop');
+        var recvid = modal.find("input[name='uid']").val()
         // 게시물 번호
         let postNo = $(this).attr('idx');
         console.log("postNo: "+postNo)
@@ -1467,6 +1608,7 @@
         commentContent = commentContent.trim();
 
         console.log(commentContent);
+
 
         if(commentContent == ""){	// 입력된게 없을때
             alert("글을 입력하세요!");
@@ -1492,7 +1634,15 @@
                     $('#reply'+postNo).text(reply);
 
                     console.log("댓글 작성 성공");
+                     // socket 알림
+                  console.log("post.socket::::" + socket);
 
+                  if(socket) {
+                      // websocket에 보내기!!! (message, 보내는이, 받는이)
+                      let socketMessage = "post,"+uId+","+recvid+","+postNo;
+                      console.log("socketM::::" + socketMessage);
+                      socket.send(socketMessage);
+                  }
                     // 댓글리스트를 새로 받아오기
                     ReplyList(postNo);
                 },
@@ -1615,7 +1765,11 @@
                     +" </div>"
                     +" </section>"
                     +"</div>";
-
+                if (data.post.postTruck == null){
+                    div += "<input type='hidden' name='uid' value='"+data.post.postUser.userId+"'/>";
+                }else{
+                    div += "<input type='hidden' name='uid' value='"+data.post.postTruck.truckId+"'/>";
+                }
 
                 if (role == "user"){
 

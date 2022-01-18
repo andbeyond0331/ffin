@@ -478,8 +478,8 @@
         </if>
 
 
-        order by order_no) inner_table
-        limit 0,8;
+        order by order_no desc) inner_table
+        limit 0,15;
 
     </select>
 
