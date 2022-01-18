@@ -131,7 +131,7 @@
 
                     <%--            <div class="col-sm-offset-4  col-sm-4 text-center">--%>
                 <c:if test="${cart.odMenuQty ne 0}">
-                    <span class="odMenuImages"><img src="/resources/image/${cart.odMenuImage}" class="star-rating"
+                    <span class="odMenuImages"><img src="/resources/menu/${cart.odMenuImage}" class="star-rating"
                                                     alt="image"></span>
                     <span class="odMenuName">${cart.odMenuName}</span>
                     <span class="odMenuQty">${cart.odMenuQty}개</span>

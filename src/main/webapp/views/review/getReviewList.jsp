@@ -30,6 +30,45 @@
     <meta name="msapplication-TileImage" content="../../resources/bootstrap/assets/favicons/mstile-150x150.png">
     <meta name="theme-color" content="#ffffff">
 
+    <%--별점 구현--%>
+
+    <style>
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+            justify-content: space-around;
+            padding: 0 0.2em;
+            text-align: center;
+            width: 5em;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+            -webkit-text-stroke-width: 1.5px;
+            -webkit-text-stroke-color: #2b2a29;
+            cursor: pointer;
+        }
+
+        .star-rating :checked ~ label {
+            -webkit-text-fill-color: gold;
+        }
+
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            -webkit-text-fill-color: #fff58c;
+        }
+        .text-center{
+            display: flex
+        }
+
+    </style>
+
     <style>
 
         .search{
@@ -407,8 +446,13 @@
                                     + "</div>";
                             }else if(role=='user'){
                                 display += "<div class='d-grid gap-2 col-6 mx-auto' style='margin: 0 55px 0 55px;'>"
-                                    + "<button class='btn btn-sm ansBtn' type='button' onclick='closeAjax()' style='background: #ecf0fd; color: #000000'>확인</button>"
+                                    + "<button class='btn btn-sm ansBtn' type='button' onclick='closeAjax()' style='background: #ecf0fd; color: #000000'>확인</button>";
 
+                                display +=""+
+                                     "<button class='btn btn-default btn-sm' data-bs-toggle='modal' data-bs-target='#updateReview' onclick='updateReviewUpdate("+Data.review.rvNo+")' type='button' style='color: #000000'>수정하기</button>"
+                                    + "</div>"
+                                    + "</div>"
+                                    + "</div>"
                                     + "</div>";
                             }
 
@@ -430,6 +474,7 @@
                                         + "</div>";
                                 }else if(role=='user'){
                                     display+=""
+                                        + "<button class='btn btn-default btn-sm' data-bs-toggle='modal' data-bs-target='#updateReview' onclick='updateReviewUpdate("+Data.review.rvNo+")' type='button' style='color: #000000'>수정하기</button>"
                                         + "</div>"
                                         + "</div>"
                                         + "</div>"
@@ -466,7 +511,7 @@
                      $('#hiddenRvNo').val(rvNo);
 
 
-                    div += "<div class='row rvContent' >"
+                    div += "<div class='row rvContent' style='justify-content: center;'>"
                         +"<div>"+data.review.rvContent+"</div>"
                         + "</div>"+"<div class='align-test'>";
 
@@ -481,6 +526,7 @@
         //사장님댓글 수정
         function updateReviewUpdate(rvNo) {
 
+            var role = $('input[name="role"]').val();
 
 
             $.ajax({
@@ -491,9 +537,11 @@
                     var modalFooter = "";
                     // var hit = data.post.postHit;
                      $('#hiddenRvNoNo').val(rvNo);
+                     $('#hiddenRvNoNoNo').val(rvNo);
 
 
-                    div += "<div class='row rvContent' >"
+
+                    div += "<div class='row rvContent' style='justify-content: center;' >"
                         +"<div>"+data.review.rvContent+"</div>"
                         + "</div>"+"<div class='align-test'>";
                     $('#updateTruckCmtContent.form-control').text(data.review.rvTruckCmtContent);
@@ -504,8 +552,21 @@
                 }
 
             })
-            $('#updateTruckComment').modal('show');
+
+            //
+            if(role=='truck') {
+                $('#updateTruckComment').modal('show');
+            }else{
+                $('#updateUserReview').modal('show');
+            }
+
+
+
+
+
         }
+
+
 
     </script>
 
@@ -783,9 +844,61 @@
             </div>
         </div>
     </div>
+    <!--수정하기 - user-->
+    <div class="modal fade" id="updateUserReview" tabindex="-1" aria-labelledby="updateUserReview" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateUserReviewModalLabel">리뷰 수정</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="hiddenRvNoNoNo" name ="hiddenRvNoNoNo" value="">
+                    <form style="text-align: left;">
+                        <div class="mb-3 truckUpdate">
+                            <label for="updateTruckCommentTitle" class="col-form-label">리뷰 정보</label>
+                            <input type="text" class="form-control" id="updateUserReviewTitle">
+                        </div>
+                        <div class="mb-3">
+                            <div class="col">
+                                <%--                <input type="text" class="form-control" id="rvStar" name="rvStar" value="${review.rvStar }" placeholder="리뷰 별점을 입력하세요.">--%>
+                                <div class="star-rating space-x-4 mx-auto">
+                                    <input type="hidden" name="ssttaarr" value=""/>
+                                    <input type="radio" id="5-stars" name="rvStar" value="5"/>
+                                    <label for="5-stars" class="star pr-4">★</label>
+                                    <input type="radio" id="4-stars" name="rvStar" value="4"/>
+                                    <label for="4-stars" class="star">★</label>
+                                    <input type="radio" id="3-stars" name="rvStar" value="3"/>
+                                    <label for="3-stars" class="star">★</label>
+                                    <input type="radio" id="2-stars" name="rvStar" value="2"/>
+                                    <label for="2-stars" class="star">★</label>
+                                    <input type="radio" id="1-star" name="rvStar" value="1"/>
+                                    <label for="1-star" class="star">★</label>
+                                </div>
+                            </div>
+                            <label for="updateTruckCmtContent" class="col-form-label">리뷰 변경 내용</label>
+                            <textarea class="form-control" id="updateReviewContent"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-default btn-sm" id="updateReview">리뷰 수정</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <script>
+
+    $(function(){
+        $('input[name="rvStar"]').on("click", function(){
+            var star = $(this).val();
+            console.log("star : "  + star);
+            $('input[name="ssttaarr"]').val(star);
+        })
+    })
 
     /* 사장님 댓글 등록 */
     $(function () {
@@ -799,6 +912,7 @@
 
             console.log(rvNo);
             console.log(rvTruckCmtContent);
+
 
             $.ajax({
 
@@ -847,6 +961,46 @@
                 data : {
                     rvNo : rvNo,
                     rvTruckCmtContent : rvTruckCmtContent
+                },
+                success : function (data){
+                    console.log(data);
+                    window.location.reload();
+                }
+            });
+        });
+    });
+
+
+
+    /* 리뷰 수정 */
+    $(function () {
+
+        $('#updateReview').click(function () {
+
+
+
+            var rvNo = $('#hiddenRvNoNoNo').val();
+            var rvContent = $('#updateReviewContent').val();
+            var rvStar = $('input[name="ssttaarr"]').val();
+
+
+            console.log(rvNo);
+            console.log(rvContent);
+            console.log(rvStar);
+
+            $.ajax({
+
+                url : "/review/json/updateReview",
+                method : "POST",
+                dataType: "json",
+                header : {
+                    "Accept" : "application/json",
+                    "Content-Type" : "application/json"
+                },
+                data : {
+                    rvNo : rvNo,
+                    rvContent : rvContent,
+                    rvStar : rvStar
                 },
                 success : function (data){
                     console.log(data);

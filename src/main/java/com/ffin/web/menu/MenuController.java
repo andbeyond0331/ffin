@@ -13,13 +13,9 @@ import com.ffin.service.truck.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -267,11 +263,7 @@ public class MenuController {
 
         ////
         String root_path = request.getSession().getServletContext().getRealPath("/");
-//        String attach_path = "menu/";
 
-
-
-//        String realPath = request.getSession().getServletContext().getRealPath(FILE_UPLOAD_PATH);
         System.out.println("//////////////////////////////////////attach_path : " + root_path);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -283,8 +275,6 @@ public class MenuController {
 
     @Transactional(rollbackFor = Exception.class) //menu만 들어가고 optionGroup은 들어가지 않는 상황 방지
     @RequestMapping(value="addMenuOptionGroup", method=RequestMethod.POST)
-//    public String addMenuOptionGroup(HttpServletRequest request,@ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
-//    public String addMenuOptionGroup(HttpServletRequest request,MultipartHttpServletRequest mtfRequest, @ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
     public String addMenuOptionGroup
             (@RequestParam("menuImg11")MultipartFile file1,
              @RequestParam("menuImg22")MultipartFile file2,
@@ -293,29 +283,21 @@ public class MenuController {
              @ModelAttribute("optionGroup")OptionGroup optionGroup,
              @ModelAttribute("menu") Menu menu,
              Model model) throws Exception{
-//    public String addMenuOptionGroup(@RequestParam("menuImg1")MultipartFile file1,@RequestParam(value="menuImg2", required = false)MultipartFile file2,@RequestParam(value="menuImg3", required = false)MultipartFile file3,HttpServletRequest request,@ModelAttribute("optionGroup")OptionGroup optionGroup, @ModelAttribute("menu") Menu menu, Model model) throws Exception{
-   // public String addMenuOptionGroup(@ModelAttribute("optionGroup")OptionGroup optionGroup, Model model) throws Exception{
-//    public String addMenuOptionGroup(HttpServletRequest request, Model model) throws Exception{
 
         System.out.println("/menu/addMenuOptionGroup:POST");
 
         System.out.println("optionGroup = " + optionGroup + ", menu = " + menu + ", model = " + model);
 
         String realPath = request.getSession().getServletContext().getRealPath("/resources/menu");
-//        String realPath = "/resources/menu";
 
         String menuImg1  = file1.getOriginalFilename();
-
         String menuImg2  = file2.getOriginalFilename();
         String menuImg3  = file3.getOriginalFilename();
 
-//        String root_path = request.getSession().getServletContext().getRealPath("/");
         System.out.println("/////////realPath : " + realPath);
 
         if(!file1.getOriginalFilename().isEmpty()){
             file1.transferTo(new File(realPath, menuImg1));
-//            model.addAttribute("msg", "File uploaded successfully.");
-//            model.addAttribute("menuImg1", menuImg1);
         }
 
         menu.setMenuImg1(file1.getOriginalFilename());
@@ -323,40 +305,26 @@ public class MenuController {
 
         if(!file2.getOriginalFilename().isEmpty()){
             file2.transferTo(new File(realPath, menuImg2));
-//            model.addAttribute("msg", "File uploaded successfully.");
-//            model.addAttribute("menuImg2", menuImg2);
-//        }else {
-//            model.addAttribute("msg", "Please select a valid mediaFile..");
         }
         menu.setMenuImg2(file2.getOriginalFilename());
 //
         if(!file3.getOriginalFilename().isEmpty()){
             file3.transferTo(new File(realPath, menuImg3));
-//            model.addAttribute("msg", "File uploaded successfully.");
-//            model.addAttribute("menuImg3", menuImg3);
-//        }else {
-//            model.addAttribute("msg", "Please select a valid mediaFile..");
         }
         menu.setMenuImg3(file3.getOriginalFilename());
 
 
-//        //경로 생성
-//        if (! new File(FILE_UPLOAD_PATH).exists()){
-//            new File(FILE_UPLOAD_PATH).mkdirs();
-//        }
-//        //파일 복사
-//        try{
-//            FileCopyUtils.copy(file.getBytes(), target);
-//            model.addAttribute("file", file);
-//        }catch(Exception e){
-//            e.printStackTrace();
-//            model.addAttribute("file", "error");
-//        }
-
-//        //대표메뉴 로직
+        //대표메뉴 로직 - daoImpl에서 처리
 //        if(menu.getIsSigMenu()==0){
 //
 //        }else{
+//
+//        }
+        //트럭 대표메뉴 건드리기 - daoImpl에서 처리
+//        if(menu.getIsSigMenu()==0){
+//
+//        }else{
+//            Truck truck = truckService.getTruck(menu.getMenuTruckId());
 //
 //        }
 
@@ -445,13 +413,14 @@ public class MenuController {
 
 
 
-        model.addAttribute("menu", menu);
-        model.addAttribute("menuNo", menuNo);
+
+//        model.addAttribute("menu", menu);
+//        model.addAttribute("menuNo", menuNo);
         model.addAttribute("truckId", menu.getMenuTruckId());
 
         System.out.println("model 확인 : " + model);
 
-        return "redirect:/views/menu/getMenuListM.jsp";
+        return "redirect:/menu/getMenuListM";
 
     }
 
@@ -516,13 +485,13 @@ public class MenuController {
         System.out.println("menuNo : " + menuNo);
 
 
-        model.addAttribute("menu", menu);
+//        model.addAttribute("menu", menu);
         model.addAttribute("truckId", menu.getMenuTruckId());
 
         System.out.println("model 확인 : " + model);
 
 
-        return "redirect:/views/menu/getMenuListM.jsp";
+        return "redirect:/menu/getMenuListM";
 
     }
 
@@ -588,6 +557,7 @@ public class MenuController {
         model.addAttribute("menu", menu);
         model.addAttribute("menuNo", menuNo);
         model.addAttribute("list", optionGroup.get("list"));
+
         // for문을 돌리기 위한 list하나 더! 제발 돌아라
 //        model.addAttribute("list2", optionGroup.get("list"));
 //
@@ -698,15 +668,16 @@ public class MenuController {
         }
 
 
-        model.addAttribute("menu", menu1);
-        model.addAttribute("optionGroupList", optionGroupList);
+//        model.addAttribute("menu", menu1);
+//        model.addAttribute("optionGroupList", optionGroupList);
 //        model.addAttribute("menuNo", menuNo);
+        model.addAttribute("truckId", menu.getMenuTruckId());
 
         System.out.println("model 확인 : " + model);
 
 
 
-        return "redirect:/menu/getMenu?menuNo="+menu.getMenuNo();
+        return "redirect:/menu/getMenuListM";
 
     }
 
@@ -762,14 +733,15 @@ public class MenuController {
 //        optionGroup.setMenuNo(menuNo);Gksmfchlrh0331)
 
 
-        model.addAttribute("menu", menu);
+//        model.addAttribute("menu", menu);
 //        model.addAttribute("menuNo", menuNo);
+        model.addAttribute("truckId", menu.getMenuTruckId());
 
         System.out.println("model 확인 : " + model);
 
 
 
-        return "redirect:/menu/getMenu?menuNo="+menu.getMenuNo();
+        return "redirect:/menu/getMenuListM";
 
     }
 

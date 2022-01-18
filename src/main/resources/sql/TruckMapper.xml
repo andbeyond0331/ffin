@@ -335,6 +335,16 @@
 		WHERE truck_id = #{truckId}
 	</update>
 
+	<!--영업모드변경-->
+	<update id="updateBusiStatus" parameterType="truck">
+		UPDATE truck
+		<set>
+			TRUCK_BUSI_STATUS = #{truckBusiStatus}
+		</set>
+
+		WHERE TRUCK_ID = #{truckId}
+	</update>
+
 	<!-- 사업자 회원탈퇴 -->
 	<update id="byeTruck" parameterType="truck">
 		UPDATE truck
@@ -396,4 +406,25 @@
 		HAVING t.truck_id = #{truckId}
 
 	</select>
+
+	<!-- 트럭 대표메뉴 바꾸기 -mj-->
+	<update id="updateTruckSigMenu" parameterType="truck">
+		UPDATE truck
+		<set>
+			truck_sig_menu_no = #{truckSigMenuNo},
+			truck_sig_menu_name = #{truckSigMenuName}
+			truck_sig_menu_img1 = #{truckSigMenuImg1}
+			truck_sig_menu_price = #{menu_price}
+		</set>
+		WHERE truck_id = #{truckId}
+	</update>
+
+	<!-- 트럭 평균 별점 바꾸기 -mj-->
+	<update id="updateTruckAVGStar" parameterType="truck">
+		UPDATE truck
+		<set>
+			truck_avg_star = #{truckAVGStar}
+		</set>
+		WHERE truck_id = #{truckId}
+	</update>
 </mapper>
