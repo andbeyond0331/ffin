@@ -45,13 +45,30 @@
     <!-- 구글 리캡차 -->
     <script src='https://www.google.com/recaptcha/api.js'></script>
 
+    <script src="/scripts/vendor/jquery.fancybox.min.js"></script>
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="../../resources/bootstrap/css/bootstrap.css" />
+    <!-- Custom styles for this template -->
+    <link href="../../resources/bootstrap/css/style.css" rel="stylesheet" />
+
+    <!--    Favicons-->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../resources/bootstrap/assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../resources/bootstrap/assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../resources/bootstrap/assets/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../resources/bootstrap/assets/favicons/favicon.ico">
+    <link rel="manifest" href="../../resources/bootstrap/assets/favicons/manifest.json">
+    <meta name="msapplication-TileImage" content="../../resources/bootstrap/assets/favicons/mstile-150x150.png">
+    <meta name="theme-color" content="#ffffff">
+
+
+
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
     <script type="text/javascript">
 
         //============= "가입"  Event 연결 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $("button.btn.btn-default.addTBtn").on("click", function () {
+            $("#addTBtn").on("click", function () {
                 fncAddTruck();
             });
         });
@@ -443,7 +460,7 @@
             <div class="col-md-3" style="text-align: end;">
             <strong for="truckAddrDetail" class="col-sm-offset-1 col-sm-3 control-label">주소 상세</strong>
             </div>
-            <div class="col-sm-6"><input type="text" class="form-control w-50" id="truckAddrDetail"
+            <div class="col-sm-6"><input type="text" class="form-control w-75" id="truckAddrDetail"
                                          name="truckAddrDetail" placeholder="주소 상세"/>
             </div>
         </div>
@@ -653,7 +670,7 @@
         <br/>
             <div class="form-group join-layout" align="center">
             <div class="col-sm-offset-1  col-sm-4 text-center">
-                <button type="button" class="btn btn-default addTBtn">가 입</button>
+                <button type="button" class="btn btn-default" id="addTBtn">가 입</button>
                 <button type="button" class="btn btn-cancle">취 소</button>
             </div>
         </div>

@@ -139,7 +139,7 @@
         //============= "글쓰기"  Event  처리 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $("button.btn.btn-primary").on("click", function () {
+            $("#addPost").on("click", function () {
                 self.location = "/views/community/addPostView.jsp";
             });
         });
@@ -238,7 +238,7 @@
                     </form>
                 </div>
                     <div class="col-md-2 button-pull-right" style="display: flex; align-items: center ">
-                        <button type="button" class="btn btn-primary" style="margin-bottom:5px ">게시글 작성</button>
+                        <button type="button" class="btn btn-default" style="margin-bottom:5px " id="addPost">게시글 작성</button>
                     </div>
 
             </div>
