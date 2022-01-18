@@ -380,7 +380,7 @@
                   <div class="postcard__preview-txt"><h6>${orderDetail.odOrderNo.payPrice}&nbsp;₩</h6></div>
 
                   <ul class="postcard__tagbox">
-                    <li class="tag__item orderBtn"><a href="/user/getPurchaseByUser?orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-tag mr-2"></i>주문상세</a></li>
+                    <li class="tag__item orderBtn"><a href="/purchase/getOrderUser?orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-tag mr-2"></i>주문상세</a></li>
                     <c:if test="${orderDetail.odOrderNo.orderStatus eq 4 }">
                     <li class="tag__item reviewBtn">
                       <a href="/review/addReview?orderNo=${orderDetail.odOrderNo.orderNo}"><i class="fas fa-clock mr-2"></i>리뷰작성</a>
