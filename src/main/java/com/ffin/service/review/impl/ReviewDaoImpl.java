@@ -30,7 +30,8 @@ public class ReviewDaoImpl implements ReviewDao {
 
     @Override
     public void addReview(Review review) throws Exception {
-
+        sqlSession.insert("ReviewMapper.addReview", review);
+        
         Map<String, Object> map = new HashMap<String, Object>();
 
         String truckId = review.getRvTruckId();
@@ -63,7 +64,7 @@ public class ReviewDaoImpl implements ReviewDao {
         sqlSession.update("PurchaseMapper.updateOrderStatusReview", purchase);
 
 
-        sqlSession.insert("ReviewMapper.addReview", review);
+
     }
 
     //delete와 update를 위한 get
@@ -178,6 +179,9 @@ public class ReviewDaoImpl implements ReviewDao {
 
     @Override
     public void updateReview(Review review) throws Exception {
+
+        sqlSession.update("ReviewMapper.updateReview",review);
+
         Map<String, Object> map = new HashMap<String, Object>();
 
         String truckId = review.getRvTruckId();
@@ -202,7 +206,9 @@ public class ReviewDaoImpl implements ReviewDao {
         truck.setTruckAVGStar(avg);
         sqlSession.selectOne("TruckMapper.updateTruckAVGStar",truck);
 
-        sqlSession.update("ReviewMapper.updateReview",review);
+        System.out.println("truck truckId, truckAVGStar = " + truck);
+
+
     }
 
     @Override
