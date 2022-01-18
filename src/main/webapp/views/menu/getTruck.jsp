@@ -1246,11 +1246,11 @@
 
 
 
-        // 별점 출력
-        function ratingToPercent() {
-            const score = +this.restaurant.averageScore * 20;
-            return score + 1.5;
-        }
+        // // 별점 출력
+        // function ratingToPercent() {
+        //     const score = +this.restaurant.averageScore * 20;
+        //     return score + 1.5;
+        // }
 
         // 메뉴 상세보기
         function getMenu(menuNo){
@@ -1437,58 +1437,58 @@
     </script>
 
     <!--별점-->
-    <style>
+<%--    <style>--%>
 
-        <%--        별점 css--%>
-        .star-ratings {
-            color: #aaa9a9;
-            position: relative;
-            unicode-bidi: bidi-override;
-            width: max-content;
-            -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
-            -webkit-text-stroke-width: 1.3px;
-            -webkit-text-stroke-color: #2b2a29;
-            font-size: 30px;
-        }
+<%--        &lt;%&ndash;        별점 css&ndash;%&gt;--%>
+<%--        .star-ratings {--%>
+<%--            color: #aaa9a9;--%>
+<%--            position: relative;--%>
+<%--            unicode-bidi: bidi-override;--%>
+<%--            width: max-content;--%>
+<%--            -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */--%>
+<%--            -webkit-text-stroke-width: 1.3px;--%>
+<%--            -webkit-text-stroke-color: #2b2a29;--%>
+<%--            font-size: 30px;--%>
+<%--        }--%>
 
-        .star-ratings-fill {
-            color: #fff58c;
-            padding: 0;
-            position: absolute;
-            z-index: 1;
-            display: flex;
-            top: 0;
-            left: 0;
-            /*overflow: hidden;*/
-            -webkit-text-fill-color: gold;
-        }
+<%--        .star-ratings-fill {--%>
+<%--            color: #fff58c;--%>
+<%--            padding: 0;--%>
+<%--            position: absolute;--%>
+<%--            z-index: 1;--%>
+<%--            display: flex;--%>
+<%--            top: 0;--%>
+<%--            left: 0;--%>
+<%--            /*overflow: hidden;*/--%>
+<%--            -webkit-text-fill-color: gold;--%>
+<%--        }--%>
 
-        .star-ratings-base {
-            z-index: 0;
-            padding: 0;
-        }
+<%--        .star-ratings-base {--%>
+<%--            z-index: 0;--%>
+<%--            padding: 0;--%>
+<%--        }--%>
 
-        .truckNameForMenu{
-            color:black;
-            font-weight: bolder;
-            text-align: center;
-        }
-        /*주문하기Madal Radio button*/
-        .toggle3 input[type=radio]{
-            display: none;
-        }
-        .toggle3 input[type=radio] + label {
-            color: #e0e0e0;
-            font-size: 1em;
-        }
-        .toggle3 input[type=radio]:checked + label {
-            color: #000;
-        }
-        .btn-outline-primary {
-            color: #007bff;
-            border-color: #ffba49;
-        }
-    </style>
+<%--        .truckNameForMenu{--%>
+<%--            color:black;--%>
+<%--            font-weight: bolder;--%>
+<%--            text-align: center;--%>
+<%--        }--%>
+<%--        /*주문하기Madal Radio button*/--%>
+<%--        .toggle3 input[type=radio]{--%>
+<%--            display: none;--%>
+<%--        }--%>
+<%--        .toggle3 input[type=radio] + label {--%>
+<%--            color: #e0e0e0;--%>
+<%--            font-size: 1em;--%>
+<%--        }--%>
+<%--        .toggle3 input[type=radio]:checked + label {--%>
+<%--            color: #000;--%>
+<%--        }--%>
+<%--        .btn-outline-primary {--%>
+<%--            color: #007bff;--%>
+<%--            border-color: #ffba49;--%>
+<%--        }--%>
+<%--    </style>--%>
 
     <script>
 
@@ -2408,33 +2408,111 @@
 
 <!--  화면구성 div Start /////////////////////////////////////-->
 <div class="container" style="margin-top:119px;">
+    <div class="border" style="margin-left: -116px; margin-right: 15px; padding: 10px; border-radius: 20px 20px 20px 20px;">
 
     <div class="page-header">
-        <h3 class="truckNameForMenu">${truck.truckName}</h3>
+        <h3 class="truckNameForMenu" style="text-align: center;">${truck.truckName}</h3>
     </div>
     <div class="star-ratings">
-        <div
-                class="star-ratings-fill space-x-2 text-lg"
-                :style="{ width: ratingToPercent + '%' }"
-        >
-            <c:if test="${rvTotal ne null}">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>(${rvTotal})
-            </c:if>
-            <c:if test="${rvTotal eq null}">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-            </c:if>
+<%--        <div--%>
+<%--                class="star-ratings-fill space-x-2 text-lg"--%>
+<%--                :style="{ width: ratingToPercent + '%' }"--%>
+<%--        >--%>
+<%--            <c:if test="${rvTotal ne null}">--%>
+<%--                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>(${rvTotal})--%>
+<%--            </c:if>--%>
+<%--            <c:if test="${rvTotal eq null}">--%>
+<%--                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>--%>
+<%--            </c:if>--%>
 
-        </div>
-        <div class="star-ratings-base space-x-2 text-lg">
-            <c:if test="${rvTotal ne null}">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>(${rvTotal})
-            </c:if>
-            <c:if test="${rvTotal eq null}">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-            </c:if>
+<%--        </div>--%>
+<%--        <div class="star-ratings-base space-x-2 text-lg">--%>
+<%--            <c:if test="${rvTotal ne null}">--%>
+<%--                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>(${rvTotal})--%>
+<%--            </c:if>--%>
+<%--            <c:if test="${rvTotal eq null}">--%>
+<%--                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>--%>
+<%--            </c:if>--%>
 
-        </div>
+<%--        </div>--%>
         <%--            <div class="beside-of-star-ratings">(${rvTotal})</div>--%>
+    <c:if test="${truck.truckAVGStar >= 0 && truck.truckAVGStar <0.35}">
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+    </c:if>
+    <c:if test="${truck.truckAVGStar >= 0.35 && truck.truckAVGStar <0.65}">
+        <i class="fas fa-star-half"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+    </c:if>
+    <c:if test="${truck.truckAVGStar >= 0.65 && truck.truckAVGStar <1.35}">
+        <i class="fas fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+    </c:if>
+    <c:if test="${truck.truckAVGStar >= 1.35 && truck.truckAVGStar <1.65}">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star-half"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+    </c:if>
+    <c:if test="${truck.truckAVGStar >= 1.65 && truck.truckAVGStar <2.35}">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+    </c:if>
+    <c:if test="${truck.truckAVGStar >= 2.35 && truck.truckAVGStar <2.65}">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star-half"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+    </c:if>
+    <c:if test="${truck.truckAVGStar >= 2.65 && truck.truckAVGStar <3.35}">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="far fa-star"></i>
+        <i class="far fa-star"></i>
+    </c:if>
+    <c:if test="${truck.truckAVGStar >= 3.35 && truck.truckAVGStar <3.65}">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star-half"></i>
+        <i class="far fa-star"></i>
+    </c:if>
+    <c:if test="${truck.truckAVGStar >= 3.65 && truck.truckAVGStar <4.35}">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="far fa-star"></i>
+    </c:if>
+    <c:if test="${truck.truckAVGStar >= 4.35 && truck.truckAVGStar <4.65}">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star-half"></i>
+    </c:if>
+    <c:if test="${truck.truckAVGStar >= 4.65 && truck.truckAVGStar <5}">
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+        <i class="fas fa-star"></i>
+    </c:if>
 
     </div>
 
@@ -2465,8 +2543,8 @@
     <!--================truck info 시작=============-->
     <div class="row">
 
-        <div class="col-xs-4 col-md-2"><strong>프 로 필 이 미 지</strong></div>
-        <div class="col-xs-8 col-md-4">${truck.truckProImg}</div>
+<%--        <div class="col-xs-4 col-md-2"><strong>프 로 필 이 미 지</strong></div>--%>
+<%--        <div class="col-xs-8 col-md-4">${truck.truckProImg}</div>--%>
         <div class="col-xs-4 col-md-2"><strong>영 업 상 태</strong></div>
         <c:if test="${truck.truckBusiStatus eq 0}">
             <div class="col-xs-8 col-md-4">영업 중</div>
@@ -2489,6 +2567,7 @@
 
 
 
+
     <!--리뷰 리스트 시작-->
     <%--    <p>--%>
     <%--      --%>
@@ -2502,9 +2581,11 @@
         </div>
     </div>
     <!--리뷰 리스트 시작-->
-
+    </div>
 
 </div>
+
+
 <!--  메뉴 목록 div Start /////////////////////////////////////-->
 <body class="row g-5">
 
