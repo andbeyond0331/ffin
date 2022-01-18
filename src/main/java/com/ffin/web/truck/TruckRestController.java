@@ -318,6 +318,63 @@ public class TruckRestController {
         return truckService.getNewTruck(truckId);
     }
 
+
+    //영업중 모드 변경
+    @RequestMapping( value = "json/updateBusiStatus", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView updateBusiStatus(HttpSession session)throws Exception{
+
+        System.out.println("json/updateBusiStatus POST");
+
+        Truck truck = new Truck();
+
+        truck = (Truck) session.getAttribute("truck");
+
+        int tb = Integer.parseInt(truck.getTruckBusiStatus());
+        String truckId = truck.getTruckId();
+
+        System.out.println("tb = " + tb + "truckId = " + truckId );
+
+        if(tb==0){
+            truck.setTruckBusiStatus("1");
+        }else if(tb==1){
+            truck.setTruckBusiStatus("0");
+        }
+        truckService.updateBusiStatus(truck);
+
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/views/truck/updateBusiStatus.jsp");
+        return mv;
+    }
+
+//    @RequestMapping(value="/mainTruckListLaLo", method=RequestMethod.POST)
+//    public ModelAndView mainTruckListLaLo(HttpServletRequest request, @RequestParam("lo") float lo, @RequestParam("la") float la, @RequestParam("address") String address, HttpServletResponse response) throws Exception{
+//        request.setCharacterEncoding("UTF-8");
+//
+//        System.out.println("mainTruckListLaLo !!!!!!!!!!!!!!!!!!!!!!!1 post");
+//        System.out.println("lo = " + lo + ", la = " + la +", address: "+address);
+//        Search search = new Search();
+//        search.setCurrentPage(1);
+//        search.setPageSize(15);
+//        Map<String, Object> map = new HashMap<String, Object>();
+//
+////        int currentPage = Integer.parseInt(request.getP)
+//
+//
+//        map = truckService.truckNearBy(search,la, lo);
+//
+//        System.out.println("위치기반 결과 : " + map.get("list"));
+//
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.addObject("list", map.get("list"));
+//        modelAndView.addObject("inputLocation", address);
+//        modelAndView.setViewName("/views/home.jsp");
+//
+//        /* 수정해야할*/
+//
+//        return modelAndView;
+//    }
+
 }
 
 
