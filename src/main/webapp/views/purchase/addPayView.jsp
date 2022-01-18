@@ -392,12 +392,16 @@
     }
 
 
+
     $(function () {
-        $("button.btn.btn-primary:contains('결제')").click(function () {
+        $("#addPay").click(function () {
 
             kakaopay();
 
 
+        });
+        $("#getPay").click(function(){
+            alert("결제가 완료된 메뉴입니다")
         });
     });
 
@@ -415,6 +419,7 @@
     $(function () {
 
         var modal = $('#myModal');
+
 
 
         modal.find('button.btn-primary').on("click", function () {
@@ -444,7 +449,7 @@
                     var payPrice = Number(totalPP2[1]) - Number(couponDcPrice);
                     var sale = Number(totalSS2[1]) + Number(couponDcPrice);
                     /*var payPrice = (dd[1] - couponDcPrice);*/
-
+                    $("input[name='payPrice']").val(payPrice);
                     append = "<input type=\"hidden\" id=\"couponNo\" name=\"couponNo\" value=\"" + couponNo + "\">";
                     totalPayPrice = "<span id='totalpp'>결제금액 : " + payPrice + "</span>"
                     totalsale = "<span id='sale'>한일금액 : " + sale + "</span>"
@@ -468,6 +473,8 @@
     });
 
     $(function () {
+/*        var modal = $('#couponCancel');
+        modal.find('button.btn-primary').on("click", function () {*/
         $("#button-addon2").click(function () {
 
             var pointCheck = $("input[name='pointAmt']").val();
@@ -477,10 +484,10 @@
             var totalSS1 = document.getElementById('sale').innerHTML;
             var totalSS2 = totalSS1.split(":").map(Number);
             var dd = val.split(":").map(Number);
-
+            var usePoint = $('input[name="usePoint"]').val();
 
             if (pointCheck == undefined) {
-                var usePoint = $('input[name="usePoint"]').val();
+
                 if(usePoint < totalPoint) {
                     if(usePoint <= Number(dd[1])){
                         if (usePoint != "") {
@@ -499,10 +506,12 @@
                                 totalPayPrice = "<span id='totalpp' name='payPrice' >결제금액 : " + payPrice + "</span>"
                                 totalsale = "<span id='sale'>한일금액 : " + sale + "</span>"
 
-
+                                $("input[name='payPrice']").val(payPrice);
                                 $('#usePointAmt').append(append);
                                 $('#pp').html(totalPayPrice);
                                 $('#dcp').html(totalsale);
+
+                                alert("포인트가 적용되었습니다")
 
                             } else {
                                 alert("포인트는 1000단위로 사용가능합니다.")
@@ -517,7 +526,98 @@
                     alert("사용포인트가 보유포인트를 초과하였습니다.")
                 }
             } else {
-                alert("사용중인 포인트가 있습니다.")
+
+                $(document).ready(function(){
+                    var result = confirm('기존에 사용한 포인트를 변경하시겠습니까??');
+                    if(result){
+
+                        if(usePoint < totalPoint) {
+
+                            var vall = document.getElementById('totalpp').innerHTML;
+                            var cc = vall.split(":").map(Number);
+                            if(usePoint <= Number(cc[1])){
+
+                                if (usePoint != "") {
+
+                                    if (usePoint % 1000 == 0) {
+
+                                        if(usePoint){
+                                            var usePointT = $('input[name="usePoint"]').val();
+
+                                            var pointde = document.getElementById("pointAmt");
+                                            var pointRe = document.getElementById("usePoint");
+
+                                        const pointAmt = document.getElementById('pointAmt').value;
+                                            var val =document.getElementById('totalpp').innerHTML;
+
+
+                                        var dd = val.split(":").map(Number);
+                                            var totalSS1 = document.getElementById('sale').innerHTML;
+                                            var totalSS2 = totalSS1.split(":").map(Number);
+                                            var payPrice = Number(dd[1]) + Number(pointAmt);
+
+                                        var sale = Number(totalSS2[1])-Number(pointAmt);
+                                            pointde.remove();
+
+                                        pointRe.value = "";
+                                        totalPayPrice =  "<span id='totalpp' name='payPrice' >결제금액 : "+payPrice+"</span>"
+                                        totalsale =  "<span id='sale'>한일금액 : "+sale+"</span>"
+
+
+                                        $('#pp').html(totalPayPrice);
+                                        $('#dcp').html(totalsale);
+
+
+                                        }
+
+
+
+                                        var valT = document.getElementById('totalpp').innerHTML;
+                                        var totalSS1T = document.getElementById('sale').innerHTML;
+                                        var totalSS2T = totalSS1T.split(":").map(Number);
+                                        var ddT = valT.split(":").map(Number);
+
+
+
+                                        var payPriceT = Number(ddT[1]) - usePointT;
+                                        var saleT = Number(totalSS2T[1]) + Number(usePointT);
+
+
+                                        alert(payPriceT)
+                                        alert(saleT)
+
+                                        append = "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePointT + "\">";
+                                        totalPayPrice = "<span id='totalpp' name='payPrice' >결제금액 : " + payPriceT + "</span>"
+                                        totalsale = "<span id='sale'>한일금액 : " + saleT + "</span>"
+
+                                        $("input[name='payPrice']").val(payPrice);
+                                        $('#usePointAmt').append(append);
+                                        $('#pp').html(totalPayPrice);
+                                        $('#dcp').html(totalsale);
+
+                                        alert("포인트가 적용되었습니다")
+
+                                    } else {
+                                        alert("포인트는 1000단위로 사용가능합니다.")
+                                    }
+                                } else {
+                                    alert("사용할 포인트를 입력해주세요")
+                                }
+                            }else{
+                                alert("사용가능 할인금액을 초과 하였습니다.")
+                            }
+                        }else{
+                            alert("사용포인트가 보유포인트를 초과하였습니다.")
+                        }
+
+
+
+                    }else{
+
+                    }
+
+                });
+
             }
         });
 
@@ -525,7 +625,9 @@
 
 
     $(function () {
-        $('#removeCoupon').click(function () {
+        var modal = $('#couponCancel');
+        modal.find('button.btn-primary').on("click", function () {
+       /* modal$('#removeCoupon').click(function () {*/
             var couponRe = document.getElementById("couponDcPrice");
             var couponde = document.getElementById("couponNo");
             const couponDcPrice = document.getElementById('couponDcPrice').value;
@@ -545,17 +647,20 @@
             var sale = Number(totalSS2[1])-Number(couponDcPrice);
 
             totalPayPrice =  "<span id='totalpp'>결제금액 : "+payPrice+"</span>"
-            totalsale =  "<span id='sale'>한일금액 : "+sale+"</span>"
+            totalsale =  "<span id='sale'>할일금액 : "+sale+"</span>"
             /*alert(append + ":append");*/
 
             $('#pp').html(totalPayPrice);
             $('#dcp').html(totalsale);
 
+            modal.modal('hide');
         });
     });
 
     $(function () {
-        $('#removePoint').click(function () {
+        var modal = $('#pointCancel');
+        modal.find('button.btn-primary').on("click", function () {
+       /* $('#removePoint').click(function () {*/
             var pointde = document.getElementById("pointAmt");
             var pointRe = document.getElementById("usePoint");
             const pointAmt = document.getElementById('pointAmt').value;
@@ -579,6 +684,8 @@
 
             $('#pp').html(totalPayPrice);
             $('#dcp').html(totalsale);
+
+            modal.modal('hide');
         });
     });
 
@@ -803,6 +910,7 @@
                         </div>
                         <div class="col-3">
                             <p class="text"  id="dcp"  ><span id="sale" name="payPrice">할인금액 :</span></p>
+                            <input type="hidden" name="payPrice" value="${purchase.payPrice}">
                         </div><div class="col-3">
                         <p class="text"  id="pp"></p>
                     </div></div>
@@ -814,9 +922,17 @@
                             </button>
                         </div>
                         <div class="col-6">
-                            <button type="button" class="btn btn-primary btn-lg">
+                            <c:if test="${purchase.orderStatus == 0}">
+                            <button type="button" id="addPay" class="btn btn-primary btn-lg">
                                 결제
                             </button>
+                            </c:if>
+                            <c:if test="${purchase.orderStatus > 0}">
+                                <button type="button" id="getPay" class="btn btn-primary btn-lg">
+                                    결제
+                                </button>
+                            </c:if>
+
                         </div>
                     </div>
                 </div>
@@ -966,7 +1082,8 @@
                 "<div class=\"col-md-8\">" +
                 "<div class=\"card-body\">" +
                 "<h5 class=\"card-title\">" + odMenuNameL[i] + "</h5>" +
-                "<p class=\"card-text\"><small class=\"text-muted\">옵션 " + odOptionGroupNameL[i] + " :" + odOptionNameL[i] + "  :</small><br><small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 가격 :" + (sum[i] + odMenuPriceL[i]) + " </small></p>" +
+                "<p class=\"card-text\"><small class=\"text-muted\">옵션 " + odOptionGroupNameL[i] + " :" + odOptionNameL[i] + "  :</small><br>" +
+                "<small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 가격 :" + (sum[i] + odMenuPriceL[i]) + " </small></p>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +
