@@ -235,7 +235,15 @@
 		limit 0,20;
 	</select>
 
-
+	<select id="truckPopular"  resultMap="truckSelectMap">
+		SELECT inner_table.*
+		FROM( SELECT  t.truck_id , t.truck_name , t.truck_phone, t.truck_map_la, t.truck_map_lo, t.truck_cate, t.truck_avg_star, t.truck_pro_img, t.truck_busi_status, t.truck_sig_menu_no, t.truck_sig_menu_name, t.truck_sig_menu_img1, m.menu_truck_id, m.menu_name
+			FROM truck t
+			left join menu m on m.menu_truck_id=t.truck_id
+			group by truck_id
+			order by t.TRUCK_AVG_STAR ) inner_table
+		limit 0,20;
+	</select>
 
 
 

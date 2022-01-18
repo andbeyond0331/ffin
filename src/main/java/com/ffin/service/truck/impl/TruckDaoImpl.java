@@ -281,4 +281,17 @@ public class TruckDaoImpl implements TruckDao {
         map.put("truckId", truckId);
         return sqlSession.selectOne("TruckMapper.getTruck2", map);
     }
+
+    @Override
+    public Map<String, Object> getTruckListPopular() throws Exception {
+        System.out.println("getTruckListPopular" );
+
+        List<Truck> list = sqlSession.selectList("TruckMapper.truckPopular");
+        System.out.println("list : " + list);
+        Map<String, Object> map = new HashMap<>();
+        map.put("list", list);
+        return map;
+    }
+
+
 }

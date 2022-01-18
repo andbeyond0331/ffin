@@ -375,4 +375,12 @@ public class TruckServiceImpl implements TruckService {
     public Truck getTruck2(String userId, String truckId) throws Exception {
         return truckDao.getTruck2(userId, truckId);
     }
+
+    //HHJ 0118
+    @Override
+    public Map<String, Object> getTruckListPopular() throws Exception {
+        return truckDao.getTruckListPopular();
+    }
+
+
 }

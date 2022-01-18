@@ -115,4 +115,8 @@ public interface TruckDao {
     public Map<String, Object> truckNearBy(Search search, float la, float lo) throws Exception;
     // HHJ 0115
     public Truck getTruck2(String userId, String truckId) throws Exception ;
+
+    //HHJ 0118
+    public Map<String, Object> getTruckListPopular() throws Exception;
+
 }

@@ -595,6 +595,7 @@
 
 
 
+
         /* 무한스크롤 */
         let isEnd = false; // 다 불러왔을 때 더이상 노출 되지 않기 위함
         var page=2;
@@ -603,6 +604,7 @@
 
 
         $(window).scroll(function(){
+
             let $window = $(this);
             let scrollTop = $window.scrollTop();
             let windowHeight = $window.height();
@@ -619,7 +621,7 @@
             // var isBottom =  (window.innerHeight + window.scrollY) >= document.body.offsetHeight; // 바닥
 
             // 현재 카드 길이에서는 이게 제일 잘먹는다~~~
-            // var isBottom =  scrollTop + windowHeight + 30 > documentHeight
+           // var isBottom =  scrollTop + windowHeight + 30 > documentHeight
             var isBottom =  (window.innerHeight + window.scrollY) >= document.body.offsetHeight; // 바닥
             //var isBottom = $(window).scrollTop()  == $(document).height() - $(window).height()
 
@@ -642,7 +644,7 @@
             /* if(isEnd === true){
                  return;
              }*/
-
+    console.log("야야ㅑ")
             $.ajax({
 
                 url : "/menu/json/getTruckList",
@@ -661,13 +663,85 @@
                     let length = list.length;
 
                     console.log("length: "+length)
-                    for(var i=0; i<list.length; i++){
-                        var div="";
+                        for(var i=0; i<list.length; i++){
+                            var div="";
 
-                        /*
-                            여기다 무한스크롤 내부 채우기
-                         */
-                        $('.card-grid').append(div);
+
+
+                          div +=   "<div class='card col-md-4 mb-4' style='border: 0;'>"
+                  +  "<div style='display: flex; flex-direction: column;'>"
+                       +" <div class='item'>"
+                           +" <div class='item-image'>";
+                               if ( list[i].truckSigMenuImg1 != null){
+                                   div += "<div class='card__background' style='background-image: url(../../resources/menu/"+list[i].truckSigMenuImg1+")'></div>";
+
+                               }else{
+                                   div += "<div class='card__background' style='background-image: url(../../resources/menu/"+list[i].truckProImg+")'></div>";
+                               }
+                            div += "</div>"
+                           + "<div class='item-text'>"
+                              + " <div class='item-text-wrapper'>";
+
+
+                               var truckCate = list[i].truckCate;
+                               switch(truckCate){
+                                   case 1:
+                                       div += "<h5><span class='badge' style='background-color: #ffffff; color: #110000'>고기</span></h5>";
+                                       break;
+                                   case 2:
+                                       div += "<h5><span class='badge' style='background-color: #ffffff; color: #110000'>분식</span></h5>";
+                                       break;
+                                   case 3:
+                                       div += "<h5><span class='badge' style='background-color: #ffffff; color: #110000'>음료</span></h5>";
+                                       break;
+                                   case 4:
+                                       div += "<h5><span class='badge' style='background-color: #ffffff; color: #110000'>양식</span></h5>";
+                                       break;
+                                   case 5:
+                                       div += "<h5><span class='badge' style='background-color: #ffffff; color: #110000'>디저트</span></h5>";
+                                       break;
+                                   case 6:
+                                       div += "<h5><span class='badge' style='background-color: #ffffff; color: #110000'>한식</span></h5>";
+                                       break;
+                                   case 7:
+                                       div += "<h5><span class='badge' style='background-color: #ffffff; color: #110000'>일식</span></h5>";
+                                       break;
+                                   default:
+                                       div += "<h5><span class='badge' style='background-color: #ffffff; color: #110000'>기타</span></h5>";
+                                       break;
+                               }
+
+                                   div +=  "<input type='hidden' name='truckId' value='"+list[i].truckId+"'>"
+                                    +"<p class='item-text-dek'><strong>"+list[i].truckSigMenuName+"</strong></p>"
+                                    +"<h6 class='item-text-title'>"+list[i].truckCEOIntro+"</h6>"
+
+                                       +"<i class='fas fa-star' style='color: #ec6a56'></i>";
+                                    // 여기 위에 바꿔야할 곳, 평점 처리  임의로 해줌
+
+                                div += "</div>"
+                           +" </div>";
+
+                                if (list[i].truckBusiStatus == 0){
+                                    div += "<a type='button' class='item-link' id='endTruck'></a>";
+                                }else{
+                                    div += "<a class='item-link' href='/menu/getMenuList?truckId="+list[i].truckId+"'></a>";
+                                }
+
+
+                       div += "</div>"
+                        +"<div class='item-truck'>"
+                            +"<span>"+list[i].truckName+"</span>";
+
+                            if (list[i].truckBusiStatus == 0){
+                                div += "<span class='badge' style='background-color: #ffba49; color: #110000'>영업종료</span>";
+                            }else{
+                                div += "<span class='badge' style='background-color: #fae100; color: #110000'>영업중</span>";
+                            }
+
+                        div += "</div></div></div>";
+
+
+                            $('#truckListAutokk').append(div);
                         if( length < 6 ){
                             isEnd = true;
                             // return;
@@ -690,8 +764,6 @@
 
 
         }
-
-
 
 
 
@@ -1126,7 +1198,7 @@
 
         <!--admin truck에서 빼오기-->
 
-        <div class="row mb-12" style="border: 0;">
+        <div id="truckListAutokk" class="row mb-12" style="border: 0;">
 
             <c:set var="i" value="0" />
             <c:forEach var="truck" items="${list}" varStatus="status">

@@ -305,10 +305,10 @@ public class CateringController {
 //        int currentPage = Integer.parseInt(request.getP)
 
         // todo : 우선은 테스트로 la, lo를 고정값으로 두었음 만들어둔거로 테스트 해보려고
-        float la = (float) 37.57041195853664;
-        float lo = (float) 126.98503967552996;
+        //float la = (float) 37.57041195853664;
+        //float lo = (float) 126.98503967552996;
 
-        map = truckService.truckNearBy(search,la, lo);
+        map = truckService.getTruckListPopular();
 
         System.out.println("위치기반 결과 : " + map.get("list"));
 
