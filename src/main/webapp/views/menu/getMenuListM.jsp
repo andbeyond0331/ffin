@@ -66,23 +66,23 @@
         function applyOptionGroupNamer(){ // 모달에서 옵션그룹이름 적용누르면 돌아가는 function
 
             var modal = $('#optionGroupModal');
-            realOptionGroupName = modal.find('input#optionGroupNamer.form-control').val();
+            optionGroupNamer = modal.find('input#optionGroupNamer.form-control').val();
 
-            console.log(realOptionGroupName + " : realOptionGroupName");
+            console.log(optionGroupNamer + " : optionGroupNamer");
             //alert(realOptionGroupName)
 
             // divElem = "<div class=\"form-group\" id=\""+realOptionGroupName+"-target\" name=\"optionGroupName\">"+
             //     "<input type=\"text\" id=\"applyOptionGroupName+"+realOptionGroupName+"\" name=\"applyOptionGroupName\" value=\""+realOptionGroupName+"\"/>22222"+
             //     "</div>";
 
-
-            divElem = "<input type=\"hidden\" id=\"applyOptionGroupName+"+realOptionGroupName+"\" name=\"applyOptionGroupName\" value=\""+realOptionGroupName+"\"/>";
+            // 적용할 옵션그룹 hidden
+            divElem = "<input type=\"hidden\" id=\"applyOptionGroupName+"+optionGroupNamer+"\" name=\"applyOptionGroupName\" value=\""+optionGroupNamer+"\"/>";
 
             // alert("applyOptionGroupName을 name으로 가진 태그가 있는가 ??? 있다면 몇 개?"+modal.find('input[name="applyOptionGroupName"]').length);
 
             //옵션그룹이름이 정해지지 않았다면
             if(modal.find('input[name="applyOptionGroupName"]').length!==0) {
-                modal.find('input[name="applyOptionGroupName"]').val(realOptionGroupName);
+                modal.find('input[name="applyOptionGroupName"]').val(optionGroupNamer);
             }else{
                 modal.find('.modal-body').append($(divElem));
             }
@@ -105,19 +105,19 @@
             modalOp.find('button.btn.btn-primary.addOption').on("click", function(){
                 //countOp++;
 
-                var realOptionName = modalOp.find('input#optionNamer.form-control').val();
-                var realOptionPrice = modalOp.find('input#optionPricer.form-control').val();
+                var optionNamer = modalOp.find('input#optionNamer.form-control').val();
+                var optionPricer = modalOp.find('input#optionPricer.form-control').val();
 
-                console.log(realOptionName +" : realOptionName");
-                console.log(realOptionPrice +" : realOptionPrice");
+                console.log(optionNamer +" : optionNamer");
+                console.log(optionPricer +" : optionPricer");
 
                 divElemOp ="</hr>"+
-                    "<div class=\"form-group\" id=\""+realOptionName+"\" name=\"optionName\">"+
-                    "<div class=\"col-xs-8 col-md-4\">"+"옵션 이름 : "+realOptionName+"</div>"+
-                    "<input type=\"hidden\" id=\"applyOptionName+"+realOptionName+"\" name=\"applyOptionName\" value=\""+realOptionName+"\"/>"+
-                    "<div class=\"col-xs-8 col-md-4\">"+"옵션 가격 : "+realOptionPrice+"</div>"+
-                    "<input type=\"hidden\" id=\"applyOptionPrice+"+realOptionPrice+"\" name=\"applyOptionPrice\" value=\""+realOptionPrice+"\"/>"+
-                    "<input type=\"button\" value=\"삭제\" onclick=\"javascript:removeEL(\'"+realOptionName+"\')\"/>"+
+                    "<div class=\"form-group\" id=\""+optionNamer+"\" name=\"optionName\">"+
+                    "<div class=\"col-xs-8 col-md-4\">"+"옵션 이름 : "+optionNamer+"</div>"+
+                    "<input type=\"hidden\" id=\"applyOptionName+"+optionNamer+"\" name=\"applyOptionName\" value=\""+optionNamer+"\"/>"+
+                    "<div class=\"col-xs-8 col-md-4\">"+"옵션 가격 : "+optionPricer+"</div>"+
+                    "<input type=\"hidden\" id=\"applyOptionPrice+"+optionPricer+"\" name=\"applyOptionPrice\" value=\""+optionPricer+"\"/>"+
+                    "<input type=\"button\" value=\"삭제\" onclick=\"javascript:removeEL(\'"+optionNamer+"\')\"/>"+
                     "</div>";
 
                 console.log("divElemOp : "+divElemOp);
@@ -201,19 +201,19 @@
                     "<div class=\"modal-dialog modal-dialog-centered\">"+
                     "<div class=\"modal-content\">"+
                     "<div class=\"modal-header\">"+
-                    "<h5 class=\"modal-title\" id=\"exampleModalLabel\">옵션그룹이름</h5>"+
+                    "<h5 class=\"modal-title\" id=\"optionGroupModalLabel\">옵션 그룹 추가</h5>"+
                     "<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>"+
                     "</div>"+
                     "<div class=\"modal-body\">"+
-                    "<div class=\"form-group\">"+
-                    "<label for=\"optionGroupName\" class=\"col-from-label\">옵션그룹이름</label>"+
-                    "<input type=\"text\" class=\"form-control\" id=\"optionGroupName\" value=\"\">"+
+                    "<div class=\"form-group\" id=\"rrrrrr\" name=\"rrrrrr\">"+
+                    "<label for=\"optionGroupNamer\" class=\"col-from-label\">옵션그룹이름</label>"+
+                    "<input type=\"text\" class=\"form-control\" id=\"optionGroupNamer\" value=\"\">"+
                     "</div>"+
                     // "</div>"+
                     "<div class=\"modal-footer\">"+
                     //"<button type=\"button\" class=\"btn btn-primary custom\" onclick='applyOptionGroupNamer();'>옵션그룹이름적용</button>"+
-                    "<button type=\"button\" class=\"btn btn-primary customer\" onclick=\'applyOptionGroupNamer()\' data-bs-toggle=\"modal\" data-bs-target=\"#optionModal\" data-whatever=\"option\">옵션추가</button>"+
-                    "<button type=\"button\" class=\"btn btn-primary\" id=\"add-optionGroup\">적용</button>"+
+                    "<button type=\"button\" class=\"btn btn-primary addOption\" data-target=\"#optionModal\" area-label=\"Close\" onclick=\"applyOptionGroupNamer();\" data-bs-toggle=\"modal\">옵션추가</button>"+
+                    "<button type=\"button\" class=\"btn btn-primary addOptionGroup\" id=\"add-optionGroup\" data-dismiss=\"modal\" aria-label=\"Close\" data-target=\"#menuModal\" data-toggle=\"modal\">옵션 그룹 적용</button>"+
                     "</div>"+
                     "</div>"+
                     // "</div>"+
