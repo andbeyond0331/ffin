@@ -383,7 +383,7 @@
             },
 
             success: function (map) {
-                location.href = "http://127.0.0.1:8080/";
+                self.location = "/user/getPurchaseList";
             },
             error: function (xhr, status, error) {
                 alert("[Error]" + error);

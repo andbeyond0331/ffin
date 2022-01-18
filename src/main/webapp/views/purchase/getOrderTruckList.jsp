@@ -213,7 +213,7 @@
                                     <div class="col-1">
                                             ${i}
                                     </div>
-                                    <div class="col-9">
+                                    <div class="col-8">
                                         <div class="row">
                                             <div class="col-4">
                                                 <a type="button" class="text-break" id="orderUserId">${cart.orderUserId.userId}</a>
@@ -236,8 +236,23 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-1">
-                                            ${cart.orderStatus}
+                                    <div class="col-3">
+                                        <c:if test="${cart.orderStatus == 1}">
+                                            주문대기
+                                        </c:if>
+                                        <c:if test="${cart.orderStatus == 2}">
+                                            주문접수
+                                        </c:if>
+                                        <c:if test="${cart.orderStatus == 3}">
+                                            픽업요청
+                                        </c:if>
+                                        <c:if test="${cart.orderStatus == 4}">
+                                            픽업완료
+                                        </c:if>
+                                        <c:if test="${cart.orderStatus == 5}">
+                                            주문취소
+                                        </c:if>
+
                                     </div>
                                 </div>
 
@@ -562,11 +577,11 @@
                                           "value='"+data.purchase.orderRequest+"' disabled>"+data.purchase.orderRequest+"</textarea>";
 
                 if(data.purchase.orderStatus == 1){
-                    CookingTime =  "<div class='col-2'> 상호 : "+data.purchase.orderTruckId.truckName+"</div>"+
+                    CookingTime =  "<div class='col-4'> 상호 :<br> "+data.purchase.orderTruckId.truckName+"</div>"+
                             "<div class='col-2'>"+
                                 "<button class='btn btn-primary' data-bs-toggle='modal' href='#exampleModalToggle' type='button'>주문거절</button>"+
                             "</div>"+
-                                "<div class='col-6'>"+
+                                "<div class='col-4'>"+
                                 "<input type='radio' class='btn-check' name='cookingTime' id='cookingTimes' autocomplete='off' value='5' checked>"+
                                 "<label class='btn btn-outline-success' for='cookingTimes' >5분</label>"+
                                 "<input type='radio' class='btn-check' name='cookingTime' id='cookingTimes1' autocomplete='off' value='10'>"+
@@ -673,8 +688,7 @@
                             forOneFirst += 1;
                             if (list[i + 1] != null) { //만약 다음 애가 있는데
                                 if (list[i + 1]['odMenuQtyFlag'] == 0) { //수량제공메뉴이면(지금 이게 수량제공메뉴란 소리니까 닫아줘야함)
-                                  /*  menuList += "</div><span class=\"text-muted\">" + list[i]['odMenuPrice'] + "원</span></li>";
-                               */ }
+                                 }
 
                             }
                         } else { //플래그 1일 때
@@ -722,7 +736,7 @@
 
     /*주문접수버튼*/
     $("body").on("click","button[name='updateTranCode']", function () {
-        alert("들어왔다")
+
         var orderUserId = $("input[name='usId']").val();
         var orderCookingTime = $("input[name='cookingTime']:checked").val();
         if(orderCookingTime == undefined){
@@ -741,11 +755,11 @@
             success: function (data) {
 
                 alert("접수되었습니다!")
-                alert(orderUserId)
+
                 console.log("purchase.socket::::" + socket);
 
                 var orderTruckId = '${sessionScope.truck.truckId}';
-                alert(orderTruckId)
+
                 if(socket) {
                     // websocket에 보내기!!! (message, 보내는이, 받는이)
                     let socketMessage = "purchaseUser,"+orderTruckId+","+orderUserId+","+orderUserId;
@@ -771,22 +785,16 @@
         var orderNopeReason = $("input[name='orderNopeReason']:checked").val();
         if(pointNo == undefined && pointNo =='' ){
             pointNo = 0;
-            alert("1")
+
         }else if(pointNo ===null && pointNo == ""){
             pointNo = 0;
-            alert("2")
+
         }
 
         if(couponNo == undefined || couponNo == '' && couponNo == null){
             couponNo = 0;
         }
         var orderCancelReason =0;
-        alert(pointNo)
-        alert(couponNo)
-        alert(payId)
-        alert(orderNo)
-        alert(orderNopeReason)
-        alert(orderCancelReason)
 
         $.ajax({
             url: "/purchase/json/payRefund", // 예: http://www.myservice.com/payments/cancel
@@ -803,7 +811,7 @@
             },
 
             success: function (map) {
-                location.href = "http://127.0.0.1:8080/";
+               location.reload();
             },
             error: function (xhr, status, error) {
                 alert("[Error]" + error);
