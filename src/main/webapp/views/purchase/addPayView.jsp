@@ -452,7 +452,7 @@
                     $("input[name='payPrice']").val(payPrice);
                     append = "<input type=\"hidden\" id=\"couponNo\" name=\"couponNo\" value=\"" + couponNo + "\">";
                     totalPayPrice = "<span id='totalpp'>결제금액 : " + payPrice + "</span>"
-                    totalsale = "<span id='sale'>할일금액 : " + sale + "</span>"
+                    totalsale = "<span id='sale'>할인금액 : " + sale + "</span>"
                     /*alert(append + ":append");*/
 
                     $('#couponDcPrice').val(couponDcPrice);
@@ -504,7 +504,7 @@
 
                                 append = "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePoint + "\">";
                                 totalPayPrice = "<span id='totalpp' name='payPrice' >결제금액 : " + payPrice + "</span>"
-                                totalsale = "<span id='sale'>할일금액 : " + sale + "</span>"
+                                totalsale = "<span id='sale'>할인금액 : " + sale + "</span>"
 
                                 $("input[name='payPrice']").val(payPrice);
                                 $('#usePointAmt').append(append);
@@ -587,7 +587,7 @@
 
                                         append = "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePointT + "\">";
                                         totalPayPrice = "<span id='totalpp' name='payPrice' >결제금액 : " + payPriceT + "</span>"
-                                        totalsale = "<span id='sale'>할일금액 : " + saleT + "</span>"
+                                        totalsale = "<span id='sale'>할인금액 : " + saleT + "</span>"
 
                                         $("input[name='payPrice']").val(payPrice);
                                         $('#usePointAmt').append(append);
@@ -646,7 +646,7 @@
             var sale = Number(totalSS2[1])-Number(couponDcPrice);
 
             totalPayPrice =  "<span id='totalpp'>결제금액 : "+payPrice+"</span>"
-            totalsale =  "<span id='sale'>할일금액 : "+sale+"</span>"
+            totalsale =  "<span id='sale'>할인금액 : "+sale+"</span>"
             /*alert(append + ":append");*/
 
             $('#pp').html(totalPayPrice);
@@ -678,7 +678,7 @@
 
 
             totalPayPrice =  "<span id='totalpp' name='payPrice' >결제금액 : "+payPrice+"</span>"
-            totalsale =  "<span id='sale'>할일금액 : "+sale+"</span>"
+            totalsale =  "<span id='sale'>할인금액 : "+sale+"</span>"
 
 
             $('#pp').html(totalPayPrice);
@@ -767,14 +767,14 @@
                                     <td>${couponLis.couponDcPrice}</td>
                                     <td>
                                         <c:if test="${couponLis.couponType == 0}">
-                                        BIRTH
-                                    </c:if>
-                                    <c:if test="${couponLis.couponType == 1}">
-                                        RAIN
-                                    </c:if>
-                                    <c:if test="${couponLis.couponType == 2}">
-                                        SNOW
-                                    </c:if>
+                                            BIRTH
+                                        </c:if>
+                                        <c:if test="${couponLis.couponType == 1}">
+                                            RAIN
+                                        </c:if>
+                                        <c:if test="${couponLis.couponType == 2}">
+                                            SNOW
+                                        </c:if>
                                     </td>
 
 
@@ -970,6 +970,17 @@
         var odOptionPriceL;
         var odMenuImageL;
 
+        var totototoprice =0; // 전체 금액
+        var totototoqty =0; // 수량
+        var pricepriceprice =0 // 임시 가격
+
+        var menuPriceOne = [];
+        var menuPriceTwo = [];
+        var optionPriceOne = [];
+        var optionPriceTwo = [];
+        var menuCount = 0;
+        var menuCheck = [];
+
         for (var i = 0; i < odMenuNameCount; i++) {
 
             var odMenuName = $("input[name='odMenuName']").eq(i).val();
@@ -980,6 +991,60 @@
             var odOptionPrice = $("input[name='odOptionPrice']").eq(i).val();
             var odMenuImage = $("input[name='odMenuImage']").eq(i).val();
             var odMenuQtyFlag = $("input[name='odMenuQtyFlag']").eq(i).val();
+
+
+
+            if(menuCheck[menuCount] == undefined) {
+                menuCheck[menuCount] = odMenuName;
+            }else if(menuCheck[menuCount] == odMenuName){
+                menuCheck[menuCount] = odMenuName;
+            }else {
+                menuCount++;
+                menuCheck[menuCount] = odMenuName;
+            }
+
+
+            if(odMenuQtyFlag == '0'){
+                if(menuPriceOne[menuCount] == undefined){
+                    menuPriceOne[menuCount] = Number(odMenuPrice);
+                }else{
+                    menuPriceOne[menuCount] += Number(odMenuPrice);
+                }
+            }
+
+            if(odMenuQtyFlag == '1'){
+                if(optionPriceOne[menuCount]==undefined){
+                    optionPriceOne[menuCount] = Number(odOptionPrice);
+                }else{
+                    optionPriceOne[menuCount] += Number(odOptionPrice);
+                }
+            }
+
+
+
+
+
+
+            /* HHJ */
+
+            if ( odMenuQtyFlag == '0'){
+
+                pricepriceprice = Number(odMenuPrice);
+                totototoqty = Number(odMenuQty);
+
+                //pricepriceprice *= qtyqtyqty;
+                //console.log("pricepriceprice *= qtyqtyqty" + (pricepriceprice *= qtyqtyqty));
+                //tttttppppprrrr += Number(pricepriceprice)// 처음 들어온 값도 0, 이후엔 곱해짐 // 기존값 더함
+                //qtyqtyqty = Number(odMenuQty); // 수량값 기억하고 있도록 for문 밖에 선언해준 qtyqtyqty 에 저장
+            }else { // 옵션이면
+
+                pricepriceprice = Number(odOptionPrice);
+            }
+
+            totototoprice+= Number(pricepriceprice * totototoqty);
+
+            console.log("ttototototo :: " + totototoprice)
+
 
 
             var odMenuImageCopy;
@@ -1049,7 +1114,7 @@
         var sum = new Array() ;
         var test3 = new Array();
 
-        odOptionPriceL = odOptionPriceCopy.split("/");
+        odOptionPriceL = odOptionPriceCopy.split("/"); //
 
         /*alert("ordejoijafjs"+odOptionPriceL)*/
         for(var i = 0; i<odOptionPriceL.length; i++){
@@ -1076,6 +1141,8 @@
 
         var menuPrice = 0;
         for (var i = 0; i < odMenuNameL.length; i++) {
+            alert("optionPriceOne : "+optionPriceOne[i])
+            alert("menuPriceOne : "+Number(menuPriceOne[i]+optionPriceOne[i]))
 
             /*         alert(odMenuNameL[i]);
                      alert(odOptionNameL[i]);*/
@@ -1093,7 +1160,7 @@
                 "<div class=\"card-body\">" +
                 "<h5 class=\"card-title\">" + odMenuNameL[i] + "</h5>" +
                 "<p class=\"card-text\"><small class=\"text-muted\">옵션 " + odOptionGroupNameL[i] + " :" + odOptionNameL[i] + "  :</small><br>" +
-                "<small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 가격 :" + (sum[i] + odMenuPriceL[i]) + " </small></p>" +
+                "<small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 총가격 :" + Number(Number(menuPriceOne[i]+optionPriceOne[i])*odMenuQtyL[i]) + " </small></p>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +
@@ -1105,11 +1172,11 @@
         }
 
 
-        divElemApply2 = "<input type=\"hidden\" name=\"orderPrice\" id=\"orderPrice\" value=\""+menuPrice+"\">"+
-            "<span id='price'>합계 : "+menuPrice+"</span>"
+        divElemApply2 = "<input type=\"hidden\" name=\"orderPrice\" id=\"orderPrice\" value=\""+totototoprice+"\">"+
+            "<span id='price'>합계 : "+totototoprice+"</span>"
 
-        divElemApply3 = "<input type=\"hidden\" name=\"orderPrice\" id=\"orderPrice\" value=\""+menuPrice+"\">"+
-            "<span id='totalpp'>결제금액 :"+menuPrice+"</span>"
+        divElemApply3 = "<input type=\"hidden\" name=\"orderPrice\" id=\"orderPrice\" value=\""+totototoprice+"\">"+
+            "<span id='totalpp'>결제금액 :"+totototoprice+"</span>"
 
         $('#total').append(divElemApply2);
         $('#pp').append(divElemApply3);

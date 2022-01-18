@@ -559,6 +559,14 @@
                                                 <label class="form-label label-name">주문상태</label>
                                                 <span class="badge" style="background-color: #ffba49; color: #110000">결제취소</span>
                                             </c:when>
+                                            <c:when test="${purchase.orderStatus == '6'}">
+                                                <label class="form-label label-name">주문상태</label>
+                                                <span class="badge" style="background-color: #ffba49; color: #110000">픽업완료</span>
+                                            </c:when>
+                                            <c:when test="${purchase.orderStatus == '7'}">
+                                                <label class="form-label label-name">주문상태</label>
+                                                <span class="badge" style="background-color: #ffba49; color: #110000">픽업완료</span>
+                                            </c:when>
                                         </c:choose>&nbsp;&nbsp;
 
                                     </div>

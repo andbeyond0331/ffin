@@ -393,6 +393,12 @@
                                         <c:when test="${orderDetail.odOrderNo.orderStatus eq 5 }">
                                             <span class="badge" style="background-color: #ffba49; color: #110000">결제취소</span>
                                         </c:when>
+                                        <c:when test="${orderDetail.odOrderNo.orderStatus eq 6 }">
+                                            <span class="badge" style="background-color: #ffba49; color: #110000">픽업완료</span>
+                                        </c:when>
+                                        <c:when test="${orderDetail.odOrderNo.orderStatus eq 7 }">
+                                            <span class="badge" style="background-color: #ffba49; color: #110000">픽업완료</span>
+                                        </c:when>
                                     </c:choose>&nbsp;&nbsp;
                                     <time datetime="YYYY-MM-DD">
                                         <i class="fas fa-calendar-alt mr-2"></i>${orderDetail.odOrderNo.payDateTime}
