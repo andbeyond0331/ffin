@@ -46,6 +46,7 @@
         <!--  ///////////////////////// JavaScript ////////////////////////// -->
         <script type="text/javascript">
 
+
             //============= 영업모드변경 function =============
             $(function () {
                 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
@@ -74,10 +75,39 @@
 
             function fncUpdateBusiStatus() {
 
-                $("form").attr("method", "POST").attr("action", "/truck/json/updateBusiStatus").submit();
-                alert("영업상태가 변경되었습니다.");
-            }
+                var la =  $("input[name='la']").val();
+                var lo = $("input[name='lo']").val();
+                var truckId = '${sessionScope.truck.truckId}'
+                var tb = $("input[name='swCh']:checked").val();
 
+
+                $.ajax({
+                    type:"POST",
+                    url: "/truck/json/updateBusiStatus",
+                    data   : {
+                        truckId : truckId,
+                        la : la,
+                        lo : lo,
+                        tb : tb
+                    },
+                    success:function (data) {
+
+                        alert ( " 현재 위치 및 영업 상태가 변경되었습니다. ");
+
+                    }
+                });
+
+            }
+            $(document).ready(function(){
+
+                var truckla = '${sessionScope.truck.truckMapLa}';
+                var trucklo = '${sessionScope.truck.truckMapLo}';
+                console.log("truckla : "+truckla)
+                console.log("trucklo : "+trucklo)
+
+                getAddr(truckla, trucklo);
+
+            });
 
         </script>
         <script type="text/javascript"
@@ -183,8 +213,8 @@
                                     </button>
                                 </div>
                             </div>
-                            <input type="hidden" name="la" />
-                            <input type="hidden" name="lo" />
+                            <input type="text" name="la" />
+                            <input type="text" name="lo" />
                             <input type="hidden" name="address" />
                         </form>
                     </div>
@@ -243,50 +273,7 @@
 <script type="text/javascript">
 
 
-    /* todo: HHJ 로직짜기
 
-        **** 고민
-
-        1. 화면 입장시 controller에서 애초에 list 생성하여 화면에 뿌려줄 것
-            - 컨트롤단에서 리스트 출력하는 서비스 필요 (이미 있는 서비스 써도 될 것 같음)
-            - 고민할 것
-                1) 애초에 들어올 때부터 주소값을 찍은 후 출력할 것인가.
-                    - 이 경우라면 컨트롤단에서 찍는 것이 아니라 window.onload 될 때 ajax로 처리해야 할 것
-                2) 그냥 전체 순위로 출력한 후, 주소값을 처리할 것인가.
-                    - 이 경우엔 controller 단으로 가능.
-                    - 근데 이게 item 에 넣었을 때 먹히느냐...? (css)
-
-        2. 로그인 안한 상태에서 '현재 위치' 값 클릭 or 지도 값 클릭시 -> 로그인 하라는 버튼 띄우기
-
-        3. 로그인한 상태
-                1) 유저의 주소 정보가 있다면 위도, 경도로 변환하여 출력함
-                2) 유저의 주소 정보가 없다면 현재 주소로 변환하여 출력함
-                3) 지도 클릭하여 위치 선택할 수 있음
-                참고) 유저의 주소 정보를 업데이트 시키고 싶은데 이건 시간이 모자랄 것 같고.. 왜냐면 db도 바꿔야할 것 같고... 이거는 아쉬운 점 중에 하나로 체크하면 될듯
-
-
-        **** 결정 - 시간을 최소화하고 최대한 간단하게 하는 형식으로 감ㅠ
-
-        1. 처음 메인 입장할 때에는 전체 순위로 불러올 예정 (주소값 x)
-            - 기존처럼 jsp로 들어오는것이 아니라 controller 한번 타서 뿌려줄 예정 -> 완성
-            - todo: catering에 붙여놓음 이거 옮겨야 하고, 처음 메인창 띄우는 형식 바꿔야 함 (컨트롤러 태워야 함)
-            - todo: login시 이동시키는 주소 바뀜! 우선 메인 주소부터 정리한 후에~
-
-        2. 현재 위치값 누르면 rest컨트롤러타서 내용 변경시키기!
-            2-1. 로그인을 안한 상태 : 모든 클릭 이벤트에 대하여 로그인 이벤트를 걸어줄 것 (다른 것 못함)
-                => 완성
-            2-2. 로그인을 한 상태라면 : 현재 위치값으로 우선 rest 컨트롤러를 타게 하자.  (완성)
-                => 완성 : rest 태우니까 css가 다 어그러져서 form.submit 시켯음! 오예
-
-        3. 지도 버튼 누르면 변경할 수 있게끔 하는 정도까지만.
-            3-1. 지도 버튼 누르면 지도 출력 (modal) (완성)
-            3-2. 지도에서 위치 선택하여 확인 누르면 위도, 경도값 받아옴 (완성)
-            3-3. getAddr(lat, lon) 태우면 완성 (완성)
-
-        todo 다른 부분은 욕심 부리지 말장 이건 플젝 끝나고 더 손봐보는거로!
-            하고싶었던 것 - 사용자가 최근 검색한 위치장소 저장하여 다음에 오면 노출시키기 ! 어렵진 않을거같은데 손이 좀 갈것같아
-
-     */
     var userIdch = '${sessionScope.user.userId}';
     var truckIdch = '${sessionScope.truck.truckId}';
     console.log("userIdch: " + userIdch)
@@ -353,14 +340,57 @@
                 // console.log(result[0].address.address_name);
                 console.log(result[0].address.address_name)
                 var address = result[0].address.address_name;
+                $("input[name='inputLocation']").val(address);
                 $("input[name='address']").val(address);
                 $("input[name='la']").val(lat);
                 $("input[name='lo']").val(lng);
                 // todo: HHJ 주소창에 이거 뜨는거 뵈기시러.... post로 바꿔야할거같은디.....  깩 :::: 바까따~~~~~!
-                $("form").attr("method", "post").attr("action", "/truck/mainTruckListLaLo").attr("target", "_parent").submit();
+               // $("form").attr("method", "post").attr("action", "/truck/mainTruckListLaLo").attr("target", "_parent").submit();
+
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                    mapOption = {
+                        center: new kakao.maps.LatLng(lat, lng), // 지도의 중심좌표
+                        level : 3 // 지도의 확대 레벨
+                    };
+
+                var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+// 지도를 클릭한 위치에 표출할 마커입니다
+                var marker = new kakao.maps.Marker({
+                    // 지도 중심좌표에 마커를 생성합니다
+                    position: map.getCenter()
+                });
+// 지도에 마커를 표시합
+                marker.setMap(map);
+
+// 지도에 클릭 이벤트를 등록합니다
+// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+                kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+
+                    // 클릭한 위도, 경도 정보를 가져옵니다
+                    var latlng = mouseEvent.latLng;
+                    var lat = latlng.getLat();
+                    var lng = latlng.getLng();
+                    marker.setPosition(latlng);    // 마커 위치를 클릭한 위치로 옮깁니다
+                    console.log(latlng);
+
+                    getAddr(lat, lng)
 
 
-//todo: 토) 쿼리 수정 (menu price 필요 )
+
+                });
+
+
+                $("#map").css("display", "");
+
+                // map.trigger('resize');
+
+
+                // map 노출이 안되어서 강제로 setTimeout 주었엉...ㅎㅎ
+                setTimeout(function () {
+                    window.dispatchEvent(new Event('resize'));
+                }, 300);
+
 
 
             }
@@ -369,63 +399,7 @@
     }
 
 
-    // 지도 클릭하여 지도 위치 변경
-    function mapLocationSelect(callback) {
 
-//todo : tmap 이 좀 예뻐서 쓰고싶엇는뎅 일단 정보가 많은 카카오로 구현해보깅 대신 도보경로는 tmap 으루 햇당
-        /* var map = new Tmapv2.Map("map", {
-             center :new Tmapv2.LatLng(37.566481622437934,126.98502302169841), // 지도 초기 좌표
-             width : "100%",
-             height : "400px",
-             zoom : 14,
-             zoomControl : true,
-             scrollwheel : true,
-             httpsMode : true //map의 https모드 설정
-         });*/
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-            mapOption = {
-                center: new kakao.maps.LatLng(37.570483259249905, 126.98529582585256), // 지도의 중심좌표
-                level : 3 // 지도의 확대 레벨
-            };
-
-        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
-// 지도를 클릭한 위치에 표출할 마커입니다
-        var marker = new kakao.maps.Marker({
-            // 지도 중심좌표에 마커를 생성합니다
-            position: map.getCenter()
-        });
-// 지도에 마커를 표시합
-        marker.setMap(map);
-
-// 지도에 클릭 이벤트를 등록합니다
-// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
-        kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
-
-            // 클릭한 위도, 경도 정보를 가져옵니다
-            var latlng = mouseEvent.latLng;
-            var lat = latlng.getLat();
-            var lng = latlng.getLng();
-            marker.setPosition(latlng);    // 마커 위치를 클릭한 위치로 옮깁니다
-            console.log(latlng);
-            $("#staticBackdrop").find("#mapAccess").on("click", function () {
-                getAddr(lat, lng)
-            });
-
-
-        });
-
-
-        $("#map").css("display", "");
-
-        // map.trigger('resize');
-        $('#staticBackdrop').modal('show');
-
-        // map 노출이 안되어서 강제로 setTimeout 주었엉...ㅎㅎ
-        setTimeout(function () {
-            window.dispatchEvent(new Event('resize'));
-        }, 300);
-    }
 
 
 </script>
