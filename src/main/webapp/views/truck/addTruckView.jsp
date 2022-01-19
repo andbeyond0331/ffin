@@ -77,8 +77,14 @@
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
             $("button.btn.btn-cancle").on("click", function () {
-                alert("회원가입을 취소하시겠습니까? 확인을 누르시면 메인화면으로 이동합니다.")
-                self.location = "/catering/mainTruckList"
+                // alert("회원가입을 취소하시겠습니까? 확인을 누르시면 메인화면으로 이동합니다.")
+                // self.location = "/catering/mainTruckList"
+                Swal.fire({
+                    text:"회원가입을 취소하시겠습니까? 확인을 누르시면 메인화면으로 이동합니다.",
+                    buttons:true
+                }).then(function (){
+                    location.href="/catering/mainTruckList";
+                })
             });
         });
 

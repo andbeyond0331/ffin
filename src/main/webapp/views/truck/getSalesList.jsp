@@ -62,7 +62,7 @@
 
     <div class="page-header" align="center">
         <label for="page-top" class="control-label"/>
-        <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
+        <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228; margin-top:50px "></i>
         <h4 style="margin-top: 10px;">
             판매 목록</h4>
     </div>
@@ -148,7 +148,7 @@
 
 
     <!-- PageNavigation Start... -->
-    <jsp:include page="../../common/pageNavigator.jsp"/>
+    <jsp:include page="../../common/pageNavigator_new.jsp"/>
     <!-- PageNavigation End... -->
 </div>
 <!--  화면구성 div End /////////////////////////////////////-->

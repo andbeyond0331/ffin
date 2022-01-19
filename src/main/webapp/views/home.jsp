@@ -157,7 +157,10 @@
             <div class="col-sm-6 col-md-4 mx-auto">
                 <div class="box">
                     <div class="img-box img-menu-box">
+                        <a idx="${truck.truckSigMenuNo}" class = "menu-location" href="/menu/getMenuList?truckId=${truck.truckId}">
                         <img src="../resources/menu/${truck.truckSigMenuImg1}" class="box-img" alt="" />
+                            <input type="hidden" id="goTruckArrow" value="${truck.truckId}">
+                        </a>
                     </div>
                     <div class="detail-box">
                         <c:if test="${truck.truckBusiStatus == '0'}">
@@ -173,21 +176,14 @@
                             </span>
                             <span class="text-primary">${truck.truckName}</span>
                         </div>
-<%--                        <span class="text-1000 fw-bold">₩5,000</span>--%>
                         <br/>
-
-                        <a idx="${truck.truckSigMenuNo}" class = "menu-location" href="/menu/getMenuList?truckId=${truck.truckId}">
-                            <i class="fa fa-arrow-right" aria-hidden="true" name="minus"></i>
-                            <input type="hidden" id="goTruckArrow" value="${truck.truckId}">
-<%--                            <button type="button" class="fa fa-arrow-right" aria-hidden="true" id="call" onclick="fncGetMenuOptionGroupYap();">누르렴</button>--%>
-                        </a>
                     </div>
                 </div>
             </div>
             </c:forEach>
         </div>
         <div class="btn-box">
-            <a href="http://127.0.0.1:8080/truck/getTruckList">
+            <a href="http://localhost:8080/menu/getTruckList">
                 more FoodTruck
             </a>
         </div>

@@ -306,11 +306,11 @@
                     <b></b>
                     <a class="btn toggle-btn" role="button" data-target="#collapseQnAUser" data-toggle="collapse" href="#collapseQnAUser" aria-expanded="false" aria-controls="collapseExample">
                         <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
-                        <span class="title">문의•신고</span>
+                        <span class="title">문의</span>
                     </a>
                     <div class="collapse" id="collapseQnAUser" style="padding: 10px;">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="/qna/getInquiryListByTruck">문의</a>
+                            <a class="collapse-item" href="/qna/getInquiryListByTruck">나의 문의</a>
                         </div>
                     </div>
                 </li>

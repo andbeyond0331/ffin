@@ -138,12 +138,12 @@
         <div class="col-lg-10 mx-auto"></div>
         <div class="page-header" style="text-align: center">
             <label for="page-top"/>
-            <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
-            <h4 style="margin-top: 10px;">영업 상태 변경</h4>
+            <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228; margin-top: 40px"></i>
+            <h3 style="margin-top: 10px;">영업 상태 변경</h3>
         </div>
 
         <form class="form-horizontal"
-              style="border-radius:10px ; border: 0; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2); transition: 0.3s;">
+              style="border-radius:10px ; border: 0; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2); transition: 0.3s; margin-top: 30px">
             <div class="row justify-content-between">
                 <div class="col-12" style="margin-top:3px ">
                     <div class="form-check form-switch pull-right" style="font-size:22px ">

@@ -120,8 +120,10 @@
 <br/><br/><br/><br/>
 <c:if test="${sessionScope.truck != null || sessionScope.user != null}">
 <div class="container">
-    <div class="page-header text-info" align="center">
-        <h3 class="text-info"> 공지 조회 </h3>
+    <div class="page-header" style="text-align: center;">
+    <label for="page-top"/>
+    <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228; margin-top:50px "></i>
+    <h4 style="margin-top: 10px;">공지 조회 </h4>
     </div>
 
     <br/>

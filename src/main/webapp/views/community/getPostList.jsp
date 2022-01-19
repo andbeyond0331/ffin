@@ -400,7 +400,7 @@
     </div>
     <br/><br/>
     <!-- PageNavigation Start... -->
-    <jsp:include page="../../common/pageNavigator.jsp"/>
+    <jsp:include page="../../common/pageNavigator_new.jsp"/>
     <!-- PageNavigation End... -->
 </section>
 <!--  화면구성 div End /////////////////////////////////////-->

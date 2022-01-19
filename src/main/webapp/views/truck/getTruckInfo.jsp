@@ -95,7 +95,7 @@
 
     <div class="page-header" align="center">
         <label for="page-top" class="control-label"/>
-        <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
+        <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228; margin-top:30px "></i>
         <h4 style="margin-top: 10px;">
         푸드트럭(사업자) 정보조회</h4>
     </div>

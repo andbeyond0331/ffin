@@ -17,7 +17,7 @@
         //============= "작성완료"  Event 연결 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $("button.btn.btn-secondary").on("click", function () {
+            $("#updateNoti").on("click", function () {
                 fncUpdateNotice();
             });
         });
@@ -25,7 +25,8 @@
         //============= "취소"  Event 처리 및  연결 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $("button.btn.btn-warning").on("click", function () {
+            $("#cun").on("click", function () {
+                alert("공지 수정을 취소하시겠습니까?");
                 self.location = "/views/truck/truckMyPage.jsp"
             });
         });
@@ -65,7 +66,7 @@
 
         <div class="page-header" style="text-align: center">
             <label for="page-top"/>
-            <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
+            <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228; margin-top:40px "></i>
             <h4 style="margin-top: 10px;">공지 작성(수정)</h4>
         </div>
 
@@ -140,8 +141,8 @@
             <br/>
             <div class="form-group">
                 <div class="offset-3 col-sm-6 text-center">
-                    <button type="button" class="btn btn-secondary">작성(수정) 완 료</button>
-                    <button class="btn btn-warning" type="button">취 소</button>
+                    <button type="button" class="btn btn-default" id="updateNoti">작성(수정) 완 료</button>
+                    <button class="btn btn-cancle" type="button" id="cun">취 소</button>
                 </div>
             </div>
         </form>
