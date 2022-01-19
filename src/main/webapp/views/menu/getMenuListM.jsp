@@ -20,108 +20,120 @@
             height:301px;
         }
         .container-fluid{
-
             margin-right:142px;
             padding-left:190px;
         }
-        .truckNameForMenu{
-            color:black;
-            font-weight: bolder;
-            text-align: center;
+        a {
+            color: #fff;
+            text-decoration: none;
         }
-
-        *, *:before, *:after {
-            box-sizing: border-box;
-            outline: none;
+        .row  {
+            display:flex;
+            align-items:center
         }
-
-        html {
-            font-family: 'Roboto', sans-serif;
-            font-size: 16px;
-            font-smooth: auto;
-            font-weight: 300;
-            line-height: 1.5;
-            color: #444;
+        .thumb-box {
+            display:flex;
+            /*max-width:33.3333%;*/
+            margin:0 15px;
+            position:relative;
         }
-
-        body {
+        .thumb-box a {
+            padding:0;
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             width: 100%;
-            height: 100vh;
-             background-color:#2c3e50
-        }
-        figure {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 375px;
-            height: 667px;
-            border-radius: 10px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-            overflow: hidden;}
-        figure:hover {
-            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);}
-        figure:hover img {
-            transform: scale(1.25);
-        }
-        figure:hover figcaption {
-            bottom: 0;
-        }
-
-        figure h1 {
-            position: absolute;
-            top: 50px;
-            left: 20px;
-            margin: 0;
-            padding: 0;
-            color: white;
-            font-size: 60px;
-            font-weight: 100;
-            line-height: 1;
-        }
-
-        figure img {
             height: 100%;
-            transition: 0.25s;
+            /*z-index:9997;*/
         }
-        figure figcaption {
-            position: absolute;
-            bottom: -33%;
-            left: 0;
-            width: 100%;
-            margin: 0;
-            padding: 30px;
-            background-color: rgba(#000, 0.85);
-            box-shadow: 0 0 20px rgba(#000, 0.4);
-            color: white;
-            line-height: 1;
-            transition: 0.25s;
+        .thumb-box img {
+            width:100%;
+            height:280px;
+            float:left;
+            border-radius: 10px;
         }
-        figure figcaption h3 {
-            margin: 0 0 20px;
-            padding: 0;
+        .overlay-box {
+            position:absolute;
+            bottom:0;
+            width:100%;
+            /*z-index:9998;*/
+            left:0;
+            padding:5%;
+            background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,0.75));
+            border-radius: 10px;
         }
-        figure figcaption p {
-            font-size: 14px;
-            line-height: 1.75;
+        .price {
+            font-size:14px;
+            display:block;
+            text-align: initial;
+            font-weight:500;
         }
-        figure figcaptionbutton {
-            position: relative;
+        .meta {
+            font-size:18px;
+            display:block;
+            text-align: initial;
+            font-weight:500;
+        }
+        .menu-title{
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 10px 0 0;
-            padding: 10px 30px;
-            background-color: $color-2;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            font-size: 14px;
+            justify-content: space-between;
+        }
+        .menu-update{
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .main-title {
+            font-size:14px;
+            display:block;
+            text-shadow:0 0 1px rgba(0,0,0,0.5);
+            text-align: justify;
+        }
+
+        .description {
+            color:#ccc;
+            font-size:13px;
+            margin-top:5px;
+            display:block;
+            color: #ccc;
+            max-height: 0;
+            line-height: 18px;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.4s ease-out, max-height 0.4s ease-out, margin 0.4s;
+            text-align: justify;
+        }
+
+        .thumb-box a:hover .description {
+            opacity:1;
+            max-height: 100px;
+            margin-top: 5px;
+            transition: opacity 0.4s ease-out, max-height 0.9s ease-out
+        }
+
+        .thumb-box a:hover .overlay-box {
+            background-image: linear-gradient(to bottom, transparent, rgba(0,0,0, 1));
+            color: #fff;
+
+        }
+        .btn.btn-default.menuupdateBtn, .btn.btn-cancle.menuupdateBtn{
+            padding: 3px 5px 3px 5px;
+            font-size: 12px;
+            margin: 0;
+        }
+        .btn.btn-default.menuupdateBtn:hover, .btn.btn-cancle.menuupdateBtn:hover{
+            background-color: rgba( 255, 255, 255, 0.0 );
+        }
+        .form-group{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .form-control{
+            border-radius: 30px;
+        }
+        input #file-upload-Button{
+            border-radius: 10px;
         }
 
     </style>
@@ -366,158 +378,170 @@
 <div class="modal fade" id="menuModal" aria-hidden="true" aria-labelledby="menuModalLabel" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="menuModalLabel">메뉴 추가</h5>
+<%--            <div class="modal-header">
+                <h5 style="margin: 0; box-shadow: inset 0 -11px 0 #fae100; line-height: 21px;font-size: 22px;" class="modal-title" id="menuModalLabel">메뉴 추가</h5>
 
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
+            </div>--%>
             <div class="modal-body">
+                <div style="display:flex; justify-content: center; margin-top: 10px;">
+                    <h5 style="margin: 0; box-shadow: inset 0 -11px 0 #fae100; font-size: 22px; width: fit-content;" id="menuModalLabel">메뉴 추가</h5>
+                </div>
+                <hr style="margin-bottom: 30px;"/>
                 <!--//////////////////여기에 추가 메뉴 정보///////시이이이작//////////////////////////////////-->
-                <form class="form-horizontal">
-                    <input type="hidden" id = "menuTruckId" name="menuTruckId" value="${truck.truckId}">
+                <div>
+                    <form class="form-horizontal">
+                        <input type="hidden" id = "menuTruckId" name="menuTruckId" value="${truck.truckId}">
 
-                    <div class="form-group">
-                        <label for="menuName" class="col-sm-offset-1 col-sm-10 control-label">메뉴 이름</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="menuName" name="menuName" value="${menu.menuName }" placeholder="메뉴 이름">
+                        <div class="form-group">
+                            <label for="menuName" class="col-sm-offset-1 col-sm-10 control-label">메뉴 이름</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="menuName" name="menuName" value="${menu.menuName }" placeholder="메뉴 이름">
 
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="menuDetail" class="col-sm-offset-1 col-sm-10 control-label">메뉴상세정보</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="menuDetail" name="menuDetail" value="${menu.menuDetail }" placeholder="메뉴상세정보">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="menuPrice" class="col-sm-offset-1 col-sm-10 control-label">메뉴 가격</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="menuPrice" name="menuPrice" value="${menu.menuPrice }" placeholder="메뉴 가격">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-10" id="sigMenu">
-
-                            <div class="form-check form-switch" id="isThereSigMenu">
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="menuImg1" class="col-sm-offset-1 col-sm-10 control-label">메뉴 이미지1</label>
-                        <div class="col-sm-10">
-                            <input type="file" class="form-control" id="menuImg1" name="menuImg11"  value="${menu.menuImg1}" placeholder="메뉴 이미지1" onchange="setImage1Preview(event);">
+                        <div class="form-group">
+                            <label for="menuDetail" class="col-sm-offset-1 col-sm-10 control-label">메뉴상세정보</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="menuDetail" name="menuDetail" value="${menu.menuDetail }" placeholder="메뉴상세정보">
+                            </div>
                         </div>
-                        <div id="image1preview" class="col-sm-10"></div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="menuImg2" class="col-sm-offset-1 col-sm-10 control-label">메뉴 이미지2</label>
-                        <div class="col-sm-10">
-                            <input type="file" class="form-control" id="menuImg2" name="menuImg22"  value="${menu.menuImg2}" placeholder="메뉴 이미지2" onchange="setImage2Preview(event);">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="menuPrice" class="col-sm-offset-1 col-sm-10 control-label">메뉴 가격</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="menuPrice" name="menuPrice" value="${menu.menuPrice }" placeholder="메뉴 가격">
+                            </div>
                         </div>
-                        <div id="image2preview" class="col-sm-10"></div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="menuImg3" class="col-sm-offset-1 col-sm-10 control-label">메뉴 이미지3</label>
-                        <div class="col-sm-10">
-                            <input type="file" class="form-control" id="menuImg3" name="menuImg33"  value="${menu.menuImg3}" placeholder="메뉴 이미지3" onchange="setImage3Preview(event);">
+                        <div class="form-group" style="margin-top: 5px;">
+                            <div class="col-sm-10" id="sigMenu">
+                                <div class="form-check form-switch" id="isThereSigMenu" style="margin-left: 10px;" >
+                                </div>
+                            </div>
                         </div>
-                        <div id="image3preview" class="col-sm-10"></div>
-                    </div>
 
-                    <hr>
+                        <div class="form-group">
+                            <label for="menuImg1" class="col-sm-offset-1 col-sm-10 control-label">메뉴 이미지1</label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" id="menuImg1" name="menuImg11"  value="${menu.menuImg1}" placeholder="메뉴 이미지1" onchange="setImage1Preview(event);" style="padding-bottom: 0; padding-top:3px; padding-left: 15px;">
+                            </div>
+                            <div id="image1preview" class="col-sm-10"></div>
+                        </div>
 
-                    <script>
+                        <div class="form-group">
+                            <label for="menuImg2" class="col-sm-offset-1 col-sm-10 control-label">메뉴 이미지2</label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" id="menuImg2" name="menuImg22"  value="${menu.menuImg2}" placeholder="메뉴 이미지2" onchange="setImage2Preview(event);" style="padding-bottom: 0; padding-top:3px; padding-left: 15px;">
+                            </div>
+                            <div id="image2preview" class="col-sm-10"></div>
+                        </div>
 
-                        function setImage1Preview(event){
+                        <div class="form-group">
+                            <label for="menuImg3" class="col-sm-offset-1 col-sm-10 control-label">메뉴 이미지3</label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" id="menuImg3" name="menuImg33"  value="${menu.menuImg3}" placeholder="메뉴 이미지3" onchange="setImage3Preview(event);" style="padding-bottom: 0; padding-top:3px; padding-left: 15px;">
+                            </div>
+                            <div id="image3preview" class="col-sm-10"></div>
+                        </div>
 
-                            var DIVimage1preview = $('#image1preview');
-                            var isTherePreview = DIVimage1preview.find('img').length;
-                            alert("isTherePreview : " + isTherePreview);
-                            //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
-                            var reader  = new FileReader();
+                        <hr style="margin-bottom: 15px; margin-top: 30px;"/>
 
-                            if(isTherePreview==0){
+                        <script>
 
-                            }else{
+                            function setImage1Preview(event){
 
-                                DIVimage1preview.find('img').remove();
+                                var DIVimage1preview = $('#image1preview');
+                                var isTherePreview = DIVimage1preview.find('img').length;
+                                alert("isTherePreview : " + isTherePreview);
+                                //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
+                                var reader  = new FileReader();
 
+                                if(isTherePreview==0){
+
+                                }else{
+
+                                    DIVimage1preview.find('img').remove();
+
+                                }
+
+                                reader.onload = function(event){
+                                    var img = document.createElement("img");
+
+                                    img.setAttribute("src", event.target.result);
+                                    img.setAttribute("style", "width:50%");
+                                    document.querySelector("div#image1preview").appendChild(img);
+
+                                };
+
+                                reader.readAsDataURL(event.target.files[0]);
                             }
 
-                            reader.onload = function(event){
-                                var img = document.createElement("img");
+                            function setImage2Preview(event){
+                                var DIVimage2preview = $('#image2preview');
+                                var isTherePreview = DIVimage2preview.find('img').length;
+                                alert("isTherePreview : " + isTherePreview);
+                                //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
+                                var reader  = new FileReader();
 
-                                img.setAttribute("src", event.target.result);
-                                img.setAttribute("style", "width:50%");
-                                document.querySelector("div#image1preview").appendChild(img);
+                                if(isTherePreview==0){
 
-                            };
+                                }else{
 
-                            reader.readAsDataURL(event.target.files[0]);
-                        }
+                                    DIVimage2preview.find('img').remove();
 
-                        function setImage2Preview(event){
-                            var DIVimage2preview = $('#image2preview');
-                            var isTherePreview = DIVimage2preview.find('img').length;
-                            alert("isTherePreview : " + isTherePreview);
-                            //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
-                            var reader  = new FileReader();
+                                }
 
-                            if(isTherePreview==0){
+                                reader.onload = function(event){
+                                    var img = document.createElement("img");
 
-                            }else{
-
-                                DIVimage2preview.find('img').remove();
-
+                                    img.setAttribute("src", event.target.result);
+                                    img.setAttribute("style", "width:50%");
+                                    document.querySelector("div#image2preview").appendChild(img);
+                                };
+                                reader.readAsDataURL(event.target.files[0]);
                             }
 
-                            reader.onload = function(event){
-                                var img = document.createElement("img");
+                            function setImage3Preview(event){
+                                var DIVimage3preview = $('#image3preview');
+                                var isTherePreview = DIVimage3preview.find('img').length;
+                                alert("isTherePreview : " + isTherePreview);
+                                //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
+                                var reader  = new FileReader();
 
-                                img.setAttribute("src", event.target.result);
-                                img.setAttribute("style", "width:50%");
-                                document.querySelector("div#image2preview").appendChild(img);
-                            };
-                            reader.readAsDataURL(event.target.files[0]);
-                        }
+                                if(isTherePreview==0){
 
-                        function setImage3Preview(event){
-                            var DIVimage3preview = $('#image3preview');
-                            var isTherePreview = DIVimage3preview.find('img').length;
-                            alert("isTherePreview : " + isTherePreview);
-                            //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
-                            var reader  = new FileReader();
+                                }else{
 
-                            if(isTherePreview==0){
+                                    DIVimage3preview.find('img').remove();
+                                }
+                                reader.onload = function(event){
+                                    var img = document.createElement("img");
 
-                            }else{
-
-                                DIVimage3preview.find('img').remove();
+                                    img.setAttribute("src", event.target.result);
+                                    img.setAttribute("style", "width:50%");
+                                    document.querySelector("div#image3preview").appendChild(img);
+                                };
+                                reader.readAsDataURL(event.target.files[0]);
                             }
-                            reader.onload = function(event){
-                                var img = document.createElement("img");
+                        </script>
+                    <!--//////////////////여기에 추가 메뉴 정보///////끄으으으읕//////////////////////////////////-->
+                        <div id="here"></div>
+                    </form>
+                </div>
 
-                                img.setAttribute("src", event.target.result);
-                                img.setAttribute("style", "width:50%");
-                                document.querySelector("div#image3preview").appendChild(img);
-                            };
-                            reader.readAsDataURL(event.target.files[0]);
-                        }
-                    </script>
-                <!--//////////////////여기에 추가 메뉴 정보///////끄으으으읕//////////////////////////////////-->
-                    <div id="here"></div>
-                </form>
+                <div style="display: flex; justify-content: center; margin-bottom: 10px">
+                    <button type="button" class="btn btn-default customer" data-toggle="modal" data-target="#optionGroupModal" data-whatever="optionGroup" data-dismiss="modal" aria-label="Close">옵션그룹추가</button>
+                    <button type="button" class="btn btn-default" id="add-menu" data-dismiss="modal" aria-label="Close">메뉴추가</button>
+                    <button type="button" class="btn btn-cancle" data-dismiss="modal">취소</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary customer" data-toggle="modal" data-target="#optionGroupModal" data-whatever="optionGroup" data-dismiss="modal" aria-label="Close">옵션그룹추가</button>
-                <button type="button" class="btn btn-primary" id="add-menu" data-dismiss="modal" aria-label="Close">메뉴추가</button>
-            </div>
+            <%--<div class="modal-footer" style="display: flex; justify-content: center;">
+                <button type="button" class="btn btn-default customer" data-toggle="modal" data-target="#optionGroupModal" data-whatever="optionGroup" data-dismiss="modal" aria-label="Close">옵션그룹추가</button>
+                <button type="button" class="btn btn-default" id="add-menu" data-dismiss="modal" aria-label="Close">메뉴추가</button>
+                <button type="button" class="btn btn-cancle" data-dismiss="modal">확인</button>
+            </div>--%>
         </div>
     </div>
 </div>
@@ -527,22 +551,39 @@
 <div class="modal fade" id="optionGroupModal" aria-hidden="true" aria-labelledby="optionGroupModalLabel" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
+            <%--<div class="modal-header">
                 <h5 class="modal-title" id="optionGroupModalLabel">옵션 그룹 추가</h5>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
+            </div>--%>
             <div class="modal-body">
+
+                <div style="display:flex; justify-content: center; margin-top: 10px;">
+                    <h5 style="margin: 0; box-shadow: inset 0 -11px 0 #fae100; font-size: 22px; width: fit-content;" id="optionGroupModalLabel">옵션 그룹 추가</h5>
+                </div>
+                <hr/>
+
                 <!--옵션그룹추가 시이이이작-->
-                <div class="form-group" id="rrrrrr" name="rrrrrr">
-                    <label for="optionGroupNamer" class="col-from-label">옵션그룹이름</label>
-                    <input type="text" class="form-control" id="optionGroupNamer" value="">
+                <div class="form-group" id="rrrrrr" name="rrrrrr" style="margin-top: 30px; margin-bottom: 30px;">
+                    <div class="col-sm-10">
+                        <label for="optionGroupNamer" class="col-from-label">옵션그룹이름</label>
+                        <input type="text" class="form-control" id="optionGroupNamer" value="">
+                    </div>
                 </div>
                 <!--옵션그룹추가 끄으으으읕-->
+
+                <hr style="margin-bottom: 15px;"/>
+
+                <div style="display: flex; justify-content: center; margin-bottom: 10px">
+                    <button type="button" class="btn btn-default addOption" data-target="#optionModal" data-dismiss="modal" aria-label="Close" onclick="applyOptionGroupNamer();" data-toggle="modal">옵션 추가</button>
+                    <button type="button" class="btn btn-default addOptionGroup" id="add-optionGroup" data-dismiss="modal" aria-label="Close" data-target="#menuModal" data-toggle="modal">옵션 그룹 적용</button>
+                    <button type="button" class="btn btn-cancle" data-dismiss="modal">취소</button>
+                </div>
+
             </div>
-            <div class="modal-footer">
+<%--            <div class="modal-footer">
                 <button type="button" class="btn btn-primary addOption" data-target="#optionModal" data-dismiss="modal" aria-label="Close" onclick="applyOptionGroupNamer();" data-toggle="modal">옵션 추가</button>
                 <button type="button" class="btn btn-primary addOptionGroup" id="add-optionGroup" data-dismiss="modal" aria-label="Close" data-target="#menuModal" data-toggle="modal">옵션 그룹 적용</button>
-            </div>
+            </div>--%>
         </div>
     </div>
 </div>
@@ -552,23 +593,48 @@
 <div class="modal fade" id="optionModal" aria-hidden="true" aria-labelledby="optionModalLabel" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
+            <%--<div class="modal-header">
                 <h5 class="modal-title" id="optionModalLabel">옵션 추가</h5>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
+            </div>--%>
             <div class="modal-body">
-                <!--옵션추가 시이이이이작-->
-                <span>옵션 이름
-                                <input type="text" class="form-control" id="optionNamer" value="${optionGroup.optionName}"></span>
 
+                <div style="display:flex; justify-content: center; margin-top: 10px;">
+                    <h5 class="modal-title" style="margin: 0; box-shadow: inset 0 -11px 0 #fae100; font-size: 22px; width: fit-content;" id="optionModalLabel">옵션 추가</h5>
+                </div>
+                <hr/>
+
+                <!--옵션추가 시이이이이작-->
+                <div class="form-group" style="margin-top: 30px;">
+                    <div class="col-sm-10">
+                        <label for="optionNamer" class="col-from-label">옵션이릅</label>
+                        <input type="text" class="form-control" id="optionNamer" value="${optionGroup.optionName}">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <div class="col-sm-10">
+                        <label for="optionPricer" class="col-from-label">옵션가격</label>
+                        <input type="text" class="form-control" id="optionPricer" value="${optionGroup.optionPrice}" placeholder="옵션 가격 - 숫자를 입력해주세요.">
+                    </div>
+                </div>
+                <%--<span>옵션 이름
+                    <input type="text" class="form-control" id="optionNamer" value="${optionGroup.optionName}">
+                </span>
                 <span>옵션 가격</span>
-                <input type="text" class="form-control" id="optionPricer" value="${optionGroup.optionPrice}" placeholder="옵션 가격 - 숫자를 입력해주세요.">
+                <input type="text" class="form-control" id="optionPricer" value="${optionGroup.optionPrice}" placeholder="옵션 가격 - 숫자를 입력해주세요.">--%>
                 <!--옵션추가 끄으으으으읕-->
 
+                <hr style="margin-bottom: 15px;"/>
+
+                <div style="display: flex; justify-content: center; margin-bottom: 10px">
+                    <button type="button" class="btn btn-default addOption" data-dismiss="modal" aria-label="Close" data-target="#optionGroupModal" data-toggle="modal">옵션 적용</button>
+                    <button type="button" class="btn btn-cancle" data-dismiss="modal">취소</button>
+                </div>
+
             </div>
-            <div class="modal-footer">
+            <%--<div class="modal-footer">
                 <button type="button" class="btn btn-primary addOption" data-dismiss="modal" aria-label="Close" data-target="#optionGroupModal" data-toggle="modal">옵션 적용</button>
-            </div>
+            </div>--%>
         </div>
     </div>
 </div>
@@ -591,30 +657,15 @@
                     </h4>
                 </div>
                 <!--메뉴 추가 버튼-->
-                <div style="margin: 0;">
+                <div style="margin: 0; display: flex; justify-content: flex-end; zoom: 90%;">
                 <a class="btn btn-default" role="button" onclick="javascript:fncSigMenu('${truck.truckId}')" >메뉴 추가</a>
                 <%--<a class="btn btn-warning" data-toggle="modal" href="#menuModal" role="button" onclick="fncSigMenu(${truck.truckId})" >메뉴 추가</a> todo : 대표메뉴 로직--%>
                 </div>
 
                 <hr/>
 
-                <figure class="image-block">
-                    <h1>The Beach</h1>
-                    <img src="https://images.pexels.com/photos/1680140/pexels-photo-1680140.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="" />
-                    <figcaption>
-                        <h3>
-                            More Info
-                        </h3>
-                        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
-                        <button>
-                            More Info
-                        </button>
-                    </figcaption>
-                </figure>
 
-            </div>
-        </div>
-    </section>
+
         <script>
             // 메뉴 추가 눌렀을 때 메뉴 없으면(메뉴가 하나라도 있다면 대표메뉴일수밖에 없음) 대표메뉴 스위치 버튼 선택상태로 되어 있고 비활성화(못 누르도록, 눌러도 alert로 "대표메뉴는 최소 하나 이상이어야 합니다".)
             //  대표메뉴 있으면 대표메뉴 스위치 버튼 선택안함 상태로 되어 있고, 누르면 대표메뉴가 이 메뉴로 바뀝니다. confirm창
@@ -721,13 +772,13 @@
 
 
     <!--  메뉴 목록 div Start /////////////////////////////////////-->
-<%--        <div class="container-fluid content-row">
+        <%--<div class="container-fluid content-row">
             <div class="row mb-3">
 
                 <c:set var="i" value="0"/>
                 <c:forEach var="menu" items="${list}">
                     <c:set var="i" value="${i+1}"/>
-                    <div class="flex card h-100" style="width: 17rem; margin-bottom:15px; margin-left: 10px;">
+                    <div class="flex card h-100" style="width: 17rem; margin-bottom:15px; margin-left: 10px; padding: 0;">
                         <img class="card-img-top" src="/resources/menu/${menu.menuImg1}" alt="Card image cap"
                              style="border-bottom: 1px solid #eee; height: 200px;">
                         <div class="card-body" style="text:center ">
@@ -736,10 +787,9 @@
                             <ul class='card-body-ul'>
                                 <h4>${menu.menuDetail}</h4>
                             </ul>
-                            <div class="btn-detail">
-                                <button class="button btn-warning" name="deleteMenu" onclick="deleteMenu(${menu.menuNo}, ${menu.isSigMenu});">
-                                    메뉴 삭제
-                                    <input type="hidden" name="menuNo" value="${menu.menuNo}"/></button>
+                            <div class="btn-detail"><button class="button btn-warning" name="deleteMenu" onclick="deleteMenu(${menu.menuNo}, ${menu.isSigMenu});">
+                                메뉴 삭제
+                                <input type="hidden" name="menuNo" value="${menu.menuNo}"/></button>
                                 <button class="button is-warning is-light" name="getMenu"
                                         style='margin-left: 100px; margin-bottom: 13px; height: 25px'
                                         onclick="updateMenu(${menu.menuNo});"
@@ -747,6 +797,7 @@
                                     메뉴 수정
                                     <input type="hidden" name="menuNo" value="${menu.menuNo}"/>
                                 </button>
+
 
                             </div>
                         </div>
@@ -756,45 +807,88 @@
             </div>
 
         </div>--%>
-    <!--  메뉴 목록 div End /////////////////////////////////////-->
+
+                <script>
+
+                    //메뉴 수정 클릭 시
+                    function updateMenu(menuNo){
+                        var menuNoo = menuNo;
+
+                        self.location="/menu/updateMenu?menuNo="+menuNoo;
+                    }
+
+                    function deleteMenu(menuNo, isSigMenu){
+
+                        if(isSigMenu==1) {
+                            alert("대표메뉴는 최소 한 개 이상이어야 합니다.");
+                        }else{
+
+                            if(!confirm("정말 삭제하시겠습니까?(복구 불가)")){
+
+                            }else{
+                                $.ajax({
+                                    url:"/menu/json/deleteMenu/"+menuNo,
+                                    method:"get",
+                                    success:function(data){
+                                        // console.log("")
+                                        alert("메뉴가 삭제되었습니다.");
+                                        location.reload();
+
+
+                                    }
+                                })
+                            }
+                        }
+                    }
+                </script>
+
+
+                <!--  메뉴 목록 div End /////////////////////////////////////-->
+
+                <div class="row mb-12" style="border: 0;">
+
+                    <c:set var="i" value="0"/>
+                    <c:forEach var="menu" items="${list}">
+                        <c:set var="i" value="${i+1}"/>
+
+                        <div class="card col-md-4 mb-4" style="border: 0; padding:0; ">
+                            <div class="thumb-box">
+                                <a href="">
+                                    <img src="/resources/menu/${menu.menuImg1}" alt="">
+                                    <span class="overlay-box">
+                                        <div class="menu-title">
+                                            <span class="meta">${menu.menuName}</span>
+                                            <span class="price"> ${menu.menuPrice}₩</span>
+                                        </div>
+                                        <span class="main-title">${menu.menuDetail}</span>
+                                        <div class="menu-update">
+                                            <span class="description">
+                                                <button class="btn btn-default menuupdateBtn" name="getMenu" onclick="updateMenu(${menu.menuNo});">
+                                                    수정
+                                                    <input type="hidden" name="menuNo" value="${menu.menuNo}"/>
+                                                </button>
+                                            </span>
+                                            <span class="description">
+                                                <button class="btn btn-cancle menuupdateBtn" name="deleteMenu" onclick="deleteMenu(${menu.menuNo}, ${menu.isSigMenu});" style="margin-left: 5px;">
+                                                    삭제
+                                                    <input type="hidden" name="menuNo" value="${menu.menuNo}"/>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </c:forEach>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
 
 </body>
 
-<script>
-
-    //메뉴 수정 클릭 시
-    function updateMenu(menuNo){
-        var menuNoo = menuNo;
-
-        self.location="/menu/updateMenu?menuNo="+menuNoo;
-
-    }
-
-    function deleteMenu(menuNo, isSigMenu){
-
-        if(isSigMenu==1) {
-            alert("대표메뉴는 최소 한 개 이상이어야 합니다.");
-        }else{
-
-            if(!confirm("정말 삭제하시겠습니까?(복구 불가)")){
-
-            }else{
-                $.ajax({
-                    url:"/menu/json/deleteMenu/"+menuNo,
-                    method:"get",
-                    success:function(data){
-                        // console.log("")
-                        alert("메뉴가 삭제되었습니다.");
-                        location.reload();
-
-
-                    }
-                })
-            }
-        }
-
-
-    }
-</script>
 
 </html>
