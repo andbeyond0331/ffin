@@ -1233,7 +1233,11 @@
 
 
 
-
+$(function (){
+    $("#truckBusi").on("click",function(){
+        alert("영업종료된 트럭입니다")
+    })
+})
 
 
 
@@ -2728,7 +2732,13 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-default" id="addCart" data-dismiss='modal' name="addCart">장바구니로!</button>
+                <c:if test="${truck.truckBusiStatus==0}">
+                    <button type="button" class="btn btn-default" id="truckBusi">장바구니로!</button>
+                </c:if>
+                <c:if test="${truck.truckBusiStatus==1}">
+                    <button type="button" class="btn btn-default" id="addCart" data-dismiss='modal' name="addCart">장바구니로!</button>
+                </c:if>
+
             </div>
         </div>
     </div>

@@ -160,11 +160,12 @@
                             <i class="fas fa-map-marker-alt"></i></span>
                             <span class="text-primary">${truck.truckName}</span>
                         </div>
-                        <span class="text-1000 fw-bold">₩5,000</span>
+<%--                        <span class="text-1000 fw-bold">₩5,000</span>--%>
                         <br/>
 
-                        <a idx="${truck.truckSigMenuNo}" class = "menu-location" href="#">
+                        <a idx="${truck.truckSigMenuNo}" class = "menu-location" href="/menu/getMenuList?truckId=${truck.truckId}">
                             <i class="fa fa-arrow-right" aria-hidden="true" name="minus"></i>
+                            <input type="hidden" id="goTruckArrow" value="${truck.truckId}">
 <%--                            <button type="button" class="fa fa-arrow-right" aria-hidden="true" id="call" onclick="fncGetMenuOptionGroupYap();">누르렴</button>--%>
                         </a>
                     </div>
@@ -358,16 +359,17 @@
             }
 
         });
-        // 화살표 클릭시!
-        $("body").on("click", ".menu-location", function () {
-            var menuNo = $(this).attr('idx');
-
-            if (userIdch == '' && truckIdch == ''){
-                loginModal()
-            }else {
-                self.location="/menu/getMenu?menuNo="+menuNo;
-            }
-        });
+        // // 화살표 클릭시!
+        // $("#goTruckArrow").on("click",function () {
+        //     // var menuNo = $(this).attr('idx');
+        //     var truckId = $("#goTruckArrow").val();
+        //     if (userIdch == '' && truckIdch == ''){
+        //         loginModal()
+        //     }else {
+        //         alert(truckId);
+        //         self.location="/menu/getMenuList?truckId="+truckId;
+        //     }
+        // });
 
         // 메뉴 사진 클릭시
         $("body").on("click", ".img-menu-box", function () {
@@ -376,7 +378,7 @@
             if (userIdch == '' && truckIdch == ''){
                 loginModal()
             }else {
-                self.location="/menu/getMenu?menuNo="+menuNo;s
+                self.location="/menu/getMenu?menuNo="+menuNo;
             }
         });
 
