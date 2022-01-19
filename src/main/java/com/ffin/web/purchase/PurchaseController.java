@@ -266,9 +266,9 @@ public class PurchaseController {
         int payPrice = purchase.getPayPrice();
         int payOption = purchase.getPayOption();
         purchase = purchaseService.getPurchase(purchase.getOrderNo());
-        purchase.setPayPrice(payPrice);
         purchase.setPayOption(payOption);
         purchase.setOrderStatus(1);
+        System.out.println("//////////////////////////////////////payPrice :"+payPrice+"payOption :"+payOption);
         System.out.println("5555555555555555"+purchase);
         Map map = new HashMap();
         map = purchaseService.getOrderDetail(purchase.getOrderNo());

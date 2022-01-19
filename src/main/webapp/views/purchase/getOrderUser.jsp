@@ -465,21 +465,23 @@
                                 <h4 style="text-align: center;">${purchase.orderTruckId.truckName}</h4>
                             </div>
                         </div>
-                        <hr style="margin-top: 35px; margin-bottom: 60px;"/>
-
-                        <div id="map_wrap" class="map_wrap3" >
-                            <div id="map_ma"></div>
-                        </div>
-                        <div class="map_act_btn_wrap clear_box"></div>
-                        <div> <div id="map_ma2"></div> </div>
-                        <p id="roadCheck"></p>
-                        <br />
-
-
-                            <button type="button" class="btn current-location btn-primary">경로 안내</button>
 
 
                     </div>
+                    <hr style="margin-top: 35px; margin-bottom: 60px;"/>
+
+                    <div id="map_wrap" class="map_wrap3" >
+                        <div id="map_ma"></div>
+                    </div>
+                    <div class="map_act_btn_wrap clear_box"></div>
+                    <div> <div id="map_ma2"></div> </div>
+                    <p id="roadCheck"></p>
+
+
+                    <div class="form-row float-right">
+                        <button type="button" class="btn current-location btn-primary center-pill">경로 안내</button>
+                    </div>
+
                     <hr style="margin-top: 60px;"/>
 
                     <div style="display: flex; justify-content: center;">
@@ -510,20 +512,20 @@
                                     <div style="margin-bottom: 15px;">
                                         <c:if test="${purchase.payOption == '0'}">
                                             <label for="payOption" class="form-label label-name">결제방법</label>
-                                            <input type="text" class="form-control" value="휴대폰결제" id="payOption" name="payOption" readonly style="width: 340px;">
+                                            <input type="text" class="form-control" value="일반결제" id="payOption" name="payOption" readonly style="width: 340px;">
                                         </c:if>
                                         <c:if test="${purchase.payOption == '1'}">
                                             <label for="payOption" class="form-label label-name">결제방법</label>
-                                            <input type="text" class="form-control" value="카카오결제" id="payOption" name="payOption" readonly style="width: 340px;">
+                                            <input type="text" class="form-control" value="휴대폰결제" id="payOption" name="payOption" readonly style="width: 340px;">
                                         </c:if>
-                                        <c:if test="${purchase.payOption == '3'}">
+                                       <%-- <c:if test="${purchase.payOption == '3'}">
                                             <label for="payOption" class="form-label label-name">결제방법</label>
                                             <input type="text" class="form-control" value="신용카드" id="payOption" name="payOption" readonly style="width: 340px;">
                                         </c:if>
                                         <c:if test="${purchase.payOption == '4'}">
                                             <label for="payOption" class="form-label label-name">결제방법</label>
                                             <input type="text" class="form-control" value="무통장입금" id="payOption" name="payOption" readonly style="width: 340px;">
-                                        </c:if>
+                                        </c:if>--%>
 
                                     </div>
                                     <div style="margin-bottom: 15px;">

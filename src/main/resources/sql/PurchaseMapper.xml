@@ -46,6 +46,7 @@
             <result property="userPhone" column="USER_PHONE" jdbcType="VARCHAR"/>
             <result property="userName" column="USER_NAME" jdbcType="VARCHAR"/>
             <result property="userProImg" column="USER_PRO_IMG" jdbcType="VARCHAR"/>
+            <result property="userEmail" column="USER_EMAIL" jdbcType="VARCHAR"/>
 
 
         </association>
@@ -438,6 +439,7 @@
               WHERE p.ORDER_TRUCK_ID = t.TRUCK_ID
                 AND p.order_No = o.od_order_no
                 AND p.ORDER_USER_ID = #{userId}
+                AND p.ORDER_STATUS between 1 and 7
               group by ORDER_NO
         order by order_no desc ) inner_table
         limit #{search.startRowNum}, #{search.pageSize}
@@ -616,6 +618,7 @@
                u.user_phone,
                u.user_name,
                u.user_pro_img,
+               u.user_email,
                t.truck_name,
                t.truck_phone,
                t.truck_map_la,
@@ -713,9 +716,13 @@
 
     <select id="getTotalCountByUser" parameterType="map" resultType="int">
         SELECT COUNT(*)
-        FROM ( SELECT *
-               FROM purchase
-               WHERE order_user_id = #{userId} ) countTable
+        FROM (  SELECT p.*, t.*, o.*
+                FROM purchase p, truck t, orderdetail o
+                WHERE p.ORDER_TRUCK_ID = t.TRUCK_ID
+                  AND p.order_No = o.od_order_no
+                  and order_user_id = #{userId}
+                  and ORDER_STATUS between 1 and 7
+                group by ORDER_NO) countTable
     </select>
 
 
