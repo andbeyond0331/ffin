@@ -393,13 +393,13 @@
 
 
 
-    <!-- Bootstrap core CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
-                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-                    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<%--    <!-- Bootstrap core CSS -->--%>
+<%--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">--%>
+<%--        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">--%>
+<%--            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">--%>
+<%--                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">--%>
+<%--                    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>--%>
+<%--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>--%>
 
 
 
@@ -526,7 +526,7 @@
             }else{
                 $("form").attr("method", "POST").attr("action","/menu/getTruckList").submit();
             }
-            
+
 
 
 
@@ -606,11 +606,11 @@
 
         }
 
-        $(function (){
-            $("a#endTruck").on("click",function(){
-                alert("영업종료하였습니다.")
-            })
-        })
+        // $(function (){
+        //     $("a#endTruck").on("click",function(){
+        //         // alert("영업종료하였습니다.")
+        //     })
+        // })
 
 
 
@@ -1003,7 +1003,7 @@
                                                    name="searchKeyword"
                                                    placeholder="What are you waiting for? Hit it!"
                                                    value="${! empty search.searchKeyword ? search.searchKeyword : ''}">
-                                            <button type="button" class="btn btn-warning" id="search">검색</button>
+                                            <button type="button" class="btn btn-default" id="search">검색</button>
                                         </div>
 
                                         <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
@@ -1019,7 +1019,7 @@
 
 <!-- Example single danger button -->
 <div class="dropdown">
-    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <c:if test="${search.sortCondition eq null}">
             기본 순
         </c:if>
@@ -1091,31 +1091,37 @@
     <!--노가다 말고 foreach로 새로운 시도!-->
     <!-- 전체보기일 때 버튼그룹 모양-->
     <c:if test="${cateCondition eq null or cateCondition eq '0'}">
-        <a href="0" class="btn btn-warning active" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckList">전체보기</a>
+        <a href="0" class="btn btn-default active" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckList">전체보기</a>
         <!-- a 태그의 href는 아래의 tab-content 영역의 id를 설정하고 data-toggle 속성을 tab으로 설정한다. -->
-        <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>
-        <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>
-        <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>
-        <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>
-        <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>
-        <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>
-        <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>
-        <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>
+        <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>
+        <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>
+        <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>
+        <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>
+        <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>
+        <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>
+        <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>
+        <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>
     </c:if>
+
+    <style>
+        btn.btn-outline-default.active {
+            color:black;
+        }
+    </style>
 
 
     <c:set var="myCate" value="${fn:split('고기,분식,음료,양식,디저트,한식,일식,기타',',')}"/>
     <c:if test="${search.sortCondition eq null}">
         <c:forEach var="i" begin="1" end="8">
             <c:if test="${cateCondition ne null and cateCondition eq i}">
-                <a href="/menu/getTruckList" class="btn btn-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" style="color:orange">전체보기</a>
+                <a href="/menu/getTruckList" class="btn btn-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" >전체보기</a>
                 <!-- a 태그의 href는 아래의 tab-content 영역의 id를 설정하고 data-toggle 속성을 tab으로 설정한다. -->
                 <c:forEach var="j" begin="1" end="8">
                     <c:if test="${i eq j}">
-                        <a href="/menu/getTruckListCate?cateCondition=${j}" class="btn btn-outline-warning active" style="color:orange" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}">${myCate[j-1]}</a>
+                        <a href="/menu/getTruckListCate?cateCondition=${j}" class="btn btn-outline-default active"  data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}">${myCate[j-1]}</a>
                     </c:if>
                     <c:if test="${i ne j}">
-                        <a href="/menu/getTruckListCate?cateCondition=${j}" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}">${myCate[j-1]}</a>
+                        <a href="/menu/getTruckListCate?cateCondition=${j}" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}">${myCate[j-1]}</a>
                     </c:if>
 
                 </c:forEach>
@@ -1126,14 +1132,14 @@
     <c:if test="${search.sortCondition eq 'moreStars'}">
         <c:forEach var="i" begin="1" end="8">
             <c:if test="${cateCondition ne null and cateCondition eq i}">
-                <a href="/menu/getTruckList" class="btn btn-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" style="color:orange">전체보기</a>
+                <a href="/menu/getTruckList" class="btn btn-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" >전체보기</a>
                 <!-- a 태그의 href는 아래의 tab-content 영역의 id를 설정하고 data-toggle 속성을 tab으로 설정한다. -->
                 <c:forEach var="j" begin="1" end="8">
                     <c:if test="${i eq j}">
-                        <a href="/menu/getTruckListCate?cateCondition=${j}&sortCondition=moreStars" class="btn btn-outline-warning active" style="color:orange" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}&sortCondition=moreStars">${myCate[j-1]}</a>
+                        <a href="/menu/getTruckListCate?cateCondition=${j}&sortCondition=moreStars" class="btn btn-outline-default active"  data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}&sortCondition=moreStars">${myCate[j-1]}</a>
                     </c:if>
                     <c:if test="${i ne j}">
-                        <a href="/menu/getTruckListCate?cateCondition=${j}&sortCondition=moreStars" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}&sortCondition=moreStars">${myCate[j-1]}</a>
+                        <a href="/menu/getTruckListCate?cateCondition=${j}&sortCondition=moreStars" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}&sortCondition=moreStars">${myCate[j-1]}</a>
                     </c:if>
 
                 </c:forEach>
@@ -1144,14 +1150,14 @@
     <c:if test="${search.sortCondition eq 'lessStars'}">
         <c:forEach var="i" begin="1" end="8">
             <c:if test="${cateCondition ne null and cateCondition eq i}">
-                <a href="/menu/getTruckList" class="btn btn-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" style="color:orange">전체보기</a>
+                <a href="/menu/getTruckList" class="btn btn-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" >전체보기</a>
                 <!-- a 태그의 href는 아래의 tab-content 영역의 id를 설정하고 data-toggle 속성을 tab으로 설정한다. -->
                 <c:forEach var="j" begin="1" end="8">
                     <c:if test="${i eq j}">
-                        <a href="/menu/getTruckListCate?cateCondition=${j}&sortCondition=lessStars" class="btn btn-outline-warning active" style="color:orange" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}&sortCondition=lessStars">${myCate[j-1]}</a>
+                        <a href="/menu/getTruckListCate?cateCondition=${j}&sortCondition=lessStars" class="btn btn-outline-default active"  data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}&sortCondition=lessStars">${myCate[j-1]}</a>
                     </c:if>
                     <c:if test="${i ne j}">
-                        <a href="/menu/getTruckListCate?cateCondition=${j}&sortCondition=lessStars" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}&sortCondition=lessStars">${myCate[j-1]}</a>
+                        <a href="/menu/getTruckListCate?cateCondition=${j}&sortCondition=lessStars" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}&sortCondition=lessStars">${myCate[j-1]}</a>
                     </c:if>
 
                 </c:forEach>
@@ -1165,135 +1171,135 @@
 
 <%--    <!-- 전체보기일 때 버튼그룹 모양-->--%>
 <%--    <c:if test="${cateCondition eq null or cateCondition eq '0'}">--%>
-<%--        <a href="0" class="btn btn-warning active" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckList">전체보기</a>--%>
+<%--        <a href="0" class="btn btn-default active" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckList">전체보기</a>--%>
 <%--        <!-- a 태그의 href는 아래의 tab-content 영역의 id를 설정하고 data-toggle 속성을 tab으로 설정한다. -->--%>
-<%--        <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
-<%--        <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
-<%--        <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
-<%--        <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
-<%--        <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
-<%--        <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
-<%--        <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
-<%--        <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
+<%--        <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
+<%--        <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
+<%--        <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
+<%--        <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
+<%--        <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
+<%--        <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
+<%--        <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
+<%--        <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
 <%--    </c:if>--%>
 <%--    <!-- 고기일 때 버튼그룹 모양-->--%>
 <%--    <c:if test="${cateCondition ne null}">--%>
 <%--        <c:if test="${cateCondition eq '1'}">--%>
-<%--            <a href="/menu/getTruckList" class="btn btn-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" style="color:orange">전체보기</a>--%>
+<%--            <a href="/menu/getTruckList" class="btn btn-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" >전체보기</a>--%>
 <%--            <!-- a 태그의 href는 아래의 tab-content 영역의 id를 설정하고 data-toggle 속성을 tab으로 설정한다. -->--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-warning active" style="color:orange" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-default active"  data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
 <%--        </c:if>--%>
 <%--    </c:if>--%>
 <%--    <!-- 분식일 때 버튼그룹 모양-->--%>
 <%--    <c:if test="${cateCondition ne null}">--%>
 <%--        <c:if test="${cateCondition eq '2'}">--%>
-<%--            <a href="/menu/getTruckList" class="btn btn-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" style="color:orange">전체보기</a>--%>
+<%--            <a href="/menu/getTruckList" class="btn btn-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" >전체보기</a>--%>
 <%--            <!-- a 태그의 href는 아래의 tab-content 영역의 id를 설정하고 data-toggle 속성을 tab으로 설정한다. -->--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-warning active" style="color:orange" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-default active"  data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
 <%--        </c:if>--%>
 <%--    </c:if>--%>
 <%--    <!-- 음료일 때 버튼그룹 모양-->--%>
 <%--    <c:if test="${cateCondition ne null}">--%>
 <%--        <c:if test="${cateCondition eq '3'}">--%>
-<%--            <a href="/menu/getTruckList" class="btn btn-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" style="color:orange">전체보기</a>--%>
+<%--            <a href="/menu/getTruckList" class="btn btn-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" >전체보기</a>--%>
 <%--            <!-- a 태그의 href는 아래의 tab-content 영역의 id를 설정하고 data-toggle 속성을 tab으로 설정한다. -->--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-warning active" style="color:orange" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-default active"  data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
 <%--        </c:if>--%>
 <%--    </c:if>--%>
 <%--    <!-- 양식일 때 버튼그룹 모양-->--%>
 <%--    <c:if test="${cateCondition ne null}">--%>
 <%--        <c:if test="${cateCondition eq '4'}">--%>
-<%--            <a href="/menu/getTruckList" class="btn btn-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" style="color:orange">전체보기</a>--%>
+<%--            <a href="/menu/getTruckList" class="btn btn-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" >전체보기</a>--%>
 <%--            <!-- a 태그의 href는 아래의 tab-content 영역의 id를 설정하고 data-toggle 속성을 tab으로 설정한다. -->--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-warning active" style="color:orange" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-default active"  data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
 <%--        </c:if>--%>
 <%--    </c:if>--%>
 <%--    <!-- 디저트일 때 버튼그룹 모양-->--%>
 <%--    <c:if test="${cateCondition ne null}">--%>
 <%--        <c:if test="${cateCondition eq '5'}">--%>
-<%--            <a href="/menu/getTruckList" class="btn btn-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" style="color:orange">전체보기</a>--%>
+<%--            <a href="/menu/getTruckList" class="btn btn-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" >전체보기</a>--%>
 <%--            <!-- a 태그의 href는 아래의 tab-content 영역의 id를 설정하고 data-toggle 속성을 tab으로 설정한다. -->--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-warning active" style="color:orange" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-default active"  data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
 <%--        </c:if>--%>
 <%--    </c:if>--%>
 <%--    <!-- 한식일 때 버튼그룹 모양-->--%>
 <%--    <c:if test="${cateCondition ne null}">--%>
 <%--        <c:if test="${cateCondition eq '6'}">--%>
-<%--            <a href="/menu/getTruckList" class="btn btn-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" style="color:orange">전체보기</a>--%>
+<%--            <a href="/menu/getTruckList" class="btn btn-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" >전체보기</a>--%>
 <%--            <!-- a 태그의 href는 아래의 tab-content 영역의 id를 설정하고 data-toggle 속성을 tab으로 설정한다. -->--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-warning active" style="color:orange" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-default active"  data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
 <%--        </c:if>--%>
 <%--    </c:if>--%>
 <%--    <!-- 일식일 때 버튼그룹 모양-->--%>
 <%--    <c:if test="${cateCondition ne null}">--%>
 <%--        <c:if test="${cateCondition eq '7'}">--%>
-<%--            <a href="/menu/getTruckList" class="btn btn-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" style="color:orange">전체보기</a>--%>
+<%--            <a href="/menu/getTruckList" class="btn btn-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" >전체보기</a>--%>
 <%--            <!-- a 태그의 href는 아래의 tab-content 영역의 id를 설정하고 data-toggle 속성을 tab으로 설정한다. -->--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-warning active" style="color:orange" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-default active"  data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
 <%--        </c:if>--%>
 <%--    </c:if>--%>
 <%--    <!-- 기타일 때 버튼그룹 모양-->--%>
 <%--    <c:if test="${cateCondition ne null}">--%>
 <%--        <c:if test="${cateCondition eq '8'}">--%>
-<%--            <a href="/menu/getTruckList" class="btn btn-warning" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" style="color:orange">전체보기</a>--%>
+<%--            <a href="/menu/getTruckList" class="btn btn-default" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckList" >전체보기</a>--%>
 <%--            <!-- a 태그의 href는 아래의 tab-content 영역의 id를 설정하고 data-toggle 속성을 tab으로 설정한다. -->--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-warning" style="color:orange" data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
-<%--            <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-warning active" style="color:orange" data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=1" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">고기</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=2" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">분식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=3" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">음료</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=4" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">양식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=5" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">디저트</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=6" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">한식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=7" class="btn btn-outline-default"  data-load="false" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">일식</a>--%>
+<%--            <a href="/menu/getTruckListCate?cateCondition=8" class="btn btn-outline-default active"  data-load="true" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">기타</a>--%>
 <%--        </c:if>--%>
 <%--    </c:if>--%>
 
@@ -1304,7 +1310,7 @@
 
 
 
-    <section class="hero-section">
+    <section class="hero-section" style="margin-right:20%; margin-left:20%; padding-top: 0px;">
 <%--        <div class="card-grid">--%>
 <%--            <c:set var="i" value="0"/>--%>
 <%--            <c:forEach var="truck" items="${list}" varStatus="status">--%>
@@ -1361,14 +1367,14 @@
 <%--                             <input type="hidden" id="ctStatusCode${catering.ctNo}" name="ctct" value="${catering.ctStatusCode}"/>--%>
 <%--                             <c:if test="${catering.ctStatusCode eq '0'}">--%>
 
-<%--                                 <button  name="getCateringDetail" class="button is-warning is-light" style='margin-left: 100px; margin-bottom: 13px; height: 25px'>자세히--%>
+<%--                                 <button  name="getCateringDetail" class="button is-default is-light" style='margin-left: 100px; margin-bottom: 13px; height: 25px'>자세히--%>
 <%--                                 </button>--%>
 <%--                                 &lt;%&ndash;onclick="getCateringDetail(${catering.ctNo})&ndash;%&gt;--%>
 <%--                             </c:if>--%>
 <%--                             <c:if test="${catering.ctStatusCode ne '0'}">--%>
 
 
-<%--                                 <button  name="getResDetail" class="button is-warning is-light" style='margin-left: 100px; margin-bottom: 13px; height: 25px' >자세히--%>
+<%--                                 <button  name="getResDetail" class="button is-default is-light" style='margin-left: 100px; margin-bottom: 13px; height: 25px' >자세히--%>
 <%--                                 </button>--%>
 <%--                                 &lt;%&ndash;onclick="getResDetail(${catering.ctNo},${catering.ctStatusCode})"&ndash;%&gt;--%>
 <%--                             </c:if>--%>
@@ -1540,12 +1546,12 @@
 
                                 </div>
                             </div>
-                            <c:if test="${truck.truckBusiStatus eq 0}">
-                                <a type="button" class="item-link" id="endTruck"></a>
-                            </c:if>
-                            <c:if test="${truck.truckBusiStatus eq 1}">
+<%--                            <c:if test="${truck.truckBusiStatus eq 0}">--%>
+<%--                                <a type="button" class="item-link" id="endTruck"></a>--%>
+<%--                            </c:if>--%>
+<%--                            <c:if test="${truck.truckBusiStatus eq 1}">--%>
                                 <a class="item-link" href="/menu/getMenuList?truckId=${truck.truckId}"></a>
-                            </c:if>
+<%--                            </c:if>--%>
 
                         </div>
                         <div class="item-truck">
