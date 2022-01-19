@@ -777,6 +777,22 @@
         var odOptionPriceL;
         var odMenuImageL;
 
+
+        var totototoprice =0; // 전체 금액
+        var totototoqty =0; // 수량
+        var pricepriceprice =0 // 임시 가격
+
+        var menuPriceOne = [];
+        var menuPriceTwo = [];
+        var optionPriceOne = [];
+        var optionPriceTwo = [];
+        var menuCount = 0;
+        var menuCheck = [];
+
+        var optionNameShow = []; // 이름 보여지게 할 값 만들기~ (최종)
+        var optionPriceShow = [];
+        var totalshow =0;
+
         for (var i = 0; i < odMenuNameCount; i++) {
             var odMenuName = $("input[name='odMenuName']").eq(i).val();
             var odOptionGroupName = $("input[name='odOptionGroupName']").eq(i).val();
@@ -786,6 +802,35 @@
             var odOptionPrice = $("input[name='odOptionPrice']").eq(i).val();
             var odMenuImage = $("input[name='odMenuImage']").eq(i).val();
             var odMenuQtyFlag = $("input[name='odMenuQtyFlag']").eq(i).val();
+            /* HHJ */
+
+            if (optionNameShow[menuCount] == undefined){
+                optionNameShow[menuCount] = " ";
+            }
+
+
+            if ( odMenuQtyFlag == '0'){
+
+                pricepriceprice = Number(odMenuPrice);
+                totototoqty = Number(odMenuQty);
+                menuCount++;
+                totalshow=0;
+                //pricepriceprice *= qtyqtyqty;
+                //console.log("pricepriceprice *= qtyqtyqty" + (pricepriceprice *= qtyqtyqty));
+                //tttttppppprrrr += Number(pricepriceprice)// 처음 들어온 값도 0, 이후엔 곱해짐 // 기존값 더함
+                //qtyqtyqty = Number(odMenuQty); // 수량값 기억하고 있도록 for문 밖에 선언해준 qtyqtyqty 에 저장
+            }else { // 옵션이면
+                // console.log("odOptionName : "+odOptionName)
+                pricepriceprice = Number(odOptionPrice);
+                optionNameShow[Number(menuCount-1)] += odOptionName + "(+" + odOptionPrice + ") ";
+
+            }
+            //console.log("optionNameShow[menuCount]: "+optionNameShow[menuCount])
+            totototoprice+= Number(pricepriceprice * totototoqty);
+            totalshow += Number(pricepriceprice * totototoqty);
+            optionPriceShow[Number(menuCount-1)] = totalshow;
+            console.log("ttototototo :: " + totototoprice)
+
 
 
             var odMenuImageCopy;
@@ -875,15 +920,16 @@
             menuPrice += (sum[i] + odMenuPriceL[i]);
 
 
-            divElemApply1 = "<div class=\"card mb-3\" >" +
+            divElemApply1 = "<div class=\"card mb-3\">" +
                 " <div class=\"row g-0\">" +
                 "<div class=\"col-md-4\">" +
-                "<img src=\"/resources/menu/"+odMenuImageL[i]+"\" class=\"img-fluid rounded-start\" alt=\"image\" style='height: 124px;'>" +
+                "<img src=\"/resources/menu/"+odMenuImageL[i]+"\" class=\"img-fluid rounded-start\" alt=\"image\">" +
                 "</div>" +
                 "<div class=\"col-md-8\">" +
                 "<div class=\"card-body\">" +
                 "<h5 class=\"card-title\">" + odMenuNameL[i] + "</h5>" +
-                "<p class=\"card-text\"><small class=\"text-muted font-size 12px\">옵션 " + odOptionGroupNameL[i] + " :" + odOptionNameL[i] + "  :</small><br><small class=\"text-muted\">수량 :" + odMenuQtyL[i] + " 가격 :" + (sum[i] + odMenuPriceL[i]) + " </small></p>" +
+                "<p class=\"card-text\"><small class=\"text-muted\"><span class='badge' style='background-color: #fae100; color: #110000'>&nbsp;옵션&nbsp;</span> " + optionNameShow[i] + "  </small><br>" +
+                "<small class=\"text-muted\"><span class='badge' style='background-color: #fae100; color: #110000'>&nbsp;수량&nbsp;</span> " + odMenuQtyL[i] + " <br><span class='badge' style='background-color: #fae100; color: #110000'>총 가격</span> " + optionPriceShow[i] + " </small></p>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +

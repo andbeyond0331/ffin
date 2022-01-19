@@ -278,83 +278,6 @@
 
                 <div class="col-6 p-3 mb-2 bg-light  text-dark">
                     <div class="row " id="CookingTime">
-            <%--            <c:if test="${purchase.orderStatus == 1}">
-                            <div class="col-2"> 상호 : ${purchase.orderTruckId.truckName}</div>
-                            <div class="col-2">
-                                <button class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle"
-                                        type="button">주문거절
-                                </button>
-                            </div>
-                            <div class="col-6">
-                                <input type="radio" class="btn-check" name="cookingTime" id="cookingTimes" autocomplete="off" value="5" checked>
-                                <label class="btn btn-outline-success" for="cookingTimes" >5분</label>
-
-                                <input type="radio" class="btn-check" name="cookingTime" id="cookingTimes1" autocomplete="off" value="10">
-                                <label class="btn btn-outline-success" for="cookingTimes1" >10분</label>
-
-                                <input type="radio" class="btn-check" name="cookingTime" id="cookingTimes2" autocomplete="off"  value="15">
-                                <label class="btn btn-outline-success" for="cookingTimes2">15분</label>
-
-                                <input type="radio" class="btn-check" name="cookingTime" id="cookingTimes3" autocomplete="off"  value="20">
-                                <label class="btn btn-outline-success" for="cookingTimes3">20분</label>
-
-                                <input type="radio" class="btn-check" name="cookingTime" id="cookingTimes4" autocomplete="off"  value="30">
-                                <label class="btn btn-outline-success" for="cookingTimes4">30분</label>
-
-                                <input type="radio" class="btn-check" name="cookingTime" id="cookingTimes5" autocomplete="off"  value="40">
-                                <label class="btn btn-outline-success" for="cookingTimes5">40분</label>
-
-
-                            </div>
-                            <div class="col-2">
-
-                                <button class="btn btn-primary" type="button" name="updateTranCode">주문접수</button>
-
-                            </div>
-                        </c:if>
-                        <c:if test="${purchase.orderStatus == 2}">
-                            <div class="col-2"> 상호 : ${purchase.orderTruckId.truckName}</div>
-                            <div class="col-5">
-                                <button class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle"
-                                        type="button">주문거절
-                                </button>
-                            </div>
-                            <div class="col-5">
-
-                                <button class="btn btn-primary" type="button" name="updateTranCode">픽업요청</button>
-
-                            </div>
-                        </c:if>
-                        <c:if test="${purchase.orderStatus == 3}">
-                            <div class="col-2"> 상호 : ${purchase.orderTruckId.truckName}</div>
-                            <div class="col-5">
-
-                            </div>
-                            <div class="col-5">
-
-                                <button class="btn btn-primary" type="button" name="updateTranCode">픽업완료</button>
-                            </div>
-                        </c:if>
-                        <c:if test="${purchase.orderStatus == 4}">
-                            <div class="col-2"> 상호 : ${purchase.orderTruckId.truckName}</div>
-                            <div class="col-5">
-
-                            </div>
-                            <div class="col-5">
-
-                                주문처리가 완료되었습니다
-                            </div>
-                        </c:if>
-                        <c:if test="${purchase.orderStatus == 5}">
-                            <div class="col-2"> 상호 : ${purchase.orderTruckId.truckName}</div>
-                            <div class="col-5">
-
-                            </div>
-                            <div class="col-5">
-
-                                주문취소된 메뉴 입니다
-                            </div>
-                        </c:if>--%>
 
                     </div>
                     <hr class="my-2">
@@ -365,12 +288,15 @@
                             <div class="row" id="oRt">
                                 <label for="orderRequest" class="col-form-label">주문요청사항 :</label>
                                 <textarea class="form-control" id="orderRequest" name="orderRequest"
-                                          value="<%--${purchase.orderRequest}--%>" disabled><%--${purchase.orderRequest}--%></textarea>
+                                          value="" disabled></textarea>
+                            </div>
+                            <div class="row" id="cancelOrder">
+
                             </div>
                             <br>
                             <div class="row" id="opt">
                                 <label for="orderRequest" class="col-form-label">픽업희망시간
-                                    : <%--${purchase.orderPickUpTime}--%></label>
+                                    : </label>
                             </div>
                             <hr class="my-2">
                             <div class="row" id="list">
@@ -379,7 +305,7 @@
 
                                 <div id="order"></div>
 
-                                <div id="total"><p class="text-end">결제금액 : <%--${purchase.payPrice}--%></p> </div>
+                                <div id="total"><p class="text-end">결제금액 : </p> </div>
                             </div>
 
                         </div>
@@ -395,11 +321,7 @@
                                 <label for="orderRequest" class="col-form-label">고객정보
                                     : </label>
                             </div>
-                           <%-- <input type="hidden" name="payId" id="payId" value="&lt;%&ndash;${purchase.payId}&ndash;%&gt;">
-                            <input type="hidden" name="purchaseOrder" id="purchaseOrder" value="&lt;%&ndash;${purchase.orderNo}&ndash;%&gt;">
-                            <input type="hidden" name="truck" value="&lt;%&ndash;${purchase.orderTruckId.truckId}&ndash;%&gt;">
-                            <input type="hidden" name="cookingTime" value="&lt;%&ndash;${purchase.orderCookingTime}&ndash;%&gt;">
-                            <input type="hidden" name="truckBusiStatus" value="&lt;%&ndash;${truck.truckBusiStatus}&ndash;%&gt;">--%>
+
                             <div class="row" id="img">
 
 
@@ -415,35 +337,24 @@
                             </div>
                             <br>
                             <div class="row" id="orNo">
-                                주문번호 :<%--${purchase.orderNo}--%>
+                                주문번호 :
                             </div>
                             <br>
                             <div class="row" id="paDa">
-                                주문일시 :<%--${purchase.payDateTime}--%>
+                                주문일시 :
                             </div>
                             <br>
                             <div class="row" id="usUN">
-                                이름 : <%--${purchase.orderUserId.userName}--%>
+                                이름 :
                             </div>
                             <br>
                             <div class="row" id="usUP">
-                                연락처 :<%-- ${purchase.orderUserId.userPhone}--%>
+                                연락처 :
                             </div>
                             <br>
 
                             <div class="row" id="paOp">
-                    <%--            <c:if test="${purchase.payOption == 0}">
-                                    결제방법 : 휴대폰결제
-                                </c:if>
-                                <c:if test="${purchase.payOption == 1}">
-                                    결제방법 : 카카오페이
-                                </c:if>
-                                <c:if test="${purchase.payOption == 2}">
-                                    결제방법 : 신용카드
-                                </c:if>
-                                <c:if test="${purchase.payOption == 3}">
-                                    결제방법 : 무통장입금
-                                </c:if>--%>
+
                             </div>
 
                         </div>
@@ -550,6 +461,78 @@
                 var CookingTime = "";
                 var orderMenuHidden = "";
                 var pointNoCouponNo = "";
+                var cancel = "";
+
+
+
+
+
+
+               switch(data.purchase.orderCancelReason) {
+                   case 1:
+                       cancel = "<div style='margin-bottom: 30px;'>" +
+                           " <label  class='form-label label-name'>주문취소사유</label>" +
+                           "<input type='text' class='form-control' value='구매의사 취소'  readonly style='width: 340px;' >" +
+                           "</div>";
+                       break;
+                   case 2 :
+                       cancel = "<div style='margin-bottom: 30px;'>" +
+                           " <label  class='form-label label-name'>주문취소사유</label>" +
+                           "<input type='text' class='form-control' value='메뉴 및 수량 변경'  readonly style='width: 340px;' >" +
+                           "</div>";
+                       break;
+                   case 3 :
+                       cancel = "<div style='margin-bottom: 30px;'>" +
+                           " <label  class='form-label label-name'>주문취소사유</label>" +
+                           "<input type='text' class='form-control' value='주문접수 지연'  readonly style='width: 340px;' >" +
+                           "</div>";
+                       break;
+                   case 4 :
+                       cancel = "<div style='margin-bottom: 30px;'>" +
+                           " <label  class='form-label label-name'>주문취소사유</label>" +
+                           "<input type='text' class='form-control' value='기 타'  readonly style='width: 340px;' >" +
+                           "</div>";
+                       break;
+               }
+                switch(data.purchase.orderNopeReason){
+                case 1 :
+                    cancel = "<div style='margin-bottom: 30px;'>"+
+                        "<label  class='form-label label-name'>주문거절사유</label>"+
+                        "<input type='text' class='form-control' value='고객 요청' readonly style='width: 340px;' >"
+                    break;
+                case 2 :
+                    cancel = "<div style='margin-bottom: 30px;'>"+
+                        "<label  class='form-label label-name'>주문거절사유</label>"+
+                        "<input type='text' class='form-control' value='고객 정보 부정확' readonly style='width: 340px;' >"
+                    break;
+                case 3 :
+                    cancel = "<div style='margin-bottom: 30px;'>"+
+                        "<label  class='form-label label-name'>주문거절사유</label>"+
+                        "<input type='text' class='form-control' value='주문 지연' readonly style='width: 340px;' >"
+                    break;
+                case 4 :
+                    cancel = "<div style='margin-bottom: 30px;'>"+
+                        "<label  class='form-label label-name'>주문거절사유</label>"+
+                        "<input type='text' class='form-control' value='재료 소진' readonly style='width: 340px;' >"
+                    break;
+                case 5 :
+                    cancel = "<div style='margin-bottom: 30px;'>"+
+                        "<label  class='form-label label-name'>주문거절사유</label>"+
+                        "<input type='text' class='form-control' value='기 타' readonly style='width: 340px;' >"
+                    break;
+                }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                 usId ="<input type='hidden' name='usId' value='"+data.purchase.orderUserId.userId+"'/>"+data.purchase.orderUserId.userId;
@@ -659,6 +642,7 @@
                 $("#CookingTime").html(CookingTime);
                 $("#orderMenuHidden").html(orderMenuHidden);
                 $("#orderMenuHidden").append(pointNoCouponNo);
+                $("#cancelOrder").html(cancel);
 
 
 
@@ -667,77 +651,200 @@
                 var menuList = [];
                 var forOneFirst=0;
                 var totalPrice =0;
+
+
+
+                var odMenuNameL;
+                var odOptionGroupNameL;
+                var odOptionNameL;
+                var odMenuQtyL;
+                var odMenuPriceL;
+                var odOptionPriceL;
+                var odMenuImageL;
+
+                var totototoprice =0; // 전체 금액
+                var totototoqty =0; // 수량
+                var pricepriceprice =0 // 임시 가격
+
+                var menuCount = 0;
+
+                var optionNameShow = []; // 이름 보여지게 할 값 만들기~ (최종)
+                var optionPriceShow = [];
+                var totalshow =0;
+
                 for(var i = 0; i<list.length; i++){
+                    var odMenuImage = list[i]['odMenuImage'];
+                    var odMenuName = list[i]['odMenuName'];
+                    var odMenuPrice = list[i]['odMenuPrice'];
+                    var odMenuQty = list[i]['odMenuQty'];
+                    var odMenuQtyFlag = list[i]['odMenuQtyFlag'];
+                    var odOptionName = list[i]['odOptionName'];
+                    var odOptionPrice = list[i]['odOptionPrice'];
+                    var odOptionGroupName = list[i]['odOptionGroupName'];
 
-                        console.log("처음 for문 안에 있다!");
-                        console.log("처음 beforeAnywayFirst[" + i + "]번째 세션 : " + list[i]);
+                    /* HHJ */
 
-
-
-                        if (list[i]['odMenuQtyFlag'] == 0) {//플래그0일 때 메뉴 수량, 이름 출력
-
-
-                            /*수량 변경을 위해서 카운트추가*/
-                            menuList += "" +
-                                "<div class=\"card mb-3\">" +
-                            " <div class=\"row g-0\">" +
-                            "<div class=\"col-md-4\">" +
-                            "<img src=\"/resources/menu/"+list[i]['odMenuImage']+"\" class=\"img-fluid rounded-start\" alt=\"image\">" +
-                            "</div>" +
-                            "<div class=\"col-md-8\">" +
-                            "<div class=\"card-body\">" +
-                            "<h5 class=\"card-title\">" + list[i]['odMenuName'] ,list[i]['odMenuPrice'] + "</h5>" +
-                            "<p class=\"card-text\"><small class=\"text-muted\">수량 " +  list[i]['odMenuQty'] + "  :</small><br>" ;
+                    if (optionNameShow[menuCount] == undefined){
+                        optionNameShow[menuCount] = " ";
+                    }
 
 
+                    if ( odMenuQtyFlag == '0'){
+
+                        pricepriceprice = Number(odMenuPrice);
+                        totototoqty = Number(odMenuQty);
+                        menuCount++;
+                        totalshow=0;
+                        //pricepriceprice *= qtyqtyqty;
+                        //console.log("pricepriceprice *= qtyqtyqty" + (pricepriceprice *= qtyqtyqty));
+                        //tttttppppprrrr += Number(pricepriceprice)// 처음 들어온 값도 0, 이후엔 곱해짐 // 기존값 더함
+                        //qtyqtyqty = Number(odMenuQty); // 수량값 기억하고 있도록 for문 밖에 선언해준 qtyqtyqty 에 저장
+                    }else { // 옵션이면
+                         //console.log("odOptionName : "+odOptionName)
+                        pricepriceprice = Number(odOptionPrice);
+                        optionNameShow[Number(menuCount-1)] += odOptionName + "(+" + odOptionPrice + ") ";
+
+                    }
+                    //console.log("optionNameShow[menuCount]: "+optionNameShow[menuCount])
+                    totototoprice+= Number(pricepriceprice * totototoqty);
+                    totalshow += Number(pricepriceprice * totototoqty);
+                    optionPriceShow[Number(menuCount-1)] = totalshow;
+                    console.log("ttototototo :: " + totototoprice)
+
+                    var odMenuImageCopy;
+                    var odMenuNameCopy;
+                    var odMenuQtyCopy;
 
 
-                            if(totalPrice == undefined){
-                                totalPrice = Number(list[i]['odMenuPrice']);
-                            }else {
-                                totalPrice = Number(totalPrice) + Number(list[i]['odMenuPrice']);
-                            }
-                            forOneFirst += 1;
-                            if (list[i + 1] != null) { //만약 다음 애가 있는데
-                                if (list[i + 1]['odMenuQtyFlag'] == 0) { //수량제공메뉴이면(지금 이게 수량제공메뉴란 소리니까 닫아줘야함)
-                                 }
-
-                            }
-                        } else { //플래그 1일 때
-                            // for(var j=i+1; j<beforeAnyway.length; j++){ //옵션그룹 화면에 뿌려주기 위한 for문 (수량제공메뉴+1부터
-                            //     if(beforeAnyway[j]['odMenuQtyFlag']==1){
-                            menuList += "" +
-                                "<p class=\"card-text\"><small class=\"text-muted\">옵션 " + list[i]['odOptionGroupName'] + " :" + list[i]['odOptionName'] + "</small><br>" +
-                                "<small class=\"text-muted\">  가격 :" + list[i]['odOptionPrice'] + "원 </small></p>" ;
+                    if (odMenuNameCopy != undefined && odMenuQtyFlag == 0) {
 
 
+                        console.log("미지의 세계")
+                        odMenuNameCopy = odMenuNameCopy + "," + odMenuName;
+                        odMenuImageCopy = odMenuImageCopy + "," + odMenuImage;
+                        odMenuQtyCopy = odMenuQtyCopy + "," + odMenuQty;
 
+                    } else if (odMenuNameCopy == undefined) {
+                        console.log("미지의 세계111111111")
+                        odMenuNameCopy = odMenuName;
+                        odMenuImageCopy = odMenuImage;
+                        odMenuQtyCopy = odMenuQty;
 
-                            totalPrice = Number(totalPrice) + Number(list[i]['odOptionPrice']);
-                            forOneFirst += 1;
-                            if (list[i + 1] != null) {
-                                if (list[i + 1]['odMenuQtyFlag'] == 0) {
-                                    menuList += "</div><span class=\"text-muted\">" + totalPrice + "원</span></li>"+
-                                        "</div>" +
-                                        "</div>" +
-                                        "</div>" +
-                                        "</div>"
-                                }
-
-                            }
-
-                            // finalCart+="</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"원</span></li>";
-                            // i=forOne;
-
+                        console.log("미지의 세계 222222")
 
 
                     }
 
+                    odMenuNameL = odMenuNameCopy.split(",");
+                    odMenuImageL = odMenuImageCopy.split(",");
+                    odMenuQtyL = odMenuQtyCopy.split(",");
+
+
+                    console.log("미지의 세계 3333333333")
+
+
+
+                    /*                       console.log("처음 for문 안에 있다!");
+                                           console.log("처음 beforeAnywayFirst[" + i + "]번째 세션 : " + list[i]);
+
+
+
+                                           if (list[i]['odMenuQtyFlag'] == 0) {//플래그0일 때 메뉴 수량, 이름 출력
+
+
+                                               /!*수량 변경을 위해서 카운트추가*!/
+                                               menuList += "" +
+                                                   "<div class=\"card mb-3\">" +
+                                               " <div class=\"row g-0\">" +
+                                               "<div class=\"col-md-4\">" +
+                                               "<img src=\"/resources/menu/"+list[i]['odMenuImage']+"\" class=\"img-fluid rounded-start\" alt=\"image\">" +
+                                               "</div>" +
+                                               "<div class=\"col-md-8\">" +
+                                               "<div class=\"card-body\">" +
+                                               "<h5 class=\"card-title\">" + list[i]['odMenuName'] ,list[i]['odMenuPrice'] + "</h5>" +
+                                               "<p class=\"card-text\"><small class=\"text-muted\">수량 " +  list[i]['odMenuQty'] + "  :</small><br>" ;
+
+
+
+
+                                               if(totalPrice == undefined){
+                                                   totalPrice = Number(list[i]['odMenuPrice']);
+                                               }else {
+                                                   totalPrice = Number(totalPrice) + Number(list[i]['odMenuPrice']);
+                                               }
+                                               forOneFirst += 1;
+                                               if (list[i + 1] != null) { //만약 다음 애가 있는데
+                                                   if (list[i + 1]['odMenuQtyFlag'] == 0) { //수량제공메뉴이면(지금 이게 수량제공메뉴란 소리니까 닫아줘야함)
+                                                    }
+
+                                               }
+                                           } else { //플래그 1일 때
+                                               // for(var j=i+1; j<beforeAnyway.length; j++){ //옵션그룹 화면에 뿌려주기 위한 for문 (수량제공메뉴+1부터
+                                               //     if(beforeAnyway[j]['odMenuQtyFlag']==1){
+                                               menuList += "" +
+                                                   "<p class=\"card-text\"><small class=\"text-muted\">옵션 " + list[i]['odOptionGroupName'] + " :" + list[i]['odOptionName'] + "</small><br>" +
+                                                   "<small class=\"text-muted\">  가격 :" + list[i]['odOptionPrice'] + "원 </small></p>" ;
+
+
+
+
+                                               totalPrice = Number(totalPrice) + Number(list[i]['odOptionPrice']);
+                                               forOneFirst += 1;
+                                               if (list[i + 1] != null) {
+                                                   if (list[i + 1]['odMenuQtyFlag'] == 0) {
+                                                       menuList += "</div><span class=\"text-muted\">" + totalPrice + "원</span></li>"+
+                                                           "</div>" +
+                                                           "</div>" +
+                                                           "</div>" +
+                                                           "</div>"
+                                                   }
+
+                                               }
+
+                                               // finalCart+="</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"원</span></li>";
+                                               // i=forOne;
+
+
+
+                                       }
+                   */
                 }
 
                 /*alert(totalPrice) 총금액*/
-                $("#order").html(menuList);
+                /*$("#order").html(menuList);*/
+                for (var i = 0; i < list.length; i++) {
 
+
+                    console.log("odMenuImageL111"+odMenuImageL[i])
+                    console.log("odMenuNameL"+odMenuNameL[i])
+                    console.log("odMenuQtyL"+odMenuQtyL[i])
+                    console.log("optionNameShow"+optionNameShow[i])
+                    console.log("optionNameShow"+optionPriceShow[i])
+
+
+
+
+
+
+                    divElemApply1 = "<div class=\"card mb-3\">" +
+                        " <div class=\"row g-0\">" +
+                        "<div class=\"col-md-4\">" +
+                        "<img src=\"/resources/menu/"+odMenuImageL[i]+"\" class=\"img-fluid rounded-start\" alt=\"image\">" +
+                        "</div>" +
+                        "<div class=\"col-md-8\">" +
+                        "<div class=\"card-body\">" +
+                        "<h5 class=\"card-title\">" + odMenuNameL[i] + "</h5>" +
+                        "<p class=\"card-text\"><small class=\"text-muted\"><span class='badge' style='background-color: #fae100; color: #110000'>&nbsp;옵션&nbsp;</span> " + optionNameShow[i] + "  </small><br>" +
+                        "<small class=\"text-muted\"><span class='badge' style='background-color: #fae100; color: #110000'>&nbsp;수량&nbsp;</span> " + odMenuQtyL[i] + " <br><span class='badge' style='background-color: #fae100; color: #110000'>총 가격</span> " + optionPriceShow[i] + " </small></p>" +
+                        "</div>" +
+                        "</div>" +
+                        "</div>" +
+                        "</div>"
+
+
+                    $('#order').append(divElemApply1);
+
+                }
             }
         })
        /* self.location = "/purchase/getOrderList?truckId="+truckId+"&orderNo="+orderNo+"&search="+search;*/
