@@ -41,6 +41,7 @@
 			transition: 0.2s;
 			background-color: white;
 		}
+
 	</style>
 
 
@@ -196,7 +197,6 @@
 						<form class="row justify-content-center" id="user_pro_form" >
 							<input type="hidden" id="userId" name="userId" value="${user.userId}">
 							<div class="col-md-6 data-input-box">
-
 								<div class="data-input-box">
 									<div class="mb-3" style="text-align: center;">
 										<c:if test="${user.userProImg == null}">

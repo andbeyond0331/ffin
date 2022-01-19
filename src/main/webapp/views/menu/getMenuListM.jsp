@@ -11,6 +11,7 @@
 
 
     <style>
+
         .div.flex.card.h-100{
             float:left;
             height:500px;
@@ -23,17 +24,106 @@
             margin-right:142px;
             padding-left:190px;
         }
-    </style>
-
-
-
-    <style>
-
         .truckNameForMenu{
             color:black;
             font-weight: bolder;
             text-align: center;
         }
+
+        *, *:before, *:after {
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        html {
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            font-smooth: auto;
+            font-weight: 300;
+            line-height: 1.5;
+            color: #444;
+        }
+
+        body {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100vh;
+             background-color:#2c3e50
+        }
+        figure {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 375px;
+            height: 667px;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+            overflow: hidden;}
+        figure:hover {
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);}
+        figure:hover img {
+            transform: scale(1.25);
+        }
+        figure:hover figcaption {
+            bottom: 0;
+        }
+
+        figure h1 {
+            position: absolute;
+            top: 50px;
+            left: 20px;
+            margin: 0;
+            padding: 0;
+            color: white;
+            font-size: 60px;
+            font-weight: 100;
+            line-height: 1;
+        }
+
+        figure img {
+            height: 100%;
+            transition: 0.25s;
+        }
+        figure figcaption {
+            position: absolute;
+            bottom: -33%;
+            left: 0;
+            width: 100%;
+            margin: 0;
+            padding: 30px;
+            background-color: rgba(#000, 0.85);
+            box-shadow: 0 0 20px rgba(#000, 0.4);
+            color: white;
+            line-height: 1;
+            transition: 0.25s;
+        }
+        figure figcaption h3 {
+            margin: 0 0 20px;
+            padding: 0;
+        }
+        figure figcaption p {
+            font-size: 14px;
+            line-height: 1.75;
+        }
+        figure figcaptionbutton {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0 0;
+            padding: 10px 30px;
+            background-color: $color-2;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 14px;
+        }
+
     </style>
 
     <script>
@@ -91,8 +181,6 @@
 
 
         }
-
-
 
 
 // 옵션 모달에서 옵션 추가 버튼 클릭 시?
@@ -264,19 +352,13 @@
         }
 
 
-
-
     </script>
 
 
 </head>
+
 <body>
-<%--<jsp:include page="/views/navbar.jsp" />--%>
-<br>
-<br>
-<br>
-<br>
-<br>
+<jsp:include page="/views/navbar.jsp" />
 
 <!--////////////////모달 옵션그룹 추가 시작////////////-->
 
@@ -352,7 +434,6 @@
 
                     <script>
 
-
                         function setImage1Preview(event){
 
                             var DIVimage1preview = $('#image1preview');
@@ -379,8 +460,6 @@
                             };
 
                             reader.readAsDataURL(event.target.files[0]);
-
-
                         }
 
                         function setImage2Preview(event){
@@ -404,12 +483,8 @@
                                 img.setAttribute("src", event.target.result);
                                 img.setAttribute("style", "width:50%");
                                 document.querySelector("div#image2preview").appendChild(img);
-
                             };
-
                             reader.readAsDataURL(event.target.files[0]);
-
-
                         }
 
                         function setImage3Preview(event){
@@ -424,23 +499,16 @@
                             }else{
 
                                 DIVimage3preview.find('img').remove();
-
                             }
-
                             reader.onload = function(event){
                                 var img = document.createElement("img");
 
                                 img.setAttribute("src", event.target.result);
                                 img.setAttribute("style", "width:50%");
                                 document.querySelector("div#image3preview").appendChild(img);
-
                             };
-
                             reader.readAsDataURL(event.target.files[0]);
-
-
                         }
-
                     </script>
                 <!--//////////////////여기에 추가 메뉴 정보///////끄으으으읕//////////////////////////////////-->
                     <div id="here"></div>
@@ -511,290 +579,186 @@
 
 
 <!--  화면구성 div Start /////////////////////////////////////-->
-<div class="container">
 
-    <div class="page-header">
-        <h3 class="truckNameForMenu">${truck.truckName} 메뉴 관리</h3>
-    </div>
+    <section class="client_section layout_padding" style="padding-top: 30px;">
+        <div class="container">
+            <div class="col-md-11 col-lg-10 mx-auto">
 
-    <!--메뉴 추가 버튼-->
-    <a class="btn btn-warning" role="button" onclick="javascript:fncSigMenu('${truck.truckId}')" >메뉴 추가</a>
-<%--    <a class="btn btn-warning" data-toggle="modal" href="#menuModal" role="button" onclick="fncSigMenu(${truck.truckId})" >메뉴 추가</a> todo : 대표메뉴 로직--%>
-    <hr/>
-
-    <script>
-        // 메뉴 추가 눌렀을 때 메뉴 없으면(메뉴가 하나라도 있다면 대표메뉴일수밖에 없음) 대표메뉴 스위치 버튼 선택상태로 되어 있고 비활성화(못 누르도록, 눌러도 alert로 "대표메뉴는 최소 하나 이상이어야 합니다".)
-        //                  대표메뉴 있으면 대표메뉴 스위치 버튼 선택안함 상태로 되어 있고, 누르면 대표메뉴가 이 메뉴로 바뀝니다. confirm창
-
-        function fncSigMenu(truckId){
-
-            //
-            $.ajax({
-
-                url:"/menu/json/isThereSigMenu/"+truckId,
-                method:"get",
-                success:function(data){
-                    console.log("data.menu : " + data.menu[0]);
-                    var isSigMenuButton="";
-                    if (data.menu[0]==undefined){
-                        iamSig=null;
-                        iamIsThereSM = 'no';
-                        isSigMenuButton +=
-                            " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" name=\"isSigMenu\" value=\"1\" data-val=\"disabled\" checked disabled>"+
-                            "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴여부</label>";
-
-                    }else{
-
-                        iamSig=data.menu;
-                        iamIsThereSM = 'yes';
-                        isSigMenuButton+=
-
-                            " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" name=\"isSigMenu\" value=\"0\" data-val=\"abled\">"+
-                            "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
-
-
-                        // $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton); //todo 대표메뉴가 없어서 나온 버튼이니까 disabled 해놓고 클릭 시 대표메뉴는 최소 1개 있어야 합니다. alert 띄우기
-                    }
-                    $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
-
-                }
-
-
-            });
-
-            $('#menuModal').modal('show');
-
-        }
-
-
-        //==========대표메뉴를 클릭했을 때!===========
-
-        $(function(){
-
-            var divIsSigMenu = $('div#isThereSigMenu.form-check.form-switch');
-
-            $("div#sigMenu").on("click", function(){
-
-                alert("onclick");
-                var isSigMenuButton ="";
-
-                if(divIsSigMenu.find('input#isSigMenu').data("val")=='disabled'){
-                    alert("대표메뉴는 최소 1개 이상 있어야 합니다.");
-                }else if(divIsSigMenu.find('input#isSigMenu').val()==0){
-
-                    if(!confirm("대표메뉴가 이미 있습니다. 변경하시겠습니까?")){
-                        isSigMenuButton+=
-                            " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" value=\"0\" data-val=\"abled\" name=\"isSigMenu\">"+
-                            "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
-                        $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
-                    }else{
-                        isSigMenuButton +=
-                            " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" value=\"1\" data-val=\"abled\" name=\"isSigMenu\" checked>"+
-                            "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
-                        $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
-
-                    }
-                }else{
-
-                    if(confirm("이전 대표메뉴로 다시 변경하시겠습니까?")){
-                        isSigMenuButton+=
-                            " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" value=\"0\" data-val=\"abled\" name=\"isSigMenu\">"+
-                            "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
-                        $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
-                    }else{
-                        isSigMenuButton +=
-                            " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" value=\"1\" data-val=\"abled\" name=\"isSigMenu\" checked>"+
-                            "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
-                        $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
-
-                    }
-
-                }
-
-
-            });
-
-        });
-    </script>
-
-
-
-
-
-
-</div>
-
-
-<!--20220117 메뉴 스타일 바꾸기 시도 -->
-
-<style>
-    .single_menu {
-        position: relative;
-        margin-bottom: 75px;
-        transition: .3s;
-    }
-    .single_menu:hover img{
-        -webkit-clip-path: polygon(0% 0%, 100% 0, 100% 50%, 100% 100%, 0% 100%);
-        clip-path: polygon(0% 0%, 100% 0, 100% 50%, 100% 100%, 0% 100%);
-
-    }
-    .single_menu img {
-        width: 33%;
-        position: absolute;
-        height: 140px;
-        -webkit-clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
-        clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
-        transition: .3s;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-    }
-    .menu_content {
-        padding-left: 200px;
-    }
-    .menu_content h4 {
-        font-size: 25px;
-        font-weight: 300;
-        border-bottom: 1px dashed #c0392b;
-        line-height: 2;
-        text-transform: capitalize;
-    }
-    .menu_content h4 span {
-        font-size: 25px;
-        font-weight: 800;
-        float: right;
-        font-style: italic;
-        color: #c0392b;
-    }
-    .menu_content p {
-        font-weight: 200;
-        font-size: 16px;
-        letter-spacing: 1px;
-    }
-    .menu_btn.btn.btn-danger {
-        margin: 0 auto;
-        display: block;
-        width: 140px;
-    }
-    /*Menu ends*/
-    .menu_btn.btn.btn-danger {
-        margin: 0 auto;
-        display: block;
-        width: 140px;
-    }
-    .btn.btn-danger {
-        background: #c0392b;
-        border: 1px solid #c0392b;
-        transition: .3s;
-        position: relative;
-        z-index: 1;
-        text-transform: capitalize;
-        font-weight: 700;
-        overflow: hidden;
-        padding: 15px 25px;
-    }
-    .btn.btn-danger::before {
-        position: absolute;
-        content: '';
-        background: #e74c3c;
-        width: 100%;
-        height: 100%;
-        left: -100%;
-        top: 100%;
-        transition: .3s;
-        z-index: -1;
-    }
-    .btn.btn-danger:hover:before{
-        top: 0;
-        left: 0;
-    }
-</style>
-<div class="container-fluid content-row">
-    <div class="row mb-3">
-
-        <c:set var="i" value="0"/>
-        <c:forEach var="menu" items="${list}">
-            <c:set var="i" value="${i+1}"/>
-            <div class="single_menu">
-                <img src="/resources/menu/${menu.menuImg1}" alt="${menu.menuName}">
-                <div class="menu_content">
-                    <h4>${menu.menuName}  <span>${menu.menuPrice}원</span></h4>
-                    <p>${menu.menuDetail}</p>
+                <div class="detail-box" style="margin-top: 100px; margin-bottom: 50px;">
+                    <i class="fa fa-quote-left" aria-hidden="true"></i>
+                    <h4 class="truckNameForMenu" style="margin-top: 10px;">
+                        ${truck.truckName} 메뉴 관리
+                    </h4>
                 </div>
-            </div>
-<%--            <div class="flex card h-100" style="width: 17rem; margin-bottom:15px; margin-left: 10px;">--%>
-<%--                <img class="card-img-top" src="/resources/menu/${menu.menuImg1}" alt="Card image cap"--%>
-<%--                     style="border-bottom: 1px solid #eee; height: 200px;">--%>
-<%--                <div class="card-body" style="text:center ">--%>
-<%--                    <h3 class="align-content-center"> <strong style="text:center;">${menu.menuName}</strong></h3>--%>
-<%--                    <h3> ${menu.menuPrice}원</h3>--%>
-<%--                    <ul class='card-body-ul'>--%>
-<%--                        <h4>${menu.menuDetail}</h4>--%>
-<%--                    </ul>--%>
-<%--                    <div class="btn-detail">--%>
-<%--                        <button class="button btn-warning" name="deleteMenu" onclick="deleteMenu(${menu.menuNo});">--%>
-<%--                            메뉴 삭제하기--%>
-<%--                            <input type="hidden" name="menuNo" value="${menu.menuNo}"/></button>--%>
-<%--                        <button class="button is-warning is-light" name="getMenu"--%>
-<%--                                style='margin-left: 100px; margin-bottom: 13px; height: 25px'--%>
-<%--                                onclick="updateMenu(${menu.menuNo});"--%>
-<%--                        >--%>
-<%--                            메뉴 수정하기--%>
-<%--                            <input type="hidden" name="menuNo" value="${menu.menuNo}"/>--%>
-<%--                        </button>--%>
+                <!--메뉴 추가 버튼-->
+                <div style="margin: 0;">
+                <a class="btn btn-default" role="button" onclick="javascript:fncSigMenu('${truck.truckId}')" >메뉴 추가</a>
+                <%--<a class="btn btn-warning" data-toggle="modal" href="#menuModal" role="button" onclick="fncSigMenu(${truck.truckId})" >메뉴 추가</a> todo : 대표메뉴 로직--%>
+                </div>
 
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-            <%--</div>--%>
-        </c:forEach>
-    </div>
+                <hr/>
 
-</div>
-
-
-<!--  메뉴 목록 div Start /////////////////////////////////////-->
-
-
-<div class="container-fluid content-row">
-    <div class="row mb-3">
-
-        <c:set var="i" value="0"/>
-        <c:forEach var="menu" items="${list}">
-            <c:set var="i" value="${i+1}"/>
-            <div class="flex card h-100" style="width: 17rem; margin-bottom:15px; margin-left: 10px;">
-                <img class="card-img-top" src="/resources/menu/${menu.menuImg1}" alt="Card image cap"
-                     style="border-bottom: 1px solid #eee; height: 200px;">
-                <div class="card-body" style="text:center ">
-                    <h3 class="align-content-center"> <strong style="text:center;">${menu.menuName}</strong></h3>
-                    <h3> ${menu.menuPrice}원</h3>
-                    <ul class='card-body-ul'>
-                        <h4>${menu.menuDetail}</h4>
-                    </ul>
-                    <div class="btn-detail">
-                        <button class="button btn-warning" name="deleteMenu" onclick="deleteMenu(${menu.menuNo}, ${menu.isSigMenu});">
-                            메뉴 삭제
-                            <input type="hidden" name="menuNo" value="${menu.menuNo}"/></button>
-                        <button class="button is-warning is-light" name="getMenu"
-                                style='margin-left: 100px; margin-bottom: 13px; height: 25px'
-                                onclick="updateMenu(${menu.menuNo});"
-                        >
-                            메뉴 수정
-                            <input type="hidden" name="menuNo" value="${menu.menuNo}"/>
+                <figure class="image-block">
+                    <h1>The Beach</h1>
+                    <img src="https://images.pexels.com/photos/1680140/pexels-photo-1680140.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="" />
+                    <figcaption>
+                        <h3>
+                            More Info
+                        </h3>
+                        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+                        <button>
+                            More Info
                         </button>
+                    </figcaption>
+                </figure>
 
-                    </div>
-                </div>
             </div>
-            <%--</div>--%>
-        </c:forEach>
-    </div>
+        </div>
+    </section>
+        <script>
+            // 메뉴 추가 눌렀을 때 메뉴 없으면(메뉴가 하나라도 있다면 대표메뉴일수밖에 없음) 대표메뉴 스위치 버튼 선택상태로 되어 있고 비활성화(못 누르도록, 눌러도 alert로 "대표메뉴는 최소 하나 이상이어야 합니다".)
+            //  대표메뉴 있으면 대표메뉴 스위치 버튼 선택안함 상태로 되어 있고, 누르면 대표메뉴가 이 메뉴로 바뀝니다. confirm창
+            function fncSigMenu(truckId){
 
-</div>
-<!--  메뉴 목록 div End /////////////////////////////////////-->
+                $.ajax({
 
+                    url:"/menu/json/isThereSigMenu/"+truckId,
+                    method:"get",
+                    success:function(data){
+                        console.log("data.menu : " + data.menu[0]);
+                        var isSigMenuButton="";
+                        if (data.menu[0]==undefined){
+                            iamSig=null;
+                            iamIsThereSM = 'no';
+                            isSigMenuButton +=
+                                " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" name=\"isSigMenu\" value=\"1\" data-val=\"disabled\" checked disabled>"+
+                                "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴여부</label>";
+
+                        }else{
+
+                            iamSig=data.menu;
+                            iamIsThereSM = 'yes';
+                            isSigMenuButton+=
+
+                                " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" name=\"isSigMenu\" value=\"0\" data-val=\"abled\">"+
+                                "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
+
+
+                            // $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton); //todo 대표메뉴가 없어서 나온 버튼이니까 disabled 해놓고 클릭 시 대표메뉴는 최소 1개 있어야 합니다. alert 띄우기
+                        }
+                        $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
+                    }
+                });
+
+                $('#menuModal').modal('show');
+            }
+
+            //==========대표메뉴를 클릭했을 때!===========
+
+            $(function(){
+
+                var divIsSigMenu = $('div#isThereSigMenu.form-check.form-switch');
+
+                $("div#sigMenu").on("click", function(){
+
+                    alert("onclick");
+                    var isSigMenuButton ="";
+
+                    if(divIsSigMenu.find('input#isSigMenu').data("val")=='disabled'){
+                        alert("대표메뉴는 최소 1개 이상 있어야 합니다.");
+                    }else if(divIsSigMenu.find('input#isSigMenu').val()==0){
+
+                        if(!confirm("대표메뉴가 이미 있습니다. 변경하시겠습니까?")){
+                            isSigMenuButton+=
+                                " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" value=\"0\" data-val=\"abled\" name=\"isSigMenu\">"+
+                                "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
+                            $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
+                        }else{
+                            isSigMenuButton +=
+                                " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" value=\"1\" data-val=\"abled\" name=\"isSigMenu\" checked>"+
+                                "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
+                            $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
+
+                        }
+                    }else{
+
+                        if(confirm("이전 대표메뉴로 다시 변경하시겠습니까?")){
+                            isSigMenuButton+=
+                                " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" value=\"0\" data-val=\"abled\" name=\"isSigMenu\">"+
+                                "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
+                            $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
+                        }else{
+                            isSigMenuButton +=
+                                " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" value=\"1\" data-val=\"abled\" name=\"isSigMenu\" checked>"+
+                                "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴를 이 메뉴로 변경하기</label>";
+                            $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
+
+                        }
+                    }
+                });
+            });
+        </script>
+
+        <!--20220117 메뉴 스타일 바꾸기 시도 -->
+
+<%--        <div class="container-fluid content-row">
+            <div class="row mb-3">
+
+                <c:set var="i" value="0"/>
+                <c:forEach var="menu" items="${list}">
+                    <c:set var="i" value="${i+1}"/>
+                    <div class="single_menu">
+                        <img src="/resources/menu/${menu.menuImg1}" alt="${menu.menuName}">
+                        <div class="menu_content">
+                            <h4>${menu.menuName}  <span>${menu.menuPrice}원</span></h4>
+                            <p>${menu.menuDetail}</p>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+
+        </div>--%>
+
+
+    <!--  메뉴 목록 div Start /////////////////////////////////////-->
+<%--        <div class="container-fluid content-row">
+            <div class="row mb-3">
+
+                <c:set var="i" value="0"/>
+                <c:forEach var="menu" items="${list}">
+                    <c:set var="i" value="${i+1}"/>
+                    <div class="flex card h-100" style="width: 17rem; margin-bottom:15px; margin-left: 10px;">
+                        <img class="card-img-top" src="/resources/menu/${menu.menuImg1}" alt="Card image cap"
+                             style="border-bottom: 1px solid #eee; height: 200px;">
+                        <div class="card-body" style="text:center ">
+                            <h3 class="align-content-center"> <strong style="text:center;">${menu.menuName}</strong></h3>
+                            <h3> ${menu.menuPrice}원</h3>
+                            <ul class='card-body-ul'>
+                                <h4>${menu.menuDetail}</h4>
+                            </ul>
+                            <div class="btn-detail">
+                                <button class="button btn-warning" name="deleteMenu" onclick="deleteMenu(${menu.menuNo}, ${menu.isSigMenu});">
+                                    메뉴 삭제
+                                    <input type="hidden" name="menuNo" value="${menu.menuNo}"/></button>
+                                <button class="button is-warning is-light" name="getMenu"
+                                        style='margin-left: 100px; margin-bottom: 13px; height: 25px'
+                                        onclick="updateMenu(${menu.menuNo});"
+                                >
+                                    메뉴 수정
+                                    <input type="hidden" name="menuNo" value="${menu.menuNo}"/>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                    &lt;%&ndash;</div>&ndash;%&gt;
+                </c:forEach>
+            </div>
+
+        </div>--%>
+    <!--  메뉴 목록 div End /////////////////////////////////////-->
 
 </body>
-
 
 <script>
 
@@ -833,7 +797,4 @@
     }
 </script>
 
-
-
-</body>
 </html>
