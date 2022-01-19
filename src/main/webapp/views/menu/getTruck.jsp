@@ -8,6 +8,8 @@
     <title>메뉴 목록</title>
     <jsp:include page="../../common/lib.jsp"/>
 
+    <link href="../resources/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
+
     <style>
 
         #dataTable thead tr th, #dataTable tbody tr td{
@@ -68,6 +70,211 @@
         #inquiryAnsContent{
             min-height: 150px;
         }
+        a, a:hover {
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+        .postcard {
+            flex-wrap: wrap;
+            display: flex;
+
+            box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
+            border-radius: 10px;
+            margin: 0 0 2rem 0;
+            overflow: hidden;
+            position: relative;
+            color: #ffffff;
+        }
+        .postcard.dark {
+            background-color: #18151f;
+        }
+        .postcard.light {
+            background-color: #ffffff;
+        }
+        .t-dark {
+            color: #18151f;
+        }
+        .postcard a {
+            color: inherit;
+        }
+        .postcard h1, .h1 {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            line-height: 1.2;
+            text-align: initial;
+        }
+        .small {
+            font-size: 80%;
+            text-align: initial;
+        }
+        .postcard__title {
+            font-size: 1.25rem;
+        }
+        .postcard__img {
+            max-height: 180px;
+            width: 100%;
+            object-fit: cover;
+            position: relative;
+        }
+        .postcard__img_link {
+            display: contents;
+        }
+        .postcard__bar {
+            width: 50px;
+            height: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background-color: #fae100;
+            transition: width 0.2s ease;
+        }
+
+        .postcard__text {
+            padding: 1.5rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .postcard__preview-txt {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: justify;
+            height: 100%;
+        }
+        .postcard__tagbox {
+            display: flex;
+            flex-flow: row wrap;
+            font-size: 14px;
+            margin: 20px 0 0 0;
+            padding: 0;
+            justify-content: center;
+        }
+        .tag__item {
+            display: inline-block;
+            background: rgb(255, 255, 255);
+            border-radius: 3px;
+            padding: 2.5px 10px;
+            margin: 0 5px 5px 0;
+            cursor: default;
+            user-select: none;
+            transition: background-color 0.3s;
+            border-radius: 20px;
+        }
+        .tag__item:hover{
+            background: rgb(250, 225, 0);
+            border-radius: 20px;
+        }
+        .postcard:before{
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-image: linear-gradient(-70deg, #ffffff, transparent 50%);
+            opacity: 1;
+            border-radius: 10px;
+        }
+        .postcard:hover .postcard__bar {
+            width: 100px;
+        }
+
+        @media screen and (min-width: 769px) {
+
+            .postcard {
+                flex-wrap: inherit;
+            }
+
+            .postcard__title {
+                font-size: 2rem;
+            }
+
+            .postcard__tagbox {
+                justify-content: start;
+            }
+
+            .postcard__img {
+                max-width: 300px;
+                max-height: 100%;
+                transition: transform 0.3s ease;
+            }
+
+            .postcard__text {
+                padding: 3rem;
+                width: 100%;
+            }
+
+            .media.postcard__text:before {
+                content: "";
+                position: absolute;
+                display: block;
+                background: #ffffff;
+                top: -20%;
+                height: 130%;
+                width: 55px;
+            }
+
+            .postcard:hover .postcard__img {
+                transform: scale(1.1);
+            }
+
+            .postcard:nth-child(2n+1) {
+                flex-direction: row;
+            }
+
+            .postcard:nth-child(2n+0) {
+                flex-direction: row-reverse;
+            }
+
+            .postcard:nth-child(2n+1) .postcard__text::before {
+                left: -12px !important;
+                transform: rotate(4deg);
+            }
+
+            .postcard:nth-child(2n+0) .postcard__text::before {
+                right: -12px !important;
+                transform: rotate(-4deg);
+            }
+        }
+
+        @media screen and (min-width: 1024px){
+            .postcard__text {
+                padding: 2rem 3.5rem;
+            }
+
+            .postcard__text:before {
+                content: "";
+                position: absolute;
+                display: block;
+
+                top: -20%;
+                height: 130%;
+                width: 55px;
+            }
+
+            .postcard.dark {
+                background: #18151f;
+            }
+            .postcard__text:before {
+                background: #ffffff;
+            }
+            .postcard.light {
+                background: rgb(255, 255, 255);
+            }
+            .postcard__text:before {
+                background: rgb(255, 255, 255);
+            }
+        }
+
+        .postcard .postcard__tagbox .blue.play:hover {
+            background: #fae100;
+        }
+        .blue .postcard__title:hover {
+            color: #fae100;
+        }
+        .blue .postcard__bar {
+            background-color: #fae100;
+        }
+
     </style>
 
 
@@ -1483,73 +1690,9 @@ $(function (){
         });
     </script>
 
-    <!--별점-->
-<%--    <style>--%>
-
-<%--        &lt;%&ndash;        별점 css&ndash;%&gt;--%>
-<%--        .star-ratings {--%>
-<%--            color: #aaa9a9;--%>
-<%--            position: relative;--%>
-<%--            unicode-bidi: bidi-override;--%>
-<%--            width: max-content;--%>
-<%--            -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */--%>
-<%--            -webkit-text-stroke-width: 1.3px;--%>
-<%--            -webkit-text-stroke-color: #2b2a29;--%>
-<%--            font-size: 30px;--%>
-<%--        }--%>
-
-<%--        .star-ratings-fill {--%>
-<%--            color: #fff58c;--%>
-<%--            padding: 0;--%>
-<%--            position: absolute;--%>
-<%--            z-index: 1;--%>
-<%--            display: flex;--%>
-<%--            top: 0;--%>
-<%--            left: 0;--%>
-<%--            /*overflow: hidden;*/--%>
-<%--            -webkit-text-fill-color: gold;--%>
-<%--        }--%>
-
-<%--        .star-ratings-base {--%>
-<%--            z-index: 0;--%>
-<%--            padding: 0;--%>
-<%--        }--%>
-
-<%--        .truckNameForMenu{--%>
-<%--            color:black;--%>
-<%--            font-weight: bolder;--%>
-<%--            text-align: center;--%>
-<%--        }--%>
-<%--        /*주문하기Madal Radio button*/--%>
-<%--        .toggle3 input[type=radio]{--%>
-<%--            display: none;--%>
-<%--        }--%>
-<%--        .toggle3 input[type=radio] + label {--%>
-<%--            color: #e0e0e0;--%>
-<%--            font-size: 1em;--%>
-<%--        }--%>
-<%--        .toggle3 input[type=radio]:checked + label {--%>
-<%--            color: #000;--%>
-<%--        }--%>
-<%--        .btn-outline-primary {--%>
-<%--            color: #007bff;--%>
-<%--            border-color: #ffba49;--%>
-<%--        }--%>
-<%--    </style>--%>
-
     <script>
 
         $(function(){
-
-            // alert($('div.star-ratings').html());
-
-            // var menuTruck = {
-            //     truckId : $('input[name="truckId"]').val()
-            // }
-            //
-            // sessionStorage.setItem("menuTruck", menuTruck);
-
-
 
             $('div.star-ratings').on("click", function(){
                 // alert($('div.star-ratings').html());
@@ -1558,15 +1701,10 @@ $(function (){
                 // alert(truckId);
 
                 self.location="/review/getReviewListTruck?truckId="+truckId;
-
-
             })
-
         })
 
     </script>
-
-
 
     <script>
         //리뷰 목록 뿌려주기 ajax
@@ -1575,8 +1713,6 @@ $(function (){
 
             var truckId = $('input[name="truckId"]').val();
             // alert(truckId);
-
-
             $.ajax({
 
                 url:"/review/json/getReviewList/"+truckId,
@@ -1698,21 +1834,15 @@ $(function (){
                             "</div>"+
                             ""+
                             "";
-
-
                     }
                     rvDiv+="</div>"+
                         "</section>";
 
                     // alert($('div.card.review-body').html());
                     $('div.card.review-body').html(rvDiv);
-
                 }
-
             });
-
         });
-
     </script>
 
     <!--리뷰 상세보기 모달-->
@@ -1733,9 +1863,6 @@ $(function (){
                 getCardDetail(postNo)*/
             });
         })
-
-
-
 
         // 리뷰 클릭했을 때, modal 호출
 
@@ -1768,122 +1895,10 @@ $(function (){
 
                             "</span><div>사장님 댓글 : "+data.review.rvTruckCmtContent+"</div></div>";
                     }
-                    // if (data.review.heartNo == '0'){
-                    //
-                    //     div +=" <a idx="+data.review.postNo+" href='javascript:' class='heart-click heart_icon"+data.post.postNo+"'>"
-                    //         +"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart' viewBox='0 0 20 20'>"
-                    //         + "<path d='M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z' />"
-                    //         +"</svg> </a> ";
-                    // }else{
-                    //
-                    //     div +=  "<a idx="+data.review.postNo+" href='javascript:' class='heart-click heart_icon"+data.post.postNo+"'>"
-                    //         +"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart-fill' viewBox='0 0 20 20'>"
-                    //         +"<path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' />"
-                    //         + " </svg></a>";
-                    // }
-                    // div += " <span id='m_heart"+data.review.postNo+"'>"+data.review.heartCount+"</span>"
-                    //     +"<span>"
-                    //     +"<a idx='"+data.review.postNo+"' href='#reply_card"+data.review.postNo+"' role='button' class='open_reply_list' data-toggle='collapse'  aria-expanded='false' aria-controls='collapseExample'> "
-                    //     +"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-chat-dots' viewBox='0 0 20 20'>"
-                    //     +"<path d='M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z' />"
-                    //     +"<path d='M2.165 15.803l.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z' />"
-                    //     +"</svg>"
-                    //     +"</a>"
-                    //     +" </span>"
-                    //     +" <span id='m_reply"+data.review.postNo+"'>"+data.review.replyCount+"</span>"
-                    //     +"<span> <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-eye' viewBox='0 0 20 20'>"
-                    //     +"<path d='M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z' />"
-                    //     +"<path d='M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z' />"
-                    //     +"</svg>"
-                    //     +"</span> <span id='hit"+data.review.postNo+"'>"+data.review.postHit+"</span>"
-                    //     +"</div>"
-                    //     +"<div class='collapse' id='reply_card"+data.review.postNo+"'>"
-                    //     +"<section class='modal-section'>"
-                    //     +"<div class='card card-body'>"
-                    //     +"<div class='reply-list reply-list"+data.review.postNo+"'>"
-                    //     +"</div>"
-                    //     +"<div class='row reply_write'>"
-                    //     +"<div class='col-1'>"
-                    //     +"<a href='other_profile.do?other_nick='>"
-                    //     +"<img id='write_reply_profileImage' src='../../../resources/image/"+proImg+"' />"
-                    //     +" </a>"
-                    //     +"</div>"
-                    //     +"<div class='col-8' class='input_reply_div'>"
-                    //     +"<input class='w-100 form-control' id='input_reply"+data.review.postNo+"' type='text' placeholder='댓글입력...'>"
-                    //     +"</div>"
-                    //     +"<div class='col-3 '>"
-                    //     +"<button type='button' idx='"+data.review.postNo+"' class='btn btn-success mb-1 write_reply' style='background-color: #ffe537; border-radius:12px; border-color: #ffba49; color: black; font-size: 12px; '>댓글달기</button>"
-                    //     +"</div>"
-                    //     +" </div>"
-                    //     +" </div>"
-                    //     +" </section>"
-                    //     +"</div>";
-
-
-                    <%--if (role == "user"){--%>
-
-                    <%--    var userId = '${sessionScope.user.userId}'--%>
-
-                    <%--    if (data.post.postTruck == null && data.post.postUser.userId == userId){--%>
-
-                    <%--        modalFooter = "<div class='modal-footer'>"--%>
-                    <%--            +"<button class='button btn-warning' name='deletePostPic' onclick='deletePostPic("+data.post.postNo+");'>글 삭제"--%>
-                    <%--            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/></button>"--%>
-                    <%--            +"<button class='button is-warning is-light' name='updatePostPicView'"--%>
-                    <%--            +"onclick='updatePostPicView("+data.post.postNo+");'>글 수정"--%>
-                    <%--            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/>"--%>
-                    <%--            + "</button>"--%>
-                    <%--            +"</div>";--%>
-                    <%--    }else {--%>
-                    <%--        modalFooter = "<div class='modal-footer'>"--%>
-                    <%--            + " <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></div>";--%>
-                    <%--    }--%>
-
-                    <%--}else if(role == "truck"){--%>
-
-                    <%--    var truckId = '${sessionScope.truck.truckId}'--%>
-
-                    <%--    if (data.post.postUser == null && data.post.postTruck.truckId == truckId){--%>
-
-                    <%--        modalFooter = "<div class='modal-footer'>"--%>
-                    <%--            +"<button class='button btn-warning' name='deletePostPic' onclick='deletePostPic("+data.post.postNo+");'>글 삭제"--%>
-                    <%--            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/></button>"--%>
-                    <%--            +"<button class='button is-warning is-light' name='updatePostPicView'"--%>
-                    <%--            +"onclick='updatePostPicView("+data.post.postNo+");'>글 수정"--%>
-                    <%--            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/>"--%>
-                    <%--            + "</button>"--%>
-                    <%--            +"</div>";--%>
-
-                    <%--    }else {--%>
-                    <%--        modalFooter = "<div class='modal-footer'>"--%>
-                    <%--            + " <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></div>";--%>
-                    <%--    }--%>
-                    <%--}--%>
-                    //$('body').find( '.format' ).clone().appendTo( '#carouselFail' ).css("display", "block");
-
-                    // var postPicUserId;
-                    // var postPicProImg;
-                    // if (data.post.truckProImg != null){
-                    //     postPicUserId = data.post.postTruck.truckId;
-                    //     postPicProImg = data.post.truckProImg;
-                    // }else {
-                    //     postPicUserId = data.post.postUser.userId;
-                    //     postPicProImg = data.post.userProImg;
-                    // }
-
-                    // console.log("id : "+postPicUserId);
-                    // console.log("img : "+postPicProImg);
-
-
-
-
 
                     $(".header-title").css({"background-image":"url(../../../resources/image/"+data.review.userProImg+")"});
                     $(".insta-header").find('h2').text(data.review.rvUserId);
 
-                    // $('.insta-header').html(sap);
-                    //$('.page1').css("background", "../../../resources/image/"+data.post.postFile1+"")
-                    // $("#page1").style.background = "url('../../../resources/image/"+data.post.postFile1+"') no-repeat 0 0";
                     if(data.review.rvImg1!=null){
                         $(".page1").css({"background":"url(../../../resources/image/"+data.review.rvImg1+") 50% 50% / 50px 50px"});
                         $(".slide1").css({"background":"url(../../../resources/image/"+data.review.rvImg1+")"});
@@ -1909,36 +1924,19 @@ $(function (){
                         $(".numb3").css({"display": "block"});
                     }
 
-                    // $('.modal-footer').remove();
-                    // alert("여기까지 오는가?");
 
-
-                    // $('.modal-content-review').append(modalFooter);
                     $('.modal-body.review').html(div);
 
                     if(data.review.rvTruckCmtContent!=null){
                         $(".truck-profile").css({"background-image":"url(../../../resources/image/"+data.review.truckProImg+")"});
                     }
-                    // $( '.format .wrapper' ).clone().appendTo( '.cloneFail' );
-
-                    // console.log("data.review.postHit: "+data.post.postHit);
 
                     $('#staticBackdrop').modal('show');
-
-
-
-
-
-
-
                 },
                 error : function(err){
                     console.log('에러')
                 }
             });
-
-
-
         }
     </script>
 
@@ -2443,271 +2441,264 @@ $(function (){
 
     </style>
 
-
-
 </head>
 <body>
 <jsp:include page="/views/navbar.jsp" />
 
 
+<!--  화면구성 div Start -->
+    <section class="client_section layout_padding" style="padding-top: 30px;">
+        <div class="container">
+            <div class="col-md-12 mx-auto">
+
+                <div class="detail-box" style="margin-top: 100px;">
+                    <i class="fa fa-quote-left" aria-hidden="true" style="margin-bottom: 10px;"></i>
+                    <h3 class="truckNameForMenu" style="font-weight: bold; margin: 0; box-shadow: inset 0 -11px 0 #fae100; width: fit-content;">${truck.truckName}</h3>
+                </div>
+
+                <div>
+                    <%-- 별점 --%>
+                    <div class="star-ratings" style="zoom: 130%; margin-top: 5px;">
+                        <c:if test="${truck.truckAVGStar >= 0 && truck.truckAVGStar <0.35}">
+                            <i class="far fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 0.35 && truck.truckAVGStar <0.65}">
+                            <i class="fas fa-star-half" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 0.65 && truck.truckAVGStar <1.35}">
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 1.35 && truck.truckAVGStar <1.65}">
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star-half" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 1.65 && truck.truckAVGStar <2.35}">
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 2.35 && truck.truckAVGStar <2.65}">
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star-half" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 2.65 && truck.truckAVGStar <3.35}">
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 3.35 && truck.truckAVGStar <3.65}">
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star-half" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 3.65 && truck.truckAVGStar <4.35}">
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="far fa-star" style="margin: 0;"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 4.35 && truck.truckAVGStar <4.65}">
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star-half" style="margin: 0;"></i>
+                        </c:if>
+                        <c:if test="${truck.truckAVGStar >= 4.65 && truck.truckAVGStar <=5}">
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                            <i class="fas fa-star" style="margin: 0;"></i>
+                        </c:if>
+                    </div>
+                </div>
+
+<%--                <hr style="margin-top: 20px;"/>--%>
+
+                <div style="display: flex; justify-content: space-evenly; align-items: center; margin-top: 20px;">
+
+                    <%--<div class="col-xs-4 col-md-2"><strong>전 화 번 호</strong></div>--%>
+                    <div class="col-8 col-md-4"  style="padding: 0; text-align: left; font-size: 16px;">
+                        <ion-icon name="call-outline"></ion-icon>&nbsp;${truck.truckPhone}
+                    </div>
+
+                    <div class="col-8 col-md-4">
+                        <%--<div><strong>영 업 상 태</strong></div>--%>
+                        <c:if test="${truck.truckBusiStatus eq 0}">
+                            <h5><span class="badge" style="background-color: #65bf96; color: #110000; padding: 5px; border-radius: 30px;">영업중</span></h5>
+                        </c:if>
+                        <c:if test="${truck.truckBusiStatus eq 1}">
+                            <h5 style="margin: 0;"><span class="badge" style="background-color: #ec6a56; color: #ffffff; padding: 5px; border-radius: 30px;">영업종료</span></h5>
+                        </c:if>
+                    </div>
+
+                    <%--div class="col-xs-4 col-md-2"><strong>사 장 님 공 지</strong></div>--%>
+                    <div class="col-8 col-md-4" style="padding: 0; text-align: right; font-size: 16px;">
+                        <ion-icon name="megaphone-outline"></ion-icon>&nbsp;${truck.truckNoticeContent}
+                    </div>
+                    <input type="hidden" name="truckId" value="${truck.truckId}">
+
+                </div>
+
+                <!--================truck info 시작=============-->
+                <div style="display: flex; justify-content: space-around; align-items: center; margin-top: 10px;">
+
+                    <div class="col-8 col-md-6" style="padding: 0; text-align: left;">
+                        <!--리뷰보기 버튼-->
+                        <div>
+                            <a class="btn btn-default" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="margin: 0; padding: 5px 10px;">
+                                리뷰 보기
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-8 col-md-6" style="padding: 0; text-align: right;">
+                        <!--좋아요--> <!-- 0115 HHJ 추가 -->
+                        <button type="button" class="btn btn-outline-danger heart-click-t">
+                            <c:if test="${truck.truckHeartCount eq '0'}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
+                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+                                </svg>
+                            </c:if>
+                            <c:if test="${truck.truckHeartCount ne '0'}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+                                    <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"></path>
+                                </svg>
+                            </c:if>
+                        </button>
+                        <span id="heartC">${truck.truckHeartCount}</span>
+                        <!--좋아요-->
+                    </div>
+                </div>
 
 
+            <hr style="margin-top: 20px;"/>
 
-<!--  화면구성 div Start /////////////////////////////////////-->
-<div class="container" style="margin-top:119px;">
-    <div class="border" style="margin-left: -116px; margin-right: 15px; padding: 10px; border-radius: 20px 20px 20px 20px;">
+            <!--================truck info 끝=============-->
 
-    <div class="page-header">
-        <h3 class="truckNameForMenu" style="text-align: center;">${truck.truckName}</h3>
-    </div>
-    <div class="star-ratings">
-<%--        <div--%>
-<%--                class="star-ratings-fill space-x-2 text-lg"--%>
-<%--                :style="{ width: ratingToPercent + '%' }"--%>
-<%--        >--%>
-<%--            <c:if test="${rvTotal ne null}">--%>
-<%--                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>(${rvTotal})--%>
-<%--            </c:if>--%>
-<%--            <c:if test="${rvTotal eq null}">--%>
-<%--                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>--%>
-<%--            </c:if>--%>
+            <!--리뷰 리스트 시작-->
+            <div class="collapse" id="collapseExample">
+                <div class="card review-body">
 
-<%--        </div>--%>
-<%--        <div class="star-ratings-base space-x-2 text-lg">--%>
-<%--            <c:if test="${rvTotal ne null}">--%>
-<%--                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>(${rvTotal})--%>
-<%--            </c:if>--%>
-<%--            <c:if test="${rvTotal eq null}">--%>
-<%--                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>--%>
-<%--            </c:if>--%>
-
-<%--        </div>--%>
-        <%--            <div class="beside-of-star-ratings">(${rvTotal})</div>--%>
-    <c:if test="${truck.truckAVGStar >= 0 && truck.truckAVGStar <0.35}">
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-    </c:if>
-    <c:if test="${truck.truckAVGStar >= 0.35 && truck.truckAVGStar <0.65}">
-        <i class="fas fa-star-half"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-    </c:if>
-    <c:if test="${truck.truckAVGStar >= 0.65 && truck.truckAVGStar <1.35}">
-        <i class="fas fa-star"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-    </c:if>
-    <c:if test="${truck.truckAVGStar >= 1.35 && truck.truckAVGStar <1.65}">
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star-half"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-    </c:if>
-    <c:if test="${truck.truckAVGStar >= 1.65 && truck.truckAVGStar <2.35}">
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-    </c:if>
-    <c:if test="${truck.truckAVGStar >= 2.35 && truck.truckAVGStar <2.65}">
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star-half"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-    </c:if>
-    <c:if test="${truck.truckAVGStar >= 2.65 && truck.truckAVGStar <3.35}">
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="far fa-star"></i>
-        <i class="far fa-star"></i>
-    </c:if>
-    <c:if test="${truck.truckAVGStar >= 3.35 && truck.truckAVGStar <3.65}">
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star-half"></i>
-        <i class="far fa-star"></i>
-    </c:if>
-    <c:if test="${truck.truckAVGStar >= 3.65 && truck.truckAVGStar <4.35}">
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="far fa-star"></i>
-    </c:if>
-    <c:if test="${truck.truckAVGStar >= 4.35 && truck.truckAVGStar <4.65}">
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star-half"></i>
-    </c:if>
-    <c:if test="${truck.truckAVGStar >= 4.65 && truck.truckAVGStar <=5}">
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-        <i class="fas fa-star"></i>
-    </c:if>
-
-    </div>
-
-    <!--리뷰보기 버튼-->
-    <a class="btnf btn-warning" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-        리뷰 보기
-    </a>
-
-    <!--좋아요--> <!-- 0115 HHJ 추가 -->
-
-
-    <button type="button" class="btn btn-outline-danger heart-click-t">
-        <c:if test="${truck.truckHeartCount eq '0'}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
-                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
-            </svg>
-        </c:if>
-        <c:if test="${truck.truckHeartCount ne '0'}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
-                <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"></path>
-            </svg>
-        </c:if>
-
-    </button>
-    <span id="heartC">${truck.truckHeartCount}</span>
-    <!--좋아요-->
-
-    <!--================truck info 시작=============-->
-    <div class="row">
-
-<%--        <div class="col-xs-4 col-md-2"><strong>프 로 필 이 미 지</strong></div>--%>
-<%--        <div class="col-xs-8 col-md-4">${truck.truckProImg}</div>--%>
-        <div class="col-xs-4 col-md-2"><strong>영 업 상 태</strong></div>
-        <c:if test="${truck.truckBusiStatus eq 0}">
-            <div class="col-xs-8 col-md-4">영업 중</div>
-        </c:if>
-        <c:if test="${truck.truckBusiStatus eq 1}">
-            <div class="col-xs-8 col-md-4">영업 종료</div>
-        </c:if>
-        <div class="col-xs-4 col-md-2"><strong>전 화 번 호</strong></div>
-        <div class="col-xs-8 col-md-4">${truck.truckPhone}</div>
-
-        <div class="col-xs-4 col-md-2"><strong>사 장 님 공 지</strong></div>
-        <div class="col-xs-8 col-md-4">${truck.truckNoticeContent}</div>
-        <input type="hidden" name="truckId" value="${truck.truckId}">
-
-    </div>
-
-    <!--================truck info 끝=============-->
-
-    <hr/>
-
-
-
-
-    <!--리뷰 리스트 시작-->
-    <%--    <p>--%>
-    <%--      --%>
-    <%--        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">--%>
-    <%--            리뷰 보기--%>
-    <%--        </button>--%>
-    <%--    </p>--%>
-    <div class="collapse" id="collapseExample">
-        <div class="card review-body">
-
-        </div>
-    </div>
-    <!--리뷰 리스트 시작-->
-    </div>
-
-</div>
-
-
-<!--  메뉴 목록 div Start /////////////////////////////////////-->
-<body class="row g-5">
-
-
-<div class="row">
-
-    <!--헝헝헝-->
-
-    <div class="col-md-5 col-lg-4 order-md-last">
-        <div class="sticky">
-            <form>
-                <h4 class="d-flex justify-content-between align-items-center mb-3" style="width:259px;">
-                    <span class="text">장바구니</span>
-
-                    <div id="cartList" name="cartList"></div>
-                    <div id="add" name="add"></div>
-
-                </h4>
-                <ul class="list-group mb-3" style="width:259px;">
-                    <img src="data:image/png;base64,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">
-                </ul>
-                <input type="hidden" id="orderUserId" name="orderUserId.userId" value="${user.userId}"/>
-                <input type="hidden" id="orderTruckId" name="orderTruckId.truckId" value="${truck.truckId}"/>
-                &emsp;&emsp;<button type="button"  class="btn btn-warning" data-toggle="modal" data-target="#cartModal" >주문하기</button>
-                &emsp;&emsp;<button type="button"  class="btn btn-warning" id="cancelCartMenuList"  >삭  제</button>
-            </form>
-        </div>
-        <%--</form></div>--%>
-    </div>
-
-    <!--헝헝헝 끝-->
-
-
-<div class="col-md-7 col-lg-8">
-
-    <c:set var="i" value="0"/>
-    <c:forEach var="menu" items="${list}">
-        <c:set var="i" value="${i+1}"/>
-        <div class="card" style="width: 17rem; margin-bottom:15px; margin-left: 10px; margin-right: 10px;">
-            <img class="card-img-top" src="/resources/menu/${menu.menuImg1}" alt="Card image cap"
-                <%--                        <img class="card-img-top" src="/resources/image/menu/${menu.menuImg1}" alt="Card image cap"--%>
-                 style="border-bottom: 1px solid #eee; height: 200px;">
-            <div class="card-body" style="text:center ">
-                <h3 class="align-content-center"> <strong style="text:center;">${menu.menuName}</strong></h3>
-                <h3> ${menu.menuPrice}원</h3>
-                <ul class='card-body-ul'>
-                    <h4>${menu.menuDetail}</h4>
-                </ul>
-                <div class="btn-detail">
-                        <%--          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 수정--%>
-                    <button class="btn btn-default" name="getMenu"
-<%--                            style='margin-left: 100px; margin-bottom: 13px; height: 25px'--%>
-
-                            style="padding-top:1px;"
-                            onclick="getMenu(${menu.menuNo});"
-                    >
-                        메뉴 상세보기
-                        <input type="hidden" name="menuNo" value="${menu.menuNo}"/>
-                    </button>
-                        <%--                                <div class="bd-example">--%>
-                        <%--                                    <button type="button" name="getMenu" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLong">--%>
-                        <%--                                        Launch demo modal--%>
-
-                        <%--                                    </button>--%>
-                        <%--                                    <input type="hidden" name="menuNo" value="${menu.menuNo}"/>--%>
-                        <%--                                </div>--%>
                 </div>
             </div>
+            <!--리뷰 리스트 시작-->
+
+            <!-- 메뉴 목록 div Start -->
+            <div class="row g-5">
+
+                <div class="col-12" style="display: flex;">
+
+                    <%-- 장바구니 --%>
+                    <div class="col-md-5 col-lg-4 order-md-last">
+                        <div class="sticky">
+                            <form>
+                                <h4 class="d-flex justify-content-between align-items-center mb-3" style="width:259px;">
+                                    <span class="text">장바구니</span>
+
+                                    <div id="cartList" name="cartList"></div>
+                                    <div id="add" name="add"></div>
+
+                                </h4>
+                                <ul class="list-group mb-3" style="width:259px;">
+                                    <img src="data:image/png;base64,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" alt="">
+                                </ul>
+                                <input type="hidden" id="orderUserId" name="orderUserId.userId" value="${user.userId}"/>
+                                <input type="hidden" id="orderTruckId" name="orderTruckId.truckId" value="${truck.truckId}"/>
+                                &emsp;&emsp;<button type="button"  class="btn btn-warning" data-toggle="modal" data-target="#cartModal" >주문하기</button>
+                                &emsp;&emsp;<button type="button"  class="btn btn-warning" id="cancelCartMenuList"  >삭  제</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <%-- 푸드트럭 메뉴 리스트 --%>
+                    <div class="col-md-8">
+
+                        <c:set var="i" value="0"/>
+                        <c:forEach var="menu" items="${list}">
+                        <c:set var="i" value="${i+1}"/>
+
+                            <section class="light">
+                                <div class="container py-2">
+
+                                    <article class="postcard light blue">
+                                        <a class="postcard__img_link" href="#">
+                                            <img class="card-img-top" src="/resources/menu/${menu.menuImg1}" alt="Card image cap" style="max-height: 220px; max-width: 330px;">
+                                        </a>
+                                        <div class="postcard__text t-dark">
+                                            <h1 class="postcard__title blue" style="font-size: 26px; font-weight: bold">
+                                                <a href="#">
+                                                        ${menu.menuName}
+                                                </a></h1>
+                                            <div class="postcard__bar"></div>
+                                            <div class="postcard__preview-txt">${menu.menuDetail}</div>
+                                            <div class="postcard__preview-txt"><h6>${menu.menuPrice}&nbsp;₩</h6></div>
+
+                                            <ul class="postcard__tagbox" style="justify-content: end;">
+                                                <li class="tag__item orderBtn" onclick="getMenu(${menu.menuNo});"><i class="fas fa-utensils"></i>메뉴 상세보기</li>
+                                                <input type="hidden" name="menuNo" value="${menu.menuNo}"/>
+                                            </ul>
+                                        </div>
+                                    </article>
+
+                                </div>
+                            </section>
+
+                            <%--<div class="card" style="width: 17rem; margin-bottom:15px; margin-left: 10px; margin-right: 10px;">
+                                <img class="card-img-top" src="/resources/menu/${menu.menuImg1}" alt="Card image cap"
+                                    &lt;%&ndash;                        <img class="card-img-top" src="/resources/image/menu/${menu.menuImg1}" alt="Card image cap"&ndash;%&gt;
+                                     style="border-bottom: 1px solid #eee; height: 200px;">
+                                <div class="card-body" style="text:center ">
+                                    <h3 class="align-content-center"> <strong style="text:center;">${menu.menuName}</strong></h3>
+                                    <h3> ${menu.menuPrice}원</h3>
+                                    <ul class='card-body-ul'>
+                                        <h4>${menu.menuDetail}</h4>
+                                    </ul>
+                                    <div class="btn-detail">
+                                            &lt;%&ndash;          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 수정&ndash;%&gt;
+                                        <button class="btn btn-default" name="getMenu" style="padding-top:1px;" onclick="getMenu(${menu.menuNo});">
+                                            메뉴 상세보기
+                                            <input type="hidden" name="menuNo" value="${menu.menuNo}"/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>--%>
+
+                        </c:forEach>
+                    </div>
+
+                </div>
+            </div>
+            <!--  메뉴 목록 div End /////////////////////////////////////-->
         </div>
-    </c:forEach>
-
-</div>
-<!--  메뉴 목록 div End /////////////////////////////////////-->
-</div>
-
+        </div>
+    </section>
 </body>
 
 
@@ -2970,6 +2961,7 @@ $(function (){
     </div>
 
 </form>
+
 <script>
     $(function(){
         var modal = $('#exampleModalLong');
