@@ -266,7 +266,7 @@ public class PurchaseController {
         int payPrice = purchase.getPayPrice();
         int payOption = purchase.getPayOption();
         purchase = purchaseService.getPurchase(purchase.getOrderNo());
-        if(payPrice == 0 ){
+        if(payPrice != 0 ){
             purchase.setPayPrice(payPrice);
         }
         purchase.setPayOption(payOption);
