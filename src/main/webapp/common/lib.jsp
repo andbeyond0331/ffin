@@ -596,20 +596,33 @@
             self.location = "/room"
         });
     });
-    // // ============= 케이터링 ===============
-    // $( function() {
-    //     $("#goCatering").on("click" , function() {
-    //         self.location = "/catering/mainCalendar"
-    //     });
-    // });
-    //
-    // // 진석 추가
-    // // ============= 게시판 ===============
-    // $( function() {
-    //     $("#goPost").on("click" , function() {
-    //         self.location = "/community/getPostList"
-    //     });
-    // });
+    // ============= 케이터링 제약 ===============
+    $( function() {
+        $("#beforeCaterCalendar").on("click" , function() {
+            alert("가입승인이 완료된 이후 이용가능합니다.");
+            return;
+        });
+    });
+    $( function() {
+        $("#beforeCaterList").on("click" , function() {
+            alert("가입승인이 완료된 이후 이용가능합니다.");
+            return;
+        });
+    });
+
+    // ============= 게시판 제약 ===============
+    $( function() {
+        $("#beforePostPic").on("click" , function() {
+            alert("가입승인이 완료된 이후 이용가능합니다.");
+            return;
+        });
+    });
+    $( function() {
+        $("#beforePostList").on("click" , function() {
+            alert("가입승인이 완료된 이후 이용가능합니다.");
+            return;
+        });
+    });
 
     // 진석 추가
     // ============= 푸드트럭 ===============

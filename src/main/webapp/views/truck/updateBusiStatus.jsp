@@ -141,7 +141,6 @@
             <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
             <h4 style="margin-top: 10px;">영업 상태 변경</h4>
         </div>
-        <br>
 
         <form class="form-horizontal"
               style="border-radius:10px ; border: 0; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2); transition: 0.3s;">
@@ -211,12 +210,12 @@
                 <div class="container">
                     <div class="col-md-6 offset-3">
                         <form>
-                            <div class="form-group col-md-6 offset-2">
+                            <div class="form-group col-md-6 offset-3">
                                 <span class="location_icon"><i class="fa fa-crosshairs"></i></span>
                                 <br/>
                                 <input type="text" class="form-control" id="inputLocation"
                                        name="inputLocation" placeholder="좌측 상단의 마커를 클릭해주세요."
-                                       value="${inputLocation}" style="width: 300px">
+                                       value="${inputLocation}" style="width: 280px">
                             </div>
                             <div class="form-group col-md-6 offset-3" style="text-align: center">
                                 <div class="btn-box">

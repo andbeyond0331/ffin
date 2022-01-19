@@ -62,19 +62,39 @@
 				self.location = "./getTruckInfo.jsp"
 			});
 			$('.truck-notice').click(function () {
-				self.location = "/truck/getNotice"
+				if(${sessionScope.truck.truckJoinReqStatus eq 1}) {
+					self.location = "/truck/getNotice"
+				}else{
+					alert("가입승인이 완료된 이후 이용가능합니다.");
+					return;
+				}
 			});
 			$('.truck-sales').click(function () {
+				if(${sessionScope.truck.truckJoinReqStatus eq 1}) {
 				self.location = "/truck/getSalesList"
+				}else{
+					alert("가입승인이 완료된 이후 이용가능합니다.");
+					return;
+				}
 			});
 			$('.truck-menu').click(function () {
+				if(${sessionScope.truck.truckJoinReqStatus eq 1}) {
 				self.location = "/menu/getMenuListM?truckId=${truck.truckId}";
+				}else{
+					alert("가입승인이 완료된 이후 이용가능합니다.");
+					return;
+				}
 			});
 			$('.truck-heart').click(function () {
 				self.location = ""
 			});
 			$('.truck-review').click(function () {
+				if(${sessionScope.truck.truckJoinReqStatus eq 1}) {
 				self.location = "/review/getReviewListTruck?truckId=${truck.truckId}"
+				}else{
+					alert("가입승인이 완료된 이후 이용가능합니다.");
+					return;
+				}
 			});
 			$('.truck-post').click(function () {
 				self.location = "getPostList.jsp"
