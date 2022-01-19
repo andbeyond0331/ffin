@@ -581,7 +581,7 @@
                                 "<label class='btn btn-outline-success' for='cookingTimes5'>40분</label>"+
                            "</div>"+
                             "<div class='col-2'>"+
-                                "<button class='btn btn-primary' type='button' id='updateTranCode' name='updateTranCode'>주문접수</button>"+
+                                "<button class='btn btn-primary' type='button' id='updateTranCode' name='updateTranCode' value='주문 접수'>주문접수</button>"+
                             "</div>";
                 }else if(data.purchase.orderStatus == 2){
 
@@ -590,13 +590,13 @@
                                 "<button class='btn btn-primary' data-bs-toggle='modal' href='#exampleModalToggle' type='button'>주문거절</button>"+
                             "</div>"+
                            " <div class='col-5'>"+
-                                "<button class='btn btn-primary' type='button' id='updateTranCode' name='updateTranCode'>픽업요청</button>"+
+                                "<button class='btn btn-primary' type='button' id='updateTranCode' name='updateTranCode' value='픽업 요청'>픽업요청</button>"+
                             "</div>";
                     }else if(data.purchase.orderStatus == 3){
                     CookingTime = "<div class='col-2'> 상호 : "+data.purchase.orderTruckId.truckName+"</div>"+
                             "<div class='col-5'></div>"+
                             "<div class='col-5'>"+
-                                "<button class='btn btn-primary' type='button' id='updateTranCode' name='updateTranCode'>픽업완료</button>"+
+                                "<button class='btn btn-primary' type='button' id='updateTranCode' name='updateTranCode' value='픽업 완료를 확인'>픽업완료</button>"+
                             "</div>";
                     }else if(data.purchase.orderStatus == 4){
                     CookingTime = "<div class='col-2'> 상호 : "+data.purchase.orderTruckId.truckName+"</div>"+
@@ -648,19 +648,6 @@
 
 
                 var list = data.map;
-                var menuList = [];
-                var forOneFirst=0;
-                var totalPrice =0;
-
-
-
-                var odMenuNameL;
-                var odOptionGroupNameL;
-                var odOptionNameL;
-                var odMenuQtyL;
-                var odMenuPriceL;
-                var odOptionPriceL;
-                var odMenuImageL;
 
                 var totototoprice =0; // 전체 금액
                 var totototoqty =0; // 수량
@@ -670,7 +657,14 @@
 
                 var optionNameShow = []; // 이름 보여지게 할 값 만들기~ (최종)
                 var optionPriceShow = [];
+                var odMenuQtyL = [];
+                var odMenuImageL = [];
+                var odMenuNameL = [];
                 var totalshow =0;
+
+                var name = "" ;
+                var image = "";
+                var qty = "";
 
                 for(var i = 0; i<list.length; i++){
                     var odMenuImage = list[i]['odMenuImage'];
@@ -695,6 +689,13 @@
                         totototoqty = Number(odMenuQty);
                         menuCount++;
                         totalshow=0;
+                        name = odMenuName;
+                        image = odMenuImage;
+                        qty = odMenuQty;
+                        console.log("name"+name)
+                        console.log("image"+image)
+                        console.log("qty"+qty)
+
                         //pricepriceprice *= qtyqtyqty;
                         //console.log("pricepriceprice *= qtyqtyqty" + (pricepriceprice *= qtyqtyqty));
                         //tttttppppprrrr += Number(pricepriceprice)// 처음 들어온 값도 0, 이후엔 곱해짐 // 기존값 더함
@@ -709,119 +710,24 @@
                     totototoprice+= Number(pricepriceprice * totototoqty);
                     totalshow += Number(pricepriceprice * totototoqty);
                     optionPriceShow[Number(menuCount-1)] = totalshow;
+                    odMenuQtyL[Number(menuCount-1)] = qty;
+                    odMenuImageL[Number(menuCount-1)] = image;
+                    odMenuNameL[Number(menuCount-1)] = name;
                     console.log("ttototototo :: " + totototoprice)
 
-                    var odMenuImageCopy;
-                    var odMenuNameCopy;
-                    var odMenuQtyCopy;
+                    console.log("odMenuQtyL"+odMenuQtyL)
+                    console.log("odMenuImageL"+odMenuImageL)
+                    console.log("odMenuNameL"+odMenuNameL)
 
 
-                    if (odMenuNameCopy != undefined && odMenuQtyFlag == 0) {
-
-
-                        console.log("미지의 세계")
-                        odMenuNameCopy = odMenuNameCopy + "," + odMenuName;
-                        odMenuImageCopy = odMenuImageCopy + "," + odMenuImage;
-                        odMenuQtyCopy = odMenuQtyCopy + "," + odMenuQty;
-
-                    } else if (odMenuNameCopy == undefined) {
-                        console.log("미지의 세계111111111")
-                        odMenuNameCopy = odMenuName;
-                        odMenuImageCopy = odMenuImage;
-                        odMenuQtyCopy = odMenuQty;
-
-                        console.log("미지의 세계 222222")
-
-
-                    }
-
-                    odMenuNameL = odMenuNameCopy.split(",");
-                    odMenuImageL = odMenuImageCopy.split(",");
-                    odMenuQtyL = odMenuQtyCopy.split(",");
-
-
-                    console.log("미지의 세계 3333333333")
-
-
-
-                    /*                       console.log("처음 for문 안에 있다!");
-                                           console.log("처음 beforeAnywayFirst[" + i + "]번째 세션 : " + list[i]);
-
-
-
-                                           if (list[i]['odMenuQtyFlag'] == 0) {//플래그0일 때 메뉴 수량, 이름 출력
-
-
-                                               /!*수량 변경을 위해서 카운트추가*!/
-                                               menuList += "" +
-                                                   "<div class=\"card mb-3\">" +
-                                               " <div class=\"row g-0\">" +
-                                               "<div class=\"col-md-4\">" +
-                                               "<img src=\"/resources/menu/"+list[i]['odMenuImage']+"\" class=\"img-fluid rounded-start\" alt=\"image\">" +
-                                               "</div>" +
-                                               "<div class=\"col-md-8\">" +
-                                               "<div class=\"card-body\">" +
-                                               "<h5 class=\"card-title\">" + list[i]['odMenuName'] ,list[i]['odMenuPrice'] + "</h5>" +
-                                               "<p class=\"card-text\"><small class=\"text-muted\">수량 " +  list[i]['odMenuQty'] + "  :</small><br>" ;
-
-
-
-
-                                               if(totalPrice == undefined){
-                                                   totalPrice = Number(list[i]['odMenuPrice']);
-                                               }else {
-                                                   totalPrice = Number(totalPrice) + Number(list[i]['odMenuPrice']);
-                                               }
-                                               forOneFirst += 1;
-                                               if (list[i + 1] != null) { //만약 다음 애가 있는데
-                                                   if (list[i + 1]['odMenuQtyFlag'] == 0) { //수량제공메뉴이면(지금 이게 수량제공메뉴란 소리니까 닫아줘야함)
-                                                    }
-
-                                               }
-                                           } else { //플래그 1일 때
-                                               // for(var j=i+1; j<beforeAnyway.length; j++){ //옵션그룹 화면에 뿌려주기 위한 for문 (수량제공메뉴+1부터
-                                               //     if(beforeAnyway[j]['odMenuQtyFlag']==1){
-                                               menuList += "" +
-                                                   "<p class=\"card-text\"><small class=\"text-muted\">옵션 " + list[i]['odOptionGroupName'] + " :" + list[i]['odOptionName'] + "</small><br>" +
-                                                   "<small class=\"text-muted\">  가격 :" + list[i]['odOptionPrice'] + "원 </small></p>" ;
-
-
-
-
-                                               totalPrice = Number(totalPrice) + Number(list[i]['odOptionPrice']);
-                                               forOneFirst += 1;
-                                               if (list[i + 1] != null) {
-                                                   if (list[i + 1]['odMenuQtyFlag'] == 0) {
-                                                       menuList += "</div><span class=\"text-muted\">" + totalPrice + "원</span></li>"+
-                                                           "</div>" +
-                                                           "</div>" +
-                                                           "</div>" +
-                                                           "</div>"
-                                                   }
-
-                                               }
-
-                                               // finalCart+="</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"원</span></li>";
-                                               // i=forOne;
-
-
-
-                                       }
-                   */
                 }
-
+                console.log("optionNameShow"+optionNameShow[0])
+                console.log("optionNameShow"+odMenuQtyL[1])
+                console.log("optionNameShow"+optionPriceShow[0])
+                console.log("optionNameShow"+menuCount)
                 /*alert(totalPrice) 총금액*/
                 /*$("#order").html(menuList);*/
-                for (var i = 0; i < list.length; i++) {
-
-
-                    console.log("odMenuImageL111"+odMenuImageL[i])
-                    console.log("odMenuNameL"+odMenuNameL[i])
-                    console.log("odMenuQtyL"+odMenuQtyL[i])
-                    console.log("optionNameShow"+optionNameShow[i])
-                    console.log("optionNameShow"+optionPriceShow[i])
-
-
+                for (var i = 0; i < menuCount; i++) {
 
 
 
@@ -842,7 +748,9 @@
                         "</div>"
 
 
-                    $('#order').append(divElemApply1);
+
+
+                    $('#order').html(divElemApply1);
 
                 }
             }
@@ -862,6 +770,8 @@
             orderCookingTime = $("input[name='cookingTime']").val();
 
         }
+        var m_sg = $(this).value();
+        console.log("m_sg: "+m_sg)
 
         $.ajax({
             url: "/purchase/json/updateTranCode",
@@ -881,7 +791,8 @@
 
                 if(socket) {
                     // websocket에 보내기!!! (message, 보내는이, 받는이)
-                    let socketMessage = "purchaseUser,"+orderTruckId+","+orderUserId+","+orderUserId;
+
+                    let socketMessage = "purchaseUser,"+orderTruckId+","+orderUserId+","+orderUserId+","+m_sg;
                     console.log("socketM::::" + socketMessage);
                     socket.send(socketMessage);
                 }
@@ -930,7 +841,15 @@
             },
 
             success: function (map) {
-               location.reload();
+                var orderTruckName = '${sessionScope.truck.truckName}';
+                var orderUserId = $("input[name='usId']").val();
+                if(socket) {
+                    // websocket에 보내기!!! (message, 보내는이, 받는이)
+                    let socketMessage = "cancel,"+orderTruckName+","+orderUserId+","+orderUserId;
+                    console.log("socketM::::" + socketMessage);
+                    socket.send(socketMessage);
+                }
+                location.reload();
             },
             error: function (xhr, status, error) {
                 alert("[Error]" + error);

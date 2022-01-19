@@ -1228,7 +1228,7 @@
             "<span id='price'>합계 : "+totototoprice+"</span>"
 
         divElemApply3 = "<input type=\"hidden\" name=\"orderPrice\" id=\"orderPrice\" value=\""+totototoprice+"\">"+
-            "<input type='hidden' id='payPrice' value='"+totototoprice+"'>"+
+            "<input type='text' id='payPrice' value='"+totototoprice+"'>"+
             "<span id='totalpp'>결제금액 :"+totototoprice+"</span>"
 
         $('#total').append(divElemApply2);
