@@ -219,7 +219,7 @@ public class MenuRestController {
 //    public String getTruckList(@RequestParam(value="cateCondition", required = false) String cateCondition, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
 
         int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-        System.out.println("currentPage : "+currentPage);
+        System.out.println("ccccccccccccccccurrentPage : "+currentPage);
 
         search.setCurrentPage(currentPage);
         search.setPageSize(pageSize);
@@ -231,6 +231,8 @@ public class MenuRestController {
         Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
         System.out.println(resultPage);
 
+        System.out.println("lllllllllllllllllllllllllllllllllllllllllllllllllllllllll");
+        System.out.println("list : "+map.get("list"));
 
         ModelAndView mv = new ModelAndView("jsonView");
         mv.addObject("list", map.get("list"));

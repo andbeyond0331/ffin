@@ -626,7 +626,7 @@
 
         /* 무한스크롤 */
         let isEnd = false; // 다 불러왔을 때 더이상 노출 되지 않기 위함
-        var page=2;
+        var page=1;
         var roleUT = '${sessionScope.role}';
 
 
@@ -654,13 +654,14 @@
             //var isBottom = $(window).scrollTop()  == $(document).height() - $(window).height()
 
             if (isBottom) {
-                if(isEnd===true || isEnd){
+                if(isEnd===true || isEnd ){
                     return;
-                }
+                }else{
                 isEnd = true; // 스크롤시 무한대로 함수 호출하는것을 막기 위함
                 /* 마지막에 한 번 더 호출하는 현상이 있어서 수정 필요.. 그치만 무한대로 호출은 안하쟈나..?..헤헤..히..ㅠ.... */
 
                 loadList();
+                }
             }
         })
         // loadList();
@@ -672,6 +673,7 @@
             /* if(isEnd === true){
                  return;
              }*/
+            page++;
             console.log("야야ㅑ")
             $.ajax({
 
@@ -685,8 +687,9 @@
                 contentType: "application/x-www-form-urlencoded;",
                 success : function(jsonData) {
 
-                    page++;
+
                     var list = jsonData.list;
+                    console.log("page: "+page)
                     console.log("list: "+list)
                     let length = list.length;
 
@@ -929,6 +932,7 @@
 
                         $('#truckListAutokk').append(div);
                         if( length < 6 ){
+                            console.log(page)
                             isEnd = true;
                             // return;
                         }
@@ -1919,7 +1923,7 @@
                                             <h5><span class="badge" style="background-color: #ffffff; color: #110000">기타</span></h5>
                                         </c:when>
                                     </c:choose>
-                                    <input type="hidden" name="truckId" value="${truck.truckId}">
+                                    <input type="text" name="truckId" value="${truck.truckId}">
                                     <p class="item-text-dek"><strong>${truck.truckSigMenuName}</strong></p>
                                     <h6 class="item-text-title">${truck.truckCEOIntro}</h6>
 
