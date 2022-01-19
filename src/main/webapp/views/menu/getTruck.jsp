@@ -313,30 +313,26 @@
 
                     console.log("처음 for문 안에 있다!");
                     console.log("처음 beforeAnywayFirst[" + i + "]번째 세션 : " + JSON.stringify(beforeAnywayFirst[i]));
-                    // finalCart += "<li class=\"list-group-item d-flex justify-content-between lh-sm\">"+
-                    //     "<div><h6 class=\"my-0\">"+beforeAnyway[i]['odMenuName']+"</h6>"+
-                    //     "<h6 class=\"my-0\">"+beforeAnyway[i]['odMenuQty']+"</h6>"+
-                    //     "<small class=\"text-muted\">"+beforeAnyway[i]['odOptionGroupName']+"</small>"+
-                    //     "<small class=\"text-muted\">"+beforeAnyway[i]['odOptionName']+"</small>"+
-                    //     "</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"</span></li>";
 
                     if (beforeAnywayFirst[i]['odMenuQtyFlag'] == 0) {//플래그0일 때 메뉴 수량, 이름 출력
+
+                        /* 장바구니 */
                         finalCartFirst += "" +
-                            "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
+                            // "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
+                            "<li class=\"list-group-item\" style='padding: 10px; display: flex; align-items: center;'>" +
+                            "<div>"+
                             "<button type='button' class='close' id='cancelMenu'>"+
-                            "<span aria-hidden='true'>&times;</span></button>"+
-                            "<div><h6 class=\"my-0\">" + beforeAnywayFirst[i]['odMenuName'] + "</h6>" +
-                            "<h6 class=\"my-0\">수량 : <input type='button' class='my-11' value='-' id='decreaseQuantity'>" +
+                            "<span aria-hidden='true'><ion-icon name='close-outline'></ion-icon></span></button>"+
+                            "</div>"+
+                            "<div class='col-11' style='text-align: initial; padding: 10px;'>"+
+                            "<div>"+
+                            "<h6 style='font-size: 16px; font-weight: 600;' class=\"my-0\">" + beforeAnywayFirst[i]['odMenuName'] + "</h6><p>" +
+                            "<h6 class=\"my-0\"><input type='button' class='my-11' value='-' id='decreaseQuantity'>" +
                             "<input type='hidden' name='orderCount' value='"+i+"'>"+
                             " <input type='text' id='numberUpDown' value='" + beforeAnywayFirst[i]['odMenuQty'] + "' size='1' max=''> " +
-                            "<input type='button' value='+' id='increaseQuantity'> </h6>" +
+                            "<input type='button' value='+' id='increaseQuantity'> </h6></div><hr/>" +
                             "";
-                        //2022-01-16
-                        // finalCartFirst += "" +
-                        //     "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
-                        //     "<div><h6 class=\"my-0\">" + beforeAnywayFirst[i]['odMenuName'] + "</h6>" +
-                        //     "<h6 class=\"my-0\">수량 : " + beforeAnywayFirst[i]['odMenuQty'] + "</h6>" +
-                        //     "";
+
                         forOneFirst += 1;
                         if (beforeAnywayFirst[i + 1] != null) { //만약 다음 애가 있는데
                             if (beforeAnywayFirst[i + 1]['odMenuQtyFlag'] == 0) { //수량제공메뉴이면(지금 이게 수량제공메뉴란 소리니까 닫아줘야함)
@@ -350,18 +346,12 @@
                         // for(var j=i+1; j<beforeAnyway.length; j++){ //옵션그룹 화면에 뿌려주기 위한 for문 (수량제공메뉴+1부터
                         //     if(beforeAnyway[j]['odMenuQtyFlag']==1){
                         finalCartFirst += "" +
-                            "<p></p>" +
+                            "<p style='margin: 0; font-size: 18px;'>" +
                             "<input type='hidden' name='orderCancelCount' value='"+i+"'>"+
                             "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionGroupName'] + "</small> : " +
-                            "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionName'] + "</small> +" +
-                            "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionPrice'] + "원</small>";
-                        //2022-01-16
-                        // finalCartFirst += "" +
-                        //     "<p></p>" +
-                        //     "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionGroupName'] + "</small> : " +
-                        //     "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionName'] + "</small> +" +
-                        //     "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionPrice'] + "원</small>";
-                        //
+                            "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionName'] + "</small>" +
+                            "<small class=\"text-muted\" style='float: right;''> +" + beforeAnywayFirst[i]['odOptionPrice'] + "원</small>";
+
                         forOneFirst += 1;
                         if (beforeAnywayFirst[i + 1] != null) {
                             if (beforeAnywayFirst[i + 1]['odMenuQtyFlag'] == 0) {
@@ -372,7 +362,6 @@
 
                         // finalCart+="</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"원</span></li>";
                         // i=forOne;
-
 
                     }//sessionStorage만큼 for문 돌리기
                 }
@@ -1055,12 +1044,7 @@
 
                         console.log("for문 안에 있다!");
                         console.log("beforeAnyway[" + i + "]번째 세션 : " + JSON.stringify(beforeAnyway[i]));
-                        // finalCart += "<li class=\"list-group-item d-flex justify-content-between lh-sm\">"+
-                        //     "<div><h6 class=\"my-0\">"+beforeAnyway[i]['odMenuName']+"</h6>"+
-                        //     "<h6 class=\"my-0\">"+beforeAnyway[i]['odMenuQty']+"</h6>"+
-                        //     "<small class=\"text-muted\">"+beforeAnyway[i]['odOptionGroupName']+"</small>"+
-                        //     "<small class=\"text-muted\">"+beforeAnyway[i]['odOptionName']+"</small>"+
-                        //     "</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"</span></li>";
+
 
                         if (beforeAnyway[i]['odMenuQtyFlag'] == 0) {//플래그0일 때 메뉴 수량, 이름 출력
                             finalCart += "" +
@@ -1073,13 +1057,7 @@
                                 " <input type='text' id='numberUpDown' value='" + beforeAnyway[i]['odMenuQty'] + "' size='1' max=''> " +
                                 "<input type='button' value='+' id='increaseQuantity'> </h6>" +
                                 "";
-                            ///////////////수정/////////////////
-                            //2022-01-16
-                            // finalCart += "" +
-                            //     "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
-                            //     "<div><h6 class=\"my-0\">" + beforeAnyway[i]['odMenuName'] + "</h6>" +
-                            //     "<h6 class=\"my-0\">수량 : " + beforeAnyway[i]['odMenuQty'] + "</h6>" +
-                            //     "";
+
                             forOne += 1;
                             if (beforeAnyway[i + 1] != null) { //만약 다음 애가 있는데
                                 if (beforeAnyway[i + 1]['odMenuQtyFlag'] == 0) { //수량제공메뉴이면(지금 이게 수량제공메뉴란 소리니까 닫아줘야함)
@@ -1098,12 +1076,7 @@
                                 "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionGroupName'] + "</small> : " +
                                 "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionName'] + "</small> +" +
                                 "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionPrice'] + "원</small>";
-                            //2022-01-16
-                            // finalCart += "" +
-                            //     "<p></p>" +
-                            //     "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionGroupName'] + "</small> : " +
-                            //     "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionName'] + "</small> +" +
-                            //     "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionPrice'] + "원</small>";
+
                             forOne += 1;
                             if (beforeAnyway[i + 1] != null) {
                                 if (beforeAnyway[i + 1]['odMenuQtyFlag'] == 0) {
@@ -1114,7 +1087,6 @@
 
                             // finalCart+="</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"원</span></li>";
                             // i=forOne;
-
 
                         }//sessionStorage만큼 for문 돌리기
                     }
@@ -1440,11 +1412,11 @@
 
 
 
-$(function (){
-    $("#truckBusi").on("click",function(){
-        alert("영업종료된 트럭입니다")
-    })
-})
+        $(function (){
+            $("#truckBusi").on("click",function(){
+                alert("영업종료된 트럭입니다")
+            })
+        })
 
 
 
@@ -1549,7 +1521,7 @@ $(function (){
                         // "<div class=\"row\"><strong>메뉴이미지1</strong></div>"+
                         "<div class=\"odMenuImg\" name=\"odMenuImg1\" data-menuimg=\""+data.menu.menuImg1+"\" style=\"padding-right:19px;\">" +
                         "<img src=\"/resources/menu/"+data.menu.menuImg1+"\"" +
-                        "style=\"border-bottom: 1px solid #eee; width: 100%;\" "+
+                        "style=\"border-bottom: 1px solid #eee; width: 100%; border-radius: 10px; box-shadow: 0 2px 2px 1px rgba(0,0,0,0.2); transition: 0.3s;\" "+
                         "alt=\""+data.menu.menuName+"의 이미지1\" title=\""+data.menu.menuName+"\"></div> </div>"+
                         "<hr/>"+
                         "<div class=\"row\">";
@@ -2447,155 +2419,159 @@ $(function (){
 
 
 <!--  화면구성 div Start -->
-    <section class="client_section layout_padding" style="padding-top: 30px;">
-        <div class="container">
-            <div class="col-md-12 mx-auto">
+<section class="client_section layout_padding" style="padding-top: 30px;">
+    <div class="container">
+        <div class="col-md-12 mx-auto">
 
-                <div class="detail-box" style="margin-top: 100px;">
-                    <i class="fa fa-quote-left" aria-hidden="true" style="margin-bottom: 10px;"></i>
-                    <h3 class="truckNameForMenu" style="font-weight: bold; margin: 0; box-shadow: inset 0 -11px 0 #fae100; width: fit-content;">${truck.truckName}</h3>
+            <div class="detail-box" style="margin-top: 100px;">
+                <i class="fa fa-quote-left" aria-hidden="true" style="margin-bottom: 10px;"></i>
+                <h3 class="truckNameForMenu" style="font-weight: bold; margin: 0; box-shadow: inset 0 -11px 0 #fae100; width: fit-content;">${truck.truckName}</h3>
+            </div>
+
+            <div>
+                <%-- 별점 --%>
+                <div class="star-ratings" style="zoom: 130%; margin-top: 5px;">
+                    <c:if test="${truck.truckAVGStar >= 0 && truck.truckAVGStar <0.35}">
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 0.35 && truck.truckAVGStar <0.65}">
+                        <i class="fas fa-star-half" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 0.65 && truck.truckAVGStar <1.35}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 1.35 && truck.truckAVGStar <1.65}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star-half" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 1.65 && truck.truckAVGStar <2.35}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 2.35 && truck.truckAVGStar <2.65}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star-half" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 2.65 && truck.truckAVGStar <3.35}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 3.35 && truck.truckAVGStar <3.65}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star-half" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 3.65 && truck.truckAVGStar <4.35}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 4.35 && truck.truckAVGStar <4.65}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star-half" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 4.65 && truck.truckAVGStar <=5}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                    </c:if>
+                </div>
+            </div>
+
+            <%--                <hr style="margin-top: 20px;"/>--%>
+
+            <div style="display: flex; justify-content: space-evenly; align-items: center; margin-top: 20px;">
+
+                <%--<div class="col-xs-4 col-md-2"><strong>전 화 번 호</strong></div>--%>
+                <div class="col-8 col-md-4"  style="padding: 0; text-align: left; font-size: 16px;">
+                    <ion-icon name="call-outline"></ion-icon>&nbsp;${truck.truckPhone}
                 </div>
 
-                <div>
-                    <%-- 별점 --%>
-                    <div class="star-ratings" style="zoom: 130%; margin-top: 5px;">
-                        <c:if test="${truck.truckAVGStar >= 0 && truck.truckAVGStar <0.35}">
-                            <i class="far fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                        </c:if>
-                        <c:if test="${truck.truckAVGStar >= 0.35 && truck.truckAVGStar <0.65}">
-                            <i class="fas fa-star-half" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                        </c:if>
-                        <c:if test="${truck.truckAVGStar >= 0.65 && truck.truckAVGStar <1.35}">
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                        </c:if>
-                        <c:if test="${truck.truckAVGStar >= 1.35 && truck.truckAVGStar <1.65}">
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star-half" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                        </c:if>
-                        <c:if test="${truck.truckAVGStar >= 1.65 && truck.truckAVGStar <2.35}">
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                        </c:if>
-                        <c:if test="${truck.truckAVGStar >= 2.35 && truck.truckAVGStar <2.65}">
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star-half" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                        </c:if>
-                        <c:if test="${truck.truckAVGStar >= 2.65 && truck.truckAVGStar <3.35}">
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                        </c:if>
-                        <c:if test="${truck.truckAVGStar >= 3.35 && truck.truckAVGStar <3.65}">
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star-half" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                        </c:if>
-                        <c:if test="${truck.truckAVGStar >= 3.65 && truck.truckAVGStar <4.35}">
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="far fa-star" style="margin: 0;"></i>
-                        </c:if>
-                        <c:if test="${truck.truckAVGStar >= 4.35 && truck.truckAVGStar <4.65}">
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star-half" style="margin: 0;"></i>
-                        </c:if>
-                        <c:if test="${truck.truckAVGStar >= 4.65 && truck.truckAVGStar <=5}">
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                            <i class="fas fa-star" style="margin: 0;"></i>
-                        </c:if>
+                <div class="col-8 col-md-4">
+                    <%--<div><strong>영 업 상 태</strong></div>--%>
+                    <c:if test="${truck.truckBusiStatus eq 1}">
+                        <h5><span class="badge" style="background-color: #65bf96; color: #110000; padding: 5px; border-radius: 30px;">영업중</span></h5>
+                    </c:if>
+                    <c:if test="${truck.truckBusiStatus eq 0}">
+                        <h5 style="margin: 0;"><span class="badge" style="background-color: #ec6a56; color: #ffffff; padding: 5px; border-radius: 30px;">영업종료</span></h5>
+                    </c:if>
+                </div>
+
+                <%--div class="col-xs-4 col-md-2"><strong>사 장 님 공 지</strong></div>--%>
+                <div class="col-8 col-md-4" style="padding: 0; text-align: right; font-size: 16px;">
+                    <ion-icon name="megaphone-outline"></ion-icon>&nbsp;${truck.truckNoticeContent}
+                </div>
+                <input type="hidden" name="truckId" value="${truck.truckId}">
+
+            </div>
+
+            <!--================truck info 시작=============-->
+            <div style="display: flex; justify-content: space-around; align-items: center; margin-top: 10px;">
+
+                <div class="col-8 col-md-6" style="padding: 0; text-align: left;">
+                    <!--리뷰보기 버튼-->
+                    <div>
+                        <a class="btn btn-default" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="margin: 0; padding: 5px 10px;">
+                            리뷰 보기
+                        </a>
                     </div>
                 </div>
 
-<%--                <hr style="margin-top: 20px;"/>--%>
+                <div class="col-8 col-md-6" style="padding: 0; text-align: right; display: flex; justify-content: flex-end; align-items: center;">
 
-                <div style="display: flex; justify-content: space-evenly; align-items: center; margin-top: 20px;">
-
-                    <%--<div class="col-xs-4 col-md-2"><strong>전 화 번 호</strong></div>--%>
-                    <div class="col-8 col-md-4"  style="padding: 0; text-align: left; font-size: 16px;">
-                        <ion-icon name="call-outline"></ion-icon>&nbsp;${truck.truckPhone}
+                    <div>
+                        <ion-icon name="location-outline"></ion-icon>
                     </div>
-
-                    <div class="col-8 col-md-4">
-                        <%--<div><strong>영 업 상 태</strong></div>--%>
-                        <c:if test="${truck.truckBusiStatus eq 0}">
-                            <h5><span class="badge" style="background-color: #65bf96; color: #110000; padding: 5px; border-radius: 30px;">영업중</span></h5>
+                    <!--좋아요--> <!-- 0115 HHJ 추가 -->
+                    <button type="button" class="btn btn-outline-danger heart-click-t">
+                        <c:if test="${truck.truckHeartCount eq '0'}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
+                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+                            </svg>
                         </c:if>
-                        <c:if test="${truck.truckBusiStatus eq 1}">
-                            <h5 style="margin: 0;"><span class="badge" style="background-color: #ec6a56; color: #ffffff; padding: 5px; border-radius: 30px;">영업종료</span></h5>
+                        <c:if test="${truck.truckHeartCount ne '0'}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+                                <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"></path>
+                            </svg>
                         </c:if>
-                    </div>
-
-                    <%--div class="col-xs-4 col-md-2"><strong>사 장 님 공 지</strong></div>--%>
-                    <div class="col-8 col-md-4" style="padding: 0; text-align: right; font-size: 16px;">
-                        <ion-icon name="megaphone-outline"></ion-icon>&nbsp;${truck.truckNoticeContent}
-                    </div>
-                    <input type="hidden" name="truckId" value="${truck.truckId}">
-
+                    </button>
+                    <span id="heartC">${truck.truckHeartCount}</span>
+                    <!--좋아요-->
                 </div>
-
-                <!--================truck info 시작=============-->
-                <div style="display: flex; justify-content: space-around; align-items: center; margin-top: 10px;">
-
-                    <div class="col-8 col-md-6" style="padding: 0; text-align: left;">
-                        <!--리뷰보기 버튼-->
-                        <div>
-                            <a class="btn btn-default" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="margin: 0; padding: 5px 10px;">
-                                리뷰 보기
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-8 col-md-6" style="padding: 0; text-align: right;">
-                        <!--좋아요--> <!-- 0115 HHJ 추가 -->
-                        <button type="button" class="btn btn-outline-danger heart-click-t">
-                            <c:if test="${truck.truckHeartCount eq '0'}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
-                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
-                                </svg>
-                            </c:if>
-                            <c:if test="${truck.truckHeartCount ne '0'}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
-                                    <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"></path>
-                                </svg>
-                            </c:if>
-                        </button>
-                        <span id="heartC">${truck.truckHeartCount}</span>
-                        <!--좋아요-->
-                    </div>
-                </div>
+            </div>
 
 
             <hr style="margin-top: 20px;"/>
@@ -2616,23 +2592,31 @@ $(function (){
                 <div class="col-12" style="display: flex;">
 
                     <%-- 장바구니 --%>
-                    <div class="col-md-5 col-lg-4 order-md-last">
+                    <div class="col-md-5 col-lg-4 order-md-last" style="padding-top: 10px;">
                         <div class="sticky">
                             <form>
-                                <h4 class="d-flex justify-content-between align-items-center mb-3" style="width:259px;">
-                                    <span class="text">장바구니</span>
+                                <div style="text-align: initial;">
+                                    <span class="text" style="font-size: 16px; font-weight: bolder">장바구니</span>
+                                </div>
 
-                                    <div id="cartList" name="cartList"></div>
-                                    <div id="add" name="add"></div>
+                                <div id="cartList" name="cartList" style="margin-top: 15px;"></div>
+                                <div id="add" name="add" style="margin-top: 15px;"></div>
 
-                                </h4>
-                                <ul class="list-group mb-3" style="width:259px;">
-                                    <img src="data:image/png;base64,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" alt="">
+
+                                <ul class="list-group mb-3">
+                                    <div class="card col-12" style="margin: 0; height: 60px;  border: 0;">
+                                        <div class="card-body">
+                                            <p class="card-text">메뉴를 선택해주세요.</p>
+                                        </div>
+                                    </div>
+                                    <%--                                    <img src="data:image/png;base64,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" alt="">--%>
                                 </ul>
                                 <input type="hidden" id="orderUserId" name="orderUserId.userId" value="${user.userId}"/>
                                 <input type="hidden" id="orderTruckId" name="orderTruckId.truckId" value="${truck.truckId}"/>
-                                &emsp;&emsp;<button type="button"  class="btn btn-warning" data-toggle="modal" data-target="#cartModal" >주문하기</button>
-                                &emsp;&emsp;<button type="button"  class="btn btn-warning" id="cancelCartMenuList"  >삭  제</button>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <button type="button"  class="btn btn-cancle" id="cancelCartMenuList" style="margin: 0;">삭제</button>
+                                    <button type="button"  class="btn btn-default" data-toggle="modal" data-target="#cartModal" style="margin: 0;">주문하기</button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -2642,7 +2626,7 @@ $(function (){
 
                         <c:set var="i" value="0"/>
                         <c:forEach var="menu" items="${list}">
-                        <c:set var="i" value="${i+1}"/>
+                            <c:set var="i" value="${i+1}"/>
 
                             <section class="light">
                                 <div class="container py-2">
@@ -2661,7 +2645,7 @@ $(function (){
                                             <div class="postcard__preview-txt"><h6>${menu.menuPrice}&nbsp;₩</h6></div>
 
                                             <ul class="postcard__tagbox" style="justify-content: end;">
-                                                <li class="tag__item orderBtn" onclick="getMenu(${menu.menuNo});"><i class="fas fa-utensils"></i>메뉴 상세보기</li>
+                                                <li class="tag__item orderBtn" onclick="getMenu(${menu.menuNo});"><i class="fas fa-utensils"></i>메뉴선택</li>
                                                 <input type="hidden" name="menuNo" value="${menu.menuNo}"/>
                                             </ul>
                                         </div>
@@ -2697,8 +2681,8 @@ $(function (){
             </div>
             <!--  메뉴 목록 div End /////////////////////////////////////-->
         </div>
-        </div>
-    </section>
+    </div>
+</section>
 </body>
 
 
@@ -2708,21 +2692,25 @@ $(function (){
 <div class="modal fade" id="exampleModalLong" tabindex="-1" aria-labelledby="exampleModalLongTitle" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <%--<div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">메뉴 정보</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
+            </div>--%>
+            <div style="display: flex; justify-content: center; margin: 25px;">
+                <h5 class="modal-title" id="exampleModalLongTitle" style="margin: 0; box-shadow: inset 0 -11px 0 #fae100; font-size: 22px; width: fit-content;">메뉴 정보</h5>
             </div>
+
             <div class="modal-body-hey" style="min-height: 500px; margin-left: 19px;">
-                <p>This is some placeholder content to show the scrolling behavior for modals. Instead of repeating the text the modal, we use an inline style set a minimum height, thereby extending the length of the overall modal and demonstrating the overflow scrolling. When content becomes longer than the height of the viewport, scrolling will move the modal as needed.</p>
+                <p></p>
             </div>
             <div class="modal-happy">
 
             </div>
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-cancle" data-dismiss="modal">확인</button>
                 <c:if test="${truck.truckBusiStatus==0}">
                     <button type="button" class="btn btn-default" id="truckBusi">장바구니로!</button>
                 </c:if>
@@ -2816,7 +2804,11 @@ $(function (){
         console.log("role"+role);
 
         if(role=="truck") {
-            alert("푸드트럭은 좋아요를 누를 수 없어요 ( ´･･)ﾉ(._.`)");
+            //alert("푸드트럭은 좋아요를 누를 수 없어요 ( ´･･)ﾉ(._.`)");
+            Swal.fire({
+                text: "푸드트럭은 좋아요를 누를 수 없어요 ( ´･･)ﾉ(._.`)",
+                buttons: true
+            })
         }else{
             var truckId = $('input[name="truckId"]').val();
             console.log("truckId: " + truckId);
