@@ -881,11 +881,11 @@
                     <div class="container">
                         <div class="row row-cols-2">
                             <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio1"
-                                                    value="1" autocomplete="off" checked>
+                                                    value="0" autocomplete="off" checked>
                                 <label class="btn btn-outline-primary w-100" for="btnradio1">일반 결제</label>
                             </div>
                             <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio2"
-                                                    value="2" autocomplete="off">
+                                                    value="1" autocomplete="off">
                                 <label class="btn btn-outline-primary w-100" for="btnradio2">휴대폰결제</label>
                             </div>
 

@@ -439,7 +439,16 @@
               WHERE p.ORDER_TRUCK_ID = t.TRUCK_ID
                 AND p.order_No = o.od_order_no
                 AND p.ORDER_USER_ID = #{userId}
+            <if test="search.searchCondition ==0">
                 AND p.ORDER_STATUS between 1 and 7
+            </if>
+            <if test="search.searchCondition ==1">
+                AND (P.ORDER_STATUS = 4
+                OR P.ORDER_STATUS BETWEEN  6 AND 7)
+            </if>
+            <if test="search.searchCondition ==2">
+                AND P.ORDER_STATUS = 5
+            </if>
               group by ORDER_NO
         order by order_no desc ) inner_table
         limit #{search.startRowNum}, #{search.pageSize}
@@ -721,7 +730,16 @@
                 WHERE p.ORDER_TRUCK_ID = t.TRUCK_ID
                   AND p.order_No = o.od_order_no
                   and order_user_id = #{userId}
-                  and ORDER_STATUS between 1 and 7
+                <if test="search.searchCondition ==0">
+                    AND p.ORDER_STATUS between 1 and 7
+                </if>
+                <if test="search.searchCondition ==1">
+                    AND P.ORDER_STATUS = 4
+                    OR P.ORDER_STATUS BETWEEN  6 AND 7
+                </if>
+                <if test="search.searchCondition ==2">
+                    AND P.ORDER_STATUS = 5
+                </if>
                 group by ORDER_NO) countTable
     </select>
 

@@ -557,7 +557,9 @@
                 orNo = "주문번호 :"+data.purchase.orderNo;
 
                 paDa = "주문일시 :"+data.purchase.payDateTime;
-
+ /*<time datetime="YYYY-MM-DD">
+                      <i class="fas fa-calendar-alt mr-2"></i>${orderDetail.odOrderNo.payDateTime}
+                    </time>*/
                 usUN = "이름 : "+data.purchase.orderUserId.userName;
 
 

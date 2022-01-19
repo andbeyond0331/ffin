@@ -393,6 +393,7 @@ public class UserController {
 
         System.out.println("UserController.getPurchaseList");
 
+
         User user = (User)session.getAttribute("user");
         String userId = user.getUserId();
         System.out.println("userId :: "+userId);
@@ -400,10 +401,15 @@ public class UserController {
         if(search.getCurrentPage() == 0){
             search.setCurrentPage(1);
         }
+        if(request.getParameter("searchCondition") == null){
+            search.setSearchCondition("0");
+        }else {
+            search.setSearchCondition(request.getParameter("searchCondition"));
+        }
         search.setPageSize(pageSize);
-
         Map<String, Object> map = purchaseService.getPurchaseList(search, userId);
 
+        System.out.println("map 정보 확인 ////////////"+ map);
         System.out.println("search.getCurrentPage() = " + search.getCurrentPage());
         System.out.println("pageUnit = " + pageUnit);
         System.out.println("pageSize = " + pageSize);

@@ -503,11 +503,11 @@
                                     </div>
                                     <div style="margin-bottom: 15px;">
                                         <label for="orderPickUpTime" class="form-label label-name">픽업희망시간</label>
-                                        <input type="text" class="form-control" value="${purchase.orderPickUpTime}" id="orderPickUpTime" name="orderPickUpTime" readonly style="width: 340px;">
+                                        <input type="text" class="form-control" value="${purchase.orderPickUpTime} 분" id="orderPickUpTime" name="orderPickUpTime" readonly style="width: 340px;">
                                     </div>
                                     <div style="margin-bottom: 15px;">
                                         <label for="orderCookingTime" class="form-label label-name">예상조리시간</label>
-                                        <input type="text" class="form-control" value="<c:if test="${purchase.orderCookingTime eq 0}">주문 접수 중</c:if><c:if test="${purchase.orderCookingTime ne 0}">${purchase.orderCookingTime}</c:if>" id="orderCookingTime" name="orderCookingTime" readonly style="width: 340px;">
+                                        <input type="text" class="form-control" value="<c:if test="${purchase.orderCookingTime eq 0}">주문 접수 중</c:if><c:if test="${purchase.orderCookingTime ne 0}">${purchase.orderCookingTime}분</c:if>" id="orderCookingTime" name="orderCookingTime" readonly style="width: 340px;">
                                     </div>
                                     <div style="margin-bottom: 15px;">
                                         <c:if test="${purchase.payOption == '0'}">
@@ -572,6 +572,71 @@
                                         </c:choose>&nbsp;&nbsp;
 
                                     </div>
+
+                                    <c:choose>
+                                        <c:when test="${purchase.orderCancelReason == '1'}">
+                                            <div style="margin-bottom: 30px;">
+                                                <label  class="form-label label-name">주문취소사유</label>
+                                                <input type="text" class="form-control" value="구매의사 취소"  readonly style="width: 340px;" >
+                                            </div>
+                                        </c:when>
+                                        <c:when test="${purchase.orderCancelReason == '2'}">
+                                            <div style="margin-bottom: 30px;">
+                                                <label  class="form-label label-name">주문취소사유</label>
+                                                <input type="text" class="form-control" value="메뉴 및 수량 변경"  readonly style="width: 340px;" >
+                                            </div>
+                                        </c:when>
+                                        <c:when test="${purchase.orderCancelReason == '3'}">
+                                            <div style="margin-bottom: 30px;">
+                                                <label  class="form-label label-name">주문취소사유</label>
+                                                <input type="text" class="form-control" value="주문접수 지연"  readonly style="width: 340px;" >
+                                            </div>
+                                        </c:when>
+                                        <c:when test="${purchase.orderCancelReason == '4'}">
+                                            <div style="margin-bottom: 30px;">
+                                                <label  class="form-label label-name">주문취소사유</label>
+                                                <input type="text" class="form-control" value="기 타" readonly style="width: 340px;" >
+                                            </div>
+                                        </c:when>
+                                    </c:choose>&nbsp;&nbsp;
+
+
+
+                                    <c:choose>
+                                        <c:when test="${purchase.orderNopeReason == '1'}">
+                                            <div style="margin-bottom: 30px;">
+                                                <label  class="form-label label-name">주문거절사유</label>
+                                                <input type="text" class="form-control" value="고객 요청" readonly style="width: 340px;" >
+                                            </div>
+                                        </c:when>
+                                        <c:when test="${purchase.orderNopeReason == '2'}">
+                                            <div style="margin-bottom: 30px;">
+                                                <label  class="form-label label-name">주문거절사유</label>
+                                                <input type="text" class="form-control" value="고객 정보 부정확" readonly style="width: 340px;" >
+                                            </div>
+                                        </c:when>
+                                        <c:when test="${purchase.orderNopeReason == '3'}">
+                                            <div style="margin-bottom: 30px;">
+                                                <label  class="form-label label-name">주문거절사유</label>
+                                                <input type="text" class="form-control" value="주문 지연" readonly style="width: 340px;" >
+                                            </div>
+                                        </c:when>
+                                        <c:when test="${purchase.orderNopeReason == '4'}">
+                                            <div style="margin-bottom: 30px;">
+                                                <label  class="form-label label-name">주문거절사유</label>
+                                                <input type="text" class="form-control" value="재료 소진" readonly style="width: 340px;" >
+                                            </div>
+                                        </c:when>
+                                        <c:when test="${purchase.orderNopeReason == '5'}">
+                                            <div style="margin-bottom: 30px;">
+                                                <label  class="form-label label-name">주문거절사유</label>
+                                                <input type="text" class="form-control" value="기 타" readonly style="width: 340px;"01 >
+                                            </div>
+                                        </c:when>
+                                    </c:choose>&nbsp;&nbsp;
+
+
+
 
                                     <div style="margin-bottom: 30px;">
                                         <label for="orderCookingTime" class="form-label label-name">주문목록</label>
