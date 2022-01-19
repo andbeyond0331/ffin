@@ -165,8 +165,8 @@
 		left join menu m
 		on m.menu_truck_id=t.truck_id
 		<trim prefix="WHERE" prefixOverrides="AND">
-
-
+			AND t.TRUCK_JOIN_REQ_STATUS=1
+		       AND t.TRUCK_BYE_STATUS=0
 			<if test="searchKeyword !='' and searchKeyword!=null">
 				<bind name="searchKeyword" value="'%'+searchKeyword+'%'"></bind>
 				AND ((t.truck_name LIKE #{searchKeyword} or t.truck_sig_menu_name like #{searchKeyword}) or m.menu_name like #{searchKeyword})
