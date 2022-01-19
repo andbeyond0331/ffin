@@ -571,7 +571,7 @@
                     <form class="form-horizontal"  id="modaladdPostPicForm">
                         <input type="hidden" id = "menuTruckId" name="menuTruckId" value="${truck.truckId}">
 
-                        <div class="form-group">
+                            <div class="form-group">
                             <label for="postUser.userId" class="col-sm-offset-1 col-sm-10 control-label"><i class="fas fa-smile-o"></i></label>
 
 
@@ -584,7 +584,7 @@
                             </c:if>
                             </div>
 
-                        </div>
+
 
 
 

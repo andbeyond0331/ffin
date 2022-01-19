@@ -383,6 +383,14 @@
             },
 
             success: function (map) {
+                var orderTruckId = '${purchase.orderTruckId.truckId}';
+                var orderUserId ='${sessionScope.user.userId}';
+                if(socket) {
+                    // websocket에 보내기!!! (message, 보내는이, 받는이)
+                    let socketMessage = "cancelUser,"+orderUserId+","+orderTruckId+","+orderUserId;
+                    console.log("socketM::::" + socketMessage);
+                    socket.send(socketMessage);
+                }
                 self.location = "/user/getPurchaseList";
             },
             error: function (xhr, status, error) {
