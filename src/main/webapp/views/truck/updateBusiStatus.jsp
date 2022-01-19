@@ -78,8 +78,15 @@
                 var la =  $("input[name='la']").val();
                 var lo = $("input[name='lo']").val();
                 var truckId = '${sessionScope.truck.truckId}'
-                var tb = $("input[name='swCh']:checked").val();
+                var tb = '${truck.truckBusiStatus}'
 
+                if (tb == '0'){
+                    tb ='1';
+                }else{
+                    tb='0';
+                }
+
+                console.log("tb: "+tb)
 
                 $.ajax({
                     type:"POST",
@@ -92,8 +99,10 @@
                     },
                     success:function (data) {
 
+
                         alert ( " 현재 위치 및 영업 상태가 변경되었습니다. ");
 
+                        $('#busiStat').modal('hide');
                     }
                 });
 
@@ -104,9 +113,12 @@
                 var trucklo = '${sessionScope.truck.truckMapLo}';
                 console.log("truckla : "+truckla)
                 console.log("trucklo : "+trucklo)
-
+                console.log("tb1 : "+'${truck.truckBusiStatus}')
                 getAddr(truckla, trucklo);
-
+                $("#busiStat").on('hide.bs.modal', function (e) {
+                    window.location.reload();
+                    e.stopImmediatePropagation();
+                });
             });
 
         </script>
@@ -127,7 +139,7 @@
         <div class="page-header" style="text-align: center">
             <label for="page-top"/>
             <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
-            <h4 style="margin-top: 10px;">영업상태변경</h4>
+            <h4 style="margin-top: 10px;">영업 상태 변경</h4>
         </div>
         <br>
 
@@ -136,17 +148,17 @@
             <div class="row justify-content-between">
                 <div class="col-12" style="margin-top:3px ">
                     <div class="form-check form-switch pull-right" style="font-size:22px ">
-                        <c:if test="${truck.truckBusiStatus.equals('1')}">
+                        <c:if test="${sessionScope.truck.truckBusiStatus.equals('1')}">
                             <input class="form-check-input" type="checkbox" role="switch"
-                                   id="swCh" name="swCh" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                   id="swCh0" name="swCh0" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
                                    checked>
-                            <label class="form-check-label" for="swCh"
+                            <label class="form-check-label" for="swCh0"
                                    style="font-size:18px; margin-top:3px ">영업중</label>
                         </c:if>
-                        <c:if test="${truck.truckBusiStatus.equals('0')}">
+                        <c:if test="${sessionScope.truck.truckBusiStatus.equals('0')}">
                             <input class="form-check-input" type="checkbox" role="switch"
-                                   id="swCh" name="swCh" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            <label class="form-check-label" for="swCh"
+                                   id="swCh1" name="swCh1" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            <label class="form-check-label" for="swCh1"
                                    style="font-size:18px; margin-top:3px ">영업종료</label>
                         </c:if>
                         <input type="hidden" name="truckId" value="${sessionScope.truck.truckId}">
@@ -213,8 +225,8 @@
                                     </button>
                                 </div>
                             </div>
-                            <input type="text" name="la" />
-                            <input type="text" name="lo" />
+                            <input type="hidden" name="la" />
+                            <input type="hidden" name="lo" />
                             <input type="hidden" name="address" />
                         </form>
                     </div>
