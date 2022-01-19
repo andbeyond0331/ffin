@@ -17,21 +17,25 @@
 
     <title>트럭 목록</title>
     <jsp:include page="../../common/lib.jsp"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+<%--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>--%>
 
 
-    <!-- bootstrap core css -->
-    <link rel="stylesheet" type="text/css" href="../../resources/bootstrap/css/bootstrap.css" />
-    <!-- Custom styles for this template -->
-    <link href="../../resources/bootstrap/css/style.css" rel="stylesheet" />
+<%--    <!-- bootstrap core css -->--%>
+<%--    <link rel="stylesheet" type="text/css" href="../../resources/bootstrap/css/bootstrap.css" />--%>
+<%--    <!-- Custom styles for this template -->--%>
+<%--    <link href="../../resources/bootstrap/css/style.css" rel="stylesheet" />--%>
 
-    <!--    Favicons-->
-    <link rel="apple-touch-icon" sizes="180x180" href="../../resources/bootstrap/assets/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../../resources/bootstrap/assets/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../../resources/bootstrap/assets/favicons/favicon-16x16.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../../resources/bootstrap/assets/favicons/favicon.ico">
-    <link rel="manifest" href="../../resources/bootstrap/assets/favicons/manifest.json">
-    <meta name="msapplication-TileImage" content="../../resources/bootstrap/assets/favicons/mstile-150x150.png">
-    <meta name="theme-color" content="#ffffff">
+<%--    <!--    Favicons-->--%>
+<%--    <link rel="apple-touch-icon" sizes="180x180" href="../../resources/bootstrap/assets/favicons/apple-touch-icon.png">--%>
+<%--    <link rel="icon" type="image/png" sizes="32x32" href="../../resources/bootstrap/assets/favicons/favicon-32x32.png">--%>
+<%--    <link rel="icon" type="image/png" sizes="16x16" href="../../resources/bootstrap/assets/favicons/favicon-16x16.png">--%>
+<%--    <link rel="shortcut icon" type="image/x-icon" href="../../resources/bootstrap/assets/favicons/favicon.ico">--%>
+<%--    <link rel="manifest" href="../../resources/bootstrap/assets/favicons/manifest.json">--%>
+<%--    <meta name="msapplication-TileImage" content="../../resources/bootstrap/assets/favicons/mstile-150x150.png">--%>
+<%--    <meta name="theme-color" content="#ffffff">--%>
 
 
     <style>
@@ -1102,6 +1106,7 @@
         line-height: 1.14;
         font-weight: 300;
         max-height: 35px;
+        color:black;
     }
 
     .fadeIn[data-v-21b52141] {
@@ -1369,63 +1374,72 @@
             <c:if test="${cateCondition eq null or cateCondition eq '0'}">
                 <!--전체보기-->
                 <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                    <a data-v-21b52141="" href="/menu/getTruckList" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="true" style="animation-delay: 0.5s;" data-url="http://127.0.0.1:8080/menu/getTruckList">
+                    <a data-v-21b52141="" href="/menu/getTruckList" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="true" style="animation-delay: 0.5s;"
+                       data-url="http://127.0.0.1:8080/menu/getTruckList">
                         <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
                         <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
                             전체보기                    </h2> <!---->
                     </a> <!---->
                 </div>
                 <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateConditon=1" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateConditon=1">
+                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=1" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                       data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=1">
                         <img data-v-21b52141="" src="https://cdn-icons.flaticon.com/png/512/2112/premium/2112082.png?token=exp=1642568599~hmac=139475cd3f40d56a87cf762418cf3d4a" width="60" height="60" class="category-bubble-icon fadeIn">
                         <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
                             고기                    </h2> <!---->
                     </a> <!---->
                 </div>
                 <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateConditon=2" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateConditon=2">
+                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=2" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                       data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=2">
                         <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
                         <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
                             분식                    </h2> <!---->
                     </a> <!---->
                 </div>
                 <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateConditon=3" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateConditon=3">
+                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=3" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                       data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=3">
                         <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
                         <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
                             음료                    </h2> <!---->
                     </a> <!---->
                 </div>
                 <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateConditon=4" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateConditon=4">
+                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=4" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                       data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=4">
                         <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
                         <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
                             양식                    </h2> <!---->
                     </a> <!---->
                 </div>
                 <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateConditon=5" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateConditon=5">
+                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=5" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                       data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=5">
                         <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
                         <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
                             디저트                    </h2> <!---->
                     </a> <!---->
                 </div>
                 <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateConditon=6" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateConditon=6">
+                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=6" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                       data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=6">
                         <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
                         <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
                             한식                    </h2> <!---->
                     </a> <!---->
                 </div>
                 <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateConditon=7" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateConditon=7">
+                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=7" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                       data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=7">
                         <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
                         <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
                             일식                    </h2> <!---->
                     </a> <!---->
                 </div>
                 <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateConditon=8" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateConditon=8">
+                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=8" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                       data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=8">
                         <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
                         <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
                             기타                    </h2> <!---->
@@ -1434,114 +1448,243 @@
 
             </c:if>
 
-            <!--카테고리가 지정되었을 때-->
+            <!--카테고리가 지정되었을 때 && 검색어를 입력했을 때 구분-->
             <c:set var="myCate" value="${fn:split('고기,분식,음료,양식,디저트,한식,일식,기타',',')}"/>
-            <c:if test="${search.sortCondition eq null}">
-                <c:forEach var="i" begin="1" end="8">
-                    <c:if test="${cateCondition ne null and cateCondition eq i}">
-                        <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                            <a data-v-21b52141="" href="/menu/getTruckList" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;" data-url="http://127.0.0.1:8080/menu/getTruckList">
-                                <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                                <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                    전체보기                    </h2> <!---->
-                            </a> <!---->
-                        </div>
-                        <c:forEach var="j" begin="1" end="8">
-                            <c:if test="${i eq j}">
-                                <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateConditon=${j}" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="true" style="animation-delay: 0.5s;"
-                                       data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateConditon=${j}">
-                                        <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                                        <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                                ${myCate[j-1]}                    </h2> <!---->
-                                    </a> <!---->
-                                </div>
-                            </c:if>
-                            <c:if test="${i ne j}">
-                                <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateConditon=${j}" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateConditon=${j}">
-                                        <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                                        <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                                ${myCate[j-1]}                    </h2> <!---->
-                                    </a> <!---->
-                                </div>
-                            </c:if>
-                        </c:forEach>
-                    </c:if>
-                </c:forEach>
+            <c:if test="${search.sortCondition eq null or search.sortCondition eq ''}">
+                <c:if test="${search.searchKeyword eq null or search.searchKeyword eq ''}">
+                    <c:forEach var="i" begin="1" end="8">
+                        <c:if test="${cateCondition ne null and cateCondition eq i}">
+                            <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                <a data-v-21b52141="" href="/menu/getTruckList" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                                   data-url="http://127.0.0.1:8080/menu/getTruckList">
+                                    <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                    <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                        전체보기                    </h2> <!---->
+                                </a> <!---->
+                            </div>
+                            <c:forEach var="j" begin="1" end="8">
+                                <c:if test="${i eq j}">
+                                    <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                        <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=${j}" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="true" style="animation-delay: 0.5s;"
+                                           data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}">
+                                            <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                            <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                                    ${myCate[j-1]}                    </h2> <!---->
+                                        </a> <!---->
+                                    </div>
+                                </c:if>
+                                <c:if test="${i ne j}">
+                                    <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                        <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=${j}" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                                           data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}">
+                                            <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                            <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                                    ${myCate[j-1]}                    </h2> <!---->
+                                        </a> <!---->
+                                    </div>
+                                </c:if>
+                            </c:forEach>
+                        </c:if>
+                    </c:forEach>
+                </c:if>
+                <c:if test="${search.searchKeyword ne null and search.searchKeyword ne ''}">
+                    <c:forEach var="i" begin="1" end="8">
+                        <c:if test="${cateCondition ne null and cateCondition eq i}">
+                            <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                <a data-v-21b52141="" href="/menu/getTruckListCate?searchKeyword=${search.searchKeyword}" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                                   data-url="http://127.0.0.1:8080/menu/getTruckListCate?searchKeyword=${search.searchKeyword}">
+                                    <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                    <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                        전체보기                    </h2> <!---->
+                                </a> <!---->
+                            </div>
+                            <c:forEach var="j" begin="1" end="8">
+                                <c:if test="${i eq j}">
+                                    <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                        <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=${j}&searchKeyword=${search.searchKeyword}" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="true" style="animation-delay: 0.5s;"
+                                           data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}&searchKeyword=${search.searchKeyword}">
+                                            <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                            <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                                    ${myCate[j-1]}                    </h2> <!---->
+                                        </a> <!---->
+                                    </div>
+                                </c:if>
+                                <c:if test="${i ne j}">
+                                    <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                        <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=${j}&searchKeyword=${search.searchKeyword}" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                                           data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}&searchKeyword=${search.searchKeyword}">
+                                            <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                            <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                                    ${myCate[j-1]}                    </h2> <!---->
+                                        </a> <!---->
+                                    </div>
+                                </c:if>
+                            </c:forEach>
+                        </c:if>
+                    </c:forEach>
+                </c:if>
+
             </c:if>
 
             <c:if test="${search.sortCondition eq 'moreStars'}">
-                <c:forEach var="i" begin="1" end="8">
-                    <c:if test="${cateCondition ne null and cateCondition eq i}">
-                        <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                            <!--불안불안-->
-                            <a data-v-21b52141="" href="/menu/getTruckList?sortCondition=moreStars" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;" data-url="http://127.0.0.1:8080/menu/getTruckList?sortCondition=moreStars">
-                                <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                                <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                    전체보기                    </h2> <!---->
-                            </a> <!---->
-                        </div>
-                        <forEach var="j" begin="1" end="8">
-                            <c:if test="${i eq j}">
-                                <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateConditon=${j}&sortCodition=moreStars" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="true" style="animation-delay: 0.5s;"
-                                       data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateConditon=${j}&sortCodition=moreStars">
-                                        <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                                        <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                                ${myCate[j-1]}                    </h2> <!---->
-                                    </a> <!---->
-                                </div>
-                            </c:if>
-                            <c:if test="${i ne j}">
-                                <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateConditon=${j}&sortCodition=moreStars" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateConditon=${j}">
-                                        <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                                        <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                                ${myCate[j-1]}                    </h2> <!---->
-                                    </a> <!---->
-                                </div>
-                            </c:if>
+                <c:if test="${search.searchKeyword eq null or search.searchKeyword eq ''}">
+                    <c:forEach var="i" begin="1" end="8">
+                        <c:if test="${cateCondition ne null and cateCondition eq i}">
+                            <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                <!--불안불안-->
+                                <a data-v-21b52141="" href="/menu/getTruckListCate?sortCondition=moreStars" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                                   data-url="http://127.0.0.1:8080/menu/getTruckListCate?sortCondition=moreStars">
+                                    <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                    <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                        전체보기                    </h2> <!---->
+                                </a> <!---->
+                            </div>
+                            <forEach var="j" begin="1" end="8">
+                                <c:if test="${i eq j}">
+                                    <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                        <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=${j}&sortCondition=moreStars" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="true" style="animation-delay: 0.5s;"
+                                           data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}&sortCondition=moreStars">
+                                            <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                            <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                                    ${myCate[j-1]}                    </h2> <!---->
+                                        </a> <!---->
+                                    </div>
+                                </c:if>
+                                <c:if test="${i ne j}">
+                                    <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                        <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=${j}&sortCondition=moreStars" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                                           data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}">
+                                            <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                            <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                                    ${myCate[j-1]}                    </h2> <!---->
+                                        </a> <!---->
+                                    </div>
+                                </c:if>
 
-                        </forEach>
-                    </c:if>
-                </c:forEach>
+                            </forEach>
+                        </c:if>
+                    </c:forEach>
+                </c:if>
+                <c:set var="myNum" value="${fn:split('1,2,3,4,5,6,7,8',',')}"/>
+                <c:if test="${search.searchKeyword ne null and search.searchKeyword ne ''}">
+                    <c:forEach var="i" items="myNum">
+                        <c:if test="${cateCondition ne null and cateCondition eq i}">
+<%--                        <c:if test="${cateCondition ne null and cateCondition eq i}">--%>
+                            <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                <!--불안불안-->
+                                <a data-v-21b52141="" href="/menu/getTruckListCate?sortCondition=moreStars&searchKeyword=${search.searchKeyword}" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                                   data-url="http://127.0.0.1:8080/menu/getTruckListCate?sortCondition=moreStars&searchKeyword=${search.searchKeyword}">
+                                    <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                    <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                        전체보기                    </h2> <!---->
+                                </a> <!---->
+                            </div>
+                            <forEach var="j" items="myNum">
+                                <c:if test="${j eq i}">
+                                    <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                        <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=${j}&sortCondition=moreStars&searchKeyword=${search.searchKeyword}" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="true" style="animation-delay: 0.5s;"
+                                           data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}&sortCondition=moreStars&searchKeyword=${search.searchKeyword}">
+                                            <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                            <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                                    ${myCate[j-1]}                    </h2> <!---->
+                                        </a> <!---->
+                                    </div>
+                                </c:if>
+                                <c:if test="${j ne i}">
+                                    <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                        <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=${j}&sortCondition=moreStars&searchKeyword=${search.searchKeyword}" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                                           data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}&sortCondition=moreStars&searchKeyword=${search.searchKeyword}">
+                                            <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                            <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                                    ${myCate[j-1]}                    </h2> <!---->
+                                        </a> <!---->
+                                    </div>
+                                </c:if>
+
+                            </forEach>
+                        </c:if>
+                    </c:forEach>
+                </c:if>
+
             </c:if>
             <c:if test="${search.sortCondition eq 'lessStars'}">
-                <c:forEach var="i" begin="1" end="8">
-                    <c:if test="${cateCondition ne null and cateCondition eq i}">
-                        <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                            <!--불안불안-->
-                            <a data-v-21b52141="" href="/menu/getTruckList?sortCondition=lessStars" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;" data-url="http://127.0.0.1:8080/menu/getTruckList?sortCondition=lessStars">
-                                <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                                <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                    전체보기                    </h2> <!---->
-                            </a> <!---->
-                        </div>
-                        <forEach var="j" begin="1" end="8">
-                            <c:if test="${i eq j}">
-                                <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateConditon=${j}&sortCodition=lessStars" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="true" style="animation-delay: 0.5s;"
-                                       data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateConditon=${j}&sortCodition=lessStars">
-                                        <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                                        <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                                ${myCate[j-1]}                    </h2> <!---->
-                                    </a> <!---->
-                                </div>
-                            </c:if>
-                            <c:if test="${i ne j}">
-                                <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                                    <a data-v-21b52141="" href="/menu/getTruckListCate?cateConditon=${j}&sortCodition=lessStars" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;" data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateConditon=${j}&sortCondition=lessStars">
-                                        <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                                        <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                                ${myCate[j-1]}                    </h2> <!---->
-                                    </a> <!---->
-                                </div>
-                            </c:if>
+                <c:if test="${search.searchKeyword eq null or search.searchKeyword eq ''}">
+                    <c:forEach var="i" begin="1" end="8">
+                        <c:if test="${cateCondition ne null and cateCondition eq i}">
+                            <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                <!--불안불안-->
+                                <a data-v-21b52141="" href="/menu/getTruckListCate?sortCondition=lessStars" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                                   data-url="http://127.0.0.1:8080/menu/getTruckListCate?sortCondition=lessStars">
+                                    <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                    <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                        전체보기                    </h2> <!---->
+                                </a> <!---->
+                            </div>
+                            <forEach var="j" begin="1" end="8">
+                                <c:if test="${i eq j}">
+                                    <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                        <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=${j}&sortCondition=lessStars" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="true" style="animation-delay: 0.5s;"
+                                           data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}&sortCondition=lessStars">
+                                            <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                            <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                                    ${myCate[j-1]}                    </h2> <!---->
+                                        </a> <!---->
+                                    </div>
+                                </c:if>
+                                <c:if test="${i ne j}">
+                                    <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                        <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=${j}&sortCondition=lessStars" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                                           data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}&sortCondition=lessStars">
+                                            <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                            <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                                    ${myCate[j-1]}                    </h2> <!---->
+                                        </a> <!---->
+                                    </div>
+                                </c:if>
 
-                        </forEach>
-                    </c:if>
-                </c:forEach>
+                            </forEach>
+                        </c:if>
+                    </c:forEach>
+                </c:if>
+                <c:if test="${search.searchKeyword ne null and search.searchKeyword ne ''}">
+                    <c:forEach var="i" begin="1" end="8">
+                        <c:if test="${cateCondition ne null and cateCondition eq i}">
+                            <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                <!--불안불안-->
+                                <a data-v-21b52141="" href="/menu/getTruckListCate?sortCondition=lessStars&searchKeyword=${search.searchKeyword}" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                                   data-url="http://127.0.0.1:8080/menu/getTruckListCate?sortCondition=lessStars&searchKeyword=${search.searchKeyword}">
+                                    <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                    <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                        전체보기                    </h2> <!---->
+                                </a> <!---->
+                            </div>
+                            <forEach var="j" begin="1" end="8">
+                                <c:if test="${i eq j}">
+                                    <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                        <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=${j}&sortCondition=lessStars&searchKeyword=${search.searchKeyword}" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="true" style="animation-delay: 0.5s;"
+                                           data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}&sortCondition=lessStars&searchKeyword=${search.searchKeyword}">
+                                            <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                            <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                                    ${myCate[j-1]}                    </h2> <!---->
+                                        </a> <!---->
+                                    </div>
+                                </c:if>
+                                <c:if test="${i ne j}">
+                                    <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                        <a data-v-21b52141="" href="/menu/getTruckListCate?cateCondition=${j}&sortCondition=lessStars&searchKeyword=${search.searchKeyword}" class="category-bubble-link category-bubble-link--bounce-in" data-test-id="category-bubble" data-load="false" style="animation-delay: 0.5s;"
+                                           data-url="http://127.0.0.1:8080/menu/getTruckListCate?cateCondition=${j}&sortCondition=lessStars&searchKeyword=${search.searchKeyword}">
+                                            <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                            <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                                    ${myCate[j-1]}                    </h2> <!---->
+                                        </a> <!---->
+                                    </div>
+                                </c:if>
+
+                            </forEach>
+                        </c:if>
+                    </c:forEach>
+                </c:if>
+
             </c:if>
 
 
@@ -1550,13 +1693,15 @@
             <!--category for & if loop end-->
         </div>
     </section>
-    <!--glovo-->
+    <!--glovo end-->
         </div>
+
+
             <div class="row">
 <div class="col-md-12 text-right">
         <!-- Example single danger button -->
         <div class="dropdown">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right:15%">
+            <button type="button" class="btn btn-default dropdown-toggle" id="truck-dropdown" data-toggle="dropdown" aria-expanded="false" style="margin-right:15%">
                 <c:if test="${search.sortCondition eq null}">
                     기본 순
                 </c:if>
@@ -1568,55 +1713,82 @@
                 </c:if>
 
             </button>
-            <ul class="dropdown-menu">
-                <c:if test="${cateCondition eq null or cateCondition eq '0'}">
-                    <li><a class="dropdown-item" href="/menu/getTruckList">기본 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckList?sortCondition=moreStars">별점 높은 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckList?sortCondition=lessStars">별점 낮은 순</a></li>
+            <ul class="dropdown-menu" aria-labelledby="truck-dropdown">
+                <c:if test="${search.searchKeyword eq null or search.searchKeyword eq ''}">
+                    <c:if test="${cateCondition eq null or cateCondition eq '0'}">
+                        <li><a class="dropdown-item" href="/menu/getTruckList">기본 순</a></li>
+                        <li><a class="dropdown-item" href="/menu/getTruckListCate?sortCondition=moreStars">별점 높은 순</a></li>
+                        <li><a class="dropdown-item" href="/menu/getTruckListCate?sortCondition=lessStars">별점 낮은 순</a></li>
+                    </c:if>
+
+                    <c:forEach var="i" begin="1" end="8">
+                        <c:if test="${cateCondition ne null and cateCondition eq i}">
+                            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=${i}">기본 순</a></li>
+                            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=${i}&sortCondition=moreStars">별점 높은 순</a></li>
+                            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=${i}&sortCondition=lessStars">별점 낮은 순</a></li>
+                        </c:if>
+                    </c:forEach>
                 </c:if>
-                <c:if test="${cateCondition ne null and cateCondition eq '1'}">
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=1">기본 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=1&sortCondition=moreStars">별점 높은 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=1&sortCondition=lessStars">별점 낮은 순</a></li>
+                <c:if test="${search.searchKeyword ne null and search.searchKeyword ne ''}">
+                    <c:if test="${cateCondition eq null or cateCondition eq '0'}">
+                        <li><a class="dropdown-item" href="/menu/getTruckListCate?searchKeyword=${search.searchKeyword}">기본 순</a></li>
+                        <li><a class="dropdown-item" href="/menu/getTruckListCate?sortCondition=moreStars&searchKeyword=${search.searchKeyword}">별점 높은 순</a></li>
+                        <li><a class="dropdown-item" href="/menu/getTruckListCate?sortCondition=lessStars&searchKeyword=${search.searchKeyword}">별점 낮은 순</a></li>
+                    </c:if>
+
+                    <c:forEach var="i" begin="1" end="8">
+                        <c:if test="${cateCondition ne null and cateCondition eq i}">
+                            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=${i}&searchKeyword=${search.searchKeyword}">기본 순</a></li>
+                            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=${i}&sortCondition=moreStars&searchKeyword=${search.searchKeyword}">별점 높은 순</a></li>
+                            <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=${i}&sortCondition=lessStars&searchKeyword=${search.searchKeyword}">별점 낮은 순</a></li>
+                        </c:if>
+                    </c:forEach>
                 </c:if>
-                <c:if test="${cateCondition ne null and cateCondition eq '2'}">
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=2">기본 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=2&sortCondition=moreStars">별점 높은 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=2&sortCondition=lessStars">별점 낮은 순</a></li>
-                </c:if>
-                <c:if test="${cateCondition ne null and cateCondition eq '3'}">
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=3">기본 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=3&sortCondition=moreStars">별점 높은 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=3&sortCondition=lessStars">별점 낮은 순</a></li>
-                </c:if>
-                <c:if test="${cateCondition ne null and cateCondition eq '4'}">
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=4">기본 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=4&sortCondition=moreStars">별점 높은 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=4&sortCondition=lessStars">별점 낮은 순</a></li>
-                </c:if>
-                <c:if test="${cateCondition ne null and cateCondition eq '5'}">
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=5">기본 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=5&sortCondition=moreStars">별점 높은 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=5&sortCondition=lessStars">별점 낮은 순</a></li>
-                </c:if>
-                <c:if test="${cateCondition ne null and cateCondition eq '6'}">
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=6">기본 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=6&sortCondition=moreStars">별점 높은 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=6&sortCondition=lessStars">별점 낮은 순</a></li>
-                </c:if>
-                <c:if test="${cateCondition ne null and cateCondition eq '7'}">
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=7">기본 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=7&sortCondition=moreStars">별점 높은 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=7&sortCondition=lessStars">별점 낮은 순</a></li>
-                </c:if>
-                <c:if test="${cateCondition ne null and cateCondition eq '8'}">
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=8">기본 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=8&sortCondition=moreStars">별점 높은 순</a></li>
-                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=8&sortCondition=lessStars">별점 낮은 순</a></li>
-                </c:if>
-                <%--        <li><a class="dropdown-item" href="/menu/getTruckList">기본 순</a></li>--%>
-                <%--        <li><a class="dropdown-item" href="/menu/getTruckList?sortCondition=moreStars">별점 높은 순</a></li>--%>
-                <%--        <li><a class="dropdown-item" href="/menu/getTruckList?sortCondition=lessStars">별점 낮은 순</a></li>--%>
+
+
+<%--                <c:if test="${cateCondition ne null and cateCondition eq '1'}">--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=1">기본 순</a></li>--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=1&sortCondition=moreStars">별점 높은 순</a></li>--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=1&sortCondition=lessStars">별점 낮은 순</a></li>--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${cateCondition ne null and cateCondition eq '2'}">--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=2">기본 순</a></li>--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=2&sortCondition=moreStars">별점 높은 순</a></li>--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=2&sortCondition=lessStars">별점 낮은 순</a></li>--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${cateCondition ne null and cateCondition eq '3'}">--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=3">기본 순</a></li>--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=3&sortCondition=moreStars">별점 높은 순</a></li>--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=3&sortCondition=lessStars">별점 낮은 순</a></li>--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${cateCondition ne null and cateCondition eq '4'}">--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=4">기본 순</a></li>--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=4&sortCondition=moreStars">별점 높은 순</a></li>--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=4&sortCondition=lessStars">별점 낮은 순</a></li>--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${cateCondition ne null and cateCondition eq '5'}">--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=5">기본 순</a></li>--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=5&sortCondition=moreStars">별점 높은 순</a></li>--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=5&sortCondition=lessStars">별점 낮은 순</a></li>--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${cateCondition ne null and cateCondition eq '6'}">--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=6">기본 순</a></li>--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=6&sortCondition=moreStars">별점 높은 순</a></li>--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=6&sortCondition=lessStars">별점 낮은 순</a></li>--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${cateCondition ne null and cateCondition eq '7'}">--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=7">기본 순</a></li>--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=7&sortCondition=moreStars">별점 높은 순</a></li>--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=7&sortCondition=lessStars">별점 낮은 순</a></li>--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${cateCondition ne null and cateCondition eq '8'}">--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=8">기본 순</a></li>--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=8&sortCondition=moreStars">별점 높은 순</a></li>--%>
+<%--                    <li><a class="dropdown-item" href="/menu/getTruckListCate?cateCondition=8&sortCondition=lessStars">별점 낮은 순</a></li>--%>
+<%--                </c:if>--%>
+<%--                        <li><a class="dropdown-item" href="/menu/getTruckList">기본 순</a></li>--%>
+<%--                        <li><a class="dropdown-item" href="/menu/getTruckList?sortCondition=moreStars">별점 높은 순</a></li>--%>
+<%--                        <li><a class="dropdown-item" href="/menu/getTruckList?sortCondition=lessStars">별점 낮은 순</a></li>--%>
             </ul>
         </div>
 </div>

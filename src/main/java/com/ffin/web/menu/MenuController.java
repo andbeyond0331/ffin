@@ -104,6 +104,10 @@ public class MenuController {
 //        model.addAttribute("list2", list2);
         model.addAttribute("resultPage", resultPage);
         model.addAttribute("search", search);
+        model.addAttribute("sortCondition", search.getSortCondition());
+        model.addAttribute("cateCondition", search.getCateCondition());
+        model.addAttribute("searchKeyword", search.getSearchKeyword());
+
 
         return "forward:/views/menu/getTruckMenuList.jsp";
     }
@@ -188,7 +192,8 @@ public class MenuController {
     // 트럭 리스트 - 카테고리에 따른
     @RequestMapping(value = "getTruckListCate")
 //    public String getTruckList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
-    public String getTruckListCate(@RequestParam(value="sortCondition", required = false) String sortCondition, @RequestParam(value="cateCondition", required = false) String cateCondition, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+    public String getTruckListCate(@RequestParam(value="searchKeyword", required = false) String searchKeyword, @RequestParam(value="sortCondition", required = false) String sortCondition, @RequestParam(value="cateCondition", required = false) String cateCondition, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+//    public String getTruckListCate(@RequestParam(value="sortCondition", required = false) String sortCondition, @RequestParam(value="cateCondition", required = false) String cateCondition, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
 
         System.out.println("/truck/getTruckList : GET / POST");
 //        if(sortCondition != null) sortCondition = new String(sortCondition.getBytes("EUC-KR"), "utf-8");
@@ -217,8 +222,12 @@ public class MenuController {
 
             search.setSortCondition(sortCondition);
         }
-        System.out.println("search ; " + search);
 
+
+        if (searchKeyword!=null && !searchKeyword.equals("")){
+            search.setSearchKeyword(searchKeyword);
+        }
+        System.out.println("search ; " + search);
 //        String searchKeyword = search.getSearchKeyword();
 //        System.out.println(searchKeyword);
 //        if(searchKeyword != null) {
@@ -242,6 +251,7 @@ public class MenuController {
         model.addAttribute("search", search);
         model.addAttribute("cateCondition", cateCondition);
         model.addAttribute("sortCondition",sortCondition);
+        model.addAttribute("searchKeyword", searchKeyword);
 
         return "forward:/views/menu/getTruckMenuList.jsp";
     }
