@@ -261,6 +261,14 @@
         }
     </style>
 
+    <style>
+
+        .carousel-item {
+            width:30%;
+        }
+
+    </style>
+
     <script type="text/javascript">
 
         function fncGetUserList(currentPage) {
@@ -277,10 +285,13 @@
         }
 
 
+
         /* 리뷰 내용 펼치기 */
         $(function () {
 
             $('.mb-10').click(function () {
+
+                var role = $('input[name="role"]').val();
 
 
                 var rvNo = $(this).find("input[name='rvNo']").val();
@@ -319,11 +330,24 @@
                         "<input type=\"hidden\" name=\"rvNo\" value=\""+Data.review.rvNo+"\">"+
                         "<div class=\"box-top\">"+
                         "<div class=\"profile\">"+
-                        " <div class=\"profile-img\">"+
-                        " <img src=\"/resources/image/"+Data.review.userProImg+"\" />"+
+                        " <div class=\"profile-img\">";
+                        if(role=='truck'){
+                            display+=""+
+                                " <img src=\"/resources/image/"+Data.review.userProImg+"\" />";
+                        }else if(role=='user'){
+                            display+=""+
+                                " <img src=\"/resources/image/"+Data.review.truckProImg+"\" />";
+                        }
+
+                        display+=""+
                         "</div>"+
-                        "<div class=\"name-user\">"+
-                        "<strong>"+Data.review.rvUserId+"</strong>"+
+                        "<div class=\"name-user\">";
+                        if(role=='truck'){
+                            display+="<strong>"+Data.review.rvUserId+"</strong>";
+                        }else if(role=='user'){
+                            display+="<strong>"+Data.review.truckName+"</strong>";
+                        }
+                        display+=
                         "<span>"+Data.review.rvRegTime+"</span>"+
                         "</div>"+
                         "</div>"+
@@ -412,30 +436,88 @@
                             "<div class=\"client-comment\">"+
                             "<p>"+Data.review.rvContent+"</p>"+
                             "</div>"+
-                            "</div>"+
+
                             ""+
 
                             "";
 
                         //스타일 바꾸기 시도 끝
 
+
+
+                        //carousel 적용
                         if(Data.review.rvImg1){
-                            display += "<img src='../../resources/image/"+Data.review.rvImg1+"' class='card-img-top' alt='reviewImg' style='width: 200px;'>";
-                        }
+                            display += ""+
+                                "<div id=\"carouselExampleIndicators\" class=\"carousel slide\" data-ride=\"carousel\">"+
+                                "<ol class=\"carousel-indicators\">"+
+                                "<li data-target=\"#carouselExampleIndicators\" data-slide-to=\"0\" class=\"active\"></li>";
 
+                        }
                         if(Data.review.rvImg2){
-                            display += "<img src='../../resources/image/"+Data.review.rvImg2+"' class='card-img-top' alt='reviewImg' style='width: 200px;'>";
+                            display += ""+
+                                "<li data-target=\"#carouselExampleIndicators\" data-slide-to=\"1\"></li>";
+                        }
+                        if(Data.review.rvImg3){
+                            display+=""+
+                                "<li data-target=\"#carouselExampleIndicators\" data-slide-to=\"\"></li>";
+                        }
+                        if(Data.review.rvImg1){
+                            display+=""+
+                        "</ol>"+
+                            "<div class=\"carousel-inner\">"+
+                                "<div class=\"carousel-item active\">"+
+                                    "<img class=\"d-block w-100\" src=\"/resources/image/"+Data.review.rvImg1+"\" alt=\"First slide\">"+
+                                "</div>";
+                        }
+                        if(Data.review.rvImg2){
+                            display+=""+
+                                "<div class=\"carousel-item\">"+
+                                    "<img class=\"d-block w-100\" src=\"/resources/image/"+Data.review.rvImg2+"\" alt=\"Second slide\">"+
+                                "</div>";
+                        }
+                        if(Data.review.rvImg3){
+                            display+=""+
+                                "<div class=\"carousel-item\">"+
+                                "<img class=\"d-block w-100\" src=\"/resources/image/"+Data.review.rvImg3+"\" alt=\"Third slide\">"+
+                                "</div>";
+
+
+                        }
+                        if(Data.review.rvImg1){
+                            display+=""+
+                        "</div>"+
+                            "<a class=\"carousel-control-prev\" href=\"#carouselExampleIndicators\" role=\"button\" data-slide=\"prev\">"+
+                                "<span class=\"carousel-control-prev-icon\" aria-hidden=\"true\"></span>"+
+                                "<span class=\"sr-only\">Previous</span>"+
+                            "</a>"+
+                            "<a class=\"carousel-control-next\" href=\"#carouselExampleIndicators\" role=\"button\" data-slide=\"next\">"+
+                                "<span class=\"carousel-control-next-icon\" aria-hidden=\"true\"></span>"+
+                                "<span class=\"sr-only\">Next</span>"+
+                            "</a>"+
+                                "</div>"+
+                        "</div>";
                         }
 
-                        if(Data.review.rvImg3){
-                            display += "<img src='../../resources/image/"+Data.review.rvImg3+"' class='card-img-top' alt='reviewImg' style='width: 200px;'>";
-                        }
+
+
+
+                        // if(Data.review.rvImg1){
+                        //     display += "<img src='../../resources/image/"+Data.review.rvImg1+"' class='card-img-top' alt='reviewImg' style='width: 200px;'>";
+                        // }
+                        //
+                        // if(Data.review.rvImg2){
+                        //     display += "<img src='../../resources/image/"+Data.review.rvImg2+"' class='card-img-top' alt='reviewImg' style='width: 200px;'>";
+                        // }
+                        //
+                        // if(Data.review.rvImg3){
+                        //     display += "<img src='../../resources/image/"+Data.review.rvImg3+"' class='card-img-top' alt='reviewImg' style='width: 200px;'>";
+                        // }
 
                         // display  += "<p class='card-text'>"+Data.review.rvContent+"</p>"
                         //     + "</div>";
 
                         display +="<hr style='border-width:2px;'/>";
-                        var role = $('input[name="role"]').val();
+
 
                         if(!Data.review.rvTruckCmtContent){
                             // alert(Data.review.rvTruckCmtContent);

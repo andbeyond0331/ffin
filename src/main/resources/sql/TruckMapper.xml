@@ -177,7 +177,7 @@
 			</if>
 		</trim>
 
-		group by truck_id
+		group by truck_id, truck_avg_star
 		<![CDATA[
                having distance <= 500
       ]]>
@@ -214,6 +214,8 @@
 			left join menu m
 			on m.menu_truck_id=t.truck_id
 				<trim prefix="WHERE" prefixOverrides="AND">
+					AND t.TRUCK_JOIN_REQ_STATUS=1
+					AND t.TRUCK_BYE_STATUS=0
 
 
 					<if test="searchKeyword !='' and searchKeyword!=null">
@@ -240,6 +242,10 @@
 		FROM( SELECT  t.truck_id , t.truck_name , t.truck_phone, t.truck_map_la, t.truck_map_lo, t.truck_cate, t.truck_avg_star, t.truck_pro_img, t.truck_busi_status, t.truck_sig_menu_no, t.truck_sig_menu_name, t.truck_sig_menu_img1, m.menu_truck_id, m.menu_name
 			FROM truck t
 			left join menu m on m.menu_truck_id=t.truck_id
+		<trim prefix="WHERE" prefixOverrides="AND">
+		AND t.TRUCK_JOIN_REQ_STATUS=1
+		AND t.TRUCK_BYE_STATUS=0
+		</trim>
 			group by truck_id
 			order by t.TRUCK_AVG_STAR ) inner_table
 		limit 0,20;
