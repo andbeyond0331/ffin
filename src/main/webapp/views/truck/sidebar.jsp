@@ -162,7 +162,7 @@
     #collapsePost div a, #collapseQnAUser div a, #collapseUser div a,
     #collapseTruck div a, #collapseApp div a, #collapseQnAAdmin div a,
     #collapseInfoT div a ,#collapseSale div a, #collapsePostT div a,
-    #collapseComment div a, #collapseNotice div a{
+    #collapseComment div a, #collapseNotice div a, #collapseMyTruckReview div a{
         color: #110000;
         padding: 0 0 0 20px;
         margin: 5px 0 5px 0;
@@ -171,14 +171,48 @@
     #collapsePost div a:hover, #collapseQnAUser div a:hover, #collapseUser div a:hover,
     #collapseTruck div a:hover, #collapseApp div a:hover, #collapseQnAAdmin div a:hover,
     #collapseInfoT div a:hover ,#collapseSale div a:hover, #collapsePostT div a:hover,
-    #collapseComment div a:hover,#collapseNotice div a:hover{
+    #collapseComment div a:hover,#collapseNotice div a:hover, #collapseMyTruckReview div a:hover{
         color: #ffba49;
     }
 
 
 </style>
 
-<script>
+<script type="text/javascript">
+    // ========= 가입승인전 제약 ==========
+    $( function() {
+        $("#goUpdateNoti").on("click" , function() {
+            if(${sessionScope.truck.truckJoinReqStatus eq 1}){
+                self.location = "/truck/updateNotice";
+            }else {
+                alert("가입승인이 완료된 이후 이용가능합니다.");
+                return;
+            }
+        });
+    });
+
+    $( function() {
+        $("#goSalesList").on("click" , function() {
+            if(${sessionScope.truck.truckJoinReqStatus eq 1}){
+                self.location = "/truck/getSalesList";
+            }else {
+                alert("가입승인이 완료된 이후 이용가능합니다.");
+                return;
+            }
+        });
+    });
+
+    $( function() {
+        $("#goMyTruckReview").on("click" , function() {
+            if(${sessionScope.truck.truckJoinReqStatus eq 1}){
+                self.location = "/review/getReviewListTruck?truckId=${truck.truckId}";
+            }else {
+                alert("가입승인이 완료된 이후 이용가능합니다.");
+                return;
+            }
+        });
+    });
+
 
 
 </script>
@@ -223,7 +257,7 @@
                     </a>
                     <div class="collapse" id="collapseNotice" style="padding: 10px;">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="/truck/updateNotice">공지수정</a>
+                            <a class="collapse-item" id="goUpdateNoti">공지수정</a>
                         </div>
                     </div>
                 </li>
@@ -236,55 +270,21 @@
                     </a>
                     <div class="collapse" id="collapsePurchase" style="padding: 10px;">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="/truck/getSalesList">판매내역</a>
+                            <a class="collapse-item" id="goSalesList">판매내역</a>
 <%--                            <a class="collapse-item" href="">환불내역</a>--%>
                         </div>
                     </div>
                 </li>
-                <%--<li class="list">
-                    <b></b>
-                    <b></b>
-                    <a class="btn toggle-btn" role="button" data-target="#collapseComment" data-toggle="collapse" href="#collapseComment" aria-expanded="false" aria-controls="collapseExample">
-                        <span class="icon"><ion-icon name="chatbubbles-outline"></ion-icon></span>
-                        <span class="title">댓글</span>
-                    </a>
-                    <div class="collapse" id="collapseComment" style="padding: 10px;">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">작성한 댓글</a>
-                        </div>
-                    </div>
-                </li>--%>
-                <%--<li class="list">
-                    <b></b>
-                    <b></b>
-                    <a class="truck-menu" href="#">
-                        <span class="icon"><ion-icon name="fast-food-outline"></ion-icon></span>
-                        <span class="title">메뉴관리</span>
-                    </a>
-                </li>--%>
-                    <%--<li class="list">
-                        <b></b>
-                        <b></b>
-                        <a class="btn toggle-btn" role="button" data-target="#collapseHeart" data-toggle="collapse" href="#collapseHeart" aria-expanded="false" aria-controls="collapseExample">
-                            <span class="icon"><ion-icon name="heart-outline"></ion-icon></span>
-                            <span class="title">좋아요</span>
-                        </a>
-                        <div class="collapse" id="collapseHeart" style="padding: 10px;">
-                            <div class="bg-white py-2 collapse-inner rounded">
-                                <a class="collapse-item" href="">게시글</a>
-                            </div>
-                        </div>
-                    </li>--%>
                 <li class="list">
                     <b></b>
                     <b></b>
-                    <a href="#">
+                    <a class="btn toggle-btn" role="button" data-target="#collapseMyTruckReview" data-toggle="collapse" href="#collapseMyTruckReview" aria-expanded="false" aria-controls="collapseExample">
                         <span class="icon"><ion-icon name="star-half-outline"></ion-icon></span>
                         <span class="title">리뷰</span>
                     </a>
-                    <div class="collapse" id="collapseReview" style="padding: 10px;">
+                    <div class="collapse" id="collapseMyTruckReview" style="padding: 10px;">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-item" href="">내 트럭 리뷰</a>
+                            <a class="collapse-item" id="goMyTruckReview">내 트럭 리뷰</a>
                         </div>
                     </div>
                 </li>
