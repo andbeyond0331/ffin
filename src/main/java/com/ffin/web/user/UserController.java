@@ -169,8 +169,8 @@ public class UserController {
         System.out.println("/user/addUser : POST");
         //Business Logic
         userService.addUserInfo(user);
-        model.addAttribute(user);
-        session.setAttribute("user", user);
+        model.addAttribute("user", user);
+        /*session.setAttribute("user", user);*/
         System.out.println("UserController.addUser : session "+user);
 
         return "/views/user/addUserProfile.jsp";
@@ -233,8 +233,14 @@ public class UserController {
             model.addAttribute("msgs", "Please select a valid mediaFile..");
         }
 
+
+        System.out.println("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
+        System.out.println("user : "+user);
+
+
         user.setUserProImg(file.getOriginalFilename());
         userService.updateUserProfile(user);
+
 
         System.out.println("UserController.updateUserProfile"+user);
 

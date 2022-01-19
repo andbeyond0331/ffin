@@ -23,6 +23,12 @@
         width:330px;
         height:270px;
     }
+    .label {margin-bottom: 105px;}
+    .label * {display: inline-block;vertical-align: top;}
+    .label .left {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png") no-repeat;display: inline-block;height: 24px;overflow: hidden;vertical-align: top;width: 7px;}
+    .label .center {background: url(https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_bg.png) repeat-x;display: inline-block;height: 24px;font-size: 12px;line-height: 24px;}
+    .label .right {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png") -1px 0  no-repeat;display: inline-block;height: 24px;overflow: hidden;width: 6px;}
+
 </style>
 
     <script type="text/javascript">
@@ -154,10 +160,17 @@
                         <img src="../resources/menu/${truck.truckSigMenuImg1}" class="box-img" alt="" />
                     </div>
                     <div class="detail-box">
+                        <c:if test="${truck.truckBusiStatus == '0'}">
+                        <span class="badge" style="background-color: #fae100; color: #110000">영업종료</span>
+                        </c:if>
+                        <c:if test="${truck.truckBusiStatus == '1'}">
+                            <span class="badge" style="background-color: #fae100; color: #110000">영업중</span>
+                        </c:if>
                         <h5> ${truck.truckSigMenuName} </h5>
                         <div>
                             <span class="text-warning me-2">
-                            <i class="fas fa-map-marker-alt"></i></span>
+                            <a style="background-color: #ffffff;" la="${truck.truckMapLa}" lo="${truck.truckMapLo}" href="#" class="truckMapFind" td="${truck.truckId}" nm="${truck.truckName}" im="${truck.truckSigMenuImg1}"><i class="fas fa-map-marker-alt"></i></a>
+                            </span>
                             <span class="text-primary">${truck.truckName}</span>
                         </div>
 <%--                        <span class="text-1000 fw-bold">₩5,000</span>--%>
@@ -499,11 +512,78 @@
 
         // map 노출이 안되어서 강제로 setTimeout 주었엉...ㅎㅎ
         setTimeout( function() {
+            map.relayout();
+            map.setCenter(new kakao.maps.LatLng(37.566481622437934,126.98502302169841));
             window.dispatchEvent(new Event('resize'));
         }, 300);
     }
 
+    function mapLocationSelectTruck(lat, lon, truckId, truckName, truckImg) {
 
+
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+            mapOption = {
+                center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+// 지도를 클릭한 위치에 표출할 마커입니다
+        var marker = new kakao.maps.Marker({
+            // 지도 중심좌표에 마커를 생성합니다
+            position: map.getCenter(),
+            map: map
+        });
+        marker.setMap(map);
+
+
+        // 커스텀 오버레이에 표시할 내용입니다
+// HTML 문자열 또는 Dom Element 입니다
+        var content = "<div class ='label'><span class='left'></span><span class='center'><a href='/menu/getMenuList?truckId="+truckId+"'>"+truckName+"</a></span>"
+            + "<span class='right'></span></div>";
+
+// 커스텀 오버레이가 표시될 위치입니다
+        var position = new kakao.maps.LatLng(lat, lon);
+
+// 커스텀 오버레이를 생성합니다
+        var customOverlay = new kakao.maps.CustomOverlay({
+            position: position,
+            content: content
+        });
+
+// 커스텀 오버레이를 지도에 표시합니다
+        customOverlay.setMap(map);
+
+        $("#map").css("display","");
+        $("#mapAccess").remove();
+
+
+        // map.trigger('resize');
+        $('#staticBackdrop').modal('show');
+
+        // map 노출이 안되어서 강제로 setTimeout 주었엉...ㅎㅎ
+        // 중심부 못잡아서도 이렇게 주었다
+        setTimeout( function() {
+
+            map.relayout();
+            map.setCenter(new kakao.maps.LatLng(lat, lon));
+            window.dispatchEvent(new Event('resize'));
+        }, 300);
+
+    }
+
+    $(document).on("click", ".truckMapFind", function (){
+        var lat = $(this).attr('la')
+        var lon = $(this).attr('lo')
+        var truckId = $(this).attr('td')
+        var truckName = $(this).attr('nm')
+        var truckImg = $(this).attr('im')
+
+        console.log('lat : '+lat);
+        console.log('lon : '+lon)
+        mapLocationSelectTruck(lat, lon, truckId, truckName, truckImg)
+    })
 
 </script>
 </body>

@@ -554,50 +554,67 @@
 
 <!-- 등록/ 수정 모달 -->
 <div class="modal fade"  id="modaladdPostPic" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modaladdPostPic" aria-hidden="true" style=" display: none; ">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Posting</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">ns</span>
-                </button>
-            </div>
+
             <div class="modal-body">
-                <form class="form-horizontal" id="modaladdPostPicForm">
-                    <div class="form-group">
-                        <strong> 작성자 아이디 </strong>
-                        <c:if test="${sessionScope.role eq 'user'}">
-                            <span id="postUser.userId">${sessionScope.user.userId}</span>
-                        </c:if>
-                        <c:if test="${sessionScope.role eq 'truck'}">
-                            <span id="postTruck.truckId">${sessionScope.truck.truckId}</span>
-                        </c:if>
-                    </div>
-                    <div class="form-group">
-                        <label for="postFile1" class="col-sm-offset-1 col-sm-10 control-label">업로드할 사진1</label>
-                        <div class="col-sm-10">
-                            <input type="file" class="form-control" id="postFile1" name="postFile11"  value="${post.postFile1}" placeholder="파일 이미지1" onchange="setImage1Preview(event, '#image1preview');">
-                        </div>
-                        <div id="image1preview" class="col-sm-10"></div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="postFile2" class="col-sm-offset-1 col-sm-10 control-label">업로드할 사진2</label>
-                        <div class="col-sm-10">
-                            <input type="file" class="form-control" id="postFile2" name="postFile22"  value="${post.postFile2}" placeholder="파일 이미지1" onchange="setImage2Preview(event, '#image2preview');">
-                        </div>
-                        <div id="image2preview" class="col-sm-10"></div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="postFile3" class="col-sm-offset-1 col-sm-10 control-label">업로드할 사진3</label>
-                        <div class="col-sm-10">
-                            <input type="file" class="form-control" id="postFile3" name="postFile33"  value="${post.postFile3}" placeholder="파일 이미지3" onchange="setImage3Preview(event, '#image3preview');">
-                        </div>
-                        <div id="image3preview" class="col-sm-10"></div>
-                    </div>
 
-                    <script>
+                <div style="display:flex; justify-content: center; margin-top: 10px;">
+                    <h5 style="margin: 0; box-shadow: inset 0 -11px 0 #fae100; font-size: 22px; width: fit-content;" id="menuModalLabel">글쓰기</h5>
+                </div>
+                <hr style="margin-bottom: 30px;"/>
+
+
+                <div>
+                    <form class="form-horizontal"  id="modaladdPostPicForm">
+                        <input type="hidden" id = "menuTruckId" name="menuTruckId" value="${truck.truckId}">
+
+                        <div class="form-group">
+                            <label for="postUser.userId" class="col-sm-offset-1 col-sm-10 control-label"><i class="fas fa-smile-o"></i></label>
+
+
+                            <c:if test="${sessionScope.role eq 'user'}">
+                                <input type="text" class="form-control" id="postUser.userId" value="${sessionScope.user.userId}" readonly>
+                                <%--<span id="postUser.userId">${sessionScope.user.userId}</span>--%>
+                            </c:if>
+                            <c:if test="${sessionScope.role eq 'truck'}">
+                                <input type="text" class="form-control" id="postTruck.postTruck" value="${sessionScope.truck.truckId}" readonly>
+                            </c:if>
+                            </div>
+
+                        </div>
+
+
+
+
+                        <div class="form-group">
+                            <label for="postFile1" class="col-sm-offset-1 col-sm-10 control-label"><i class="fas fa-camera"></i></label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" id="postFile1" name="postFile11"  value="${post.postFile1}" placeholder="파일 이미지1" onchange="setImage1Preview(event, '#image1preview');" style="padding-bottom: 0; padding-top:3px; padding-left: 15px;">
+                            </div>
+                            <div id="image1preview" class="col-sm-10"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="postFile2" class="col-sm-offset-1 col-sm-10 control-label"><i class="fas fa-camera"></i></label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" id="postFile2" name="postFile22"  value="${post.postFile2}" placeholder="파일 이미지2" onchange="setImage2Preview(event, '#image2preview');" style="padding-bottom: 0; padding-top:3px; padding-left: 15px;">
+                            </div>
+                            <div id="image2preview" class="col-sm-10"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="postFile3" class="col-sm-offset-1 col-sm-10 control-label"><i class="fas fa-camera"></i></label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" id="postFile3" name="menuImg33"  value="${post.postFile3}" placeholder="파일 이미지3" onchange="setImage3Preview(event, '#image3preview');" style="padding-bottom: 0; padding-top:3px; padding-left: 15px;">
+                            </div>
+                            <div id="image3preview" class="col-sm-10"></div>
+                        </div>
+
+                        <hr style="margin-bottom: 15px; margin-top: 30px;"/>
+                        <script>
 
 
                         function setImage1Preview(event, tag){
@@ -727,17 +744,27 @@
                         }
 
                     </script>
+
+                        <div class="form-group">
+                            <label for="postContent" class="col-sm-offset-1 col-sm-10 control-label"><i class="fas fa-commenting"></i>
+                            </label>
+                            <div class="col-sm-10">
+                                <textarea id="postContent" name = "postContent" style="resize:none; border-radius:2px " rows="5" cols="55" placeholder="내용을 입력해 주세요.">${post.postContent}</textarea>
+                            </div>
+                        </div>
+
                     <div id="here"></div>
 
-                    <div class="form-group">
-                        <textarea id="postContent" name = "postContent" style="resize:none; border-radius:2px " rows="5" cols="55" placeholder="내용을 입력해 주세요.">${post.postContent}</textarea>
-                    </div>
                 </form>
+                </div>
             </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="add-post-p" style="color: black" >작성완료</button>
-            </div>
+                    <div style="display: flex; justify-content: center; margin-bottom: 10px">
+                        <button type="button" class="btn btn-default" id="add-post-p" style="color: black" >작성완료</button>
+                        <button type="button" class="btn btn-cancle" data-dismiss="modal">취소</button>
+                    </div>
+
+
         </div>
     </div>
 </div>
@@ -824,7 +851,7 @@
 
     <div class="container">
         <div class="addbutton" style="padding: 0;">
-            <a class='btn btn-warning' id ='modaladdPostPicbt' role='button' data-toggle='collapse' href='#modaladdPostPic' aria-expanded='false' aria-controls='modaladdPostPic'><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#FFBA49" class="bi bi-plus-circle-dotted" viewBox="0 0 16 16">
+            <a class='btn btn-default' id ='modaladdPostPicbt' role='button' data-toggle='collapse' href='#modaladdPostPic' aria-expanded='false' aria-controls='modaladdPostPic'><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#FFBA49" class="bi bi-plus-circle-dotted" viewBox="0 0 16 16">
                 <path d="M8 0c-.176 0-.35.006-.523.017l.064.998a7.117 7.117 0 0 1 .918 0l.064-.998A8.113 8.113 0 0 0 8 0zM6.44.152c-.346.069-.684.16-1.012.27l.321.948c.287-.098.582-.177.884-.237L6.44.153zm4.132.271a7.946 7.946 0 0 0-1.011-.27l-.194.98c.302.06.597.14.884.237l.321-.947zm1.873.925a8 8 0 0 0-.906-.524l-.443.896c.275.136.54.29.793.459l.556-.831zM4.46.824c-.314.155-.616.33-.905.524l.556.83a7.07 7.07 0 0 1 .793-.458L4.46.824zM2.725 1.985c-.262.23-.51.478-.74.74l.752.66c.202-.23.418-.446.648-.648l-.66-.752zm11.29.74a8.058 8.058 0 0 0-.74-.74l-.66.752c.23.202.447.418.648.648l.752-.66zm1.161 1.735a7.98 7.98 0 0 0-.524-.905l-.83.556c.169.253.322.518.458.793l.896-.443zM1.348 3.555c-.194.289-.37.591-.524.906l.896.443c.136-.275.29-.54.459-.793l-.831-.556zM.423 5.428a7.945 7.945 0 0 0-.27 1.011l.98.194c.06-.302.14-.597.237-.884l-.947-.321zM15.848 6.44a7.943 7.943 0 0 0-.27-1.012l-.948.321c.098.287.177.582.237.884l.98-.194zM.017 7.477a8.113 8.113 0 0 0 0 1.046l.998-.064a7.117 7.117 0 0 1 0-.918l-.998-.064zM16 8a8.1 8.1 0 0 0-.017-.523l-.998.064a7.11 7.11 0 0 1 0 .918l.998.064A8.1 8.1 0 0 0 16 8zM.152 9.56c.069.346.16.684.27 1.012l.948-.321a6.944 6.944 0 0 1-.237-.884l-.98.194zm15.425 1.012c.112-.328.202-.666.27-1.011l-.98-.194c-.06.302-.14.597-.237.884l.947.321zM.824 11.54a8 8 0 0 0 .524.905l.83-.556a6.999 6.999 0 0 1-.458-.793l-.896.443zm13.828.905c.194-.289.37-.591.524-.906l-.896-.443c-.136.275-.29.54-.459.793l.831.556zm-12.667.83c.23.262.478.51.74.74l.66-.752a7.047 7.047 0 0 1-.648-.648l-.752.66zm11.29.74c.262-.23.51-.478.74-.74l-.752-.66c-.201.23-.418.447-.648.648l.66.752zm-1.735 1.161c.314-.155.616-.33.905-.524l-.556-.83a7.07 7.07 0 0 1-.793.458l.443.896zm-7.985-.524c.289.194.591.37.906.524l.443-.896a6.998 6.998 0 0 1-.793-.459l-.556.831zm1.873.925c.328.112.666.202 1.011.27l.194-.98a6.953 6.953 0 0 1-.884-.237l-.321.947zm4.132.271a7.944 7.944 0 0 0 1.012-.27l-.321-.948a6.954 6.954 0 0 1-.884.237l.194.98zm-2.083.135a8.1 8.1 0 0 0 1.046 0l-.064-.998a7.11 7.11 0 0 1-.918 0l-.064.998zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
             </svg></a>
         </div>
@@ -1394,9 +1421,9 @@
 
                 div2="";
                 div2+=
-                    "<button class='button btn-warning' name='updatePostPic' onclick='fncUpdatePostPic();'>수정"
+                    "<button class='button btn-default' name='updatePostPic' onclick='fncUpdatePostPic();'>수정"
                     +"</button>"
-                    +"<button class='btn btn-secondary' data-dismiss='modal'>취소"
+                    +"<button class='btn btn-cancle' data-dismiss='modal'>취소"
                     + "</button>" ;
 
                 modalPic.find('.wrapper').remove();
@@ -1636,7 +1663,6 @@
                     console.log("댓글 작성 성공");
                      // socket 알림
                   console.log("post.socket::::" + socket);
-
                   if(socket) {
                       // websocket에 보내기!!! (message, 보내는이, 받는이)
                       let socketMessage = "post,"+uId+","+recvid+","+postNo;
@@ -1787,7 +1813,7 @@
                             +"</div>";
                     }else{
                         modalFooter = "<div class='modal-footer'>"
-                            + " <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></div>";
+                            + " <button type='button' class='btn btn-cancle' data-dismiss='modal'>Close</button></div>";
                     }
 
                 }else if(role == "truck"){
@@ -1797,9 +1823,9 @@
                     if (data.post.postUser == null && data.post.postTruck.truckId == truckId){
 
                         modalFooter = "<div class='modal-footer'>"
-                            +"<button class='button btn-warning' name='deletePostPic' onclick='deletePostPic("+data.post.postNo+");'>글 삭제"
+                            +"<button class='btn btn-default' name='deletePostPic' onclick='deletePostPic("+data.post.postNo+");'>글 삭제"
                             +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/></button>"
-                            +"<button class='button is-warning is-light' name='updatePostPicView'"
+                            +"<button class='btn btn-default' name='updatePostPicView'"
                             +"onclick='updatePostPicView("+data.post.postNo+");'>글 수정"
                             +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/>"
                             + "</button>"
@@ -1807,21 +1833,21 @@
 
                     }else {
                         modalFooter = "<div class='modal-footer'>"
-                            + " <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></div>";
+                            + " <button type='button' class='btn btn-cancle' data-dismiss='modal'>Close</button></div>";
                     }
                 }else if(role=='admin'){
 
                     modalFooter += "<div class='modal-footer'>";
 
                     if( data.post.secretKey == '0'){
-                        modalFooter += " <button type='button' class='btn btn-warning' name='postPicSecret' idx='"+data.post.postNo+"'>비공개</button>";
+                        modalFooter += " <button type='button' class='btn btn-default' name='postPicSecret' idx='"+data.post.postNo+"'>비공개</button>";
                     }else {
-                        modalFooter += " <button type='button' class='btn btn-warning' name='postPicSecretOff' idx='"+data.post.postNo+"'>공개</button>";
+                        modalFooter += " <button type='button' class='btn btn-default' name='postPicSecretOff' idx='"+data.post.postNo+"'>공개</button>";
                     }
 
 
                     modalFooter += " <input type='hidden' name='secretPostPicKey' value='"+data.post.secretKey+"'>"
-                        + " <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></div>";
+                        + " <button type='button' class='btn btn-cancle' data-dismiss='modal'>Close</button></div>";
                 }
                 //$('body').find( '.format' ).clone().appendTo( '#carouselFail' ).css("display", "block");
 

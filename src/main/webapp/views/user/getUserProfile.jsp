@@ -232,15 +232,15 @@
 								<div class="data-input-box">
 									<label for="userFavMenu" class="form-label label-name">좋아하는 메뉴</label>
 									<select class="form-select form-control" id="userFavMenu" name="userFavMenu" aria-label="Default select example" style="padding-left: 0;">
-										<option selected>수정하자</option>
-										<option value="1">고기</option>
-										<option value="2">한식</option>
-										<option value="3">분식</option>
-										<option value="4">양식</option>
-										<option value="5">일식</option>
-										<option value="6">음료</option>
-										<option value="7">디저트</option>
-										<option value="8">기타</option>
+										<option >수정하자</option>
+										<option value="1" <c:if test="${user.userFavMenu == 1}">selected</c:if>>고기</option>
+										<option value="2" <c:if test="${user.userFavMenu == 2}">selected</c:if>>한식</option>
+										<option value="3" <c:if test="${user.userFavMenu == 3}">selected</c:if>>분식</option>
+										<option value="4" <c:if test="${user.userFavMenu == 4}">selected</c:if>>양식</option>
+										<option value="5" <c:if test="${user.userFavMenu == 5}">selected</c:if>>일식</option>
+										<option value="6" <c:if test="${user.userFavMenu == 6}">selected</c:if>>음료</option>
+										<option value="7" <c:if test="${user.userFavMenu == 7}">selected</c:if>>디저트</option>
+										<option value="8" <c:if test="${user.userFavMenu == 8}">selected</c:if>>기타</option>
 									</select>
 									<%--<div id="img_container">
 										<img src="../../resources/image/menu1.jpg" id="menu1"/>
