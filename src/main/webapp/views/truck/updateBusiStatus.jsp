@@ -211,7 +211,7 @@
                     <div class="col-md-6 offset-3">
                         <form>
                             <div class="form-group col-md-6 offset-3">
-                                <span class="location_icon"><i class="fa fa-crosshairs"></i></span>
+                                <span class="location_icon"><i class="fa fa-truck" style="color: #ffba49"></i></span>
                                 <br/>
                                 <input type="text" class="form-control" id="inputLocation"
                                        name="inputLocation" placeholder="좌측 상단의 마커를 클릭해주세요."

@@ -60,6 +60,7 @@
                         <li class="dropdown" style="color: black">
                             <a class="dropbtn" id="goTruck">푸드트럭</a>
                         </li>
+                        <c:if test="${sessionScope.user.userId != null && (sessionScope.role == 'user' || sessionScope.role == 'admin')}">
                         <li class="dropdown">
                             <a class="dropbtn" id="goCatering">케이터링</a>
                             <div class="dropdown-content">
@@ -74,9 +75,36 @@
                                 <a href="/community/getPostList">일반게시판</a>
                             </div>
                         </li>
-                        <c:if test="${sessionScope.user.userId != null && (sessionScope.role == 'user' || sessionScope.role == 'admin')}">
                             <li class="dropdown" style="color: black">
                                 <a class="dropbtn" id="goChat">채팅방</a>
+                            </li>
+                        </c:if>
+                        <c:if test="${sessionScope.truck.truckId != null && (sessionScope.role == 'truck')}">
+                            <li class="dropdown">
+                                <a class="dropbtn" id="goCateringT">케이터링</a>
+                                <div class="dropdown-content">
+                                    <c:if test="${sessionScope.truck.truckJoinReqStatus eq 1}">
+                                    <a href="/catering/mainCalendar">캘린더</a>
+                                    <a href="/catering/listCatering">리스트</a>
+                                    </c:if>
+                                    <c:if test="${sessionScope.truck.truckJoinReqStatus eq 0 or sessionScope.truck.truckJoinReqStatus eq 2}">
+                                        <a id="beforeCaterCalendar">캘린더</a>
+                                        <a id="beforeCaterList">리스트</a>
+                                    </c:if>
+                                </div>
+                            </li>
+                            <li class="dropdown">
+                                <a class="dropbtn" id="goPostT">게시판</a>
+                                <div class="dropdown-content">
+                            <c:if test="${sessionScope.truck.truckJoinReqStatus eq 1}">
+                                    <a href="/community/getPostList2">썸네일게시판</a>
+                                    <a href="/community/getPostList">일반게시판</a>
+                            </c:if>
+                            <c:if test="${sessionScope.truck.truckJoinReqStatus eq 0 or sessionScope.truck.truckJoinReqStatus eq 2}">
+                                <a id="beforePostPic">썸네일게시판</a>
+                                <a id="beforePostList">일반게시판</a>
+                            </c:if>
+                                </div>
                             </li>
                         </c:if>
                     </ul>
