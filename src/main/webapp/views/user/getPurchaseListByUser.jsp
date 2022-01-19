@@ -312,24 +312,13 @@
 
         <div class="col-md-6 text-right">
           <form class="form-inline" id="search_form" name="detailForm" style="zoom: 90%; padding: 0; float: right;">
-
-            <div class="form-group">
-              <select class="form-control" name="searchCondition" >
-                <option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>ID</option>
-                <option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>답변여부</option>
-              </select>
-            </div>
-            <style>.nice-select.form-control{min-width: 95px;}</style>
-
-            <div class="form-group">
-              <label class="sr-only" for="searchKeyword">검색어</label>
-              <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-                     value="${! empty search.searchKeyword ? search.searchKeyword : '' }" style="width: 200px;" >
-            </div>
-
-            <button type="button" class="btn btn-cancle" style="zoom: 90%;">검색</button>
+            <a type="button" href="/user/getPurchaseList?searchCondition=0" class="btn btn-cancle" style="zoom: 90%;">전체</a>
+            <a type="button" href="/user/getPurchaseList?searchCondition=1" class="btn btn-cancle" style="zoom: 90%;">구매완료</a>
+            <a type="button" href="/user/getPurchaseList?searchCondition=2" class="btn btn-cancle" style="zoom: 90%;">주문취소</a>
+            <%--<a type="button" href="/user/getPurchaseList?searchCondition=2" class="btn btn-cancle" style="zoom: 90%;">현재주문정보</a>--%>
 
             <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+            <input type="hidden" id=""  name="searchCondition" value="${search.searchCondition}"/>
             <input type="hidden" id="currentPage" name="currentPage" value=""/>
 
           </form>
