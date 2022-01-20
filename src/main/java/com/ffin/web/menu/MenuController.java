@@ -73,28 +73,58 @@ public class MenuController {
 
     // 트럭 리스트 - 전체
     @RequestMapping(value = "getTruckList")
-    public String getTruckList (@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+    public String getTruckList (@ModelAttribute("search") Search search, Model model, HttpServletRequest request, HttpSession session) throws Exception {
 //    public String getTruckList(@RequestParam(value="cateCondition", required = false) String cateCondition, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
 
         System.out.println("/truck/getTruckList : GET / POST");
+// todo: 검색시 search 객체인데 널값뜨는 현상 확인할 것  그래서 limit에 0, 20 으로 고정값 줌
+
+        System.out.println("111search :::::::: "+search);
+        double la = 0.0;
+        double lo = 0.0;
+        // role
+        String role = (String)session.getAttribute("role");// role로 구분할 예정 - user / truck
+
+        // 기본 위도, 경도값 세팅
+        if (role == "user" || role.equals("user")){
+
+            User user = (User) session.getAttribute("user");
+            la = user.getUserCurMapLa();
+            lo = user.getUserCurMapLo();
+        }else if(role == "truck" || role.equals("truck")){
+           Truck truck = (Truck) session.getAttribute("truck");
+           la = truck.getTruckMapLa();
+           lo = truck.getTruckMapLo();
+        }
+
+        // 위도, 경도값이 없다면 (최근 위치 설정 안한 경우가 있을 수 있음)
+        // 이 경우 static하게 정리하기로. (사실 현재 위치값 불러와도 되는데 일단은... ㅎㅎ )
+        la = 37.57043436384354;
+        lo = 126.98522327824654;
+
+        System.out.println(" role : "+role);
+        System.out.println(" la : "+ la);
+        System.out.println(" lo : "+ lo);
 
         if (search.getCurrentPage() == 0) {
             search.setCurrentPage(1);
         }
+        if (search.getSortCondition() == "" || search.getSortCondition() == null) {
+            search.setSortCondition("distance");//
+        }
 
-
-//        String searchKeyword = search.getSearchKeyword();
-//        System.out.println("////searchKeyword : " +searchKeyword);
-//        if(searchKeyword != null) {
-//            search.setSearchKeyword(new String(searchKeyword.getBytes("8859_1"), "euc-kr"));
-//        }
-        System.out.println("////searchKeyword : " + search.getSearchKeyword());
-
+        System.out.println("////searchKeyword : " + search.getSearchKeyword()); //
         search.setPageSize(pageSize);
 
+        System.out.println(">>>>startRowNum : "+ search.getStartRowNum());
+        System.out.println(">>>>endRowNum : "+ search.getEndRowNum());
+        System.out.println("22222222222search: "+search);
 
         // Business logic 수행
-        Map<String, Object> map = truckService.getTruckList(search);
+        //Map<String, Object> map = truckService.getTruckList(search);
+        Map<String, Object> map = truckService.getTruckList(search, la, lo);
+        System.out.println("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
+        System.out.println("map : "+map.get("list"));
 
         Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
         System.out.println(resultPage);
@@ -107,7 +137,6 @@ public class MenuController {
         model.addAttribute("sortCondition", search.getSortCondition());
         model.addAttribute("cateCondition", search.getCateCondition());
         model.addAttribute("searchKeyword", search.getSearchKeyword());
-
 
         return "forward:/views/menu/getTruckMenuList.jsp";
     }
@@ -190,12 +219,12 @@ public class MenuController {
     // TODO: 2022-01-15 대표메뉴 로직!!!!!!!!개중요!!!!!!!!!!!!!!잊지말기!!!!!!!!!add할 때 트럭도 건드리도록 !!!!!!!!!반드시!!!!!!!!!!기억!!!!!!!
 
     // 트럭 리스트 - 카테고리에 따른
-    @RequestMapping(value = "getTruckListCate")
+  /*  @RequestMapping(value = "getTruckListCate")
 //    public String getTruckList(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
     public String getTruckListCate(@RequestParam(value="searchKeyword", required = false) String searchKeyword, @RequestParam(value="sortCondition", required = false) String sortCondition, @RequestParam(value="cateCondition", required = false) String cateCondition, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
 //    public String getTruckListCate(@RequestParam(value="sortCondition", required = false) String sortCondition, @RequestParam(value="cateCondition", required = false) String cateCondition, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
 
-        System.out.println("/truck/getTruckList : GET / POST");
+        System.out.println("/truck/getTruckListCate : GET / POST");
 //        if(sortCondition != null) sortCondition = new String(sortCondition.getBytes("EUC-KR"), "utf-8");
         System.out.println("sortCondition = " + sortCondition + ", cateCondition = " + cateCondition + ", search = " + search + ", model = " + model + ", request = " + request);
 
@@ -239,7 +268,7 @@ public class MenuController {
 
 
         // Business logic 수행
-        Map<String, Object> map = truckService.getTruckList(search);
+        Map<String, Object> map = truckService.getTruckList(search, la, lo);
 
         Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
         System.out.println(resultPage);
@@ -255,7 +284,7 @@ public class MenuController {
 
         return "forward:/views/menu/getTruckMenuList.jsp";
     }
-
+*/
 
 
     @RequestMapping(value = "addMenu", method= RequestMethod.GET)

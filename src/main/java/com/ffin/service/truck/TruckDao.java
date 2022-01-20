@@ -46,7 +46,7 @@ public interface TruckDao {
 
     // SELECT LIST
     // 푸드트럭 목록보기
-    public List<Truck> getTruckList(Search search) throws Exception ;
+    public Map<String, Object> getTruckList(Search search, double la, double lo) throws Exception;
     //푸드트럭 목록보기 - 관리자
     public List<Truck> getTruckListByAdmin(Search search) throws Exception;
     // 새로 가입한 푸드트럭 목록보기(관리자)
@@ -112,7 +112,7 @@ public interface TruckDao {
     // 마이페이지 판매목록
     public List<Object> getSalesList(Search search, String truckId)throws Exception;
 
-    public Map<String, Object> truckNearBy(Search search, float la, float lo) throws Exception;
+    public Map<String, Object> truckNearBy(Search search, double la, double lo) throws Exception;
     // HHJ 0115
     public Truck getTruck2(String userId, String truckId) throws Exception ;
 

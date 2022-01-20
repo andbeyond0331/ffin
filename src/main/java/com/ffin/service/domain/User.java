@@ -37,4 +37,10 @@ public class User {
     private Date sessionLimit;
     private boolean autoLogin;
 
+    //HHJ
+    //최근 설정한 주소의 위도와 경도값
+    private double userCurMapLa;
+    private double userCurMapLo;
+    private String userCurAdd;
+
 }

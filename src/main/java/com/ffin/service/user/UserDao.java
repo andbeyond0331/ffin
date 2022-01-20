@@ -56,4 +56,7 @@ public interface UserDao {
     //블랙여부
     public void updateBlackStatus(User user) throws Exception;
 
+    //HHJ
+    //유저 최근 위치 정보 저장
+    public void updateUserCurMap(User user) throws Exception;
 }

@@ -99,7 +99,7 @@
                                     <form>
                                         <div class="form-row">
                                             <div class="form-group col-lg-6">
-                                                <input type="text" class="form-control" id="inputLocation" name="inputLocation" placeholder="What's your address?" value="${inputLocation}">
+                                                <input type="text" class="form-control" id="inputLocation" name="inputLocation" placeholder="What's your address?" value="${sessionScope.user.userCurAdd}">
                                                 <span class="location_icon">
                                                     <i class="fa fa-map-marker" aria-hidden="true"></i>
                                                   </span>
@@ -339,6 +339,8 @@
     var truckIdch = '${sessionScope.truck.truckId}';
     console.log("userIdch: "+userIdch)
     console.log("truckIdch: "+truckIdch)
+
+
     $(function() {
         // 현재 위치 클릭하기
         $("body").on("click", ".current-location", function () {
@@ -439,13 +441,11 @@
                 $("input[name='address']").val(address);
                 $("input[name='la']").val(lat);
                 $("input[name='lo']").val(lng);
-                // todo: HHJ 주소창에 이거 뜨는거 뵈기시러.... post로 바꿔야할거같은디.....  깩 :::: 바까따~~~~~!
-                $("form").attr("method","post").attr("action","/catering/mainTruckListLaLo").attr("target","_parent").submit();
+
+                // todo: HHJ 주소창에 이거 뜨는거 뵈기시러.... post로 바꿔야할거같은디.....  깩 :::: 바까따~~~~
 
 
-//todo: 토) 쿼리 수정 (menu price 필요 )
-
-
+                $("form").attr("method","POST").attr("action","/catering/updateUserCurLaLo").attr("target","_parent").submit();
 
             }
         }
@@ -455,7 +455,15 @@
 
     // 지도 클릭하여 지도 위치 변경
     function mapLocationSelect() {
+        var userCurMapLa = '${sessionScope.user.userCurMapLa}';
+        var userCurMapLo='${sessionScope.user.userCurMapLo}';
 
+        if (userCurMapLa == 0.0) { //설정한 값이 없다면 static으로 설정해줌!
+            userCurMapLa = 37.57043436384354;
+            userCurMapLo = 126.98522327824654;
+        }
+        console.log("userCurMapLa : "+ userCurMapLa);
+        console.log("userCurMapLo : "+ userCurMapLo);
 //todo : tmap 이 좀 예뻐서 쓰고싶엇는뎅 일단 정보가 많은 카카오로 구현해보깅 대신 도보경로는 tmap 으루 햇당
         /* var map = new Tmapv2.Map("map", {
              center :new Tmapv2.LatLng(37.566481622437934,126.98502302169841), // 지도 초기 좌표
@@ -468,7 +476,7 @@
          });*/
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div
             mapOption = {
-                center: new kakao.maps.LatLng(37.566481622437934,126.98502302169841), // 지도의 중심좌표
+                center: new kakao.maps.LatLng(userCurMapLa,userCurMapLo), // 지도의 중심좌표
                 level: 3 // 지도의 확대 레벨
             };
 
@@ -509,7 +517,7 @@
         // map 노출이 안되어서 강제로 setTimeout 주었엉...ㅎㅎ
         setTimeout( function() {
             map.relayout();
-            map.setCenter(new kakao.maps.LatLng(37.566481622437934,126.98502302169841));
+            map.setCenter(new kakao.maps.LatLng(userCurMapLa,userCurMapLo));
             window.dispatchEvent(new Event('resize'));
         }, 300);
     }

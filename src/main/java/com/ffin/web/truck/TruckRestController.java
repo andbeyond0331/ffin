@@ -151,7 +151,7 @@ public class TruckRestController {
         return truck;
     }
 
-    @RequestMapping(value = "/json/listTruck", method = RequestMethod.POST)
+   /* @RequestMapping(value = "/json/listTruck", method = RequestMethod.POST)
     public Map listTruck(@ModelAttribute("search") Search search, Truck truck, HttpServletRequest request) throws Exception {
 
         System.out.println("/truck/listTruck : GET / POST");
@@ -170,7 +170,7 @@ public class TruckRestController {
         //list, totalCount
         return map;
 
-    }
+    }*/
 
     @RequestMapping(value = "/json/addTruck/{truckId}", method = RequestMethod.POST)
     public Truck addTruck(@RequestBody Truck truck, Search search) throws Exception {
@@ -336,7 +336,7 @@ public class TruckRestController {
         truckService.updateBusiStatus(truck);
 
         ModelAndView mv = new ModelAndView("jsonView");
-
+        mv.addObject("truck", truck);
         return mv;
     }
 
@@ -367,6 +367,8 @@ public class TruckRestController {
 
         return modelAndView;
     }
+
+
 
 }
 

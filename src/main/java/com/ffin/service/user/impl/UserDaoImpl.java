@@ -170,4 +170,11 @@ public class UserDaoImpl implements UserDao {
         System.out.println("UserDaoImpl.updateBlackStatus");
         sqlSession.update("UserMapper.updateBlackStatus", user);
     }
+
+    //HHJ
+    @Override
+    public void updateUserCurMap(User user) throws Exception {
+        System.out.println("UserDaoImpl.updateUserCurMap");
+        sqlSession.update("UserMapper.updateCurLaLo", user);
+    }
 }

@@ -234,4 +234,9 @@ public class UserServiceImpl implements UserService {
         userDao.updateBlackStatus(user);
     }
 
+    @Override
+    public void updateUserCurMap(User user) throws Exception {
+        System.out.println("UserServiceImpl.updateUserCurMap");
+        userDao.updateUserCurMap(user);
+    }
 }

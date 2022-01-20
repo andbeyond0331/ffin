@@ -116,8 +116,31 @@ public class TruckDaoImpl implements TruckDao {
     }
     // 푸드트럭 목록보기
     @Override
-    public List<Truck> getTruckList(Search search) throws Exception {
-        return sqlSession.selectList("TruckMapper.getTruckList", search);
+    public Map<String, Object> getTruckList(Search search, double la, double lo) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("search", search);
+        map.put("la", la);
+        map.put("lo", lo);
+        map.put("startRowNum", search.getStartRowNum());
+        map.put("pageSize", search.getPageSize());
+        map.put("cateCondition", search.getCateCondition());
+        /* 안먹어서 하드코딩 쒜쑤ㅖ쑤ㅖㄸㅆ */
+
+        System.out.println(" DAO IMPL ");
+        System.out.println(" search:: "+search);
+
+
+        List<Truck> list= sqlSession.selectList("TruckMapper.getTruckList", map);
+        int totalCount = sqlSession.selectOne("TruckMapper.getTotalCount", map);
+
+        map.clear();
+        map.put("list", list);
+        map.put("totalCount", totalCount);
+
+        System.out.println("여기는 DAO impl");
+        System.out.println("list ::: "+map.get("list"));
+
+        return map;
     }
 
     @Override
@@ -261,7 +284,7 @@ public class TruckDaoImpl implements TruckDao {
     }
 
     @Override
-    public Map<String, Object> truckNearBy(Search search, float la, float lo) throws Exception {
+    public Map<String, Object> truckNearBy(Search search, double la, double lo) throws Exception {
         System.out.println("search = " + search + ", la = " + la + ", lo = " + lo);
         Map<String, Object> map = new HashMap<>();
         map.put("search", search);

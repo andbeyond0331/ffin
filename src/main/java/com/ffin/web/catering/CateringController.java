@@ -6,6 +6,7 @@ import com.ffin.service.catering.CateringService;
 import com.ffin.service.domain.Truck;
 import com.ffin.service.domain.User;
 import com.ffin.service.truck.TruckService;
+import com.ffin.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +38,10 @@ public class CateringController {
     @Autowired
     @Qualifier("truckServiceImpl")
     private TruckService truckService;
+
+    @Autowired
+    @Qualifier("userServiceImpl")
+    private UserService userService;
 
     public CateringController(){
         System.out.println(this.getClass());
@@ -295,26 +300,25 @@ public class CateringController {
 
      */
     @RequestMapping(value="/mainTruckList", method=RequestMethod.GET)
-    public ModelAndView mainTruckList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public ModelAndView mainTruckList(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
 
         Search search = new Search();
         search.setCurrentPage(1);
         search.setPageSize(15);
         Map<String, Object> map = new HashMap<String, Object>();
 
-//        int currentPage = Integer.parseInt(request.getP)
+        User user = (User)session.getAttribute("user");
+        if (user != null && user.getUserCurMapLa() != 0.0){
+            map = truckService.truckNearBy(search, user.getUserCurMapLa(), user.getUserCurMapLo());
+        }else {
+            map = truckService.getTruckListPopular();
+        }
 
-        // todo : 우선은 테스트로 la, lo를 고정값으로 두었음 만들어둔거로 테스트 해보려고
-        //float la = (float) 37.57041195853664;
-        //float lo = (float) 126.98503967552996;
-
-        map = truckService.getTruckListPopular();
 
         System.out.println("위치기반 결과 : " + map.get("list"));
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("list", map.get("list"));
-   //     modelAndView.setViewName("/views/home.jsp");
         modelAndView.setViewName("/views/home.jsp");
 /* 수정해야할수도잇음 */
 
@@ -325,32 +329,27 @@ public class CateringController {
     /*
         위/경도 받아서 메인 출력하려고
      */
-    @RequestMapping(value="/mainTruckListLaLo", method=RequestMethod.POST)
-    public ModelAndView mainTruckListLaLo(HttpServletRequest request, @RequestParam("lo") float lo, @RequestParam("la") float la, @RequestParam("address") String address, HttpServletResponse response) throws Exception{
+    @RequestMapping(value="/updateUserCurLaLo", method=RequestMethod.POST)
+    public String updateUserCurLaLo(HttpServletRequest request, @RequestParam("lo") float lo, @RequestParam("la") float la, @RequestParam("address") String address, HttpServletResponse response, HttpSession session) throws Exception{
         request.setCharacterEncoding("UTF-8");
 
-        System.out.println("mainTruckListLaLo !!!!!!!!!!!!!!!!!!!!!!!1 post");
+        System.out.println("updateUserCurLaLo !!!!!!!!!!!!!!!!!!!!!!!1 post");
         System.out.println("lo = " + lo + ", la = " + la +", address: "+address);
-        Search search = new Search();
-        search.setCurrentPage(1);
-        search.setPageSize(15);
-        Map<String, Object> map = new HashMap<String, Object>();
-
-//        int currentPage = Integer.parseInt(request.getP)
 
 
-        map = truckService.truckNearBy(search,la, lo);
+        User user = (User)session.getAttribute("user");
+        user.setUserCurMapLa(la);
+        user.setUserCurMapLo(lo);
+        user.setUserCurAdd(address);
+        userService.updateUserCurMap(user);
+        session.setAttribute("user", user);
 
-        System.out.println("위치기반 결과 : " + map.get("list"));
 
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("list", map.get("list"));
-        modelAndView.addObject("inputLocation", address);
-        modelAndView.setViewName("/views/home.jsp");
+
 
 /* 수정해야할*/
 
-        return modelAndView;
+        return "redirect: /catering/mainTruckList";
     }
 
 

@@ -156,53 +156,44 @@
 		limit #{startRowNum}, #{pageSize}
 	</select>
 
-	<select id="getTruckList"   parameterType="search"     resultMap="truckSelectMap">
+	<select id="getTruckList"   parameterType="map"     resultMap="truckSelectMap">
 		SELECT inner_table.*
-		FROM( SELECT  t.truck_id , t.truck_name , t.truck_phone, t.truck_map_la, t.truck_map_lo, t.truck_cate, t.truck_avg_star, t.truck_pro_img, t.truck_busi_status, t.truck_sig_menu_no, t.truck_sig_menu_name, t.truck_sig_menu_img1, m.menu_truck_id, m.menu_name,
-		(6371*acos(cos(radians(37.4685225))*cos(radians(t.truck_map_la))*cos(radians(t.truck_map_lo)
-		-radians(126.8943311))+sin(radians(37.4685225))*sin(radians(t.truck_map_la)))) as distance
+		FROM( SELECT  t.truck_id , t.truck_name , t.truck_phone, t.truck_map_la, t.truck_map_lo, t.truck_cate, t.truck_avg_star, t.truck_pro_img, t.truck_busi_status, t.truck_sig_menu_no, t.truck_sig_menu_name, t.truck_sig_menu_img1, t.truck_notice_content, m.menu_truck_id, m.menu_name,
+		(6371*acos(cos(radians(#{la}))*cos(radians(t.truck_map_la))*cos(radians(t.truck_map_lo)
+		-radians(#{lo}))+sin(radians(#{la}))*sin(radians(t.truck_map_la)))) as distance
 		FROM truck t
 		left join menu m
 		on m.menu_truck_id=t.truck_id
-		<trim prefix="WHERE" prefixOverrides="AND">
 			AND t.TRUCK_JOIN_REQ_STATUS=1
 		       AND t.TRUCK_BYE_STATUS=0
-			<if test="searchKeyword !='' and searchKeyword!=null">
-				<bind name="searchKeyword" value="'%'+searchKeyword+'%'"></bind>
-				AND ((t.truck_name LIKE #{searchKeyword} or t.truck_sig_menu_name like #{searchKeyword}) or m.menu_name like #{searchKeyword})
+			<if test="search.searchKeyword !='' and search.searchKeyword!=null">
+				<bind name="search.searchKeyword" value="'%'+search.searchKeyword+'%'"></bind>
+				AND ((t.truck_name LIKE #{search.searchKeyword} or t.truck_sig_menu_name like #{search.searchKeyword}) or m.menu_name like #{search.searchKeyword})
 			</if>
-
-			<if test="cateCondition!=null and cateCondition != ''">
+			<if test="cateCondition!=null and cateCondition != '' and cateCondition != 0">
 				AND t.truck_cate = #{cateCondition}
 			</if>
-		</trim>
-
 		group by truck_id, truck_avg_star
-		<![CDATA[
-               having distance <= 500
-      ]]>
-		<trim prefix="ORDER BY">
-			<if test="sortCondition != null ">
-				<if test='sortCondition.equals("moreStars")'>
-					t.truck_avg_star is null asc, t.truck_avg_star DESC
-				</if>
-				<if test='sortCondition.equals("lessStars")'>
-					t.truck_avg_star is null asc, t.truck_avg_star ASC
-				</if>
-				<!--               <if test='sortCondition.equals("거리 순")'>-->
-				<!--                  BLABLA DESC-->
-				<!--               </if>-->
-				<!--               <if test='sortCondition.equals("구매 많은 순")'>-->
-				<!--                  BLABLA DESC-->
-				<!--               </if>-->
+		<trim prefix="having" prefixOverrides="AND">
+			<if test="cateCondition!=null and cateCondition != '' and cateCondition != 0">
+				AND t.truck_cate = #{cateCondition}
 			</if>
-			<if test="sortCondition == null">
-				truck_id ASC
+			<if test="search.searchKeyword !='' and search.searchKeyword!=null">
+				<bind name="search.searchKeyword" value="'%'+search.searchKeyword+'%'"></bind>
+				AND ((t.truck_name LIKE #{search.searchKeyword} or t.truck_sig_menu_name like #{search.searchKeyword}) or m.menu_name like #{search.searchKeyword})
 			</if>
 		</trim>
-		--             order by truck_id
-		) inner_table
-		limit #{startRowNum},#{pageSize};
+		<if test="search.sortCondition == 'distance'">
+			order by distance
+		</if>
+		<if test="search.sortCondition == 'starD'">
+			order by truck_avg_star desc
+		</if>
+		<if test="search.sortCondition == 'starA'">
+			order by truck_avg_star asc
+		</if>
+		    ) inner_table
+		limit #{startRowNum}, #{pageSize};
 	</select>
 
 		<select id="truckNearBy"   parameterType="map"     resultMap="truckSelectMap">
@@ -232,6 +223,7 @@
 			<![CDATA[
 					having distance <= 5
 		]]>
+
 
 				order by distance ) inner_table
 		limit 0,20;
@@ -435,4 +427,7 @@
 		</set>
 		WHERE truck_id = #{truckId}
 	</update>
+
+
+
 </mapper>

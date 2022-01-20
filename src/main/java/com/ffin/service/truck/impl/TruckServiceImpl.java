@@ -3,7 +3,6 @@ package com.ffin.service.truck.impl;
 import com.ffin.common.Search;
 import com.ffin.service.domain.*;
 import com.ffin.service.purchase.PurchaseDao;
-import com.ffin.service.purchase.impl.PurchaseServiceImpl;
 import com.ffin.service.truck.TruckDao;
 import com.ffin.service.truck.TruckService;
 import net.nurigo.java_sdk.api.Message;
@@ -14,10 +13,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -65,15 +60,8 @@ public class TruckServiceImpl implements TruckService {
 
     // 푸드트럭 목록조회
     @Override
-    public Map<String, Object> getTruckList(Search search) throws Exception {
-        List<Truck> list = truckDao.getTruckList(search);
-        int totalCount = truckDao.getTotalCount(search);
-
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("list", list);
-        map.put("totalCount", new Integer(totalCount));
-
-        return map;
+    public Map<String, Object> getTruckList(Search search, double la, double lo) throws Exception {
+        return truckDao.getTruckList(search, la, lo);
     }
 
     @Override
@@ -89,7 +77,7 @@ public class TruckServiceImpl implements TruckService {
     }
 
     @Override
-    public Map<String, Object> truckNearBy(Search search, float la, float lo) throws Exception {
+    public Map<String, Object> truckNearBy(Search search, double la, double lo) throws Exception {
         return truckDao.truckNearBy(search, la, lo);
     }
 

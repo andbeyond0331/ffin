@@ -3,6 +3,8 @@ package com.ffin.web.menu;
 import com.ffin.common.Page;
 import com.ffin.common.Search;
 import com.ffin.service.domain.Menu;
+import com.ffin.service.domain.Truck;
+import com.ffin.service.domain.User;
 import com.ffin.service.menu.MenuService;
 import com.ffin.service.truck.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import retrofit2.http.Path;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -215,29 +218,65 @@ public class MenuRestController {
     // 트럭 리스트 - 전체
     @RequestMapping(value = "json/getTruckList")
     @ResponseBody
-    public ModelAndView getTruckList (@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
+    public ModelAndView getTruckList (@ModelAttribute("search") Search search, Model model, HttpServletRequest request, HttpSession session) throws Exception {
 //    public String getTruckList(@RequestParam(value="cateCondition", required = false) String cateCondition, @ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
-
+        request.setCharacterEncoding("UTF-8");
         int currentPage = Integer.parseInt(request.getParameter("currentPage"));
         System.out.println("ccccccccccccccccurrentPage : "+currentPage);
-
         search.setCurrentPage(currentPage);
         search.setPageSize(pageSize);
+        search.setSortCondition(request.getParameter("sortCondition"));
+        search.setCateCondition(request.getParameter("cateCondition"));
+        search.setSearchKeyword(request.getParameter("searchKeyword"));
+
+        System.out.println("search : "+search);
+
+        double la = 0.0;
+        double lo = 0.0;
+        // role
+        String role = (String)session.getAttribute("role");// role로 구분할 예정 - user / truck
+
+        // 기본 위도, 경도값 세팅
+        if (role == "user" || role.equals("user")){
+
+            User user = (User) session.getAttribute("user");
+            la = user.getUserCurMapLa();
+            lo = user.getUserCurMapLo();
+        }else if(role == "truck" || role.equals("truck")){
+            Truck truck = (Truck) session.getAttribute("truck");
+            la = truck.getTruckMapLa();
+            lo = truck.getTruckMapLo();
+        }
+
+        // 위도, 경도값이 없다면 (최근 위치 설정 안한 경우가 있을 수 있음)
+        // 이 경우 static하게 정리하기로. (사실 현재 위치값 불러와도 되는데 일단은... ㅎㅎ )
+        la = 37.57043436384354;
+        lo = 126.98522327824654;
+
+        System.out.println(" role : "+role);
+        System.out.println(" la : "+ la);
+        System.out.println(" lo : "+ lo);
+
 
 
         // Business logic 수행
-        Map<String, Object> map = truckService.getTruckList(search);
+        //Map<String, Object> map = truckService.getTruckList(search);
+        Map<String, Object> map = truckService.getTruckList(search, la, lo);
+
 
         Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
         System.out.println(resultPage);
 
-        System.out.println("lllllllllllllllllllllllllllllllllllllllllllllllllllllllll");
-        System.out.println("list : "+map.get("list"));
-
+        // Model 과 View 연결
         ModelAndView mv = new ModelAndView("jsonView");
-        mv.addObject("list", map.get("list"));
-        mv.addObject("resultPage", resultPage);
-        mv.addObject("search", search);
+        model.addAttribute("list", map.get("list"));
+//        model.addAttribute("list2", list2);
+        model.addAttribute("resultPage", resultPage);
+        model.addAttribute("search", search);
+        model.addAttribute("sortCondition", search.getSortCondition());
+        model.addAttribute("cateCondition", search.getCateCondition());
+        model.addAttribute("searchKeyword", search.getSearchKeyword());
+
 
         return mv;
     }

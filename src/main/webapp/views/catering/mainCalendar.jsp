@@ -451,7 +451,7 @@
 
     }
 
-    function getCateringDetail(arg) {
+    const getCateringDetail = function(arg) {
         /* statusCode == 0 */
         g_arg = arg;
         var ctNo = arg.event.extendedProps.ctNo;

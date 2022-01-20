@@ -1,3 +1,4 @@
+/*
 package com.ffin.service.truck;
 
 import com.ffin.common.Search;
@@ -25,16 +26,19 @@ import java.util.Optional;
 
 public class TruckServiceTest {
 
-    /**
+    */
+/**
      *
-     */
+     *//*
+
     //==>@RunWith,@ContextConfiguration 이용 Wiring, Test 할 instance DI
     @Autowired
     @Qualifier("truckServiceImpl")
     private TruckService truckService;
 
 //    @Test //okay - mj
-    public void testTruckListForSortingNoKeywordNoCate() throws Exception{
+    */
+/*public void testTruckListForSortingNoKeywordNoCate() throws Exception{
         Search search = new Search();
         search.setCurrentPage(1);
         search.setPageSize(3);
@@ -53,7 +57,8 @@ public class TruckServiceTest {
         System.out.println("=======================================");
 
 
-    }
+    }*//*
+
 
 //    @Test //okay - mj
     public void testTruckListForSortingYesKeywordNoCate() throws Exception{
@@ -782,3 +787,4 @@ public class TruckServiceTest {
     void getTotalCount() {
     }
 }
+*/
