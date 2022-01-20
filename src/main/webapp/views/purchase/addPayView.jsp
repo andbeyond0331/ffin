@@ -582,8 +582,8 @@
                                             pointde.remove();
 
                                             pointRe.value = "";
-                                            totalPayPrice =  "<span id='totalpp' name='payPrice' >결제금액 : "+payPrice+"</span>"+
-                                                "<input type='hidden' id='payPrice' value='"+payPrice+"'>";
+                                            totalPayPrice =  "<span id='totalpp' name='totalpp' >결제금액 : "+payPrice+"</span>"+
+                                                "<input type='hidden' id='payPrice' name='payPrice' value='"+payPrice+"'>";
 
                                             totalsale =  "<span id='sale'>할인금액 : "+sale+"</span>"
 
@@ -609,8 +609,8 @@
 
 
                                         append = "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePointT + "\">";
-                                        totalPayPrice = "<span id='totalpp' name='payPrice' >결제금액 : " + payPriceT + "</span>"+
-                                            "<input type='hidden' id='payPrice' value='"+payPrice+"'>";
+                                        totalPayPrice = "<span id='totalpp' name='totalpp' >결제금액 : " + payPriceT + "</span>"+
+                                            "<input type='hidden' id='payPrice' name='payPrice' value='"+payPrice+"'>";
                                         totalsale = "<span id='sale'>할인금액 : " + saleT + "</span>"
 
                                         $("input[name='payPrice']").val(payPrice);
@@ -669,7 +669,8 @@
             var payPrice = Number(totalPP2[1]) + Number(couponDcPrice);
             var sale = Number(totalSS2[1])-Number(couponDcPrice);
 
-            totalPayPrice =  "<span id='totalpp'>결제금액 : "+payPrice+"</span>"
+            totalPayPrice =  "<span id='totalpp'>결제금액 : "+payPrice+"</span>"+
+                "<input type='hidden' id='payPrice' name='payPrice' value='"+payPrice+"'>";
             totalsale =  "<span id='sale'>할인금액 : "+sale+"</span>"
             /*alert(append + ":append");*/
 
@@ -705,7 +706,8 @@
             pointRe.value = "";
 
 
-            totalPayPrice =  "<span id='totalpp' name='payPrice' >결제금액 : "+payPrice+"</span>"
+            totalPayPrice =  "<span id='totalpp' name='payPrice' >결제금액 : "+payPrice+"</span>"+
+                "<input type='hidden' id='payPrice' name='payPrice' value='"+payPrice+"'>";
             totalsale =  "<span id='sale'>할인금액 : "+sale+"</span>"
 
 
@@ -895,11 +897,11 @@
                         <div class="row row-cols-2">
                             <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio1"
                                                     value="0" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary w-100" for="btnradio1">일반 결제</label>
+                                <label class="btn btn-outline-primary w-100" for="btnradio1" style="border-radius: 9.25rem;">일반 결제</label>
                             </div>
                             <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio2"
                                                     value="1" autocomplete="off">
-                                <label class="btn btn-outline-primary w-100" for="btnradio2">휴대폰결제</label>
+                                <label class="btn btn-outline-primary w-100" for="btnradio2" style="border-radius: 9.25rem;">휴대폰결제</label>
                             </div>
 
                         </div>
@@ -953,25 +955,25 @@
                         </div>
                         <div class="col-3">
                             <p class="text"  id="dcp"  ><span id="sale" name="payPrice">할인금액 :</span></p>
-                            <input type="text" name="payPrice" value="${purchase.payPrice}">
+                            <input type="hidden" name="payPrice" value="${purchase.payPrice}">
                         </div><div class="col-3">
                         <p class="text"  id="pp"></p>
                     </div></div>
 
                     <div class="row">
                         <div class="col-6">
-                            <button type="button" class="btn btn-primary btn-lg">
+                            <button type="button" class="btn btn-primary btn-lg" style="border-radius: 2.3rem;">
                                 뒤로가기
                             </button>
                         </div>
                         <div class="col-6">
                             <c:if test="${purchase.orderStatus == 0}">
-                                <button type="button" id="addPay" class="btn btn-primary btn-lg">
+                                <button type="button" id="addPay" class="btn btn-primary btn-lg" style="border-radius: 2.3rem;">
                                     결제
                                 </button>
                             </c:if>
                             <c:if test="${purchase.orderStatus > 0}">
-                                <button type="button" id="getPay" class="btn btn-primary btn-lg">
+                                <button type="button" id="getPay" class="btn btn-primary btn-lg" style="border-radius: 2.3rem;">
                                     결제
                                 </button>
                             </c:if>
@@ -1228,7 +1230,7 @@
             "<span id='price'>합계 : "+totototoprice+"</span>"
 
         divElemApply3 = "<input type=\"hidden\" name=\"orderPrice\" id=\"orderPrice\" value=\""+totototoprice+"\">"+
-            "<input type='text' id='payPrice' value='"+totototoprice+"'>"+
+            "<input type='hidden' id='payPrice' name='payPrice' value='"+totototoprice+"'>"+
             "<span id='totalpp'>결제금액 :"+totototoprice+"</span>"
 
         $('#total').append(divElemApply2);
