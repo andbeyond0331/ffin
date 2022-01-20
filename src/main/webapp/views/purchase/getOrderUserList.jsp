@@ -368,7 +368,7 @@
 
                         <article class="postcard light blue">
                             <a class="postcard__img_link" href="#">
-                                <img class="postcard__img" src="/resources/image/${orderDetail.odMenuImage}" alt="Image Title" />
+                                <img class="postcard__img" src="/resources/menu/${orderDetail.odMenuImage}" alt="Image Title" />
                             </a>
                             <div class="postcard__text t-dark">
                                 <h1 class="postcard__title blue">
