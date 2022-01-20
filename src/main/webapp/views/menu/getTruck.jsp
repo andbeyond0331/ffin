@@ -12,6 +12,21 @@
 
     <style>
 
+        .btn.btn-outline-primary{
+            border-color: #fae100;
+            color: #25323c;
+        }
+        .btn.btn-outline-primary:hover{
+            border-color: #fae100;
+            color: #25323c;
+            background-color: #fae100;
+        }
+        .btn.btn-outline-primary:active{
+            border-color: #fae100;
+            color: #25323c;
+            background-color: #fae100;
+        }
+
         #dataTable thead tr th, #dataTable tbody tr td{
             text-align: center;
         }
@@ -319,8 +334,8 @@
                         /* 장바구니 */
                         finalCartFirst += "" +
                             // "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
-                            "<li class=\"list-group-item\" style='padding: 10px; display: flex; align-items: center;'>" +
-                            "<div>"+
+                            "<li class=\"list-group-item\" style='padding: 10px; display: flex; align-items: center; flex-direction: column;'>" +
+                            "<div class='col-12'>"+
                             "<button type='button' class='close' id='cancelMenu'>"+
                             "<span aria-hidden='true'><ion-icon name='close-outline'></ion-icon></span></button>"+
                             "</div>"+
@@ -336,11 +351,11 @@
                         forOneFirst += 1;
                         if (beforeAnywayFirst[i + 1] != null) { //만약 다음 애가 있는데
                             if (beforeAnywayFirst[i + 1]['odMenuQtyFlag'] == 0) { //수량제공메뉴이면(지금 이게 수량제공메뉴란 소리니까 닫아줘야함)
-                                finalCartFirst += "</div><span class=\"text-muted\">" + beforeAnywayFirst[i]['odMenuPrice'] + "원</span></li>";
+                                finalCartFirst += "</div><div class='col-12' style='display: flex; justify-content: flex-end; margin-right: 15px; font-weight: 600;'><span class=\"text-muted\" style='font-size: 16px;'>" + beforeAnywayFirst[i]['odMenuPrice'] + "</span></div></li>";
                             }
 
                         }else{ //만약 다음 애가 없으면
-                            finalCartFirst += "</div><span class=\"text-muted\">" + beforeAnywayFirst[i]['odMenuPrice'] + "원</span></li>";
+                            finalCartFirst += "</div><div class='col-12' style='display: flex; justify-content: flex-end; margin-right: 15px; font-weight: 600;'><span class=\"text-muted\" style='font-size: 16px;'>" + beforeAnywayFirst[i]['odMenuPrice'] + "</span></div></li>";
                         }
                     } else { //플래그 1일 때
                         // for(var j=i+1; j<beforeAnyway.length; j++){ //옵션그룹 화면에 뿌려주기 위한 for문 (수량제공메뉴+1부터
@@ -355,10 +370,13 @@
                         forOneFirst += 1;
                         if (beforeAnywayFirst[i + 1] != null) {
                             if (beforeAnywayFirst[i + 1]['odMenuQtyFlag'] == 0) {
-                                finalCartFirst += "</div><span class=\"text-muted\">" + beforeAnywayFirst[i]['odMenuPrice'] + "원</span></li>";
+                                finalCartFirst += "</div><div class='col-12' style='display: flex; justify-content: flex-end; margin-right: 15px; font-weight: 600;'><span class=\"text-muted\" style='font-size: 16px;'>" + beforeAnywayFirst[i]['odMenuPrice'] + "</span></div></li>";
                             }
 
+                        }else{
+                        finalCartFirst += "</div><div class='col-12' style='display: flex; justify-content: flex-end; margin-right: 15px; font-weight: 600;'><span class=\"text-muted\" style='font-size: 16px;'>" + beforeAnywayFirst[i]['odMenuPrice'] + "</span><div></li>";
                         }
+
 
                         // finalCart+="</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"원</span></li>";
                         // i=forOne;
@@ -407,7 +425,7 @@
                 var orderDetail = {
                     menuTruckId : modalApply.find('input[name="menuTruckId"]').val(),
                     odMenuNo : modalApply.find('input[name="odMenuNo"]').val(),
-                    odMenuName : modalApply.find('h3[name="odMenuName"]').text(),
+                    odMenuName : modalApply.find('h4[name="odMenuName"]').text(),
                     odMenuImg1 : modalApply.find('div[name="odMenuImg1"]').data('menuimg'),
                     odMenuDetail : modalApply.find('div[name="odMenuDetail"]').text(),
                     odMenuPrice : modalApply.find('div[name="odMenuPrice"]').text(),
@@ -455,7 +473,7 @@
                         var optionGroupOrderDetail = {
                             menuTruckId : modalApply.find('input[name="menuTruckId"]').val(),
                             odMenuNo : modalApply.find('input[name="odMenuNo"]').val(),
-                            odMenuName : modalApply.find('h3[name="odMenuName"]').text(),
+                            odMenuName : modalApply.find('h6[name="odMenuName"]').text(),
                             odMenuImg1 : modalApply.find('div[name="odMenuImg1"]').data('menuimg'),
                             odMenuDetail : modalApply.find('div[name="odMenuDetail"]').text(),
                             odMenuPrice : modalApply.find('div[name="odMenuPrice"]').text(),
@@ -1140,9 +1158,9 @@
             var orderCancelCount = [];
 
             $('button#cancelMenu').click(function(){
-                var orderCount = $(this).parent('li').find('input[name="orderCount"]').val();
+                var orderCount = $(this).parents('li').find('input[name="orderCount"]').val();
                 // var orderCancelCount = $(this).parent('li').find('input[name="orderCancelCount"]').val();
-                $(this).parent('li').find('input[name="orderCancelCount"]').each(function (i) {
+                $(this).parents('li').find('input[name="orderCancelCount"]').each(function (i) {
                     orderCancelCount.push($(this).val());
                 });
 
@@ -1257,12 +1275,6 @@
         /*장바구니 주문하기 */
         $(function () {
             $("#addMenuCart").click(function () {
-                /*//////////////////////////수정///////////////////////////*/
-                var orderCheck = $("input[name='checkMenuTruckId']").val();
-                if(orderCheck== undefined){
-                    alert("담겨있는 메뉴가 없습니다")
-                    return;
-                }
 
                 var order = menu_ajax()
 
@@ -1274,6 +1286,29 @@
                 /* $("form").attr("method" , "POST").attr("action" , "/purchase/addCart").submit();*/
 
             });
+            $("#addOrderMenuCall").click(function(){
+                var orderLoginCheck = $('#orderUserId').val();
+                var orderCheck = $("input[name='checkMenuTruckId']").val();
+                /*                alert(orderLoginCheck)
+                            if(orderLoginCheck == ''){
+                                   alert("로그인 부탁드립니다")
+                                   loginModal()
+                                   $('#cartModal').modal('hide');
+                                   return;
+                               }else */
+                if(orderCheck== undefined){
+                    Swal.fire({
+                        text: "장바구니에 메뉴를 담아주세요.",
+                        buttons: true,
+                        closeOnClickOutside : false
+                    }).then(function (){
+                        // 바꿔죠!!!
+
+                    });
+                }else{
+                    $('#cartModal').modal('toggle');
+                }
+            })
         });
 
 
@@ -1318,7 +1353,7 @@
             });
 
             $('input[name="odMPrice"]').each(function (i) {
-                odMenuPrice.push($(this).val());
+                odMenuPrice.push($(this).val().replace('₩','').trim());
             });
 
             $('input[name="odOpPrice"]').each(function (i) {
@@ -1519,43 +1554,29 @@
                         // "</div>"+
                         // "<hr/>"+
                         // "<div class=\"row\"><strong>메뉴이미지1</strong></div>"+
-                        "<div class=\"odMenuImg\" name=\"odMenuImg1\" data-menuimg=\""+data.menu.menuImg1+"\" style=\"padding-right:19px;\">" +
+                        "<hr/>"+
+                        "<div class=\"odMenuImg\" name=\"odMenuImg1\" data-menuimg=\""+data.menu.menuImg1+"\" style=\"max-width: 450px;\">" +
                         "<img src=\"/resources/menu/"+data.menu.menuImg1+"\"" +
                         "style=\"border-bottom: 1px solid #eee; width: 100%; border-radius: 10px; box-shadow: 0 2px 2px 1px rgba(0,0,0,0.2); transition: 0.3s;\" "+
                         "alt=\""+data.menu.menuName+"의 이미지1\" title=\""+data.menu.menuName+"\"></div> </div>"+
                         "<hr/>"+
-                        "<div class=\"row\">";
+                        "<div>";
                     // "<div class=\"col-xs-4 col-md-2 \"><strong>메뉴 이름</strong></div>"+
                     //  "<div class=\"col-xs-8 col-md-4\" name=\"odMenuName\"><strong>"+data.menu.menuName+"</strong></div>"+
 
                     if(data.menu.isSigMenu==1){
                         div+=""+
-                            "<h5><span class=\"badge badge-warning\" style=\"margin-left: 15px;\">대표메뉴</span></h5>"+
+                            "<h5><span class=\"badge badge-warning\" style=\"\">대표메뉴</span></h5>"+
                             "";
                     }
-                    div+="<h3 name=\"odMenuName\" style=\"margin-left: 15px;\">"+data.menu.menuName+"</h3>"+
+                    div+="<h4 name=\"odMenuName\" style=\"font-weight: 600; box-shadow: inset 0 -11px 0 #fae100; font-size: 22px; width: fit-content;\">"+data.menu.menuName+"</h4>"+
                         "</div>"+
-                        // "<hr/>"+
-                        "<div>"+
-
-                        // "<div class=\"row\">" +
-                        // "<div class=\"col-xs-4 col-md-2 \">" +
-                        // "<strong>메뉴상세정보</strong>" +
-                        // "</div>" +
-                        "<p></p>"+
-                        "<h5 class=\"odMenuDetail\" name=\"odMenuDetail\" style=\"text-align: right; margin-right: 47px;\">"+data.menu.menuDetail
-
-                        +"</h5>"+
-                        "</div><hr/>"+
-                        // "<div class=\"row\">"+
-                        // "<div class=\"col-xs-4 col-md-2\"><strong>대표메뉴여부</strong></div>"+
-                        // "<div class=\"col-xs-8 col-md-4\">"+data.menu.isSigMenu+"</div>"+
-                        // "</div><hr/>" +
-                        "<div>"+
-                        // "<div class=\"col-xs-4 col-md-2 \"><strong>메뉴가격</strong></div>"+
+                        "<div style='display: flex; justify-content: space-between; align-items: center;'>"+
+                        "<h6 class=\"odMenuDetail\" name=\"odMenuDetail\" style=\"text-align: left; margin-left: 5px; margin-top: 0;\">"+data.menu.menuDetail
+                        +"</h6>"+
                         "<div class=\"odMenuPrice\" name=\"odMenuPrice\">"+
-                        "<h4><span></span><span style=\"float: right;margin-right: 19px;\">"+data.menu.menuPrice+"</span></h4>"
-                    "</div></div><hr/>";
+                        "<h3><span></span><span style=\"float: right;margin-right: 15px; font-size: 18px; font-weight: 600;\">"+data.menu.menuPrice+"&nbsp;₩</span></h3>"
+                    "</div></div>";
                     // "<input type=\"hidden\" name=\"odMenuQty\" value="+ //todo 보류입니다!(수량을 hidden으로 넣을지가)
 
 
@@ -1594,23 +1615,23 @@
                                     "<hr><div class=\"row\"> " +
                                     // "<div class=\"col-xs-4 col-md-2\">" +
                                     // "<strong>옵션 그룹 이름</strong></div>"+
-                                    "<div class=\"col-xs-8 col-md-4\"><strong>"+x.optionGroupName+"</strong></div>"+
-                                    "</div><hr>";
+                                    "<div class=\"col-xs-8 col-md-4\" style='margin-bottom: 10px;'><strong>"+x.optionGroupName+"</strong></div>"+
+                                    "</div>";
                             }
                         }else{
                             divOG+=""+
                                 "<hr><div class=\"row\"> " +
                                 // "<div class=\"col-xs-4 col-md-2\">" +
                                 // "<strong>옵션 그룹 이름</strong></div>"+
-                                "<div class=\"col-xs-8 col-md-4\"><strong>"+x.optionGroupName+"</strong></div>"+
-                                "</div><hr>";
+                                "<div class=\"col-xs-8 col-md-4\" style='margin-bottom: 10px;'><strong>"+x.optionGroupName+"</strong></div>"+
+                                "</div>";
                         }
                         divOG+=""+
 
                             "<div class=\"row\"> " +
-                            "<div class=\"col\">" +
+                            "<div class=\"col\" style='display: flex; justify-content: space-between; margin: 5px; padding: 0 25px;'>" +
                             // "<label class=\"form-check-label\" for=\"optionName+OGName"+x.optionGroupName+"\"><strong>옵션 이름</strong></label></div>"+
-                            "<div class=\"col-xs-8 col-md-4\">" +
+                            "<div class=\"col-xs-8 col-md-4\" style='margin-bottom: 5px;'>" +
                             "<input class=\"form-check-input\" type=\"radio\" name=\"optionName+OGName"+x.optionGroupName+"\" id=\"optionName+OGName"+x.optionGroupName+"\" data-op=\""+x.optionName+"\">"+x.optionName+"" +
                             "<input type=\"hidden\" name=\"odOptionGroupNo\" value=\""+x.optionGroupNo+"\">"+
                             "<input type=\"hidden\" name=\"odOptionGroupName\" value=\""+x.optionGroupName+"\">"+
@@ -1619,7 +1640,7 @@
                             "</div>"+
                             // "<div class=\"row\">"+
                             // "<div class=\"col-xs-4 col-md-2\"><strong>옵션 가격</strong></div>"+
-                            "<span class=\"col-xs-8 col-md-4\" style=\"right:0px;\">"+x.optionPrice+"</span>"+
+                            "<span style=\"right:0;\">+&nbsp;"+x.optionPrice+"&nbsp;₩</span>"+
                             "</div>"+
                             "</div>"+
 
@@ -1696,8 +1717,8 @@
                     rvDiv+=""+
                         "<section id=\"testimonials\">"+
                         "<div class=\"testimonial-heading\">"+
-                        "<span>Comments</span>"+
-                        "<h4>Clients Says</h4>"+
+                        "<i class='fa fa-quote-left' aria-hidden='true' style='color: #f17228;'></i>"+
+                        "<h4 style='margin-top: 10px;'>리뷰목록</h4>"+
                         "</div>"+
                         "<div class=\"testimonial-box-container\">"+
                         ""+
@@ -1917,13 +1938,6 @@
 
     <%--리뷰 css--%>
     <style>
-
-        *{
-            margin: 0px;
-            padding: 0px;
-            font-family: poppins;
-            box-sizing: border-box;
-        }
         a{
             text-decoration: none;
         }
@@ -1960,7 +1974,7 @@
         }
         .testimonial-box{
             width:500px;
-            box-shadow: 2px 2px 30px rgba(0,0,0,0.1);
+            box-shadow: 2px 4px 2px rgba(0,0,0,0.1);
             background-color: #ffffff;
             padding: 20px;
             margin: 15px;
@@ -2009,11 +2023,6 @@
             font-size: 0.9rem;
             color: #4b4b4b;
         }
-        .testimonial-box:hover{
-            transform: translateY(-10px);
-            transition: all ease 0.3s;
-        }
-
         @media(max-width:1060px){
             .testimonial-box{
                 width:80%;
@@ -2552,23 +2561,25 @@
 
                 <div class="col-8 col-md-6" style="padding: 0; text-align: right; display: flex; justify-content: flex-end; align-items: center;">
 
-                    <div>
-                        <ion-icon name="location-outline"></ion-icon>
+                    <div style="margin-right: 10px;">
+                        <i class="fas fa-map-marker-alt fa-lg"></i>
                     </div>
                     <!--좋아요--> <!-- 0115 HHJ 추가 -->
-                    <button type="button" class="btn btn-outline-danger heart-click-t">
-                        <c:if test="${truck.truckHeartCount eq '0'}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
-                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
-                            </svg>
-                        </c:if>
-                        <c:if test="${truck.truckHeartCount ne '0'}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
-                                <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"></path>
-                            </svg>
-                        </c:if>
-                    </button>
-                    <span id="heartC">${truck.truckHeartCount}</span>
+                    <div style="display: flex; align-items: center;">
+                        <button type="button" class="btn heart-click-t" style="padding: 0; margin-right: 5px;">
+                            <c:if test="${truck.truckHeartCount eq '0'}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
+                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+                                </svg>
+                            </c:if>
+                            <c:if test="${truck.truckHeartCount ne '0'}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+                                    <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"></path>
+                                </svg>
+                            </c:if>
+                        </button>
+                        <span id="heartC">${truck.truckHeartCount}</span>
+                    </div>
                     <!--좋아요-->
                 </div>
             </div>
@@ -2615,7 +2626,9 @@
                                 <input type="hidden" id="orderTruckId" name="orderTruckId.truckId" value="${truck.truckId}"/>
                                 <div style="display: flex; justify-content: space-between;">
                                     <button type="button"  class="btn btn-cancle" id="cancelCartMenuList" style="margin: 0;">삭제</button>
-                                    <button type="button"  class="btn btn-default" data-toggle="modal" data-target="#cartModal" style="margin: 0;">주문하기</button>
+<%--                                    <button type="button"  class="btn btn-default" data-toggle="modal" data-target="#cartModal" style="margin: 0;">주문하기</button>--%>
+<%--                                    <button type="button" id="addOrderMenuCall"   class="btn btn-default" data-toggle="modal" data-target="#cartModal" style="margin: 0;">주문하기</button>--%>
+                                    <button type="button" id="addOrderMenuCall"   class="btn btn-default" style="margin: 0;">주문하기</button>
                                 </div>
                             </form>
                         </div>
@@ -2692,32 +2705,36 @@
 <div class="modal fade" id="exampleModalLong" tabindex="-1" aria-labelledby="exampleModalLongTitle" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
+            <div class="modal-body" style="margin: 0; display: flex; flex-direction: column; align-items: center;">
             <%--<div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLongTitle">메뉴 정보</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>--%>
-            <div style="display: flex; justify-content: center; margin: 25px;">
-                <h5 class="modal-title" id="exampleModalLongTitle" style="margin: 0; box-shadow: inset 0 -11px 0 #fae100; font-size: 22px; width: fit-content;">메뉴 정보</h5>
-            </div>
+                <div style="display: flex; justify-content: center; margin: 15px 0 5px 0;">
+                    <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight: 600; margin: 0; box-shadow: inset 0 -11px 0 #fae100; font-size: 20px; width: fit-content;">메뉴 정보</h5>
+                </div>
 
-            <div class="modal-body-hey" style="min-height: 500px; margin-left: 19px;">
-                <p></p>
-            </div>
-            <div class="modal-happy">
+                <div class="modal-body-hey" style="display: flex; flex-direction: column;">
+                    <p></p>
+                </div>
 
-            </div>
-            <div class="modal-footer">
+                <div class="modal-happy col-12" style="margin: 0; display: flex; flex-direction: column;">
+                </div>
 
-                <button type="button" class="btn btn-cancle" data-dismiss="modal">확인</button>
-                <c:if test="${truck.truckBusiStatus==0}">
-                    <button type="button" class="btn btn-default" id="truckBusi">장바구니로!</button>
-                </c:if>
-                <c:if test="${truck.truckBusiStatus==1}">
-                    <button type="button" class="btn btn-default" id="addCart" data-dismiss='modal' name="addCart">장바구니로!</button>
-                </c:if>
-
+                <div>
+                    <hr style="width: 440px;"/>
+                    <div style="display: flex; justify-content: center;">
+                        <button type="button" class="btn btn-cancle" data-dismiss="modal">확인</button>
+                        <c:if test="${truck.truckBusiStatus==0}">
+                            <button type="button" class="btn btn-default" id="truckBusi">담기기</button>
+                        </c:if>
+                        <c:if test="${truck.truckBusiStatus==1}">
+                            <button type="button" class="btn btn-default" id="addCart" data-dismiss='modal' name="addCart">담기</button>
+                        </c:if>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -2894,60 +2911,87 @@
     <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="cartModalLabel">주문정보입력
-                    </h5>
+                <%--<div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">주문정보입력</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
-                <div class="modal-body">
+                </div>--%>
+                <div class="modal-body" style="margin: 0;">
+
+                    <div style="display: flex; justify-content: center; margin-bottom: 20px; ">
+                        <h5 class="modal-title" id="cartModalLabel" style="text-align: center; margin: 0; box-shadow: inset 0 -11px 0 #fae100; width: fit-content; font-size: 22px;">
+                            주문정보입력
+                        </h5>
+                    </div>
+
+                    <hr/>
+
                     <div class="mb-3">
-                        <label for="orderPickUpTime" class="col-form-label">픽업희망시간:</label>
+                        <label for="orderPickUpTime" class="col-form-label" style="margin-bottom: 5px; font-weight: 600;">픽업희망시간</label>
                         <div class="toggle3" role="group" aria-label="Basic radio toggle button group">
-                            <input type="radio" class="btn-check" id="orderPickUpTime" name="orderPickUpTime" value="5"
-                                   id="btnradio1" autocomplete="off" checked>
-                            <label class="btn btn-outline-primary" for="btnradio1">5분</label>
+                            <div style="display: flex; justify-content: space-around;">
+                                <div class="col-4">
+                                    <input type="radio" class="btn-check" id="orderPickUpTime" name="orderPickUpTime" value="5"
+                                           id="btnradio1" autocomplete="off" checked>
+                                    <label class="btn btn-outline-primary" for="btnradio1">5분</label>
+                                </div>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="10" id="btnradio2"
-                                   autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio2">10분</label>
+                                <div class="col-4">
+                                    <input type="radio" class="btn-check" name="orderPickUpTime" value="10" id="btnradio2"
+                                           autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="btnradio2">10분</label>
+                                </div>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="15" id="btnradio3"
-                                   autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio3">15분</label>
+                                <div class="col-4">
+                                    <input type="radio" class="btn-check" name="orderPickUpTime" value="15" id="btnradio3"
+                                           autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="btnradio3">15분</label>
+                                </div>
+                            </div>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="20" id="btnradio4"
-                                   autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio4">20분</label>
+                            <div style="display: flex; justify-content: space-around;">
+                                <div class="col-4">
+                                    <input type="radio" class="btn-check" name="orderPickUpTime" value="20" id="btnradio4"
+                                           autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="btnradio4">20분</label>
+                                </div>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="30" id="btnradio5"
-                                   autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio5">30분</label>
+                                <div class="col-4">
+                                    <input type="radio" class="btn-check" name="orderPickUpTime" value="30" id="btnradio5"
+                                           autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="btnradio5">30분</label>
+                                </div>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="40" id="btnradio6"
-                                   autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio6">40분</label>
+                                <div class="col-4">
+                                    <input type="radio" class="btn-check" name="orderPickUpTime" value="40" id="btnradio6"
+                                           autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="btnradio6">40분</label>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="menuRequest" class="col-form-label">주문요청사항:</label>
+                        <label for="menuRequest" class="col-form-label" style="font-weight: 600;">주문요청사항</label>
                         <textarea class="form-control" id="menuRequest" name="menuRequest"
                                   value="${purchase.orderRequest}"></textarea>
                     </div>
+
+                    <hr/>
+
+                    <div style="display: flex; justify-content: center;">
+                        <button type="button" class="btn btn-default" id="addMenuCart">확인</button>
+                        <button type="button" class="btn btn-cancle" data-dismiss="modal">취소</button>
+                    </div>
+
                 </div>
-                <div class="modal-footer">
+                <%--<div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
                     <button type="button" class="btn btn-primary" id="addMenuCart">확인</button>
-
-
-
-
-
                     <input type="hidden" id="orderQty" name="orderQty" value="3"/>
                     <input type="hidden" id="orderTotalPrice" name="orderTotalPrice" value="3000"/>
-                </div>
+                </div>--%>
             </div>
         </div>
     </div>
