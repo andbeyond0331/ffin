@@ -511,8 +511,8 @@
 
         <div class="form-group">
             <div class="col-sm-offset-4  col-sm-4 text-center">
-                <button type="submit" class="btn btn-primary" id="updateMenuButton">수 &nbsp;정</button>
-                <a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
+                <button type="submit" class="btn btn-default" id="updateMenuButton">수 &nbsp;정</button>
+                <a type="button" class="btn btn-cancel btn" href="#" role="button">취 &nbsp;소</a>
             </div>
         </div>
 

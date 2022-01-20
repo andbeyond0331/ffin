@@ -202,7 +202,7 @@
             var modalOp = $('#optionModal');
 
 
-            modalOp.find('button.btn.btn-primary.addOption').on("click", function(){
+            modalOp.find('button.btn.btn-default.addOption').on("click", function(){
                 //countOp++;
 
                 var optionNamer = modalOp.find('input#optionNamer.form-control').val();
@@ -226,7 +226,7 @@
                 //$('div#'+indexOp+'-target').append($(divElemOp));
                 console.log("append-op-target : " + $('#optionGroupModal').find('.modal-body').html());
 
-                $('#optionGroupModal').find('.modal-body').append($(divElemOp));
+                $('#optionGroupModal').find('.optionHere').append(divElemOp);
 
                 modalOp.find('input#optionNamer.form-control').val("");
                 modalOp.find('input#optionPricer.form-control').val("");
@@ -561,7 +561,7 @@
                     <h5 style="margin: 0; box-shadow: inset 0 -11px 0 #fae100; font-size: 22px; width: fit-content;" id="optionGroupModalLabel">옵션 그룹 추가</h5>
                 </div>
                 <hr/>
-
+                <div class="optionHere">
                 <!--옵션그룹추가 시이이이작-->
                 <div class="form-group" id="rrrrrr" name="rrrrrr" style="margin-top: 30px; margin-bottom: 30px;">
                     <div class="col-sm-10">
@@ -570,7 +570,7 @@
                     </div>
                 </div>
                 <!--옵션그룹추가 끄으으으읕-->
-
+            </div>
                 <hr style="margin-bottom: 15px;"/>
 
                 <div style="display: flex; justify-content: center; margin-bottom: 10px">
@@ -811,11 +811,20 @@
                 <script>
 
                     //메뉴 수정 클릭 시
-                    function updateMenu(menuNo){
-                        var menuNoo = menuNo;
+                    // function updateMenu(menuNo){
+                    //     var menuNoo = menuNo;
+                    //
+                    //     self.location="/menu/updateMenu?menuNo="+menuNoo;
+                    // }
 
-                        self.location="/menu/updateMenu?menuNo="+menuNoo;
-                    }
+                    $("body").on("click", "button[name='getMenu']", function() {
+
+                        alert("111111")
+                        var menuNoo = $(this).find('input[name="menuNo"]').val();
+
+                        window.location="/menu/updateMenu?menuNo="+menuNoo;
+
+                    });
 
                     function deleteMenu(menuNo, isSigMenu){
 
@@ -853,7 +862,7 @@
 
                         <div class="card col-md-4 mb-4" style="border: 0; padding:0; ">
                             <div class="thumb-box">
-                                <a href="">
+                                <a >
                                     <img src="/resources/menu/${menu.menuImg1}" alt="">
                                     <span class="overlay-box">
                                         <div class="menu-title">
@@ -863,7 +872,7 @@
                                         <span class="main-title">${menu.menuDetail}</span>
                                         <div class="menu-update">
                                             <span class="description">
-                                                <button class="btn btn-default menuupdateBtn" name="getMenu" onclick="updateMenu(${menu.menuNo});">
+                                                <button class="btn btn-default menuupdateBtn" name="getMenu">
                                                     수정
                                                     <input type="hidden" name="menuNo" value="${menu.menuNo}"/>
                                                 </button>
