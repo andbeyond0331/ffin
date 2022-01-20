@@ -57,7 +57,7 @@ public class CateringController {
     int pageSize;
 
     private int count=0;
-    @RequestMapping( value="mainCalendar", method= RequestMethod.GET)
+        @RequestMapping( value="mainCalendar", method= RequestMethod.GET)
     public ModelAndView mainCalendar(@ModelAttribute("search") Search search , HttpSession session) throws Exception {
 
         count++;

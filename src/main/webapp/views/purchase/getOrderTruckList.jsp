@@ -768,9 +768,8 @@
         var orderCookingTime = $("input[name='cookingTime']:checked").val();
         if(orderCookingTime == undefined){
             orderCookingTime = $("input[name='cookingTime']").val();
-
         }
-        var m_sg = $(this).value();
+        var m_sg = $(this).val();
         console.log("m_sg: "+m_sg)
 
         $.ajax({
