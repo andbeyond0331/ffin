@@ -177,7 +177,7 @@
             width:100%;
         }
         .testimonial-box{
-            width:500px;
+            width:938px;
             box-shadow: 2px 2px 30px rgba(0,0,0,0.1);
             background-color: #ffffff;
             padding: 20px;
@@ -216,6 +216,7 @@
         }
         .reviews{
             color: #f9d71c;
+            /*margin-right:60%*/
         }
         .box-top{
             display: flex;
@@ -307,19 +308,212 @@
                     },
                     success : function (Data) {
                         console.log(Data.review.rvNo);
-                        var display = "<div class='card-ans mb-10'>"
+                        var display ="";
+                        display +="<hr style='border-width:2px;'/>";
+                        display += "<div class='card-ans mb-10'>"
                             + "<div class='row g-0 inquiry-card'>"
                             + "<div class='card-body'>"
                             + "<div style='margin: 0 55px 0 55px;'>";
-                        display += "<hr>";
-                        for(var i in Data.orderDetail){
-                            display+=""+
-                                ""+
-                                ""+
-                                ""+
-                                ""+
-                                "";
+
+                        var odMenuNameCount = Data.orderDetail.list.length;
+                        // console.log(odMenuNameCount);
+
+
+                        var odMenuNameL;
+                        var odOptionGroupNameL;
+                        var odOptionNameL;
+                        var odMenuQtyL;
+                        var odMenuPriceL;
+                        var odOptionPriceL;
+                        var odMenuImageL;
+
+                        var totototoprice =0; // 전체 금액
+                        var totototoqty =0; // 수량
+                        var pricepriceprice =0 // 임시 가격
+
+                        var menuPriceOne = [];
+                        var menuPriceTwo = [];
+                        var optionPriceOne = [];
+                        var optionPriceTwo = [];
+                        var menuCount = 0;
+                        var menuCheck = [];
+
+                        var optionNameShow = []; // 이름 보여지게 할 값 만들기~ (최종)
+                        var optionPriceShow = [];
+                        var totalshow =0;
+
+
+
+                        for (var i = 0; i < odMenuNameCount; i++) {
+                            var odMenuName = Data.orderDetail.list[i].odMenuName;
+                            var odOptionGroupName = Data.orderDetail.list[i].odOptionGroupName;
+                            var odOptionName = Data.orderDetail.list[i].odOptionName;
+                            var odMenuQty = (Data.orderDetail.list[i].odMenuQty).toString();
+                            var odMenuPrice = (Data.orderDetail.list[i].odMenuPrice).toString();
+                            var odOptionPrice = (Data.orderDetail.list[i].odOptionPrice).toString();
+                            var odMenuImage = Data.orderDetail.list[i].odMenuImage;
+                            var odMenuQtyFlag =Data.orderDetail.list[i].odMenuQtyFlag;
+
+                            // console.log("odOptionName ["+i+"] : " + odOptionName);
+
+                            if (optionNameShow[menuCount] == undefined){
+                                optionNameShow[menuCount] = " ";
+                            }
+
+
+                            if ( odMenuQtyFlag == '0'){
+
+                                pricepriceprice = Number(odMenuPrice);
+                                totototoqty = Number(odMenuQty);
+                                menuCount++;
+                                totalshow=0;
+                                //pricepriceprice *= qtyqtyqty;
+                                //console.log("pricepriceprice *= qtyqtyqty" + (pricepriceprice *= qtyqtyqty));
+                                //tttttppppprrrr += Number(pricepriceprice)// 처음 들어온 값도 0, 이후엔 곱해짐 // 기존값 더함
+                                //qtyqtyqty = Number(odMenuQty); // 수량값 기억하고 있도록 for문 밖에 선언해준 qtyqtyqty 에 저장
+                            }else { // 옵션이면
+                                // console.log("odOptionName : "+odOptionName)
+                                pricepriceprice = Number(odOptionPrice);
+                                optionNameShow[Number(menuCount-1)] += odOptionName + "(+" + odOptionPrice + ") ";
+
+                            }
+                            //console.log("optionNameShow[menuCount]: "+optionNameShow[menuCount])
+                            totototoprice+= Number(pricepriceprice * totototoqty);
+                            totalshow += Number(pricepriceprice * totototoqty);
+                            optionPriceShow[Number(menuCount-1)] = totalshow;
+                            console.log("ttototototo :: " + totototoprice)
+
+                            var odMenuImageCopy;
+                            var odMenuNameCopy;
+                            var odOptionGroupNameCopy;
+                            var odOptionNameCopy;
+                            var odMenuQtyCopy;
+                            var odMenuPriceCopy;
+                            var odOptionPriceCopy;
+                            var test2;
+                            var totalPrice;
+
+
+                            if (odMenuNameCopy != null && odMenuQtyFlag == 0) {
+                                odMenuNameCopy = odMenuNameCopy + "," + odMenuName;
+                                odMenuImageCopy = odMenuImageCopy + "," + odMenuImage;
+                                odMenuQtyCopy = odMenuQtyCopy + "," + odMenuQty;
+                                odMenuPriceCopy = odMenuPriceCopy + "," + odMenuPrice;
+                                totalPrice = totalPrice + parseInt(odMenuPrice);
+                            } else if (odMenuNameCopy == null) {
+
+                                odMenuNameCopy = odMenuName;
+                                odMenuImageCopy = odMenuImage;
+                                odMenuQtyCopy = odMenuQty;
+                                odMenuPriceCopy = odMenuPrice;
+                                totalPrice = parseInt(odMenuPrice);
+
+                            }
+
+                            odMenuNameL = odMenuNameCopy.split(",");
+                            odMenuImageL = odMenuImageCopy.split(",");
+                            odMenuQtyL = odMenuQtyCopy.split(",");
+                            odMenuPriceL = odMenuPriceCopy.split(",").map(Number);
+
+                            if (odOptionNameCopy == null) {
+                                odOptionNameCopy = odOptionName;
+                                test2 = odMenuName;
+                                odOptionGroupNameCopy = odOptionGroupName;
+                                odOptionPriceCopy = odOptionPrice;
+
+                            } else if (test2 != odMenuName ) {
+                                odOptionNameCopy = odOptionNameCopy + "/" + odOptionName;
+                                odOptionGroupNameCopy = odOptionGroupNameCopy + "/" + odOptionGroupName;
+                                odOptionPriceCopy = odOptionPriceCopy + "/" + odOptionPrice;
+
+                            } else if (odOptionNameCopy != null) {
+
+                                odOptionNameCopy = odOptionNameCopy + "," + odOptionName;
+                                test2 = odMenuName;
+                                odOptionGroupNameCopy = odOptionGroupNameCopy + "," + odOptionGroupName;
+                                odOptionPriceCopy = odOptionPriceCopy + "," +  odOptionPrice;
+                            }
+                            if(odOptionNameL!=null){
+                                odOptionNameL = odOptionNameCopy.split("/");
+                                odOptionGroupNameL = odOptionGroupNameCopy.split("/");
+
+                            }
+
+
+
+
+
                         }
+
+
+
+                        var sum = new Array() ;
+                        var test3 = new Array();
+
+                        odOptionPriceL = odOptionPriceCopy.split("/");
+
+                        for(var i=0; i<odOptionPriceL.length; i++){
+                            a=odOptionPriceL[i]*1;
+                            odOptionPrice[i] = a;
+                        }
+
+                        /*alert("ordejoijafjs"+odOptionPriceL)*/
+                        for(var i = 0; i<odOptionPriceL.length; i++){
+                            test3 = odOptionPriceL[i].split(",");
+
+                            for(var j = 0; j<test3.length; j++){
+
+                                if(sum[i]==undefined){
+                                    sum[i] =Number(test3[j]);
+                                    /*alert("첫번째값"+Number(test3[j]))*/
+                                }else{
+                                    sum[i]=(Number(sum[i])+Number(test3[j]));
+                                    /*alert("계속 들어가는 값"+Number(sum[i]));*/
+                                }
+
+                            }
+
+                        }
+
+                        var menuPrice = 0;
+                        for (var i = 0; i < odMenuNameL.length; i++) {
+
+
+                            menuPrice += (sum[i] + odMenuPriceL[i]);
+
+
+                            divElemApply1 = "<div class=\"card mb-3\" >" +
+                                " <div class=\"row g-0\">" +
+                                "<div class=\"col-md-4\">" +
+                                "<img src=\"/resources/menu/"+odMenuImageL[i]+"\" class=\"img-fluid rounded-start\" alt=\"image\">" +
+                                "</div>" +
+                                "<div class=\"col-md-8\">" +
+                                "<div class=\"card-body\">" +
+                                "<h5 class=\"card-title\">" + odMenuNameL[i] + "</h5>" +
+                                "<p class=\"card-text\"><small class=\"text-muted\"><span class=\"badge\" style=\"background-color: #fae100; color: #110000\">&nbsp;옵션&nbsp;</span> " + optionNameShow[i] + " </small><br>"  +
+                                "  <small class=\"text-muted\"><span class=\"badge\" style=\"background-color: #fae100; color:#110000\">&nbsp;수량&nbsp;</span> "+ odMenuQtyL[i] + "<br><span class=\"badge\" style=\"background-color: #fae100; color: #110000\">총 가격</span> "+optionPriceShow[i] + " </small></p>" +
+                                "</div></div></div></div>" ;
+
+
+                            display+=(divElemApply1);
+
+                        }
+                        // display+="</div></div>";
+
+
+
+
+
+                        display += "<hr>";
+                        // for(var i in Data.orderDetail){
+                        //     display+=""+
+                        //         ""+
+                        //         ""+
+                        //         ""+
+                        //         ""+
+                        //         "";
+                        // }
+
 
 
 
@@ -327,6 +521,7 @@
 
                         // 스타일 바꾸기 시도 시작
                         display +="<div class=\"testimonial-box\">"+
+                            // "<div class=\"col-md-6 data-input-box\" style=\"display: flex; justify-conent:center;\""+
                         "<input type=\"hidden\" name=\"rvNo\" value=\""+Data.review.rvNo+"\">"+
                         "<div class=\"box-top\">"+
                         "<div class=\"profile\">"+
@@ -494,12 +689,31 @@
                                 "<span class=\"carousel-control-next-icon\" aria-hidden=\"true\"></span>"+
                                 "<span class=\"sr-only\">Next</span>"+
                             "</a>"+
-                                "</div>"+
-                        "</div>";
+                                "</div>";
+
                         }
+                        // display +=""+
+                        //     // "<div class=\"col-md-6 data-input-box\" style=\"display: flex; justify-content: center;\">"+
+                        //         "<div class=\"data-input-box user-profile\">"+
+                        //             "<div>"+
+                        //                 "<div style=\"margin-bottom: 30px;\">"+
+                        //                     "<label class=\"form-label label-name\">주문정보</label>"+
+                        //                     "<span class=\"badge\" style=\"background-color: #65bf96; color: #110000\">픽업완료</span>&nbsp;&nbsp;" +
+                        //                     "</div> &nbsp;&nbsp;&nbsp;&nbsp;<div style=\"margin-bottom: 30px;\">"+
+                        //                     "<label for=\"orderCookingTime\" class=\"form-label label-name\">주문목록</label>"+
+                        //                     "<div id=\"order\">"+
+                        //     " </div></div></div></div>" +
+                        //     "</div>";
 
 
 
+                        //             display+=
+                        //
+                        //                " </div>"+
+                        //           "  </div>"+
+                        //        " </div>"+
+                        //     "</div>";
+                        // display +=         "</div>";
 
                         // if(Data.review.rvImg1){
                         //     display += "<img src='../../resources/image/"+Data.review.rvImg1+"' class='card-img-top' alt='reviewImg' style='width: 200px;'>";
@@ -516,7 +730,7 @@
                         // display  += "<p class='card-text'>"+Data.review.rvContent+"</p>"
                         //     + "</div>";
 
-                        display +="<hr style='border-width:2px;'/>";
+
 
 
                         if(!Data.review.rvTruckCmtContent){
