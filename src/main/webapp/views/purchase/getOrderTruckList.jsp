@@ -10,7 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <head>
     <jsp:include page="../../common/lib.jsp"/>
-</head>
+    <title>F.FIN | 주문접수</title></head>
 <body>
 <jsp:include page="/views/navbar.jsp"/>
 <!-- Bootstrap Dropdown Hover CSS -->
@@ -51,6 +51,21 @@
     }
     body{
         margin-top: 80px;
+    }
+    .statusBtn{
+        background-color: #fae100;
+        color: #25323c;
+        border-color: #fae100;
+    }
+    .statusBtn:hover{
+        background-color: #ec6a56;
+        color: #25323c;
+        border-color: #ec6a56;
+    }
+    .statusBtn:after{
+        background-color: #ec6a56;
+        color: #25323c;
+        border-color: #ec6a56;
     }
 </style>
 <main>
@@ -154,220 +169,244 @@
                     </c:if>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary" id="busiStatus">등록</button>
+                    <button type="button" class="btn btn-cancle" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-default" id="busiStatus">등록</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <%-- MAIN VIEW --%>
 
-    <div class="container py-4">
-        <header class="pb-4 mb-5 py-4 border-bottom">
-            <span class="fs-1">주문내역</span>
-            <input type="hidden" id="truckId" name="truckId"
-                   value="${truck.truckId}"/>
-        </header>
+    <section class="client_section layout_padding" style="padding-top: 30px;">
+        <div class="container">
+            <div class="col-md-12 ">
 
-        <div class="container-fluid">
-            <div class="row justify-content-evenly">
+                <div class="detail-box" style="margin-top: 100px; margin-bottom: 50px;">
+                    <i class="fa fa-quote-left" aria-hidden="true"></i>
+                    <h4 class="truckNameForMenu" style="margin-top: 10px;">
+                        ${truck.truckName} 주문접수
+                    </h4>
+                    <input type="hidden" id="truckId" name="truckId" value="${truck.truckId}"/>
+                </div>
 
-                <div class="col-5 p-3 mb-2  bg-light text-dark">
+                    <%--<header class="pb-4 mb-5 py-4 border-bottom">
+                        <span class="fs-1">주문접수</span>
+                        <input type="hidden" id="truckId" name="truckId"
+                               value="${truck.truckId}"/>
+                    </header>--%>
 
-                    <div class="row ">
-                        <div class="col-2">
+                    <div class="container-fluid" style="padding: 0 10px; background-color: #ffffff; box-shadow: 0 2px 4px 1px rgba(0,0,0,0.2); transition: 0.3s; border-radius: 10px;">
+                        <div style="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between;">
 
-                            <button class="btn btn-primary" id="ing" type="button">처리중</button>
+                            <%-- 주문목록 --%>
+                            <div class="col-5 p-3 mb-2">
 
-                            <button class="btn btn-primary" id="end" type="button">픽업완료</button>
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-6 text-center" style="padding: 0;"> 전체 :</div>
+                                        <div class="col-6" style="padding: 0;">
+                                            <div class="form-check form-switch">
+                                                <c:if test="${truck.truckBusiStatus.equals('1')}">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                           id="swCh" name="swCh"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" checked>
+                                                    <label class="form-check-label" for="swCh">영업중</label>
+                                                </c:if>
+                                                <c:if test="${truck.truckBusiStatus.equals('0')}">
+                                                    <input class="form-check-input" type="checkbox" role="switch"
+                                                           id="swCh" name="swCh"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                    <label class="form-check-label" for="swCh">영업종료</label>
+                                                </c:if>
 
-                            <button class="btn btn-primary" id="cancel" type="button">주문취소</button>
-                        </div>
-                        <div class="col-10">
-                            <div class="row justify-content-between">
-                                <div class="col-6 text-center"> 전체 :</div>
-                                <div class="col-6">
-                                    <div class="form-check form-switch">
-                                        <c:if test="${truck.truckBusiStatus.equals('1')}">
-                                            <input class="form-check-input" type="checkbox" role="switch"
-                                                   id="swCh" name="swCh"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" checked>
-                                            <label class="form-check-label" for="swCh">영업중</label>
-                                        </c:if>
-                                        <c:if test="${truck.truckBusiStatus.equals('0')}">
-                                            <input class="form-check-input" type="checkbox" role="switch"
-                                                   id="swCh" name="swCh"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                            <label class="form-check-label" for="swCh">영업종료</label>
-                                        </c:if>
-
+                                            </div>
+                                        </div>
+                                        <br><br>
                                     </div>
                                 </div>
-                                <br><br>
+
+                                <div class="row ">
+                                    <div class="btn-group-vertical col-2">
+                                        <button class="btn btn-secondary statusBtn" id="ing" type="button">처리중</button>
+                                        <button class="btn btn-secondary statusBtn" id="end" type="button">픽업완료</button>
+                                        <button class="btn btn-secondary statusBtn" id="cancel" type="button">주문취소</button>
+                                    </div>
+                                    <%--<div class="col-2">
+                                        <button class="btn btn-default" id="ing" type="button">처리중</button>
+                                        <button class="btn btn-default" id="end" type="button">픽업완료</button>
+                                        <button class="btn btn-default" id="cancel" type="button">주문취소</button>
+                                    </div>--%>
+                                    <div class="col-10">
+
+                                        <c:set var="i" value="0"/>
+                                        <c:forEach var="cart" items="${map.get('list')}">
+                                            <c:set var="i" value="${i+1}"/>
+
+                                            <hr class="my-2">
+                                            <div class="row">
+                                                <div class="col-1">
+                                                        ${i}
+                                                </div>
+                                                <div class="col-8">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <a type="button" class="text-break" id="orderUserId">${cart.orderUserId.userId}</a>
+                                                            <input type="hidden" id="orderNo" name="orderNo" value="${cart.orderNo}"/>
+
+
+                                                        </div>
+                                                        <div class="col-6" id="orderPickUp">
+                                                            픽업희망시간 : ${cart.orderPickUpTime}
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <a href="#" class="text-break"><%--${cart.odMenuName}--%></a>
+
+                                                        </div>
+                                                        <div class="col-6">
+                                                            예상조리시간 : ${cart.orderCookingTime}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-3">
+                                                    <c:if test="${cart.orderStatus == 1}">
+                                                        주문대기
+                                                    </c:if>
+                                                    <c:if test="${cart.orderStatus == 2}">
+                                                        주문접수
+                                                    </c:if>
+                                                    <c:if test="${cart.orderStatus == 3}">
+                                                        픽업요청
+                                                    </c:if>
+                                                    <c:if test="${cart.orderStatus == 4}">
+                                                        픽업완료
+                                                    </c:if>
+                                                    <c:if test="${cart.orderStatus == 5}">
+                                                        주문취소
+                                                    </c:if>
+
+                                                </div>
+                                            </div>
+
+                                            <%--                                <input type="hidden" id="orderNo" name="orderNo" value="${cart.odOrderNo.orderNo}"/>--%>
+                                            <input type="hidden" id="userId" name="userId"
+                                                   value="${cart.orderUserId.userId}"/>
+                                            <input type="hidden" id="orderStatus" name="orderStatus"
+                                                   value="${cart.orderStatus}"/>
+                                            <input type="hidden" id="odMenuPrice" name="orderPickUpTime"
+                                                   value="${cart.orderPickUpTime}"/>
+                                            <input type="hidden" id="orderCookingTime" name="orderCookingTime"
+                                                   value="${cart.orderCookingTime}"/>
+                                            <input type="hidden" name="searchCondition" value="${search.searchCondition}">
+
+                                            <%--<input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>--%>
+
+                                        </c:forEach>
+                                    </div>
+                                </div>
                             </div>
 
-                            <c:set var="i" value="0"/>
-                            <c:forEach var="cart" items="${map.get('list')}">
-                                <c:set var="i" value="${i+1}"/>
+                            <div class="col-1" style="display: flex; align-items: center; justify-content: center;">
+                                <div class="d-flex" style="height: 680px; justify-content: center;">
+                                    <div class="vr"></div>
+                                </div>
+                            </div>
 
+                            <%-- 주문 상세정보 --%>
+                            <div class="col-7 p-3 mb-2">
+                                <div class="row " id="CookingTime">
+
+                                </div>
                                 <hr class="my-2">
                                 <div class="row">
+
+                                    <div class="col-7">
+
+                                        <div class="row" id="oRt">
+                                            <label for="orderRequest" class="col-form-label">주문요청사항 :</label>
+                                            <textarea class="form-control" id="orderRequest" name="orderRequest"
+                                                      value="" disabled></textarea>
+                                        </div>
+                                        <div class="row" id="cancelOrder">
+
+                                        </div>
+                                        <br>
+                                        <div class="row" id="opt">
+                                            <label for="orderRequest" class="col-form-label">픽업희망시간
+                                                : </label>
+                                        </div>
+                                        <hr class="my-2">
+                                        <div class="row" id="list">
+
+                                            <label for="orderRequest" class="col-form-label">주문내역 :</label>
+
+                                            <div id="order"></div>
+
+                                            <div id="total"><p class="text-end">결제금액 : </p> </div>
+                                        </div>
+
+                                    </div>
                                     <div class="col-1">
-                                            ${i}
-                                    </div>
-                                    <div class="col-8">
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <a type="button" class="text-break" id="orderUserId">${cart.orderUserId.userId}</a>
-                                                <input type="hidden" id="orderNo" name="orderNo" value="${cart.orderNo}"/>
-
-
-                                            </div>
-                                            <div class="col-6" id="orderPickUp">
-                                                픽업희망시간 : ${cart.orderPickUpTime}
-                                            </div>
+                                        <div class="d-flex" style="height: 680px; justify-content: center;">
+                                            <div class="vr"></div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <a href="#" class="text-break"><%--${cart.odMenuName}--%></a>
+                                    </div>
 
-                                            </div>
-                                            <div class="col-6">
-                                                예상조리시간 : ${cart.orderCookingTime}
-                                            </div>
+                                    <div class="col-4">
+                                        <div class="row" id="orderMenuHidden">
+                                            <div id="pointNoCouponNo"></div>
+                                            <label for="orderRequest" class="col-form-label">고객정보
+                                                : </label>
                                         </div>
 
-                                    </div>
-                                    <div class="col-3">
-                                        <c:if test="${cart.orderStatus == 1}">
-                                            주문대기
-                                        </c:if>
-                                        <c:if test="${cart.orderStatus == 2}">
-                                            주문접수
-                                        </c:if>
-                                        <c:if test="${cart.orderStatus == 3}">
-                                            픽업요청
-                                        </c:if>
-                                        <c:if test="${cart.orderStatus == 4}">
-                                            픽업완료
-                                        </c:if>
-                                        <c:if test="${cart.orderStatus == 5}">
-                                            주문취소
-                                        </c:if>
+                                        <div class="row" id="img">
+
+
+
+
+
+                                        </div>
+
+                                        <br>
+                                        <div class="row" id="usId" >
+                                            <input type="hidden" name="usId" value=""/>
+                                            ${purchase.orderUserId.userId}
+                                        </div>
+                                        <br>
+                                        <div class="row" id="orNo">
+                                            주문번호 :
+                                        </div>
+                                        <br>
+                                        <div class="row" id="paDa">
+                                            주문일시 :
+                                        </div>
+                                        <br>
+                                        <div class="row" id="usUN">
+                                            이름 :
+                                        </div>
+                                        <br>
+                                        <div class="row" id="usUP">
+                                            연락처 :
+                                        </div>
+                                        <br>
+
+                                        <div class="row" id="paOp">
+
+                                        </div>
 
                                     </div>
+
                                 </div>
 
-                                <%--                                <input type="hidden" id="orderNo" name="orderNo" value="${cart.odOrderNo.orderNo}"/>--%>
-                                <input type="hidden" id="userId" name="userId"
-                                       value="${cart.orderUserId.userId}"/>
-                                <input type="hidden" id="orderStatus" name="orderStatus"
-                                       value="${cart.orderStatus}"/>
-                                <input type="hidden" id="odMenuPrice" name="orderPickUpTime"
-                                       value="${cart.orderPickUpTime}"/>
-                                <input type="hidden" id="orderCookingTime" name="orderCookingTime"
-                                       value="${cart.orderCookingTime}"/>
-                                <input type="hidden" name="searchCondition" value="${search.searchCondition}">
-
-                                <%--<input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>--%>
-
-                            </c:forEach>
-                        </div>
-                    </div>
-
-
-                </div>
-
-                <div class="col-6 p-3 mb-2 bg-light  text-dark">
-                    <div class="row " id="CookingTime">
-
-                    </div>
-                    <hr class="my-2">
-                    <div class="row">
-
-                        <div class="col-7">
-
-                            <div class="row" id="oRt">
-                                <label for="orderRequest" class="col-form-label">주문요청사항 :</label>
-                                <textarea class="form-control" id="orderRequest" name="orderRequest"
-                                          value="" disabled></textarea>
                             </div>
-                            <div class="row" id="cancelOrder">
-
-                            </div>
-                            <br>
-                            <div class="row" id="opt">
-                                <label for="orderRequest" class="col-form-label">픽업희망시간
-                                    : </label>
-                            </div>
-                            <hr class="my-2">
-                            <div class="row" id="list">
-
-                                <label for="orderRequest" class="col-form-label">주문내역 :</label>
-
-                                <div id="order"></div>
-
-                                <div id="total"><p class="text-end">결제금액 : </p> </div>
-                            </div>
-
-                        </div>
-                        <div class="col-1">
-                            <div class="d-flex" style="height: 672px;">
-                                <div class="vr"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-4">
-                            <div class="row" id="orderMenuHidden">
-                                <div id="pointNoCouponNo"></div>
-                                <label for="orderRequest" class="col-form-label">고객정보
-                                    : </label>
-                            </div>
-
-                            <div class="row" id="img">
-
-
-
-
-
-                            </div>
-
-                            <br>
-                            <div class="row" id="usId" >
-                                <input type="hidden" name="usId" value=""/>
-                                ${purchase.orderUserId.userId}
-                            </div>
-                            <br>
-                            <div class="row" id="orNo">
-                                주문번호 :
-                            </div>
-                            <br>
-                            <div class="row" id="paDa">
-                                주문일시 :
-                            </div>
-                            <br>
-                            <div class="row" id="usUN">
-                                이름 :
-                            </div>
-                            <br>
-                            <div class="row" id="usUP">
-                                연락처 :
-                            </div>
-                            <br>
-
-                            <div class="row" id="paOp">
-
-                            </div>
-
                         </div>
 
                     </div>
 
-                </div>
             </div>
-
         </div>
-
-    </div>
-
+    </section>
 </main>
 
 <script>

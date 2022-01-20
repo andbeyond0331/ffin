@@ -92,8 +92,10 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: auto;
+            /*width: 100%;
+            height: auto;*/
+            height: -webkit-fill-available;
+            width: -webkit-fill-available;;
             line-height: 0;
             border-radius: 10px;
             background-color: white;
@@ -144,13 +146,15 @@
         .item-truck{
             /*width: 33%;*/
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             margin-top: 5px;
             padding: 5px;
         }
         .item-truck span {
             display: flex;
             align-items: center;
+            font-weight: normal;
+            font-size: 15px;
         }
         ion-icon{
             margin-right: 2px;
@@ -175,6 +179,14 @@
             margin: 8px;
             text-align: center;
             background-color: #ffe537;
+            border: 1.8px solid #ffe537;
+            border-radius: 50%;
+        }
+        .landing__categories>.category-bubble[data-v-f275d10a]:hover {
+            margin: 8px;
+            text-align: center;
+            background-color: #ffffff;
+            border: 1.8px solid #ffe537;
             border-radius: 50%;
         }
         .category-bubble-link--bounce-in[data-v-21b52141] {
@@ -191,6 +203,7 @@
             animation-delay: .2s;
             height: 60px;
         }
+
 
         .fadeIn[data-v-21b52141] {
             -webkit-animation-name: fadeIn;
@@ -227,6 +240,9 @@
             animation-duration: .3s;
             -webkit-animation-fill-mode: both;
             animation-fill-mode: both;
+        }
+        .fas.fa-star, .far.fa-star{
+            color: #ec6a56;
         }
 
     </style>
@@ -444,9 +460,9 @@
                             + " <div class='item-text-wrapper'>";
 
                         if (list[i].truckBusiStatus == '0'){
-                            div += "<h5><span class='badge' style='background-color: #ffba49; color: #110000'>영업종료</span></h5>";
+                            div += "<h5><span class='badge' style='background-color: #ec6a56; color: #110000'>영업종료</span></h5>";
                         }else{
-                            div += "<h5><span class='badge' style='background-color: #ffba49; color: #110000'>영업중</span></h5>";
+                            div += "<h5><span class='badge' style='background-color: #65bf96; color: #110000'>영업중</span></h5>";
                         }
 
 
@@ -561,8 +577,8 @@
                                 "<i class=\"fas fa-star\"></i>";
                         }
 
-                        div +=  "<p class='item-text-dek'><strong>"+list[i].truckName+"</strong></p>"
-                            +"<h6 class='item-text-title'>+list[i].truckNoticeContent+</h6>";
+                        div +=  "<p class='item-text-dek'><strong>"+list[i].truckSigMenuName+"</strong></p>"
+                            +"<h6 class='item-text-title'>"+list[i].truckNoticeContent+"</h6>";
 
                         div += "</div>"
                             +" </div>";
@@ -574,7 +590,7 @@
 
                         div += "</div>"
                             +"<div class='item-truck'>"
-                            +"<span><ion-icon name='at-outline'></ion-icon>"+list[i].truckName+"</span>";
+                            +"<span style='text-align: center; margin: 0; box-shadow: inset 0 -11px 0 #fae100; width: fit-content; ' >"+list[i].truckName+"</span>";
 
 
                         div += "</div></div></div>";
@@ -620,454 +636,320 @@
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="/views/navbar.jsp" />
 
-<form class="form-inline" name="detailForm">
+
     <section class="client_section layout_padding" style="padding-top: 30px;">
         <div class="container">
-            <div class="col-md-11 col-lg-10 mx-auto">
-                <div class="detail-box" style="margin-top: 100px; margin-bottom: 50px;">
+
+            <div class="col-md-12 mx-auto">
+                <div class="detail-box" style="margin-top: 120px; margin-bottom: 60px;">
                     <i class="fa fa-quote-left" aria-hidden="true"></i>
                     <h4 class="truckNameForMenu" style="margin-top: 10px;">
                         푸드 트럭
                     </h4>
                 </div>
-                <div class="form-row" style="margin-top: 70px;">
 
-                    <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
-                        <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                            <a idx ='0' class="category-bubble-link category-bubble-link--bounce-in"style="animation-delay: 0.5s;" >
-                                <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                                <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                    전체보기                    </h2> <!---->
-                            </a> <!---->
+<%--                <hr/>--%>
+
+                <form class="form-inline" name="detailForm">
+
+                    <div class="col-12" style="display: flex; justify-content: space-between; margin-top: 20px;">
+
+                        <div style="margin: 0; display: flex; justify-content: flex-end; zoom: 90%;">
+                            <div class="dropdown" style="padding: 0; margin: 0;">
+                                <button type="button" class="btn btn-default btn-foodtruck dropdown-toggle" id="truck-dropdown-f" data-toggle="dropdown" aria-expanded="false" style="margin:0;">
+                                    <c:if test="${sortCondition eq 'distance'}">
+                                        기본 순
+                                    </c:if>
+                                    <c:if test="${sortCondition eq 'starD'}">
+                                        별점 높은 순
+                                    </c:if>
+                                    <c:if test="${sortCondition eq 'starA'}">
+                                        별점 낮은 순
+                                    </c:if>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="truck-dropdown-f">
+                                    <li><a class="dropdown-item order-d" href="#" orderColurm = "distance">기본 순</a></li>
+                                    <li><a class="dropdown-item order-sd" href="#" orderColurm = "starD">별점 높은 순</a></li>
+                                    <li><a class="dropdown-item order-sa" href="#" orderColurm = "starA">별점 낮은 순</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="form-row" style="display: flex; justify-content: flex-end; align-items: center;">
+                            <div class="form-group col-lg-6 text-center">
+                                <label class="sr-only" for="searchKeyword">검색어</label>
+                                <input type="text" class="form-control" id="searchKeyword" name="searchKeyword" placeholder="What are you waiting for? Hit it!" value="${! empty searchKeyword ? searchKeyword : ''}" style="width:500px; border-radius: 50px;">
+                            </div>
+
+                            <div class="col-2.1 text-right">
+                                <button type="button" class="btn btn-default btn-search" id="search" style="margin: 0; zoom:90%;">검색</button>
+                            </div>
+                            <input type="hidden" id = "sortCondition" name="sortCondition" value="${sortCondition}">
+                            <input type="hidden" id = "cateCondition" name="cateCondition" value="${cateCondition}">
+                            <input type="hidden" id="currentPage" name="currentPage" value=""/>
+                            <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
                         </div>
                     </div>
-                    <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
-                        <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                            <a idx ='1' class="category-bubble-link category-bubble-link--bounce-in"style="animation-delay: 0.5s;" >
-                                <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                                <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                    고기                   </h2> <!---->
-                            </a> <!---->
+
+                    <hr style="width: -webkit-fill-available;"/>
+
+                    <div class="col-12" style="display: flex; justify-content: center;">
+                        <div class="form-row" style="margin-top: 5px;">
+                            <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
+                                <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                    <a idx ='0' class="category-bubble-link category-bubble-link--bounce-in"style="animation-delay: 0.5s;" >
+                                        <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                        <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                            전체보기                    </h2> <!---->
+                                    </a> <!---->
+                                </div>
+                            </div>
+                            <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
+                                <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                    <a idx ='1' class="category-bubble-link category-bubble-link--bounce-in"style="animation-delay: 0.5s;" >
+                                        <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                        <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                            고기                   </h2> <!---->
+                                    </a> <!---->
+                                </div>
+                            </div>
+                            <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
+                                <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                    <a idx ='2' class="category-bubble-link category-bubble-link--bounce-in"style="animation-delay: 0.5s;" >
+                                        <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                        <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                            분식                   </h2> <!---->
+                                    </a> <!---->
+                                </div>
+                            </div>
+                            <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
+                                <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                    <a idx ='3' class="category-bubble-link category-bubble-link--bounce-in"style="animation-delay: 0.5s;" >
+                                        <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                        <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                            음료                   </h2> <!---->
+                                    </a> <!---->
+                                </div>
+                            </div>
+                            <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
+                                <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                    <a idx ='4' class="category-bubble-link category-bubble-link--bounce-in"style="animation-delay: 0.5s;" >
+                                        <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                        <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                            양식                   </h2> <!---->
+                                    </a> <!---->
+                                </div>
+                            </div>
+                            <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
+                                <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                    <a idx ='5' class="category-bubble-link category-bubble-link--bounce-in"style="animation-delay: 0.5s;" >
+                                        <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                        <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                            디저트                   </h2> <!---->
+                                    </a> <!---->
+                                </div>
+                            </div>
+                            <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
+                                <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                    <a idx ='6'  class="category-bubble-link category-bubble-link--bounce-in"style="animation-delay: 0.5s;" >
+                                    <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                    <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                        한식                   </h2> <!---->
+                                    </a> <!---->
+                                </div>
+                            </div>
+                            <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
+                                <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                    <a idx ='7' class="category-bubble-link category-bubble-link--bounce-in"style="animation-delay: 0.5s;" >
+                                        <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                        <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                            일식                   </h2> <!---->
+                                    </a> <!---->
+                                </div>
+                            </div>
+                            <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
+                                <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
+                                    <a idx="8" class="category-bubble-link category-bubble-link--bounce-in" style="animation-delay: 0.5s;" >
+                                        <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
+                                        <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
+                                            기타                   </h2> <!---->
+                                    </a> <!---->
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
-                        <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                            <a idx ='2' class="category-bubble-link category-bubble-link--bounce-in"style="animation-delay: 0.5s;" >
-                                <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                                <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                    분식                   </h2> <!---->
-                            </a> <!---->
-                        </div>
-                    </div>
-                    <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
-                        <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                            <a idx ='3' class="category-bubble-link category-bubble-link--bounce-in"style="animation-delay: 0.5s;" >
-                                <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                                <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                    음료                   </h2> <!---->
-                            </a> <!---->
-                        </div>
-                    </div>
-                    <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
-                        <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                            <a idx ='4' class="category-bubble-link category-bubble-link--bounce-in"style="animation-delay: 0.5s;" >
-                                <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                                <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                    양식                   </h2> <!---->
-                            </a> <!---->
-                        </div>
-                    </div>
-                    <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
-                        <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                            <a idx ='5' class="category-bubble-link category-bubble-link--bounce-in"style="animation-delay: 0.5s;" >
-                                <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                                <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                    디저트                   </h2> <!---->
-                            </a> <!---->
-                        </div>
-                    </div>
-                    <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
-                        <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                            <aidx ='6'  class="category-bubble-link category-bubble-link--bounce-in"style="animation-delay: 0.5s;" >
-                            <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                            <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                한식                   </h2> <!---->
-                            </a> <!---->
-                        </div>
-                    </div>
-                    <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
-                        <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                            <a idx ='7' class="category-bubble-link category-bubble-link--bounce-in"style="animation-delay: 0.5s;" >
-                                <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                                <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                    일식                   </h2> <!---->
-                            </a> <!---->
-                        </div>
-                    </div>
-                    <div data-v-f275d10a="" class="landing__categories" style="max-width: 534px;">
-                        <div data-v-21b52141="" data-v-f275d10a="" class="category-bubble">
-                            <a idx="8" class="category-bubble-link category-bubble-link--bounce-in" style="animation-delay: 0.5s;" >
-                                <img data-v-21b52141="" src="https://res.cloudinary.com/glovoapp/w_60,h_60,c_fit,f_auto,q_auto:best/StoreCategories/prj0mlcuvmymzfh8pqjz" alt="Cibo" data-test-id="category-img-url" width="60" height="60" class="category-bubble-icon fadeIn">
-                                <h2 data-v-21b52141="" data-test-id="category-title" class="category-bubble-title fadeIn">
-                                    기타                   </h2> <!---->
-                            </a> <!---->
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row" style="margin-top: 70px;">
-                    <div class="form-group col-lg-6 text-center">
-                        <label class="sr-only" for="searchKeyword">검색어</label>
-                        <input type="text"
-                               class="form-control"
-                               id="searchKeyword"
-                               name="searchKeyword"
-                               placeholder="What are you waiting for? Hit it!"
-                               value="${! empty searchKeyword ? searchKeyword : ''}"
-                               style="width:500px;">
 
-                    </div>
-                    <%-- 뱃지형태 --%>
-                    <%--<div class="sorting-catering">
-                        <span id="badgeClick0" class="badge badge-click" style="background-color: #2ec0f3; color: #110000">전체</span>
-                        <span id="badgeClick1" class="badge badge-click" style="background-color: #2ef3b7; color: #110000">고기</span>
-                        <span id="badgeClick2" class="badge badge-click" style="background-color: #f5cb00; color: #110000">분식</span>
-                        <span id="badgeClick3" class="badge badge-click" style="background-color: #f79865; color: #110000">음료</span>
-                        <span id="badgeClick4" class="badge badge-click" style="background-color: #f33d6e; color: #110000">양식</span>
-                        <span id="badgeClick5" class="badge badge-click" style="background-color: #d9d9d9; color: #110000">디저트</span>
-                        <span id="badgeClick6" class="badge badge-click" style="background-color: #d9d9d9; color: #110000">한식</span>
-                        <span id="badgeClick7" class="badge badge-click" style="background-color: #d9d9d9; color: #110000">일식</span>
-                        <span id="badgeClick8" class="badge badge-click" style="background-color: #d9d9d9; color: #110000">기타</span>
-                    </div>--%>
+                    <hr style="width: -webkit-fill-available;"/>
 
-                    <div class="col-2.1 text-right">
-                        <button type="button" class="btn btn-default btn-search" id="search">검색</button>
-                    </div>
-                    <input type="hidden" id = "sortCondition" name="sortCondition" value="${sortCondition}">
-                    <input type="hidden" id = "cateCondition" name="cateCondition" value="${cateCondition}">
-                    <input type="hidden" id="currentPage" name="currentPage" value=""/>
-                    <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+                    <!-- end slider section -->
+                    <%--</div>--%>
+                    <!-- Tab 영역 태그는 ul이고 클래스는 nav와 nav-tabs를 설정한다. -->
 
-                </div>
-                <div style="margin: 0; display: flex; justify-content: flex-end; zoom: 90%;">
-                    <div class="dropdown">
-                        <button type="button" class="btn btn-default btn-foodtruck dropdown-toggle" id="truck-dropdown-f" data-toggle="dropdown" aria-expanded="false" style="margin-right:15%">
-                            <c:if test="${sortCondition eq 'distance'}">
-                                기본 순
-                            </c:if>
-                            <c:if test="${sortCondition eq 'starD'}">
-                                별점 높은 순
-                            </c:if>
-                            <c:if test="${sortCondition eq 'starA'}">
-                                별점 낮은 순
-                            </c:if>
+                    <div id="truckListAutokk" class="row mb-12" style="border: 0; width: -webkit-fill-available; margin-top: 10px;">
 
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="truck-dropdown-f">
-                            <li><a class="dropdown-item order-d" href="#" orderColurm = "distance">기본 순</a></li>
-                            <li><a class="dropdown-item order-sd" href="#" orderColurm = "starD">별점 높은 순</a></li>
-                            <li><a class="dropdown-item order-sa" href="#" orderColurm = "starA">별점 낮은 순</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <hr/>
-
-
-
-                <!-- end slider section -->
-                <%--</div>--%>
-                <!-- Tab 영역 태그는 ul이고 클래스는 nav와 nav-tabs를 설정한다. -->
-
-
-                <div id="truckListAutokk" class="row mb-12" style="border: 0;">
-                    <c:set var="i" value="0" />
-                    <c:forEach var="truck" items="${list}" varStatus="status">
+                        <c:set var="i" value="0" />
+                        <c:forEach var="truck" items="${list}" varStatus="status">
                         <c:set var="i" value="${ i+1 }" />
 
-                        <div class="card col-md-4 mb-4" style="border: 0;">
-                            <div >
-                                <div class="item">
-                                    <div class="item-image">
-                                        <c:if test="${truck.truckSigMenuImg1 != null }">
-                                            <img src="/resources/menu/${truck.truckSigMenuImg1}" alt="" />
-                                        </c:if>
-                                        <c:if test="${truck.truckSigMenuImg1 == null }">
-                                            <img src="/resources/image/truckNo.jpg" alt="" />
-                                        </c:if>
-                                    </div>
-                                    <div class="item-text">
-                                        <div class="item-text-wrapper">
-                                            <c:if test="${truck.truckBusiStatus eq 0}">
-                                                <h5><span class="badge" style="background-color: #ffba49; color: #110000">영업종료</span></h5>
+                            <div class="card col-md-4 mb-4" style="border: 0;">
+                                <div style="display: flex; flex-direction: column;">
+                                    <div class="item">
+                                        <div class="item-image">
+                                            <c:if test="${truck.truckSigMenuImg1 != null }">
+                                                <img src="/resources/menu/${truck.truckSigMenuImg1}" alt="" />
                                             </c:if>
-                                            <c:if test="${truck.truckBusiStatus eq 1}">
-                                                <h5><span class="badge" style="background-color: #fae100; color: #110000">영업중</span></h5>
+                                            <c:if test="${truck.truckSigMenuImg1 == null }">
+                                                <img src="/resources/image/truckNo.jpg" alt="" />
                                             </c:if>
-
-                                            <c:choose>
-                                                <c:when test="${truck.truckCate eq 1}">
-                                                    <h5><span class="badge" style="background-color: #ffffff; color: #110000">고기</span></h5>
-                                                </c:when>
-                                                <c:when test="${truck.truckCate eq 2}">
-                                                    <h5><span class="badge" style="background-color: #ffffff; color: #110000">분식</span></h5>
-                                                </c:when>
-                                                <c:when test="${truck.truckCate eq 3}">
-                                                    <h5><span class="badge" style="background-color: #ffffff; color: #110000">음료</span></h5>
-                                                </c:when>
-                                                <c:when test="${truck.truckCate eq 4}">
-                                                    <h5><span class="badge" style="background-color: #ffffff; color: #110000">양식</span></h5>
-                                                </c:when>
-                                                <c:when test="${truck.truckCate eq 5}">
-                                                    <h5><span class="badge" style="background-color: #ffffff; color: #110000">디저트</span></h5>
-                                                </c:when>
-                                                <c:when test="${truck.truckCate eq 6}">
-                                                    <h5><span class="badge" style="background-color: #ffffff; color: #110000">한식</span></h5>
-                                                </c:when>
-                                                <c:when test="${truck.truckCate eq 7}">
-                                                    <h5><span class="badge" style="background-color: #ffffff; color: #110000">일식</span></h5>
-                                                </c:when>
-                                                <c:when test="${truck.truckCate eq 8}">
-                                                    <h5><span class="badge" style="background-color: #ffffff; color: #110000">기타</span></h5>
-                                                </c:when>
-                                            </c:choose>
-                                            <c:if test="${truck.truckAVGStar >= 0 && truck.truckAVGStar <0.35}">
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                            </c:if>
-                                            <c:if test="${truck.truckAVGStar >= 0.35 && truck.truckAVGStar <0.65}">
-                                                <i class="fas fa-star-half"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                            </c:if>
-                                            <c:if test="${truck.truckAVGStar >= 0.65 && truck.truckAVGStar <1.35}">
-                                                <i class="fas fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                            </c:if>
-                                            <c:if test="${truck.truckAVGStar >= 1.35 && truck.truckAVGStar <1.65}">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star-half"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                            </c:if>
-                                            <c:if test="${truck.truckAVGStar >= 1.65 && truck.truckAVGStar <2.35}">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                            </c:if>
-                                            <c:if test="${truck.truckAVGStar >= 2.35 && truck.truckAVGStar <2.65}">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star-half"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                            </c:if>
-                                            <c:if test="${truck.truckAVGStar >= 2.65 && truck.truckAVGStar <3.35}">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                            </c:if>
-                                            <c:if test="${truck.truckAVGStar >= 3.35 && truck.truckAVGStar <3.65}">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star-half"></i>
-                                                <i class="far fa-star"></i>
-                                            </c:if>
-                                            <c:if test="${truck.truckAVGStar >= 3.65 && truck.truckAVGStar <4.35}">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                            </c:if>
-                                            <c:if test="${truck.truckAVGStar >= 4.35 && truck.truckAVGStar <4.65}">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star-half"></i>
-                                            </c:if>
-                                            <c:if test="${truck.truckAVGStar >= 4.65 && truck.truckAVGStar <=5}">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                            </c:if>
-                                            <p class="item-text-dek"><strong>${truck.truckName}</strong></p>
-                                            <h6 class="item-text-title">${truck.truckNoticeContent}</h6>
-
                                         </div>
+                                        <div class="item-text">
+                                            <div class="item-text-wrapper">
+
+<%--                                                <div style="display: flex; justify-content: center;">--%>
+                                                <c:if test="${truck.truckBusiStatus eq 0}">
+                                                    <h5><span class="badge" style="margin: 0 5px; background-color: #ec6a56; color: #110000;">영업종료</span></h5>
+                                                </c:if>
+                                                <c:if test="${truck.truckBusiStatus eq 1}">
+                                                    <h5><span class="badge" style="margin: 0 5px; background-color: #65bf96; color: #110000;">영업중</span></h5>
+                                                </c:if>
+
+                                                <c:choose>
+                                                    <c:when test="${truck.truckCate eq 1}">
+                                                        <h5><span class="badge" style="background-color: #ffffff; color: #110000; margin: 0 5px;">고기</span></h5>
+                                                    </c:when>
+                                                    <c:when test="${truck.truckCate eq 2}">
+                                                        <h5><span class="badge" style="margin: 0 5px; background-color: #ffffff; color: #110000">분식</span></h5>
+                                                    </c:when>
+                                                    <c:when test="${truck.truckCate eq 3}">
+                                                        <h5><span class="badge" style="margin: 0 5px; background-color: #ffffff; color: #110000">음료</span></h5>
+                                                    </c:when>
+                                                    <c:when test="${truck.truckCate eq 4}">
+                                                        <h5><span class="badge" style="margin: 0 5px;background-color: #ffffff; color: #110000">양식</span></h5>
+                                                    </c:when>
+                                                    <c:when test="${truck.truckCate eq 5}">
+                                                        <h5><span class="badge" style="margin: 0 5px; background-color: #ffffff; color: #110000">디저트</span></h5>
+                                                    </c:when>
+                                                    <c:when test="${truck.truckCate eq 6}">
+                                                        <h5><span class="badge" style="margin: 0 5px; background-color: #ffffff; color: #110000">한식</span></h5>
+                                                    </c:when>
+                                                    <c:when test="${truck.truckCate eq 7}">
+                                                        <h5><span class="badge" style="margin: 0 5px; background-color: #ffffff; color: #110000">일식</span></h5>
+                                                    </c:when>
+                                                    <c:when test="${truck.truckCate eq 8}">
+                                                        <h5><span class="badge" style="margin: 0 5px; background-color: #ffffff; color: #110000">기타</span></h5>
+                                                    </c:when>
+                                                </c:choose>
+
+<%--                                                </div>--%>
+                                                <p class="item-text-dek"><strong>${truck.truckSigMenuName}</strong></p>
+
+                                                <c:if test="${truck.truckAVGStar >= 0 && truck.truckAVGStar <0.35}">
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </c:if>
+                                                <c:if test="${truck.truckAVGStar >= 0.35 && truck.truckAVGStar <0.65}">
+                                                    <i class="fas fa-star-half"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </c:if>
+                                                <c:if test="${truck.truckAVGStar >= 0.65 && truck.truckAVGStar <1.35}">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </c:if>
+                                                <c:if test="${truck.truckAVGStar >= 1.35 && truck.truckAVGStar <1.65}">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </c:if>
+                                                <c:if test="${truck.truckAVGStar >= 1.65 && truck.truckAVGStar <2.35}">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </c:if>
+                                                <c:if test="${truck.truckAVGStar >= 2.35 && truck.truckAVGStar <2.65}">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </c:if>
+                                                <c:if test="${truck.truckAVGStar >= 2.65 && truck.truckAVGStar <3.35}">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </c:if>
+                                                <c:if test="${truck.truckAVGStar >= 3.35 && truck.truckAVGStar <3.65}">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half"></i>
+                                                    <i class="far fa-star"></i>
+                                                </c:if>
+                                                <c:if test="${truck.truckAVGStar >= 3.65 && truck.truckAVGStar <4.35}">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="far fa-star"></i>
+                                                </c:if>
+                                                <c:if test="${truck.truckAVGStar >= 4.35 && truck.truckAVGStar <4.65}">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half"></i>
+                                                </c:if>
+                                                <c:if test="${truck.truckAVGStar >= 4.65 && truck.truckAVGStar <=5}">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                </c:if>
+                                                <h6 class="item-text-title">${truck.truckNoticeContent}</h6>
+
+                                            </div>
+                                        </div>
+                                        <a class="item-link" href="/menu/getMenuList?truckId=${truck.truckId}"></a>
                                     </div>
-                                    <a class="item-link" href="/menu/getMenuList?truckId=${truck.truckId}"></a>
-                                </div>
-                                <div class="item-truck">
-                                    <span><ion-icon name="at-outline"></ion-icon>${truck.truckName}</span>
+                                    <div class="item-truck">
+                                        <span style="text-align: center; margin: 0; box-shadow: inset 0 -11px 0 #fae100; width: fit-content; ">${truck.truckName}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-
-
-                        <%--<div class="card col-md-4 mb-4" style="border: 0; padding:0; ">
-                            <div class="thumb-box">
-                                <a href="/menu/getMenuList?truckId=${truck.truckId}">
-                                    <img src="/resources/menu/${truck.truckSigMenuImg1}" alt="">
-                                    <span class="overlay-box">
-                                                <div class="menu-title">
-                                                    <span class="meta">${truck.truckName}</span>
-                                                </div>
-                                                   <span class="main-title">${truck.truckNoticeContent}</span>
-                                                <div class="menu-update">
-                                                    <span class="description">
-                                                        <c:if test="${truck.truckBusiStatus eq 0}">
-                                                            <span class="badge" style="background-color: #ffba49; color: #110000">영업종료</span>
-                                                        </c:if>
-                                                        <c:if test="${truck.truckBusiStatus eq 1}">
-                                                            <span class="badge" style="background-color: #fae100; color: #110000">영업중</span>
-                                                        </c:if>
-                                                    </span>
-                                                    <span class="description">
-                                                        <c:choose>
-                                                            <c:when test="${truck.truckCate eq 1}">
-                                                                <h5><span class="badge" style="background-color: #ffffff; color: #110000">고기</span></h5>
-                                                            </c:when>
-                                                            <c:when test="${truck.truckCate eq 2}">
-                                                                <h5><span class="badge" style="background-color: #ffffff; color: #110000">분식</span></h5>
-                                                            </c:when>
-                                                            <c:when test="${truck.truckCate eq 3}">
-                                                                <h5><span class="badge" style="background-color: #ffffff; color: #110000">음료</span></h5>
-                                                            </c:when>
-                                                            <c:when test="${truck.truckCate eq 4}">
-                                                                <h5><span class="badge" style="background-color: #ffffff; color: #110000">양식</span></h5>
-                                                            </c:when>
-                                                            <c:when test="${truck.truckCate eq 5}">
-                                                                <h5><span class="badge" style="background-color: #ffffff; color: #110000">디저트</span></h5>
-                                                            </c:when>
-                                                            <c:when test="${truck.truckCate eq 6}">
-                                                                <h5><span class="badge" style="background-color: #ffffff; color: #110000">한식</span></h5>
-                                                            </c:when>
-                                                            <c:when test="${truck.truckCate eq 7}">
-                                                                <h5><span class="badge" style="background-color: #ffffff; color: #110000">일식</span></h5>
-                                                            </c:when>
-                                                            <c:when test="${truck.truckCate eq 8}">
-                                                                <h5><span class="badge" style="background-color: #ffffff; color: #110000">기타</span></h5>
-                                                            </c:when>
-                                                        </c:choose>
-                                                    </span>
-                                                    <span class="description">
-                                                        <c:if test="${truck.truckAVGStar >= 0 && truck.truckAVGStar <0.35}">
-                                                            <i class="far fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                        </c:if>
-                                                        <c:if test="${truck.truckAVGStar >= 0.35 && truck.truckAVGStar <0.65}">
-                                                            <i class="fas fa-star-half"></i>
-                                                            <i class="far fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                        </c:if>
-                                                        <c:if test="${truck.truckAVGStar >= 0.65 && truck.truckAVGStar <1.35}">
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                        </c:if>
-                                                        <c:if test="${truck.truckAVGStar >= 1.35 && truck.truckAVGStar <1.65}">
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star-half"></i>
-                                                            <i class="far fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                        </c:if>
-                                                        <c:if test="${truck.truckAVGStar >= 1.65 && truck.truckAVGStar <2.35}">
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                        </c:if>
-                                                        <c:if test="${truck.truckAVGStar >= 2.35 && truck.truckAVGStar <2.65}">
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star-half"></i>
-                                                            <i class="far fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                        </c:if>
-                                                        <c:if test="${truck.truckAVGStar >= 2.65 && truck.truckAVGStar <3.35}">
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                        </c:if>
-                                                        <c:if test="${truck.truckAVGStar >= 3.35 && truck.truckAVGStar <3.65}">
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star-half"></i>
-                                                            <i class="far fa-star"></i>
-                                                        </c:if>
-                                                        <c:if test="${truck.truckAVGStar >= 3.65 && truck.truckAVGStar <4.35}">
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="far fa-star"></i>
-                                                        </c:if>
-                                                        <c:if test="${truck.truckAVGStar >= 4.35 && truck.truckAVGStar <4.65}">
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star-half"></i>
-                                                        </c:if>
-                                                        <c:if test="${truck.truckAVGStar >= 4.65 && truck.truckAVGStar <=5}">
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                            <i class="fas fa-star"></i>
-                                                        </c:if>
-                                                    </span>
-                                                </div>
-                                            </span>
-                                </a>
-                            </div>
-                        </div>--%>
-
-
-
-                        <%--
-                                        <div class="card col-md-4 mb-4" style="border: 0;">
-                                            <div style="display: flex; flex-direction: column;">
-                                                <div class="item">
-                                                    <div class="item-image">
-                                                        <c:if test="${truck.truckSigMenuImg1 ne null}">
-                                                            <div class="card__background" style="background-image: url(../../resources/menu/${truck.truckSigMenuImg1})"></div>
-                                                        </c:if>
-                                                        <c:if test="${truck.truckSigMenuImg1 eq null}">
-                                                            <div class="card__background" style="background-image: url(../../resources/image/${truck.truckProImg})"></div>
-                                                        </c:if>
+                            <%--<div class="card col-md-4 mb-4" style="border: 0; padding:0; ">
+                                <div class="thumb-box">
+                                    <a href="/menu/getMenuList?truckId=${truck.truckId}">
+                                        <img src="/resources/menu/${truck.truckSigMenuImg1}" alt="">
+                                        <span class="overlay-box">
+                                                    <div class="menu-title">
+                                                        <span class="meta">${truck.truckName}</span>
                                                     </div>
-                                                    <div class="item-text">
-                                                        <div class="item-text-wrapper">
+                                                       <span class="main-title">${truck.truckNoticeContent}</span>
+                                                    <div class="menu-update">
+                                                        <span class="description">
+                                                            <c:if test="${truck.truckBusiStatus eq 0}">
+                                                                <span class="badge" style="background-color: #ffba49; color: #110000">영업종료</span>
+                                                            </c:if>
+                                                            <c:if test="${truck.truckBusiStatus eq 1}">
+                                                                <span class="badge" style="background-color: #fae100; color: #110000">영업중</span>
+                                                            </c:if>
+                                                        </span>
+                                                        <span class="description">
                                                             <c:choose>
                                                                 <c:when test="${truck.truckCate eq 1}">
                                                                     <h5><span class="badge" style="background-color: #ffffff; color: #110000">고기</span></h5>
@@ -1094,10 +976,8 @@
                                                                     <h5><span class="badge" style="background-color: #ffffff; color: #110000">기타</span></h5>
                                                                 </c:when>
                                                             </c:choose>
-                                                            <input type="text" name="truckId" value="${truck.truckId}">
-                                                            <p class="item-text-dek"><strong>${truck.truckSigMenuName}</strong></p>
-                                                            <h6 class="item-text-title">${truck.truckCEOIntro}</h6>
-
+                                                        </span>
+                                                        <span class="description">
                                                             <c:if test="${truck.truckAVGStar >= 0 && truck.truckAVGStar <0.35}">
                                                                 <i class="far fa-star"></i>
                                                                 <i class="far fa-star"></i>
@@ -1175,30 +1055,159 @@
                                                                 <i class="fas fa-star"></i>
                                                                 <i class="fas fa-star"></i>
                                                             </c:if>
-
-
-                                                        </div>
+                                                        </span>
                                                     </div>
-                                                        <a class="item-link" href="/menu/getMenuList?truckId=${truck.truckId}"></a>
-                                                </div>
-                                                <div class="item-truck">
-                                                    <span>${truck.truckName}</span>
-                                                    <c:if test="${truck.truckBusiStatus eq 0}">
-                                                        <span class="badge" style="background-color: #ffba49; color: #110000">영업종료</span>
-                                                    </c:if>
-                                                    <c:if test="${truck.truckBusiStatus eq 1}">
-                                                        <span class="badge" style="background-color: #fae100; color: #110000">영업중</span>
-                                                    </c:if>
-                                                </div>
-                                            </div>
-                                        </div>--%>
-                    </c:forEach>
+                                                </span>
+                                    </a>
+                                </div>
+                            </div>--%>
+                            <%--
+                                            <div class="card col-md-4 mb-4" style="border: 0;">
+                                                <div style="display: flex; flex-direction: column;">
+                                                    <div class="item">
+                                                        <div class="item-image">
+                                                            <c:if test="${truck.truckSigMenuImg1 ne null}">
+                                                                <div class="card__background" style="background-image: url(../../resources/menu/${truck.truckSigMenuImg1})"></div>
+                                                            </c:if>
+                                                            <c:if test="${truck.truckSigMenuImg1 eq null}">
+                                                                <div class="card__background" style="background-image: url(../../resources/image/${truck.truckProImg})"></div>
+                                                            </c:if>
+                                                        </div>
+                                                        <div class="item-text">
+                                                            <div class="item-text-wrapper">
+                                                                <c:choose>
+                                                                    <c:when test="${truck.truckCate eq 1}">
+                                                                        <h5><span class="badge" style="background-color: #ffffff; color: #110000">고기</span></h5>
+                                                                    </c:when>
+                                                                    <c:when test="${truck.truckCate eq 2}">
+                                                                        <h5><span class="badge" style="background-color: #ffffff; color: #110000">분식</span></h5>
+                                                                    </c:when>
+                                                                    <c:when test="${truck.truckCate eq 3}">
+                                                                        <h5><span class="badge" style="background-color: #ffffff; color: #110000">음료</span></h5>
+                                                                    </c:when>
+                                                                    <c:when test="${truck.truckCate eq 4}">
+                                                                        <h5><span class="badge" style="background-color: #ffffff; color: #110000">양식</span></h5>
+                                                                    </c:when>
+                                                                    <c:when test="${truck.truckCate eq 5}">
+                                                                        <h5><span class="badge" style="background-color: #ffffff; color: #110000">디저트</span></h5>
+                                                                    </c:when>
+                                                                    <c:when test="${truck.truckCate eq 6}">
+                                                                        <h5><span class="badge" style="background-color: #ffffff; color: #110000">한식</span></h5>
+                                                                    </c:when>
+                                                                    <c:when test="${truck.truckCate eq 7}">
+                                                                        <h5><span class="badge" style="background-color: #ffffff; color: #110000">일식</span></h5>
+                                                                    </c:when>
+                                                                    <c:when test="${truck.truckCate eq 8}">
+                                                                        <h5><span class="badge" style="background-color: #ffffff; color: #110000">기타</span></h5>
+                                                                    </c:when>
+                                                                </c:choose>
+                                                                <input type="text" name="truckId" value="${truck.truckId}">
+                                                                <p class="item-text-dek"><strong>${truck.truckSigMenuName}</strong></p>
+                                                                <h6 class="item-text-title">${truck.truckCEOIntro}</h6>
 
-                </div>
+                                                                <c:if test="${truck.truckAVGStar >= 0 && truck.truckAVGStar <0.35}">
+                                                                    <i class="far fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                </c:if>
+                                                                <c:if test="${truck.truckAVGStar >= 0.35 && truck.truckAVGStar <0.65}">
+                                                                    <i class="fas fa-star-half"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                </c:if>
+                                                                <c:if test="${truck.truckAVGStar >= 0.65 && truck.truckAVGStar <1.35}">
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                </c:if>
+                                                                <c:if test="${truck.truckAVGStar >= 1.35 && truck.truckAVGStar <1.65}">
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star-half"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                </c:if>
+                                                                <c:if test="${truck.truckAVGStar >= 1.65 && truck.truckAVGStar <2.35}">
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                </c:if>
+                                                                <c:if test="${truck.truckAVGStar >= 2.35 && truck.truckAVGStar <2.65}">
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star-half"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                </c:if>
+                                                                <c:if test="${truck.truckAVGStar >= 2.65 && truck.truckAVGStar <3.35}">
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                </c:if>
+                                                                <c:if test="${truck.truckAVGStar >= 3.35 && truck.truckAVGStar <3.65}">
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star-half"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                </c:if>
+                                                                <c:if test="${truck.truckAVGStar >= 3.65 && truck.truckAVGStar <4.35}">
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="far fa-star"></i>
+                                                                </c:if>
+                                                                <c:if test="${truck.truckAVGStar >= 4.35 && truck.truckAVGStar <4.65}">
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star-half"></i>
+                                                                </c:if>
+                                                                <c:if test="${truck.truckAVGStar >= 4.65 && truck.truckAVGStar <=5}">
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                    <i class="fas fa-star"></i>
+                                                                </c:if>
+
+
+                                                            </div>
+                                                        </div>
+                                                            <a class="item-link" href="/menu/getMenuList?truckId=${truck.truckId}"></a>
+                                                    </div>
+                                                    <div class="item-truck">
+                                                        <span>${truck.truckName}</span>
+                                                        <c:if test="${truck.truckBusiStatus eq 0}">
+                                                            <span class="badge" style="background-color: #ffba49; color: #110000">영업종료</span>
+                                                        </c:if>
+                                                        <c:if test="${truck.truckBusiStatus eq 1}">
+                                                            <span class="badge" style="background-color: #fae100; color: #110000">영업중</span>
+                                                        </c:if>
+                                                    </div>
+                                                </div>
+                                            </div>--%>
+                        </c:forEach>
+
+                    </div>
                 <!--admin truck에서 빼오기-->
-
+                </form>
+            </div>
+        </div>
     </section>
-</form>
+
 <%--<jsp:include page="/views/footer.jsp" />--%>
 </body>
 <script src="../resources/bootstrap/js/custom.js"></script>
