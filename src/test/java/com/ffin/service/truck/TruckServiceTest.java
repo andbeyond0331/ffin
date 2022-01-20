@@ -251,21 +251,22 @@ public class TruckServiceTest {
         //System.out.println(totalCount);
     }
 
-//    @Test //okay - mj
+    @Test //okay - mj
     public void testTruckListForSortingYesKeywordYesCateLaLo() throws Exception{
         Search search = new Search();
         search.setCurrentPage(1);
-        search.setPageSize(3);
+        search.setPageSize(100);
 
 //        카테고리에 어울리는 키워드로 검색 시
-        search.setSearchKeyword("떡볶이");
+        search.setSearchKeyword("떡");
         search.setCateCondition("2");
+        search.setSortCondition("moreStars");
 
 
         Map<String,Object> map = truckService.getTruckList(search);
 
         List<Object> list = (List<Object>)map.get("list");
-        //Assert.assertEquals(3, list.size());
+        Assert.assertEquals(3, list.size());
 
 
         System.out.println("search : " + search);
@@ -304,7 +305,7 @@ public class TruckServiceTest {
     }
 
     // TODO: 2022-01-15 mj 클립
-        @Test
+//        @Test
     public void testTruckListForSortingNoKeywordNoCateLaLoYesSorting() throws Exception{
         Search search = new Search();
         search.setCurrentPage(1);

@@ -320,6 +320,7 @@
 
             var finalCartFirst = "";
             var forOneFirst=0;
+            var qty =0;
 
             // ////////////시작///////////////////
             if(beforeAnywayFirst) { // sessionStorage에 뭔가 있다?
@@ -328,9 +329,12 @@
 
                     console.log("처음 for문 안에 있다!");
                     console.log("처음 beforeAnywayFirst[" + i + "]번째 세션 : " + JSON.stringify(beforeAnywayFirst[i]));
+                    console.log("1 : " + beforeAnywayFirst[i]['odMenuPrice'])//플래그
 
                     if (beforeAnywayFirst[i]['odMenuQtyFlag'] == 0) {//플래그0일 때 메뉴 수량, 이름 출력
-
+                        var totalPrice = 0; // 다음 대표메뉴가 들어오면 지금까지 저장한 price가 필요없으므로 0값을 취함.
+                                            // 만약에 장바구니에 있는 '총가격'을 노출시키려면 다른 변수를 로직 바깥에서 (원래 totalPrice 잇던곳)
+                                            // 처리해주면 된당
                         /* 장바구니 */
                         finalCartFirst += "" +
                             // "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
@@ -348,14 +352,24 @@
                             "<input type='button' value='+' id='increaseQuantity'> </h6></div><hr/>" +
                             "";
 
+                        qty = beforeAnywayFirst[i]['odMenuQty'];
+
+                        //totalPrice = Number(beforeAnywayFirst[i]['odMenuPrice'].replace('₩','').trim());
+                        totalPrice = (Number(beforeAnywayFirst[i]['odMenuPrice'].replace('₩','').trim()) * Number(qty));
+                        // totalPrice에 대표메뉴 값을 지정하고,
+                        // 수량을 곱한 값이 나와야 함
+                        // 그리고 옵션 없어도 수량을 곱한 값이 노출되어야 하므로
+                        // 기존에 출력하던 beforAnyWay 어쩌고 에서 totalPrice로 바꿔줌
+
+
                         forOneFirst += 1;
                         if (beforeAnywayFirst[i + 1] != null) { //만약 다음 애가 있는데
                             if (beforeAnywayFirst[i + 1]['odMenuQtyFlag'] == 0) { //수량제공메뉴이면(지금 이게 수량제공메뉴란 소리니까 닫아줘야함)
-                                finalCartFirst += "</div><div class='col-12' style='display: flex; justify-content: flex-end; margin-right: 15px; font-weight: 600;'><span class=\"text-muted\" style='font-size: 16px;'>" + beforeAnywayFirst[i]['odMenuPrice'] + "</span></div></li>";
+                                finalCartFirst += "</div><div class='col-12' style='display: flex; justify-content: flex-end; margin-right: 15px; font-weight: 600;'><span class=\"text-muted\" style='font-size: 16px;'>" + totalPrice + " ₩</span></div></li>";
                             }
 
                         }else{ //만약 다음 애가 없으면
-                            finalCartFirst += "</div><div class='col-12' style='display: flex; justify-content: flex-end; margin-right: 15px; font-weight: 600;'><span class=\"text-muted\" style='font-size: 16px;'>" + beforeAnywayFirst[i]['odMenuPrice'] + "</span></div></li>";
+                            finalCartFirst += "</div><div class='col-12' style='display: flex; justify-content: flex-end; margin-right: 15px; font-weight: 600;'><span class=\"text-muted\" style='font-size: 16px;'>" + totalPrice + " ₩</span></div></li>";
                         }
                     } else { //플래그 1일 때
                         // for(var j=i+1; j<beforeAnyway.length; j++){ //옵션그룹 화면에 뿌려주기 위한 for문 (수량제공메뉴+1부터
@@ -367,14 +381,21 @@
                             "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionName'] + "</small>" +
                             "<small class=\"text-muted\" style='float: right;''> +" + beforeAnywayFirst[i]['odOptionPrice'] + "원</small>";
 
+
+                        //totalPrice +=  Number(beforeAnywayFirst[i]['odOptionPrice']);
+                        // 다음 대표메뉴가 들어올 때까지 계속 더해준당
+                        // 그리고 마지막에 그 값을 노출시키면 됨
+                        totalPrice +=  (Number(beforeAnywayFirst[i]['odOptionPrice']) * Number(qty));
+
+                        console.log("totalPrice//////////////////////////"+totalPrice)
                         forOneFirst += 1;
                         if (beforeAnywayFirst[i + 1] != null) {
                             if (beforeAnywayFirst[i + 1]['odMenuQtyFlag'] == 0) {
-                                finalCartFirst += "</div><div class='col-12' style='display: flex; justify-content: flex-end; margin-right: 15px; font-weight: 600;'><span class=\"text-muted\" style='font-size: 16px;'>" + beforeAnywayFirst[i]['odMenuPrice'] + "</span></div></li>";
+                                finalCartFirst += "</div><div class='col-12' style='display: flex; justify-content: flex-end; margin-right: 15px; font-weight: 600;'><span class=\"text-muted\" style='font-size: 16px;'>" + totalPrice + " ₩</span></div></li>";
                             }
 
                         }else{
-                        finalCartFirst += "</div><div class='col-12' style='display: flex; justify-content: flex-end; margin-right: 15px; font-weight: 600;'><span class=\"text-muted\" style='font-size: 16px;'>" + beforeAnywayFirst[i]['odMenuPrice'] + "</span><div></li>";
+                            finalCartFirst += "</div><div class='col-12' style='display: flex; justify-content: flex-end; margin-right: 15px; font-weight: 600;'><span class=\"text-muted\" style='font-size: 16px;'>" + totalPrice + " ₩</span><div></li>";
                         }
 
 
@@ -382,6 +403,7 @@
                         // i=forOne;
 
                     }//sessionStorage만큼 for문 돌리기
+
                 }
                 console.log("하하"+targetCartFirst.html());
                 console.log("호호"+finalCartFirst);
@@ -1460,10 +1482,75 @@
 
 
 
+        /* 지도 */
+        $(function() {
+
+            // 지도 클릭시 지도 화면 띄우기
+            $("body").on("click", ".fa-lg", function () {
+
+                mapLocationSelect()
+
+            });
+        });
+
+        function mapLocationSelect() {
+            var userCurMapLa = '${truck.truckMapLa}';
+            var userCurMapLo='${truck.truckMapLo}';
 
 
+            console.log("userCurMapLa : "+ userCurMapLa);
+            console.log("userCurMapLo : "+ userCurMapLo);
+
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                mapOption = {
+                    center: new kakao.maps.LatLng(userCurMapLa,userCurMapLo), // 지도의 중심좌표
+                    level: 3 // 지도의 확대 레벨
+                };
+
+            var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+// 지도를 클릭한 위치에 표출할 마커입니다
+            var marker = new kakao.maps.Marker({
+                // 지도 중심좌표에 마커를 생성합니다
+                position: map.getCenter()
+            });
+// 지도에 마커를 표시합
+            marker.setMap(map);
+
+            // 커스텀 오버레이에 표시할 내용입니다
+// HTML 문자열 또는 Dom Element 입니다
+            var truckId = '${truck.truckId}'
+            var truckName = '${truck.truckName}'
+            var content = "<div class ='label'><span class='left'></span><span class='center'><i class='fas fa-truck' style='vertical-align: baseline;'></i>"+truckName+"</span>"
+                + "<span class='right'></span></div>";
+
+// 커스텀 오버레이가 표시될 위치입니다
+            var position = new kakao.maps.LatLng(userCurMapLa,userCurMapLo);
+
+// 커스텀 오버레이를 생성합니다
+            var customOverlay = new kakao.maps.CustomOverlay({
+                position: position,
+                content: content
+            });
+
+// 커스텀 오버레이를 지도에 표시합니다
+            customOverlay.setMap(map);
+
+            $("#map").css("display","");
 
 
+            // map.trigger('resize');
+            $('#mapModal').modal('show');
+
+            // map 노출이 안되어서 강제로 setTimeout 주었엉...ㅎㅎ
+            // 중심부 못잡아서도 이렇게 주었다
+            setTimeout( function() {
+
+                map.relayout();
+                map.setCenter(new kakao.maps.LatLng(userCurMapLa,userCurMapLo));
+                window.dispatchEvent(new Event('resize'));
+            }, 300);
+        }
 
 
 
@@ -1500,8 +1587,21 @@
         .modal-happy{
             margin-left : 39px;
         }
+
+        /*지도*/
+        .box-img{
+            width:330px;
+            height:270px;
+        }
+        .label {margin-bottom: 105px;}
+        .label * {display: inline-block;vertical-align: top;}
+        .label .left {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png") no-repeat;display: inline-block;height: 24px;overflow: hidden;vertical-align: top;width: 7px;}
+        .label .center {background: url(https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_bg.png) repeat-x;display: inline-block;height: 24px;font-size: 12px;line-height: 24px;}
+        .label .right {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png") -1px 0  no-repeat;display: inline-block;height: 24px;overflow: hidden;width: 6px;}
+
     </style>
 
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=51615d81a030d0475e576eb41e443c14&libraries=services"></script>
 
     <script type="text/javascript">
 
@@ -1515,6 +1615,13 @@
 
         // 메뉴 상세보기
         function getMenu(menuNo){
+            var role = '${sessionScope.role}'
+
+            if (role=='truck'){
+
+                $("#exampleModalLong").find("button").remove("#addCart");
+
+            }
 
             // 메뉴에 해당하는 옵션그룹이 있니?
             var optionGroupCount = 0;
@@ -1708,9 +1815,11 @@
             // alert(truckId);
             $.ajax({
 
+
                 url:"/review/json/getReviewList/"+truckId,
                 method:"get",
                 success:function(data){
+                    // console.log("a" + data);
                     var rvDiv = "<div class=\"d-flex\"";
                     var reviewPLZ = 0;
 
@@ -2427,6 +2536,10 @@
 <jsp:include page="/views/navbar.jsp" />
 
 
+
+
+
+
 <!--  화면구성 div Start -->
 <section class="client_section layout_padding" style="padding-top: 30px;">
     <div class="container">
@@ -2547,6 +2660,47 @@
 
             </div>
 
+
+            <!-- kakao sdk 호출 -->
+            <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
+            <script type="text/javascript">
+                // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+                Kakao.init('bdd958f3b9eae2d56eaf7eeb49a9c56f');
+
+                // SDK 초기화 여부를 판단합니다.
+                console.log(Kakao.isInitialized());
+
+                function kakaoShare() {
+                    <%--var truckName = ${truck.truckName};--%>
+                    <%--    var truckSigMenuImg1 = ${truck.truckSigMenuImg1};--%>
+
+                    Kakao.Link.sendDefault({
+                        objectType: 'feed',
+                        content: {
+                            title: 'F.Fin || 푸드트럭 공유',
+                            description: '지금 바로 ${truck.truckName}의 정보를 확인 해보세요!',
+                            imageUrl: 'data:image/jpeg;base64,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',
+                            link: {
+                                // mobileWebUrl: '카카오공유하기 시 클릭 후 이동 경로',
+                                webUrl: '/menu/getMenuList?truckId=${truck.truckId}',
+                            },
+                        },
+                        buttons: [
+                            {
+                                title: '${truck.truckName} 알아보기',
+                                link: {
+                                    // mobileWebUrl: '카카오공유하기 시 클릭 후 이동 경로',
+                                    webUrl: 'http://localhost:8080/menu/getMenuList?truckId=${truck.truckId}',
+                                },
+                            },
+                        ],
+                        // 카카오톡 미설치 시 카카오톡 설치 경로이동
+                        installTalk: true,
+                    })
+                }
+            </script>
+
             <!--================truck info 시작=============-->
             <div style="display: flex; justify-content: space-around; align-items: center; margin-top: 10px;">
 
@@ -2555,6 +2709,10 @@
                     <div>
                         <a class="btn btn-default" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="margin: 0; padding: 5px 10px;">
                             리뷰 보기
+                        </a>
+                        <!--//////////////////////////-->
+                        <a id="kakao-link-btn" href="javascript:kakaoShare()">
+                            <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" />
                         </a>
                     </div>
                 </div>
@@ -2626,8 +2784,8 @@
                                 <input type="hidden" id="orderTruckId" name="orderTruckId.truckId" value="${truck.truckId}"/>
                                 <div style="display: flex; justify-content: space-between;">
                                     <button type="button"  class="btn btn-cancle" id="cancelCartMenuList" style="margin: 0;">삭제</button>
-<%--                                    <button type="button"  class="btn btn-default" data-toggle="modal" data-target="#cartModal" style="margin: 0;">주문하기</button>--%>
-<%--                                    <button type="button" id="addOrderMenuCall"   class="btn btn-default" data-toggle="modal" data-target="#cartModal" style="margin: 0;">주문하기</button>--%>
+                                    <%--                                    <button type="button"  class="btn btn-default" data-toggle="modal" data-target="#cartModal" style="margin: 0;">주문하기</button>--%>
+                                    <%--                                    <button type="button" id="addOrderMenuCall"   class="btn btn-default" data-toggle="modal" data-target="#cartModal" style="margin: 0;">주문하기</button>--%>
                                     <button type="button" id="addOrderMenuCall"   class="btn btn-default" style="margin: 0;">주문하기</button>
                                 </div>
                             </form>
@@ -2699,6 +2857,7 @@
 </body>
 
 
+
 <!--////////////////모달 메뉴 상세보기 시작////////////-->
 <!-- Modal -->
 
@@ -2706,12 +2865,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body" style="margin: 0; display: flex; flex-direction: column; align-items: center;">
-            <%--<div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">메뉴 정보</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>--%>
+                <%--<div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">메뉴 정보</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>--%>
                 <div style="display: flex; justify-content: center; margin: 15px 0 5px 0;">
                     <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight: 600; margin: 0; box-shadow: inset 0 -11px 0 #fae100; font-size: 20px; width: fit-content;">메뉴 정보</h5>
                 </div>
@@ -2733,12 +2892,14 @@
                         <c:if test="${truck.truckBusiStatus==1}">
                             <button type="button" class="btn btn-default" id="addCart" data-dismiss='modal' name="addCart">담기</button>
                         </c:if>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 
 <!--review Modal -->
@@ -2903,7 +3064,27 @@
 
 
 </script>
+<%-- 지도 띄울 modal --%>
 
+<!-- Modal -->
+<div class="modal fade" id="mapModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mapModalLabel">지도 출력</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body"></div>
+            <div id="map" name = "map" style='width:100%;height:350px; display:none;'></div>
+            <p id="result"></p>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <form>
 
