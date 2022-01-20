@@ -334,7 +334,7 @@
                 </div>
 
                 <div class="col-md-6 text-right">
-                    <form class="form-inline" name="detailForm" style="padding: 0;">
+                    <%--<form class="form-inline" name="detailForm" style="padding: 0;">
 
                         <div class="form-group">
                             <select class="form-control" name="searchCondition" >
@@ -354,7 +354,7 @@
                         <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
                         <input type="hidden" id="currentPage" name="currentPage" value=""/>
 
-                    </form>
+                    </form>--%>
                 </div>
             </div>
 

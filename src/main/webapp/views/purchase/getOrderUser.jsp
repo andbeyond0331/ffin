@@ -487,7 +487,7 @@
 
 
                     <div class="form-row float-right">
-                        <button type="button" class="btn current-location btn-primary center-pill">경로 안내</button>
+                        <button type="button" class="btn current-location btn-primary center-pill" style="border-radius: 5.25rem;">경로 안내</button>
                     </div>
 
                     <hr style="margin-top: 60px;"/>
@@ -714,7 +714,7 @@
                     <div class="row">
                         <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio1"
                                autocomplete="off" value="1" checked>
-                        <label class="btn btn-outline-primary" for="btnradio1">구매의사 취소</label>
+                        <label class="btn btn-outline-primary" for="btnradio1"  style="border-radius: 3.25rem;  width: 100%">구매의사 취소</label>
                     </div>
                 </div>
 
@@ -722,7 +722,7 @@
                     <div class="row">
                         <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio2"
                                autocomplete="off" value="2">
-                        <label class="btn btn-outline-primary" for="btnradio2">메뉴 및 수량 변경</label>
+                        <label class="btn btn-outline-primary" for="btnradio2"  style="border-radius: 3.25rem;  width: 100%">메뉴 및 수량 변경</label>
                     </div>
                 </div>
 
@@ -730,14 +730,14 @@
                     <div class="row">
                         <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio3"
                                autocomplete="off" value="3">
-                        <label class="btn btn-outline-primary" for="btnradio3">주문접수 지연</label>
+                        <label class="btn btn-outline-primary" for="btnradio3"  style="border-radius: 3.25rem;  width: 100%">주문접수 지연</label>
                     </div>
                 </div>
                 <div class="container-fluid">
                     <div class="row">
                         <input type="radio" class="btn-check" name="orderCancelReason" id="btnradio4"
                                autocomplete="off" value="4">
-                        <label class="btn btn-outline-primary" for="btnradio4">기 타</label>
+                        <label class="btn btn-outline-primary" for="btnradio4" style="border-radius: 3.25rem;  width: 100%">기 타</label>
                     </div>
                 </div>
 

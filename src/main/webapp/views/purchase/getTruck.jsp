@@ -8,7 +8,24 @@
     <title>메뉴 목록</title>
     <jsp:include page="../../common/lib.jsp"/>
 
+    <link href="../resources/bootstrap/css/font-awesome.min.css" rel="stylesheet" />
+
     <style>
+
+        .btn.btn-outline-primary{
+            border-color: #fae100;
+            color: #25323c;
+        }
+        .btn.btn-outline-primary:hover{
+            border-color: #fae100;
+            color: #25323c;
+            background-color: #fae100;
+        }
+        .btn.btn-outline-primary:active{
+            border-color: #fae100;
+            color: #25323c;
+            background-color: #fae100;
+        }
 
         #dataTable thead tr th, #dataTable tbody tr td{
             text-align: center;
@@ -68,6 +85,211 @@
         #inquiryAnsContent{
             min-height: 150px;
         }
+        a, a:hover {
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+        .postcard {
+            flex-wrap: wrap;
+            display: flex;
+
+            box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
+            border-radius: 10px;
+            margin: 0 0 2rem 0;
+            overflow: hidden;
+            position: relative;
+            color: #ffffff;
+        }
+        .postcard.dark {
+            background-color: #18151f;
+        }
+        .postcard.light {
+            background-color: #ffffff;
+        }
+        .t-dark {
+            color: #18151f;
+        }
+        .postcard a {
+            color: inherit;
+        }
+        .postcard h1, .h1 {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            line-height: 1.2;
+            text-align: initial;
+        }
+        .small {
+            font-size: 80%;
+            text-align: initial;
+        }
+        .postcard__title {
+            font-size: 1.25rem;
+        }
+        .postcard__img {
+            max-height: 180px;
+            width: 100%;
+            object-fit: cover;
+            position: relative;
+        }
+        .postcard__img_link {
+            display: contents;
+        }
+        .postcard__bar {
+            width: 50px;
+            height: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background-color: #fae100;
+            transition: width 0.2s ease;
+        }
+
+        .postcard__text {
+            padding: 1.5rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .postcard__preview-txt {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: justify;
+            height: 100%;
+        }
+        .postcard__tagbox {
+            display: flex;
+            flex-flow: row wrap;
+            font-size: 14px;
+            margin: 20px 0 0 0;
+            padding: 0;
+            justify-content: center;
+        }
+        .tag__item {
+            display: inline-block;
+            background: rgb(255, 255, 255);
+            border-radius: 3px;
+            padding: 2.5px 10px;
+            margin: 0 5px 5px 0;
+            cursor: default;
+            user-select: none;
+            transition: background-color 0.3s;
+            border-radius: 20px;
+        }
+        .tag__item:hover{
+            background: rgb(250, 225, 0);
+            border-radius: 20px;
+        }
+        .postcard:before{
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-image: linear-gradient(-70deg, #ffffff, transparent 50%);
+            opacity: 1;
+            border-radius: 10px;
+        }
+        .postcard:hover .postcard__bar {
+            width: 100px;
+        }
+
+        @media screen and (min-width: 769px) {
+
+            .postcard {
+                flex-wrap: inherit;
+            }
+
+            .postcard__title {
+                font-size: 2rem;
+            }
+
+            .postcard__tagbox {
+                justify-content: start;
+            }
+
+            .postcard__img {
+                max-width: 300px;
+                max-height: 100%;
+                transition: transform 0.3s ease;
+            }
+
+            .postcard__text {
+                padding: 3rem;
+                width: 100%;
+            }
+
+            .media.postcard__text:before {
+                content: "";
+                position: absolute;
+                display: block;
+                background: #ffffff;
+                top: -20%;
+                height: 130%;
+                width: 55px;
+            }
+
+            .postcard:hover .postcard__img {
+                transform: scale(1.1);
+            }
+
+            .postcard:nth-child(2n+1) {
+                flex-direction: row;
+            }
+
+            .postcard:nth-child(2n+0) {
+                flex-direction: row-reverse;
+            }
+
+            .postcard:nth-child(2n+1) .postcard__text::before {
+                left: -12px !important;
+                transform: rotate(4deg);
+            }
+
+            .postcard:nth-child(2n+0) .postcard__text::before {
+                right: -12px !important;
+                transform: rotate(-4deg);
+            }
+        }
+
+        @media screen and (min-width: 1024px){
+            .postcard__text {
+                padding: 2rem 3.5rem;
+            }
+
+            .postcard__text:before {
+                content: "";
+                position: absolute;
+                display: block;
+
+                top: -20%;
+                height: 130%;
+                width: 55px;
+            }
+
+            .postcard.dark {
+                background: #18151f;
+            }
+            .postcard__text:before {
+                background: #ffffff;
+            }
+            .postcard.light {
+                background: rgb(255, 255, 255);
+            }
+            .postcard__text:before {
+                background: rgb(255, 255, 255);
+            }
+        }
+
+        .postcard .postcard__tagbox .blue.play:hover {
+            background: #fae100;
+        }
+        .blue .postcard__title:hover {
+            color: #fae100;
+        }
+        .blue .postcard__bar {
+            background-color: #fae100;
+        }
+
     </style>
 
 
@@ -106,30 +328,26 @@
 
                     console.log("처음 for문 안에 있다!");
                     console.log("처음 beforeAnywayFirst[" + i + "]번째 세션 : " + JSON.stringify(beforeAnywayFirst[i]));
-                    // finalCart += "<li class=\"list-group-item d-flex justify-content-between lh-sm\">"+
-                    //     "<div><h6 class=\"my-0\">"+beforeAnyway[i]['odMenuName']+"</h6>"+
-                    //     "<h6 class=\"my-0\">"+beforeAnyway[i]['odMenuQty']+"</h6>"+
-                    //     "<small class=\"text-muted\">"+beforeAnyway[i]['odOptionGroupName']+"</small>"+
-                    //     "<small class=\"text-muted\">"+beforeAnyway[i]['odOptionName']+"</small>"+
-                    //     "</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"</span></li>";
 
                     if (beforeAnywayFirst[i]['odMenuQtyFlag'] == 0) {//플래그0일 때 메뉴 수량, 이름 출력
+
+                        /* 장바구니 */
                         finalCartFirst += "" +
-                            "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
+                            // "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
+                            "<li class=\"list-group-item\" style='padding: 10px; display: flex; align-items: center;'>" +
+                            "<div>"+
                             "<button type='button' class='close' id='cancelMenu'>"+
-                            "<span aria-hidden='true'>&times;</span></button>"+
-                            "<div><h6 class=\"my-0\">" + beforeAnywayFirst[i]['odMenuName'] + "</h6>" +
-                            "<h6 class=\"my-0\">수량 : <input type='button' class='my-11' value='-' id='decreaseQuantity'>" +
+                            "<span aria-hidden='true'><ion-icon name='close-outline'></ion-icon></span></button>"+
+                            "</div>"+
+                            "<div class='col-11' style='text-align: initial; padding: 10px;'>"+
+                            "<div>"+
+                            "<h6 style='font-size: 16px; font-weight: 600;' class=\"my-0\">" + beforeAnywayFirst[i]['odMenuName'] + "</h6><p>" +
+                            "<h6 class=\"my-0\"><input type='button' class='my-11' value='-' id='decreaseQuantity'>" +
                             "<input type='hidden' name='orderCount' value='"+i+"'>"+
                             " <input type='text' id='numberUpDown' value='" + beforeAnywayFirst[i]['odMenuQty'] + "' size='1' max=''> " +
-                            "<input type='button' value='+' id='increaseQuantity'> </h6>" +
+                            "<input type='button' value='+' id='increaseQuantity'> </h6></div><hr/>" +
                             "";
-                        //2022-01-16
-                        // finalCartFirst += "" +
-                        //     "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
-                        //     "<div><h6 class=\"my-0\">" + beforeAnywayFirst[i]['odMenuName'] + "</h6>" +
-                        //     "<h6 class=\"my-0\">수량 : " + beforeAnywayFirst[i]['odMenuQty'] + "</h6>" +
-                        //     "";
+
                         forOneFirst += 1;
                         if (beforeAnywayFirst[i + 1] != null) { //만약 다음 애가 있는데
                             if (beforeAnywayFirst[i + 1]['odMenuQtyFlag'] == 0) { //수량제공메뉴이면(지금 이게 수량제공메뉴란 소리니까 닫아줘야함)
@@ -143,29 +361,25 @@
                         // for(var j=i+1; j<beforeAnyway.length; j++){ //옵션그룹 화면에 뿌려주기 위한 for문 (수량제공메뉴+1부터
                         //     if(beforeAnyway[j]['odMenuQtyFlag']==1){
                         finalCartFirst += "" +
-                            "<p></p>" +
+                            "<p style='margin: 0; font-size: 18px;'>" +
                             "<input type='hidden' name='orderCancelCount' value='"+i+"'>"+
                             "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionGroupName'] + "</small> : " +
-                            "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionName'] + "</small> +" +
-                            "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionPrice'] + "원</small>";
-                        //2022-01-16
-                        // finalCartFirst += "" +
-                        //     "<p></p>" +
-                        //     "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionGroupName'] + "</small> : " +
-                        //     "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionName'] + "</small> +" +
-                        //     "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionPrice'] + "원</small>";
-                        //
+                            "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionName'] + "</small>" +
+                            "<small class=\"text-muted\" style='float: right;''> +" + beforeAnywayFirst[i]['odOptionPrice'] + "원</small>";
+
                         forOneFirst += 1;
                         if (beforeAnywayFirst[i + 1] != null) {
                             if (beforeAnywayFirst[i + 1]['odMenuQtyFlag'] == 0) {
                                 finalCartFirst += "</div><span class=\"text-muted\">" + beforeAnywayFirst[i]['odMenuPrice'] + "원</span></li>";
                             }
+/*//////////////////////////////////////////////수정///////////////////*/
 
+                        }else{
+                            finalCartFirst += "</div><span class=\"text-muted\">" + beforeAnywayFirst[i]['odMenuPrice'] + "원</span></li>";
                         }
 
                         // finalCart+="</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"원</span></li>";
                         // i=forOne;
-
 
                     }//sessionStorage만큼 for문 돌리기
                 }
@@ -211,7 +425,7 @@
                 var orderDetail = {
                     menuTruckId : modalApply.find('input[name="menuTruckId"]').val(),
                     odMenuNo : modalApply.find('input[name="odMenuNo"]').val(),
-                    odMenuName : modalApply.find('h3[name="odMenuName"]').text(),
+                    odMenuName : modalApply.find('h4[name="odMenuName"]').text(),
                     odMenuImg1 : modalApply.find('div[name="odMenuImg1"]').data('menuimg'),
                     odMenuDetail : modalApply.find('div[name="odMenuDetail"]').text(),
                     odMenuPrice : modalApply.find('div[name="odMenuPrice"]').text(),
@@ -848,12 +1062,7 @@
 
                         console.log("for문 안에 있다!");
                         console.log("beforeAnyway[" + i + "]번째 세션 : " + JSON.stringify(beforeAnyway[i]));
-                        // finalCart += "<li class=\"list-group-item d-flex justify-content-between lh-sm\">"+
-                        //     "<div><h6 class=\"my-0\">"+beforeAnyway[i]['odMenuName']+"</h6>"+
-                        //     "<h6 class=\"my-0\">"+beforeAnyway[i]['odMenuQty']+"</h6>"+
-                        //     "<small class=\"text-muted\">"+beforeAnyway[i]['odOptionGroupName']+"</small>"+
-                        //     "<small class=\"text-muted\">"+beforeAnyway[i]['odOptionName']+"</small>"+
-                        //     "</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"</span></li>";
+
 
                         if (beforeAnyway[i]['odMenuQtyFlag'] == 0) {//플래그0일 때 메뉴 수량, 이름 출력
                             finalCart += "" +
@@ -866,13 +1075,7 @@
                                 " <input type='text' id='numberUpDown' value='" + beforeAnyway[i]['odMenuQty'] + "' size='1' max=''> " +
                                 "<input type='button' value='+' id='increaseQuantity'> </h6>" +
                                 "";
-                            ///////////////수정/////////////////
-                            //2022-01-16
-                            // finalCart += "" +
-                            //     "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
-                            //     "<div><h6 class=\"my-0\">" + beforeAnyway[i]['odMenuName'] + "</h6>" +
-                            //     "<h6 class=\"my-0\">수량 : " + beforeAnyway[i]['odMenuQty'] + "</h6>" +
-                            //     "";
+
                             forOne += 1;
                             if (beforeAnyway[i + 1] != null) { //만약 다음 애가 있는데
                                 if (beforeAnyway[i + 1]['odMenuQtyFlag'] == 0) { //수량제공메뉴이면(지금 이게 수량제공메뉴란 소리니까 닫아줘야함)
@@ -891,12 +1094,7 @@
                                 "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionGroupName'] + "</small> : " +
                                 "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionName'] + "</small> +" +
                                 "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionPrice'] + "원</small>";
-                            //2022-01-16
-                            // finalCart += "" +
-                            //     "<p></p>" +
-                            //     "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionGroupName'] + "</small> : " +
-                            //     "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionName'] + "</small> +" +
-                            //     "<small class=\"text-muted\">" + beforeAnyway[i]['odOptionPrice'] + "원</small>";
+
                             forOne += 1;
                             if (beforeAnyway[i + 1] != null) {
                                 if (beforeAnyway[i + 1]['odMenuQtyFlag'] == 0) {
@@ -907,7 +1105,6 @@
 
                             // finalCart+="</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"원</span></li>";
                             // i=forOne;
-
 
                         }//sessionStorage만큼 for문 돌리기
                     }
@@ -961,9 +1158,9 @@
             var orderCancelCount = [];
 
             $('button#cancelMenu').click(function(){
-                var orderCount = $(this).parent('li').find('input[name="orderCount"]').val();
+                var orderCount = $(this).parents('li').find('input[name="orderCount"]').val();
                 // var orderCancelCount = $(this).parent('li').find('input[name="orderCancelCount"]').val();
-                $(this).parent('li').find('input[name="orderCancelCount"]').each(function (i) {
+                $(this).parents('li').find('input[name="orderCancelCount"]').each(function (i) {
                     orderCancelCount.push($(this).val());
                 });
 
@@ -1075,10 +1272,11 @@
 
 
 
+        /*//////////////////////////수정///////////////////////////*/
+        /*//////////////////////////수정///////////////////////////*//*//////////////////////////수정///////////////////////////*/
         /*장바구니 주문하기 */
         $(function () {
             $("#addMenuCart").click(function () {
-                /*//////////////////////////수정///////////////////////////*/
 
                 var order = menu_ajax()
 
@@ -1101,13 +1299,21 @@
                                    return;
                                }else */
                 if(orderCheck== undefined){
-                    alert("담겨있는 메뉴가 없습니다")
-                    location.reload();
-                    return;
+                    Swal.fire({
+                        text: "장바구니에 메뉴를 담아주세요.",
+                        buttons: true,
+                        closeOnClickOutside : false
+                    }).then(function (){
+                       // 바꿔죠!!!
+
+                    });
+                }else{
+                    $('#cartModal').modal('toggle');
                 }
 
             })
         });
+
 
 
         function menu_ajax() {
@@ -1151,7 +1357,7 @@
             });
 
             $('input[name="odMPrice"]').each(function (i) {
-                odMenuPrice.push($(this).val());
+                odMenuPrice.push($(this).val().replace('₩','').trim());
             });
 
             $('input[name="odOpPrice"]').each(function (i) {
@@ -1166,16 +1372,24 @@
                 odMenuQtyFlag.push($(this).val());
             });
 
-            /*   alert(orderPickUpTime)
-               alert(orderTotalPrice)
-               alert(orderUserId)
-               alert(orderTruckId)
-               alert(orderRequest)
-               alert(orderQty)
-               alert(odMenuQtyFlag)*/
+/*               console.log("orderPickUpTime"+orderPickUpTime)
+            console.log("orderTotalPrice"+orderTotalPrice)
+            console.log("orderUserId"+orderUserId)
+            console.log("orderTruckId"+orderTruckId)
+            console.log("orderRequest"+orderRequest)
+            console.log("orderQty"+orderQty)
+            console.log("odMenuQtyFlag"+odMenuQtyFlag)
+
+            console.log("orderRequest"+orderRequest)
+            console.log("odMenuPrice"+odMenuPrice)
+            console.log("odOptionPrice"+odOptionPrice)
+            console.log("odMenuQty"+odMenuQty)
+            console.log("odMenuImage"+odMenuImage)*/
             var menuTotalPrice = 0;
             var menuPriceCount = 0;
             var menuPricePree =0;
+            var menuPrice111 = 0;
+
 
             for(var j = 0; j< odMenuName.length; j++){
                 if(odMenuQtyFlag[j] == '0'){
@@ -1202,7 +1416,8 @@
 
                 }
             }
-
+     /*       console.log("menuCount"+menuCount)
+            console.log("menuTotalPrice"+menuTotalPrice)*/
 
 
             var data = {
@@ -1352,43 +1567,29 @@
                         // "</div>"+
                         // "<hr/>"+
                         // "<div class=\"row\"><strong>메뉴이미지1</strong></div>"+
-                        "<div class=\"odMenuImg\" name=\"odMenuImg1\" data-menuimg=\""+data.menu.menuImg1+"\" style=\"padding-right:19px;\">" +
+                        "<hr/>"+
+                        "<div class=\"odMenuImg\" name=\"odMenuImg1\" data-menuimg=\""+data.menu.menuImg1+"\" style=\"max-width: 450px;\">" +
                         "<img src=\"/resources/menu/"+data.menu.menuImg1+"\"" +
-                        "style=\"border-bottom: 1px solid #eee; width: 100%;\" "+
+                        "style=\"border-bottom: 1px solid #eee; width: 100%; border-radius: 10px; box-shadow: 0 2px 2px 1px rgba(0,0,0,0.2); transition: 0.3s;\" "+
                         "alt=\""+data.menu.menuName+"의 이미지1\" title=\""+data.menu.menuName+"\"></div> </div>"+
                         "<hr/>"+
-                        "<div class=\"row\">";
+                        "<div>";
                     // "<div class=\"col-xs-4 col-md-2 \"><strong>메뉴 이름</strong></div>"+
                     //  "<div class=\"col-xs-8 col-md-4\" name=\"odMenuName\"><strong>"+data.menu.menuName+"</strong></div>"+
 
                     if(data.menu.isSigMenu==1){
                         div+=""+
-                            "<h5><span class=\"badge badge-warning\" style=\"margin-left: 15px;\">대표메뉴</span></h5>"+
+                            "<h5><span class=\"badge badge-warning\" style=\"\">대표메뉴</span></h5>"+
                             "";
                     }
-                    div+="<h3 name=\"odMenuName\" style=\"margin-left: 15px;\">"+data.menu.menuName+"</h3>"+
+                    div+="<h4 name=\"odMenuName\" style=\"font-weight: 600; box-shadow: inset 0 -11px 0 #fae100; font-size: 22px; width: fit-content;\">"+data.menu.menuName+"</h4>"+
                         "</div>"+
-                        // "<hr/>"+
-                        "<div>"+
-
-                        // "<div class=\"row\">" +
-                        // "<div class=\"col-xs-4 col-md-2 \">" +
-                        // "<strong>메뉴상세정보</strong>" +
-                        // "</div>" +
-                        "<p></p>"+
-                        "<h5 class=\"odMenuDetail\" name=\"odMenuDetail\" style=\"text-align: right; margin-right: 47px;\">"+data.menu.menuDetail
-
-                        +"</h5>"+
-                        "</div><hr/>"+
-                        // "<div class=\"row\">"+
-                        // "<div class=\"col-xs-4 col-md-2\"><strong>대표메뉴여부</strong></div>"+
-                        // "<div class=\"col-xs-8 col-md-4\">"+data.menu.isSigMenu+"</div>"+
-                        // "</div><hr/>" +
-                        "<div>"+
-                        // "<div class=\"col-xs-4 col-md-2 \"><strong>메뉴가격</strong></div>"+
+                        "<div style='display: flex; justify-content: space-between; align-items: center;'>"+
+                        "<h6 class=\"odMenuDetail\" name=\"odMenuDetail\" style=\"text-align: left; margin-left: 5px; margin-top: 0;\">"+data.menu.menuDetail
+                        +"</h6>"+
                         "<div class=\"odMenuPrice\" name=\"odMenuPrice\">"+
-                        "<h4><span></span><span style=\"float: right;margin-right: 19px;\">"+data.menu.menuPrice+"</span></h4>"
-                    "</div></div><hr/>";
+                        "<h3><span></span><span style=\"float: right;margin-right: 15px; font-size: 18px; font-weight: 600;\">"+data.menu.menuPrice+"&nbsp;₩</span></h3>"
+                    "</div></div>";
                     // "<input type=\"hidden\" name=\"odMenuQty\" value="+ //todo 보류입니다!(수량을 hidden으로 넣을지가)
 
 
@@ -1427,23 +1628,23 @@
                                     "<hr><div class=\"row\"> " +
                                     // "<div class=\"col-xs-4 col-md-2\">" +
                                     // "<strong>옵션 그룹 이름</strong></div>"+
-                                    "<div class=\"col-xs-8 col-md-4\"><strong>"+x.optionGroupName+"</strong></div>"+
-                                    "</div><hr>";
+                                    "<div class=\"col-xs-8 col-md-4\" style='margin-bottom: 10px;'><strong>"+x.optionGroupName+"</strong></div>"+
+                                    "</div>";
                             }
                         }else{
                             divOG+=""+
                                 "<hr><div class=\"row\"> " +
                                 // "<div class=\"col-xs-4 col-md-2\">" +
                                 // "<strong>옵션 그룹 이름</strong></div>"+
-                                "<div class=\"col-xs-8 col-md-4\"><strong>"+x.optionGroupName+"</strong></div>"+
-                                "</div><hr>";
+                                "<div class=\"col-xs-8 col-md-4\" style='margin-bottom: 10px;'><strong>"+x.optionGroupName+"</strong></div>"+
+                                "</div>";
                         }
                         divOG+=""+
 
                             "<div class=\"row\"> " +
-                            "<div class=\"col\">" +
+                            "<div class=\"col\" style='display: flex; justify-content: space-between; margin: 5px; padding: 0 25px;'>" +
                             // "<label class=\"form-check-label\" for=\"optionName+OGName"+x.optionGroupName+"\"><strong>옵션 이름</strong></label></div>"+
-                            "<div class=\"col-xs-8 col-md-4\">" +
+                            "<div class=\"col-xs-8 col-md-4\" style='margin-bottom: 5px;'>" +
                             "<input class=\"form-check-input\" type=\"radio\" name=\"optionName+OGName"+x.optionGroupName+"\" id=\"optionName+OGName"+x.optionGroupName+"\" data-op=\""+x.optionName+"\">"+x.optionName+"" +
                             "<input type=\"hidden\" name=\"odOptionGroupNo\" value=\""+x.optionGroupNo+"\">"+
                             "<input type=\"hidden\" name=\"odOptionGroupName\" value=\""+x.optionGroupName+"\">"+
@@ -1452,7 +1653,7 @@
                             "</div>"+
                             // "<div class=\"row\">"+
                             // "<div class=\"col-xs-4 col-md-2\"><strong>옵션 가격</strong></div>"+
-                            "<span class=\"col-xs-8 col-md-4\" style=\"right:0px;\">"+x.optionPrice+"</span>"+
+                            "<span style=\"right:0;\">+&nbsp;"+x.optionPrice+"&nbsp;₩</span>"+
                             "</div>"+
                             "</div>"+
 
@@ -1495,73 +1696,9 @@
         });
     </script>
 
-    <!--별점-->
-    <%--    <style>--%>
-
-    <%--        &lt;%&ndash;        별점 css&ndash;%&gt;--%>
-    <%--        .star-ratings {--%>
-    <%--            color: #aaa9a9;--%>
-    <%--            position: relative;--%>
-    <%--            unicode-bidi: bidi-override;--%>
-    <%--            width: max-content;--%>
-    <%--            -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */--%>
-    <%--            -webkit-text-stroke-width: 1.3px;--%>
-    <%--            -webkit-text-stroke-color: #2b2a29;--%>
-    <%--            font-size: 30px;--%>
-    <%--        }--%>
-
-    <%--        .star-ratings-fill {--%>
-    <%--            color: #fff58c;--%>
-    <%--            padding: 0;--%>
-    <%--            position: absolute;--%>
-    <%--            z-index: 1;--%>
-    <%--            display: flex;--%>
-    <%--            top: 0;--%>
-    <%--            left: 0;--%>
-    <%--            /*overflow: hidden;*/--%>
-    <%--            -webkit-text-fill-color: gold;--%>
-    <%--        }--%>
-
-    <%--        .star-ratings-base {--%>
-    <%--            z-index: 0;--%>
-    <%--            padding: 0;--%>
-    <%--        }--%>
-
-    <%--        .truckNameForMenu{--%>
-    <%--            color:black;--%>
-    <%--            font-weight: bolder;--%>
-    <%--            text-align: center;--%>
-    <%--        }--%>
-    <%--        /*주문하기Madal Radio button*/--%>
-    <%--        .toggle3 input[type=radio]{--%>
-    <%--            display: none;--%>
-    <%--        }--%>
-    <%--        .toggle3 input[type=radio] + label {--%>
-    <%--            color: #e0e0e0;--%>
-    <%--            font-size: 1em;--%>
-    <%--        }--%>
-    <%--        .toggle3 input[type=radio]:checked + label {--%>
-    <%--            color: #000;--%>
-    <%--        }--%>
-    <%--        .btn-outline-primary {--%>
-    <%--            color: #007bff;--%>
-    <%--            border-color: #ffba49;--%>
-    <%--        }--%>
-    <%--    </style>--%>
-
     <script>
 
         $(function(){
-
-            // alert($('div.star-ratings').html());
-
-            // var menuTruck = {
-            //     truckId : $('input[name="truckId"]').val()
-            // }
-            //
-            // sessionStorage.setItem("menuTruck", menuTruck);
-
-
 
             $('div.star-ratings').on("click", function(){
                 // alert($('div.star-ratings').html());
@@ -1570,15 +1707,10 @@
                 // alert(truckId);
 
                 self.location="/review/getReviewListTruck?truckId="+truckId;
-
-
             })
-
         })
 
     </script>
-
-
 
     <script>
         //리뷰 목록 뿌려주기 ajax
@@ -1587,8 +1719,6 @@
 
             var truckId = $('input[name="truckId"]').val();
             // alert(truckId);
-
-
             $.ajax({
 
                 url:"/review/json/getReviewList/"+truckId,
@@ -1710,21 +1840,15 @@
                             "</div>"+
                             ""+
                             "";
-
-
                     }
                     rvDiv+="</div>"+
                         "</section>";
 
                     // alert($('div.card.review-body').html());
                     $('div.card.review-body').html(rvDiv);
-
                 }
-
             });
-
         });
-
     </script>
 
     <!--리뷰 상세보기 모달-->
@@ -1745,9 +1869,6 @@
                 getCardDetail(postNo)*/
             });
         })
-
-
-
 
         // 리뷰 클릭했을 때, modal 호출
 
@@ -1780,122 +1901,10 @@
 
                             "</span><div>사장님 댓글 : "+data.review.rvTruckCmtContent+"</div></div>";
                     }
-                    // if (data.review.heartNo == '0'){
-                    //
-                    //     div +=" <a idx="+data.review.postNo+" href='javascript:' class='heart-click heart_icon"+data.post.postNo+"'>"
-                    //         +"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart' viewBox='0 0 20 20'>"
-                    //         + "<path d='M8 6.236l-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595L8 6.236zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.55 7.55 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z' />"
-                    //         +"</svg> </a> ";
-                    // }else{
-                    //
-                    //     div +=  "<a idx="+data.review.postNo+" href='javascript:' class='heart-click heart_icon"+data.post.postNo+"'>"
-                    //         +"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-suit-heart-fill' viewBox='0 0 20 20'>"
-                    //         +"<path d='M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z' />"
-                    //         + " </svg></a>";
-                    // }
-                    // div += " <span id='m_heart"+data.review.postNo+"'>"+data.review.heartCount+"</span>"
-                    //     +"<span>"
-                    //     +"<a idx='"+data.review.postNo+"' href='#reply_card"+data.review.postNo+"' role='button' class='open_reply_list' data-toggle='collapse'  aria-expanded='false' aria-controls='collapseExample'> "
-                    //     +"<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-chat-dots' viewBox='0 0 20 20'>"
-                    //     +"<path d='M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z' />"
-                    //     +"<path d='M2.165 15.803l.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z' />"
-                    //     +"</svg>"
-                    //     +"</a>"
-                    //     +" </span>"
-                    //     +" <span id='m_reply"+data.review.postNo+"'>"+data.review.replyCount+"</span>"
-                    //     +"<span> <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='red' class='bi bi-eye' viewBox='0 0 20 20'>"
-                    //     +"<path d='M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z' />"
-                    //     +"<path d='M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z' />"
-                    //     +"</svg>"
-                    //     +"</span> <span id='hit"+data.review.postNo+"'>"+data.review.postHit+"</span>"
-                    //     +"</div>"
-                    //     +"<div class='collapse' id='reply_card"+data.review.postNo+"'>"
-                    //     +"<section class='modal-section'>"
-                    //     +"<div class='card card-body'>"
-                    //     +"<div class='reply-list reply-list"+data.review.postNo+"'>"
-                    //     +"</div>"
-                    //     +"<div class='row reply_write'>"
-                    //     +"<div class='col-1'>"
-                    //     +"<a href='other_profile.do?other_nick='>"
-                    //     +"<img id='write_reply_profileImage' src='../../../resources/image/"+proImg+"' />"
-                    //     +" </a>"
-                    //     +"</div>"
-                    //     +"<div class='col-8' class='input_reply_div'>"
-                    //     +"<input class='w-100 form-control' id='input_reply"+data.review.postNo+"' type='text' placeholder='댓글입력...'>"
-                    //     +"</div>"
-                    //     +"<div class='col-3 '>"
-                    //     +"<button type='button' idx='"+data.review.postNo+"' class='btn btn-success mb-1 write_reply' style='background-color: #ffe537; border-radius:12px; border-color: #ffba49; color: black; font-size: 12px; '>댓글달기</button>"
-                    //     +"</div>"
-                    //     +" </div>"
-                    //     +" </div>"
-                    //     +" </section>"
-                    //     +"</div>";
-
-
-                    <%--if (role == "user"){--%>
-
-                    <%--    var userId = '${sessionScope.user.userId}'--%>
-
-                    <%--    if (data.post.postTruck == null && data.post.postUser.userId == userId){--%>
-
-                    <%--        modalFooter = "<div class='modal-footer'>"--%>
-                    <%--            +"<button class='button btn-warning' name='deletePostPic' onclick='deletePostPic("+data.post.postNo+");'>글 삭제"--%>
-                    <%--            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/></button>"--%>
-                    <%--            +"<button class='button is-warning is-light' name='updatePostPicView'"--%>
-                    <%--            +"onclick='updatePostPicView("+data.post.postNo+");'>글 수정"--%>
-                    <%--            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/>"--%>
-                    <%--            + "</button>"--%>
-                    <%--            +"</div>";--%>
-                    <%--    }else {--%>
-                    <%--        modalFooter = "<div class='modal-footer'>"--%>
-                    <%--            + " <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></div>";--%>
-                    <%--    }--%>
-
-                    <%--}else if(role == "truck"){--%>
-
-                    <%--    var truckId = '${sessionScope.truck.truckId}'--%>
-
-                    <%--    if (data.post.postUser == null && data.post.postTruck.truckId == truckId){--%>
-
-                    <%--        modalFooter = "<div class='modal-footer'>"--%>
-                    <%--            +"<button class='button btn-warning' name='deletePostPic' onclick='deletePostPic("+data.post.postNo+");'>글 삭제"--%>
-                    <%--            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/></button>"--%>
-                    <%--            +"<button class='button is-warning is-light' name='updatePostPicView'"--%>
-                    <%--            +"onclick='updatePostPicView("+data.post.postNo+");'>글 수정"--%>
-                    <%--            +"<input type='hidden' name='postNo' value='"+data.post.postNo+"'/>"--%>
-                    <%--            + "</button>"--%>
-                    <%--            +"</div>";--%>
-
-                    <%--    }else {--%>
-                    <%--        modalFooter = "<div class='modal-footer'>"--%>
-                    <%--            + " <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button></div>";--%>
-                    <%--    }--%>
-                    <%--}--%>
-                    //$('body').find( '.format' ).clone().appendTo( '#carouselFail' ).css("display", "block");
-
-                    // var postPicUserId;
-                    // var postPicProImg;
-                    // if (data.post.truckProImg != null){
-                    //     postPicUserId = data.post.postTruck.truckId;
-                    //     postPicProImg = data.post.truckProImg;
-                    // }else {
-                    //     postPicUserId = data.post.postUser.userId;
-                    //     postPicProImg = data.post.userProImg;
-                    // }
-
-                    // console.log("id : "+postPicUserId);
-                    // console.log("img : "+postPicProImg);
-
-
-
-
 
                     $(".header-title").css({"background-image":"url(../../../resources/image/"+data.review.userProImg+")"});
                     $(".insta-header").find('h2').text(data.review.rvUserId);
 
-                    // $('.insta-header').html(sap);
-                    //$('.page1').css("background", "../../../resources/image/"+data.post.postFile1+"")
-                    // $("#page1").style.background = "url('../../../resources/image/"+data.post.postFile1+"') no-repeat 0 0";
                     if(data.review.rvImg1!=null){
                         $(".page1").css({"background":"url(../../../resources/image/"+data.review.rvImg1+") 50% 50% / 50px 50px"});
                         $(".slide1").css({"background":"url(../../../resources/image/"+data.review.rvImg1+")"});
@@ -1921,36 +1930,19 @@
                         $(".numb3").css({"display": "block"});
                     }
 
-                    // $('.modal-footer').remove();
-                    // alert("여기까지 오는가?");
 
-
-                    // $('.modal-content-review').append(modalFooter);
                     $('.modal-body.review').html(div);
 
                     if(data.review.rvTruckCmtContent!=null){
                         $(".truck-profile").css({"background-image":"url(../../../resources/image/"+data.review.truckProImg+")"});
                     }
-                    // $( '.format .wrapper' ).clone().appendTo( '.cloneFail' );
-
-                    // console.log("data.review.postHit: "+data.post.postHit);
 
                     $('#staticBackdrop').modal('show');
-
-
-
-
-
-
-
                 },
                 error : function(err){
                     console.log('에러')
                 }
             });
-
-
-
         }
     </script>
 
@@ -2455,271 +2447,279 @@
 
     </style>
 
-
-
 </head>
 <body>
 <jsp:include page="/views/navbar.jsp" />
 
 
+<!--  화면구성 div Start -->
+<section class="client_section layout_padding" style="padding-top: 30px;">
+    <div class="container">
+        <div class="col-md-12 mx-auto">
 
-
-
-<!--  화면구성 div Start /////////////////////////////////////-->
-<div class="container" style="margin-top:119px;">
-    <div class="border" style="margin-left: -116px; margin-right: 15px; padding: 10px; border-radius: 20px 20px 20px 20px;">
-
-        <div class="page-header">
-            <h3 class="truckNameForMenu" style="text-align: center;">${truck.truckName}</h3>
-        </div>
-        <div class="star-ratings">
-            <%--        <div--%>
-            <%--                class="star-ratings-fill space-x-2 text-lg"--%>
-            <%--                :style="{ width: ratingToPercent + '%' }"--%>
-            <%--        >--%>
-            <%--            <c:if test="${rvTotal ne null}">--%>
-            <%--                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>(${rvTotal})--%>
-            <%--            </c:if>--%>
-            <%--            <c:if test="${rvTotal eq null}">--%>
-            <%--                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>--%>
-            <%--            </c:if>--%>
-
-            <%--        </div>--%>
-            <%--        <div class="star-ratings-base space-x-2 text-lg">--%>
-            <%--            <c:if test="${rvTotal ne null}">--%>
-            <%--                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>(${rvTotal})--%>
-            <%--            </c:if>--%>
-            <%--            <c:if test="${rvTotal eq null}">--%>
-            <%--                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>--%>
-            <%--            </c:if>--%>
-
-            <%--        </div>--%>
-            <%--            <div class="beside-of-star-ratings">(${rvTotal})</div>--%>
-            <c:if test="${truck.truckAVGStar >= 0 && truck.truckAVGStar <0.35}">
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-            </c:if>
-            <c:if test="${truck.truckAVGStar >= 0.35 && truck.truckAVGStar <0.65}">
-                <i class="fas fa-star-half"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-            </c:if>
-            <c:if test="${truck.truckAVGStar >= 0.65 && truck.truckAVGStar <1.35}">
-                <i class="fas fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-            </c:if>
-            <c:if test="${truck.truckAVGStar >= 1.35 && truck.truckAVGStar <1.65}">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-            </c:if>
-            <c:if test="${truck.truckAVGStar >= 1.65 && truck.truckAVGStar <2.35}">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-            </c:if>
-            <c:if test="${truck.truckAVGStar >= 2.35 && truck.truckAVGStar <2.65}">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-            </c:if>
-            <c:if test="${truck.truckAVGStar >= 2.65 && truck.truckAVGStar <3.35}">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="far fa-star"></i>
-                <i class="far fa-star"></i>
-            </c:if>
-            <c:if test="${truck.truckAVGStar >= 3.35 && truck.truckAVGStar <3.65}">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half"></i>
-                <i class="far fa-star"></i>
-            </c:if>
-            <c:if test="${truck.truckAVGStar >= 3.65 && truck.truckAVGStar <4.35}">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="far fa-star"></i>
-            </c:if>
-            <c:if test="${truck.truckAVGStar >= 4.35 && truck.truckAVGStar <4.65}">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half"></i>
-            </c:if>
-            <c:if test="${truck.truckAVGStar >= 4.65 && truck.truckAVGStar <=5}">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-            </c:if>
-
-        </div>
-
-        <!--리뷰보기 버튼-->
-        <a class="btnf btn-warning" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-            리뷰 보기
-        </a>
-
-        <!--좋아요--> <!-- 0115 HHJ 추가 -->
-
-
-        <button type="button" class="btn btn-outline-danger heart-click-t">
-            <c:if test="${truck.truckHeartCount eq '0'}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
-                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
-                </svg>
-            </c:if>
-            <c:if test="${truck.truckHeartCount ne '0'}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
-                    <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"></path>
-                </svg>
-            </c:if>
-
-        </button>
-        <span id="heartC">${truck.truckHeartCount}</span>
-        <!--좋아요-->
-
-        <!--================truck info 시작=============-->
-        <div class="row">
-
-            <%--        <div class="col-xs-4 col-md-2"><strong>프 로 필 이 미 지</strong></div>--%>
-            <%--        <div class="col-xs-8 col-md-4">${truck.truckProImg}</div>--%>
-            <div class="col-xs-4 col-md-2"><strong>영 업 상 태</strong></div>
-            <c:if test="${truck.truckBusiStatus eq 0}">
-                <div class="col-xs-8 col-md-4">영업 중</div>
-            </c:if>
-            <c:if test="${truck.truckBusiStatus eq 1}">
-                <div class="col-xs-8 col-md-4">영업 종료</div>
-            </c:if>
-            <div class="col-xs-4 col-md-2"><strong>전 화 번 호</strong></div>
-            <div class="col-xs-8 col-md-4">${truck.truckPhone}</div>
-
-            <div class="col-xs-4 col-md-2"><strong>사 장 님 공 지</strong></div>
-            <div class="col-xs-8 col-md-4">${truck.truckNoticeContent}</div>
-            <input type="hidden" name="truckId" value="${truck.truckId}">
-
-        </div>
-
-        <!--================truck info 끝=============-->
-
-        <hr/>
-
-
-
-
-        <!--리뷰 리스트 시작-->
-        <%--    <p>--%>
-        <%--      --%>
-        <%--        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">--%>
-        <%--            리뷰 보기--%>
-        <%--        </button>--%>
-        <%--    </p>--%>
-        <div class="collapse" id="collapseExample">
-            <div class="card review-body">
-
+            <div class="detail-box" style="margin-top: 100px;">
+                <i class="fa fa-quote-left" aria-hidden="true" style="margin-bottom: 10px;"></i>
+                <h3 class="truckNameForMenu" style="font-weight: bold; margin: 0; box-shadow: inset 0 -11px 0 #fae100; width: fit-content;">${truck.truckName}</h3>
             </div>
-        </div>
-        <!--리뷰 리스트 시작-->
-    </div>
 
-</div>
-
-
-<!--  메뉴 목록 div Start /////////////////////////////////////-->
-<body class="row g-5">
-
-
-<div class="row">
-
-    <!--헝헝헝-->
-
-    <div class="col-md-5 col-lg-4 order-md-last">
-        <div class="sticky">
-            <form>
-                <h4 class="d-flex justify-content-between align-items-center mb-3" style="width:259px;">
-                    <span class="text">장바구니</span>
-
-                    <div id="cartList" name="cartList"></div>
-                    <div id="add" name="add"></div>
-
-                </h4>
-                <ul class="list-group mb-3" style="width:259px;">
-                    <img src="data:image/png;base64,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">
-                </ul>
-                <input type="hidden" id="orderUserId" name="orderUserId.userId" value="${user.userId}"/>
-                <input type="hidden" id="orderTruckId" name="orderTruckId.truckId" value="${truck.truckId}"/>
-                &emsp;&emsp;<button type="button"  class="btn btn-warning" id="addOrderMenuCall" data-toggle="modal" data-target="#cartModal" >주문하기</button>
-                &emsp;&emsp;<button type="button"  class="btn btn-warning" id="cancelCartMenuList"  >삭  제</button>
-            </form>
-        </div>
-        <%--</form></div>--%>
-    </div>
-
-    <!--헝헝헝 끝-->
-
-
-    <div class="col-md-7 col-lg-8">
-
-        <c:set var="i" value="0"/>
-        <c:forEach var="menu" items="${list}">
-            <c:set var="i" value="${i+1}"/>
-            <div class="card" style="width: 17rem; margin-bottom:15px; margin-left: 10px; margin-right: 10px;">
-                <img class="card-img-top" src="/resources/menu/${menu.menuImg1}" alt="Card image cap"
-                    <%--                        <img class="card-img-top" src="/resources/image/menu/${menu.menuImg1}" alt="Card image cap"--%>
-                     style="border-bottom: 1px solid #eee; height: 200px;">
-                <div class="card-body" style="text:center ">
-                    <h3 class="align-content-center"> <strong style="text:center;">${menu.menuName}</strong></h3>
-                    <h3> ${menu.menuPrice}원</h3>
-                    <ul class='card-body-ul'>
-                        <h4>${menu.menuDetail}</h4>
-                    </ul>
-                    <div class="btn-detail">
-                            <%--          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 수정--%>
-                        <button class="btn btn-default" name="getMenu"
-                            <%--                            style='margin-left: 100px; margin-bottom: 13px; height: 25px'--%>
-
-                                style="padding-top:1px;"
-                                onclick="getMenu(${menu.menuNo});"
-                        >
-                            메뉴 상세보기
-                            <input type="hidden" name="menuNo" value="${menu.menuNo}"/>
-                        </button>
-                            <%--                                <div class="bd-example">--%>
-                            <%--                                    <button type="button" name="getMenu" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalLong">--%>
-                            <%--                                        Launch demo modal--%>
-
-                            <%--                                    </button>--%>
-                            <%--                                    <input type="hidden" name="menuNo" value="${menu.menuNo}"/>--%>
-                            <%--                                </div>--%>
-                    </div>
+            <div>
+                <%-- 별점 --%>
+                <div class="star-ratings" style="zoom: 130%; margin-top: 5px;">
+                    <c:if test="${truck.truckAVGStar >= 0 && truck.truckAVGStar <0.35}">
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 0.35 && truck.truckAVGStar <0.65}">
+                        <i class="fas fa-star-half" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 0.65 && truck.truckAVGStar <1.35}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 1.35 && truck.truckAVGStar <1.65}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star-half" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 1.65 && truck.truckAVGStar <2.35}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 2.35 && truck.truckAVGStar <2.65}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star-half" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 2.65 && truck.truckAVGStar <3.35}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 3.35 && truck.truckAVGStar <3.65}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star-half" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 3.65 && truck.truckAVGStar <4.35}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="far fa-star" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 4.35 && truck.truckAVGStar <4.65}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star-half" style="margin: 0;"></i>
+                    </c:if>
+                    <c:if test="${truck.truckAVGStar >= 4.65 && truck.truckAVGStar <=5}">
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                        <i class="fas fa-star" style="margin: 0;"></i>
+                    </c:if>
                 </div>
             </div>
-        </c:forEach>
 
+            <%--                <hr style="margin-top: 20px;"/>--%>
+
+            <div style="display: flex; justify-content: space-evenly; align-items: center; margin-top: 20px;">
+
+                <%--<div class="col-xs-4 col-md-2"><strong>전 화 번 호</strong></div>--%>
+                <div class="col-8 col-md-4"  style="padding: 0; text-align: left; font-size: 16px;">
+                    <ion-icon name="call-outline"></ion-icon>&nbsp;${truck.truckPhone}
+                </div>
+
+                <div class="col-8 col-md-4">
+                    <%--<div><strong>영 업 상 태</strong></div>--%>
+                    <c:if test="${truck.truckBusiStatus eq 1}">
+                        <h5><span class="badge" style="background-color: #65bf96; color: #110000; padding: 5px; border-radius: 30px;">영업중</span></h5>
+                    </c:if>
+                    <c:if test="${truck.truckBusiStatus eq 0}">
+                        <h5 style="margin: 0;"><span class="badge" style="background-color: #ec6a56; color: #ffffff; padding: 5px; border-radius: 30px;">영업종료</span></h5>
+                    </c:if>
+                </div>
+
+                <%--div class="col-xs-4 col-md-2"><strong>사 장 님 공 지</strong></div>--%>
+                <div class="col-8 col-md-4" style="padding: 0; text-align: right; font-size: 16px;">
+                    <ion-icon name="megaphone-outline"></ion-icon>&nbsp;${truck.truckNoticeContent}
+                </div>
+                <input type="hidden" name="truckId" value="${truck.truckId}">
+
+            </div>
+
+            <!--================truck info 시작=============-->
+            <div style="display: flex; justify-content: space-around; align-items: center; margin-top: 10px;">
+
+                <div class="col-8 col-md-6" style="padding: 0; text-align: left;">
+                    <!--리뷰보기 버튼-->
+                    <div>
+                        <a class="btn btn-default" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="margin: 0; padding: 5px 10px;">
+                            리뷰 보기
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-8 col-md-6" style="padding: 0; text-align: right; display: flex; justify-content: flex-end; align-items: center;">
+
+                    <div style="margin-right: 10px;">
+                        <i class="fas fa-map-marker-alt fa-lg"></i>
+                    </div>
+                    <!--좋아요--> <!-- 0115 HHJ 추가 -->
+                    <div style="display: flex; align-items: center;">
+                        <button type="button" class="btn heart-click-t" style="padding: 0; margin-right: 5px;">
+                            <c:if test="${truck.truckHeartCount eq '0'}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart" viewBox="0 0 16 16">
+                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+                                </svg>
+                            </c:if>
+                            <c:if test="${truck.truckHeartCount ne '0'}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+                                    <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"></path>
+                                </svg>
+                            </c:if>
+                        </button>
+                        <span id="heartC">${truck.truckHeartCount}</span>
+                    </div>
+                    <!--좋아요-->
+                </div>
+            </div>
+
+
+            <hr style="margin-top: 20px;"/>
+
+            <!--================truck info 끝=============-->
+
+            <!--리뷰 리스트 시작-->
+            <div class="collapse" id="collapseExample">
+                <div class="card review-body">
+
+                </div>
+            </div>
+            <!--리뷰 리스트 시작-->
+
+            <!-- 메뉴 목록 div Start -->
+            <div class="row g-5">
+
+                <div class="col-12" style="display: flex;">
+
+                    <%-- 장바구니 --%>
+                    <div class="col-md-5 col-lg-4 order-md-last" style="padding-top: 10px;">
+                        <div class="sticky">
+                            <form>
+                                <div style="text-align: initial;">
+                                    <span class="text" style="font-size: 16px; font-weight: bolder">장바구니</span>
+                                </div>
+
+                                <div id="cartList" name="cartList" style="margin-top: 15px;"></div>
+                                <div id="add" name="add" style="margin-top: 15px;"></div>
+
+
+                                <ul class="list-group mb-3">
+                                    <div class="card col-12" style="margin: 0; height: 60px;  border: 0;">
+                                        <div class="card-body">
+                                            <p class="card-text">메뉴를 선택해주세요.</p>
+                                        </div>
+                                    </div>
+                                    <%--                                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN0AAADlCAMAAADgMwLoAAAAflBMVEX///8AAAD6+voMDAx1dXV5eXnq6upra2uzs7OsrKyhoaHy8vKUlJQ8PDwxMTH5+flgYGDh4eHs7OzLy8u+vr5ubm6NjY3V1dVWVlZERESmpqbc3NzAwMAmJiZkZGSenp44ODiIiIhHR0cYGBgiIiKBgYFQUFArKysbGxsSEhLSQfC6AAAN1klEQVR4nN1d54LyKhB1LbHEFuMae9tVv33/F7xXBlIIwTAMkd3za4sSDmU6pNVyjFkQL0+XW3e9mR6+Oh+dr8N0M+/dVttlHIWuH+4Qwf7Uu3596PCz6Y7iX8cxjE9zLa0i5qd49u4u18QsXm0MmAlMLvG7e/4S0faOYCZwH0XvJlCNaPyo7nnncb6uj/35ffLQ7cXp2EuCi9FU1dvzcTWMd0H547t4OO5evxVfmQx9kzPLdbmX89Uyar/6YhhvPzvlr3q0B4NVaX3dluXpqka4X13lhTzyYwJ3faljvT2mY/+L2rPUjskAuUFSlJETK6kXDooLfJ6Q9RODeFOkZj/a4bAwXOv38UsKm+VCJcoXp3+5Zu/v4Rccc324LknbjvMrdN78/gt7ued36TVwkG//1rAVus09e+VGds9OuWdsnTxCjV3OLDk5fM420/PTncPnFHDJzZvjNZNbIxe3T+JIMonWa8CeyNbnTwPmWTZxm2as+bDb2PRFB/GkDq0O0D401asPpwOabYOVy8eUMGhAeLbTWMm5MQnGEaamw9HRE4J0VY4cPUGHfaobFi6aj9OJe49nMkutMweyM91yzegdFYaiC+QWRM/hwNVGIKJSPdp2hdO1eXM8QAiXNWGb4cHNmCEwErKFbJgXwpht0lKvghBuHSLRGYkt994oh0Aggr0kojsl50uQeDah69CON/XwI77IIGSLtcUkZm7zMqrcJHo0sxfwZq40vSLDjffLSrSEXFreqXpFhguXnBb7pX3wlVyrxXMX3/jQx8Zfcuni3GC/37f8vmNw0YJ0+PjcT2n7RAg++iinZWC/b12D2/ZD828mnlkoKrS/kSbijJPzKMWrgFDHpoKTu/kDJ52iQ4KS6mOLDdsohoiO8iGh9IBdoWu8g9pggHW8spyrMDXdekciB6MRLAyVOtd074jJYrA3EoDh79l0AG6S1TM71iYf9gLf9adj+RvUeBE8OlIj59aGT3bd94kQ47oyni/iX6EMMkAI/mUwmU/yvokuESKpp8MgiTtvpEuU6NWxN5e/Tl5ytOvIQjDBDPJji8AEr0Ztu54IHA2rDmBevnUfgQzLT+0mE02ZtxJzrTlYLLA1dFCgdlXjp89q6w3ATu78axw0zZ2kz5q53FywVH8A1Eb9GBjm7IFmcCfSRw0nD2z/Sut4ZjpkPwh2GjNBLvk3tCi4s1D1bwjxGVjP5VL71/isbs6SHdcKFSKRT52BV+cZO+3kwaY2UeSeseOTp3b0oEkTh9w3duCZ/lP9Czxyo9iZb+z45KmMZGjbSMd4xw4yxQq5CMpwYtSYd+x4XKGcHYCEilns2T92MEclM4CrA7O2MOw0FjoBO96G/FeIWBtWzGLYadwECnYgG2W5Aua5YTrLnF1H9wQKduDnSUobUkWmOWQlu8N4WAm9RKZgx/MKxRUCjp1pElPFzqJumYRdomACDZsm+RTsbLLsJOxarEiuoNkC1Wp9DQU7m6JeGnbj0tKEvxiH+RTsbJK1NOyi0tKcoBamih2i/iDFP6ktZDycxXpy1hg4RuZJHwU7C6GSyG0h2Y2lqRogF5VKZuKzK6W7BpDsIJaVbTM4AWMeolXqu1HYroD07TCPxbJ8KQI2U8O+fCv+iigHM7RVDuPcdxPltRAk7EChpw9iv411XyBhl9/apU1GyA5SzcLmg4AKomLd3M5Md4Mcu6RkBwEIIb3B5UNk7MzZid0we/1Riwwpqyvl0hvMakwRgDk70eHQKTsWmOUJE5CgGBPKV3aw8aAiHLQdRk/5yg5ah2QPhMkw1dO+sgObDqIrzC7TZZ5+Hzum8UCSsJZQZ8+8ZQdRoudPIFRQtr237OAY2/OQFyScUcavObtUMrtlB4P3NB3AYUAdqDFnlz6m9/qzNvVO32IoWUK2g2rDmF1m7bVr1BNYsGPm11OWsFoB3HkRNbvuuALLgrE3muehuG3Nhh2zVu7CDsM1pGJ3x1aYyRUPVuzY6fiH2IAI96elZFe/1qWEMSE7EJozRQipPhTscMMEIGQHam7BWeKiIcQxMemmOxt2M84KbGjcaR/iuZM9WpsKWNbAnmcQcEV9CnYoe5WDkh0rFBrwEhxcEyqZucZX5VKyY+75iR+wxDWh1ne9kQa6e00p2TEb5QLOAlKOY3KvGgFGyY7R6oHNgjzaimJXbdJSsrs8GzhCShlZB41jVylWKdkxcbKGJpG5DRy7flVzlOyYXXcFFVr5QD1w7CqHkpIdMzQ3kHn5e+yYkXJuscsONAVAOvjO7gFe7B9ld4B43x9lN/2rUoXF/M7Q5N9jx5yDjZU217+WowqVnSbXd3c4MYG0xOQb2uuh8qiK/EqMW9UHa4DbKqyHSK+sVkRZRnXltRxYsTkEyOKlXSsPqLU4yn1/CU0JaLv4Sauboj6fLdxaFxt2zy6ZQdtWmB8suzsD5zCSEEb05phrvWF4DaboRjwZ5PMdMSgwVgOeY/bjAkJCcLGUWIsnHxHwFQlS/bfcWFEXMGchj9raKE4fwVKuz1gYc/D8vO4ND6YJnsXRzNB8UDYdJvuBMeKI8mUETJk/rWcwVsiaXnZxtvVzrMdkt/GcQZmLa65p2o3qpMN1mNrkkDKAMHm2BeKF4uKw8NOS2xMdip6AQnjOGKgEgpvDBrpOG+Bqf8sEmCjsR/aT/S1GXV2PzWB9Lw/z7sCtm2dELWDzzsISbFcn6ww4GeAlWNrRmFdNuqPH2oCbyWOC9sy92BewMut3uSZArFjZYkNdR3Gw7w5X4Uz12SS8F/TksEFIBhYrEpEwUMEWl7qbvLm2NizWJisJEAEcqGHEb7w6JyfMgT+nCNtOqBXYePjYqKqCjQBorQdFKumvk+KvhnCx655AX/vFRjszTyBMil3o5eI8IiD9FgiLZtGGivsDaoJYkWdAvukLxEjOOmG/Iz3Y8pGen0HlEbxKzKJLqR2kCmb6IH+xGFjAOB+vdO0WVtjt5YZwoXYY7fxChIZx9XlLuVPoNzKUyk8t+lMQIuwvyitzXmIrdcki/k/CTuHyfJYJ14U84haxA7n8FPW+5tLCFH4CSqHLL8i2cDbkF2Vj2CnDRHCtGybzMpK6ZPFWQ4qVyaqLZMG2Qo+7HE7BV7WX5BOiDVDd8iu1oLQdkz+P5T5hPcWZHAjFqJZP9ZIGWxMRfygnz7sonZCU6kMQYgA6U64ZgWWBKTpSHIvfdHuGOJavCsDsExDgCu/iRz2nr3Ep94sGCH+afU+1ooE2QuK5cV5RQgAknErjcmsYoRQOmi5aALEwYf0p/wXiBpGFpQqxSzDvCMgO9fKLsI26mTzEayDhxGKF6ICyL8SlASWVRwCEsgNPp0rd8slD7DzbtJ0CCM0LSqVS6oPzgDEUTW/FfgnEuoQIdLWlxCcPofNQ1X4aIKy59svOg9jEOEKRpqvmwITZQV/rQl98CjABlgW6GKAMTHSOd10rNMARQpXatsmyXKhIHzxdv1354sX513uS6eujgrSglF4lsngmDhkGHuKq3HOYI0tLYGBfFvOBn4fOnsVdzNX0HJMTttyh7hXz9q9diZbjXt8U3cs2xldy8E7XcJn4m0a9qSWuAzB0a9mQwA55NOgtuLAe17NMuU2MzMC8ATVfBsRh9E6y96MN8rJ2FgTEntmd7e/D3GBdPsGn+neUE/PUr4HHtPo9W4/PhJHHdDUekDeBG89mFQT8Sx3KWmUngKTYl6F25mrB6hxVA8C+3ZQnHW3KtdyDdxKREOUHI20uu3ENHkhF5bLPCGnUKKx2j4gE+XoCiuuCb6TkE5Uofr4cVcSp0AUkscf0RObJ4piIyGRbVKY6QkIx8JiXozcBsaosa9/BRrV4L4ATCHK28tzmEkNnECX01ic+dxQLgBhjopkTcsWrt9SLA0cEh9lGdjqFHrM7HTnpTQrvRySi3SQWFBspfyIsaSkZzV75hzbCXYBHkj8ONFsFckI2L2giRCBqttA3/0qIPPIS0oNiZEsp9kYhZHev0BxrfgLqcD3ImKT1TP8I43RsG+Nq3SkRpgepSC1e6cDQm5CdNKJblU98Ve7iWdyU07dPC1PPtI9sV1qrz33QbSJLFGWn+yyq5ZUIKhSC2Acr1/ImyC5XmJJL7uwNGAXkjiifXPJb5KrrHAQeC0eb02cWrwVwxi/IcTu62AQrhUKQTzV9fFxcOEhJrnTp4CYox9KahexRIJ/VYfikvrFrn18frqLhrDQnHxDLDv18tpI80anuinJDBIVjYe5iOqz5TING2Q2XTI7GhSNla5JUbTgsrI6bO60DAbF00WdDehSCJi4u1N7eTsSEg+LZ9bHL7CgoBC4zomyi8pOUSGfpj0vsaO9G0ulnx24lGObwczZxc2lAg1uxUx/Ti3HJVzCQ71G9Oi9JYAqBBVV2WVm3IrbZ3spnOj+mvUFN22IRn+alws5VA/UIzAx65pYv6WPXFbMSrRRHLr77p2USVu2dMNpve6o7IubNxAL4He5JdnpM54EkVacSHpv5bTwaDgb7OIn3g8HwNO6tJxUHUO6EqkUPeF626u6vjJK4pzhGZ4D1oLniNPnyjVo2QzRE3iVzWMWNRjiKdxxs6ruOu21ffpu3HvexRWEtEoWTZ6bKJ4xPn3UozlfL4C1RqdzFKROkzx/Fp1X/ei5Xgj+u/fE2fmcdWuYXW1uyszCMkjje7+M42S3CmQcxRGFDTv0v9UOAqwLqYI0nYPvu4UOY3Qku3tUDGOI/P5WpBYaF8HcAAAAASUVORK5CYII=" alt="">--%>
+                                </ul>
+                                <input type="hidden" id="orderUserId" name="orderUserId.userId" value="${user.userId}"/>
+                                <input type="hidden" id="orderTruckId" name="orderTruckId.truckId" value="${truck.truckId}"/>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <button type="button"  class="btn btn-cancle" id="cancelCartMenuList" style="margin: 0;">삭제</button>
+                                    <%--///////////////////////////수정//////////////////////////--%>
+                                    <button type="button" id="addOrderMenuCall"   class="btn btn-default" style="margin: 0;">주문하기</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <%-- 푸드트럭 메뉴 리스트 --%>
+                    <div class="col-md-8">
+
+                        <c:set var="i" value="0"/>
+                        <c:forEach var="menu" items="${list}">
+                            <c:set var="i" value="${i+1}"/>
+
+                            <section class="light">
+                                <div class="container py-2">
+
+                                    <article class="postcard light blue">
+                                        <a class="postcard__img_link" href="#">
+                                            <img class="card-img-top" src="/resources/menu/${menu.menuImg1}" alt="Card image cap" style="max-height: 220px; max-width: 330px;">
+                                        </a>
+                                        <div class="postcard__text t-dark">
+                                            <h1 class="postcard__title blue" style="font-size: 26px; font-weight: bold">
+                                                <a href="#">
+                                                        ${menu.menuName}
+                                                </a></h1>
+                                            <div class="postcard__bar"></div>
+                                            <div class="postcard__preview-txt">${menu.menuDetail}</div>
+                                            <div class="postcard__preview-txt"><h6>${menu.menuPrice}&nbsp;₩</h6></div>
+
+                                            <ul class="postcard__tagbox" style="justify-content: end;">
+                                                <li class="tag__item orderBtn" onclick="getMenu(${menu.menuNo});"><i class="fas fa-utensils"></i>메뉴선택</li>
+                                                <input type="hidden" name="menuNo" value="${menu.menuNo}"/>
+                                            </ul>
+                                        </div>
+                                    </article>
+
+                                </div>
+                            </section>
+
+                            <%--<div class="card" style="width: 17rem; margin-bottom:15px; margin-left: 10px; margin-right: 10px;">
+                                <img class="card-img-top" src="/resources/menu/${menu.menuImg1}" alt="Card image cap"
+                                    &lt;%&ndash;                        <img class="card-img-top" src="/resources/image/menu/${menu.menuImg1}" alt="Card image cap"&ndash;%&gt;
+                                     style="border-bottom: 1px solid #eee; height: 200px;">
+                                <div class="card-body" style="text:center ">
+                                    <h3 class="align-content-center"> <strong style="text:center;">${menu.menuName}</strong></h3>
+                                    <h3> ${menu.menuPrice}원</h3>
+                                    <ul class='card-body-ul'>
+                                        <h4>${menu.menuDetail}</h4>
+                                    </ul>
+                                    <div class="btn-detail">
+                                            &lt;%&ndash;          //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 수정&ndash;%&gt;
+                                        <button class="btn btn-default" name="getMenu" style="padding-top:1px;" onclick="getMenu(${menu.menuNo});">
+                                            메뉴 상세보기
+                                            <input type="hidden" name="menuNo" value="${menu.menuNo}"/>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>--%>
+
+                        </c:forEach>
+                    </div>
+
+                </div>
+            </div>
+            <!--  메뉴 목록 div End /////////////////////////////////////-->
+        </div>
     </div>
-    <!--  메뉴 목록 div End /////////////////////////////////////-->
-</div>
-
+</section>
 </body>
 
 
@@ -2729,28 +2729,36 @@
 <div class="modal fade" id="exampleModalLong" tabindex="-1" aria-labelledby="exampleModalLongTitle" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">메뉴 정보</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body-hey" style="min-height: 500px; margin-left: 19px;">
-                <p>This is some placeholder content to show the scrolling behavior for modals. Instead of repeating the text the modal, we use an inline style set a minimum height, thereby extending the length of the overall modal and demonstrating the overflow scrolling. When content becomes longer than the height of the viewport, scrolling will move the modal as needed.</p>
-            </div>
-            <div class="modal-happy">
+            <div class="modal-body" style="margin: 0; display: flex; flex-direction: column; align-items: center;">
+                <%--<div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">메뉴 정보</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>--%>
+                <div style="display: flex; justify-content: center; margin: 15px 0 5px 0;">
+                    <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight: 600; margin: 0; box-shadow: inset 0 -11px 0 #fae100; font-size: 20px; width: fit-content;">메뉴 정보</h5>
+                </div>
 
-            </div>
-            <div class="modal-footer">
+                <div class="modal-body-hey" style="display: flex; flex-direction: column;">
+                    <p></p>
+                </div>
 
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <c:if test="${truck.truckBusiStatus==0}">
-                    <button type="button" class="btn btn-default" id="truckBusi">장바구니로!</button>
-                </c:if>
-                <c:if test="${truck.truckBusiStatus==1}">
-                    <button type="button" class="btn btn-default" id="addCart" data-dismiss='modal' name="addCart">장바구니로!</button>
-                </c:if>
+                <div class="modal-happy col-12" style="margin: 0; display: flex; flex-direction: column;">
+                </div>
 
+                <div>
+                    <hr style="width: 440px;"/>
+                    <div style="display: flex; justify-content: center;">
+                        <button type="button" class="btn btn-cancle" data-dismiss="modal">확인</button>
+                        <c:if test="${truck.truckBusiStatus==0}">
+                            <button type="button" class="btn btn-default" id="truckBusi">담기기</button>
+                        </c:if>
+                        <c:if test="${truck.truckBusiStatus==1}">
+                            <button type="button" class="btn btn-default" id="addCart" data-dismiss='modal' name="addCart">담기</button>
+                        </c:if>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -2837,7 +2845,11 @@
         console.log("role"+role);
 
         if(role=="truck") {
-            alert("푸드트럭은 좋아요를 누를 수 없어요 ( ´･･)ﾉ(._.`)");
+            //alert("푸드트럭은 좋아요를 누를 수 없어요 ( ´･･)ﾉ(._.`)");
+            Swal.fire({
+                text: "푸드트럭은 좋아요를 누를 수 없어요 ( ´･･)ﾉ(._.`)",
+                buttons: true
+            })
         }else{
             var truckId = $('input[name="truckId"]').val();
             console.log("truckId: " + truckId);
@@ -2923,65 +2935,95 @@
     <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="cartModalLabel">주문정보입력
-                    </h5>
+                <%--<div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">주문정보입력</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
-                <div class="modal-body">
+                </div>--%>
+                <div class="modal-body" style="margin: 0;">
+
+                    <div style="display: flex; justify-content: center; margin-bottom: 20px; ">
+                        <h5 class="modal-title" id="cartModalLabel" style="text-align: center; margin: 0; box-shadow: inset 0 -11px 0 #fae100; width: fit-content; font-size: 22px;">
+                            주문정보입력
+                        </h5>
+                    </div>
+
+                    <hr/>
+
                     <div class="mb-3">
-                        <label for="orderPickUpTime" class="col-form-label">픽업희망시간:</label>
+                        <label for="orderPickUpTime" class="col-form-label" style="margin-bottom: 5px; font-weight: 600;">픽업희망시간</label>
                         <div class="toggle3" role="group" aria-label="Basic radio toggle button group">
-                            <input type="radio" class="btn-check" id="orderPickUpTime" name="orderPickUpTime" value="5"
-                                   id="btnradio1" autocomplete="off" checked>
-                            <label class="btn btn-outline-primary" for="btnradio1">5분</label>
+                            <div style="display: flex; justify-content: space-around;">
+                                <div class="col-4">
+                                    <input type="radio" class="btn-check" id="orderPickUpTime" name="orderPickUpTime" value="5"
+                                           id="btnradio1" autocomplete="off" checked>
+                                    <label class="btn btn-outline-primary" for="btnradio1">5분</label>
+                                </div>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="10" id="btnradio2"
-                                   autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio2">10분</label>
+                                <div class="col-4">
+                                    <input type="radio" class="btn-check" name="orderPickUpTime" value="10" id="btnradio2"
+                                           autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="btnradio2">10분</label>
+                                </div>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="15" id="btnradio3"
-                                   autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio3">15분</label>
+                                <div class="col-4">
+                                    <input type="radio" class="btn-check" name="orderPickUpTime" value="15" id="btnradio3"
+                                           autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="btnradio3">15분</label>
+                                </div>
+                            </div>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="20" id="btnradio4"
-                                   autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio4">20분</label>
+                            <div style="display: flex; justify-content: space-around;">
+                                <div class="col-4">
+                                    <input type="radio" class="btn-check" name="orderPickUpTime" value="20" id="btnradio4"
+                                           autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="btnradio4">20분</label>
+                                </div>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="30" id="btnradio5"
-                                   autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio5">30분</label>
+                                <div class="col-4">
+                                    <input type="radio" class="btn-check" name="orderPickUpTime" value="30" id="btnradio5"
+                                           autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="btnradio5">30분</label>
+                                </div>
 
-                            <input type="radio" class="btn-check" name="orderPickUpTime" value="40" id="btnradio6"
-                                   autocomplete="off">
-                            <label class="btn btn-outline-primary" for="btnradio6">40분</label>
+                                <div class="col-4">
+                                    <input type="radio" class="btn-check" name="orderPickUpTime" value="40" id="btnradio6"
+                                           autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="btnradio6">40분</label>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="menuRequest" class="col-form-label">주문요청사항:</label>
+                        <label for="menuRequest" class="col-form-label" style="font-weight: 600;">주문요청사항</label>
                         <textarea class="form-control" id="menuRequest" name="menuRequest"
                                   value="${purchase.orderRequest}"></textarea>
                     </div>
+
+                    <hr/>
+
+                    <div style="display: flex; justify-content: center;">
+                        <button type="button" class="btn btn-default" id="addMenuCart">확인</button>
+                        <button type="button" class="btn btn-cancle" data-dismiss="modal">취소</button>
+<%--///////////////////////////수정.//////////////////--%>
+
+                    </div>
+
                 </div>
-                <div class="modal-footer">
+                <%--<div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
                     <button type="button" class="btn btn-primary" id="addMenuCart">확인</button>
-
-
-
-
-
                     <input type="hidden" id="orderQty" name="orderQty" value="3"/>
                     <input type="hidden" id="orderTotalPrice" name="orderTotalPrice" value="3000"/>
-                </div>
+                </div>--%>
             </div>
         </div>
     </div>
 
 </form>
+
 <script>
     $(function(){
         var modal = $('#exampleModalLong');
