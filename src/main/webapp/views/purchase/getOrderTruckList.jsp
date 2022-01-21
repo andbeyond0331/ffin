@@ -67,6 +67,25 @@
         color: #25323c;
         border-color: #ec6a56;
     }
+    .btn.btn-default-chk{
+        background-color: #ffffff;
+        color: #25323c;
+        border-color: #fae100;
+        border-radius: 50px;
+    }
+    .btn-check:checked+.btn.btn-default-chk, .btn-default-chk:hover, .btn-default-chk:checked{
+        background-color: #fae100;
+        color: #25323c;
+        border-color: #fae100;
+    }
+    .container orderCheck{
+        margin-top: 70px;
+        padding: 20px;
+        background-color: #ffffff;
+        box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1);
+        transition: 0.2s;
+        border-radius: 10px;
+    }
 </style>
 <main>
 
@@ -74,57 +93,63 @@
          tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalToggleLabel">Modal 1</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+
                 <div class="modal-body">
 
+                    <div style="text-align: -webkit-center;">
+                        <h5 class="modal-title" id="updateTruckCmtModalLabel" style=" width: fit-content; margin: 10px 0 25px 0; box-shadow: inset 0 -11px 0 #fae100;">주문 거절</h5>
+                    </div>
 
-                    <div class="container-fluid">
-                        <div class="row">
-                            <input type="radio" class="btn-check" name="orderNopeReason" id="btnradio1"
-                                   autocomplete="off" value="1" checked>
-                            <label class="btn btn-outline-primary" for="btnradio1">고객 요청</label>
+                    <hr style="border-width: inherit;"/>
+
+                    <div>
+                        <div>
+                            <div style="display: flex; flex-direction: column;">
+                                <input type="radio" class="btn-check" name="orderNopeReason" id="btnradio1" style="margin: 0;"
+                                       autocomplete="off" value="1" checked>
+                                <label class="btn btn-default-chk" for="btnradio1" style="width: inherit; margin-left: 0;">고객 요청</label>
+                            </div>
+                        </div>
+
+                        <div >
+                            <div style="display: flex; flex-direction: column;">
+                                <input type="radio" class="btn-check" name="orderNopeReason" id="btnradio2" style="margin: 0;"
+                                       autocomplete="off" value="2">
+                                <label class="btn btn-default-chk" for="btnradio2" style="width: inherit; margin-left: 0;">고객 정보 부정확</label>
+                            </div>
+                        </div>
+
+                        <div >
+                            <div style="display: flex; flex-direction: column;">
+                                <input type="radio" class="btn-check" name="orderNopeReason" id="btnradio3" style="margin: 0;"
+                                       autocomplete="off" value="3">
+                                <label class="btn btn-default-chk" for="btnradio3" style="width: inherit; margin-left: 0;">주문 지연</label>
+                            </div>
+                        </div>
+                        <div>
+                            <div style="display: flex; flex-direction: column;">
+                                <input type="radio" class="btn-check" name="orderNopeReason" id="btnradio4" style="margin: 0;"
+                                       autocomplete="off" value="4">
+                                <label class="btn btn-default-chk" for="btnradio4" style="width: inherit; margin-left: 0;">재료 소진</label>
+                            </div>
+                        </div>
+                        <div>
+                            <div style="display: flex; flex-direction: column;">
+                                <input type="radio" class="btn-check" name="orderNopeReason" id="btnradio5" style="margin: 0;"
+                                       autocomplete="off" value="5">
+                                <label class="btn btn-default-chk" for="btnradio4" style="width: inherit; margin-left: 0;">기타</label>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="container-fluid">
-                        <div class="row">
-                            <input type="radio" class="btn-check" name="orderNopeReason" id="btnradio2"
-                                   autocomplete="off" value="2">
-                            <label class="btn btn-outline-primary" for="btnradio2">고객 정보 부정확</label>
-                        </div>
+                    <hr style="border-width: inherit;"/>
+
+                    <div style="display: flex; justify-content: center;">
+                        <button class="btn btn-cancle" data-bs-dismiss="modal" aria-label="Close">취소</button>
+                        <button class="btn btn-default" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">다 음
+                        </button>
                     </div>
 
-                    <div class="container-fluid">
-                        <div class="row">
-                            <input type="radio" class="btn-check" name="orderNopeReason" id="btnradio3"
-                                   autocomplete="off" value="3">
-                            <label class="btn btn-outline-primary" for="btnradio3">주문 지연</label>
-                        </div>
-                    </div>
-                    <div class="container-fluid">
-                        <div class="row">
-                            <input type="radio" class="btn-check" name="orderNopeReason" id="btnradio4"
-                                   autocomplete="off" value="4">
-                            <label class="btn btn-outline-primary" for="btnradio4">재료 소진</label>
-                        </div>
-                    </div>
-                    <div class="container-fluid">
-                        <div class="row">
-                            <input type="radio" class="btn-check" name="orderNopeReason" id="btnradio5"
-                                   autocomplete="off" value="5">
-                            <label class="btn btn-outline-primary" for="btnradio4">기타</label>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">취소</button>
-                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">다 음
-                    </button>
                 </div>
             </div>
         </div>
@@ -133,17 +158,19 @@
          tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
                 <div class="modal-body">
-                    정말로 주문취소 하나요??
-                </div>
-                <div class="modal-footer">
+                    <div  style="display: grid; text-align: -webkit-center; margin-bottom: 30px;">
+                        <br/>
+                        <h5 class="modal-title" id="exampleModalToggleLabel2" ><i class="far fa-check-circle fa-2x"></i></h5>
+                        <span style="margin-top: 10px; font-size: 15px;">정말 주문을 취소 할까요?</span>
+                    </div>
 
-                    <button class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">취소</button>
-                    <button class="btn btn-primary" onclick="cancelPay()">확인</button>
+                    <hr style="border-width: inherit;"/>
+
+                    <div style="display: flex; justify-content: center;">
+                        <button class="btn btn-cancle" data-bs-dismiss="modal" aria-label="Close" style="padding: 5px 10px;">취소</button>
+                        <button class="btn btn-default" style="padding: 5px 10px;" onclick="cancelPay()">확인</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -156,21 +183,24 @@
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">영업모드</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
                 <div class="modal-body">
-                    <c:if test="${truck.truckBusiStatus.equals('1')}">
-                        영업종료하시겠습니까??
-                    </c:if>
-                    <c:if test="${truck.truckBusiStatus.equals('0')}">
-                        영업시작하시겠습니까??
-                    </c:if>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-cancle" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-default" id="busiStatus">등록</button>
+                    <div  style="display: grid; text-align: -webkit-center; margin-bottom: 30px;">
+                            <br/>
+                            <h5 class="modal-title" id="staticBackdropLabel" ><i class="fas fa-power-off fa-2x"></i></h5>
+                        <c:if test="${truck.truckBusiStatus.equals('1')}">
+                            <span style="margin-top: 10px; font-size: 15px;">영업을 종료하시나요??</span>
+                        </c:if>
+                        <c:if test="${truck.truckBusiStatus.equals('0')}">
+                            <span style="margin-top: 10px; font-size: 15px;">영업을 시작하시나요??</span>
+                        </c:if>
+                    </div>
+
+                    <hr style="border-width: inherit;"/>
+
+                    <div style="display: flex; justify-content: center;">
+                        <button class="btn btn-cancle" data-bs-dismiss="modal" aria-label="Close" style="padding: 5px 10px;">취소</button>
+                        <button class="btn btn-default" style="padding: 5px 10px;" id="busiStatus">확인</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -190,20 +220,16 @@
                     <input type="hidden" id="truckId" name="truckId" value="${truck.truckId}"/>
                 </div>
 
-                    <%--<header class="pb-4 mb-5 py-4 border-bottom">
-                        <span class="fs-1">주문접수</span>
-                        <input type="hidden" id="truckId" name="truckId"
-                               value="${truck.truckId}"/>
-                    </header>--%>
 
-                    <div class="container-fluid" style="padding: 0 10px; background-color: #ffffff; box-shadow: 0 2px 4px 1px rgba(0,0,0,0.2); transition: 0.3s; border-radius: 10px;">
-                        <div style="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between;">
+                <div class="container orderCheck" style="min-height: 700px;">
+                    <div class="row col-12" style="min-height: inherit;">
 
-                            <%-- 주문목록 --%>
+                        <%-- 주문목록 --%>
+                        <div class="col" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
                             <div class="col-5 p-3 mb-2">
 
                                 <div class="col-12">
-                                    <div class="row">
+                                    <div class="col-5">
                                         <div class="col-6 text-center" style="padding: 0;"> 전체 :</div>
                                         <div class="col-6" style="padding: 0;">
                                             <div class="form-check form-switch">
@@ -312,10 +338,13 @@
                                     <div class="vr"></div>
                                 </div>
                             </div>
+                        </div>
 
-                            <%-- 주문 상세정보 --%>
-                            <div class="col-7 p-3 mb-2">
-                                <div class="row " id="CookingTime">
+                        <%-- 주문상세정보 --%>
+                        <div class="col" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+
+                            <div class="col-12">
+                                <div class="col-7" id="CookingTime">
 
                                 </div>
                                 <hr class="my-2">
@@ -394,15 +423,12 @@
                                         <div class="row" id="paOp">
 
                                         </div>
-
                                     </div>
-
                                 </div>
-
                             </div>
                         </div>
-
                     </div>
+                </div>
 
             </div>
         </div>
