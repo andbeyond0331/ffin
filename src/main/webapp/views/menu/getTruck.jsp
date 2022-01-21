@@ -2961,7 +2961,7 @@
                     <div style="display: flex; justify-content: center;">
                         <button type="button" class="btn btn-cancle" data-dismiss="modal">확인</button>
                         <c:if test="${truck.truckBusiStatus==0}">
-                            <button type="button" class="btn btn-default" id="truckBusi">담기기</button>
+                            <button type="button" class="btn btn-default" id="truckBusi">담기</button>
                         </c:if>
                         <c:if test="${truck.truckBusiStatus==1}">
                             <button type="button" class="btn btn-default" id="addCart" data-dismiss='modal' name="addCart">담기</button>
