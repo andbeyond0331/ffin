@@ -1213,7 +1213,7 @@
                         listHtml += "				<img id='write_reply_profileImage' src='../../../resources/image/"+proImg+"'/>"
                         listHtml += "			</a> ";
                         listHtml += "		</div>"
-                        listHtml += "		<div class='col-8' style='display:flex; text-align: center; align-items: center;'>"
+                        listHtml += "		<div class='col-10' style='display:flex; text-align: center; align-items: center; max-width: max-content;'>"
                         listHtml +=  "  		<input class='w-100 input_rereply_div form-control' style='zoom: 90%; height: 35px; border-radius: 50px; margin-left: 15px;' id='input_rereply"+ commentNo +"' type='text' placeholder='댓글입력...'>"
                         listHtml += "		</div>"
                         listHtml += "		<div class='col-2' style='display:flex; align-items: center; padding: 0;'>"

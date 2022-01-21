@@ -670,7 +670,7 @@
                                     + "</div>";
                             }else if(role=='user'){
                                 display += "<div class='d-grid gap-2 col-6 mx-auto' style='margin: 0 55px 0 55px;'>"
-                                    + "<button class='btn btn-sm ansBtn' type='button' onclick='closeAjax()' style='background: #ecf0fd; color: #000000'>확인</button>";
+                                    + "<button class='btn btn-sm btn-cancle ansBtn' type='button' onclick='closeAjax()' style='background: #ecf0fd; color: #000000'>확인</button>";
 
                                 display +=""+
                                      "<button class='btn btn-default btn-sm' data-bs-toggle='modal' data-bs-target='#updateReview' onclick='updateReviewUpdate("+Data.review.rvNo+")' type='button' style='color: #000000'>수정하기</button>"

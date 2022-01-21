@@ -1647,6 +1647,14 @@
                     var div="";
                     var modalFooter = "";
 
+                    $("#menuModalImg1").attr("src", "/resources/menu/"+data.menu.menuImg1+"");
+                    if ( data.menu.menuImg2 != null ){
+                    $("#menuModalImg2").attr("src", "/resources/menu/"+data.menu.menuImg2+"");
+                    }
+                    if (data.menu.menuImg3 != null ) {
+                        $("#menuModalImg3").attr("src", "/resources/menu/" + data.menu.menuImg3 + "");
+                        //$(".header-title").css({"background-image":"url(../../../resources/image/"+data.review.userProImg+")"});
+                    }
                     div +=
                         // "<div class=\"page-header\">"+
                         // "<h3 class=\"getMenuTitle custom\" name=\"menuTruckName\">"+truckName+"</h3>"+
@@ -1657,17 +1665,17 @@
                         // "<div class=\"row\">"+
                         // "<div class=\"col-xs-4 col-md-2\"><strong>메뉴번호</strong></div>"+
                         // " <div class=\"col-xs-8 col-md-4\" name=\"odMenuNo\">"+data.menu.menuNo+"</div>"+
-                        "<input type=\"hidden\" name=\"odMenuNo\" value=\""+data.menu.menuNo+"\">"+
+                        "<input type=\"hidden\" name=\"odMenuNo\" value=\""+data.menu.menuNo+"\">";
                         // "</div>"+
                         // "<hr/>"+
                         // "<div class=\"row\"><strong>메뉴이미지1</strong></div>"+
-                        "<hr/>"+
-                        "<div class=\"odMenuImg\" name=\"odMenuImg1\" data-menuimg=\""+data.menu.menuImg1+"\" style=\"max-width: 450px;\">" +
-                        "<img src=\"/resources/menu/"+data.menu.menuImg1+"\"" +
-                        "style=\"border-bottom: 1px solid #eee; width: 100%; border-radius: 10px; box-shadow: 0 2px 2px 1px rgba(0,0,0,0.2); transition: 0.3s;\" "+
-                        "alt=\""+data.menu.menuName+"의 이미지1\" title=\""+data.menu.menuName+"\"></div> </div>"+
-                        "<hr/>"+
-                        "<div>";
+                    /* "<hr/>"+
+                   "<div class=\"odMenuImg\" name=\"odMenuImg1\" data-menuimg=\""+data.menu.menuImg1+"\" style=\"max-width: 450px;\">" +
+                    "<img src=\"/resources/menu/"+data.menu.menuImg1+"\"" +
+                    "style=\"border-bottom: 1px solid #eee; width: 100%; border-radius: 10px; box-shadow: 0 2px 2px 1px rgba(0,0,0,0.2); transition: 0.3s;\" "+
+                    "alt=\""+data.menu.menuName+"의 이미지1\" title=\""+data.menu.menuName+"\"></div> </div>"+
+                    "<hr/>"+
+                    "<div>";*/
                     // "<div class=\"col-xs-4 col-md-2 \"><strong>메뉴 이름</strong></div>"+
                     //  "<div class=\"col-xs-8 col-md-4\" name=\"odMenuName\"><strong>"+data.menu.menuName+"</strong></div>"+
 
@@ -1687,7 +1695,7 @@
                     // "<input type=\"hidden\" name=\"odMenuQty\" value="+ //todo 보류입니다!(수량을 hidden으로 넣을지가)
 
 
-                    $('.modal-body-hey').html(div);
+                    $('.menu-modal-body').html(div);
 
                     if(optionGroupCount!=0){
                         getOptionGroupListOnModal(data.menu.menuNo);
@@ -2529,6 +2537,25 @@
             font-size: 14px;
         }
 
+        /*hhj 모달 안의 사진 */
+        .img-size{
+            /* 	padding: 0;
+                margin: 0; */
+            height: 450px;
+            width: 700px;
+            background-size: cover;
+            overflow: hidden;
+        }
+        .carousel-control-prev-icon {
+             background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+             width: 30px;
+             height: 48px;
+         }
+        .carousel-control-next-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+            width: 30px;
+            height: 48px;
+        }
     </style>
 
 </head>
@@ -2875,10 +2902,57 @@
                     <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight: 600; margin: 0; box-shadow: inset 0 -11px 0 #fae100; font-size: 20px; width: fit-content;">메뉴 정보</h5>
                 </div>
 
-                <div class="modal-body-hey" style="display: flex; flex-direction: column;">
-                    <p></p>
-                </div>
+                <div class="modal-body-hey col-12" style="margin: 0; display: flex; flex-direction: column;">
+                    <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
+                        <ol class='carousel-indicators'>
+                            <li
+                                    data-target='#carouselExampleIndicators'
+                                    data-slide-to='0'
+                                    class='active'></li>
+                            <li
+                                    data-target='#carouselExampleIndicators'
+                                    data-slide-to='1'></li>
+                            <li
+                                    data-target='#carouselExampleIndicators'
+                                    data-slide-to='2'></li>
+                        </ol>
+                        <div class='carousel-inner'>
+                            <div class='carousel-item active'>
+                                <img class='img-size' id='menuModalImg1' src='https://images.unsplash.com/photo-1485470733090-0aae1788d5af?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1391&q=80' alt='First slide' />
+                            </div>
+                            <div class='carousel-item'>
+                                <img class='img-size' id='menuModalImg2' src='https://images.unsplash.com/photo-1491555103944-7c647fd857e6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80' alt='Second slide' />
+                            </div>
+                            <div class='carousel-item'>
+                                <img class='img-size' id='menuModalImg3' src='https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80' alt='Second slide' />
+                            </div>
+                        </div>
+                        <a
+                                class='carousel-control-prev'
+                                href='#carouselExampleIndicators'
+                                role='button'
+                                data-slide='prev'>
+              <span class='carousel-control-prev-icon'
+                    aria-hidden='true'></span>
+                            <span class='sr-only'>Previous</span>
+                        </a>
+                        <a
+                                class='carousel-control-next'
+                                href='#carouselExampleIndicators'
+                                role='button'
+                                data-slide='next'>
+              <span
+                      class='carousel-control-next-icon'
+                      aria-hidden='true'></span>
+                            <span class='sr-only'>Next</span>
+                        </a>
+                    </div>
 
+
+                </div>
+                <div class="menu-modal-body col-12" style="margin: 0; display: flex; flex-direction: column;">
+                        // 여기엔 메뉴 정보
+                    </div>
                 <div class="modal-happy col-12" style="margin: 0; display: flex; flex-direction: column;">
                 </div>
 
