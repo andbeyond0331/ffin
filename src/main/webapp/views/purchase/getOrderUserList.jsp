@@ -293,7 +293,7 @@
 
             if(orderCount.length == 1){
 
-                self.location = "/purchase/getOrderUser?orderNo="+getOrderUser;
+                self.location = "/purchase/getOrderUser?orderNo="+getOrderUser+"&orderCount="+orderCount;
             }
 
         });
