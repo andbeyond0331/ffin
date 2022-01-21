@@ -1,3 +1,5 @@
+
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -474,7 +476,7 @@
                     var sale = Number(totalSS2[1]) + Number(couponDcPrice);
                     /*var payPrice = (dd[1] - couponDcPrice);*/
                     $("input[name='payPrice']").val(payPrice);
-                    append = "<input type=\"hidden\" id=\"couponNo\" name=\"couponNo\" value=\"" + couponNo + "\">";
+                    append = "<input type=\"text\" id=\"couponNo\" name=\"couponNo\" value=\"" + couponNo + "\">";
                     totalPayPrice = "<span id='totalpp'>결제금액 : " + payPrice + "</span>"+
                         "<input type='hidden' id='payPrice' value='"+payPrice+"'>";
                     totalsale = "<span id='sale'>할인금액 : " + sale + "</span>"
@@ -502,9 +504,9 @@
                 modal.find('button.btn-primary').on("click", function () {*/
         $("#button-addon2").click(function () {
 
-            var pointCheck = $("input[name='pointAmt']").val();
+            var pointCheck = $("input[name='pointCheck']").val();
 
-            var totalPoint = Number(document.getElementById('totalPoint').innerHTML);
+            var totalPoint = $("input[name='totalPoint']").val();
             var val = document.getElementById('totalpp').innerHTML;
             var orderTotalPayPrice = $("input[name='orderPrice']").val();
             var totalSS1 = document.getElementById('sale').innerHTML;
@@ -512,6 +514,14 @@
             var dd = val.split(":").map(Number);
             var usePoint = $('input[name="usePoint"]').val();
 
+
+            console.log("totalPoint"+totalPoint)
+            console.log("val"+val)
+            console.log("orderTotalPayPrice"+orderTotalPayPrice)
+            console.log("totalSS1"+totalSS1)
+            console.log("totalSS2"+totalSS2)
+            console.log("dd"+dd)
+            console.log("usePoint"+usePoint)
 
             if (pointCheck == undefined) {
 
@@ -521,24 +531,28 @@
                         if (usePoint != "") {
                             if (usePoint % 1000 == 0) {
 
-                                var useMinPoint = Number(totalPoint-usePoint);
+                                /* var useMinPoint = Number(totalPoint-usePoint);*/
 
 
                                 var payPrice = Number(dd[1]) - usePoint;
                                 var sale = Number(totalSS2[1]) + Number(usePoint);
 
 
-                                append = "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePoint + "\">";
-                                totalPayPrice = "<span id='totalpp' name='payPrice' >결제금액 : " + payPrice + "</span>"+
-                                    "<input type='hidden' id='payPrice' value='"+payPrice+"'>";
 
+                                /*   append = "<input type=\"text\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePoint + "\">";*/
+                                totalPayPrice = "<span id='totalpp' name='payPrice' >결제금액 : " + payPrice + "</span>"+
+                                    "<input type='hidden' id='payPrice' value='"+payPrice+"'>"+
+                                    "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePoint + "\">";
+
+                                pointHtmlCheck =  "<input type='hidden' name='pointCheck' id='pointCheck' value='1'>";
                                 totalsale = "<span id='sale'>할인금액 : " + sale + "</span>"
 
                                 $("input[name='payPrice']").val(payPrice);
-                                $('#usePointAmt').append(append);
+                                /* $('#usePointAmt').append(append);*/
                                 $('#pp').html(totalPayPrice);
                                 $('#dcp').html(totalsale);
-                                $('#totalPoint').html(useMinPoint);
+                                $('#order').append(pointHtmlCheck);
+                                /*$('#totalPoint').html(useMinPoint);*/
 
                                 alert("포인트가 적용되었습니다")
 
@@ -577,6 +591,10 @@
                                             var ususususPoint = $("#pointAmt").val();
                                             var usePlMnPoint = Number(totalPoint)+Number(ususususPoint);
 
+                                            console.log("usePointT"+usePointT)
+                                            console.log("pointde"+pointde)
+                                            console.log("pointRe"+pointRe)
+                                            console.log("")
                                             console.log("totalPoint 현재 보유 포인트 "+usePlMnPoint)
                                             console.log("usususPoint 현재 그전에 사용한 포인트"+ususususPoint)
                                             console.log("1번째 합친거 "+usePlMnPoint)
@@ -619,13 +637,14 @@
 
 
 
-                                        append = "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePointT + "\">";
+                                        /*append = "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePointT + "\">";*/
                                         totalPayPrice = "<span id='totalpp' name='totalpp' >결제금액 : " + payPriceT + "</span>"+
-                                            "<input type='hidden' id='payPrice' name='payPrice' value='"+payPrice+"'>";
+                                            "<input type='hidden' id='payPrice' name='payPrice' value='"+payPrice+"'>"+
+                                            "<input type=\"hidden\" id=\"pointAmt\" name=\"pointAmt\" value=\"" + usePointT + "\">";
                                         totalsale = "<span id='sale'>할인금액 : " + saleT + "</span>"
 
                                         $("input[name='payPrice']").val(payPrice);
-                                        $('#usePointAmt').append(append);
+                                        /* $('#usePointAmt').append(append);*/
                                         $('#pp').html(totalPayPrice);
                                         $('#dcp').html(totalsale);
 
@@ -856,8 +875,8 @@
                                         <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.odOptionName}"/>
                                         <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.odMenuQty}"/>
                                         <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.odMenuPrice}"/>
-                                        <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
-                                        <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
+                                        <input type="text" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
+                                        <input type="text" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
                                         <input type="hidden" id="odMenuQtyFlag" name="odMenuQtyFlag" value="${cart.odMenuQtyFlag}"/>
 
                                     </c:forEach>
@@ -926,6 +945,7 @@
 
                                 <div>
                                     <div id="test" style="display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+
                                         <label for="couponDcPrice" class="col-sm-1 col-sm-2 control-label" style="font-weight:600; margin: 0; padding: 0; text-align: left">할인쿠폰</label>
                                         <div class="input-group col-sm-1 col-sm-9" style="padding: 0;">
                                             <input type="text" class="form-control" id="couponDcPrice" name="couponDcPrice" placeholder="쿠폰을 적용하세요" value="${coupon.couponDcPrice}"
@@ -943,7 +963,9 @@
                                         <div style="display: flex; align-items: center; justify-content: center;">
                                             <label for="usePoint" class="col-sm-1 col-sm-2 control-label" style="font-weight:600; margin: 0; padding: 0; text-align: left">적립금</label>
                                             <div class="input-group col-sm-1 col-sm-9" style="padding: 0;">
-<%--                                                <input type="hidden" class="input-group-text" id="totalPoint" style="background-color: white; border: 0;">${totalPoint.userTotalPoint}</input>--%>
+
+                                                <input type="hidden" id="totalPoint" name="totalPoint" value="${totalPoint.userTotalPoint}">
+                                                <%--<input type="hidden" class="input-group-text" id="totalPoint" style="background-color: white; border: 0;">${totalPoint.userTotalPoint}</input>--%>
                                                 <input type="text" class="form-control" id="usePoint" name="usePoint" placeholder="보유 적립금 : ${totalPoint.userTotalPoint}" value="${point.pointAmt}"
                                                        style="border-width: 1.5px; border-top: 0; border-right: 0; border-left: 0; background-color: white; border-radius: 0; text-align: center;">
                                                 <span class="input-group-text" style="background-color: white; border: 0;">원</span>
@@ -970,11 +992,11 @@
                                     <div class="row row-cols-2" style="display:flex; align-items: center; justify-content: flex-start;">
                                         <div class="col-5">결제방법을 선택해주세요.</div>
                                         <div class="col-3" style="padding: 0;" ><input type="radio" class="btn-check" name="payOption" id="btnradio1"
-                                                                value="0" autocomplete="off" checked >
+                                                                                       value="0" autocomplete="off" checked >
                                             <label class="btn btn-outline-primary w-100" for="btnradio1" style="border-radius: 9.25rem; margin: 0;">일반 결제</label>
                                         </div>
                                         <div class="col-3" style="padding: 0;" ><input type="radio" class="btn-check" name="payOption" id="btnradio2"
-                                                                value="1" autocomplete="off">
+                                                                                       value="1" autocomplete="off">
                                             <label class="btn btn-outline-primary w-100" for="btnradio2" style="border-radius: 9.25rem; margin: 0 0 0 15px;">휴대폰결제</label>
                                         </div>
                                     </div>
@@ -1080,6 +1102,7 @@
             var odMenuQtyFlag = $("input[name='odMenuQtyFlag']").eq(i).val();
 
 
+            console.log(odMenuImage)
             /* HHJ */
 
             if (optionNameShow[menuCount] == undefined){
@@ -1191,6 +1214,7 @@
             /* alert("test3"+test3)
              alert("test 길이"+test3.length)*/
         }
+        console.log(odMenuImageL[0])
 
 
         var menuPrice = 0;
@@ -1237,3 +1261,4 @@
 
 </script>
 </html>
+

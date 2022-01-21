@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -1390,13 +1391,13 @@
                 odMenuQtyFlag.push($(this).val());
             });
 
-            /*   alert(orderPickUpTime)
-               alert(orderTotalPrice)
-               alert(orderUserId)
-               alert(orderTruckId)
-               alert(orderRequest)
-               alert(orderQty)
-               alert(odMenuQtyFlag)*/
+            /*  alert(orderPickUpTime)
+              alert(orderTotalPrice)
+              alert(orderUserId)
+              alert(orderTruckId)
+              alert(orderRequest)
+              alert(orderQty)
+              alert(odMenuQtyFlag)*/
             var menuTotalPrice = 0;
             var menuPriceCount = 0;
             var menuPricePree =0;
@@ -1649,7 +1650,7 @@
 
                     $("#menuModalImg1").attr("src", "/resources/menu/"+data.menu.menuImg1+"");
                     if ( data.menu.menuImg2 != null ){
-                    $("#menuModalImg2").attr("src", "/resources/menu/"+data.menu.menuImg2+"");
+                        $("#menuModalImg2").attr("src", "/resources/menu/"+data.menu.menuImg2+"");
                     }
                     if (data.menu.menuImg3 != null ) {
                         $("#menuModalImg3").attr("src", "/resources/menu/" + data.menu.menuImg3 + "");
@@ -1666,9 +1667,9 @@
                         // "<div class=\"col-xs-4 col-md-2\"><strong>메뉴번호</strong></div>"+
                         // " <div class=\"col-xs-8 col-md-4\" name=\"odMenuNo\">"+data.menu.menuNo+"</div>"+
                         "<input type=\"hidden\" name=\"odMenuNo\" value=\""+data.menu.menuNo+"\">";
-                        // "</div>"+
-                        // "<hr/>"+
-                        // "<div class=\"row\"><strong>메뉴이미지1</strong></div>"+
+                    // "</div>"+
+                    // "<hr/>"+
+                    // "<div class=\"row\"><strong>메뉴이미지1</strong></div>"+
                     /* "<hr/>"+
                    "<div class=\"odMenuImg\" name=\"odMenuImg1\" data-menuimg=\""+data.menu.menuImg1+"\" style=\"max-width: 450px;\">" +
                     "<img src=\"/resources/menu/"+data.menu.menuImg1+"\"" +
@@ -1783,7 +1784,7 @@
             if(checkMenuTruckId != undefined) {
 
                 if (checkMenuTruckId != orderTruckId) {
-                    $('button#truckIdCheck.button.is-warning.is-light').click(function () {
+                    $('li.tag__item.orderBtn').click(function () {
                         var result = confirm('기존에 저장된 메뉴를 삭제하시겠습니까??');
                         if (result) { //yes
                             sessionStorage.removeItem('menuOdList');
@@ -2547,10 +2548,10 @@
             overflow: hidden;
         }
         .carousel-control-prev-icon {
-             background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
-             width: 30px;
-             height: 48px;
-         }
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+            width: 30px;
+            height: 48px;
+        }
         .carousel-control-next-icon {
             background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23009be1' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
             width: 30px;
@@ -2951,8 +2952,8 @@
 
                 </div>
                 <div class="menu-modal-body col-12" style="margin: 0; display: flex; flex-direction: column;">
-                        // 여기엔 메뉴 정보
-                    </div>
+                    // 여기엔 메뉴 정보
+                </div>
                 <div class="modal-happy col-12" style="margin: 0; display: flex; flex-direction: column;">
                 </div>
 
@@ -3284,3 +3285,5 @@
 
 </body>
 </html>
+
+
