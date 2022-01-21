@@ -320,6 +320,7 @@
 
             var finalCartFirst = "";
             var forOneFirst=0;
+            var qty =0;
 
             // ////////////시작///////////////////
             if(beforeAnywayFirst) { // sessionStorage에 뭔가 있다?
@@ -328,14 +329,17 @@
 
                     console.log("처음 for문 안에 있다!");
                     console.log("처음 beforeAnywayFirst[" + i + "]번째 세션 : " + JSON.stringify(beforeAnywayFirst[i]));
+                    console.log("1 : " + beforeAnywayFirst[i]['odMenuPrice'])//플래그
 
                     if (beforeAnywayFirst[i]['odMenuQtyFlag'] == 0) {//플래그0일 때 메뉴 수량, 이름 출력
-
+                        var totalPrice = 0; // 다음 대표메뉴가 들어오면 지금까지 저장한 price가 필요없으므로 0값을 취함.
+                                            // 만약에 장바구니에 있는 '총가격'을 노출시키려면 다른 변수를 로직 바깥에서 (원래 totalPrice 잇던곳)
+                                            // 처리해주면 된당
                         /* 장바구니 */
                         finalCartFirst += "" +
                             // "<li class=\"list-group-item d-flex justify-content-between lh-sm\">" +
-                            "<li class=\"list-group-item\" style='padding: 10px; display: flex; align-items: center;'>" +
-                            "<div>"+
+                            "<li class=\"list-group-item\" style='padding: 10px; display: flex; align-items: center; flex-direction: column;'>" +
+                            "<div class='col-12'>"+
                             "<button type='button' class='close' id='cancelMenu'>"+
                             "<span aria-hidden='true'><ion-icon name='close-outline'></ion-icon></span></button>"+
                             "</div>"+
@@ -348,14 +352,24 @@
                             "<input type='button' value='+' id='increaseQuantity'> </h6></div><hr/>" +
                             "";
 
+                        qty = beforeAnywayFirst[i]['odMenuQty'];
+
+                        //totalPrice = Number(beforeAnywayFirst[i]['odMenuPrice'].replace('₩','').trim());
+                        totalPrice = (Number(beforeAnywayFirst[i]['odMenuPrice'].replace('₩','').trim()) * Number(qty));
+                        // totalPrice에 대표메뉴 값을 지정하고,
+                        // 수량을 곱한 값이 나와야 함
+                        // 그리고 옵션 없어도 수량을 곱한 값이 노출되어야 하므로
+                        // 기존에 출력하던 beforAnyWay 어쩌고 에서 totalPrice로 바꿔줌
+
+
                         forOneFirst += 1;
                         if (beforeAnywayFirst[i + 1] != null) { //만약 다음 애가 있는데
                             if (beforeAnywayFirst[i + 1]['odMenuQtyFlag'] == 0) { //수량제공메뉴이면(지금 이게 수량제공메뉴란 소리니까 닫아줘야함)
-                                finalCartFirst += "</div><span class=\"text-muted\">" + beforeAnywayFirst[i]['odMenuPrice'] + "원</span></li>";
+                                finalCartFirst += "</div><div class='col-12' style='display: flex; justify-content: flex-end; margin-right: 15px; font-weight: 600;'><span class=\"text-muted\" style='font-size: 16px;'>" + totalPrice + " ₩</span></div></li>";
                             }
 
                         }else{ //만약 다음 애가 없으면
-                            finalCartFirst += "</div><span class=\"text-muted\">" + beforeAnywayFirst[i]['odMenuPrice'] + "원</span></li>";
+                            finalCartFirst += "</div><div class='col-12' style='display: flex; justify-content: flex-end; margin-right: 15px; font-weight: 600;'><span class=\"text-muted\" style='font-size: 16px;'>" + totalPrice + " ₩</span></div></li>";
                         }
                     } else { //플래그 1일 때
                         // for(var j=i+1; j<beforeAnyway.length; j++){ //옵션그룹 화면에 뿌려주기 위한 for문 (수량제공메뉴+1부터
@@ -367,21 +381,29 @@
                             "<small class=\"text-muted\">" + beforeAnywayFirst[i]['odOptionName'] + "</small>" +
                             "<small class=\"text-muted\" style='float: right;''> +" + beforeAnywayFirst[i]['odOptionPrice'] + "원</small>";
 
+
+                        //totalPrice +=  Number(beforeAnywayFirst[i]['odOptionPrice']);
+                        // 다음 대표메뉴가 들어올 때까지 계속 더해준당
+                        // 그리고 마지막에 그 값을 노출시키면 됨
+                        totalPrice +=  (Number(beforeAnywayFirst[i]['odOptionPrice']) * Number(qty));
+
+                        console.log("totalPrice//////////////////////////"+totalPrice)
                         forOneFirst += 1;
                         if (beforeAnywayFirst[i + 1] != null) {
                             if (beforeAnywayFirst[i + 1]['odMenuQtyFlag'] == 0) {
-                                finalCartFirst += "</div><span class=\"text-muted\">" + beforeAnywayFirst[i]['odMenuPrice'] + "원</span></li>";
+                                finalCartFirst += "</div><div class='col-12' style='display: flex; justify-content: flex-end; margin-right: 15px; font-weight: 600;'><span class=\"text-muted\" style='font-size: 16px;'>" + totalPrice + " ₩</span></div></li>";
                             }
-/*//////////////////////////////////////////////수정///////////////////*/
 
                         }else{
-                            finalCartFirst += "</div><span class=\"text-muted\">" + beforeAnywayFirst[i]['odMenuPrice'] + "원</span></li>";
+                            finalCartFirst += "</div><div class='col-12' style='display: flex; justify-content: flex-end; margin-right: 15px; font-weight: 600;'><span class=\"text-muted\" style='font-size: 16px;'>" + totalPrice + " ₩</span><div></li>";
                         }
+
 
                         // finalCart+="</div><span class=\"text-muted\">"+beforeAnyway[i]['odMenuPrice']+"원</span></li>";
                         // i=forOne;
 
                     }//sessionStorage만큼 for문 돌리기
+
                 }
                 console.log("하하"+targetCartFirst.html());
                 console.log("호호"+finalCartFirst);
@@ -394,6 +416,7 @@
             // location.reload();
 
             //처음 화면에 담기 끝
+
 
 
 
@@ -473,7 +496,7 @@
                         var optionGroupOrderDetail = {
                             menuTruckId : modalApply.find('input[name="menuTruckId"]').val(),
                             odMenuNo : modalApply.find('input[name="odMenuNo"]').val(),
-                            odMenuName : modalApply.find('h3[name="odMenuName"]').text(),
+                            odMenuName : modalApply.find('h6[name="odMenuName"]').text(),
                             odMenuImg1 : modalApply.find('div[name="odMenuImg1"]').data('menuimg'),
                             odMenuDetail : modalApply.find('div[name="odMenuDetail"]').text(),
                             odMenuPrice : modalApply.find('div[name="odMenuPrice"]').text(),
@@ -1272,8 +1295,6 @@
 
 
 
-        /*//////////////////////////수정///////////////////////////*/
-        /*//////////////////////////수정///////////////////////////*//*//////////////////////////수정///////////////////////////*/
         /*장바구니 주문하기 */
         $(function () {
             $("#addMenuCart").click(function () {
@@ -1304,16 +1325,14 @@
                         buttons: true,
                         closeOnClickOutside : false
                     }).then(function (){
-                       // 바꿔죠!!!
+                        // 바꿔죠!!!
 
                     });
                 }else{
                     $('#cartModal').modal('toggle');
                 }
-
             })
         });
-
 
 
         function menu_ajax() {
@@ -1372,24 +1391,16 @@
                 odMenuQtyFlag.push($(this).val());
             });
 
-/*               console.log("orderPickUpTime"+orderPickUpTime)
-            console.log("orderTotalPrice"+orderTotalPrice)
-            console.log("orderUserId"+orderUserId)
-            console.log("orderTruckId"+orderTruckId)
-            console.log("orderRequest"+orderRequest)
-            console.log("orderQty"+orderQty)
-            console.log("odMenuQtyFlag"+odMenuQtyFlag)
-
-            console.log("orderRequest"+orderRequest)
-            console.log("odMenuPrice"+odMenuPrice)
-            console.log("odOptionPrice"+odOptionPrice)
-            console.log("odMenuQty"+odMenuQty)
-            console.log("odMenuImage"+odMenuImage)*/
+            /*   alert(orderPickUpTime)
+               alert(orderTotalPrice)
+               alert(orderUserId)
+               alert(orderTruckId)
+               alert(orderRequest)
+               alert(orderQty)
+               alert(odMenuQtyFlag)*/
             var menuTotalPrice = 0;
             var menuPriceCount = 0;
             var menuPricePree =0;
-            var menuPrice111 = 0;
-
 
             for(var j = 0; j< odMenuName.length; j++){
                 if(odMenuQtyFlag[j] == '0'){
@@ -1416,8 +1427,7 @@
 
                 }
             }
-     /*       console.log("menuCount"+menuCount)
-            console.log("menuTotalPrice"+menuTotalPrice)*/
+
 
 
             var data = {
@@ -1528,7 +1538,13 @@
 
         // 메뉴 상세보기
         function getMenu(menuNo){
+            var role = '${sessionScope.role}'
 
+            if (role=='truck'){
+
+                $("#exampleModalLong").find("button").remove("#addCart");
+
+            }
             // 메뉴에 해당하는 옵션그룹이 있니?
             var optionGroupCount = 0;
             $.ajax({
@@ -1730,8 +1746,8 @@
                     rvDiv+=""+
                         "<section id=\"testimonials\">"+
                         "<div class=\"testimonial-heading\">"+
-                        "<span>Comments</span>"+
-                        "<h4>Clients Says</h4>"+
+                        "<i class='fa fa-quote-left' aria-hidden='true' style='color: #f17228;'></i>"+
+                        "<h4 style='margin-top: 10px;'>리뷰목록</h4>"+
                         "</div>"+
                         "<div class=\"testimonial-box-container\">"+
                         ""+
@@ -1951,13 +1967,6 @@
 
     <%--리뷰 css--%>
     <style>
-
-        *{
-            margin: 0px;
-            padding: 0px;
-            font-family: poppins;
-            box-sizing: border-box;
-        }
         a{
             text-decoration: none;
         }
@@ -1994,7 +2003,7 @@
         }
         .testimonial-box{
             width:500px;
-            box-shadow: 2px 2px 30px rgba(0,0,0,0.1);
+            box-shadow: 2px 4px 2px rgba(0,0,0,0.1);
             background-color: #ffffff;
             padding: 20px;
             margin: 15px;
@@ -2043,11 +2052,6 @@
             font-size: 0.9rem;
             color: #4b4b4b;
         }
-        .testimonial-box:hover{
-            transform: translateY(-10px);
-            transition: all ease 0.3s;
-        }
-
         @media(max-width:1060px){
             .testimonial-box{
                 width:80%;
@@ -2651,7 +2655,8 @@
                                 <input type="hidden" id="orderTruckId" name="orderTruckId.truckId" value="${truck.truckId}"/>
                                 <div style="display: flex; justify-content: space-between;">
                                     <button type="button"  class="btn btn-cancle" id="cancelCartMenuList" style="margin: 0;">삭제</button>
-                                    <%--///////////////////////////수정//////////////////////////--%>
+                                    <%--                                    <button type="button"  class="btn btn-default" data-toggle="modal" data-target="#cartModal" style="margin: 0;">주문하기</button>--%>
+                                    <%--                                    <button type="button" id="addOrderMenuCall"   class="btn btn-default" data-toggle="modal" data-target="#cartModal" style="margin: 0;">주문하기</button>--%>
                                     <button type="button" id="addOrderMenuCall"   class="btn btn-default" style="margin: 0;">주문하기</button>
                                 </div>
                             </form>
@@ -3007,8 +3012,6 @@
                     <div style="display: flex; justify-content: center;">
                         <button type="button" class="btn btn-default" id="addMenuCart">확인</button>
                         <button type="button" class="btn btn-cancle" data-dismiss="modal">취소</button>
-<%--///////////////////////////수정.//////////////////--%>
-
                     </div>
 
                 </div>
