@@ -165,6 +165,7 @@
 		FROM truck t
 		left join menu m
 		on m.menu_truck_id=t.truck_id
+		<trim prefix="WHERE" prefixOverrides="AND">
 			AND t.TRUCK_JOIN_REQ_STATUS=1
 		       AND t.TRUCK_BYE_STATUS=0
 			<if test="search.searchKeyword !='' and search.searchKeyword!=null">
@@ -174,6 +175,7 @@
 			<if test="cateCondition!=null and cateCondition != '' and cateCondition != 0">
 				AND t.truck_cate = #{cateCondition}
 			</if>
+		</trim>
 		group by truck_id, truck_avg_star
 		<trim prefix="having" prefixOverrides="AND">
 			<if test="cateCondition!=null and cateCondition != '' and cateCondition != 0">
@@ -184,6 +186,7 @@
 				AND ((t.truck_name LIKE #{search.searchKeyword} or t.truck_sig_menu_name like #{search.searchKeyword}) or m.menu_name like #{search.searchKeyword})
 			</if>
 		</trim>
+
 		<if test="search.sortCondition == 'distance'">
 			order by distance
 		</if>
