@@ -413,6 +413,8 @@
         }
 
         function setImage2Preview(event){
+            var DIVimage2preview = $('#image2preview');
+
             var reader  = new FileReader();
             var isTherePreview = DIVimage2preview.find('img').length;
             alert("isTherePreview : " + isTherePreview);
@@ -439,6 +441,8 @@
         }
 
         function setImage3Preview(event){
+            var DIVimage3preview = $('#image3preview');
+
             var reader  = new FileReader();
             var isTherePreview = DIVimage3preview.find('img').length;
             alert("isTherePreview : " + isTherePreview);

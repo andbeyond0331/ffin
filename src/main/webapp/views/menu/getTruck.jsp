@@ -1486,7 +1486,7 @@
         $(function() {
 
             // 지도 클릭시 지도 화면 띄우기
-            $("body").on("click", ".fa-lg", function () {
+            $("body").on("click", ".fa-lg.map", function () {
 
                 mapLocationSelect()
 
@@ -2720,7 +2720,7 @@
                 <div class="col-8 col-md-6" style="padding: 0; text-align: right; display: flex; justify-content: flex-end; align-items: center;">
 
                     <div style="margin-right: 10px;">
-                        <i class="fas fa-map-marker-alt fa-lg"></i>
+                        <i class="fas fa-map-marker-alt fa-lg map"></i>
                     </div>
                     <!--좋아요--> <!-- 0115 HHJ 추가 -->
                     <div style="display: flex; align-items: center;">
