@@ -358,6 +358,7 @@ public class UserController {
 
         System.out.println("UserController.getOrderUser : GET");
 
+        int orderCheck = 1;
         purchase = purchaseService.getPurchase(orderNo);
         Map map = new HashMap();
         map = purchaseService.getOrderDetail(orderNo);
@@ -365,7 +366,8 @@ public class UserController {
         System.out.println("map//////////"+map);
         model.addObject("map",map);
         model.addObject("purchase",purchase);
-        model.setViewName("forward:/views/user/getPurchaseByUser.jsp");
+        model.addObject("orderCheck",orderCheck);
+        model.setViewName("forward:/views/purchase/getOrderUser.jsp");
 
         return  model;
 

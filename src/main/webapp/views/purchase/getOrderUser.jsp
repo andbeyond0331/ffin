@@ -460,7 +460,16 @@
             <div class="detail-box">
                 <i class="fa fa-quote-left" aria-hidden="true" style="color: #f17228;"></i>
                 <h4 style="margin-top: 10px;">
-                    현재주문정보
+                    <c:if test="${orderCheck==1}">
+                        상세주문정보
+                    </c:if>
+                    <c:if test="${orderCheck==2}">
+                        현재주문정보
+                    </c:if>
+                    <c:if test="${orderCheck==0}">
+                        현재주문정보
+                    </c:if>
+
                 </h4>
             </div>
 

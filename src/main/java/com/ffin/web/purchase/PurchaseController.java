@@ -253,6 +253,7 @@ public class PurchaseController {
 
 
 
+
         return "forward:/purchase/getOrderUser";
     }
 
@@ -269,6 +270,7 @@ public class PurchaseController {
         if(payPrice != 0 ){
             purchase.setPayPrice(payPrice);
         }
+        int orderCheck = 0;
         purchase.setPayOption(payOption);
         purchase.setOrderStatus(1);
         System.out.println("//////////////////////////////////////payPrice :"+payPrice+"payOption :"+payOption);
@@ -280,7 +282,9 @@ public class PurchaseController {
         System.out.println("map.put "+map.get("list"));
         model.addObject("map", map);
         model.addObject("purchase", purchase);
+        model.addObject("orderCheck",orderCheck);
         model.setViewName("forward:/views/purchase/getOrderUser.jsp");
+
 
         return model;
 
@@ -333,6 +337,7 @@ public class PurchaseController {
         purchase.setOrderNo(orderNo);
             purchase = purchaseService.getPurchase(purchase.getOrderNo());
 
+            int orderCheck = 0;
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println("ppppppppppppurchase11111 + "+purchase);
             Map map = new HashMap();
@@ -342,6 +347,7 @@ public class PurchaseController {
         System.out.println("map//////////"+map);
             model.addObject("map",map);
             model.addObject("purchase",purchase);
+        model.addObject("orderCheck",orderCheck);
             model.setViewName("forward:/views/purchase/getOrderUser.jsp");
 
     return  model;
