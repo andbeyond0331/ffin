@@ -19,7 +19,7 @@
         //============= "수정완료"  Event 연결 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $("button.btn.btn-secondary").on("click", function () {
+            $("#updatePC").on("click", function () {
                 fncUpdatePost();
             });
         });
@@ -27,7 +27,7 @@
         //============= "취소"  Event 처리 및  연결 =============
         $(function () {
             //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-            $("a[href='#' ]").on("click", function () {
+            $("#cancelUP").on("click", function () {
                 self.location = "/community/getPostList"
             });
         });
@@ -201,8 +201,8 @@
             <br/>
             <div class="form-group">
                 <div class="offset-3 col-sm-6 text-center">
-                    <button type="button" class="btn btn-secondary">수 정 완 료</button>
-                    <a class="btn btn-secondary btn" href="#" role="button">취 소</a>
+                    <button type="button" class="btn btn-default" id="updatePC">수 정 완 료</button>
+                    <button type="button" class="btn btn-cancle" id="cancelUP">취 소</button>
                 </div>
             </div>
         </form>
