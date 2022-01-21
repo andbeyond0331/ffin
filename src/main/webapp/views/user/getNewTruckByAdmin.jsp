@@ -223,6 +223,32 @@
             })
         })
 
+        $(function () {
+
+            var code = "";
+            ``
+            /* 인증번호 이메일 전송 */
+            $(".okBtn").click(function () {
+                alert("가입승인처리가 완료되었습니다. 해당사업자에게 가입승인완료 통보 메일이 발송됩니다.");
+
+                var getEmail = $("#truckEmail").val();
+                var authInputBox = $(".mail-check-input");
+
+                var boxWrap = $(".mail-check-input-box");
+                $.ajax({
+                    type   : "GET",
+                    url    : "/auth/json/joinAcceptMail/" + getEmail,
+                    success: function (data) {
+                        //console.log("data : "+data);
+                        /*$("#userEmailAuth").attr("disabled",false);*/
+                        authInputBox.attr("disabled", false);
+                        boxWrap.attr("id", "mail-check-input-box-ture")
+                        code = data;
+                    }
+                });
+            });
+        })
+
     </script>
 </head>
 
