@@ -544,7 +544,7 @@
 
         // 커스텀 오버레이에 표시할 내용입니다
 // HTML 문자열 또는 Dom Element 입니다
-        var content = "<div class ='label'><span class='left'></span><span class='center'><a href='/menu/getMenuList?truckId="+truckId+"'>"+truckName+"</a></span>"
+        var content = "<div class ='label'><span class='left'></span><span class='center'><a href='/menu/getMenuList?truckId="+truckId+"'><i class='fas fa-truck' style='vertical-align: baseline;'></i>"+truckName+"</a></span>"
             + "<span class='right'></span></div>";
 
 // 커스텀 오버레이가 표시될 위치입니다
