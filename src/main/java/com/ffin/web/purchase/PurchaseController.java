@@ -330,13 +330,15 @@ public class PurchaseController {
 
     //현재주문정보 화면으로 보여줄 데이터를 가져온다.
     @RequestMapping(value = "getOrderUser", method= RequestMethod.GET)
-    public ModelAndView getOrderUser(@RequestParam("orderNo") int orderNo, ModelAndView model,Purchase purchase) throws Exception {
+    public ModelAndView getOrderUser(@RequestParam("orderNo") int orderNo, ModelAndView model,Purchase purchase,HttpServletRequest request) throws Exception {
 
         System.out.println("/purchase/getOrderUser : GETGETGETGETGETGET");
 
         purchase.setOrderNo(orderNo);
             purchase = purchaseService.getPurchase(purchase.getOrderNo());
 
+           String orderCount =  request.getParameter("orderCount");
+        System.out.println("orderCount : orderCount : "+orderCount);
             int orderCheck = 0;
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println("ppppppppppppurchase11111 + "+purchase);
@@ -348,6 +350,7 @@ public class PurchaseController {
             model.addObject("map",map);
             model.addObject("purchase",purchase);
         model.addObject("orderCheck",orderCheck);
+        model.addObject("movePage",orderCount);
             model.setViewName("forward:/views/purchase/getOrderUser.jsp");
 
     return  model;

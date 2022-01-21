@@ -671,9 +671,23 @@
             </form>
 
             <div class="btn-box" style=" margin-top: 20px;">
-                <a type="button" href="/purchase/getOrderUserList?userId="+${purchase.orderUserId.userId} style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
-                    확인
-                </a>
+                <c:if test="${orderCheck == 0}">
+                    <c:if test="${movePage==1}">
+                        <a type="button" href="/menu/getTruckList" style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
+                            확인
+                        </a>
+                    </c:if>
+                    <c:if test="${movePage!=1}">
+                        <a type="button" href="/purchase/getOrderUserList?userId="+${purchase.orderUserId.userId} style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
+                            확인
+                        </a>
+                    </c:if>
+                </c:if>
+                <c:if test="${orderCheck == 1}">
+                    <a type="button" href="/user/getPurchaseList?userId="+${purchase.orderUserId.userId} style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
+                        확인
+                    </a>
+                </c:if>
                 <c:if test="${purchase.orderStatus == '1'}">
                 <a data-bs-toggle="modal" href="#exampleModalToggle"  style="margin-right: 10px;  background-color: #ecf0fd; border-color: #ecf0fd">
                     주문취소
