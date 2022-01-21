@@ -5,95 +5,110 @@
 <html lang="ko">
 <meta charset="EUC-KR">
 
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
-<jsp:include page="../../common/lib.jsp"/>
 <head>
 
+    <!-- 제이쿼리 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- 아임포트 -->
+    <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javascript"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <jsp:include page="../../common/lib.jsp"/>
+
+
+    <style>
+
+        .btn-outline-primary {
+            color: #ffe537;
+            border-color: #ffe537;
+        }
+        .btn-check:active+.btn-outline-primary, .btn-check:checked+.btn-outline-primary, .btn-outline-primary.active, .btn-outline-primary.dropdown-toggle.show, .btn-outline-primary:active {
+            color: #212529;
+            background-color: #ffe537;
+            border-color: #ffe537;
+        }
+        .btn-outline-primary {
+            color: #ffe537;
+            border-color: #ffe537;
+        }
+        .btn-outline-primary:hover {
+            color: #ffffff;
+            background-color: #ffe537;
+            border-color: #ffe537;
+        }
+
+        .btn-primary {
+            color: #212529;
+            background-color: #ffe537;
+            border-color: #ffe537;
+        }
+
+        body {
+            margin-top: 122px;
+
+        }
+        #priceT{
+            margin: 1px;
+        }
+        /*이미지접히게*/
+        .rounded-start {
+            border-bottom-left-radius: 1.25rem!important;
+            border-top-left-radius: 1.25rem!important;
+        }
+        /*이미지 사이즈*/
+        .img-fluid {
+            max-width: 100%;
+            height: 113px;
+        }
+        /*카드 둥글게*/
+        .card {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 1.25rem;
+        }
+        .card-body{
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .card-title{
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .container.shopping{
+            margin-top: 70px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1);
+            transition: 0.2s;
+            border-radius: 10px;
+        }
+
+    </style>
 
 </head>
+
 <body>
 <jsp:include page="/views/navbar.jsp"/>
 <!-- Bootstrap Dropdown Hover CSS -->
 <!--  ///////////////////////// CSS ////////////////////////// -->
-<!-- 제이쿼리 -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
-/>//        crossorigin="anonymous" type="text/javascript"></script>
-<!-- 아임포트 -->
-<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js" type="text/javascript"></script>
-
-
-<style>
-
-    .btn-outline-primary {
-        color: #ffba49;
-        border-color: #ffba49;
-    }
-    .btn-check:active+.btn-outline-primary, .btn-check:checked+.btn-outline-primary, .btn-outline-primary.active, .btn-outline-primary.dropdown-toggle.show, .btn-outline-primary:active {
-        color: #212529;
-        background-color: #ffba49;
-        border-color: #ffba49;
-    }
-    .btn-outline-primary {
-        color: #ffba49;
-        border-color: #ffba49;
-    }
-
-    .btn-primary {
-        color: #212529;
-        background-color: #ffc107;
-        border-color: #ffc107;
-    }
-
-    body {
-        margin-top: 122px;
-
-    }
-    #priceT{
-        margin: 1px;
-    }
-    /*이미지접히게*/
-    .rounded-start {
-        border-bottom-left-radius: 1.25rem!important;
-        border-top-left-radius: 1.25rem!important;
-    }
-    /*이미지 사이즈*/
-    .img-fluid {
-        max-width: 100%;
-        height: 113px;
-    }
-    /*카드 둥글게*/
-    .card {
-        position: relative;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        min-width: 0;
-        word-wrap: break-word;
-        background-color: #fff;
-        background-clip: border-box;
-        border: 1px solid rgba(0, 0, 0, 0.125);
-        border-radius: 1.25rem;
-    }
-    .card-body{
-        width: 100%;
-        table-layout: fixed;
-    }
-
-    .card-title{
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-
-</style>
 <script type="text/javascript">
 
 
@@ -506,10 +521,6 @@
                         if (usePoint != "") {
                             if (usePoint % 1000 == 0) {
 
-
-
-
-
                                 var useMinPoint = Number(totalPoint-usePoint);
 
 
@@ -632,18 +643,11 @@
                         }else{
                             alert("사용포인트가 보유포인트를 초과하였습니다.")
                         }
-
-
-
                     }else{
-
                     }
-
                 });
-
             }
         });
-
     });
 
 
@@ -654,9 +658,6 @@
             var couponRe = document.getElementById("couponDcPrice");
             var couponde = document.getElementById("couponNo");
             const couponDcPrice = document.getElementById('couponDcPrice').value;
-
-
-
             couponde.remove();
             couponRe.value = "";
 
@@ -664,7 +665,6 @@
             var totalSS1 = document.getElementById('sale').innerHTML;
             var totalSS2 = totalSS1.split(":").map(Number);
             var totalPP2 = totalPP1.split(":").map(Number);
-
 
             var payPrice = Number(totalPP2[1]) + Number(couponDcPrice);
             var sale = Number(totalSS2[1])-Number(couponDcPrice);
@@ -705,7 +705,6 @@
             pointde.remove();
             pointRe.value = "";
 
-
             totalPayPrice =  "<span id='totalpp' name='payPrice' >결제금액 : "+payPrice+"</span>"+
                 "<input type='hidden' id='payPrice' name='payPrice' value='"+payPrice+"'>";
             totalsale =  "<span id='sale'>할인금액 : "+sale+"</span>"
@@ -723,274 +722,322 @@
 
 </script>
 
+<section class="client_section layout_padding" style="padding-top: 30px;">
+    <div class="container">
+        <div class="col-md-12 mx-auto">
 
-<form name="addPurchase">
-
-    <!-- Modal coupon취소-->
-    <div class="modal fade" id="couponCancel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="couponCa">쿠폰</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    쿠폰 사용을 취소하겠습니까?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">뒤로</button>
-                    <button type="button" class="btn btn-primary" id="removeCoupon" name="removeCoupon">확인</button>
-                </div>
+            <div class="detail-box" style="margin-top: 0;">
+                <i class="fa fa-quote-left" aria-hidden="true" style="margin-bottom: 10px;"></i>
+                <h3 class="truckNameForMenu" style="font-weight: bold;">주문 결제</h3>
             </div>
-        </div>
-    </div>
 
-    <!-- Modal point취소 -->
-    <div class="modal fade" id="pointCancel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="pointCa">포인트</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    포인트 사용을 취소하겠습니까?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">뒤로</button>
-                    <button type="button" class="btn btn-primary" id="removePoint">확인</button>
-                </div>
-            </div>
-        </div>
-    </div>
+            <form name="addPurchase">
 
-
-    <%--Modal coupon적용--%>
-    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col"></th>
-                            <th scope="col">할인금액</th>
-                            <th scope="col">쿠폰유형</th>
-                        </tr>
-                        </thead>
-                        <c:set var="i" value="0"/>
-                        <c:forEach var="couponLis" items="${couponList.get('list')}">
-                            <c:set var="i" value="${i+1}"/>
-                            <c:if test="${couponLis.couponStatus==0}">
-                                <tr>
-                                    <th scope="row">${i}</th>
-                                    <td><label class="btn btn-secondary active">
-                                        <input type="radio" name="options" id="option${i}" autocomplete="off"
-                                               value="${couponLis.couponDcPrice},${couponLis.couponNo}" checked> Active
-                                    </label></td>
-                                    <td>${couponLis.couponDcPrice}</td>
-                                    <td>
-                                        <c:if test="${couponLis.couponType == 0}">
-                                            BIRTH
-                                        </c:if>
-                                        <c:if test="${couponLis.couponType == 1}">
-                                            RAIN
-                                        </c:if>
-                                        <c:if test="${couponLis.couponType == 2}">
-                                            SNOW
-                                        </c:if>
-                                    </td>
-
-
-                                </tr>
-                            </c:if>
-                        </c:forEach>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">쿠폰 적용</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container py-4">
-        <header class="pb-4 mb-5 border-bottom">
-            <span class="fs-1">결제하기</span>
-        </header>
-        <div class="row gx-5">
-            <div class="col">
-                <div class="container">
-                    <div class="row">
-                        <br>
-                        <div class="col-sm-12">
-
-                            <input type="hidden" name="userPhone" value="${purchase.orderUserId.userName}">
-                            <input type="hidden" name="userEmail" value="${purchase.orderUserId.userEmail}">
-                            <input type="hidden" name="truckPhone" value="${purchase.orderTruckId.truckPhone}">
-                            <input type="hidden" name="truckName" value="${purchase.orderTruckId.truckName}">
-                            <input type="hidden" name="userName" value="${purchase.orderUserId.userName}">
-                            <input type="hidden" name="orderTruckId.truckId" value="${purchase.orderTruckId.truckId}">
-                            <input type="hidden" name="orderUserId.userId" value="${purchase.orderUserId.userId}">
-                            <input type="hidden" name="orderNo" value="${purchase.orderNo}">
-                            <input type="hidden" name="orderTotalPrice" value="${purchase.orderTotalPrice}"/>
-                            <h3>할인 및 적립금</h3>
-                        </div>
-                    </div>
-                    <br><br>
-                    <div class="row" id="test">
-                        <label for="couponDcPrice" class="col-sm-offset-1 col-sm-3 control-label">할인쿠폰</label>
-                        <br><br>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="couponDcPrice" name="couponDcPrice"
-                                   placeholder="쿠폰을 적용하세요" value="${coupon.couponDcPrice}" disabled>
-                            <span class="input-group-text">원</span>
-                            <a href="#myModal"> <input class="btn btn-outline-secondary" type="button"
-                                                       data-bs-toggle="modal"
-                                                       data-bs-target="#myModal" value="쿠폰적용"/></a>
-                            <button type="button" class="btn-close" aria-label="Close" data-bs-toggle="modal"
-                                    data-bs-target="#couponCancel"></button>
-                        </div>
-                    </div>
-                    <br><br>
-                    <div class="row">
-                        <label for="usePoint" class="col-sm-offset-1 col-sm-3 control-label">적립금</label>
-
-                        <div class="input-group mb-3" id="usePointAmt">
-                            <span class="input-group-text" id="totalPoint">${totalPoint.userTotalPoint}</span>
-                            <input type="text" class="form-control" id="usePoint" name="usePoint" placeholder="입력"
-                                   value="${point.pointAmt}">
-                            <input class="btn btn-outline-secondary" type="button" id="button-addon2"
-                                   value="적용"/>
-                            <button type="button" class="btn-close" aria-label="Close" data-bs-toggle="modal"
-                                    data-bs-target="#pointCancel"></button>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="container">
-                                적립금은 1000단위로 사용가능합니다.
+                <!-- Modal coupon취소-->
+                <div class="modal fade" id="couponCancel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="couponCa">쿠폰</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                쿠폰 사용을 취소하겠습니까?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">뒤로</button>
+                                <button type="button" class="btn btn-primary" id="removeCoupon" name="removeCoupon">확인</button>
                             </div>
                         </div>
                     </div>
-                    <br>
-                    <hr class="my-lg-12">
-                    <br><br>
-                    <div class="row">
-                        <div class="col-sm-12">
-
-                            <h3>결제방법</h3>
-                        </div>
-                    </div>
-
-                    <br><br>
-                    <div class="container">
-                        <div class="row row-cols-2">
-                            <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio1"
-                                                    value="0" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary w-100" for="btnradio1" style="border-radius: 9.25rem;">일반 결제</label>
-                            </div>
-                            <div class="col"><input type="radio" class="btn-check" name="payOption" id="btnradio2"
-                                                    value="1" autocomplete="off">
-                                <label class="btn btn-outline-primary w-100" for="btnradio2" style="border-radius: 9.25rem;">휴대폰결제</label>
-                            </div>
-
-                        </div>
-                    </div>
-                    <br>
-
                 </div>
-            </div>
 
-
-            <div class="col">
-                <div class="jumbotron ">
-
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <h3>주문내역</h3>
-                        </div>
-                    </div>
-                    <hr class="my-lg-12">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <%--<h5>상호 : ${purchase.orderTruckId.truckName}</h5>--%>
-                        </div>
-                    </div>
-
-                    <div id="order"></div>
-
-                    <c:set var="i" value="0"/>
-                    <c:forEach var="cart" items="${map.get('list')}">
-                        <c:set var="i" value="${i+1}"/>
-
-
-                        <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
-                        <input type="hidden" id="odOptionGroupName" name="odOptionGroupName"
-                               value="${cart.odOptionGroupName}"/>
-                        <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.odOptionName}"/>
-                        <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.odMenuQty}"/>
-                        <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.odMenuPrice}"/>
-                        <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
-                        <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
-                        <input type="hidden" id="odMenuQtyFlag" name="odMenuQtyFlag" value="${cart.odMenuQtyFlag}"/>
-
-
-                    </c:forEach>
-
-                    <hr class="my-lg-12">
-                    <div class="row">
-                        <div class="col-3">
-                            <p class="text"  id="total" ></p>
-                        </div>
-                        <div class="col-3">
-                            <p class="text"  id="dcp"  ><span id="sale" name="payPrice">할인금액 :</span></p>
-                            <input type="hidden" name="payPrice" value="${purchase.payPrice}">
-                        </div><div class="col-3">
-                        <p class="text"  id="pp"></p>
-                    </div></div>
-
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="button" class="btn btn-primary btn-lg" style="border-radius: 2.3rem;">
-                                뒤로가기
-                            </button>
-                        </div>
-                        <div class="col-6">
-                            <c:if test="${purchase.orderStatus == 0}">
-                                <button type="button" id="addPay" class="btn btn-primary btn-lg" style="border-radius: 2.3rem;">
-                                    결제
-                                </button>
-                            </c:if>
-                            <c:if test="${purchase.orderStatus > 0}">
-                                <button type="button" id="getPay" class="btn btn-primary btn-lg" style="border-radius: 2.3rem;">
-                                    결제
-                                </button>
-                            </c:if>
-
+                <!-- Modal point취소 -->
+                <div class="modal fade" id="pointCancel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="pointCa">포인트</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                포인트 사용을 취소하겠습니까?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">뒤로</button>
+                                <button type="button" class="btn btn-primary" id="removePoint">확인</button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-            </div>
+
+                <%--Modal coupon적용--%>
+                <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+
+                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col"></th>
+                                        <th scope="col">할인금액</th>
+                                        <th scope="col">쿠폰유형</th>
+                                    </tr>
+                                    </thead>
+                                    <c:set var="i" value="0"/>
+                                    <c:forEach var="couponLis" items="${couponList.get('list')}">
+                                        <c:set var="i" value="${i+1}"/>
+                                        <c:if test="${couponLis.couponStatus==0}">
+                                            <tr>
+                                                <th scope="row">${i}</th>
+                                                <td><label class="btn btn-secondary active">
+                                                    <input type="radio" name="options" id="option${i}" autocomplete="off"
+                                                           value="${couponLis.couponDcPrice},${couponLis.couponNo}" checked> Active
+                                                </label></td>
+                                                <td>${couponLis.couponDcPrice}</td>
+                                                <td>
+                                                    <c:if test="${couponLis.couponType == 0}">
+                                                        BIRTH
+                                                    </c:if>
+                                                    <c:if test="${couponLis.couponType == 1}">
+                                                        RAIN
+                                                    </c:if>
+                                                    <c:if test="${couponLis.couponType == 2}">
+                                                        SNOW
+                                                    </c:if>
+                                                </td>
+
+
+                                            </tr>
+                                        </c:if>
+                                    </c:forEach>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">쿠폰 적용</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="container shopping" style="min-height: 700px;">
+
+                    <div class="row gx-5" style="min-height: inherit;">
+
+                        <%-- 왼쪽 --%>
+                        <div class="col" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+
+                            <div  style=" box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1); transition: 0.2s; border-radius: 10px; padding: 20px 5px; ">
+                                <div style="text-align: left;">
+                                    <div class="col-sm-12" style="margin-bottom: 20px;">
+                                        <h5 style="box-shadow: inset 0 -11px 0 #fae100; width: fit-content;">주문내역</h5>
+                                    </div>
+                                </div>
+
+                                <div style="padding: 15px;">
+                                    <div id="order"></div>
+
+                                    <c:set var="i" value="0"/>
+                                    <c:forEach var="cart" items="${map.get('list')}">
+                                        <c:set var="i" value="${i+1}"/>
+
+                                        <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
+                                        <input type="hidden" id="odOptionGroupName" name="odOptionGroupName"
+                                               value="${cart.odOptionGroupName}"/>
+                                        <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.odOptionName}"/>
+                                        <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.odMenuQty}"/>
+                                        <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.odMenuPrice}"/>
+                                        <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
+                                        <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
+                                        <input type="hidden" id="odMenuQtyFlag" name="odMenuQtyFlag" value="${cart.odMenuQtyFlag}"/>
+
+                                    </c:forEach>
+                                </div>
+                            </div>
+
+                            <%--<div>
+                                <div>
+                                    <div class="col-12">
+                                        <div class="col-3">
+                                            <p class="text"  id="total" ></p>
+                                        </div>
+                                        <div class="col-3">
+                                            <p class="text"  id="dcp"  ><span id="sale" name="payPrice">할인금액 :</span></p>
+                                            <input type="hidden" name="payPrice" value="${purchase.payPrice}">
+                                        </div><div class="col-3">
+                                        <p class="text"  id="pp"></p>
+                                    </div></div>
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <button type="button" class="btn btn-cancle" style="width: inherit; margin: 0;">
+                                                뒤로가기
+                                            </button>
+                                        </div>
+                                        <div class="col-6">
+                                            <c:if test="${purchase.orderStatus == 0}">
+                                                <button type="button" id="addPay" class="btn btn-default" style="width: inherit; margin: 0;">
+                                                    결제
+                                                </button>
+                                            </c:if>
+                                            <c:if test="${purchase.orderStatus > 0}">
+                                                <button type="button" id="getPay" class="btn btn-default" style="width: inherit; margin: 0;">
+                                                    결제
+                                                </button>
+                                            </c:if>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>--%>
+
+                        </div>
+
+                        <%-- 오른쪽 --%>
+                        <div class="col" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+
+                            <div  style=" box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1); transition: 0.2s; border-radius: 10px; padding: 20px 5px; ">
+                                <div>
+                                    <div style="text-align: left;">
+                                        <div class="col-sm-12" style="margin-bottom: 20px;">
+                                            <h5 style=" box-shadow: inset 0 -11px 0 #fae100; width: fit-content;">할인 및 적립금</h5>
+                                        </div>
+
+                                        <input type="hidden" name="userPhone" value="${purchase.orderUserId.userName}">
+                                        <input type="hidden" name="userEmail" value="${purchase.orderUserId.userEmail}">
+                                        <input type="hidden" name="truckPhone" value="${purchase.orderTruckId.truckPhone}">
+                                        <input type="hidden" name="truckName" value="${purchase.orderTruckId.truckName}">
+                                        <input type="hidden" name="userName" value="${purchase.orderUserId.userName}">
+                                        <input type="hidden" name="orderTruckId.truckId" value="${purchase.orderTruckId.truckId}">
+                                        <input type="hidden" name="orderUserId.userId" value="${purchase.orderUserId.userId}">
+                                        <input type="hidden" name="orderNo" value="${purchase.orderNo}">
+                                        <input type="hidden" name="orderTotalPrice" value="${purchase.orderTotalPrice}"/>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div id="test" style="display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+                                        <label for="couponDcPrice" class="col-sm-1 col-sm-2 control-label" style="font-weight:600; margin: 0; padding: 0; text-align: left">할인쿠폰</label>
+                                        <div class="input-group col-sm-1 col-sm-9" style="padding: 0;">
+                                            <input type="text" class="form-control" id="couponDcPrice" name="couponDcPrice" placeholder="쿠폰을 적용하세요" value="${coupon.couponDcPrice}"
+                                                   style="border-width: 1.5px; border-top: 0; border-right: 0; border-left: 0; background-color: white; border-radius: 0; text-align: center;" disabled>
+                                            <span class="input-group-text" style="background-color: white; border: 0;">원</span>
+                                            <a href="#myModal"> <input class="btn btn-default" type="button"
+                                                                       data-bs-toggle="modal"
+                                                                       data-bs-target="#myModal" value="적용" style="padding: 5px 10px;"/></a>
+                                            <a href="#"><input class="btn btn-cancle" type="button" aria-label="Close" data-bs-toggle="modal" data-bs-target="#couponCancel" value="취소" style="padding: 5px 10px;"/></a>
+                                        </div>
+                                    </div>
+
+                                    <div>
+
+                                        <div style="display: flex; align-items: center; justify-content: center;">
+                                            <label for="usePoint" class="col-sm-1 col-sm-2 control-label" style="font-weight:600; margin: 0; padding: 0; text-align: left">적립금</label>
+                                            <div class="input-group col-sm-1 col-sm-9" style="padding: 0;">
+<%--                                                <input type="hidden" class="input-group-text" id="totalPoint" style="background-color: white; border: 0;">${totalPoint.userTotalPoint}</input>--%>
+                                                <input type="text" class="form-control" id="usePoint" name="usePoint" placeholder="보유 적립금 : ${totalPoint.userTotalPoint}" value="${point.pointAmt}"
+                                                       style="border-width: 1.5px; border-top: 0; border-right: 0; border-left: 0; background-color: white; border-radius: 0; text-align: center;">
+                                                <span class="input-group-text" style="background-color: white; border: 0;">원</span>
+                                                <a href="#"><input class="btn btn-default" type="button" id="button-addon2" value="사용" style="padding: 5px 10px;"/></a>
+                                                <a href="#"><input class="btn btn-cancle" type="button"  aria-label="Close" data-bs-toggle="modal" data-bs-target="#pointCancel" value="취소" style="padding: 5px 10px;"/></a>
+                                            </div>
+                                        </div>
+                                        <span style="padding-right: 50px; font-size: 12px; color: grey;">적립금은 1,000원 단위로 사용 가능합니다.</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style=" box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1); transition: 0.2s; border-radius: 10px; padding: 20px 5px; ">
+
+                                <div class="row">
+                                    <div style="text-align: left;">
+                                        <div class="col-sm-12" style="margin-bottom: 20px;">
+                                            <h5 style=" box-shadow: inset 0 -11px 0 #fae100; width: fit-content;">결제방법</h5>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="container">
+                                    <div class="row row-cols-2" style="display:flex; align-items: center; justify-content: flex-start;">
+                                        <div class="col-5">결제방법을 선택해주세요.</div>
+                                        <div class="col-3" style="padding: 0;" ><input type="radio" class="btn-check" name="payOption" id="btnradio1"
+                                                                value="0" autocomplete="off" checked >
+                                            <label class="btn btn-outline-primary w-100" for="btnradio1" style="border-radius: 9.25rem; margin: 0;">일반 결제</label>
+                                        </div>
+                                        <div class="col-3" style="padding: 0;" ><input type="radio" class="btn-check" name="payOption" id="btnradio2"
+                                                                value="1" autocomplete="off">
+                                            <label class="btn btn-outline-primary w-100" for="btnradio2" style="border-radius: 9.25rem; margin: 0 0 0 15px;">휴대폰결제</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style=" box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1); transition: 0.2s; border-radius: 10px; padding: 20px 5px; ">
+                                <div>
+
+                                    <div class="col-sm-12" style="margin-bottom: 20px;">
+                                        <h5 style=" box-shadow: inset 0 -11px 0 #fae100; width: fit-content;">결제상세</h5>
+                                    </div>
+
+                                    <div class="col-12" style="display:flex; flex-direction: column; align-items: flex-start; padding: 0 25px;">
+                                        <div>
+                                            <p class="text"  id="total" ></p>
+                                        </div>
+                                        <div>
+                                            <p class="text"  id="dcp" ><span id="sale" name="payPrice">할인금액 :</span></p>
+                                            <input type="hidden" name="payPrice" value="${purchase.payPrice}">
+                                        </div>
+                                        <div>
+                                            <p class="text"  id="pp"></p>
+                                        </div>
+                                        <hr style="border-style: unset; 10px; width: -webkit-fill-available"/>
+                                    </div>
+
+                                    <div class="col-12" style="display: flex; padding: 0; margin-top: 10px;">
+
+                                        <div class="col-6">
+                                            <button type="button" class="btn btn-cancle" style="width: inherit; margin: 0; padding: 5px 20px;">
+                                                뒤로가기
+                                            </button>
+                                        </div>
+                                        <div class="col-6">
+                                            <c:if test="${purchase.orderStatus == 0}">
+                                                <button type="button" id="addPay" class="btn btn-default" style="width: inherit; margin: 0; padding: 5px 20px;">
+                                                    결제
+                                                </button>
+                                            </c:if>
+                                            <c:if test="${purchase.orderStatus > 0}">
+                                                <button type="button" id="getPay" class="btn btn-default" style="width: inherit; margin: 0; padding: 5px 20px;">
+                                                    결제
+                                                </button>
+                                            </c:if>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+
+
         </div>
     </div>
+</section>
 
-
-</form>
-
-
-
+</body>
 
 <script>
     $(function () {
@@ -1033,43 +1080,6 @@
             var odMenuQtyFlag = $("input[name='odMenuQtyFlag']").eq(i).val();
 
 
-
-
-
-            /*   if(menuCheck[menuCount] == undefined) {
-                   menuCheck[menuCount] = odMenuName;
-               }else if(menuCheck[menuCount] == odMenuName){
-                   menuCheck[menuCount] = odMenuName;
-               }else {
-                   menuCount++;
-                   menuCheck[menuCount] = odMenuName;
-               }
-
-               if(odMenuQtyFlag == '0'){
-
-                   if(menuPriceOne[menuCount] == undefined){
-                       menuPriceOne[menuCount] = Number(odMenuPrice);
-                   }else{
-                       menuPriceOne[menuCount] += Number(odMenuPrice);
-                   }
-               }
-
-                   if(optionPriceOne[menuCount] == undefined){
-                       if(odOptionPrice == 0 || odOptionPrice ==undefined){
-                           optionPriceOne[menuCount] = 0 ;
-
-                       }else{
-                       optionPriceOne[menuCount] = Number(odOptionPrice);
-
-                       }
-                   }else{
-                       optionPriceOne[menuCount] += Number(odOptionPrice);
-
-               }
-
-           */
-
-
             /* HHJ */
 
             if (optionNameShow[menuCount] == undefined){
@@ -1098,8 +1108,6 @@
             totalshow += Number(pricepriceprice * totototoqty);
             optionPriceShow[Number(menuCount-1)] = totalshow;
             console.log("ttototototo :: " + totototoprice)
-
-
 
             var odMenuImageCopy;
             var odMenuNameCopy;
@@ -1157,13 +1165,8 @@
 
             odOptionNameL = odOptionNameCopy.split("/");
             odOptionGroupNameL = odOptionGroupNameCopy.split("/");
-
-
-
             /* alert("total"+odMenuPriceL)
              alert("price"+odOptionPriceL)*/
-
-
         }
         var sum = new Array() ;
         var test3 = new Array();
@@ -1187,23 +1190,15 @@
             }
             /* alert("test3"+test3)
              alert("test 길이"+test3.length)*/
-
-
-
         }
 
 
         var menuPrice = 0;
 
-
         for (var i = 0; i < odMenuNameL.length; i++) {
-
-            /*         alert(odMenuNameL[i]);
-                     alert(odOptionNameL[i]);*/
 
             menuPrice += (sum[i] + odMenuPriceL[i]);
             menuQty = odMenuQtyL[i]
-
 
             divElemApply1 = "<div class=\"card mb-3\">" +
                 " <div class=\"row g-0\">" +
@@ -1211,10 +1206,14 @@
                 "<img src=\"/resources/menu/"+odMenuImageL[i]+"\" class=\"img-fluid rounded-start\" alt=\"image\">" +
                 "</div>" +
                 "<div class=\"col-md-8\">" +
-                "<div class=\"card-body\">" +
+                "<div class=\"card-body\" style='display: flex; flex-direction: column; align-items: flex-start; padding: 15px 0;'>" +
                 "<h5 class=\"card-title\">" + odMenuNameL[i] + "</h5>" +
-                "<p class=\"card-text\"><small class=\"text-muted\"><span class='badge' style='background-color: #fae100; color: #110000'>&nbsp;옵션&nbsp;</span> " + optionNameShow[i] + "  </small><br>" +
-                "<small class=\"text-muted\"><span class='badge' style='background-color: #fae100; color: #110000'>&nbsp;수량&nbsp;</span> " + odMenuQtyL[i] + " <br><span class='badge' style='background-color: #fae100; color: #110000'>총 가격</span> " + optionPriceShow[i] + " </small></p>" +
+                "<p class=\"card-text\" style='margin:0; display: flex; flex-direction: column;'>" +
+                "<div class=\"text-muted\"><span class='badge' style='background-color: #fae100; color: #110000'>&nbsp;옵션&nbsp;</span> " + optionNameShow[i] + "  </div>" +
+                "<div class=\"text-muted\" style='text-align: initial;'><span class='badge' style='background-color: #fae100; color: #110000'>&nbsp;수량&nbsp;</span> " +
+                odMenuQtyL[i] + " <br><span class='badge' style='background-color: #fae100; color: #110000'>총 가격</span> " +
+                optionPriceShow[i] + " " +
+                "</div></p>" +
                 "</div>" +
                 "</div>" +
                 "</div>" +
@@ -1224,8 +1223,6 @@
             $('#order').append(divElemApply1);
 
         }
-
-
         divElemApply2 = "<input type=\"hidden\" name=\"orderPrice\" id=\"orderPrice\" value=\""+totototoprice+"\">"+
             "<span id='price'>합계 : "+totototoprice+"</span>"
 
@@ -1236,25 +1233,7 @@
         $('#total').append(divElemApply2);
         $('#pp').append(divElemApply3);
 
-
     });
 
-
-    /*
-
-                                        <input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>
-                                    <input type="hidden" id="odOptionGroupName" name="odOptionGroupName" value="${cart.odOptionGroupName}"/>
-                                    <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.odOptionName}"/>
-                                    <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.odMenuQty}"/>
-                                    <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.odMenuPrice}"/>
-                                    <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
-                                    <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
-
-
-
-*/
-
-
 </script>
-</body>
 </html>
