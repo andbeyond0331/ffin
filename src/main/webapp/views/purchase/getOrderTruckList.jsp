@@ -19,21 +19,37 @@
 
 <style>
     .btn-outline-success {
-        color: #ffba49;
-        border-color: #ffba49;
+        color: #fae100;
+        border-color: #fae100;
+        margin: 0;
     }
 
     .btn-check:active+.btn-outline-success, .btn-check:checked+.btn-outline-success, .btn-outline-success.active, .btn-outline-success.dropdown-toggle.show, .btn-outline-success:active {
-        color: #fff;
-        background-color: #ffba49;
-        border-color: #ffba49;
+        color: #110000;
+        background-color: #fae100;
+        border-color: #fae100;
+    }
+    .btn-primary{
+        color: #110000;
+        background-color: #fae100;
+        border-color: #fae100;
+    }
+    .btn.btn-outline-success:hover, .btn.btn-primary:hover{
+        color: #110000;
+        background-color: #fae100;
+        border-color: #fae100;
+    }
+    .btn.btn-primary:hover{
+        color: #110000;
+        background-color: #ffffff;
+        border-color: #fae100;
+    }
+    .btn.btn-outline-success:active, .btn.btn-primary:active{
+        color: #110000;
+        background-color: #fae100;
+        border-color: #fae100;
     }
 
-    .btn-primary {
-        color: #f8f9fa;
-        background-color: #ffba49;
-        border-color: #ffba49;
-    }
     .row {
         display: -ms-flexbox;
         display: flex;
@@ -58,14 +74,14 @@
         border-color: #fae100;
     }
     .statusBtn:hover{
-        background-color: #ec6a56;
+        background-color: #fae100;
         color: #25323c;
-        border-color: #ec6a56;
+        border-color: #fae100;
     }
     .statusBtn:after{
-        background-color: #ec6a56;
+        background-color: #fae100;
         color: #25323c;
-        border-color: #ec6a56;
+        border-color: #fae100;
     }
     .btn.btn-default-chk{
         background-color: #ffffff;
@@ -78,13 +94,16 @@
         color: #25323c;
         border-color: #fae100;
     }
-    .container orderCheck{
+    .container.orderCheck{
         margin-top: 70px;
         padding: 20px;
         background-color: #ffffff;
         box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1);
         transition: 0.2s;
-        border-radius: 10px;
+        border-radius: 20ox;
+    }
+    .orderList:hover{
+        color: #fae100;
     }
 </style>
 <main>
@@ -221,17 +240,17 @@
                 </div>
 
 
-                <div class="container orderCheck" style="min-height: 700px;">
+                <div class="container orderCheck" style="min-height: 700px;  box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1); transition: 0.2s;">
                     <div class="row col-12" style="min-height: inherit;">
 
                         <%-- 주문목록 --%>
-                        <div class="col" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
-                            <div class="col-5 p-3 mb-2">
+                        <div class="col-6" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div class="col-12" style="padding: 0;">
 
-                                <div class="col-12">
-                                    <div class="col-5">
-                                        <div class="col-6 text-center" style="padding: 0;"> 전체 :</div>
-                                        <div class="col-6" style="padding: 0;">
+                                <div class="col-12" style="margin-bottom: 4px;" >
+                                    <div class="col-12 row" style=" margin:0; display: flex; justify-content: space-between;">
+                                        <div class="col-6" style="padding: 0; text-align: initial;"> 전체 :</div>
+                                        <div class="col-6" style="padding: 0; text-align: right;">
                                             <div class="form-check form-switch">
                                                 <c:if test="${truck.truckBusiStatus.equals('1')}">
                                                     <input class="form-check-input" type="checkbox" role="switch"
@@ -246,187 +265,147 @@
 
                                             </div>
                                         </div>
-                                        <br><br>
                                     </div>
                                 </div>
 
-                                <div class="row ">
-                                    <div class="btn-group-vertical col-2">
-                                        <button class="btn btn-secondary statusBtn" id="ing" type="button">처리중</button>
-                                        <button class="btn btn-secondary statusBtn" id="end" type="button">픽업완료</button>
-                                        <button class="btn btn-secondary statusBtn" id="cancel" type="button">주문취소</button>
-                                    </div>
-                                    <%--<div class="col-2">
-                                        <button class="btn btn-default" id="ing" type="button">처리중</button>
-                                        <button class="btn btn-default" id="end" type="button">픽업완료</button>
-                                        <button class="btn btn-default" id="cancel" type="button">주문취소</button>
-                                    </div>--%>
-                                    <div class="col-10">
+                                <div style="display:-webkit-box; margin-top: 15px;">
+
+                                        <ul class="nav nav-tabs" style="display: table-caption;">
+                                            <li class="nav-item">
+                                                <button class="btn btn-outline-success" id="ing" type="button">처리중</button>
+                                            </li>
+                                            <li class="nav-item">
+                                                <button class="btn btn-outline-success" id="end" type="button">픽업완료</button>
+                                            </li>
+                                            <li class="nav-item">
+                                                <button class="btn btn-outline-success" id="cancel" type="button">주문취소</button>
+                                            </li>
+                                        </ul>
+
+                                    <div class="col-12" style="padding-left: 0;">
 
                                         <c:set var="i" value="0"/>
                                         <c:forEach var="cart" items="${map.get('list')}">
-                                            <c:set var="i" value="${i+1}"/>
+                                        <c:set var="i" value="${i+1}"/>
 
-                                            <hr class="my-2">
-                                            <div class="row">
-                                                <div class="col-1">
-                                                        ${i}
+                                            <%--<div> ${i} </div>--%>
+                                            <div class="col-12 orderList" style="display: flex; align-items: center; background-color: rgba(37,50,60,0.07); padding: 15px 0;">
+                                                <div class="col-4" style="padding: 0;">
+                                                    <a type="button" class="text-break" id="orderUserId">${cart.orderUserId.userId}</a>
+                                                    <input type="hidden" id="orderNo" name="orderNo" value="${cart.orderNo}"/>
                                                 </div>
-                                                <div class="col-8">
-                                                    <div class="row">
-                                                        <div class="col-4">
-                                                            <a type="button" class="text-break" id="orderUserId">${cart.orderUserId.userId}</a>
-                                                            <input type="hidden" id="orderNo" name="orderNo" value="${cart.orderNo}"/>
-
-
-                                                        </div>
-                                                        <div class="col-6" id="orderPickUp">
-                                                            픽업희망시간 : ${cart.orderPickUpTime}
-                                                        </div>
+                                                <div class="col-5" style="padding: 0;">
+                                                    <div id="orderPickUp" style="text-align: left">
+                                                        픽업희망시간 : ${cart.orderPickUpTime}분
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-4">
-                                                            <a href="#" class="text-break"><%--${cart.odMenuName}--%></a>
-
-                                                        </div>
-                                                        <div class="col-6">
-                                                            예상조리시간 : ${cart.orderCookingTime}
-                                                        </div>
+                                                    <div style="text-align: left">
+                                                        예상조리시간 : ${cart.orderCookingTime}분
                                                     </div>
-
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-3" style="padding: 0;">
                                                     <c:if test="${cart.orderStatus == 1}">
-                                                        주문대기
+                                                        <span id="badgeClick1" class="badge badge-click" style="background-color: #2ec0f3; color: #110000; zoom: 115%;">주문대기</span>
                                                     </c:if>
                                                     <c:if test="${cart.orderStatus == 2}">
-                                                        주문접수
+                                                        <span id="badgeClick2" class="badge badge-click" style="zoom: 115%; background-color: #2ef3b7; color: #110000">주문접수</span>
                                                     </c:if>
                                                     <c:if test="${cart.orderStatus == 3}">
-                                                        픽업요청
+                                                        <span id="badgeClick3" class="badge badge-click" style="zoom: 115%; background-color: #f5cb00; color: #110000">픽업요청</span>
                                                     </c:if>
                                                     <c:if test="${cart.orderStatus == 4}">
-                                                        픽업완료
+                                                        <span id="badgeClick4" class="badge badge-click" style="zoom: 115%;background-color: #f79865; color: #110000">픽업완료</span>
                                                     </c:if>
                                                     <c:if test="${cart.orderStatus == 5}">
-                                                        주문취소
+                                                        <span id="badgeClick6" class="badge badge-click" style="zoom: 115%; background-color: #d9d9d9; color: #110000">주문취소</span>
                                                     </c:if>
-
                                                 </div>
                                             </div>
 
-                                            <%--                                <input type="hidden" id="orderNo" name="orderNo" value="${cart.odOrderNo.orderNo}"/>--%>
-                                            <input type="hidden" id="userId" name="userId"
-                                                   value="${cart.orderUserId.userId}"/>
-                                            <input type="hidden" id="orderStatus" name="orderStatus"
-                                                   value="${cart.orderStatus}"/>
-                                            <input type="hidden" id="odMenuPrice" name="orderPickUpTime"
-                                                   value="${cart.orderPickUpTime}"/>
-                                            <input type="hidden" id="orderCookingTime" name="orderCookingTime"
-                                                   value="${cart.orderCookingTime}"/>
+                                            <%--<input type="hidden" id="orderNo" name="orderNo" value="${cart.odOrderNo.orderNo}"/>--%>
+                                            <input type="hidden" id="userId" name="userId" value="${cart.orderUserId.userId}"/>
+                                            <input type="hidden" id="orderStatus" name="orderStatus" value="${cart.orderStatus}"/>
+                                            <input type="hidden" id="odMenuPrice" name="orderPickUpTime" value="${cart.orderPickUpTime}"/>
+                                            <input type="hidden" id="orderCookingTime" name="orderCookingTime" value="${cart.orderCookingTime}"/>
                                             <input type="hidden" name="searchCondition" value="${search.searchCondition}">
-
-                                            <%--<input type="hidden" id="odMenuName" name="odMenuName" value="${cart.odMenuName}"/>--%>
 
                                         </c:forEach>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-1" style="display: flex; align-items: center; justify-content: center;">
-                                <div class="d-flex" style="height: 680px; justify-content: center;">
-                                    <div class="vr"></div>
-                                </div>
-                            </div>
                         </div>
 
                         <%-- 주문상세정보 --%>
-                        <div class="col" style="padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div class="col-6" style="padding: 20px 0; display: flex; flex-direction: column; justify-content: space-between;">
+                            <div class="col-12" style="padding: 0;">
 
-                            <div class="col-12">
-                                <div class="col-7" id="CookingTime">
-
+                                <div class="col-12" style="margin-bottom: 4px;">
+                                    <div class="col-12" id="CookingTime" style="padding: 0; margin:0; display: flex; justify-content: space-between;">
+                                    </div>
                                 </div>
-                                <hr class="my-2">
-                                <div class="row">
 
-                                    <div class="col-7">
+                                <div style="display:flex; flex-direction: column; padding: 15px 10px 15px 15px; background-color: #f8f9fa;">
 
-                                        <div class="row" id="oRt">
-                                            <label for="orderRequest" class="col-form-label">주문요청사항 :</label>
+                                    <div >
+                                        <h6 style=" box-shadow: inset 0 -11px 0 #fae100; width: fit-content;">고객정보</h6>
+                                    </div>
+
+                                    <div id="orderUserInfo" style="display: flex; align-items: center; padding: 10px 0; margin: 0 15px;">
+                                        <div id="orderMenuHidden">
+                                            <div id="pointNoCouponNo"></div>
+<%--                                            <label for="orderRequest" class="col-form-label">고객정보 : </label>--%>
+                                        </div>
+
+                                        <div class="col-3" id="img" style="display: contents;"></div>
+
+                                        <div style="display: flex; flex-direction: column; align-items: flex-start; margin-left: 25px;">
+                                            <div id="usId" >
+                                                <input type="hidden" name="usId" value=""/>${purchase.orderUserId.userId}
+                                            </div>
+                                            <div id="orNo"> 주문번호 : </div>
+                                            <div id="paDa"> 주문일시 : </div>
+                                            <div id="usUN"> 이름 : </div>
+                                            <div id="usUP"> 연락처 : </div>
+                                            <div id="paOp"> </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="orderPayInfo" style="display: flex; flex-direction: column; align-items: flex-start; padding: 10px 0; margin-top: 15px;">
+
+                                        <div >
+                                            <h6 style=" box-shadow: inset 0 -11px 0 #fae100; width: fit-content;">주문내역</h6>
+                                        </div>
+
+                                        <div  id="list" style="display: contents;">
+<%--                                            <label for="orderRequest" class="col-form-label">주문내역</label>--%>
+                                            <div id="order" style="padding: 0 15px;"></div>
+                                            <div class="col-12" id="total"><p class="text-end">결제금액 : </p> </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="orderReqInfo" style="display: flex; flex-direction: column; align-items: flex-start; padding: 10px 0;">
+
+                                        <div >
+                                            <h6 style=" box-shadow: inset 0 -11px 0 #fae100; width: fit-content;">주문요청사항</h6>
+                                        </div>
+
+                                        <div id="oRt" style="display: contents;">
+<%--                                            <label for="orderRequest" class="col-form-label">주문요청사항</label>--%>
                                             <textarea class="form-control" id="orderRequest" name="orderRequest"
                                                       value="" disabled></textarea>
                                         </div>
-                                        <div class="row" id="cancelOrder">
 
-                                        </div>
-                                        <br>
-                                        <div class="row" id="opt">
-                                            <label for="orderRequest" class="col-form-label">픽업희망시간
-                                                : </label>
-                                        </div>
-                                        <hr class="my-2">
-                                        <div class="row" id="list">
+                                        <div id="cancelOrder"> </div>
 
-                                            <label for="orderRequest" class="col-form-label">주문내역 :</label>
-
-                                            <div id="order"></div>
-
-                                            <div id="total"><p class="text-end">결제금액 : </p> </div>
+                                        <div class="col-12" id="opt" style="text-align: end;">
+                                            <label for="orderRequest" class="col-form-label">픽업희망시간 : </label>
                                         </div>
 
                                     </div>
-                                    <div class="col-1">
-                                        <div class="d-flex" style="height: 680px; justify-content: center;">
-                                            <div class="vr"></div>
-                                        </div>
-                                    </div>
 
-                                    <div class="col-4">
-                                        <div class="row" id="orderMenuHidden">
-                                            <div id="pointNoCouponNo"></div>
-                                            <label for="orderRequest" class="col-form-label">고객정보
-                                                : </label>
-                                        </div>
-
-                                        <div class="row" id="img">
-
-
-
-
-
-                                        </div>
-
-                                        <br>
-                                        <div class="row" id="usId" >
-                                            <input type="hidden" name="usId" value=""/>
-                                            ${purchase.orderUserId.userId}
-                                        </div>
-                                        <br>
-                                        <div class="row" id="orNo">
-                                            주문번호 :
-                                        </div>
-                                        <br>
-                                        <div class="row" id="paDa">
-                                            주문일시 :
-                                        </div>
-                                        <br>
-                                        <div class="row" id="usUN">
-                                            이름 :
-                                        </div>
-                                        <br>
-                                        <div class="row" id="usUP">
-                                            연락처 :
-                                        </div>
-                                        <br>
-
-                                        <div class="row" id="paOp">
-
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -617,21 +596,22 @@
                     paOp = "결제방법 : 휴대폰결제";
                 }
 
-                img = "<img src='/resources/image/"+data.purchase.orderUserId.userProImg+"' width='90' height='120' alt='주문상품 이미지'>";
+                img = "<img src='/resources/image/"+data.purchase.orderUserId.userProImg+"' width='90' height='120' alt='userProImg' " +
+                    "style='width: fit-content; border-radius: 10px; box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1); transition: 0.2s;'>";
 
                 usUP = "연락처 : "+data.purchase.orderUserId.userPhone;
 
-                opt = "<label for='orderRequest' class='col-form-label'>픽업희망시간 : "+data.purchase.orderPickUpTime+"</label>";
+                opt = "<label for='orderRequest' class='col-form-label'>픽업희망시간 : <strong>"+data.purchase.orderPickUpTime+"분</strong></label>";
 
-                oRt = "<label for='orderRequest' class='col-form-label'>주문요청사항 :</label><textarea class='form-control' id='orderRequest' name='orderRequest'"+
+                oRt = "<label for='orderRequest' class='col-form-label'></label><textarea class='form-control' id='orderRequest' name='orderRequest'"+
                                           "value='"+data.purchase.orderRequest+"' disabled>"+data.purchase.orderRequest+"</textarea>";
 
                 if(data.purchase.orderStatus == 1){
-                    CookingTime =  "<div class='col-4'> 상호 :<br> "+data.purchase.orderTruckId.truckName+"</div>"+
-                            "<div class='col-2'>"+
-                                "<button class='btn btn-primary' data-bs-toggle='modal' href='#exampleModalToggle' type='button'>주문거절</button>"+
+                    CookingTime =  /*"<div>"+data.purchase.orderTruckId.truckName+"</div>"+*/
+                            "<div>"+
+                                "<button class='btn btn-primary' data-bs-toggle='modal' href='#exampleModalToggle' type='button'>거절</button>"+
                             "</div>"+
-                                "<div class='col-4'>"+
+                            "<div>"+
                                 "<input type='radio' class='btn-check' name='cookingTime' id='cookingTimes' autocomplete='off' value='5' checked>"+
                                 "<label class='btn btn-outline-success' for='cookingTimes' >5분</label>"+
                                 "<input type='radio' class='btn-check' name='cookingTime' id='cookingTimes1' autocomplete='off' value='10'>"+
@@ -645,43 +625,43 @@
                                 "<input type='radio' class='btn-check' name='cookingTime' id='cookingTimes5' autocomplete='off'  value='40'>"+
                                 "<label class='btn btn-outline-success' for='cookingTimes5'>40분</label>"+
                            "</div>"+
-                            "<div class='col-2'>"+
-                                "<button class='btn btn-primary' type='button' id='updateTranCode' name='updateTranCode' value='주문 접수'>주문접수</button>"+
+                            "<div>"+
+                                "<button class='btn btn-primary' type='button' id='updateTranCode' name='updateTranCode' value='주문 접수'>접수</button>"+
                             "</div>";
                 }else if(data.purchase.orderStatus == 2){
 
-                    CookingTime =  "<div class='col-2'> 상호 : "+data.purchase.orderTruckId.truckName+"</div>"+
-                            "<div class='col-5'>"+
+                    CookingTime = /* "<div>"+data.purchase.orderTruckId.truckName+"</div>"+*/
+                            "<div>"+
                                 "<button class='btn btn-primary' data-bs-toggle='modal' href='#exampleModalToggle' type='button'>주문거절</button>"+
                             "</div>"+
-                           " <div class='col-5'>"+
+                           " <div>"+
                                 "<button class='btn btn-primary' type='button' id='updateTranCode' name='updateTranCode' value='픽업 요청'>픽업요청</button>"+
                             "</div>";
                     }else if(data.purchase.orderStatus == 3){
-                    CookingTime = "<div class='col-2'> 상호 : "+data.purchase.orderTruckId.truckName+"</div>"+
-                            "<div class='col-5'></div>"+
-                            "<div class='col-5'>"+
+                    CookingTime = /*"<div>"+data.purchase.orderTruckId.truckName+"</div>"+*/
+                            "<div></div>"+
+                            "<div>"+
                                 "<button class='btn btn-primary' type='button' id='updateTranCode' name='updateTranCode' value='픽업 완료를 확인'>픽업완료</button>"+
                             "</div>";
                     }else if(data.purchase.orderStatus == 4){
-                    CookingTime = "<div class='col-2'> 상호 : "+data.purchase.orderTruckId.truckName+"</div>"+
-                            "<div class='col-5'></div>"+
-                            "<div class='col-5'>주문처리가 완료되었습니다 </div>";
+                    CookingTime = /*"<div>"+data.purchase.orderTruckId.truckName+"</div>"+*/
+                            "<div></div>"+
+                            "<div>주문처리가 완료되었습니다 </div>";
                     }else if(data.purchase.orderStatus == 5){
 
-                    CookingTime = "<div class='col-2'> 상호 : "+data.purchase.orderTruckId.truckName+"</div>"+
-                           "<div class='col-5'></div>"+
-                            "<div class='col-5'>주문취소된 메뉴 입니다</div>";
+                    CookingTime =/* "<div>"+data.purchase.orderTruckId.truckName+"</div>"+*/
+                           "<div></div>"+
+                            "<div >주문취소된 메뉴 입니다</div>";
                     }else if(data.purchase.orderStatus == 6) {
 
-                    CookingTime = "<div class='col-2'> 상호 : " + data.purchase.orderTruckId.truckName + "</div>" +
-                        "<div class='col-5'></div>" +
-                        "<div class='col-5'>주문처리가 완료되었습니다</div>";
+                    CookingTime = /*"<div>" + data.purchase.orderTruckId.truckName + "</div>" +*/
+                        "<div></div>" +
+                        "<div>주문처리가 완료되었습니다</div>";
                     }else if(data.purchase.orderStatus == 7) {
 
-                        CookingTime = "<div class='col-2'> 상호 : " + data.purchase.orderTruckId.truckName + "</div>" +
-                            "<div class='col-5'></div>" +
-                            "<div class='col-5'>주문처리가 완료되었습니다</div>";
+                        CookingTime = /*"<div>" + data.purchase.orderTruckId.truckName + "</div>" +*/
+                            "<div></div>" +
+                            "<div >주문처리가 완료되었습니다</div>";
                     }
 
                     orderMenuHidden = ""+
@@ -693,7 +673,7 @@
                     pointNoCouponNo = "<input type='hidden' name='couponNo' value='"+couponNo+"'>"+
                     "<input type='hidden' name='pointNo' value='"+pointNo+"'>";
 
-                total = "<p class='text-end'>결제금액 : "+data.purchase.payPrice+"</p>";
+                total = "<p class='text-end'>결제금액 : <strong>"+data.purchase.payPrice+"원</strong></p>";
                 $("#usId").html(usId);
                 $("#orNo").html(orNo);
                 $("#paDa").html(paDa);
@@ -797,14 +777,14 @@
 
 
 
-                    divElemApply1 = "<div class=\"card mb-3\">" +
+                    divElemApply1 = "<div class=\"card mb-3\" style='border: 0; box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1); transition: 0.2s;'>" +
                         " <div class=\"row g-0\">" +
                         "<div class=\"col-md-4\">" +
-                        "<img src=\"/resources/menu/"+odMenuImageL[i]+"\" class=\"img-fluid rounded-start\" alt=\"image\">" +
+                        "<img src=\"/resources/menu/"+odMenuImageL[i]+"\" class=\"img-fluid rounded-start\" alt=\"image\" style='height: fit-content;'>" +
                         "</div>" +
-                        "<div class=\"col-md-8\">" +
-                        "<div class=\"card-body\">" +
-                        "<h5 class=\"card-title\">" + odMenuNameL[i] + "</h5>" +
+                        "<div class=\"col-md-8\" style='padding: 0;'>" +
+                        "<div class=\"card-body\" style='padding: 10px 0; text-align: initial;'>" +
+                        "<h6 class=\"card-title\">" + odMenuNameL[i] + "</h6>" +
                         "<p class=\"card-text\"><small class=\"text-muted\"><span class='badge' style='background-color: #fae100; color: #110000'>&nbsp;옵션&nbsp;</span> " + optionNameShow[i] + "  </small><br>" +
                         "<small class=\"text-muted\"><span class='badge' style='background-color: #fae100; color: #110000'>&nbsp;수량&nbsp;</span> " + odMenuQtyL[i] + " <br><span class='badge' style='background-color: #fae100; color: #110000'>총 가격</span> " + optionPriceShow[i] + " </small></p>" +
                         "</div>" +
