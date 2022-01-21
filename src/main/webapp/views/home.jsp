@@ -121,11 +121,11 @@
             </div>
         </div>
         <div class="slider_container">
-            <c:forEach var="truck" items="${list}">
+            <c:forEach var="i" begin="1" end="8">
             <div class="item">
                 <div class="img-box img-truck-box">
-                    <img src="../resources/image/${truck.truckProImg}" alt="" />
-                    <input type="hidden" name="truckId" value="${truck.truckId}"/>
+                    <img src="../resources/image/foodtruck/fcate${i}.jpg" alt="" />
+                    <input type="hidden" name="truckCate" value="${i}"/>
                 </div>
             </div>
             </c:forEach>
@@ -157,10 +157,10 @@
             <div class="col-sm-6 col-md-4 mx-auto">
                 <div class="box">
                     <div class="img-box img-menu-box">
-                        <a idx="${truck.truckSigMenuNo}" class = "menu-location" href="/menu/getMenuList?truckId=${truck.truckId}">
+
                         <img src="../resources/menu/${truck.truckSigMenuImg1}" class="box-img" alt="" />
                             <input type="hidden" id="goTruckArrow" value="${truck.truckId}">
-                        </a>
+
                     </div>
                     <div class="detail-box">
                         <c:if test="${truck.truckBusiStatus == '0'}">
@@ -182,8 +182,8 @@
             </div>
             </c:forEach>
         </div>
-        <div class="btn-box">
-            <a href="http://localhost:8080/menu/getTruckList">
+        <div class="btn-box btn-more-ft">
+            <a href="#">
                 more FoodTruck
             </a>
         </div>
@@ -210,8 +210,8 @@
                 <div class="detail-box">
                     <p></p>
                 </div>
-                <div class="btn-box">
-                    <a href="/views/purchase/getCouponList.jsp">
+                <div class="btn-box btn-coupon">
+                    <a href="#">
                         coupon
                     </a>
                 </div>
@@ -353,11 +353,11 @@
 
         // 트럭 사진 클릭하면 트럭으로 가기
         $("body").on("click", ".img-truck-box", function () {
-            var truckNo = $(this).find('input').val();
+            var cateNo = $(this).find('input').val();
             if (userIdch == '' && truckIdch == ''){
                 loginModal()
             }else {
-                self.location="/menu/getMenuList?truckId="+truckNo;
+                self.location="/menu/getTruckList?cateCondition="+cateNo;
             }
 
         });
@@ -384,16 +384,40 @@
 
         // 메뉴 사진 클릭시
         $("body").on("click", ".img-menu-box", function () {
-            var menuNo = $(this).parent().find('a').attr('idx');
+            var truckId = $(this).find('input').val();
 
             if (userIdch == '' && truckIdch == ''){
                 loginModal()
             }else {
-                self.location="/menu/getMenu?menuNo="+menuNo;
+                self.location="/menu/getMenuList?truckId="+truckId;
             }
+
+        });
+
+        // 쿠폰 클릭시
+
+        $('div .btn-coupon').click(function (e) {
+
+            e.preventDefault();
+            if (userIdch == '' && truckIdch == ''){
+                loginModal()
+            }else {
+                self.location="/views/purchase/getCouponList.jsp";
+            }
+
         });
 
 
+            $('div .btn-more-ft').click(function (e) {
+
+                e.preventDefault();
+                if (userIdch == '' && truckIdch == ''){
+                    loginModal()
+                }else {
+                    self.location="/menu/getTruckList";
+                }
+
+            });
 
     });
 
