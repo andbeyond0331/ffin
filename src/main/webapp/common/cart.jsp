@@ -144,7 +144,7 @@
         for (var i in beforeAnyway) {
             // console.log("beforeAnyway : " + beforeAnyway[i]);
             for (var j in beforeAnyway[i]) {
-                console.log("afterAnyway key : " + j + "/value : " + beforeAnyway[i][j]);
+                // console.log("afterAnyway key : " + j + "/value : " + beforeAnyway[i][j]);
 
             }
         }
@@ -157,11 +157,11 @@
 
         ////////////시작///////////////////
         if (beforeAnyway) { // sessionStorage에 뭔가 있다?
-            console.log("sessionStorage에 있다! 화면 뿌려주기 준비 시작!");
+            // console.log("sessionStorage에 있다! 화면 뿌려주기 준비 시작!");
             for (var i = 0; i < beforeAnyway.length; i++) {//sessionStorage의 orderDetail만큼 for문 돌리기
 
-                console.log("for문 장바구니이쪽이다!!!!!! 안에 있다!");
-                console.log("beforeAnyway[" + i + "]번째 세션 : " + JSON.stringify(beforeAnyway[i]));
+                // console.log("for문 장바구니이쪽이다!!!!!! 안에 있다!");
+                // console.log("beforeAnyway[" + i + "]번째 세션 : " + JSON.stringify(beforeAnyway[i]));
                 // finalCart += "<li class=\"list-group-item d-flex justify-content-between lh-sm\">"+
                 //     "<div><h6 class=\"my-0\">"+beforeAnyway[i]['odMenuName']+"</h6>"+
                 //     "<h6 class=\"my-0\">"+beforeAnyway[i]['odMenuQty']+"</h6>"+

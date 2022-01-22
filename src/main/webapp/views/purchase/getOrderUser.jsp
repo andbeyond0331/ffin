@@ -130,9 +130,9 @@
             icon : "http://tmapapi.sktelecom.com/resources/images/common/pin_car.png",
             map: map
         });
-
-        console.log("truckMapLa : "+truckMapLa);
-        console.log("truckMapLo : "+truckMapLo);
+        //
+        // console.log("truckMapLa : "+truckMapLa);
+        // console.log("truckMapLo : "+truckMapLo);
 
     }
 
@@ -158,8 +158,8 @@
 
         function success(pos) {
             var crd = pos.coords;
-            console.log('위도 : ' + crd.latitude);
-            console.log('경도: ' + crd.longitude);
+            // console.log('위도 : ' + crd.latitude);
+            // console.log('경도: ' + crd.longitude);
             lat = crd.latitude;
             lon = crd.longitude;
             /* ymca */
@@ -321,7 +321,7 @@
                                 });
                         }
                     }//for문 [E]
-                    console.log("drawInfoArr: "+drawInfoArr)
+                    // console.log("drawInfoArr: "+drawInfoArr)
                     drawLine(drawInfoArr);
                 },
                 error : function(request, status, error) {
@@ -388,7 +388,7 @@
                 if(socket) {
                     // websocket에 보내기!!! (message, 보내는이, 받는이)
                     let socketMessage = "cancelUser,"+orderUserId+","+orderTruckId+","+orderUserId;
-                    console.log("socketM::::" + socketMessage);
+                    // console.log("socketM::::" + socketMessage);
                     socket.send(socketMessage);
                 }
                 self.location = "/user/getPurchaseList";
@@ -860,7 +860,7 @@
             totototoprice+= Number(pricepriceprice * totototoqty);
             totalshow += Number(pricepriceprice * totototoqty);
             optionPriceShow[Number(menuCount-1)] = totalshow;
-            console.log("ttototototo :: " + totototoprice)
+            // console.log("ttototototo :: " + totototoprice)
 
 
 
