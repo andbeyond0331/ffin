@@ -278,6 +278,15 @@
               background-image: linear-gradient(30deg, rgba(255, 229, 55, 0.16), transparent 50%);
             }*/
 
+        .card {
+            background-size: cover;
+            width: 600px;
+            height: 350px;
+            border-radius: 20px;
+            box-shadow: 0px 8px 16px 4px #9E9E9E;
+            margin-top: 50px;
+            margin-bottom: 50px
+        }
 
     </style>
     <!-- google -->
@@ -430,46 +439,78 @@
 
 
 
-                <section class="light">
-                    <div class="container py-2">
+            <section class="light">
+                <div class="container py-2">
 
-                        <article class="postcard light blue" id="rainCoupon">
-                                <img class="postcard__img" src="/resources/image/1.jpg" alt="Image Title" />
-                            <div class="postcard__text t-dark">
-                                <h1 class="postcard__title blue"><a href="#">비오는 날 쿠폰</a></h1>
-
-                                <div class="postcard__bar"></div>
-                                <div class="postcard__preview-txt">비 오는 날엔 언제나 할인</div>
-                                <div class="postcard__preview-txt">현재 위치 기준으로 발급됩니다.</div>
-                                <div class="postcard__preview-txt"><h6>3000원</h6></div>
-
-                                <ul class="postcard__tagbox">
-                                    <li class="tag__item orderBtn"><i class="fas fa-tag mr-2"></i>비가와비가와</li>
-
-                                </ul>
+                    <div class="container-fluid px-1 px-md-4 py-5 mx-auto">
+                        <div class="row d-flex justify-content-center px-3">
+                            <div class="card" id="rainCoupon2" style="padding: 10px 5px 0 0; background-image: url(/resources/image/rainday.jpeg);">
+                                <h2 class="ml-auto mr-4 mt-3 mb-0" style="color:#fff; font-size: 20px; margin-bottom: 10px;">비 오는날 쿠폰</h2>
+                                <p class="ml-auto mr-4 mb-0 med-font" style="color:#fff; font-size: 16px; margin-bottom: 10px;">비 오는 날엔 언제나 할인</p>
+                                <h1 class="ml-auto mr-4 large-font" style="color:#fff; font-size: 20px;">3,000원</h1>
+                                <p class="time-font mb-0 ml-4 mt-auto"><span class="sm-font">
+                                    <ion-icon name="rainy-outline"></ion-icon>
+                                    <ion-icon name="rainy-outline"></ion-icon>
+                                    <ion-icon name="rainy-outline"></ion-icon>
+                                </span></p>
+                                <p class="ml-4 mb-4" style="color:#fff;">현재 위치 기준으로 발급됩니다.</p>
                             </div>
-                        </article>
-
-                        <article class="postcard light blue" id="snowCoupon">
-
-                                <img class="postcard__img" src="/resources/image/1.jpg" alt="Image Title" />
-
-                            <div class="postcard__text t-dark">
-                                <h1 class="postcard__title blue"><a href="#">눈오는 날 쿠폰</a></h1>
-                                <div class="postcard__bar"></div>
-                                <div class="postcard__preview-txt">눈 오는 날엔 언제나 할인</div>
-                                <div class="postcard__preview-txt">현재 위치 기준으로 발급됩니다.</div>
-                                <div class="postcard__preview-txt"><h6>3000원</h6></div>
-
-                                <ul class="postcard__tagbox">
-                                    <li class="tag__item orderBtn"><i class="fas fa-tag mr-2"></i>눈이와 눈이와</li>
-
-                                </ul>
-                            </div>
-                        </article>
-
+                        </div>
                     </div>
-                </section>
+
+                    <div class="container-fluid px-1 px-md-4 py-5 mx-auto">
+                        <div class="row d-flex justify-content-center px-3">
+                            <div class="card" id="snowCoupon2" style="padding: 10px 5px 0 0; background-image: url(/resources/image/snowday.jpeg);">
+                                <h2 class="ml-auto mr-4 mt-3 mb-0" style="color:#25323c; font-size: 20px; margin-bottom: 10px;">눈 오는날 쿠폰</h2>
+                                <p class="ml-auto mr-4 mb-0 med-font" style="color:#25323c; font-size: 16px; margin-bottom: 10px;">눈 오는 날엔 언제나 할인</p>
+                                <h1 class="ml-auto mr-4 large-font" style="color:#25323c; font-size: 20px;">3,000원</h1>
+                                <p class="time-font mb-0 ml-4 mt-auto"><span class="sm-font">
+                                        <i class="far fa-snowflake"  style="color:#25323c; margin-bottom: 5px;" ></i>
+                                        <i class="far fa-snowflake"  style="color:#25323c; margin-bottom: 5px;" ></i>
+                                        <i class="far fa-snowflake"  style="color:#25323c; margin-bottom: 5px;" ></i>
+                                    </span></p>
+                                <p class="ml-4 mb-4" style="color:#25323c;">현재 위치 기준으로 발급됩니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <article class="postcard light blue" id="rainCoupon">
+                        <img class="postcard__img" src="/resources/image/1.jpg" alt="Image Title" />
+                        <div class="postcard__text t-dark">
+                            <h1 class="postcard__title blue"><a href="#">비오는 날 쿠폰</a></h1>
+
+                            <div class="postcard__bar"></div>
+                            <div class="postcard__preview-txt">비 오는 날엔 언제나 할인</div>
+                            <div class="postcard__preview-txt">현재 위치 기준으로 발급됩니다.</div>
+                            <div class="postcard__preview-txt"><h6>3000원</h6></div>
+
+                            <ul class="postcard__tagbox">
+                                <li class="tag__item orderBtn"><i class="fas fa-tag mr-2"></i>비가와비가와</li>
+
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="postcard light blue" id="snowCoupon">
+
+                        <img class="postcard__img" src="/resources/image/1.jpg" alt="Image Title" />
+
+                        <div class="postcard__text t-dark">
+                            <h1 class="postcard__title blue"><a href="#">눈오는 날 쿠폰</a></h1>
+                            <div class="postcard__bar"></div>
+                            <div class="postcard__preview-txt">눈 오는 날엔 언제나 할인</div>
+                            <div class="postcard__preview-txt">현재 위치 기준으로 발급됩니다.</div>
+                            <div class="postcard__preview-txt"><h6>3000원</h6></div>
+
+                            <ul class="postcard__tagbox">
+                                <li class="tag__item orderBtn"><i class="fas fa-tag mr-2"></i>눈이와 눈이와</li>
+
+                            </ul>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
 
 
 

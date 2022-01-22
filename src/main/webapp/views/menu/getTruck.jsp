@@ -449,7 +449,7 @@
                     menuTruckId : modalApply.find('input[name="menuTruckId"]').val(),
                     odMenuNo : modalApply.find('input[name="odMenuNo"]').val(),
                     odMenuName : modalApply.find('h4[name="odMenuName"]').text(),
-                    odMenuImg1 : modalApply.find('div[name="odMenuImg1"]').data('menuimg'),
+                    odMenuImg1 : modalApply.find('input[name="odMenuImg1"]').data('menuimg'),
                     odMenuDetail : modalApply.find('div[name="odMenuDetail"]').text(),
                     odMenuPrice : modalApply.find('div[name="odMenuPrice"]').text(),
                     odMenuQty : 1,
@@ -497,7 +497,7 @@
                             menuTruckId : modalApply.find('input[name="menuTruckId"]').val(),
                             odMenuNo : modalApply.find('input[name="odMenuNo"]').val(),
                             odMenuName : modalApply.find('h6[name="odMenuName"]').text(),
-                            odMenuImg1 : modalApply.find('div[name="odMenuImg1"]').data('menuimg'),
+                            odMenuImg1 : modalApply.find('input[name="odMenuImg1"]').data('menuimg'),
                             odMenuDetail : modalApply.find('div[name="odMenuDetail"]').text(),
                             odMenuPrice : modalApply.find('div[name="odMenuPrice"]').text(),
                             odMenuQty : 1,
@@ -2740,7 +2740,7 @@
                         </a>
                         <!--//////////////////////////-->
                         <a id="kakao-link-btn" href="javascript:kakaoShare()">
-                            <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" />
+                            <img src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png" style="zoom: 55%; margin-left: 10px;"/>
                         </a>
                     </div>
                 </div>
@@ -2903,7 +2903,7 @@
                     <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight: 600; margin: 0; box-shadow: inset 0 -11px 0 #fae100; font-size: 20px; width: fit-content;">메뉴 정보</h5>
                 </div>
 
-                <div class="modal-body-hey col-12" style="margin: 0; display: flex; flex-direction: column;">
+                <div class="modal-body-hey col-12" style="margin: 10px 0 25px 0; display: flex; flex-direction: column;">
                     <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
                         <ol class='carousel-indicators'>
                             <li
@@ -2917,14 +2917,14 @@
                                     data-target='#carouselExampleIndicators'
                                     data-slide-to='2'></li>
                         </ol>
-                        <div class='carousel-inner'>
-                            <div class='carousel-item active'>
+                        <div class='carousel-inner' style="border-radius: 20px; ">
+                            <div class='carousel-item active' style="max-height: 400px; ">
                                 <img class='img-size' id='menuModalImg1' src='https://images.unsplash.com/photo-1485470733090-0aae1788d5af?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1391&q=80' alt='First slide' />
                             </div>
-                            <div class='carousel-item'>
+                            <div class='carousel-item' style="max-height: 400px;">
                                 <img class='img-size' id='menuModalImg2' src='https://images.unsplash.com/photo-1491555103944-7c647fd857e6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80' alt='Second slide' />
                             </div>
-                            <div class='carousel-item'>
+                            <div class='carousel-item' style="max-height: 400px;">
                                 <img class='img-size' id='menuModalImg3' src='https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80' alt='Second slide' />
                             </div>
                         </div>

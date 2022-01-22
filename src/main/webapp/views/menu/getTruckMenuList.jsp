@@ -644,7 +644,7 @@
                 <div class="detail-box" style="margin-top: 120px; margin-bottom: 60px;">
                     <i class="fa fa-quote-left" aria-hidden="true"></i>
                     <h4 class="truckNameForMenu" style="margin-top: 10px;">
-                        푸드 트럭
+                        푸드트럭
                     </h4>
                 </div>
 
