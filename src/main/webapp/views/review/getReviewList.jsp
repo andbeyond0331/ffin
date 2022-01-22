@@ -307,7 +307,7 @@
                         "Content-Type" : "application/json"
                     },
                     success : function (Data) {
-                        console.log(Data.review.rvNo);
+                        // console.log(Data.review.rvNo);
                         var display ="<div class='card-ans mb-10'>";
                         display +="<hr style='border-width:2px;'/>";
                         display += "<div class='card-ans mb-10'>"
@@ -381,7 +381,7 @@
                             totototoprice+= Number(pricepriceprice * totototoqty);
                             totalshow += Number(pricepriceprice * totototoqty);
                             optionPriceShow[Number(menuCount-1)] = totalshow;
-                            console.log("ttototototo :: " + totototoprice)
+                            // console.log("ttototototo :: " + totototoprice)
 
                             var odMenuImageCopy;
                             var odMenuNameCopy;
@@ -1145,7 +1145,7 @@
     $(function(){
         $('input[name="rvStar"]').on("click", function(){
             var star = $(this).val();
-            console.log("star : "  + star);
+            // console.log("star : "  + star);
             $('input[name="ssttaarr"]').val(star);
         })
     })
@@ -1158,8 +1158,8 @@
             var rvNo = $('#hiddenRvNo').val();
             var rvTruckCmtContent = $('#inquiryAnsContent').val();
 
-            console.log(rvNo);
-            console.log(rvTruckCmtContent);
+            // console.log(rvNo);
+            // console.log(rvTruckCmtContent);
 
             $.ajax({
                 url : "/review/json/updateRvForAddTruckCmt",
@@ -1174,7 +1174,7 @@
                     rvTruckCmtContent : rvTruckCmtContent
                 },
                 success : function (data){
-                    console.log(data);
+                    // console.log(data);
                     window.location.reload();
                 }
             });
@@ -1192,8 +1192,8 @@
             var rvNo = $('#hiddenRvNoNo').val();
             var rvTruckCmtContent = $('#updateTruckCmtContent').val();
 
-            console.log(rvNo);
-            console.log(rvTruckCmtContent);
+            // console.log(rvNo);
+            // console.log(rvTruckCmtContent);
 
             $.ajax({
 
@@ -1209,7 +1209,7 @@
                     rvTruckCmtContent : rvTruckCmtContent
                 },
                 success : function (data){
-                    console.log(data);
+                    // console.log(data);
                     window.location.reload();
                 }
             });
@@ -1230,9 +1230,9 @@
             var rvStar = $('input[name="ssttaarr"]').val();
 
 
-            console.log(rvNo);
-            console.log(rvContent);
-            console.log(rvStar);
+            // console.log(rvNo);
+            // console.log(rvContent);
+            // console.log(rvStar);
 
             $.ajax({
 
@@ -1249,7 +1249,7 @@
                     rvStar : rvStar
                 },
                 success : function (data){
-                    console.log(data);
+                    // (data);
                     window.location.reload();
                 }
             });
