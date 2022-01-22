@@ -198,7 +198,7 @@
                 <div class="col-md-6 text-right">
                     <form class="form-inline" id="search_form" name="detailForm" style="zoom: 90%; padding: 0; float: right;">
 
-                        <div class="form-group">
+             <%--           <div class="form-group">
                             <select class="form-control" name="searchCondition" >
                                 <option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>ID</option>
                                 <option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>답변여부</option>
@@ -212,7 +212,7 @@
                                    value="${! empty search.searchKeyword ? search.searchKeyword : '' }" style="width: 200px;" >
                         </div>
 
-                        <button type="button" class="btn btn-cancle" style="zoom: 90%;">검색</button>
+                        <button type="button" class="btn btn-cancle" style="zoom: 90%;">검색</button>--%>
 
                         <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
                         <input type="hidden" id="currentPage" name="currentPage" value=""/>
