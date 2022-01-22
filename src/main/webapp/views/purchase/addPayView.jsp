@@ -204,12 +204,12 @@
                             //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
                         }
                     });
-                    console.log("purchase.socket::::" + socket);
+                  /*  console.log("purchase.socket::::" + socket);*/
                     if(socket) {
                         // websocket에 보내기!!! (message, 보내는이, 받는이)
                         let socketMessage = "purchase,"+orderUserId+","+orderTruckId+","+orderTruckId;
-                        console.log("socketM::::" + socketMessage);
-                        socket.send(socketMessage);
+                      /*  console.log("socketM::::" + socketMessage);
+                        socket.send(socketMessage);*/
                     }
                     //성공시 이동할 페이지
                     $("form").attr("method", "POST").attr("action", "/purchase/getOrderUser").submit();
@@ -268,12 +268,12 @@
                             //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
                         }
                     });
-                    console.log("purchase.socket::::" + socket);
+                   /* console.log("purchase.socket::::" + socket);*/
                     if(socket) {
                         // websocket에 보내기!!! (message, 보내는이, 받는이)
                         let socketMessage = "purchase,"+orderUserId+","+orderTruckId+","+orderTruckId;
-                        console.log("socketM::::" + socketMessage);
-                        socket.send(socketMessage);
+                      /*  console.log("socketM::::" + socketMessage);
+                        socket.send(socketMessage);*/
                     }
                     //성공시 이동할 페이지
                     $("form").attr("method", "POST").attr("action", "/purchase/getOrderUser").submit();
@@ -331,12 +331,12 @@
                             //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
                         }
                     });
-                    console.log("purchase.socket::::" + socket);
+                   /* console.log("purchase.socket::::" + socket);*/
                     if(socket) {
                         // websocket에 보내기!!! (message, 보내는이, 받는이)
                         let socketMessage = "purchase,"+orderUserId+","+orderTruckId+","+orderTruckId;
-                        console.log("socketM::::" + socketMessage);
-                        socket.send(socketMessage);
+                     /*   console.log("socketM::::" + socketMessage);
+                        socket.send(socketMessage);*/
                     }
                     //성공시 이동할 페이지
                     $("form").attr("method", "POST").attr("action", "/purchase/getOrderUser").submit();
@@ -395,12 +395,12 @@
                             //[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
                         }
                     });
-                    console.log("purchase.socket::::" + socket);
+                 /*   console.log("purchase.socket::::" + socket);*/
                     if(socket) {
                         // websocket에 보내기!!! (message, 보내는이, 받는이)
                         let socketMessage = "purchase,"+orderUserId+","+orderTruckId+","+orderTruckId;
-                        console.log("socketM::::" + socketMessage);
-                        socket.send(socketMessage);
+                    /*    console.log("socketM::::" + socketMessage);
+                        socket.send(socketMessage);*/
                     }
                     //성공시 이동할 페이지
                     $("form").attr("method", "POST").attr("action", "/purchase/getOrderUser").submit();
@@ -463,10 +463,10 @@
                 if(couponDcPrice < Number(totalPP2[1])) {
 
                     /*  var couponNo =modal.find('input[name=couponNumber]').val();*/
-                    console.log(realCouponDcPrice + " : realOptionGroupName");
+                 /*   console.log(realCouponDcPrice + " : realOptionGroupName");*/
 
                     var couponNo = data[1];
-                    console.log(couponNo + ": couponNo");
+                 /*   console.log(couponNo + ": couponNo");*/
 
 
 
@@ -515,13 +515,13 @@
             var usePoint = $('input[name="usePoint"]').val();
 
 
-            console.log("totalPoint"+totalPoint)
+       /*     console.log("totalPoint"+totalPoint)
             console.log("val"+val)
             console.log("orderTotalPayPrice"+orderTotalPayPrice)
             console.log("totalSS1"+totalSS1)
             console.log("totalSS2"+totalSS2)
             console.log("dd"+dd)
-            console.log("usePoint"+usePoint)
+            console.log("usePoint"+usePoint)*/
 
             if (pointCheck == undefined) {
 
@@ -591,14 +591,14 @@
                                             var ususususPoint = $("#pointAmt").val();
                                             var usePlMnPoint = Number(totalPoint)+Number(ususususPoint);
 
-                                            console.log("usePointT"+usePointT)
+                                         /*   console.log("usePointT"+usePointT)
                                             console.log("pointde"+pointde)
                                             console.log("pointRe"+pointRe)
                                             console.log("")
                                             console.log("totalPoint 현재 보유 포인트 "+usePlMnPoint)
                                             console.log("usususPoint 현재 그전에 사용한 포인트"+ususususPoint)
                                             console.log("1번째 합친거 "+usePlMnPoint)
-
+*/
                                             const pointAmt = document.getElementById('pointAmt').value;
                                             var val =document.getElementById('totalpp').innerHTML;
 
@@ -616,7 +616,7 @@
 
                                             totalsale =  "<span id='sale'>할인금액 : "+sale+"</span>"
 
-                                            console.log("지금 사용한 포인트 "+usePoint)
+                                         /*   console.log("지금 사용한 포인트 "+usePoint)*/
                                             $('#totalPoint').html(Number(usePlMnPoint)-Number(usePoint));
                                             $('#pp').html(totalPayPrice);
                                             $('#dcp').html(totalsale);
@@ -708,9 +708,9 @@
             var pointde = document.getElementById("pointAmt");
             var pointRe = document.getElementById("usePoint");
             const pointAmt = document.getElementById('pointAmt').value;
-            console.log("pointde"+pointde)
+          /*  console.log("pointde"+pointde)
             console.log("pointAmt"+pointAmt)
-            console.log('totalPoint'+totalPoint)
+            console.log('totalPoint'+totalPoint)*/
 
             var val =document.getElementById('totalpp').innerHTML;
             var dd = val.split(":").map(Number);
@@ -1065,7 +1065,7 @@
     $(function () {
 
         var odMenuNameCount = $("input[name='odMenuName']").length;
-        console.log("odMenuCount : " + odMenuNameCount)
+       /* console.log("odMenuCount : " + odMenuNameCount)*/
 
         var odMenuNameL;
         var odOptionGroupNameL;
@@ -1102,7 +1102,7 @@
             var odMenuQtyFlag = $("input[name='odMenuQtyFlag']").eq(i).val();
 
 
-            console.log(odMenuImage)
+         /*   console.log(odMenuImage)*/
             /* HHJ */
 
             if (optionNameShow[menuCount] == undefined){
@@ -1130,7 +1130,7 @@
             totototoprice+= Number(pricepriceprice * totototoqty);
             totalshow += Number(pricepriceprice * totototoqty);
             optionPriceShow[Number(menuCount-1)] = totalshow;
-            console.log("ttototototo :: " + totototoprice)
+           /* console.log("ttototototo :: " + totototoprice)*/
 
             var odMenuImageCopy;
             var odMenuNameCopy;
@@ -1214,7 +1214,7 @@
             /* alert("test3"+test3)
              alert("test 길이"+test3.length)*/
         }
-        console.log(odMenuImageL[0])
+     /*   console.log(odMenuImageL[0])*/
 
 
         var menuPrice = 0;

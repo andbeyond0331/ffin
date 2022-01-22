@@ -319,8 +319,8 @@
 
             // 에러 확인 내부 함수 정의
             function showErrorMsg(error) {
-                console.log("");
-                console.log("showErrorMsg : error : " + error.code);
+                // console.log("");
+                // console.log("showErrorMsg : error : " + error.code);
                 switch(error.code) {
                     case error.PERMISSION_DENIED:
                         console.log("showErrorMsg : error : " + "Geolocation API의 사용 요청을 거부했습니다");
