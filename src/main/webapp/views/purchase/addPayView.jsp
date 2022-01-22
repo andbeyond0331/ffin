@@ -795,13 +795,18 @@
                 <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <%--<div class="modal-header">
 
                                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
+                            </div--%>
                             <div class="modal-body">
-                                <table class="table">
+
+                                <div style="display:flex; justify-content: center; margin-top: 10px;">
+                                    <h5 style="margin: 0; box-shadow: inset 0 -11px 0 #fae100; font-size: 22px; width: fit-content;" id="menuModalLabel">보유쿠폰</h5>
+                                </div>
+
+                                <table class="table" style="margin-top: 50px;">
                                     <thead>
                                     <tr>
                                         <th scope="col">#</th>
@@ -839,9 +844,9 @@
                                     </c:forEach>
                                 </table>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">쿠폰 적용</button>
+                            <div class="modal-footer" style="display: flow-root;">
+                                <button type="button" class="btn btn-cancle" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" style="border-radius: 50px; padding: 10px 15px;">쿠폰 적용</button>
                             </div>
                         </div>
                     </div>
@@ -875,8 +880,8 @@
                                         <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.odOptionName}"/>
                                         <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.odMenuQty}"/>
                                         <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.odMenuPrice}"/>
-                                        <input type="text" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
-                                        <input type="text" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
+                                        <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
+                                        <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
                                         <input type="hidden" id="odMenuQtyFlag" name="odMenuQtyFlag" value="${cart.odMenuQtyFlag}"/>
 
                                     </c:forEach>
