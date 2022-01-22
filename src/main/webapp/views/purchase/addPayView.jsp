@@ -875,8 +875,8 @@
                                         <input type="hidden" id="odOptionName" name="odOptionName" value="${cart.odOptionName}"/>
                                         <input type="hidden" id="odMenuQty" name="odMenuQty" value="${cart.odMenuQty}"/>
                                         <input type="hidden" id="odMenuPrice" name="odMenuPrice" value="${cart.odMenuPrice}"/>
-                                        <input type="text" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
-                                        <input type="text" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
+                                        <input type="hidden" id="odOptionPrice" name="odOptionPrice" value="${cart.odOptionPrice}"/>
+                                        <input type="hidden" id="odMenuImage" name="odMenuImage" value="${cart.odMenuImage}"/>
                                         <input type="hidden" id="odMenuQtyFlag" name="odMenuQtyFlag" value="${cart.odMenuQtyFlag}"/>
 
                                     </c:forEach>
