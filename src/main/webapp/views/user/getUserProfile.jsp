@@ -60,7 +60,7 @@
 				var userFavPlaceDetail = $("#userFavPlaceDetail").val();
 				var userIntro = $("#userIntro").val();
 
-				console.log(userId+userProImg+userFavMenu+userFavPlace+userFavPlaceDetail+userIntro);
+				//console.log(userId+userProImg+userFavMenu+userFavPlace+userFavPlaceDetail+userIntro);
 
 				$.ajax({
 					type:"POST",

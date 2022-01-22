@@ -104,7 +104,7 @@
            $('.mb-10').click(function () {
 
                var reportNo = $(this).find("input[name='reportNo']").val();
-               console.log(reportNo);
+               //console.log(reportNo);
 
                $.ajax({
                    url: "/qna/json/getReport/"+reportNo,
@@ -114,9 +114,9 @@
                        "Content-Type" : "application/json"
                    },
                    success : function (data) {
-                       console.log(data.report.reportNo);
-                       console.log(data.report.reportLink);
-                       console.log(data.report.reportContent);
+                       //console.log(data.report.reportNo);
+                       //console.log(data.report.reportLink);
+                       //console.log(data.report.reportContent);
                        var display = "<div class='card-ans mb-10'>"
                                     + "<div class='row g-0 inquiry-card'>"
                                     + "<div class='card-body'>"

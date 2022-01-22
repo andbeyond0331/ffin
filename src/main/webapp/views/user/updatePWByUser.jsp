@@ -127,7 +127,7 @@
 						userPassword : userPassword_now
 					},
 					success : function(pwResult){
-						console.log(pwResult);
+						//console.log(pwResult);
 
 						if( pwResult == userPassword_now){
 							$(".now_pw_vc_chk_OK").css("display","block");

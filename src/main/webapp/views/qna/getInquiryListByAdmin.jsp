@@ -115,8 +115,8 @@
                        "Content-Type" : "application/json"
                    },
                    success : function (Data) {
-                       console.log(Data.inquiry.inquiryNo);
-                       console.log(Data.inquiry.inquiryFile);
+                       //console.log(Data.inquiry.inquiryNo);
+                       //console.log(Data.inquiry.inquiryFile);
 
                        var display = "<div class='card-ans mb-10'>"
                                     + "<div class='row g-0 inquiry-card'>"
@@ -183,9 +183,9 @@
                 var inquiryAnsTitle = $('#inquiryAnsTitle').val();
                 var inquiryAnsContent = $('#inquiryAnsContent').val();
 
-                console.log(inquiryNo);
-                console.log(inquiryAnsTitle);
-                console.log(inquiryAnsContent);
+                //console.log(inquiryNo);
+                //console.log(inquiryAnsTitle);
+                //console.log(inquiryAnsContent);
 
                 $.ajax({
 
@@ -202,7 +202,7 @@
                         inquiryAnsContent : inquiryAnsContent
                     },
                     success : function (data){
-                        console.log(data);
+                        //console.log(data);
                         window.location.reload();
                     }
                 });

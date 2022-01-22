@@ -76,7 +76,7 @@
 		$(function () {
 			$("a[href='#' ]").click(function () {
 
-				alert("수정");
+				//("수정");
 
 				var inquiryType = $('#inquiryType').val();
 				var inquiryTitle = $('#inquiryTitle').val();
