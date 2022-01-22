@@ -113,7 +113,7 @@
                        "Content-Type" : "application/json"
                    },
                    success : function (Data) {
-                       console.log(Data.inquiry.inquiryNo);
+                       //console.log(Data.inquiry.inquiryNo);
                        var display = "<div class='card-ans mb-10'>"
                                     + "<div class='row g-0 inquiry-card'>"
                                     + "<div class='card-body'>"

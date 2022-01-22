@@ -179,7 +179,11 @@
 						showUploadImage(result);
 					},
 					error : function(result) {
-						alert("이미지 파일이 아닙니다.");
+						//alert("이미지 파일이 아닙니다.");
+						Swal.fire({
+							text: "이미지 파일만 업로드 해주세요.",
+							buttons: true
+						})
 					}
 				});
 
@@ -201,12 +205,18 @@
             function fileCheck(fileName, fileSize){
 
                 if(fileSize >= maxSize){
-                    alert("파일 사이즈 초과");
+					Swal.fire({
+						text: "파일 사이즈가 초과되었어요.",
+						buttons: true
+					})
                     return false;
                 }
 
                 if(!regex.test(fileName)){
-                    alert("해당 종류의 파일은 업로드할 수 없습니다.");
+					Swal.fire({
+						text: "파일 형식을 확인해주세요.",
+						buttons: true
+					})
                     return false;
                 }
 
@@ -252,7 +262,7 @@
 					error : function(result){
 						console.log(result);
 
-						alert("파일 삭제 X")
+						//alert("파일 삭제 X")
 					}
 				});
 			}

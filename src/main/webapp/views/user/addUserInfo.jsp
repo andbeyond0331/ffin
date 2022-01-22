@@ -633,7 +633,7 @@
 							<div class="col-md-6 data-input-box">
 
 								<div class="data-input-box">
-									<label for="userId" class="form-label label-name">ID</label>
+									<label for="userId" class="form-label label-name" style="display: flex;">ID<i class="fas fa-asterisk" style="zoom: 70%; margin-bottom: 5px;"></i></label>
 									<input type="text" class="form-control" id="userId" name="userId" placeholder="아이디">
 									<span class="id_vc_chk_1">사용 가능한 아이디입니다.</span>
 									<span class="id_vc_chk_2">사용 중인 아이디입니다.</span>
@@ -642,7 +642,7 @@
 								</div>
 
 								<div class="data-input-box">
-									<label for="userPassword" class="form-label label-name">Password</label>
+									<label for="userPassword" class="form-label label-name" style="display: flex;">Password<i class="fas fa-asterisk" style="zoom: 70%; margin-bottom: 5px;"></i></label>
 									<input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="비밀번호">
 									<span class="pw_input_chk">비밀번호를 입력해주세요.</span>
 									<span class="pw_ex_chk">대소문자, 숫자를 포함하여 8자 이상으로 입력해주세요.</span>
@@ -652,21 +652,21 @@
 								</div>
 
 								<div class="data-input-box">
-									<label for="userName" class="form-label label-name">이름</label>
+									<label for="userName" class="form-label label-name" style="display: flex;">성명<i class="fas fa-asterisk" style="zoom: 70%; margin-bottom: 5px;"></i></label>
 									<input type="text" class="form-control" id="userName" name="userName">
 									<span class="name_input_chk">이름을 입력해주세요.</span>
 									<span class="name_ex_chk">이름을 정확하게 입력해주세요.</span>
 								</div>
 
 								<div class="data-input-box">
-									<label for="userBirth" class="form-label label-name">생년월일</label>
+									<label for="userBirth" class="form-label label-name" style="display: flex;">생년월일<i class="fas fa-asterisk" style="zoom: 70%; margin-bottom: 5px;"></i></label>
 									<input type="text" class="form-control" id="userBirth" name="userBirth">
 									<div id="birthHelp" class="form-text" style="font-size: 10pt; margin-left: 5px; color: grey">연 1회 생일 축하 쿠폰이 발급됩니다.</div>
 									<span class="brith_ex_chK">생년월일을 'YYYY-DD-MM' 형식으로 입력해주세요.</span>
 								</div>
 
 								<div class="data-input-box">
-									<label for="userPhone" class="form-label label-name">Phone</label>
+									<label for="userPhone" class="form-label label-name" style="display: flex;">전화번호<i class="fas fa-asterisk" style="zoom: 70%; margin-bottom: 5px;"></i></label>
 									<input type="text" class="form-control" id="userPhone" name="userPhone" placeholder="전화번호를 입력하세요.">
 									<%--<div id="phoneHelp" class="form-text" style="font-size: 10pt; float:left; margin-right:10px; margin-top: 12px; margin-left: 5px;">인증번호를 요청하세요.</div>--%>
 									<span class="phone_input_chk">휴대폰번호를 입력해주세요.</span>

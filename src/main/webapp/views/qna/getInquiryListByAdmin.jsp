@@ -115,8 +115,8 @@
                        "Content-Type" : "application/json"
                    },
                    success : function (Data) {
-                       console.log(Data.inquiry.inquiryNo);
-                       console.log(Data.inquiry.inquiryFile);
+                       //console.log(Data.inquiry.inquiryNo);
+                       //console.log(Data.inquiry.inquiryFile);
 
                        var display = "<div class='card-ans mb-10'>"
                                     + "<div class='row g-0 inquiry-card'>"
@@ -183,9 +183,9 @@
                 var inquiryAnsTitle = $('#inquiryAnsTitle').val();
                 var inquiryAnsContent = $('#inquiryAnsContent').val();
 
-                console.log(inquiryNo);
-                console.log(inquiryAnsTitle);
-                console.log(inquiryAnsContent);
+                //console.log(inquiryNo);
+                //console.log(inquiryAnsTitle);
+                //console.log(inquiryAnsContent);
 
                 $.ajax({
 
@@ -202,7 +202,7 @@
                         inquiryAnsContent : inquiryAnsContent
                     },
                     success : function (data){
-                        console.log(data);
+                        //console.log(data);
                         window.location.reload();
                     }
                 });
@@ -234,7 +234,7 @@
                 <div class="col-md-6 text-right">
                     <form class="form-inline" id="search_form" name="detailForm" style="zoom: 90%; padding: 0; float: right;">
 
-                        <div class="form-group">
+      <%--                  <div class="form-group">
                             <select class="form-control" name="searchCondition" >
                                 <option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>ID</option>
                                 <option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>답변여부</option>
@@ -248,7 +248,7 @@
                                    value="${! empty search.searchKeyword ? search.searchKeyword : '' }" style="width: 200px;" >
                         </div>
 
-                        <button type="button" class="btn btn-cancle" style="zoom: 90%;">검색</button>
+                        <button type="button" class="btn btn-cancle" style="zoom: 90%;">검색</button>--%>
 
                         <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
                         <input type="hidden" id="currentPage" name="currentPage" value=""/>

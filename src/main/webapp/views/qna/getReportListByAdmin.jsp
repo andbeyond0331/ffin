@@ -107,7 +107,7 @@
            $('.mb-10').click(function () {
 
                var reportNo = $(this).find("input[name='reportNo']").val();
-               console.log(reportNo);
+               //console.log(reportNo);
 
                $.ajax({
                    url: "/qna/json/getReport/"+reportNo,
@@ -117,10 +117,10 @@
                        "Content-Type" : "application/json"
                    },
                    success : function (data) {
-                       console.log(data.report.reportNo);
-                       console.log(data.report.reportLink);
-                       console.log(data.report.reportContent);
-                       console.log(data.report.reportTargetId);
+                       //console.log(data.report.reportNo);
+                       //console.log(data.report.reportLink);
+                       //console.log(data.report.reportContent);
+                       //console.log(data.report.reportTargetId);
 
                        var display = "<div class='card-ans mb-10'>"
                                     + "<div class='row g-0 inquiry-card'>"
@@ -271,7 +271,7 @@
 
                 <div class="col-md-6 text-right">
                     <form class="form-inline" name="detailForm" style="zoom: 90%; padding: 0; float: right;">
-
+<%--
                         <div class="form-group">
                             <select class="form-control" name="searchCondition" >
                                 <option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>ID</option>
@@ -286,7 +286,7 @@
                                    value="${! empty search.searchKeyword ? search.searchKeyword : '' }" style="width: 200px;" >
                         </div>
 
-                        <button type="button" class="btn btn-cancle" style="zoom: 90%;">검색</button>
+                        <button type="button" class="btn btn-cancle" style="zoom: 90%;">검색</button>--%>
 
                         <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
                         <input type="hidden" id="currentPage" name="currentPage" value=""/>

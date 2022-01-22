@@ -145,15 +145,15 @@
                 <div class="col-md-6 text-right">
                     <form class="form-inline" name="detailForm" style="zoom: 90%; padding: 0; float: right;">
 
-                        <div class="form-group">
+                        <%--<div class="form-group">
                             <select class="form-control" name="searchCondition" >
                                 <option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>ID</option>
                                 <option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>답변여부</option>
                             </select>
                         </div>
-                        <style>.nice-select.form-control{min-width: 95px;}</style>
+                        <style>.nice-select.form-control{min-width: 95px;}</style>--%>
 
-                        <div class="form-group">
+                      <%--  <div class="form-group">
                             <label class="sr-only" for="searchKeyword">검색어</label>
                             <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
                                    value="${! empty search.searchKeyword ? search.searchKeyword : '' }" style="width: 200px;" >
@@ -162,7 +162,7 @@
                         <button type="button" class="btn btn-cancle" style="zoom: 90%;">검색</button>
 
                         <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-                        <input type="hidden" id="currentPage" name="currentPage" value=""/>
+                        <input type="hidden" id="currentPage" name="currentPage" value=""/>--%>
 
                     </form>
                 </div>
