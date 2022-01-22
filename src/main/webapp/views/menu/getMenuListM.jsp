@@ -212,12 +212,12 @@
                 // console.log(optionPricer +" : optionPricer");
 
                 divElemOp ="</hr>"+
-                    "<div class=\"form-group\" id=\""+optionNamer+"\" name=\"optionName\">"+
+                    "<div class=\"form-group\" id=\""+optionNamer+"\" name=\"optionName\" style='display: flex; flex-direction: row; justify-content: center;'>"+
                     "<div class=\"col-xs-8 col-md-4\">"+"옵션 이름 : "+optionNamer+"</div>"+
                     "<input type=\"hidden\" id=\"applyOptionName+"+optionNamer+"\" name=\"applyOptionName\" value=\""+optionNamer+"\"/>"+
                     "<div class=\"col-xs-8 col-md-4\">"+"옵션 가격 : "+optionPricer+"</div>"+
                     "<input type=\"hidden\" id=\"applyOptionPrice+"+optionPricer+"\" name=\"applyOptionPrice\" value=\""+optionPricer+"\"/>"+
-                    "<input type=\"button\" value=\"삭제\" onclick=\"javascript:removeEL(\'"+optionNamer+"\')\"/>"+
+                    "<input type=\"button\" class='btn btn-cancle' value=\"삭제\" onclick=\"javascript:removeEL(\'"+optionNamer+"\')\" style='zoom: 80%;'/>"+
                     "</div>";
 
                 // console.log("divElemOp : "+divElemOp);
@@ -268,27 +268,32 @@
 
 
                     divElemApply1 = "</hr>"+
-                        "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\">"+
+                        "<div>" +
+                        "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\" style='display: flex; flex-direction: row; justify-content: center; align-items: center;'>"+
                         " <label for=\"optionGroupName\" class=\"col-sm-offset-1 col-sm-5 control-label\">옵션그룹이름</label>"+
                         "<div class=\"col-sm-4\">"+
                         "<input type=\"text\" class=\"form-control\" id=\"optionGroupName\" name=\"optionGroupName\"  value=\""+applyOptionGroupName+"\" placeholder=\""+applyOptionGroupName+"\">"+
                         "</div>"+
                         "</div>"+
                         "</hr>";
-                    divElemApply2 =  "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\">"+
+                    divElemApply2 =  "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\" style='display: flex; flex-direction: row; justify-content: center; align-items: center;'>"+
                         " <label for=\"optionName\" class=\"col-sm-offset-1 col-sm-5 control-label\">옵션이름</label>"+
                         "<div class=\"col-sm-4\">"+
                         "<input type=\"text\" class=\"form-control\" id=\"optionName\" name=\"optionName\"  value=\""+finalOptionName+"\" placeholder=\""+finalOptionName+"\">"+
                         "</div>"+
                         "</div>"+
                         "</hr>"+
-                        "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\">"+
+                        "<div class=\"form-group\" id=\"removeTarget"+applyOptionGroupName+"\" style='display: flex; flex-direction: row; justify-content: center; align-items: center;'>"+
                         " <label for=\"optionPrice\" class=\"col-sm-offset-1 col-sm-5 control-label\">옵션가격</label>"+
                         "<div class=\"col-sm-4\">"+
                         "<input type=\"text\" class=\"form-control\" id=\"optionPrice\" name=\"optionPrice\"  value=\""+finalOptionPrice+"\" placeholder=\""+finalOptionPrice+"\">"+
                         "</div>"+
                         "</div>"+
-                        "<input type=\"button\" value=\"삭제\" id=\"removeTarget"+applyOptionGroupName+"\" onclick=\"javascript:removeELOption(\'"+applyOptionGroupName+"\')\"/>";
+                        "<div style='text-align: center; margin-bottom: 20px;'>"+
+                        "<input type=\"button\" class='btn btn-cancle' value=\"삭제\" id=\"removeTarget"+applyOptionGroupName+"\" onclick=\"javascript:removeELOption(\'"+applyOptionGroupName+"\')\" style='zoom: 80%;; margin: 0;' />" +
+                        "</div>"+
+                        "</div>"+
+                        "<hr/>";
 
 
                     // alert(i+"번째 optionPrice" + ($('input[name="applyOptionPrice"]').eq(i).val()));
