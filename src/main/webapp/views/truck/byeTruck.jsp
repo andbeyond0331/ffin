@@ -100,7 +100,7 @@
         function fncByeTruck() {
 
             $("form").attr("method", "POST").attr("action", "/truck/byeTruck").submit();
-            alert("회원탈퇴 완료되었습니다. 그동안 저희 사이트를 이용해주셔서 감사합니다.");
+            alert("회원탈퇴가 완료되었습니다. \n그동안 저희 사이트를 이용해주셔서 감사합니다.");
         }
 
         function getValue(){

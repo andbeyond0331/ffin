@@ -1006,7 +1006,7 @@
 
 
     $("body").on("click", ".write_reply", function () {
-        alert("!")
+        //alert("!")
         // 게시물 번호
         let postNo = $(this).attr('idx');
         console.log("postNo: " + postNo)
@@ -1020,7 +1020,7 @@
         console.log(commentContent);
 
         if (commentContent == "") {	// 입력된게 없을때
-            alert("글을 입력하세요!");
+            alert("댓글을 입력해주세요.");
         } else {
             // 입력란 비우기
             $("#input_reply" + postNo).val("");
@@ -1040,7 +1040,7 @@
 
                     $('#reply' + postNo).text(reply);
 
-                    console.log("댓글 작성 성공");
+                    //console.log("댓글 작성 성공");
 
                     // 댓글리스트를 새로 받아오기
                     ReplyList(postNo);

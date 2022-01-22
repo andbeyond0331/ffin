@@ -41,7 +41,7 @@ public class AuthRestController {
         String title = "F.FIN 이메일 인증번호입니다.";
         String content;
         content ="";
-        content+="<p align =\"center\"><img alt=\"Logo\" src=\"https://fineapple.or.kr/assets/img/banner.png\" style=\"height:150px\"class=\"ban\"></p>";
+        content+="<p align =\"center\"><img alt=\"Logo\" src=\"http://localhost:8080/resources/image/logo_flat_point.png\" style=\"height:150px\"class=\"ban\"></p>";
         content+="<p align=\"center\" style=\"text-align: center; \">F.FIN에 가입해주셔서 감사합니다.&nbsp;</p><p align=\"center\" style=\"text-align: center; \">아래 번호를 입력해 인증을 완료해주세요.</p>";
         content += "<p align=\"center\" style=\"text-align: center; \">인증번호는 "+authNum+"입니다.&nbsp;</p>\r\n";
         content+="<p style=\"text-align: center; \" align=\"center\">감사합니다.&nbsp;</p><br><br>\r\n";
@@ -79,7 +79,7 @@ public class AuthRestController {
         String title = "F.FIN 가입승인 메일입니다.";
         String content;
         content ="";
-        content+="<p align =\"center\"><img alt=\"Logo\" src=\"https://fineapple.or.kr/assets/img/banner.png\" style=\"height:150px\"class=\"ban\"></p>";
+        content+="<p align =\"center\"><img alt=\"Logo\" src=\"resources/image/logo_flat_point.png\" style=\"height:150px\"class=\"ban\"></p>";
         content+="<p align=\"center\" style=\"text-align: center; \">F.FIN에 가입해주셔서 감사합니다.&nbsp;</p><p align=\"center\" style=\"text-align: center; \">가입승인절차가 완료 되었으니 사이트 이용에 참고바랍니다.</p>";
 //        content += "<p align=\"center\" style=\"text-align: center; \">인증번호는 "+authNum+"입니다.&nbsp;</p>\r\n";
         content+="<p style=\"text-align: center; \" align=\"center\">감사합니다.&nbsp;</p><br><br>\r\n";

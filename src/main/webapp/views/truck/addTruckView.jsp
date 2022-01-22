@@ -229,7 +229,7 @@
             var code2 = "";
 
             $(".sms-auth").click(function () {
-                alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호 확인을 해주십시오.");
+                alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호를 확인해주세.");
 
                 var inputPhone = $("#truckPhone").val();
                 var authInputBox = $(".phone-check-input");
@@ -312,7 +312,7 @@
             ``
             /* 인증번호 이메일 전송 */
             $(".email-auth").click(function () {
-                alert("인증번호 발송이 완료되었습니다.\n입력하신 메일에서 인증번호 확인을 해주십시오.");
+                alert("인증번호 발송이 완료되었습니다.\n입력하신 메일에서 인증번호를 확인해주세요.");
 
                 var inputEmail = $("#truckEmail").val();
                 var authInputBox = $(".mail-check-input");

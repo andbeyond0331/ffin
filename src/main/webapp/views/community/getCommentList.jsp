@@ -57,17 +57,17 @@
 
         //댓글 목록 출력 함수
         function listReply() {
-            alert("listReply function excute");
+            //alert("listReply function excute");
             $.ajax({
                 type   : "get", //get방식으로 자료를 전달한다
                 url    : "/community/getCommentList?commentPostNo="+${post.postNo},
                 data    : "commentList", //컨트롤러에 있는 list.do로 맵핑하고 게시판 번호도 같이 보낸다.
                 success: function (result) { //자료를 보내는것이 성공했을때 출력되는 메시지
                     //result : responseText 응답텍스트(html)
-                    console.log(result);
-                    alert(result);
+                    //console.log(result);
+                    //alert(result);
                     $("#listReply").html(result);
-                    alert("댓글 출력");
+                    //alert("댓글 출력");
                 }
             });
         }
