@@ -647,7 +647,7 @@
         //$("#currentPage").val(currentPage)
         //$("#cate").val("list");
 
-        alert("1")
+        //alert("1")
         $("input[name='flag']").val('2')
         self.location="/catering/getCtServAllList?cate=list";
        // $("form").attr("method" , "POST").attr("action" , "/catering/getCtServAllList?cate=list").submit();
@@ -826,7 +826,7 @@
 
             error : function() {
 
-                alert("1에러가 발생하였습니다.")
+                alert("에러가 발생하였습니다.")
 
             },
 
