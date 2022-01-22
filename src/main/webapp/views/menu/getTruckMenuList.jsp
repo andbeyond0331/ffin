@@ -417,7 +417,7 @@
                  return;
              }*/
             page++;
-            console.log("야야ㅑ")
+            // console.log("야야ㅑ")
             $.ajax({
 
                 url : "/menu/json/getTruckList",
@@ -435,11 +435,11 @@
 
 
                     var list = jsonData.list;
-                    console.log("page: "+page)
-                    console.log("list: "+list)
+                    // console.log("page: "+page)
+                    // console.log("list: "+list)
                     let length = list.length;
 
-                    console.log("length: "+length)
+                    // console.log("length: "+length)
                     for(var i=0; i<list.length; i++){
                         var div="";
 
@@ -598,7 +598,7 @@
 
                         $('#truckListAutokk').append(div);
                         if( length < 6 ){
-                            console.log(page)
+                            // console.log(page)
                             isEnd = true;
                             return;
                         }

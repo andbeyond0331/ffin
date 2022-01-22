@@ -153,7 +153,7 @@
 
         function fncAddMenu(){
 
-            alert("optionGroup개수 : " +$('input#optionGroupName.form-control').length);
+            // alert("optionGroup개수 : " +$('input#optionGroupName.form-control').length);
 
             if($('input#optionGroupName.form-control').length==0){
                 $("form").attr("method", "POST").attr("action","/menu/addMenu").attr("enctype", "multipart/form-data").submit();
@@ -170,7 +170,7 @@
             var modal = $('#optionGroupModal');
             optionGroupNamer = modal.find('input#optionGroupNamer.form-control').val();
 
-            console.log(optionGroupNamer + " : optionGroupNamer");
+            // console.log(optionGroupNamer + " : optionGroupNamer");
             //alert(realOptionGroupName)
 
             // divElem = "<div class=\"form-group\" id=\""+realOptionGroupName+"-target\" name=\"optionGroupName\">"+
@@ -208,8 +208,8 @@
                 var optionNamer = modalOp.find('input#optionNamer.form-control').val();
                 var optionPricer = modalOp.find('input#optionPricer.form-control').val();
 
-                console.log(optionNamer +" : optionNamer");
-                console.log(optionPricer +" : optionPricer");
+                // console.log(optionNamer +" : optionNamer");
+                // console.log(optionPricer +" : optionPricer");
 
                 divElemOp ="</hr>"+
                     "<div class=\"form-group\" id=\""+optionNamer+"\" name=\"optionName\">"+
@@ -220,11 +220,11 @@
                     "<input type=\"button\" value=\"삭제\" onclick=\"javascript:removeEL(\'"+optionNamer+"\')\"/>"+
                     "</div>";
 
-                console.log("divElemOp : "+divElemOp);
+                // console.log("divElemOp : "+divElemOp);
 
 
                 //$('div#'+indexOp+'-target').append($(divElemOp));
-                console.log("append-op-target : " + $('#optionGroupModal').find('.modal-body').html());
+                // console.log("append-op-target : " + $('#optionGroupModal').find('.modal-body').html());
 
                 $('#optionGroupModal').find('.optionHere').append(divElemOp);
 
@@ -250,9 +250,9 @@
                 var applyOptionName = modalApply.find('input[name="applyOptionName"]').val();
                 var applyOptionPrice = modalApply.find('input[name="applyOptionPrice"]').val();
 
-                console.log(applyOptionGroupName +" : applyOptionGroupName");
-                console.log(applyOptionName +" : applyOptionName");
-                console.log(applyOptionPrice +" : applyOptionPrice");
+                // console.log(applyOptionGroupName +" : applyOptionGroupName");
+                // console.log(applyOptionName +" : applyOptionName");
+                // console.log(applyOptionPrice +" : applyOptionPrice");
 
 
                 ///append를 위한 for문
@@ -291,7 +291,7 @@
                         "<input type=\"button\" value=\"삭제\" id=\"removeTarget"+applyOptionGroupName+"\" onclick=\"javascript:removeELOption(\'"+applyOptionGroupName+"\')\"/>";
 
 
-                    alert(i+"번째 optionPrice" + ($('input[name="applyOptionPrice"]').eq(i).val()));
+                    // alert(i+"번째 optionPrice" + ($('input[name="applyOptionPrice"]').eq(i).val()));
 
                     $('#here').append(divElemApply1+divElemApply2);
                 }
@@ -320,8 +320,8 @@
                     "</div>";
 
 
-                console.log("forresetmodal : " + $('#optionGroupModal').html());
-                console.log("forResetModal 대체텍스트 : " + forResetModal);
+                // console.log("forresetmodal : " + $('#optionGroupModal').html());
+                // console.log("forResetModal 대체텍스트 : " + forResetModal);
 
                 $('#optionGroupModal').html(forResetModal);
 
@@ -330,8 +330,8 @@
         });
 
         function removeEL(idIndex){
-            console.log("removeEL(옵션 삭제)");
-            console.log("삭제 타겟 : " + $('div#'+idIndex+'.form-group').html());
+            // console.log("removeEL(옵션 삭제)");
+            // console.log("삭제 타겟 : " + $('div#'+idIndex+'.form-group').html());
 
             if(!confirm("옵션을 삭제하시겠습니까?")){
 
@@ -343,8 +343,8 @@
         }
 
         function removeELOption(idIndex){
-            console.log("removeELOption(옵션그룹 삭제)");
-            console.log("삭제 타겟 : " + $('div#removeTarget'+idIndex+'.form-group').html());
+            // console.log("removeELOption(옵션그룹 삭제)");
+            // console.log("삭제 타겟 : " + $('div#removeTarget'+idIndex+'.form-group').html());
 
             // var removeTargetOG=[];
             // removeTargetOG=idIndex.split();
@@ -454,7 +454,7 @@
 
                                 var DIVimage1preview = $('#image1preview');
                                 var isTherePreview = DIVimage1preview.find('img').length;
-                                alert("isTherePreview : " + isTherePreview);
+                                // alert("isTherePreview : " + isTherePreview);
                                 //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
                                 var reader  = new FileReader();
 
@@ -481,7 +481,7 @@
                             function setImage2Preview(event){
                                 var DIVimage2preview = $('#image2preview');
                                 var isTherePreview = DIVimage2preview.find('img').length;
-                                alert("isTherePreview : " + isTherePreview);
+                                // alert("isTherePreview : " + isTherePreview);
                                 //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
                                 var reader  = new FileReader();
 
@@ -506,7 +506,7 @@
                             function setImage3Preview(event){
                                 var DIVimage3preview = $('#image3preview');
                                 var isTherePreview = DIVimage3preview.find('img').length;
-                                alert("isTherePreview : " + isTherePreview);
+                                // alert("isTherePreview : " + isTherePreview);
                                 //이미지파일미리보기 이미 있으면 바꾸기 구현 중-  점심먹고 왔다! 다시 시작!
                                 var reader  = new FileReader();
 
@@ -676,7 +676,7 @@
                     url:"/menu/json/isThereSigMenu/"+truckId,
                     method:"get",
                     success:function(data){
-                        console.log("data.menu : " + data.menu[0]);
+                        // console.log("data.menu : " + data.menu[0]);
                         var isSigMenuButton="";
                         if (data.menu[0]==undefined){
                             iamSig=null;
@@ -712,7 +712,7 @@
 
                 $("div#sigMenu").on("click", function(){
 
-                    alert("onclick");
+                    // alert("onclick");
                     var isSigMenuButton ="";
 
                     if(divIsSigMenu.find('input#isSigMenu').data("val")=='disabled'){
@@ -819,7 +819,7 @@
 
                     $("body").on("click", "button[name='getMenu']", function() {
 
-                        alert("111111")
+                        // alert("111111")
                         var menuNoo = $(this).find('input[name="menuNo"]').val();
 
                         window.location="/menu/updateMenu?menuNo="+menuNoo;
