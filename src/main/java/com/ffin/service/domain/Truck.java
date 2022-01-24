@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class Truck {
-	
+
 	private String truckId; //트럭 아이디
 	private String truckPassword; //트럭 비밀번호
 	private String truckCEOName; //트럭 사업자 이름
@@ -38,8 +38,8 @@ public class Truck {
 	private int truckSigMenuNo;
 	private String truckSigMenuName;
 	private String truckSigMenuImg1;
-	private int truckSigMenuPrice;
-	
-//43 추가 0115 HHJ
+	private int menuPrice;
+
+	//43 추가 0115 HHJ
 	private int truckHeartCount;
 }

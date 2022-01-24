@@ -208,8 +208,8 @@
                     if(socket) {
                         // websocket에 보내기!!! (message, 보내는이, 받는이)
                         let socketMessage = "purchase,"+orderUserId+","+orderTruckId+","+orderTruckId;
-                      /*  console.log("socketM::::" + socketMessage);
-                        socket.send(socketMessage);*/
+                        console.log("socketM::::" + socketMessage);
+                        socket.send(socketMessage);
                     }
                     //성공시 이동할 페이지
                     $("form").attr("method", "POST").attr("action", "/purchase/getOrderUser").submit();
@@ -272,8 +272,8 @@
                     if(socket) {
                         // websocket에 보내기!!! (message, 보내는이, 받는이)
                         let socketMessage = "purchase,"+orderUserId+","+orderTruckId+","+orderTruckId;
-                      /*  console.log("socketM::::" + socketMessage);
-                        socket.send(socketMessage);*/
+                        console.log("socketM::::" + socketMessage);
+                        socket.send(socketMessage);
                     }
                     //성공시 이동할 페이지
                     $("form").attr("method", "POST").attr("action", "/purchase/getOrderUser").submit();
@@ -335,8 +335,8 @@
                     if(socket) {
                         // websocket에 보내기!!! (message, 보내는이, 받는이)
                         let socketMessage = "purchase,"+orderUserId+","+orderTruckId+","+orderTruckId;
-                     /*   console.log("socketM::::" + socketMessage);
-                        socket.send(socketMessage);*/
+                        console.log("socketM::::" + socketMessage);
+                        socket.send(socketMessage);
                     }
                     //성공시 이동할 페이지
                     $("form").attr("method", "POST").attr("action", "/purchase/getOrderUser").submit();
@@ -399,8 +399,8 @@
                     if(socket) {
                         // websocket에 보내기!!! (message, 보내는이, 받는이)
                         let socketMessage = "purchase,"+orderUserId+","+orderTruckId+","+orderTruckId;
-                    /*    console.log("socketM::::" + socketMessage);
-                        socket.send(socketMessage);*/
+                       console.log("socketM::::" + socketMessage);
+                        socket.send(socketMessage);
                     }
                     //성공시 이동할 페이지
                     $("form").attr("method", "POST").attr("action", "/purchase/getOrderUser").submit();
@@ -476,7 +476,7 @@
                     var sale = Number(totalSS2[1]) + Number(couponDcPrice);
                     /*var payPrice = (dd[1] - couponDcPrice);*/
                     $("input[name='payPrice']").val(payPrice);
-                    append = "<input type=\"text\" id=\"couponNo\" name=\"couponNo\" value=\"" + couponNo + "\">";
+                    append = "<input type=\"hidden\" id=\"couponNo\" name=\"couponNo\" value=\"" + couponNo + "\">";
                     totalPayPrice = "<span id='totalpp'>결제금액 : " + payPrice + "</span>"+
                         "<input type='hidden' id='payPrice' value='"+payPrice+"'>";
                     totalsale = "<span id='sale'>할인금액 : " + sale + "</span>"
@@ -835,6 +835,9 @@
                                                     </c:if>
                                                     <c:if test="${couponLis.couponType == 2}">
                                                         SNOW
+                                                    </c:if>
+                                                    <c:if test="${couponLis.couponType == 3}">
+                                                        CLOUD
                                                     </c:if>
                                                 </td>
 

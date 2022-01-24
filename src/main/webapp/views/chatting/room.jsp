@@ -292,7 +292,7 @@
         <ul class="cards">
             <li>
                 <a href="#" class="card" onclick="goRoom(1, '서울')">
-                    <img src="../../resources/image/seoul.jpg" class="card__image" alt="" />
+                    <img src="../../resources/image/chat1.png" class="card__image" alt="" />
                     <div class="card__overlay">
                         <div class="card__header">
                             <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path/></svg>
@@ -308,7 +308,7 @@
             </li>
             <li>
                 <a href="#" class="card" onclick="goRoom(2, '부산')">
-                    <img src="../../resources/image/seoul.jpg" class="card__image" alt="" />
+                    <img src="../../resources/image/chat3.png" class="card__image" alt="" />
                     <div class="card__overlay">
                         <div class="card__header">
                             <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>
@@ -324,7 +324,7 @@
             </li>
             <li>
                 <a href="#" class="card" onclick="goRoom(3, '경기')">
-                    <img src="../../resources/image/seoul.jpg" class="card__image" alt="" />
+                    <img src="../../resources/image/chat2.png" class="card__image" alt="" />
                     <div class="card__overlay">
                         <div class="card__header">
                             <svg class="card__arc" xmlns="http://www.w3.org/2000/svg"><path /></svg>

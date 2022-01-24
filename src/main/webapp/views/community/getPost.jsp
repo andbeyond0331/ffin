@@ -1041,7 +1041,16 @@
                     $('#reply' + postNo).text(reply);
 
                     //console.log("댓글 작성 성공");
+                    console.log("post.socket::::" + socket);
+                    var postUserId = '${post.postUser.userId}${post.postTruck.truckId}'
 
+                    console.log("post.socket::::" + socket);
+                    if (socket) {
+                        // websocket에 보내기!!! (message, 보내는이, 받는이)
+                        let socketMessage = "post," + uId + "," + postUserId + "," + postNo;
+                        console.log("socketM::::" + socketMessage);
+                        socket.send(socketMessage);
+                    }
                     // 댓글리스트를 새로 받아오기
                     ReplyList(postNo);
                 },

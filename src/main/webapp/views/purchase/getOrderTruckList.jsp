@@ -772,12 +772,13 @@
                 console.log("optionNameShow"+menuCount)
                 /*alert(totalPrice) 총금액*/
                 /*$("#order").html(menuList);*/
+                var divElemApply1="";
                 for (var i = 0; i < menuCount; i++) {
 
 
 
 
-                    divElemApply1 = "<div class=\"card mb-3\" style='border: 0; box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1); transition: 0.2s;'>" +
+                    divElemApply1 += "<div class=\"card mb-3\" style='border: 0; box-shadow: 0 1px 2px 1px rgba(0,0,0,0.1); transition: 0.2s;'>" +
                         " <div class=\"row g-0\">" +
                         "<div class=\"col-md-4\">" +
                         "<img src=\"/resources/menu/"+odMenuImageL[i]+"\" class=\"img-fluid rounded-start\" alt=\"image\" style='height: fit-content;'>" +

@@ -417,10 +417,12 @@ public class CommunityController {
             User user = new User();
             user.setUserId( ((User)(session.getAttribute("user"))).getUserId());
             post.setPostUser(user);
+            System.out.println("user :: "+user);
         }else if (role == "truck"){
             Truck truck = new Truck();
             truck.setTruckId( ((Truck)(session.getAttribute("truck"))).getTruckId());
             post.setPostTruck(truck);
+            System.out.println("truck: "+truck);
         }
         String realPath = request.getSession().getServletContext().getRealPath("/resources/image");
 //        String realPath = "/resources/menu";

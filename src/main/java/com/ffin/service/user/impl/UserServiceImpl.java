@@ -146,8 +146,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void sendSMSForPassword(String userId, String userPhone, int tempPassword) throws Exception {
 
-        String api_key = "NCSZ8KC6ERB3YVCA";
-        String api_secret = "FYKRI2N8YKOR8BUGOKSLPQ3LKOJTYMMX";
+        String api_key = "NCSMKLR9WHF8LGKK";
+        String api_secret = "BMWDMBJOD01Y33LIEEDWO6NLYLIWGDEV";
         
         User user = userDao.getUser(userId);
         String userName = user.getUserName();
@@ -156,7 +156,7 @@ public class UserServiceImpl implements UserService {
         HashMap<String, String> params = new HashMap<String, String>();
 
         params.put("to", userPhone); // 수신전화번호
-        params.put("from", "01071484785"); // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
+        params.put("from", "01048060207"); // 발신전화번호. 테스트시에는 발신,수신 둘다 본인 번호로 하면 됨
         params.put("type", "SMS");
         params.put("text", "[TEST]"+userName+"님의 임시 비밀번호는 " + "["+tempPassword+"]" + " 입니다." +
                             " 로그인 후 비밀번호를 변경해주세요."); // 문자 내용 입력

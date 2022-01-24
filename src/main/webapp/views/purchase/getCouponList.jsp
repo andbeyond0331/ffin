@@ -294,13 +294,18 @@
 
     <script type="text/javascript">
         $(function() {
-            $("body").on("click", "#rainCoupon", function () {
+            $("body").on("click", "#rainCoupon2", function () {
                 findLocation("rain");
             });
 
-            $("body").on("click", "#snowCoupon", function () {
+            $("body").on("click", "#snowCoupon2", function () {
                 findLocation("snow");
             });
+
+            $("body").on("click", "#cloudCoupon", function () {
+                findLocation("cloud");
+            });
+
         });
 
 
@@ -328,8 +333,8 @@
 
             // 에러 확인 내부 함수 정의
             function showErrorMsg(error) {
-                // console.log("");
-                // console.log("showErrorMsg : error : " + error.code);
+                console.log("");
+                console.log("showErrorMsg : error : " + error.code);
                 switch(error.code) {
                     case error.PERMISSION_DENIED:
                         console.log("showErrorMsg : error : " + "Geolocation API의 사용 요청을 거부했습니다");
@@ -386,9 +391,11 @@
                         weatherGroupCode : 5 - Rain
                         weatherGroupCode : 6 - Snow
                      */
-                    if (weather == 'rain' && weatherGroupCode =='8'){
+                    if (weather == 'rain' && weatherGroupCode =='5'){
                         weatherCheck ='t';
                     }else if (weather == 'snow' && weatherGroupCode =='6'){
+                        weatherCheck ='t';
+                    }else if (weather == 'cloud' && weatherGroupCode =='8'){
                         weatherCheck ='t';
                     }
 
@@ -449,10 +456,10 @@
                                 <p class="ml-auto mr-4 mb-0 med-font" style="color:#fff; font-size: 16px; margin-bottom: 10px;">비 오는 날엔 언제나 할인</p>
                                 <h1 class="ml-auto mr-4 large-font" style="color:#fff; font-size: 20px;">3,000원</h1>
                                 <p class="time-font mb-0 ml-4 mt-auto"><span class="sm-font">
-                                    <ion-icon name="rainy-outline"></ion-icon>
-                                    <ion-icon name="rainy-outline"></ion-icon>
-                                    <ion-icon name="rainy-outline"></ion-icon>
-                                </span></p>
+                                        <i class="fas fa-cloud-showers-heavy"  style="color:#fff; margin-bottom: 5px;" ></i>
+                                        <i class="fas fa-cloud-showers-heavy"  style="color:#fff; margin-bottom: 5px;" ></i>
+                                        <i class="fas fa-cloud-showers-heavy"  style="color:#fff; margin-bottom: 5px;" ></i>
+                                    </span></p>
                                 <p class="ml-4 mb-4" style="color:#fff;">현재 위치 기준으로 발급됩니다.</p>
                             </div>
                         </div>
@@ -473,8 +480,22 @@
                             </div>
                         </div>
                     </div>
-
-                    <article class="postcard light blue" id="rainCoupon">
+                    <div class="container-fluid px-1 px-md-4 py-5 mx-auto">
+                        <div class="row d-flex justify-content-center px-3">
+                            <div class="card" id="cloudCoupon" style="padding: 10px 5px 0 0; background-image: url(/resources/image/cloudday.jpg);">
+                                <h2 class="ml-auto mr-4 mt-3 mb-0" style="color:#25323c; font-size: 20px; margin-bottom: 10px;">구름 가득한 날 쿠폰</h2>
+                                <p class="ml-auto mr-4 mb-0 med-font" style="color:#25323c; font-size: 16px; margin-bottom: 10px;">흐린날엔 언제나 할인</p>
+                                <h1 class="ml-auto mr-4 large-font" style="color:#25323c; font-size: 20px;">3,000원</h1>
+                                <p class="time-font mb-0 ml-4 mt-auto"><span class="sm-font">
+                                        <i class="far fa-snowflake"  style="color:#25323c; margin-bottom: 5px;" ></i>
+                                        <i class="far fa-snowflake"  style="color:#25323c; margin-bottom: 5px;" ></i>
+                                        <i class="far fa-snowflake"  style="color:#25323c; margin-bottom: 5px;" ></i>
+                                    </span></p>
+                                <p class="ml-4 mb-4" style="color:#25323c;">현재 위치 기준으로 발급됩니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                   <%-- <article class="postcard light blue" id="rainCoupon">
                         <img class="postcard__img" src="/resources/image/1.jpg" alt="Image Title" />
                         <div class="postcard__text t-dark">
                             <h1 class="postcard__title blue"><a href="#">비오는 날 쿠폰</a></h1>
@@ -507,7 +528,7 @@
 
                             </ul>
                         </div>
-                    </article>
+                    </article>--%>
 
                 </div>
             </section>

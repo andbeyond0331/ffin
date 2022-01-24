@@ -48,7 +48,7 @@ public class MenuDaoImpl implements MenuDao {
             truck.setTruckSigMenuNo(menu.getMenuNo());
             truck.setTruckSigMenuName(menu.getMenuName());
             truck.setTruckSigMenuImg1(menu.getMenuImg1());
-            truck.setTruckSigMenuPrice(menu.getMenuPrice());
+            truck.setMenuPrice(menu.getMenuPrice());
             sqlSession.update("TruckMapper.updateTruckSigMenu", truck);
             System.out.println("truck - sigMenuNo, sigMenuName, sigMenuImg1, sigMenuPrice = " + truck);
         }
@@ -151,18 +151,23 @@ public class MenuDaoImpl implements MenuDao {
 
     @Override
     public void updateMenu(Menu menu) throws Exception {
+
+        System.out.println("MenuDaoImpl.updateMenu.start");
         Truck truck = new Truck();
 
         //대표메뉴 로직
         if(menu.getIsSigMenu()==0){
+            System.out.println("menu.getIsSigMenu()==0");
 
         }else{
+            System.out.println("menuDaoImpl.updateSigMenu");
             sqlSession.update("MenuMapper.updateSigMenu",menu.getMenuTruckId());
 
+            truck.setTruckId(menu.getMenuTruckId());
             truck.setTruckSigMenuNo(menu.getMenuNo());
             truck.setTruckSigMenuName(menu.getMenuName());
             truck.setTruckSigMenuImg1(menu.getMenuImg1());
-            truck.setTruckSigMenuPrice(menu.getMenuPrice());
+            truck.setMenuPrice(menu.getMenuPrice());
             sqlSession.update("TruckMapper.updateTruckSigMenu", truck);
             System.out.println("truck - sigMenuNo, sigMenuName, sigMenuImg1, sigMenuPrice = " + truck);
         }

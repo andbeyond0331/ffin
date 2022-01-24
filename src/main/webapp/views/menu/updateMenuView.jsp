@@ -162,8 +162,8 @@
 
                                 </c:if>
                                 <c:if test="${menu.isSigMenu eq 1}">
-                                     <input class="form-check-input" data-toggle="toggle" data-onstyle="warning" type="checkbox" id="isSigMenu" name="isSigMenu" value="1" data-val="abled">
-                                     <label class="form-check-label" for="isSigMenu" style='font-weight: normal'>대표메뉴 여부</label>
+                                    <input class="form-check-input" data-toggle="toggle" data-onstyle="warning" type="checkbox" id="isSigMenu" name="isSigMenu" value="1" data-val="disabled" checked disabled>
+                                    <label class="form-check-label" for="isSigMenu" style='font-weight: normal'>대표메뉴 여부</label>
 
                                 </c:if>
 
@@ -225,6 +225,10 @@
 
                                 if(divIsSigMenu.find('input#isSigMenu').data("val")=='disabled'){
                                     alert("대표메뉴는 최소 1개 이상 있어야 합니다.");
+                                    // isSigMenuButton+=
+                                    // " <input class=\"form-check-input\" data-toggle=\"toggle\" data-onstyle=\"warning\" type=\"checkbox\" id=\"isSigMenu\" value=\"1\" data-val=\"disabled\" name=\"isSigMenu\" checked disabled>"+
+                                    // "<label class=\"form-check-label\" for=\"isSigMenu\">대표메뉴 여부</label>";
+                                    // $('div#isThereSigMenu.form-check.form-switch').html(isSigMenuButton);
                                 }else if(divIsSigMenu.find('input#isSigMenu').val()==0){
 
                                     if(!confirm("대표메뉴가 이미 있습니다. 변경하시겠습니까?")){
@@ -499,6 +503,5 @@
 
 
 </html>
-
 
 

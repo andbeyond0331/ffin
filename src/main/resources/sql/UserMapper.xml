@@ -223,6 +223,15 @@
 		WHERE user_name = #{userName}  AND  role = '1' AND user_phone = #{userPhone}
 	</select>
 
+
+	<!-- PW 찾기 -->
+	<select id="getUserIdForPassword" parameterType="user" resultType="String">
+		SELECT user_id
+		FROM user
+		WHERE user_name = #{userName}  AND  role = '1' AND user_phone = #{userPhone}
+	</select>
+
+
 	<!--PW변경-->
 	<update id="updatePassword" parameterType="user">
 		UPDATE user

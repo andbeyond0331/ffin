@@ -343,28 +343,28 @@
                         <div class="gallery">
                             <ul>
                                 <c:if test="${truck.truckProImg == null}">
-                                    <li><img src="/resources/image/nothing.jpg"></li>
+                                    <li><img src="../resources/image/nothing.jpg"></li>
                                 </c:if>
                                 <c:if test="${truck.truckProImg != null}">
                                     <li><img src="/resources/image/${truck.truckProImg}"></li>
                                 </c:if>
 
                                 <c:if test="${truck.truckBusiLice == null}">
-                                    <li><img class="busiLiceImg" src="/resources/image/nothing.jpg"></li>
+                                    <li><img class="busiLiceImg" src="../resources/image/nothing.jpg"></li>
                                 </c:if>
                                 <c:if test="${truck.truckBusiLice != null}">
                                     <li><img class="busiLiceImg" src="/resources/image/${truck.truckBusiLice}"></li>
                                 </c:if>
 
                                 <c:if test="${truck.truckSigMenuImg1 == null}">
-                                <li><img src="/resources/image/nothing.jpg"></li>
+                                <li><img src="../resources/image/nothing.jpg"></li>
                                 </c:if>
                                 <c:if test="${truck.truckSigMenuImg1 != null}">
-                                    <li><img src="/resources/image/${truck.truckSigMenuImg1}"></li>
+                                    <li><img src="/resources/menu/${truck.truckSigMenuImg1}"></li>
                                 </c:if>
 
                                 <c:if test="${truck.truckNoticeImg == null}">
-                                <li><img src="/resources/image/nothing.jpg"></li>
+                                <li><img src="../resources/image/nothing.jpg"></li>
                                 </c:if>
                                 <c:if test="${truck.truckNoticeImg != null}">
                                     <li><img src="/resources/image/${truck.truckNoticeImg}"></li>

@@ -184,11 +184,11 @@
             </div>
 
             <div class="row search" style="margin-bottom: 20px;">
-                <div class="col-md-6 text-left" style="display: flex; align-items: center;">
+               <%-- <div class="col-md-6 text-left" style="display: flex; align-items: center;">
                     <p style="margin: 0; font-size: 12px;">
                         전체  ${resultPage.totalCount } 건, 현재 ${resultPage.currentPage}  페이지
                     </p>
-                </div>
+                </div>--%>
 
                 <div class="col-md-6 text-right">
                     <form class="form-inline" name="detailForm" style="zoom: 90%; padding: 0; float: right;">

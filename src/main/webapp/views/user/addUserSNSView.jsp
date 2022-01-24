@@ -54,7 +54,7 @@
 		$(function () {
 			$("a[href='#' ]").click(function () {
 
-				alert(1234);
+				//alert(1234);
 
 				var userPassword = $("#userPassword").val();
 				var reUserPassword = $("#reUserPassword").val();

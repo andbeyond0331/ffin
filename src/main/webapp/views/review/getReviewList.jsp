@@ -512,7 +512,7 @@
                                 " <img src=\"/resources/image/"+Data.review.userProImg+"\" />";
                         }else if(role=='user'){
                             display+=""+
-                                " <img src=\"/resources/image/"+Data.review.truckProImg+"\" />";
+                                " <img src=\"/resources/image/1.jpg\" />";
                         }
 
                         display+=""+
@@ -1007,7 +1007,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>--%>
                 <div class="modal-body">
-                    <input type="hidden" id="NohiddenRvNo" name ="hiddenRvNo" value="">
+                    <input type="hidden" id="hiddenRvNo" name ="hiddenRvNo" value="">
 
                     <div style="text-align: -webkit-center;">
                         <h5 class="modal-title" id="updateTruckCmtModalLabel" style=" width: fit-content; margin: 10px 0 25px 0; box-shadow: inset 0 -11px 0 #fae100;">사장님 댓글</h5>

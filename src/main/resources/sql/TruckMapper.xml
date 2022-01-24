@@ -10,44 +10,44 @@
 <mapper namespace="TruckMapper">
 
 
-	<!--<resultMap id="adminSelectMap" 	type="user">
-        <result property="userId"		column="user_id"		jdbcType="VARCHAR"/>
-    </resultMap> -->
+	<!--<resultMap id="adminSelectMap"    type="user">
+         <result property="userId"      column="user_id"      jdbcType="VARCHAR"/>
+     </resultMap> -->
 
 	<!-- Truck Table  -->
 	<resultMap id="truckSelectMap" type="truck">
-		<result property="truckId" 					column="truck_id" 					jdbcType="VARCHAR"/>
-		<result property="truckPassword" 			column="truck_password" 			jdbcType="VARCHAR"/>
-		<result property="truckCEOName" 			column="truck_ceo_name"				jdbcType="VARCHAR"/>
-		<result property="truckCEOBirth" 			column="truck_ceo_birth"			jdbcType="DATE"/>
-		<result property="truckAddr" 				column="truck_addr" 				jdbcType="VARCHAR"/>
-		<result property="truckAddrDetail"			column="truck_addr_detail"			jdbcType="VARCHAR"/>
-		<result property="truckPhone" 				column="truck_phone" 				jdbcType="VARCHAR"/>
-		<result property="truckEmail"				column="truck_email"				jdbcType="VARCHAR"/>
-		<result property="truckName" 				column="truck_name" 				jdbcType="VARCHAR"/>
-		<result property="truckBusiLice" 			column="truck_busi_lice" 			jdbcType="VARCHAR"/>
-		<result property="truckBusiNo" 				column="truck_busi_no" 				jdbcType="VARCHAR"/>
-		<result property="truckCate" 				column="truck_cate" 				jdbcType="CHAR"/>
-		<result property="truckProImg" 				column="truck_pro_img" 				jdbcType="VARCHAR"/>
-		<result property="truckCEOIntro" 			column="truck_ceo_intro" 			jdbcType="VARCHAR"/>
-		<result property="truckAVGStar" 			column="truck_avg_star" 			jdbcType="FLOAT"/>
-		<result property="truckMapLa" 				column="truck_map_la" 				jdbcType="DECIMAL"/>
-		<result property="truckMapLo" 				column="truck_map_lo" 				jdbcType="DECIMAL"/>
-		<result property="truckJoinReqStatus" 		column="truck_join_req_status" 		jdbcType="CHAR"/>
-		<result property="truckJoinReqDate" 		column="truck_join_req_date" 		jdbcType="DATE"/>
-		<result property="truckNoticeTitle" 		column="truck_notice_title" 		jdbcType="VARCHAR"/>
-		<result property="truckNoticeContent" 		column="truck_notice_content" 		jdbcType="VARCHAR"/>
-		<result property="truckNoticeImg" 			column="truck_notice_img" 			jdbcType="VARCHAR"/>
-		<result property="truckByeStatus" 			column="truck_bye_status" 			jdbcType="CHAR"/>
-		<result property="truckByeReason" 			column="truck_bye_reason" 			jdbcType="CHAR"/>
-		<result property="truckBusiStatus" 			column="truck_busi_status" 			jdbcType="CHAR"/>
-		<result property="truckRegDate" 			column="truck_reg_date" 			jdbcType="DATE"/>
-		<result property="role" 					column="role" 						jdbcType="CHAR"/>
-		<result property="truckSigMenuNo" 					column="truck_sig_menu_no" 						jdbcType="INTEGER"/>
-		<result property="truckSigMenuName" 					column="truck_sig_menu_name" 						jdbcType="VARCHAR"/>
-		<result property="truckSigMenuImg1" 					column="truck_sig_menu_img1" 						jdbcType="VARCHAR"/>
-<!--49라인추가 HHJ 0115--><result property="truckHeartCount" 					column="truck_heart_count" 						jdbcType="INTEGER"/>
-		<result property="truckSigMenuPrice"                column="menu_price"                   jdbcType="INTEGER"/>
+		<result property="truckId"                column="truck_id"                jdbcType="VARCHAR"/>
+		<result property="truckPassword"          column="truck_password"          jdbcType="VARCHAR"/>
+		<result property="truckCEOName"          column="truck_ceo_name"            jdbcType="VARCHAR"/>
+		<result property="truckCEOBirth"          column="truck_ceo_birth"         jdbcType="DATE"/>
+		<result property="truckAddr"             column="truck_addr"             jdbcType="VARCHAR"/>
+		<result property="truckAddrDetail"         column="truck_addr_detail"         jdbcType="VARCHAR"/>
+		<result property="truckPhone"             column="truck_phone"             jdbcType="VARCHAR"/>
+		<result property="truckEmail"            column="truck_email"            jdbcType="VARCHAR"/>
+		<result property="truckName"             column="truck_name"             jdbcType="VARCHAR"/>
+		<result property="truckBusiLice"          column="truck_busi_lice"          jdbcType="VARCHAR"/>
+		<result property="truckBusiNo"             column="truck_busi_no"             jdbcType="VARCHAR"/>
+		<result property="truckCate"             column="truck_cate"             jdbcType="CHAR"/>
+		<result property="truckProImg"             column="truck_pro_img"             jdbcType="VARCHAR"/>
+		<result property="truckCEOIntro"          column="truck_ceo_intro"          jdbcType="VARCHAR"/>
+		<result property="truckAVGStar"          column="truck_avg_star"          jdbcType="FLOAT"/>
+		<result property="truckMapLa"             column="truck_map_la"             jdbcType="DECIMAL"/>
+		<result property="truckMapLo"             column="truck_map_lo"             jdbcType="DECIMAL"/>
+		<result property="truckJoinReqStatus"       column="truck_join_req_status"       jdbcType="CHAR"/>
+		<result property="truckJoinReqDate"       column="truck_join_req_date"       jdbcType="DATE"/>
+		<result property="truckNoticeTitle"       column="truck_notice_title"       jdbcType="VARCHAR"/>
+		<result property="truckNoticeContent"       column="truck_notice_content"       jdbcType="VARCHAR"/>
+		<result property="truckNoticeImg"          column="truck_notice_img"          jdbcType="VARCHAR"/>
+		<result property="truckByeStatus"          column="truck_bye_status"          jdbcType="CHAR"/>
+		<result property="truckByeReason"          column="truck_bye_reason"          jdbcType="CHAR"/>
+		<result property="truckBusiStatus"          column="truck_busi_status"          jdbcType="CHAR"/>
+		<result property="truckRegDate"          column="truck_reg_date"          jdbcType="DATE"/>
+		<result property="role"                column="role"                   jdbcType="CHAR"/>
+		<result property="truckSigMenuNo"                column="truck_sig_menu_no"                   jdbcType="INTEGER"/>
+		<result property="truckSigMenuName"                column="truck_sig_menu_name"                   jdbcType="VARCHAR"/>
+		<result property="truckSigMenuImg1"                column="truck_sig_menu_img1"                   jdbcType="VARCHAR"/>
+		<!--49라인추가 HHJ 0115--><result property="truckHeartCount"                column="truck_heart_count"                   jdbcType="INTEGER"/>
+		<result property="menuPrice"                column="truck_sig_menu_price"                   jdbcType="INTEGER"/>
 
 
 	</resultMap>
@@ -66,11 +66,11 @@
 	<!-- SQL :SELECT ONE-->
 	<select id="getTruck"   parameterType="String"    resultMap="truckSelectMap" >
 		SELECT
-			 TRUCK_ID, TRUCK_PASSWORD, TRUCK_CEO_NAME, TRUCK_CEO_BIRTH, TRUCK_ADDR, TRUCK_ADDR_DETAIL,
-			 TRUCK_PHONE, TRUCK_EMAIL, TRUCK_NAME, TRUCK_BUSI_LICE, TRUCK_BUSI_NO, TRUCK_CATE, TRUCK_PRO_IMG,
-			 TRUCK_CEO_INTRO, TRUCK_AVG_STAR, TRUCK_MAP_LA, TRUCK_MAP_LO, TRUCK_JOIN_REQ_STATUS,
-			 TRUCK_JOIN_REQ_DATE, TRUCK_NOTICE_TITLE, TRUCK_NOTICE_CONTENT, TRUCK_NOTICE_IMG,
-			 TRUCK_BYE_STATUS, TRUCK_BYE_REASON, TRUCK_BUSI_STATUS, TRUCK_REG_DATE, ROLE, truck_sig_menu_img1, truck_sig_menu_no, truck_sig_menu_name, truck_heart_count
+			TRUCK_ID, TRUCK_PASSWORD, TRUCK_CEO_NAME, TRUCK_CEO_BIRTH, TRUCK_ADDR, TRUCK_ADDR_DETAIL,
+			TRUCK_PHONE, TRUCK_EMAIL, TRUCK_NAME, TRUCK_BUSI_LICE, TRUCK_BUSI_NO, TRUCK_CATE, TRUCK_PRO_IMG,
+			TRUCK_CEO_INTRO, TRUCK_AVG_STAR, TRUCK_MAP_LA, TRUCK_MAP_LO, TRUCK_JOIN_REQ_STATUS,
+			TRUCK_JOIN_REQ_DATE, TRUCK_NOTICE_TITLE, TRUCK_NOTICE_CONTENT, TRUCK_NOTICE_IMG,
+			TRUCK_BYE_STATUS, TRUCK_BYE_REASON, TRUCK_BUSI_STATUS, TRUCK_REG_DATE, ROLE, truck_sig_menu_img1, truck_sig_menu_no, truck_sig_menu_name, truck_heart_count
 		FROM truck
 		WHERE truck_id = #{value}
 	</select>
@@ -110,7 +110,7 @@
 	<update id="updatePassword" parameterType="truck">
 		UPDATE truck
 		<set>
-			truck_password 	= #{truckPassword}
+			truck_password    = #{truckPassword}
 		</set>
 		WHERE truck_id = #{truckId}
 	</update>
@@ -123,7 +123,7 @@
 			   WHERE ROLE = 0
 				 AND TRUCK_JOIN_REQ_STATUS != 1
 			   order by TRUCK_JOIN_REQ_DATE DESC ) inner_table
-			limit #{startRowNum}, #{pageSize}
+		limit #{startRowNum}, #{pageSize}
 	</select>
 
 
@@ -135,25 +135,25 @@
 	<select id="getTruckListByAdmin"   parameterType="search"     resultMap="truckSelectMap">
 		SELECT inner_table.*
 		FROM( SELECT  t.truck_id , t.truck_name , t.truck_phone, t.truck_map_la, t.truck_map_lo, t.truck_cate, t.truck_avg_star, t.truck_pro_img, t.truck_busi_status, t.truck_sig_menu_no, t.truck_sig_menu_name, t.truck_sig_menu_img1, m.menu_truck_id, m.menu_name
-			FROM truck t
-			left join menu m
-			on m.menu_truck_id=t.truck_id
-				<trim prefix="WHERE" prefixOverrides="AND">
+		FROM truck t
+		left join menu m
+		on m.menu_truck_id=t.truck_id
+		<trim prefix="WHERE" prefixOverrides="AND">
 
 
-					<if test="searchKeyword !='' and searchKeyword!=null">
-						<bind name="searchKeyword" value="'%'+searchKeyword+'%'"></bind>
-						AND ((t.truck_name LIKE #{searchKeyword} or t.truck_sig_menu_name like #{searchKeyword}) or m.menu_name like #{searchKeyword})
-					</if>
+			<if test="searchKeyword !='' and searchKeyword!=null">
+				<bind name="searchKeyword" value="'%'+searchKeyword+'%'"></bind>
+				AND ((t.truck_name LIKE #{searchKeyword} or t.truck_sig_menu_name like #{searchKeyword}) or m.menu_name like #{searchKeyword})
+			</if>
 
-					<if test="cateCondition!=null and cateCondition != ''">
-						AND t.truck_cate = #{cateCondition}
-					</if>
-				</trim>
+			<if test="cateCondition!=null and cateCondition != ''">
+				AND t.truck_cate = #{cateCondition}
+			</if>
+		</trim>
 
-					group by truck_id
+		group by truck_id
 
-				order by truck_id ) inner_table
+		order by truck_id ) inner_table
 		limit #{startRowNum}, #{pageSize}
 	</select>
 
@@ -167,7 +167,7 @@
 		on m.menu_truck_id=t.truck_id
 		<trim prefix="WHERE" prefixOverrides="AND">
 			AND t.TRUCK_JOIN_REQ_STATUS=1
-		       AND t.TRUCK_BYE_STATUS=0
+			AND t.TRUCK_BYE_STATUS=0
 			<if test="search.searchKeyword !='' and search.searchKeyword!=null">
 				<bind name="search.searchKeyword" value="'%'+search.searchKeyword+'%'"></bind>
 				AND ((t.truck_name LIKE #{search.searchKeyword} or t.truck_sig_menu_name like #{search.searchKeyword}) or m.menu_name like #{search.searchKeyword})
@@ -196,54 +196,54 @@
 		<if test="search.sortCondition == 'starA'">
 			order by truck_avg_star asc
 		</if>
-		    ) inner_table
+		) inner_table
 		limit #{startRowNum}, #{pageSize};
 	</select>
 
-		<select id="truckNearBy"   parameterType="map"     resultMap="truckSelectMap">
+	<select id="truckNearBy"   parameterType="map"     resultMap="truckSelectMap">
 		SELECT inner_table.*
 		FROM( SELECT  t.truck_id , t.truck_name , t.truck_phone, t.truck_map_la, t.truck_map_lo, t.truck_cate, t.truck_avg_star, t.truck_pro_img, t.truck_busi_status, t.truck_sig_menu_no, t.truck_sig_menu_name, t.truck_sig_menu_img1, m.menu_truck_id, m.menu_name,
-		             (6371*acos(cos(radians(#{la}))*cos(radians(t.truck_map_la))*cos(radians(t.truck_map_lo)
-			-radians(#{lo}))+sin(radians(#{la}))*sin(radians(t.truck_map_la)))) as distance
-			FROM truck t
-			left join menu m
-			on m.menu_truck_id=t.truck_id
-				<trim prefix="WHERE" prefixOverrides="AND">
-					AND t.TRUCK_JOIN_REQ_STATUS=1
-					AND t.TRUCK_BYE_STATUS=0
+		(6371*acos(cos(radians(#{la}))*cos(radians(t.truck_map_la))*cos(radians(t.truck_map_lo)
+		-radians(#{lo}))+sin(radians(#{la}))*sin(radians(t.truck_map_la)))) as distance
+		FROM truck t
+		left join menu m
+		on m.menu_truck_id=t.truck_id
+		<trim prefix="WHERE" prefixOverrides="AND">
+			AND t.TRUCK_JOIN_REQ_STATUS=1
+			AND t.TRUCK_BYE_STATUS=0
 
 
-					<if test="searchKeyword !='' and searchKeyword!=null">
-						<bind name="searchKeyword" value="'%'+searchKeyword+'%'"></bind>
-						AND ((t.truck_name LIKE #{search.searchKeyword} or t.truck_sig_menu_name like #{search.searchKeyword}) or m.menu_name like #{searchKeyword})
-					</if>
+			<if test="searchKeyword !='' and searchKeyword!=null">
+				<bind name="searchKeyword" value="'%'+searchKeyword+'%'"></bind>
+				AND ((t.truck_name LIKE #{search.searchKeyword} or t.truck_sig_menu_name like #{search.searchKeyword}) or m.menu_name like #{searchKeyword})
+			</if>
 
-					<if test="cateCondition!=null and cateCondition != ''">
-						AND t.truck_cate = #{search.cateCondition}
-					</if>
-				</trim>
+			<if test="cateCondition!=null and cateCondition != ''">
+				AND t.truck_cate = #{search.cateCondition}
+			</if>
+		</trim>
 
-					group by truck_id
-			<![CDATA[
-					having distance <= 5
-		]]>
+		group by truck_id
+		<![CDATA[
+               having distance <= 5
+      ]]>
 
 
-				order by distance ) inner_table
+		order by distance ) inner_table
 		limit 0,20;
 	</select>
 
 	<select id="truckPopular"  resultMap="truckSelectMap">
 		SELECT inner_table.*
 		FROM( SELECT  t.truck_id , t.truck_name , t.truck_phone, t.truck_map_la, t.truck_map_lo, t.truck_cate, t.truck_avg_star, t.truck_pro_img, t.truck_busi_status, t.truck_sig_menu_no, t.truck_sig_menu_name, t.truck_sig_menu_img1, m.menu_truck_id, m.menu_name
-			FROM truck t
-			left join menu m on m.menu_truck_id=t.truck_id
+		FROM truck t
+		left join menu m on m.menu_truck_id=t.truck_id
 		<trim prefix="WHERE" prefixOverrides="AND">
-		AND t.TRUCK_JOIN_REQ_STATUS=1
-		AND t.TRUCK_BYE_STATUS=0
+			AND t.TRUCK_JOIN_REQ_STATUS=1
+			AND t.TRUCK_BYE_STATUS=0
 		</trim>
-			group by truck_id
-			order by t.TRUCK_AVG_STAR ) inner_table
+		group by truck_id
+		order by t.TRUCK_AVG_STAR ) inner_table
 		limit 0,20;
 	</select>
 
@@ -251,30 +251,30 @@
 
 
 
-<!--	&lt;!&ndash; SQL : SELECT LIST &ndash;&gt;-->
-<!--	<select id="getTruckList"   parameterType="search"     resultMap="truckSelectMap">-->
-<!--		SELECT inner_table.*-->
-<!--		FROM( SELECT  truck_id , truck_name , truck_phone, truck_map_la, truck_map_lo, truck_cate, truck_avg_star, truck_pro_img, truck_busi_status, truck_sig_menu_no, truck_sig_menu_name, truck_sig_menu_img1-->
-<!--			FROM truck-->
-<!--				<if test="searchCondition != null">-->
-<!--					<where>-->
-<!--						<bind name="searchKeyword" value="'%' + searchKeyword + '%'"/>-->
-<!--						<if test="searchCondition == 0 and searchKeyword !='' ">-->
-<!--							AND truck_id LIKE #{searchKeyword}-->
-<!--						</if>-->
-<!--						<if test="searchCondition == 1 and searchKeyword !='' ">-->
-<!--							AND truck_name LIKE #{searchKeyword}-->
-<!--						</if>-->
-<!--					</where>-->
-<!--				</if>-->
-<!--				order by truck_id ) inner_table-->
-<!--		limit 0,20;-->
-<!--	</select>-->
+	<!--   &lt;!&ndash; SQL : SELECT LIST &ndash;&gt;-->
+	<!--   <select id="getTruckList"   parameterType="search"     resultMap="truckSelectMap">-->
+	<!--      SELECT inner_table.*-->
+	<!--      FROM( SELECT  truck_id , truck_name , truck_phone, truck_map_la, truck_map_lo, truck_cate, truck_avg_star, truck_pro_img, truck_busi_status, truck_sig_menu_no, truck_sig_menu_name, truck_sig_menu_img1-->
+	<!--         FROM truck-->
+	<!--            <if test="searchCondition != null">-->
+	<!--               <where>-->
+	<!--                  <bind name="searchKeyword" value="'%' + searchKeyword + '%'"/>-->
+	<!--                  <if test="searchCondition == 0 and searchKeyword !='' ">-->
+	<!--                     AND truck_id LIKE #{searchKeyword}-->
+	<!--                  </if>-->
+	<!--                  <if test="searchCondition == 1 and searchKeyword !='' ">-->
+	<!--                     AND truck_name LIKE #{searchKeyword}-->
+	<!--                  </if>-->
+	<!--               </where>-->
+	<!--            </if>-->
+	<!--            order by truck_id ) inner_table-->
+	<!--      limit 0,20;-->
+	<!--   </select>-->
 
 
 
 	<!-- SQL : UPDATE -->
-	<update	id="updateTruck" 	parameterType="truck" >
+	<update   id="updateTruck"    parameterType="truck" >
 		UPDATE truck
 		<set>
 			truck_id = #{truckId},
@@ -283,14 +283,14 @@
 			truck_ceo_birth = #{truckCEOBirth},
 			truck_addr = #{truckAddr},
 			truck_addr_detail = #{truckAddrDetail},
-			truck_phone	= #{truckPhone},
-			truck_email	= #{truckEmail},
-			truck_name	= #{truckName},
-			truck_busi_lice	= #{truckBusiLice},
+			truck_phone   = #{truckPhone},
+			truck_email   = #{truckEmail},
+			truck_name   = #{truckName},
+			truck_busi_lice   = #{truckBusiLice},
 			truck_busi_no = #{truckBusiNo},
 			truck_cate = #{truckCate},
 			truck_pro_img = #{truckProImg},
-			truck_ceo_intro	= #{truckCEOIntro},
+			truck_ceo_intro   = #{truckCEOIntro},
 			truck_avg_star = #{truckAVGStar},
 			truck_map_la = #{truckMapLa},
 			truck_map_lo = #{truckMapLo},
@@ -307,7 +307,7 @@
 		</set>
 		WHERE truck_id = #{truckId}
 	</update>
-	
+
 	<update id="updateTruckJoin" parameterType="truck">
 		UPDATE truck
 		<set>
@@ -327,7 +327,7 @@
 	</update>
 
 	<!-- 공지 작성(수정) -->
-	<update	id="updateNotice" 	parameterType="truck" >
+	<update   id="updateNotice"    parameterType="truck" >
 		UPDATE truck
 		<set>
 			TRUCK_NOTICE_TITLE = #{truckNoticeTitle},
@@ -342,8 +342,8 @@
 		UPDATE truck
 		<set>
 			TRUCK_BUSI_STATUS = #{truckBusiStatus},
-		    TRUCK_MAP_LA = #{truckMapLa},
-		    TRUCK_MAP_LO = #{truckMapLo}
+			TRUCK_MAP_LA = #{truckMapLa},
+			TRUCK_MAP_LO = #{truckMapLo}
 		</set>
 
 		WHERE TRUCK_ID = #{truckId}
@@ -354,7 +354,7 @@
 		UPDATE truck
 		<set>
 			truck_bye_status = #{truckByeStatus},
-		    truck_bye_reason = #{truckByeReason}
+			truck_bye_reason = #{truckByeReason}
 		</set>
 		WHERE truck_id = #{truckId}
 	</update>
@@ -363,8 +363,8 @@
 	<update id="autoLogin">
 		UPDATE truck
 		<set>
-			session_key 	= #{sessionKey},
-			session_limit 	= #{sessionLimit}
+			session_key    = #{sessionKey},
+			session_limit    = #{sessionLimit}
 		</set>
 		WHERE truck_id = #{truckId}
 	</update>
@@ -377,9 +377,9 @@
 	</select>
 
 	<!-- SQL : SELECT ROW Count -->
-	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	<select  id="getTotalCount"  parameterType="search"    resultType="int">
 		SELECT COUNT(*)
-		FROM(	SELECT truck_name, truck_map_la, truck_map_lo, truck_cate, truck_avg_star, truck_busi_status
+		FROM(   SELECT truck_name, truck_map_la, truck_map_lo, truck_cate, truck_avg_star, truck_busi_status
 		FROM truck
 		<if test="searchCondition != null">
 			<where>
@@ -416,9 +416,9 @@
 		UPDATE truck
 		<set>
 			truck_sig_menu_no = #{truckSigMenuNo},
-			truck_sig_menu_name = #{truckSigMenuName}
-			truck_sig_menu_img1 = #{truckSigMenuImg1}
-			truck_sig_menu_price = #{menu_price}
+			truck_sig_menu_name = #{truckSigMenuName},
+			truck_sig_menu_img1 = #{truckSigMenuImg1},
+			truck_sig_menu_price = #{menuPrice}
 		</set>
 		WHERE truck_id = #{truckId}
 	</update>

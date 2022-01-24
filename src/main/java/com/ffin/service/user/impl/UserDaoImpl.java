@@ -144,7 +144,7 @@ public class UserDaoImpl implements UserDao {
         map.put("userName", userName);
         map.put("userPhone", userPhone);
 
-        return sqlSession.selectOne("UserMapper.getUserIdForPassword", map);
+        return sqlSession.selectOne("UserMapper.getUserId", map);
     }
 
     @Override

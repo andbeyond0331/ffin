@@ -416,7 +416,7 @@
 
 			$(".auth-phone").click(function () {
 
-				alert(1234);
+				//alert(1234);
 
 				var inputPhone = $("#userPhone").val();
 				var authInputBox = $("#authNumPhone");

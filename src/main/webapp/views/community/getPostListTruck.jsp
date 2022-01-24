@@ -608,7 +608,7 @@
                         <div class="form-group">
                             <label for="postFile3" class="col-sm-offset-1 col-sm-10 control-label"><i class="fas fa-camera"></i></label>
                             <div class="col-sm-10">
-                                <input type="file" class="form-control" id="postFile3" name="menuImg33"  value="${post.postFile3}" placeholder="파일 이미지3" onchange="setImage3Preview(event, '#image3preview');" style="padding-bottom: 0; padding-top:3px; padding-left: 15px;">
+                                <input type="file" class="form-control" id="postFile3" name="postFile33"  value="${post.postFile3}" placeholder="파일 이미지3" onchange="setImage3Preview(event, '#image3preview');" style="padding-bottom: 0; padding-top:3px; padding-left: 15px;">
                             </div>
                             <div id="image3preview" class="col-sm-10"></div>
                         </div>

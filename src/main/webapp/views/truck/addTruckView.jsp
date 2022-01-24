@@ -229,7 +229,7 @@
             var code2 = "";
 
             $(".sms-auth").click(function () {
-                alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호를 확인해주세.");
+                alert("인증번호 발송이 완료되었습니다.\n휴대폰에서 인증번호를 확인해주세요.");
 
                 var inputPhone = $("#truckPhone").val();
                 var authInputBox = $(".phone-check-input");

@@ -133,7 +133,8 @@
                                     +"<div class='d-grid gap-2 col-6 mx-auto' style='margin: 0 55px 0 55px;'>";
 
                            if(data.report.reportProcStatus === 1){
-                               display += "<button class='btn btn-default btn-sm' onclick='nopeBtn("+data.report.reportNo+")' type='button' >신고거절</button>";
+                               display += "<button class='btn btn-default btn-sm' onclick='nopeBtn("+data.report.reportNo+")' type='button' >신고거절"
+                               +"<input type='hidden' name='reportTargetIdId' value='"+data.report.reportTargetId+"'></button>";
                            }
 
                            display +="<button class='btn btn-cancle btn-sm' onclick='closeBtn()' type='button' >확인</button>";
@@ -162,7 +163,8 @@
 
         /* 신고처리 */
         function nopeBtn(reportNo){
-
+            var reportTargetId = 'user03';
+            //alert(reportTargetId)
             $.ajax({
                 url: "/qna/json/updateReportProcStatus",
                 method: "POST",
@@ -173,7 +175,8 @@
                 },
                 data: {
                     reportNo : reportNo,
-                    reportProcStatus : 3
+                    reportProcStatus : 3,
+                    reportTargetId : reportTargetId
                 },
                 success :function (data) {
                     console.log(data);

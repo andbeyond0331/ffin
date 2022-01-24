@@ -93,6 +93,7 @@
 
         // 상대방 신고하기
         $("#reportModal").on("click", function () {
+
             var modal = $('#userReportModal');
             var reportTargetId = modal.find("#reportTargetIdModal").text();
             var reportLink = modal.find("#reportLinkModal").text();
@@ -100,9 +101,10 @@
             var reportType = modal.find("#reportType").val();
             var reportContent = modal.find("#reportContentModal").val();
 
+
             $.ajax(
                 {
-                    url : "/catering/json/addReport",
+                    url : "/qna/json/addReport",
                     method : "POST",
                     contentType: "application/x-www-form-urlencoded; charset=UTF-8",
                     data :{
@@ -164,50 +166,62 @@
 </div>
 
 
-<!-- 신고하기 Modal -->
 <div class="modal fade" id="userReportModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="userReportModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="userReportModalLabel">신고하기</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"></span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <span>신고 대상 : </span>
-                    <span id="reportTargetIdModal"></span>
-                </div>
-                <div>
-                    <span>신고 링크 : </span>
-                    <span id="reportLinkModal"></span>
-                </div>
-                <div>
-                    <label for="reportType" class="reportType-label">신고 유형</label>
-                    <select class="form-select form-control" id="reportType" name="reportType" aria-label="Default select example">
-                        <option selected style="color: grey">신고 유형을 선택해주세요</option>
-                        <option value="1">광고/도배</option>
-                        <option value="2">욕설/인신공격</option>
-                        <option value="3">개인정보침해</option>
-                        <option value="4">음란성/선정성</option>
-                        <option value="5">명예훼손/저작권</option>
-                        <option value="6">기타</option>
-                    </select>
-                </div>
-                <div class="writing_area">
-                    <textarea id="reportContentModal" style="resize:none;" rows="2" cols="55" title="신고 내용을 입력해 주세요."></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" id="reportModal" name="reportModal">보내기</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+            <form class="report-form">
+                <div class="modal-body">
 
-            </div>
+                    <div style="display:flex; justify-content: center; margin-top: 10px;">
+                        <h5 style="margin: 0; box-shadow: inset 0 -11px 0 #fae100; font-size: 22px; width: fit-content;" id="userReportModalLabel">신고하기</h5>
+                    </div>
+
+                    <hr/>
+
+                    <div style="padding: 0 5px;">
+                        <div style="display: flex; flex-direction: column;">
+                            <span style="font-weight: bold;">신고 대상</span>
+                            <span id="reportTargetIdModal" style="margin-top: 5px; background-color: rgba(37,50,60,0.07); padding: 10px 15px;border-radius: 5px;width: fit-content;"></span>
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; margin: 10px 0;">
+                            <span style="font-weight: bold;">신고 링크</span>
+                            <span id="reportLinkModal" style="margin-top: 5px; background-color: rgba(37,50,60,0.07); padding: 10px 15px;border-radius: 5px;width: fit-content;"></span>
+                        </div>
+
+
+                        <div style="margin: 10px 0;">
+                            <label for="reportType" class="reportType-label" style="font-weight: bold;">신고 유형</label>
+                            <select class="form-select form-control" id="reportType" name="reportType" aria-label="Default select example" style="padding-left: 0; padding-right: 0;">
+                                <option selected style="color: grey; padding-right: 0; padding-left: 0;">신고 유형을 선택해주세요</option>
+                                <option value="1">광고/도배</option>
+                                <option value="2">욕설/인신공격</option>
+                                <option value="3">개인정보침해</option>
+                                <option value="4">음란성/선정성</option>
+                                <option value="5">명예훼손/저작권</option>
+                                <option value="6">기타</option>
+                            </select>
+                        </div>
+
+                        <div class="writing_area" style="display: flex; flex-direction: column; margin: 10px 0;">
+                            <span style="margin-bottom: 5px; font-weight: bold;">신고 내용</span>
+                            <textarea id="reportContentModal" style="resize:none; border: 0; background-color: rgba(37,50,60,0.07); border-radius: 5px; min-height: 100px; padding: 8px;"
+                                      rows="2" cols="55" title="신고 내용을 입력해 주세요." ></textarea>
+                        </div>
+
+                    </div>
+
+                    <hr/>
+
+                    <div style="display: flex; justify-content: center;">
+                        <button type="button" class="btn btn-cancle" data-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-default" id="reportModal" name="reportModal">신고</button>
+                    </div>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
-
-
 
 </body>

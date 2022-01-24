@@ -87,9 +87,11 @@
             <div class="row">
                 <div class="col-lg-10 mx-auto">
                     <div class="detail-box" style="margin-bottom: -40px;">
-                        <h1 class="display-1 fs-md-5 fs-lg-6 fs-xl-8 text-light" style=" font-family: 'Pacifico', cursive; margin-top:100px; margin-bottom: 0; color: #110000">
-                            FoodTruck Finder
-                        </h1>
+                        <img class="logo" src="../resources/image/logo_home.png" alt="Image Title"  style="zoom:60%; margin: 200px 0 20px 0;" />
+
+                        <%--                        <h1 class="display-1 fs-md-5 fs-lg-6 fs-xl-8 text-light" style=" font-family: 'Pacifico', cursive; margin-top:100px; margin-bottom: 0; color: #110000">--%>
+                        <%--                            FoodTruck Finder--%>
+                        <%--                        </h1>--%>
                         <h6 class="text-800 mb-5 fs-4">Within a few clicks, find foodtruck are accessible near you</h6>
                     </div>
                     <div class="find_container ">

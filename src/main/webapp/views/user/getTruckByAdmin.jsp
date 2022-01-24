@@ -280,7 +280,7 @@
                                 <li><img src="/resources/image/nothing.jpg"></li>
                                 </c:if>
                                 <c:if test="${truck.truckSigMenuImg1 != null}">
-                                    <li><img src="/resources/image/${truck.truckSigMenuImg1}"></li>
+                                    <li><img src="/resources/menu/${truck.truckSigMenuImg1}"></li>
                                 </c:if>
 
                                 <c:if test="${truck.truckNoticeImg == null}">
