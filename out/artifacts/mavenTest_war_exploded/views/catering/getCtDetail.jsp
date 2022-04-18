@@ -1,0 +1,1 @@
+getCtDetail.jsp

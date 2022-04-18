@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MenuMapper">
+
+	<resultMap id="MenuSelectMap" type="menu">
+		<result property="menuNo" 			column="MENU_NO" 			jdbcType="INTEGER"/>
+		<result property="menuTruckId"	column="MENU_TRUCK_ID" 		jdbcType="VARCHAR" />
+		<result property="menuName" 				column="MENU_NAME" 					jdbcType="VARCHAR" />
+		<result property="menuPrice" 	column="MENU_PRICE" 		jdbcType="INTEGER" />
+		<result property="menuDetail" 				column="MENU_DETAIL" 					jdbcType="VARCHAR" />
+		<result property="isSigMenu" 				column="IS_SIG_MENU" 					jdbcType="CHAR" />
+		<result property="menuRegDate" 	column="MENU_REG_DATE" 		jdbcType="DATE" />
+		<result property="menuImg1" 			column="MENU_IMG1" 		jdbcType="VARCHAR" />
+		<result property="menuImg2" 				column="MENU_IMG2" 					jdbcType="VARCHAR" />
+		<result property="menuImg3"					column="MENU_IMG3"				jdbcType="VARCHAR"	/>
+	</resultMap>
+
+	<resultMap id="OptionGroupSelectMap" type="optionGroup">
+		<result property="menuNo"		column="MENU_NO"		jdbcType="INTEGER"/>
+		<result property="optionGroupNo" 			column="OPTION_GROUP_NO" 			jdbcType="INTEGER"/>
+		<result property="optionNo"	column="OPTION_NO" 		jdbcType="INTEGER" />
+		<result property="optionGroupName" 				column="OPTION_GROUP_NAME" 					jdbcType="VARCHAR" />
+		<result property="optionName"			column="OPTION_NAME"					jdbcType="VARCHAR" />
+		<result property="optionPrice" 				column="OPTION_PRICE" 					jdbcType="INTEGER" />
+
+	</resultMap>
+
+
+	<insert id="addMenu" parameterType="menu" useGeneratedKeys="true" keyProperty="menuNo">
+		INSERT INTO ffin.menu
+		(menu_truck_id, menu_name, menu_price, menu_detail, is_sig_menu, menu_reg_date, menu_img1, menu_img2, menu_img3)
+		values
+		(
+		 #{menuTruckId:VARCHAR},
+		 #{menuName:VARCHAR},
+		 #{menuPrice:INTEGER},
+		 #{menuDetail:VARCHAR},
+		 #{isSigMenu},
+		 sysdate(),
+		 #{menuImg1},
+		 #{menuImg2},
+		 #{menuImg3}
+		 )
+
+
+	</insert>
+
+
+	<update id="updateSigMenu" parameterType="String">
+		UPDATE menu
+		<set>
+			IS_SIG_MENU = 0
+		</set>
+		WHERE IS_SIG_MENU = 1 and menu_truck_id=#{value}
+	</update>
+
+
+	<insert id="addOptionGroup" parameterType="map" useGeneratedKeys="true" keyProperty="menuNo">
+			INSERT INTO ffin.optiongroup
+			(MENU_NO, OPTION_GROUP_NO, OPTION_NO, OPTION_GROUP_NAME, OPTION_NAME, OPTION_PRICE)
+			VALUES
+			<foreach collection="list" item="item" separator=",">
+				(${item.menuNo},
+				${item.optionGroupNo},
+				(select ifnull(max(OPTION_NO)+1,1)from optiongroup c),
+				'${item.optionGroupName}',
+				'${item.optionName}',
+				${item.optionPrice}
+				)
+			</foreach>
+	</insert>
+
+	<select id="getLatestOptionGroupNo" resultMap="OptionGroupSelectMap">
+# 		select ifnull(max(OPTION_GROUP_NO)+1,1) as optionGroupNo from optiongroup
+select * from optiongroup order by OPTION_GROUP_NO desc limit 1
+	</select>
+
+	<select id="getOptionGroupList" parameterType="int" resultMap="OptionGroupSelectMap">
+		SELECT
+			menu_no, option_group_no, option_no, option_group_name, option_name, option_price
+		FROM optiongroup
+		WHERE OPTION_GROUP_NO = #{value}
+	</select>
+
+	<select 	id="getMenu"	parameterType="int"	resultMap="MenuSelectMap" >
+		SELECT
+			MENU_NO,
+			MENU_TRUCK_ID,
+			MENU_NAME,
+			MENU_PRICE,
+			MENU_DETAIL,
+		    MENU_REG_DATE,
+			IS_SIG_MENU,
+			MENU_IMG1,
+			MENU_IMG2,
+			MENU_IMG3
+		FROM menu
+		WHERE MENU_NO = #{value}
+
+	</select>
+
+	<select 	id="getOption"	parameterType="int"	resultMap="OptionGroupSelectMap" >
+		SELECT
+			MENU_NO,
+			OPTION_GROUP_NO,
+			OPTION_NO,
+			OPTION_GROUP_NAME,
+			OPTION_NAME,
+			OPTION_PRICE
+		FROM ffin.optiongroup
+		WHERE OPTION_NO = #{value}
+
+	</select>
+
+	<select 	id="getOptionGroup"	parameterType="map"	resultMap="OptionGroupSelectMap" >
+
+		SELECT o.MENU_NO, o.OPTION_GROUP_NO, o.OPTION_NO, o.OPTION_GROUP_NAME, o.OPTION_NAME, o.OPTION_PRICE, m.MENU_NO
+		FROM ffin.optiongroup o, menu m
+		WHERE o.MENU_NO = m.MENU_NO
+		<if test="optionGroupNo != null">
+			AND o.OPTION_GROUP_NO = #{optionGroupNo}
+		</if>
+
+
+	</select>
+
+	<select 	id="getOptionGroupByMenu"	parameterType="map"	resultMap="OptionGroupSelectMap" >
+
+		SELECT o.MENU_NO, o.OPTION_GROUP_NO, o.OPTION_NO, o.OPTION_GROUP_NAME, o.OPTION_NAME, o.OPTION_PRICE, m.MENU_NO
+		FROM ffin.optiongroup o, menu m
+		WHERE o.MENU_NO = m.MENU_NO
+			AND o.MENU_NO = #{menuNo}
+
+
+
+	</select>
+
+
+
+	<select  id="getMenuList" 	parameterType="map"		resultMap="MenuSelectMap">
+
+		SELECT
+			m.MENU_NO,
+			m.MENU_TRUCK_ID,
+			m.MENU_NAME,
+			m.MENU_PRICE,
+			m.MENU_DETAIL,
+			m.IS_SIG_MENU,
+			m.MENU_IMG1,
+			m.MENU_IMG2,
+			m.MENU_IMG3,
+			t.TRUCK_ID
+		FROM menu m, truck t
+
+		WHERE MENU_TRUCK_ID = #{menuTruckId} AND m.MENU_TRUCK_ID=t.TRUCK_ID
+
+
+	</select>
+
+	<select  id="isThereSigMenu" 	parameterType="map"		resultMap="MenuSelectMap">
+
+		SELECT
+			m.MENU_NO,
+			m.MENU_TRUCK_ID,
+			m.MENU_NAME,
+			m.MENU_PRICE,
+			m.MENU_DETAIL,
+			m.IS_SIG_MENU,
+			m.MENU_IMG1,
+			m.MENU_IMG2,
+			m.MENU_IMG3,
+			t.TRUCK_ID
+		FROM menu m, truck t
+
+		WHERE MENU_TRUCK_ID = #{menuTruckId} AND m.MENU_TRUCK_ID=t.TRUCK_ID AND m.IS_SIG_MENU=1;
+
+
+	</select>
+
+<!--	<select id="getLargestOptionGroupNo" parameterType="int" resultMap="OptionGroupSelectMap">-->
+<!--		SELECT MAX(option_group_no) FROM optiongroup;-->
+<!--	</select>-->
+
+<!--	<select id="getLargestOptionNo" parameterType="int" resultMap="OptionGroupSelectMap">-->
+<!--		SELECT MAX(OPTION_NO) FROM optiongroup;-->
+<!--	</select>-->
+
+	<update id="updateMenu" parameterType="menu">
+		UPDATE menu
+		<set>
+			MENU_NAME = #{menuName},
+			MENU_PRICE = #{menuPrice},
+			MENU_DETAIL = #{menuDetail},
+			IS_SIG_MENU = #{isSigMenu},
+			MENU_IMG1 = #{menuImg1},
+			MENU_IMG2 = #{menuImg2},
+			MENU_IMG3 = #{menuImg3}
+		</set>
+		WHERE MENU_NO = #{menuNo}
+	</update>
+
+	<update id="updateOptionGroup" parameterType="optionGroup">
+
+<!--		    <foreach collection="list" item="item" separator=",">-->
+				UPDATE optiongroup
+				<set>
+				OPTION_GROUP_NAME = #{optionGroupName:VARCHAR},
+				OPTION_NAME = #{optionName:VARCHAR},
+				OPTION_PRICE = #{optionPrice:INTEGER}
+				</set>
+				WHERE OPTION_NO = #{optionNo}
+<!--			</foreach>-->
+
+	</update>
+
+	<delete id="deleteMenu">
+		DELETE FROM menu
+		WHERE MENU_NO = #{menuNo}
+	</delete>
+
+	<delete id="deleteOptionGroupMenu">
+		DELETE FROM ffin.optiongroup
+		WHERE MENU_NO = #{menuNo}
+	</delete>
+
+	<delete id="deleteOptionGroup">
+		DELETE FROM optiongroup
+		WHERE OPTION_GROUP_NO = #{optionGroupNo}
+	</delete>
+
+	<delete id="deleteOption">
+		DELETE FROM optiongroup
+		WHERE OPTION_NO = #{optionNo}
+	</delete>
+
+
+	<!-- SQL : SELECT ROW Count -->
+	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+		SELECT COUNT(*)
+		FROM(	SELECT *
+		FROM menu
+		<if test="searchCondition != null">
+			<where>
+				<if test="searchCondition == 0 and searchKeyword !='' ">
+					menu_name LIKE '%'||#{searchKeyword}||'%'
+				</if>
+				<if test="searchCondition == 1 and searchKeyword !='' ">
+					menu_truck_id LIKE '%'||#{searchKeyword}||'%'
+				</if>
+			</where>
+		</if> ) countTable
+	</select>
+
+	<!-- SQL : SELECT ROW COUNT -->
+	<select id="isThereOG" parameterType="map" resultMap="OptionGroupSelectMap">
+		SELECT COUNT(*) as option_Group_no
+		FROM( SELECT *
+		    FROM optiongroup
+		    WHERE menu_no=#{menuNo})countTable
+	</select>
+
+
+
+</mapper>

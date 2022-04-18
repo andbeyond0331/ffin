@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="HeartMapper">
+    <resultMap id="heartSelectMap" type="heart">
+        <result property="heartNo"          column="HEART_NO"           jdbcType="NUMERIC"/>
+        <result property="heartTargetP"     column="HEART_TARGET_P"     jdbcType="NUMERIC"/>
+        <result property="heartTargetT"     column="HEART_TARGET_T"     jdbcType="VARCHAR"/>
+        <result property="heartType"        column="HEART_TYPE"         jdbcType="CHAR"/>
+        <result property="heartRegDate"     column="HEART_REG_DATE"     jdbcType="DATE"/>
+        <result property="heartFlag"        column="HEART_FLAG"         jdbcType="CHAR"/>
+        <result property="heartUserId"      column="HEART_USER_ID"      jdbcType="VARCHAR"/>
+        <result property="heartTruckId"      column="HEART_TRUCK_ID"      jdbcType="VARCHAR"/>
+
+    </resultMap>
+    <!--
+        &lt;!&ndash; SQL : INSERT &ndash;&gt;
+        <insert id="addHeart"       parameterType="heart">
+            INSERT INTO HEART (HEART_TARGET_P, HEART_TARGET_T, HEART_TYPE, HEART_REG_DATE, HEART_FLAG, HEART_USER_ID)
+            VALUES (#{heartTargetP},#{heartTargetT},#{heartType},SYSDATE(),#{heartFlag},#{heartUserId})
+        </insert>
+
+        &lt;!&ndash; SQL : SELECT ONE &ndash;&gt;
+        <select id="getHeart"       parameterType="int"         resultMap="heartSelectMap">
+            SELECT
+                *
+            FROM heart
+            WHERE heart_no = #{heartNo}
+        </select>
+
+
+        &lt;!&ndash; SQL : SELECT LIST &ndash;&gt;
+        <select id="getHeartList"     parameterType="search"      resultMap="heartSelectMap">
+            SELECT inner_table.*
+            FROM( SELECT HEART_TARGET_P, HEART_TARGET_T, HEART_TYPE, HEART_REG_DATE, HEART_FLAG, HEART_USER_ID
+            FROM heart
+            <if test="searchCondition != null">
+                <where>
+                    <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+                    <if test="searchCondition == 0 and searchKeyword !='' ">
+                        AND heart_target_p LIKE #{searchKeyword}
+                    </if>
+                </where>
+            </if>
+            order by heart_no ) inner_table
+            limit 0,8;
+        </select>
+
+        &lt;!&ndash; SQL : UPDATE &ndash;&gt;
+        <update id="updateHeart"  parameterType="heart">
+            UPDATE heart
+            <set>
+                HEART_FLAG = #{heartFlag},
+                HEART_REG_DATE = SYSDATE()
+            </set>
+            WHERE heart_no = #{heartNo}
+        </update>
+        -->
+
+    <!-- HHJ -->
+
+    <!-- 좋아요 추가 //user-->
+    <insert id="addHeartPostUser" parameterType="heart">
+        insert into heart (heart_target_p, heart_type, heart_reg_date, heart_user_id)
+        values(#{heartTargetP}, 'P', now(), #{heartUserId})
+    </insert>
+    <!-- 좋아요 추가 //truck-->
+    <insert id="addHeartPostTruck" parameterType="heart">
+        insert into heart (heart_target_p, heart_type, heart_reg_date, heart_truck_id)
+        values(#{heartTargetP}, 'P', now(), #{heartTruckId})
+    </insert>
+
+    <!-- post 의 좋아요 갯수 추가  -->
+    <update id="addHeartPostCount" parameterType="int">
+        update post
+        set
+            HEART_COUNT=HEART_COUNT+1
+        where POST_NO=#{value}
+    </update>
+
+    <!-- post의 좋아요 갯수 감소 -->
+    <update id="minusHeartPostCount" parameterType="int">
+        update post
+        set
+            HEART_COUNT=HEART_COUNT-1
+        where POST_NO=#{value}
+    </update>
+
+
+    <!-- 좋아요 삭제 // user-->
+    <delete id="removeHeartUser" parameterType="heart">
+        delete from heart
+        where HEART_TARGET_P=#{heartTargetP} and HEART_USER_ID=#{heartUserId}
+    </delete>
+
+    <!-- 좋아요 삭제 //truck-->
+    <delete id="removeHeartTruck" parameterType="heart">
+        delete from heart
+        where HEART_TARGET_P=#{heartTargetP} and HEART_TRUCK_ID=#{heartTruckId}
+    </delete>
+
+
+
+    <!-- 좋아요 추가/삭제시 좋아요 갯수 가져오기 //// post랑 heart랑 맵퍼를 합쳐도 될거같기도 하고...-->
+    <select id="heartCountCheck" parameterType="int" resultType="int">
+        select HEART_COUNT
+        from POST
+        where POST_NO=#{value}
+    </select>
+
+    <!-- 114부터 추가 HHJ / 0115 / 아쉬운 점 애초에 post와 truck좋아요를 같이 설계하는걸 기억했다면 좀더 효율적으로 관리를 했을껀데
+    같은걸 중복으로 선언하고있다 ㅠㅠ 흠.....ㅠㅠㅠㅠㅠㅠ 그래서 서비스며 dao며 다 수정해야 하는게 너무 아쉽네에에에에 -->
+
+    <!-- 좋아요 추가 : TRUCK 의 좋아요 -->
+    <insert id="addHeartTruck" parameterType="heart">
+        insert into heart (heart_target_t, heart_type, heart_reg_date, heart_user_id)
+        values(#{heartTargetT}, 'T', now(), #{heartUserId})
+    </insert>
+
+    <!-- truck 의 좋아요 갯수 추가  -->
+    <update id="addHeartTruckCount" parameterType="String">
+        update truck
+        set
+            TRUCK_HEART_COUNT=TRUCK_HEART_COUNT+1
+        where TRUCK_ID=#{value}
+    </update>
+
+    <!-- truck의  좋아요 갯수 감소 -->
+    <update id="minusHeartTruckCount" parameterType="String">
+        update truck
+        set
+            TRUCK_HEART_COUNT=TRUCK_HEART_COUNT-1
+        where TRUCK_ID=#{value}
+    </update>
+
+
+    <!-- 좋아요 삭제 : truck-->
+    <delete id="removeTruckHeartT" parameterType="heart">
+        delete from heart
+        where HEART_TARGET_T=#{heartTargetT} and HEART_USER_ID=#{heartUserId}
+    </delete>
+
+
+    <!-- 좋아요 추가/삭제시 좋아요 갯수 가져오기 //// -->
+    <select id="heartTruckCountCheck" parameterType="String" resultType="int">
+        select TRUCK_HEART_COUNT
+        from TRUCK
+        where TRUCK_ID=#{value}
+    </select>
+</mapper>
+

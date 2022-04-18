@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="QnAMapper">
+
+    <resultMap id="reportSelectMap" type="report">
+        <result property="reportNo"					column="report_no"					jdbcType="NUMERIC"/>
+        <result property="reportUserId"		        column="report_user_id"				jdbcType="VARCHAR"/>
+        <result property="reportTargetId"	        column="report_target_id"			jdbcType="VARCHAR"/>
+        <result property="reportDate"				column="report_date"				jdbcType="DATE"/>
+        <result property="reportContent"			column="report_content"				jdbcType="VARCHAR"/>
+        <result property="reportLink"				column="report_link"				jdbcType="VARCHAR"/>
+        <result property="reportType"				column="report_type"				jdbcType="CHAR"/>
+        <result property="reportProcStatus"     	column="report_proc_status"			jdbcType="CHAR"/>
+
+        <association property="reportUserId"  javaType="user">
+            <id property="userId" column="user_id" jdbcType="VARCHAR"/>
+        </association>
+
+        <association property="reportTargetId"  javaType="user">
+            <id property="userId" column="target_id" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="inquirySelectMap" type="inquiry">
+    <result property="inquiryNo"				column="inquiry_no"					jdbcType="NUMERIC"/>
+    <result property="inquiryUserId"		    column="inquiry_user_id"			jdbcType="VARCHAR"/>
+    <result property="inquiryTruckId"	        column="inquiry_truck_id"			jdbcType="VARCHAR"/>
+    <result property="inquiryType"				column="inquiry_type"				jdbcType="CHAR"/>
+    <result property="inquiryTitle"			    column="inquiry_title"				jdbcType="VARCHAR"/>
+    <result property="inquiryContent"			column="inquiry_content"			jdbcType="VARCHAR"/>
+    <result property="inquiryFile"				column="inquiry_file"				jdbcType="VARCHAR"/>
+    <result property="inquiryDate"     	        column="inquiry_date"		    	jdbcType="DATE"/>
+    <result property="inquiryAnsStatus"     	column="inquiry_ans_status"			jdbcType="CHAR"/>
+    <result property="inquiryAnsTitle"     	    column="inquiry_ans_title"			jdbcType="VARCHAR"/>
+    <result property="inquiryAnsContent"     	column="inquiry_ans_content"		jdbcType="VARCHAR"/>
+    <result property="inquiryAnsDate"     	    column="inquiry_ans_date"			jdbcType="DATE"/>
+    <result property="inquiryUserRole"     	    column="inquiry_user_role"			jdbcType="CHAR"/>
+
+    <association property="inquiryUserId"  javaType="user">
+        <id property="userId" column="user_id" jdbcType="VARCHAR"/>
+    </association>
+
+    <association property="inquiryTruckId"  javaType="truck">
+        <id property="truckId" column="truck_id" jdbcType="VARCHAR"/>
+    </association>
+    </resultMap>
+
+
+    <!-- ***** Report ***** -->
+    <insert id="addReport" parameterType="report">
+        INSERT INTO report
+            (report_user_id, report_target_id, report_date, report_content, report_link, report_type)
+        VALUES
+            (#{reportUserId},
+             #{reportTargetId},
+             now() ,
+             #{reportContent},
+             #{reportLink},
+             #{reportType});
+    </insert>
+
+    <select id="getReport" parameterType="int" resultMap="reportSelectMap">
+        SELECT
+            report_no, report_user_id, report_target_id, report_date, report_content, report_link, report_type, report_proc_status
+        FROM report
+        WHERE report_no = #{value};
+    </select>
+
+
+    <select id="getReportListByUser" parameterType="map" resultMap="reportSelectMap">
+        SELECT inner_table.*
+        FROM ( SELECT REPORT_USER_ID, REPORT_TARGET_ID, REPORT_PROC_STATUS, REPORT_LINK, REPORT_DATE, REPORT_CONTENT, REPORT_TYPE, REPORT_NO
+               FROM report
+               WHERE REPORT_USER_ID = #{reportUserId}
+               ORDER BY report_no ) inner_table
+        limit #{search.startRowNum}, #{search.pageSize}
+    </select>
+
+
+    <select id="getReportList" parameterType="search" resultMap="reportSelectMap">
+        SELECT inner_table.*
+        FROM( SELECT r.report_no, r.report_user_id, r.report_target_id, r.report_content, r.report_link, r.report_type, r.report_proc_status
+                FROM report r, user u
+                WHERE r.report_user_id = u.user_id
+                order by r.report_no DESC ) inner_table
+        limit #{startRowNum}, #{pageSize}
+        <!--select *
+        FROM ( SELECT inner_table.*, @rownum := @rownum + 1 as row_seq
+               FROM( SELECT r.report_no, r.report_user_id, r.report_target_id, r.report_content, r.report_link, r.report_type, r.report_proc_status
+                     FROM report r, user u
+                     WHERE r.report_user_id = u.user_id
+                        <if test="searchCondition != null">
+                            <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+                            <if test="searchCondition == 0 and searchKeyword !='' ">
+                                AND r.report_user_id LIKE #{searchKeyword}
+                            </if>
+                            <if test="searchCondition == 1 and searchKeyword !='' ">
+                                AND r.report_type LIKE #{searchKeyword}
+                            </if>
+                        </if>
+                    order by r.report_no DESC ) inner_table,  (select @rownum := 0) r
+               limit #{startRowNum}, #{pageSize} ) l
+        WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}-->
+    </select>
+
+    <select id="getTotalCount" parameterType="search" resultType="int">
+        SELECT COUNT(*)
+        FROM ( SELECT report_no, report_user_id, report_target_id, report_date, report_content, report_link, report_type, report_proc_status
+                FROM report
+                <if test="searchCondition != null">
+                    <where>
+                        <if test="searchCondition == 0 and searchKeyword !='' ">
+                            report_user_id = #{searchKeyword}
+                        </if>
+                        <if test="searchCondition == 1 and searchKeyword !='' ">
+                            report_type = #{searchKeyword}
+                        </if>
+                    </where>
+                </if> ) countTable
+    </select>
+
+    <select id="getTotalCountByUser" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM ( SELECT report_no, report_user_id, report_target_id, report_date, report_content, report_link, report_type, report_proc_status
+                FROM report
+                WHERE REPORT_USER_ID = #{reportUserId} ) countTable
+    </select>
+
+    <update id="updateReport" parameterType="report">
+        UPDATE report
+        <set>
+            report_content  = #{reportContent},
+            report_link     = #{reportLink},
+            report_type     = #{reportType}
+        </set>
+        WHERE report_no     = #{reportNo}
+    </update>
+
+    <update id="updateReportProcStatus" parameterType="report">
+        UPDATE report
+        <set>
+            report_proc_status  = #{reportProcStatus}
+        </set>
+        WHERE report_no     = #{reportNo}
+    </update>
+
+
+    <!-- ***** Inquiry ***** -->
+    <insert id="addInquiry" parameterType="inquiry">
+        INSERT INTO inquiry
+        ( INQUIRY_USER_ID, INQUIRY_TRUCK_ID, INQUIRY_TYPE, INQUIRY_TITLE, INQUIRY_CONTENT, INQUIRY_FILE, INQUIRY_DATE, INQUIRY_ANS_STATUS, INQUIRY_USER_ROLE)
+        VALUES
+            (#{inquiryUserId},
+             #{inquiryTruckId},
+             #{inquiryType},
+             #{inquiryTitle},
+             #{inquiryContent},
+             #{inquiryFile},
+             SYSDATE(),
+             1,
+             #{inquiryUserRole});
+    </insert>
+
+    <select id="getInquiry" parameterType="int" resultMap="inquirySelectMap">
+        SELECT *
+        FROM inquiry
+        WHERE INQUIRY_NO = #{value}
+    </select>
+
+    <select id="getInquiryListByAdmin" parameterType="search" resultMap="inquirySelectMap">
+        SELECT inner_table.*
+        FROM ( SELECT inquiry_no, inquiry_user_id, inquiry_truck_id, inquiry_type, inquiry_title, inquiry_date, inquiry_ans_status, inquiry_user_role
+                FROM inquiry i
+                ORDER BY inquiry_no DESC ) inner_table
+        limit #{startRowNum}, #{pageSize}
+    </select>
+
+    <select id="getInquiryListByUser" parameterType="map" resultMap="inquirySelectMap">
+        SELECT inner_table.*
+        FROM ( SELECT inquiry_no, inquiry_type, inquiry_title, inquiry_date, INQUIRY_ANS_STATUS, INQUIRY_ANS_CONTENT, INQUIRY_ANS_DATE, INQUIRY_ANS_TITLE
+                FROM inquiry
+                WHERE inquiry_user_id = #{inquiryUserId}
+                ORDER BY inquiry_no ) inner_table
+        limit #{search.startRowNum}, #{search.pageSize}
+    </select>
+
+    <select id="getInquiryListByTruck" parameterType="map" resultMap="inquirySelectMap">
+        SELECT inner_table.*
+        FROM ( SELECT inquiry_no, inquiry_type, inquiry_title, inquiry_date, INQUIRY_ANS_STATUS, INQUIRY_ANS_CONTENT, INQUIRY_ANS_DATE, INQUIRY_ANS_TITLE
+               FROM inquiry
+               WHERE inquiry_truck_id = #{inquiryTruckId}
+               ORDER BY inquiry_no ) inner_table
+        limit #{search.startRowNum}, #{search.pageSize}
+    </select>
+
+    <select id="getInquiryTotalCount" parameterType="search" resultType="int">
+        SELECT COUNT(*)
+        FROM ( SELECT inquiry_no, inquiry_user_id, inquiry_truck_id, inquiry_type, inquiry_date, inquiry_ans_status
+               FROM inquiry
+             ) countTable
+    </select>
+
+    <update id="updateInquiry" parameterType="int">
+        UPDATE inquiry
+        <set>
+            inquiry_type    = #{inquiryType},
+            inquiry_title   = #{inquiryTitle},
+            inquiry_content = #{inquiryContent},
+            inquiry_file    = #{inquiryFile}
+        </set>
+        WHERE inquiry_no = #{inquiryNo}
+    </update>
+
+    <update id="updateInquiryAns" parameterType="int">
+        UPDATE inquiry
+        <set>
+            inquiry_ans_status = 2,
+            inquiry_ans_title = #{inquiryAnsTitle},
+            inquiry_ans_content = #{inquiryAnsContent},
+            inquiry_ans_date = SYSDATE()
+        </set>
+        WHERE inquiry_no = #{inquiryNo}
+    </update>
+
+    <select id="getInquiryTotalCountByUser" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM ( SELECT inquiry_no, inquiry_user_id, inquiry_type, inquiry_title, inquiry_content, inquiry_file, inquiry_date, inquiry_ans_status, inquiry_ans_title, inquiry_ans_content, inquiry_ans_date, inquiry_user_role
+               FROM Inquiry
+               WHERE inquiry_user_id = #{inquiryUserId} ) countTable
+    </select>
+
+
+</mapper>

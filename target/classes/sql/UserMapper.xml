@@ -37,6 +37,10 @@
 		<result property="blackEndDate"			column="black_end_date"				jdbcType="DATE"/>
 		<result property="sessionKey"			column="session_key"				jdbcType="VARCHAR"/>
 		<result property="sessionLimit"			column="session_limit"				jdbcType="DATE"/>
+		<result property="userCurMapLa"			column="user_cur_map_la"				jdbcType="DECIMAL"/>
+		<result property="userCurMapLo"			column="user_cur_map_lo"				jdbcType="DECIMAL"/>
+		<result property="userCurAdd"			column="user_cur_add"				jdbcType="VARCHAR"/>
+
 	</resultMap>
 
 
@@ -258,4 +262,14 @@
 		WHERE user_id = #{userId}
 	</update>
 
+	<!-- 최근 위치 업데이트  -->
+	<update id="updateCurLaLo" parameterType="user">
+		UPDATE user
+		<set>
+			user_cur_map_la = #{userCurMapLa},
+		    user_cur_map_lo = #{userCurMapLo},
+		    user_cur_add = #{userCurAdd}
+		</set>
+		WHERE user_id = #{userId}
+	</update>
 </mapper>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MessageMapper">
+	
+	<resultMap type="msg" id="msgSelectMap">
+		<result property="msgNo" 	column="MSG_NO" 		jdbcType="NUMERIC"/>
+  		<result property="msgSendUserId" 		column="MSG_SEND_USER_ID" 		jdbcType="VARCHAR"/>
+  		<result property="msgRecvUserId"		column="MSG_RECV_USER_ID"			jdbcType="NUMERIC"/>
+  		<result property="msgSendDate" 	column="MSG_SEND_DATE"	jdbcType="TIMESTAMP"/>
+  		<result property="msgReadDate"		column="MSG_READ_DATE" 		jdbcType="TIMESTAMP"/>
+  		<result property="msgContent" 		column="MSG_CONTENT" 		jdbcType="VARCHAR"/>
+  		<result property="msgReadStatus" 		column="MSG_READ_STATUS"		jdbcType="CHAR"/>
+  		<result property="msgRoom" 		column="MSG_ROOM" 		jdbcType="NUMERIC"/>
+		<result property="profile" 		column="USER_PRO_IMG" 		jdbcType="VARCHAR"/>
+
+  	</resultMap>
+
+	<!-- LIST  -->
+	<select id="message_list" parameterType="msg" resultMap="msgSelectMap">
+		select MSG_NO, MSG_ROOM, MSG_SEND_USER_ID, MSG_RECV_USER_ID, date_format(MSG_SEND_DATE, '%Y-%m-%d %H:%i') as MSG_SEND_DATE, MSG_READ_DATE, MSG_CONTENT, MSG_READ_STATUS
+		from msg
+		where MSG_NO in (select max(MSG_NO) from msg group by MSG_ROOM) and (MSG_SEND_USER_ID = #{id} or MSG_RECV_USER_ID=#{id})
+		order by MSG_NO desc;
+	</select>
+
+	<!-- 메세지 list에서 상대방 profile/   가져오기 //  여기서의 profile은 사진인거같아.-->
+	<select id="get_other_profile" parameterType="msg" resultType="String">
+		select USER_PRO_IMG from user
+		<choose>
+			<when test="msgSendUserId == id">
+				where USER_ID = #{msgRecvUserId}
+			</when>
+			<otherwise>
+				where USER_ID = #{msgSendUserId}
+			</otherwise>
+		</choose>
+	</select>
+
+	<!-- 안읽은 메세지 갯수 가져오기 -->
+	<select id="count_unread" parameterType="msg" resultType="Int">
+		select count(MSG_NO) from MSG
+		where MSG_RECV_USER_ID=#{id} and MSG_READ_STATUS=0 and MSG_ROOM=#{msgRoom}
+	</select>
+
+	<!-- 메세지 내용 가져오기 -->
+	<select id="room_content_list" parameterType="msg" resultMap="msgSelectMap">
+		select m.MSG_NO, m.MSG_ROOM, m.MSG_SEND_USER_ID, m.MSG_RECV_USER_ID, date_format(m.MSG_SEND_DATE, '%Y-%m-%d %H:%i') as MSG_SEND_DATE, m.MSG_READ_DATE, m.MSG_CONTENT, m.MSG_READ_STATUS, u.USER_PRO_IMG
+		from msg m left outer join user u
+		on m.MSG_SEND_USER_ID = u.USER_ID
+		<choose>
+			<when test="msgRoom != 0">
+				where MSG_ROOM=#{msgRoom}
+			</when>
+			<otherwise>
+				where (MSG_RECV_USER_ID = #{msgRecvUserId} and MSG_SEND_USER_ID = #{msgSendUserId}) or (MSG_SEND_USER_ID = #{msgRecvUserId} and MSG_RECV_USER_ID = #{id})
+			</otherwise>
+		</choose>
+
+	</select>
+
+	<!-- 메세지 읽음 처리 -->
+	<update id="message_read_chk" parameterType="msg">
+		update msg set MSG_READ_STATUS=1
+		<choose>
+			<when test="msgRoom != 0">
+				where MSG_ROOM=#{msgRoom} and MSG_READ_STATUS=0 and MSG_RECV_USER_ID=#{id}
+			</when>
+			<otherwise>
+				where MSG_SEND_USER_ID=#{msgRecvUserId} and MSG_READ_STATUS=0 and MSG_RECV_USER_ID=#{id}
+			</otherwise>
+		</choose>
+
+	</update>
+
+	<!-- 메세지리스트에서 메세지 보내기 -->
+	<insert id="messageSendInlist" parameterType="msg" >
+		<choose>
+			<when test="msgRoom != 0">
+				insert into msg(MSG_SEND_USER_ID, MSG_RECV_USER_ID, MSG_SEND_DATE, MSG_READ_DATE, MSG_CONTENT, MSG_READ_STATUS, MSG_ROOM) values(#{msgSendUserId}, #{msgRecvUserId}, now(), now(), #{msgContent}, 0, #{msgRoom});
+			</when>
+			<otherwise>
+				insert into msg(MSG_SEND_USER_ID, MSG_RECV_USER_ID, MSG_SEND_DATE, MSG_READ_DATE, MSG_CONTENT, MSG_READ_STATUS, MSG_ROOM) values( #{msgSendUserId}, #{msgRecvUserId}, now(), now(), #{msgContent}, 0, #{msgRoom});
+			</otherwise>
+		</choose>
+	</insert>
+
+	<!-- room 번호 최댓값 구하기 -->
+	<select id="max_room"  parameterType="msg" resultType="Int">
+		select max(MSG_ROOM) from msg
+	</select>
+
+	<!-- 메세지 이력이 있는지 검색 -->
+	<select id="exist_chat" parameterType="msg" resultType="Int">
+		select count(MSG_NO) from msg
+		where (MSG_RECV_USER_ID = #{msgRecvUserId} and MSG_SEND_USER_ID=#{msgSendUserId}) or (MSG_SEND_USER_ID = #{msgRecvUserId} and MSG_RECV_USER_ID=#{msgSendUserId})
+	</select>
+
+	<!-- 기존 메세지 내역의 room 번호를 가져옴 -->
+	<select id="select_room"  parameterType="msg" resultType="String">
+		select MSG_ROOM from msg
+		where (MSG_RECV_USER_ID = #{msgRecvUserId} and MSG_SEND_USER_ID=#{msgSendUserId}) or (MSG_SEND_USER_ID = #{msgRecvUserId} and MSG_RECV_USER_ID=#{msgSendUserId})
+		limit 0,1
+	</select>
+
+</mapper>

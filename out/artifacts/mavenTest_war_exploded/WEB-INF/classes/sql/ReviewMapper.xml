@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="ReviewMapper">
+
+	<resultMap id="ReviewSelectMap" type="review">
+		<result property="rvNo" 			column="RV_NO" 			jdbcType="INTEGER"/>
+		<result property="rvOrderNo"	column="RV_ORDER_NO" 		jdbcType="INTEGER" />
+		<result property="rvTruckId"	column="RV_TRUCK_ID" 		jdbcType="VARCHAR" />
+		<result property="rvUserId"	column="RV_USER_ID" 		jdbcType="VARCHAR" />
+		<result property="rvRegTime" 	column="RV_REG_TIME" 		jdbcType="DATE" />
+		<result property="rvStar" 			column="RV_STAR" 	jdbcType="FLOAT" />
+		<result property="rvContent" 			column="RV_CONTENT" 	jdbcType="VARCHAR" />
+		<result property="rvTruckCmtContent" 			column="RV_TRUCK_CMT_CONTENT" 			jdbcType="VARCHAR"/>
+		<result property="rvTruckCmtRegTime"	column="RV_TRUCK_CMT_REG_TIME" 		jdbcType="DATE" />
+		<result property="rvImg1" 	column="RV_IMG1" 		jdbcType="VARCHAR" />
+		<result property="rvImg2" 			column="RV_IMG2" 	jdbcType="VARCHAR" />
+		<result property="rvImg3" 			column="RV_IMG3" 	jdbcType="VARCHAR" />
+		<result property="rvDelete" 			column="RV_DELETE" 	jdbcType="CHAR" />
+		<result property="rvTCDelete" 			column="RV_TC_DELETE" 	jdbcType="CHAR" />
+
+		<result property="truckProImg"       column="TRUCK_PRO_IMG"        jdbcType="VARCHAR"/>
+		<result property="userProImg"       column="USER_PRO_IMG"        jdbcType="VARCHAR"/>
+		<result property="truckName"       column="TRUCK_NAME"        jdbcType="VARCHAR"/>
+
+	</resultMap>
+
+
+	<insert id="addReview"	parameterType="review">
+		INSERT
+		INTO review (RV_ORDER_NO,
+		             RV_TRUCK_ID,
+		             RV_USER_ID,
+		             RV_REG_TIME,
+		             RV_STAR,
+		             RV_CONTENT,
+		             RV_IMG1,
+		             RV_IMG2,
+		             RV_IMG3,
+		             ffin.review.RV_DELETE,
+		             ffin.review.RV_TC_DELETE
+		             )
+		VALUES (
+				   #{rvOrderNo},
+		        #{rvTruckId},
+		        #{rvUserId},
+				   SYSDATE(),
+				   #{rvStar},
+				   #{rvContent},
+				   #{rvImg1},
+				   #{rvImg2},
+				   #{rvImg3},
+				   #{rvDelete},
+				   #{rvTCDelete}
+			   )
+	</insert>
+
+	<select 	id="getReview"	parameterType="int"	resultMap="ReviewSelectMap" >
+		SELECT
+			rv_no, RV_USER_ID, RV_TRUCK_ID, rv_order_no, rv_reg_time, rv_star, rv_content, rv_truck_cmt_content, rv_truck_cmt_reg_time, rv_img1, rv_img2, rv_img3, rv_delete, rv_tc_delete, truck_pro_img, user_pro_img, TRUCK_NAME
+
+		FROM review
+		WHERE RV_NO = #{value}
+
+	</select>
+
+	<select id="getReviewListTruck"	parameterType="map"	resultMap="ReviewSelectMap">
+		SELECT inner_table.*
+		FROM( SELECT
+			RV_NO,
+		       RV_TRUCK_ID,
+		       RV_USER_ID,
+			RV_ORDER_NO,
+			RV_REG_TIME,
+			RV_STAR,
+			RV_CONTENT,
+		       RV_TRUCK_CMT_CONTENT,
+		       RV_TRUCK_CMT_REG_TIME,
+			RV_IMG1,
+			RV_IMG2,
+			RV_IMG3,
+		       TRUCK_PRO_IMG,
+		       USER_PRO_IMG,
+		       TRUCK_NAME
+		FROM 	review
+		WHERE RV_TRUCK_ID=#{truckId}  ) inner_table
+		limit #{search.startRowNum}, #{search.pageSize}
+	</select>
+
+	<select id="getReviewAvg" parameterType="map" resultMap="ReviewSelectMap">
+		select round(avg(RV_STAR),1) as RV_STAR
+		from review
+		where RV_TRUCK_ID=#{truckId}
+		group by RV_TRUCK_ID;
+	</select>
+
+	<select id="getReviewListUser"	parameterType="map"	resultMap="ReviewSelectMap">
+		SELECT inner_table.*
+		FROM( SELECT
+			RV_NO,
+			RV_ORDER_NO,
+		    RV_TRUCK_ID,
+		    RV_USER_ID,
+			RV_REG_TIME,
+			RV_STAR,
+			RV_CONTENT,
+			RV_TRUCK_CMT_CONTENT,
+			RV_TRUCK_CMT_REG_TIME,
+			RV_IMG1,
+			RV_IMG2,
+			RV_IMG3,
+		       TRUCK_PRO_IMG,
+		       USER_PRO_IMG,
+		       TRUCK_NAME
+		FROM 	review
+		WHERE RV_USER_ID = #{userId}  ) inner_table
+		limit #{search.startRowNum}, #{search.pageSize}
+	</select>
+
+	<update id="updateReview"	parameterType="review">
+		UPDATE 	review
+		<set>
+			RV_STAR = #{rvStar},
+			RV_CONTENT = #{rvContent},
+			RV_IMG1=#{rvImg1},
+			RV_IMG2=#{rvImg2},
+			RV_IMG3=#{rvImg3}
+		</set>
+		WHERE RV_NO = #{rvNo}
+	</update>
+
+	<update id="updateRVAddTruckComment"	parameterType="review">
+		UPDATE 	review
+		<set>
+			RV_TRUCK_CMT_CONTENT = #{rvTruckCmtContent},
+		    RV_TRUCK_CMT_REG_TIME = SYSDATE()
+
+		</set>
+		WHERE RV_NO = #{rvNo}
+	</update>
+
+	<update id="updateRVUpdateTruckComment"	parameterType="review">
+		UPDATE 	review
+		<set>
+			RV_TRUCK_CMT_CONTENT = #{rvTruckCmtContent}
+		</set>
+		WHERE RV_NO = #{rvNo}
+	</update>
+
+	<!-- SQL : SELECT ROW Count -->
+	<select  id="getTotalCount"  parameterType="search"	 resultType="int">
+		SELECT COUNT(*)
+		FROM(	SELECT *
+		FROM review
+				 WHERE RV_TRUCK_ID=#{truckId}
+			) countTable
+	</select>
+
+	<!-- SQL : SELECT ROW Count -->
+	<select  id="getTotalCountUser"  parameterType="map"	 resultMap="ReviewSelectMap">
+		SELECT COUNT(*) as rv_no
+		FROM(	SELECT *
+		FROM review
+				 WHERE RV_USER_ID=#{userId}
+			) countTable
+	</select>
+
+
+	<!-- SQL : SELECT ROW Count -->
+	<select  id="getReviewTotalCount"  parameterType="map"	 resultMap="ReviewSelectMap">
+		SELECT COUNT(*) as rv_no
+		FROM(	SELECT *
+		FROM review
+				 WHERE RV_TRUCK_ID=#{truckId}
+			) countTable
+	</select>
+
+	<!-- 사진 갖고오깅 ㅜ user-->
+	<select id="getProImgUser" parameterType="String" resultType="String">
+		select USER_PRO_IMG from user
+		where USER_ID = #{userId}
+	</select>
+	<!-- 사진 갖고오깅 ㅜ truck-->
+	<select id="getProImgTruck" parameterType="String" resultType="String">
+		select TRUCK_PRO_IMG from truck
+		where TRUCK_ID = #{truckId}
+	</select>
+	<!-- 트럭이름 갖고오깅 ㅜ truck-->
+	<select id="getTruckName" parameterType="String" resultType="String">
+		select TRUCK_NAME from truck
+		where TRUCK_ID = #{truckId}
+	</select>
+
+
+</mapper>

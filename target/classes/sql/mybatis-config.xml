@@ -34,6 +34,8 @@
 		<typeAlias alias="review" 		type="com.ffin.service.domain.Review" />
 		<typeAlias alias="truck" 		type="com.ffin.service.domain.Truck" />
 		<typeAlias alias="user" 		type="com.ffin.service.domain.User" />
+
+
 	</typeAliases>
 
 	<mappers>
@@ -48,6 +50,7 @@
 		<mapper resource="sql/PostMapper.xml"/>
 		<mapper resource="sql/CommentMapper.xml"/>
 		<mapper resource="sql/HeartMapper.xml"/>
+
 	</mappers>
 
 

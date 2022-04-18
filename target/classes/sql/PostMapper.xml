@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PostMapper">
+    <resultMap id="postSelectMap" type="post">
+        <result property="postNo"           column="POST_NO"            jdbcType="NUMERIC"/>
+        <result property="postTitle"        column="POST_TITLE"         jdbcType="VARCHAR"/>
+        <result property="postContent"      column="POST_CONTENT"       jdbcType="VARCHAR"/>
+        <result property="postRegDate"      column="POST_REG_DATE"      jdbcType="DATE"/>
+        <result property="secretKey"        column="SECRET_KEY"         jdbcType="CHAR"/>
+        <result property="postFile1"        column="POST_FILE1"         jdbcType="VARCHAR"/>
+        <result property="postFile2"        column="POST_FILE2"         jdbcType="VARCHAR"/>
+        <result property="postFile3"        column="POST_FILE3"         jdbcType="VARCHAR"/>
+
+        <result property="heartCount"        column="HEART_COUNT"         jdbcType="NUMERIC"/>
+        <result property="postHit"        column="POST_HIT"         jdbcType="NUMERIC"/>
+        <result property="heartNo"          column="HEART_NO"           jdbcType="NUMERIC"/>
+        <result property="heartUserId"          column="HEART_USER_ID"           jdbcType="VARCHAR"/>
+        <result property="heartTruckId"          column="HEART_TRUCK_ID"           jdbcType="VARCHAR"/>
+        <result property="replyCount"          column="REPLY_COUNT"           jdbcType="NUMERIC"/>
+        <result property="postCategory"          column="POST_CATEGORY"           jdbcType="VARCHAR"/>
+
+        <association property="postUser"    javaType="user">
+            <id property="userId"           column="POST_USER_ID"       jdbcType="VARCHAR"/>
+            <result property="userName"     column="USER_NAME"          jdbcType="VARCHAR"/>
+            <result property="userProImg"     column="USER_PRO_IMG"          jdbcType="VARCHAR"/>
+        </association>
+        <association property="postTruck"   javaType="truck">
+            <id property="truckId"          column="POST_TRUCK_ID"      jdbcType="VARCHAR"/>
+            <result property="truckName"    column="TRUCK_NAME"         jdbcType="VARCHAR"/>
+            <result property="truckProImg"    column="TRUCK_PRO_IMG"         jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <!-- SQL : INSERT -->
+    <insert id="addPost"    parameterType="post">
+        INSERT INTO POST (POST_USER_ID, POST_TRUCK_ID, POST_TITLE, POST_CONTENT, POST_REG_DATE, SECRET_KEY, POST_FILE1,
+                          POST_FILE2, POST_FILE3, POST_CATEGORY)
+        VALUES (#{postUser.userId}, #{postTruck.truckId}, #{postTitle}, #{postContent}, DATE_FORMAT(now(), '%Y-%m-%d'), DEFAULT, #{postFile1}, #{postFile2}, #{postFile3}, 'g')
+    </insert>
+
+    <!-- SQL :SELECT ONE-->
+    <select id="getPost"    parameterType="int"      resultMap="postSelectMap">
+        SELECT
+            *
+        FROM post LEFT JOIN TRUCK ON post.POST_TRUCK_ID = truck.TRUCK_ID
+                    LEFT OUTER JOIN USER ON post.POST_USER_ID = user.USER_ID
+        WHERE post_no = #{value}
+    </select>
+
+<!--    <select id="getPost3"    parameterType="String"      resultMap="postSelectMap">-->
+<!--        SELECT-->
+<!--            POST_USER_ID, POST_TRUCK_ID, POST_TITLE, POST_CONTENT, POST_REG_DATE, SECRET_KEY, POST_FILE1,-->
+<!--            POST_FILE2, POST_FILE3-->
+<!--        FROM post-->
+<!--        WHERE post_content = #{value}-->
+<!--    </select>-->
+
+    <!-- SQL : SELECT LIST -->
+    <select id="getPostList"    parameterType="search"      resultMap="postSelectMap">
+        SELECT inner_table.*
+        FROM( SELECT post_no, post_title, post_user_id, post_truck_id, post_reg_date, POST_HIT, SECRET_KEY
+        FROM post
+        WHERE
+        <if test="searchCondition != null">
+
+                <bind name="searchKeyword" value="'%' + searchKeyword + '%'"/>
+                <if test="searchCondition == 0 and searchKeyword !='' " >
+                ( post_user_id LIKE #{searchKeyword} OR post_truck_id LIKE #{searchKeyword} )
+                 </if>
+                <if test="searchCondition == 1 and searchKeyword !='' ">
+                    post_title LIKE #{searchKeyword} AND secret_key = 0
+                </if>
+                 AND POST_CATEGORY="g"
+
+        </if>
+        <if test="searchCondition == null">
+            POST_CATEGORY="g"
+        </if>
+        order by post_no DESC ) inner_table
+        limit #{startRowNum}, #{pageSize}
+    </select>
+
+
+
+    <!-- SQL : UPDATE -->
+    <update id="updatePost"     parameterType="post">
+        UPDATE post
+        <set>
+            post_title = #{postTitle},
+            post_content = #{postContent},
+            post_reg_date = SYSDATE(),
+            post_file1 = #{postFile1},
+            post_file2 = #{postFile2},
+            post_file3 = #{postFile3}
+        </set>
+        WHERE post_no = #{postNo}
+    </update>
+
+    <update id="blindPost"     parameterType="post">
+        UPDATE post
+        <set>
+            SECRET_KEY = '1'
+        </set>
+        WHERE post_no = #{postNo}
+    </update>
+
+    <update id="seePost"     parameterType="post">
+        UPDATE post
+        <set>
+            SECRET_KEY = '0'
+        </set>
+        WHERE post_no = #{postNo}
+    </update>
+
+
+    <!-- SQL : SELECT ROW Count -->
+    <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+        SELECT COUNT(*)
+        FROM(	SELECT post_no, post_title, post_user_id, post_truck_id, post_reg_date
+        FROM post
+            WHERE
+        <if test="searchCondition != null">
+
+                <bind name="searchKeyword" value="'%' + searchKeyword + '%'"/>
+                <if test="searchCondition == 0 and searchKeyword !='' ">
+                   ( post_user_id LIKE #{searchKeyword}
+                    OR post_truck_id LIKE #{searchKeyword} )
+                </if>
+                <if test="searchCondition == 1 and searchKeyword !='' ">
+                    post_title LIKE #{searchKeyword} AND secret_key = 0
+                </if>
+                AND POST_CATEGORY="g"
+        </if>
+        <if test="searchCondition == null">
+           POST_CATEGORY="g"
+        </if>
+         ) countTable
+    </select>
+
+    <select  id="getTotalCountUser"  parameterType="search"	 resultType="int">
+        SELECT COUNT(*)
+        FROM(	SELECT post_no, post_title, post_user_id, post_reg_date
+            FROM post
+                where
+        <if test="searchCondition != null">
+
+                <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+                <if test="searchCondition == 0 and searchKeyword !='' ">
+                     post_user_id LIKE #{searchKeyword}
+                </if>
+                <if test="searchCondition == 1 and searchKeyword !='' ">
+                     post_title LIKE #{searchKeyword}
+                </if>
+                AND POST_CATEGORY="g"
+
+        </if>
+        <if test="searchCondition == null">
+             POST_CATEGORY="g"
+        </if>
+         ) countTable
+        WHERE post_user_id IS NOT NULL
+    </select>
+
+    <select  id="getTotalCountTruck"  parameterType="search"	 resultType="int">
+        SELECT COUNT(*)
+        FROM(	SELECT post_no, post_title, post_truck_id, post_reg_date
+        FROM post
+        <if test="searchCondition != null">
+            <where>
+                <bind name="searchKeywords" value="'%' + searchKeyword + '%'"/>
+                <if test="searchCondition == 0 and searchKeyword !='' ">
+                     post_truck_id LIKE #{searchKeyword}
+                </if>
+                <if test="searchCondition == 1 and searchKeyword !='' ">
+                     post_title LIKE #{searchKeyword}
+                </if>
+                AND POST_CATEGORY="g"
+            </where>
+        </if>
+        <if test="searchCondition == null">
+            where POST_CATEGORY="g"
+        </if>
+            ) countTable
+        WHERE post_truck_id IS NOT NULL
+    </select>
+
+    <!-- SQL : DELETE -->
+    <delete id="deletePost"  parameterType="post">
+        DELETE
+        FROM post
+        where post_no = #{postNo}
+    </delete>
+
+
+
+
+
+
+    <!-- HHJ -->
+    <!-- SQL : SELECT LIST //  -->
+    <select id="getPostList2"    parameterType="map"      resultMap="postSelectMap">
+
+
+        <!--
+
+        게시물만 보일 땐 이렇게 하려고 했는데.......
+
+
+        SELECT inner_table.*
+        FROM( SELECT *
+        FROM post
+        <if test="role == 'user'">
+            <where>
+                post_user_id= #{id}
+            </where>
+        </if>
+        <if test="role == 'truck'">
+            <where>
+                post_truck_id= #{id}
+            </where>
+        </if>
+        <if test="searchCondition != null">
+
+                <bind name="searchKeyword" value="'%' + searchKeyword + '%'"/>
+                <if test="searchCondition == 0 and searchKeyword !='' ">
+                    AND post_user_id LIKE #{search.searchKeyword}
+                    OR post_truck_id LIKE #{search.searchKeyword}
+                </if>
+                <if test="searchCondition == 1 and searchKeyword !='' ">
+                    AND post_title LIKE #{search.searchKeyword}
+                </if>
+
+        </if>
+        order by post_no ) inner_table
+        limit #{search.startRowNum}, #{search.pageSize}-->
+
+
+        <!-- 리스트 + user/truck 구분하여 heart를 눌렀는지 여부도 체크해야 했기 때문에 outer join  -->
+        SELECT inner_table.*
+        FROM ( select * from
+                (SELECT p.*, h.heart_no FROM post p LEFT OUTER JOIN heart AS h ON p.POST_NO = h.HEART_TARGET_P
+                    <if test="role == 'user'">
+                        AND h.HEART_USER_ID=#{id}
+                    </if>
+                    <if test="role == 'truck'">
+                        AND h.HEART_TRUCK_ID=#{id}
+                    </if>
+                    <if test="role == 'admin'">
+                        group by p.post_no
+                    </if>
+                    ) p1 where p1.POST_CATEGORY='p' order by p1.post_no ) inner_table
+        limit #{search.startRowNum}, #{search.pageSize}
+    </select>
+    <!-- SQL : SELECT ROW Count -->
+    <select  id="getTotalCount2"  parameterType="map"	 resultType="int">
+        SELECT COUNT(*)
+        FROM(	select * from
+        (SELECT p.*, h.heart_no FROM post p LEFT OUTER JOIN heart AS h ON p.POST_NO = h.HEART_TARGET_P
+        <if test="role == 'user'">
+           AND h.HEART_USER_ID=#{id}
+        </if>
+        <if test="role == 'truck'">
+           AND h.HEART_TRUCK_ID=#{id}
+        </if>
+        <if test="role == 'admin'">
+            group by p.post_no
+        </if>
+        ) p1 where p1.POST_CATEGORY='p' order by p1.post_no
+        ) countTable
+    </select>
+
+    <!-- SQL :SELECT ONE // 사진 모달창 켰을 때 getDetail
+    클릭했을 때 해당하는 사람이 하트를 눌럿는지 여부도 알아야 하고 어쩌고 저쩌고 땜에
+    group으로 묶고 암튼 이랫당..ㅠ
+    -->
+    <select id="getCardDetail"    parameterType="map"      resultMap="postSelectMap">
+        SELECT p.*, h.heart_no
+        FROM post p LEFT OUTER JOIN heart AS h ON  p.POST_NO = h.HEART_TARGET_P
+            AND p.POST_NO=#{postNo}
+        <if test="role == 'user'">
+            AND h.HEART_USER_ID=#{id}
+        </if>
+        <if test="role == 'truck'">
+            AND h.HEART_TRUCK_ID=#{id}
+        </if>
+        GROUP BY p.POST_NO
+        HAVING p.POST_NO=#{postNo}
+    </select>
+
+
+    <!-- 조회수 증가 -->
+    <update id="post_hit_up" parameterType="int">
+        update post set post_hit=post.post_hit+1
+        where POST_NO=#{int}
+    </update>
+
+    <!-- SQL : INSERT -->
+    <insert id="addPostPic"    parameterType="post">
+        INSERT INTO POST (POST_USER_ID, POST_TRUCK_ID, POST_TITLE, POST_CONTENT, POST_REG_DATE, SECRET_KEY, POST_FILE1,
+                          POST_FILE2, POST_FILE3, POST_CATEGORY)
+        VALUES (#{postUser.userId}, #{postTruck.truckId}, 'title', #{postContent}, DATE_FORMAT(now(), '%Y-%m-%d'), DEFAULT, #{postFile1}, #{postFile2}, #{postFile3}, 'p')
+    </insert>
+
+    <!-- SQL : UPDATE -->
+    <update id="updatePostPic"     parameterType="post">
+        UPDATE post
+        <set>
+            post_content = #{postContent},
+            post_reg_date = SYSDATE(),
+            post_file1 = #{postFile1},
+            post_file2 = #{postFile2},
+            post_file3 = #{postFile3}
+        </set>
+        WHERE post_no = #{postNo}
+    </update>
+
+
+</mapper>
