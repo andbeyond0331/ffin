@@ -77,7 +77,7 @@ ___
 <br>
 
 # 🖵 구현 화면
-## 👦 이용자 User 👉[클릭](./docs/student.md)
-## 👮 사업자 User 👉[클릭](./docs/admin.md)
-## 👴 관리자 User 👉[클릭](./docs/professor.md)
-##    비회원 User 👉[클릭](./docs/professor.md)
+## 👦 이용자 👉[클릭](./docs/user.md)
+## :truck: 사업자 👉[클릭](./docs/truck.md)
+## 👮 관리자 👉[클릭](./docs/admin.md)
+## :no_mouth: 👉[클릭](./docs/nonuser.md)
