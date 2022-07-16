@@ -1,7 +1,5 @@
 # 👦 이용자 화면
 
-## 로그인 화면
-
 
 ## ⚡ 로그인 화면 (+위치 정보)
 <img src="https://user-images.githubusercontent.com/88870452/179361264-35ac9106-f96b-4dfa-bdb1-edd73d8887a6.gif" width="700px"></img>
